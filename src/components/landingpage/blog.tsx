@@ -1,4 +1,5 @@
 import React from "react";
+import Badge from "../common/badge";
 
 const BlogSection = () => {
   return (
@@ -57,12 +58,9 @@ const BlogTitle = () => {
   return (
     <div className="flex justify-center items-center text-center  pb-20 pt-32 px-9">
       <div className="text-center mb-4">
-        <span className="inline-block bg-[#ffeecc] text-base font-bold px-2.5 py-0.5 rounded mb-4">
-          Unser Blog
-        </span>
-
-        <h1 className="text-4xl font-bold">Immer gut informiert</h1>
-        <p className="text-lg  max-w-2xl leading-normal mt-6">
+        <Badge title="Unser Blog" color="#ffeecc" />
+        <h1 className="text-4xl font-bold my-5">Immer gut informiert</h1>
+        <p className="text-lg  max-w-2xl leading-normal">
           Lorem ipsum dolor sit amet consectetur adipiscing elit. Eaque sed
           tenetur rem quam nihil dolorum expedita maxime nisi recusandae sequi
           magni culpa fuga accusamus eveniet fugiat ipsum ab consequuntur.
