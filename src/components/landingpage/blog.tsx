@@ -1,10 +1,17 @@
 import React from "react";
 import Badge from "../common/badge";
+import TitleSection from "../common/title-section";
 
 const BlogSection = () => {
   return (
     <section className="pb-20">
-      <BlogTitle />
+      <TitleSection
+        title="Immer gut informiert"
+        subtitle="Lorem ipsum dolor sit amet consectetur adipiscing elit. Eaque sed
+          tenetur rem quam nihil dolorum expedita maxime nisi recusandae sequi
+          magni culpa fuga accusamus eveniet fugiat ipsum ab consequuntur."
+        badge={<Badge title="Unser Blog" color="#ffeecc" />}
+      />
       <div className="container max-w-7xl ">
         <div className="grid grid-cols-1 xl:grid-cols-4 lg:grid-cols-2 md:grid-cols-2 gap-7 px-14 ">
           <BlogCard
@@ -53,21 +60,5 @@ function BlogCard({ title, source }: { title: string; source: string }) {
     </>
   );
 }
-
-const BlogTitle = () => {
-  return (
-    <div className="flex justify-center items-center text-center  pb-20 pt-32 px-9">
-      <div className="text-center mb-4">
-        <Badge title="Unser Blog" color="#ffeecc" />
-        <h1 className="text-4xl font-bold my-5">Immer gut informiert</h1>
-        <p className="text-lg  max-w-2xl leading-normal">
-          Lorem ipsum dolor sit amet consectetur adipiscing elit. Eaque sed
-          tenetur rem quam nihil dolorum expedita maxime nisi recusandae sequi
-          magni culpa fuga accusamus eveniet fugiat ipsum ab consequuntur.
-        </p>
-      </div>
-    </div>
-  );
-};
 
 export default BlogSection;
