@@ -1,8 +1,8 @@
 import React from "react";
-import TitleSection from "../common/title-section";
-import Badge from "../common/badge";
-import { AuftrafSvg, AngebotSvg, SolutionSvg } from "../common/function-svg";
-const FunctionSection = () => {
+import TitleSection from "../../components/common/title-section";
+import Badge from "../../components/common/GBadge/GBadge";
+import { AuftrafSvg, AngebotSvg, SolutionSvg } from "../../components/common/function-svg";
+const GFunctionSection = () => {
   return (
     <div className="mx-auto p-5 flex flex-col justify-center items-center">
       <TitleSection
@@ -100,4 +100,4 @@ const ServiceStep = ({
     </div>
   );
 };
-export default FunctionSection;
+export default GFunctionSection;

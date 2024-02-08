@@ -1,6 +1,6 @@
 import React from "react";
 
-const VideoSection = () => {
+const GVideoSection = () => {
   return (
     <section className="feature-v8 padding-bottom-xxl">
       <div className="feature-v8__main-content bg-contrast-lower bg-opacity-50% padding-top-xxl">
@@ -42,4 +42,4 @@ const VideoSection = () => {
   );
 };
 
-export default VideoSection;
+export default GVideoSection;

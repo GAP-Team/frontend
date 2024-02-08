@@ -1,6 +1,6 @@
 import React from "react";
 
-const OfferSection = () => {
+const GOfferSection = () => {
   return (
     <div className="w-full mx-auto bg-[#37383f] flex flex-col md:flex-row justify-center items-center gap-4 py-6 text-white text-lg">
       <div className="flex items-center  ">
@@ -35,4 +35,4 @@ const TickSvg = () => {
     </figure>
   );
 };
-export default OfferSection;
+export default GOfferSection;
