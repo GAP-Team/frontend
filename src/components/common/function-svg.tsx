@@ -64,4 +64,3 @@ export const SolutionSvg = ({ className }: { className?: string }) => {
     </div>
   );
 };
-

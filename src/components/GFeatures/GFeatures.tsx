@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import Badge from "../common/badge";
+import GBadge from "../common/GBadge/GBadge";
 import {
   AufzugSvgIcon,
   FireSvgIcon,
@@ -10,7 +10,7 @@ import {
 } from "../common/features-svg";
 import TitleSection from "../common/title-section";
 
-const Features = () => {
+const GFeatures = () => {
   return (
     <div className="container mx-auto flex flex-col items-center justify-center">
       <TitleSection
@@ -19,7 +19,7 @@ const Features = () => {
       maiores reiciendis fuga animi, quidem similique perspiciatis neque
       doloremque ut veniam modi earum non iste assumenda voluptates impedit
       velit debitis, voluptas aspernatur dolore incidunt pariatur beatae?"
-        badge={<Badge title="Jetzt direkt loslegen" color="#ccdfeb" />}
+        badge={<GBadge title="Jetzt direkt loslegen" color="#ccdfeb" />}
       />
       <div className="grid grid-cols-2 sm:grid-cols-3  lg:grid-cols-6 gap-4 sm:px-16 ">
         <FeatureCard title="Aufzugsanlagen" icon={<AufzugSvgIcon />} />
@@ -65,4 +65,4 @@ const FeatureCard = ({ title, icon }: { title: string; icon: any }) => {
   );
 };
 
-export default Features;
+export default GFeatures;

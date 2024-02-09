@@ -1,6 +1,6 @@
 import React from "react";
 
-const Footer = () => {
+const GFooter = () => {
   return (
     <footer className="footer bg-contrast-high padding-y-md">
       <div className="container max-width-lg">
@@ -64,7 +64,9 @@ const Footer = () => {
                 </div>
 
                 <div className="col-6@xs col-4@md">
-                  <h4 className="margin-bottom-xs text-base@md color-white">GAP</h4>
+                  <h4 className="margin-bottom-xs text-base@md color-white">
+                    GAP
+                  </h4>
                   <p className="color-contrast-low margin-bottom-sm">
                     Lorem ipsum dolor sit amet consectetur adipisicing elit.
                   </p>
@@ -192,4 +194,4 @@ const Footer = () => {
   );
 };
 
-export default Footer;
+export default GFooter;

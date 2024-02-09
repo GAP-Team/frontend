@@ -1,8 +1,8 @@
 import React from "react";
-import Badge from "../common/badge";
-import TitleSection from "../common/title-section";
+import Badge from "../../components/common/GBadge/GBadge";
+import TitleSection from "../../components/common/title-section";
 
-const BlogSection = () => {
+const GBlogSection = () => {
   return (
     <section className="pb-20">
       <TitleSection
@@ -61,4 +61,4 @@ function BlogCard({ title, source }: { title: string; source: string }) {
   );
 }
 
-export default BlogSection;
+export default GBlogSection;

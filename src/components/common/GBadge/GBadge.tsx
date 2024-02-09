@@ -1,6 +1,6 @@
 import React from "react";
 
-const Badge = ({ title, color }: { title: string; color?: string }) => {
+const GBadge = ({ title, color }: { title: string; color?: string }) => {
   const bgColorClass = color ? `bg-[${color}]` : "bg-primary";
   return (
     <span
@@ -12,4 +12,4 @@ const Badge = ({ title, color }: { title: string; color?: string }) => {
   );
 };
 
-export default Badge;
+export default GBadge;

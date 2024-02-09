@@ -1,19 +1,9 @@
 import Image from "next/legacy/image";
-import { useRef } from "react";
 import classes from "./hero_section.module.css";
 
 const HeroSection = () => {
-  const gewerk = useRef();
-  const auftragstyp = useRef();
-  const bundesland = useRef();
-
-  const submitHandler = (e) => {
+  const submitHandler = (e: any) => {
     e.preventDefault();
-    const gewerkWert = gewerk.current.value;
-    const auftragstypWert = auftragstyp.current.value;
-    const bundeslandWert = bundesland.current.value;
-
-    console.log(gewerkWert + " " + auftragstypWert + " " + bundeslandWert);
   };
 
   return (
@@ -58,7 +48,7 @@ const HeroSection = () => {
                   Wählen Sie ein Gewerk aus:
                 </label>
 
-                <select className={`js-select-auto__select`} ref={gewerk}>
+                <select className={`js-select-auto__select`}>
                   <optgroup label="Gewerke">
                     <option>Gewerke</option>
                     <option value="0">Option 1</option>
@@ -81,7 +71,7 @@ const HeroSection = () => {
                   Auftragstyp:
                 </label>
 
-                <select className="js-select-auto__select" ref={auftragstyp}>
+                <select className="js-select-auto__select">
                   <optgroup label="Auftragstyp">
                     <option>Auftragstyp</option>
                     <option value="0">Option 1</option>
@@ -104,7 +94,7 @@ const HeroSection = () => {
                   Bundesland:
                 </label>
 
-                <select className="js-select-auto__select" ref={bundesland}>
+                <select className="js-select-auto__select">
                   <optgroup label="Bundesland">
                     <option>Bundesland</option>
                     <option value="0">Option 1</option>
