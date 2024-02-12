@@ -6,13 +6,12 @@ import GTestimonials from "@/components/GTestimonials/GTestimonials";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between">
-      <GFeatures />
-      <GOfferSection />
-      <GTestimonials />
+    <main className="flex min-h-screen flex-col items-center justify-between gap-14">
       <GFunctionSection />
+      <GOfferSection />
       <GFeatures />
       <GBlogSection />
+      <GTestimonials />
     </main>
   );
 }
