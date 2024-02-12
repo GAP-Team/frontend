@@ -20,7 +20,7 @@ const GOfferSection = () => {
 };
 const TickSvg = () => {
   return (
-    <figure className="flex justify-center items-center mx-2 rounded-full bg-[#304e4e] p-1 w-8 h-8">
+    <figure className="flex justify-center items-center mx-2 rounded-full bg-[#304e4e] p-1 w-7 h-6">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
