@@ -1,0 +1,18 @@
+version: '3.7'
+
+services:
+  gap_frontend:
+    container_name: gap_frontend
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./fe/:/usr/src/app
+      - /usr/src/app/node_modules
+    networks:
+      - gap_network
+
+networks:
+  gap_network:
