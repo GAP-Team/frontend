@@ -34,20 +34,14 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: Print current directory
-      run: pwd
-
-    - name: List contents after download
-      run: ls
-
     - name: Download node_modules
       uses: actions/download-artifact@v4
       with:
         name: node_modules
         path: node_modules
 
-    - name: List contents after download
-      run: ls
+    - name: Set executable permissions for next binary
+      run: chmod +x node_modules/.bin/next
 
     - name: Build
       run: npm run build:ci
