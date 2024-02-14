@@ -21,7 +21,7 @@ const GFeatures = () => {
       velit debitis, voluptas aspernatur dolore incidunt pariatur beatae?"
         badge={<GBadge title="Jetzt direkt loslegen" color="#ccdfeb" />}
       />
-      <div className="grid grid-cols-2 sm:grid-cols-3  lg:grid-cols-6 gap-4 sm:px-16 ">
+      <div className="grid grid-cols-2 sm:grid-cols-3  lg:grid-cols-6 gap-4 sm:px-16 mb-8">
         <FeatureCard title="Aufzugsanlagen" icon={<AufzugSvgIcon />} />
         <FeatureCard title="Brandschutz" icon={<FireSvgIcon />} />
         <FeatureCard title="Brandmelde-anlage" icon={<BulbSvgIcon />} />

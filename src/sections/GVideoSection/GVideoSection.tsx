@@ -1,44 +1,23 @@
 import React from "react";
 
-const GVideoSection = () => {
+const GVideoSection = ({
+  title = "Unternehmenssuche leicht gemacht!",
+  subtitle = "Lorem ipsum dolor sit amet consectetur adipiscing elit. Eaque sed tenetur rem quam nihil dolorum expedita maxime nisi recusandae sequi magni culpa fuga accusamus eveniet fugiat ipsum ab consequuntur.",
+}: {
+  title?: string;
+  subtitle?: string;
+}) => {
   return (
-    <section className="feature-v8 padding-bottom-xxl">
-      <div className="feature-v8__main-content bg-contrast-lower bg-opacity-50% padding-top-xxl">
-        <div className="container max-width-adaptive-md">
-          <div className="grid gap-sm gap-lg@sm">
-            <div className="col-6@sm">
-              <h2 className="text-xxl">
-                Unternehmenssuche
-                <br /> leicht gemacht!
-              </h2>
-            </div>
-
-            <div className="col-6@sm">
-              <div className="text-component">
-                <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Aperiam ullam minus cupiditate voluptatibus ab, sequi magni,
-                  labore necessitatibus aliquam expedita, natus tenetur corrupti
-                  dolorum.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
+    <>
+      <div className="w-full mx-auto flex flex-col md:flex-row justify-center items-center py-36 bg-[#ebebec] gap-14">
+        <h1 className="text-4xl font-bold text-gray-800 mb-4 md:mb-0 max-w-md ">{title}</h1>
+        <p className="text-lg text-gray-600 text-base max-w-lg">{subtitle}</p>
       </div>
-
-      <div className="container max-width-adaptive-md feature-v8__sub-content">
-        <figure className="width-100% radius-lg overflow-hidden col-8@md shadow-lg">
-          <div className="aspect-ratio-16:9">
-            <iframe
-              src="https://player.vimeo.com/video/308876956?title=0&byline=0&portrait=0&badge=0"
-              frameBorder="0"
-              allowFullScreen
-            ></iframe>
-          </div>
-        </figure>
-      </div>
-    </section>
+      <video className="max-w-5xl aspect-video rounded-lg -mt-36 mb-28" controls>
+        <source src="https://docs.material-tailwind.com/demo.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+    </>
   );
 };
 
