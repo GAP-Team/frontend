@@ -1,4 +1,4 @@
-name: GAP FE CI 
+name: GAP FE CI
 
 on:
   push:
@@ -68,8 +68,18 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Manual approval
+        id: manual-approval
+        run: echo "Ready for deployment? Approve or reject this workflow run by commenting on the pull request."
+
+      - name: Check if approved
+        if: steps.manual-approval.outputs.result == 'approve'
+        run: exit 0
+
       - name: Checkout code
+        if: steps.manual-approval.outputs.result == 'approve'
         uses: actions/checkout@v2
 
       - name: Deploy to Vercel
+        if: steps.manual-approval.outputs.result == 'approve'
         run: npx vercel --prod --token ${{ secrets.VERCEL_TOKEN }}
