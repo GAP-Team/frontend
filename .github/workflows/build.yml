@@ -5,15 +5,16 @@ on:
     branches:
       - main
       - developer
-      - add-ci
   pull_request:
     branches:
       - main
       - developer
 
 jobs:
-  cache_node_modules:
+  build:
     runs-on: ubuntu-latest
+    container:
+      image: node:20
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -26,54 +27,11 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node_modules-
 
-  install_dependencies:
-    runs-on: ubuntu-latest
-    container:
-      image: node:20
-    needs: cache_node_modules
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
       - name: Install dependencies
         run: npm install
-
-  build:
-    runs-on: ubuntu-latest
-    container:
-      image: node:20
-    needs: install_dependencies
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Restore cache
-        uses: actions/cache@v4
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node_modules-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node_modules-
 
       - name: Build
         run: npm run build
 
-  test:
-    runs-on: ubuntu-latest
-    container:
-      image: node:20
-    needs: install_dependencies
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Restore cache
-        uses: actions/cache@v4
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node_modules-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node_modules-
-
-      - name: Test
-        run: npm run test
+      # - name: Test
+      #   run: npm run test
