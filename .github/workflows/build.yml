@@ -1,4 +1,4 @@
-name: Next.js CI/CD with Vercel
+name: GAP FE CI 
 
 on:
   push:
@@ -14,51 +14,62 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-    - name: Install dependencies
-      run: npm install
+      - name: Install dependencies
+        run: npm install
 
-    - name: Upload node_modules
-      uses: actions/upload-artifact@v4
-      with:
-        name: node_modules
-        path: node_modules
+      - name: Upload node_modules
+        uses: actions/upload-artifact@v4
+        with:
+          name: node_modules
+          path: node_modules
 
   build:
     needs: setup
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-    - name: Download node_modules
-      uses: actions/download-artifact@v4
-      with:
-        name: node_modules
-        path: node_modules
+      - name: Download node_modules
+        uses: actions/download-artifact@v4
+        with:
+          name: node_modules
+          path: node_modules
 
-    - name: Set executable permissions for next binary
-      run: chmod +x ./node_modules/next/dist/bin/next
+      - name: Set executable permissions for next binary
+        run: chmod +x ./node_modules/next/dist/bin/next
 
-    - name: Build
-      run: npm run build:ci
+      - name: Build
+        run: npm run build:ci
 
   test:
     needs: setup
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-    - name: Download node_modules
-      uses: actions/download-artifact@v4
-      with:
-        name: node_modules
-        path: node_modules
+      - name: Download node_modules
+        uses: actions/download-artifact@v4
+        with:
+          name: node_modules
+          path: node_modules
 
-    - name: Run tests
-      run: npm run test
+      - name: Run tests
+        run: npm run test
+
+  deploy-to-vercel:
+    needs: [build, test]
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Deploy to Vercel
+        run: npx vercel --prod --token ${{ secrets.VERCEL_TOKEN }}
