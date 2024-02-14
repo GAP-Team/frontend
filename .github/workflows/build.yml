@@ -1,4 +1,31 @@
+name: Next.js CI/CD with Vercel
+
+on:
+  push:
+    branches:
+      - developer
+      - add-ci
+  pull_request:
+    branches:
+      - developer
+
 jobs:
+  setup:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Upload node_modules
+      uses: actions/upload-artifact@v4
+      with:
+        name: node_modules
+        path: node_modules
+
   build:
     needs: setup
     runs-on: ubuntu-latest
@@ -18,3 +45,20 @@ jobs:
 
     - name: Build
       run: npm run build:ci
+
+  test:
+    needs: setup
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Download node_modules
+      uses: actions/download-artifact@v4
+      with:
+        name: node_modules
+        path: node_modules
+
+    - name: Run tests
+      run: npm run test
