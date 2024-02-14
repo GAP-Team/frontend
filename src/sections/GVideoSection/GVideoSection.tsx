@@ -1,12 +1,13 @@
 import React from "react";
+interface GVideoSectionProps {
+  title?: string;
+  subtitle?: string;
+}
 
 const GVideoSection = ({
   title = "Unternehmenssuche leicht gemacht!",
   subtitle = "Lorem ipsum dolor sit amet consectetur adipiscing elit. Eaque sed tenetur rem quam nihil dolorum expedita maxime nisi recusandae sequi magni culpa fuga accusamus eveniet fugiat ipsum ab consequuntur.",
-}: {
-  title?: string;
-  subtitle?: string;
-}) => {
+}: GVideoSectionProps) => {
   return (
     <>
       <div className="w-full mx-auto flex flex-col md:flex-row justify-center items-center py-16 md:py-24 lg:py-36 p-12 bg-[#ebebec] gap-8 md:gap-14">
