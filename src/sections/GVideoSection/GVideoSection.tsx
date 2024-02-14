@@ -1,45 +1,23 @@
 import React from "react";
+interface GVideoSectionProps {
+  title?: string;
+  subtitle?: string;
+}
 
-const GVideoSection = () => {
+const GVideoSection: React.FC<GVideoSectionProps> = ({
+  title = "Unternehmenssuche leicht gemacht!",
+  subtitle = "Lorem ipsum dolor sit amet consectetur adipiscing elit. Eaque sed tenetur rem quam nihil dolorum expedita maxime nisi recusandae sequi magni culpa fuga accusamus eveniet fugiat ipsum ab consequuntur.",
+}) => {
   return (
-    <section className="feature-v8 padding-bottom-xxl">
-      <div className="feature-v8__main-content bg-contrast-lower bg-opacity-50% padding-top-xxl">
-        <div className="container max-width-adaptive-md">
-          <div className="grid gap-sm gap-lg@sm">
-            <div className="col-6@sm">
-              <h2 className="text-xxl">
-                Unternehmenssuche
-                <br /> leicht gemacht!
-              </h2>
-            </div>
-
-            <div className="col-6@sm">
-              <div className="text-component">
-                <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Aperiam ullam minus cupiditate voluptatibus ab, sequi magni,
-                  labore necessitatibus aliquam expedita, natus tenetur corrupti
-                  dolorum.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
+    <>
+      <div className="w-full mx-auto flex flex-col md:flex-row justify-center items-center py-16 md:py-24 lg:py-36 p-12 bg-[#ebebec] gap-8 md:gap-14">
+        <h1 className="text-4xl font-bold text-gray-800 mb-4 md:mb-0 md:text-3xl lg:text-4xl max-w-md text-center md:text-left">{title}</h1>
+        <p className="text-md text-gray-600 md:text-md lg:text-lg lg:max-w-lg max-w-md text-center md:text-left">{subtitle}</p>
       </div>
-
-      <div className="container max-width-adaptive-md feature-v8__sub-content">
-        <figure className="width-100% radius-lg overflow-hidden col-8@md shadow-lg">
-          <div className="aspect-ratio-16:9">
-            <iframe
-              src="https://player.vimeo.com/video/308876956?title=0&byline=0&portrait=0&badge=0"
-              frameBorder="0"
-              allowFullScreen
-            ></iframe>
-          </div>
-        </figure>
-      </div>
-    </section>
+      <video className="w-full mx-auto rounded-lg aspect-video max-w-md sm:max-w-xl md:max-w-2xl lg:max-w-5xl -mt-28 md:-mt-32 lg:-mt-36 md:mb-28" controls>
+        <source src="https://docs.material-tailwind.com/demo.mp4" type="video/mp4" />
+      </video>
+    </>
   );
 };
-
 export default GVideoSection;
