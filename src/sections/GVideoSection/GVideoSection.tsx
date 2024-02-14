@@ -16,7 +16,6 @@ const GVideoSection = ({
       </div>
       <video className="w-full mx-auto rounded-lg aspect-video max-w-md sm:max-w-xl md:max-w-2xl lg:max-w-5xl -mt-28 md:-mt-32 lg:-mt-36 md:mb-28" controls>
         <source src="https://docs.material-tailwind.com/demo.mp4" type="video/mp4" />
-        Your browser does not support the video tag.
       </video>
     </>
   );
