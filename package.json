@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "echo \"Error: no test specified yet please add some\"",
     "build": "next build",
     "start": "next start",
     "build:ci": "./node_modules/next/dist/bin/next build",
