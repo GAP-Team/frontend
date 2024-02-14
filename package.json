@@ -4,8 +4,11 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "test": "echo \"Error: no test specified yet please add some\"",
     "build": "next build",
     "start": "next start",
+    "build:ci": "./node_modules/next/dist/bin/next build",
+    "start:ci": "./node_modules/next/dist/bin/next start",
     "lint": "next lint",
     "format": "prettier --write \"src/**/*.tsx\""
   },
