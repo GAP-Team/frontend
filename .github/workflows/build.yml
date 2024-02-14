@@ -41,7 +41,7 @@ jobs:
         path: node_modules
 
     - name: Set executable permissions for next binary
-      run: chmod +x node_modules/.bin/next
+      run: chmod +x ./node_modules/next/dist/bin/next
 
     - name: Build
       run: npm run build:ci
