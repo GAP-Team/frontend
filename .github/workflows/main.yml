@@ -1,0 +1,16 @@
+name: GAP FE CI
+
+on:
+  push:
+    branches:
+      - add-ci
+  pull_request:
+    branches:
+      - developer
+
+jobs:
+  <<: *setup
+
+  <<: *build
+
+  <<: *test

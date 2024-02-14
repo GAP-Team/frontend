@@ -1,5 +1,5 @@
 jobs:
-  build:
+  test:
     needs: setup
     runs-on: ubuntu-latest
 
@@ -13,8 +13,5 @@ jobs:
         name: node_modules
         path: node_modules
 
-    - name: Set executable permissions for next binary
-      run: chmod +x ./node_modules/next/dist/bin/next
-
-    - name: Build
-      run: npm run build:ci
+    - name: Run tests
+      run: npm run test
