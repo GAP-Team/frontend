@@ -40,3 +40,5 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 The application is setup to run in docker with docker-compose `docker-compose up`
 
 if you do not want log messages run `docker-compose up -d`
+
+
