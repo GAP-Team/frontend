@@ -75,6 +75,12 @@ jobs:
       # - name: Check if approved
       #   if: steps.manual-approval.outputs.result == 'approve'
       #   run: exit 0
+      - name: Set CI name
+        run: git config --global user.name "gap-github-ci"
+      
+      - name: Set CI email
+        run: git config --global user.email "gap-github-ci@gap.de"
+
       - name: cwd
         run: pwd
 
