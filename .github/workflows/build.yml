@@ -75,10 +75,25 @@ jobs:
       # - name: Check if approved
       #   if: steps.manual-approval.outputs.result == 'approve'
       #   run: exit 0
+      - name: cwd
+        run: pwd
+
+      - name: ls current directory
+        run: ls -la
 
       - name: Checkout code
         if: steps.manual-approval.outputs.result == 'approve'
         uses: actions/checkout@v2
+        with:
+          ref: 'developer'
+          path: 'gap-next-fe'
+
+      - name: cwd 2
+        run: pwd
+
+      - name: ls current directory 2
+        run: ls -la
+
 
       - name: Deploy to Staging on Vercel
         # if: steps.manual-approval.outputs.result == 'approve'
