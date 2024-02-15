@@ -68,24 +68,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # - name: Manual approval
-      #   id: manual-approval
-      #   run: echo "Ready for deployment? Approve or reject this workflow run by commenting on the pull request."
-
-      # - name: Check if approved
-      #   if: steps.manual-approval.outputs.result == 'approve'
-      #   run: exit 0
       - name: Set CI name
         run: git config --global user.name "gap-github-ci"
       
       - name: Set CI email
         run: git config --global user.email "gap-github-ci@gap.de"
-
-      - name: cwd
-        run: pwd
-
-      - name: ls current directory
-        run: ls -la
 
       - name: Checkout code
         if: steps.manual-approval.outputs.result == 'approve'
@@ -94,13 +81,10 @@ jobs:
           ref: 'developer'
           path: 'gap-next-fe'
 
-      - name: cwd 2
-        run: pwd
-
-      - name: ls current directory 2
-        run: ls -la
-
-
-      - name: Deploy to Staging on Vercel
-        # if: steps.manual-approval.outputs.result == 'approve'
-        run:  npx vercel --prod --token ${{ secrets.VERCEL_TOKEN }} --yes -S gap-team
+      - name: Vercel Action
+        uses: amondnet/vercel-action@v25.1.1
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+            
