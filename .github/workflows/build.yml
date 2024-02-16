@@ -75,10 +75,8 @@ jobs:
         run: git config --global user.email "gap-github-ci@gap.de"
 
       - name: Checkout code
-        if: steps.manual-approval.outputs.result == 'approve'
         uses: actions/checkout@v2
         with:
-          ref: 'developer'
           path: 'gap-next-fe'
 
       - name: Vercel Action
