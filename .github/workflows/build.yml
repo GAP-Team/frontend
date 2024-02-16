@@ -104,12 +104,17 @@ jobs:
         run: ls -la
 
       - name: Vercel Action
-        uses: amondnet/vercel-action@v25.1.1
+        # uses: amondnet/vercel-action@v25.1.1
+        uses: amondnet/vercel-action@e610ddb0e844d1a22c4b27560c224f84f20f3061
         with:
           working-directory: /home/runner/work/gap-next-ts/gap-next-ts/gap-next-fe
+          git-directory: gap-next-fe
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
           vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+
+        # with:
+        #   working-directory: /home/runner/work/gap-next-ts/gap-next-ts/gap-next-fe
 
       - name: check current directory 3
         working-directory: /home/runner/work/gap-next-ts/gap-next-ts/gap-next-fe
