@@ -91,6 +91,15 @@ jobs:
       - name: list files in current directory 2
         run: ls -la
 
+      - name: Example step
+        run: echo "Running in a specific directory"
+        working-directory: /home/runner/work/gap-next-ts/gap-next-ts/gap-next-fe
+
+      - name: check current directory 2
+        run: pwd
+
+      - name: list files in current directory 2
+        run: ls -la
 
       - name: Vercel Action
         uses: amondnet/vercel-action@v25.1.1
@@ -98,7 +107,6 @@ jobs:
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
           vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
-          working-directory: ./gap-next-fe
 
       - name: check current directory 3
         run: pwd
