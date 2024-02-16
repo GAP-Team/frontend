@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "framework": "nextjs",
+  "buildCommand": "npm run build:ci",
+  "devCommand": "npm run dev",
+  "installCommand": "npm install",
+  "cleanUrls": true,
+  "public": false,
+  "github": {
+    "enabled": false
+  }
+}
