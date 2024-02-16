@@ -74,10 +74,23 @@ jobs:
       - name: Set CI email
         run: git config --global user.email "gap-github-ci@gap.de"
 
+      - name: check current directory
+        run: pwd
+
+      - name: list files in current directory
+        run: ls -la
+
       - name: Checkout code
         uses: actions/checkout@v2
         with:
           path: 'gap-next-fe'
+
+      - name: check current directory 2
+        run: pwd
+
+      - name: list files in current directory 2
+        run: ls -la
+
 
       - name: Vercel Action
         uses: amondnet/vercel-action@v25.1.1
@@ -85,4 +98,12 @@ jobs:
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
           vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+          working-directory: ./gap-next-fe
+
+      - name: check current directory 3
+        run: pwd
+
+      - name: list files in current directory 3
+        run: ls -la
+
             
