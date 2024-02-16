@@ -96,22 +96,27 @@ jobs:
         working-directory: /home/runner/work/gap-next-ts/gap-next-ts/gap-next-fe
 
       - name: check current directory 2
+        working-directory: /home/runner/work/gap-next-ts/gap-next-ts/gap-next-fe
         run: pwd
 
       - name: list files in current directory 2
+        working-directory: /home/runner/work/gap-next-ts/gap-next-ts/gap-next-fe
         run: ls -la
 
       - name: Vercel Action
         uses: amondnet/vercel-action@v25.1.1
+        working-directory: /home/runner/work/gap-next-ts/gap-next-ts/gap-next-fe
         with:
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
           vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
 
       - name: check current directory 3
+        working-directory: /home/runner/work/gap-next-ts/gap-next-ts/gap-next-fe
         run: pwd
 
       - name: list files in current directory 3
+        working-directory: /home/runner/work/gap-next-ts/gap-next-ts/gap-next-fe
         run: ls -la
 
             
