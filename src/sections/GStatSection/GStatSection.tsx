@@ -34,16 +34,16 @@ const GStatSection: React.FC<GStatSectionProps> = ({
             <div className={`hidden 2xl:block ${classes.diamond_container}`}>
                 <div className={classes.diamond_grid__inner}>
                     <div className={classes.diamond_grid__item}>
-                        <img className={classes.diamond_grid__img} src="https://placehold.co/300x300" alt="Image description" />
+                        <img className={classes.diamond_grid__img} src="https://source.unsplash.com/random/300x300?water" alt="Image description" />
                     </div>
                     <div className={classes.diamond_grid__item}>
-                        <img className={classes.diamond_grid__img} src="https://placehold.co/300x300" alt="Image description" />
+                        <img className={classes.diamond_grid__img} src="https://source.unsplash.com/random/300x300?flower" alt="Image description" />
                     </div>
                     <div className={classes.diamond_grid__item}>
-                        <img className={classes.diamond_grid__img} src="https://placehold.co/300x300" alt="Image description" />
+                        <img className={classes.diamond_grid__img} src="https://source.unsplash.com/random/300x300?office" alt="Image description" />
                     </div>
                     <div className={classes.diamond_grid__item}>
-                        <img className={classes.diamond_grid__img} src="https://placehold.co/300x300" alt="Image description" />
+                        <img className={classes.diamond_grid__img} src="https://source.unsplash.com/random/300x300?building" alt="Image description" />
                     </div>
                 </div>
             </div>
