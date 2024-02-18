@@ -61,9 +61,6 @@ const config: Config = {
           "base-100": "white", //default color of the blank page or the bg color
         },
       },
-      ,
-      "dark",
-      "cupcake",
     ],
   },
 };

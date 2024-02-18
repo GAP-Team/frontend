@@ -1,10 +1,11 @@
 import GBlogSection from "@/sections/GBlogSection/GBlogSection";
-import GFeatures from "@/components/GFeatures/GFeatures";
+import GFeatures from "@/sections/GFeatures/GFeatures";
 import GOfferSection from "@/sections/GOfferSection/GOfferSection";
 import GFunctionSection from "@/sections/GFunctionSection/GFunctionSection";
 import GTestimonials from "@/components/GTestimonials/GTestimonials";
 import GVideoSection from "@/sections/GVideoSection/GVideoSection";
 import GClientSection from "@/sections/GClientSection/GClientSection";
+import GStatSection from "@/sections/GStatSection/GStatSection";
 
 export default function Home() {
   return (
@@ -16,6 +17,7 @@ export default function Home() {
       <GBlogSection />
       <GTestimonials />
       <GClientSection />
+      <GStatSection />
     </main>
   );
 }
