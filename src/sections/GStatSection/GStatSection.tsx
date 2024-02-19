@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { ReactNode } from 'react'
 import classes from "./GStatSection.module.scss";
 import { Button } from 'flowbite-react';
 import GBadge from '@/components/common/GBadge/GBadge';
@@ -7,7 +7,7 @@ import GCountDown from '@/components/common/GCountdown/GCountDown';
 interface GStatSectionProps {
     title?: string;
     subtitle?: string;
-    badge?: React.ReactNode;
+    badge?: ReactNode;
 }
 
 const GStatSection: React.FC<GStatSectionProps> = ({
@@ -19,7 +19,7 @@ const GStatSection: React.FC<GStatSectionProps> = ({
     return (
         <div className="w-full mx-auto flex flex-col lg:flex-row justify-center items-center gap-6 sm:gap-8 md:gap-10 lg:gap-20 py-16 md:py-40 p-12 bg-[#e4e4e7] w-full text-lg">
             <div className="w-full lg:max-w-2xl p-8 text-center xl:text-left">
-                {badge ?? { badge }}
+                {badge}
                 <h1 className="text-4xl font-bold my-5">{title}</h1>
                 <p className="text-lg font-normal max-w-4xl mx-auto">{subtitle}</p>
                 <div className="flex justify-center xl:justify-start">
