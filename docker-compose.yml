@@ -1,5 +1,3 @@
-version: '3.7'
-
 services:
   gap_frontend:
     container_name: gap_frontend
@@ -9,12 +7,13 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - .:/app 
+      - .:/app
+      - /app/node_modules/
     networks:
       - gap_network
     environment:
       - NODE_ENV=development
-    command: npm run dev
 
 networks:
   gap_network:
+  
