@@ -7,10 +7,9 @@ export const AuftrafSvg = ({ className }: { className?: string }) => {
         fill="none"
         stroke="currentColor"
         color="#ffaa00"
-        stroke-width="2"
         stroke-linecap="round"
         stroke-linejoin="round"
-        className={`${className || "h-12 w-12"}`}
+        className={`${className || "stroke-2 h-12 w-12"}`}
       >
         <rect width="8" height="4" x="8" y="2" rx="1" ry="1" />
         <path d="M8 4H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-.5" />
@@ -30,10 +29,9 @@ export const AngebotSvg = ({ className }: { className?: string }) => {
         fill="none"
         stroke="currentColor"
         color="#ffaa00"
-        stroke-width="2"
         stroke-linecap="round"
         stroke-linejoin="round"
-        className={`${className || "h-12 w-12"}`}
+        className={`${className || "stroke-2 h-12 w-12"}`}
       >
         <path d="M3 2v6h6"></path>
         <path d="M21 12A9 9 0 0 0 6 5.3L3 8"></path>
@@ -53,10 +51,9 @@ export const SolutionSvg = ({ className }: { className?: string }) => {
         fill="none"
         stroke="currentColor"
         color="#ffaa00"
-        stroke-width="2"
         stroke-linecap="round"
         stroke-linejoin="round"
-        className={`${className || "h-12 w-12"}`}
+        className={`${className || "stroke-2 h-12 w-12"}`}
       >
         <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
         <polyline points="22 4 12 14.01 9 11.01"></polyline>

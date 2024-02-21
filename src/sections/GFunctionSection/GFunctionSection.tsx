@@ -15,21 +15,21 @@ const GFunctionSection = () => {
           title="Auftrag beschreiben"
           subtitle="Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dicta maxime, maiores reiciendis fuga animi, quidem"
           icon={
-            <AuftrafSvg className="inline-block  w-10 h-10 stroke-current" />
+            <AuftrafSvg className="inline-block  w-10 h-10 stroke-2" />
           }
         />
         <IconSeparator />
         <ServiceStep
           title="Auftrag beschreiben"
           subtitle="Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dicta maxime, maiores reiciendis fuga animi, quidem"
-          icon={<AngebotSvg className="inline-block w-10 h-10" />}
+          icon={<AngebotSvg className="inline-block w-10 h-10 stroke-2" />}
         />
         <IconSeparator />
         <ServiceStep
           title="Auftrag beschreiben"
           subtitle="Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dicta maxime, maiores reiciendis fuga animi, quidem"
           icon={
-            <SolutionSvg className="inline-block  w-10 h-10 stroke-current" />
+            <SolutionSvg className="inline-block  w-10 h-10 stroke-2" />
           }
         />
       </div>
@@ -88,7 +88,7 @@ const ServiceStep = ({
   return (
     <div
       className="w-full md:w-auto md:flex-1 p-4 max-w-screen-xl"
-      // className="w-full p-4 md:w-4/12 lg:w-3/12 max-w-md md:max-w-lg"
+    // className="w-full p-4 md:w-4/12 lg:w-3/12 max-w-md md:max-w-lg"
     >
       <div className="card bg-base-100 border border-black shadow-xl hover:shadow-2xl transition-shadow duration-300">
         <figure className="px-10 pt-10">{icon}</figure>
