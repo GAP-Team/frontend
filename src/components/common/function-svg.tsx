@@ -7,8 +7,6 @@ export const AuftrafSvg = ({ className }: { className?: string }) => {
         fill="none"
         stroke="currentColor"
         color="#ffaa00"
-        stroke-linecap="round"
-        stroke-linejoin="round"
         className={`${className || "stroke-2 h-12 w-12"}`}
       >
         <rect width="8" height="4" x="8" y="2" rx="1" ry="1" />
@@ -29,8 +27,6 @@ export const AngebotSvg = ({ className }: { className?: string }) => {
         fill="none"
         stroke="currentColor"
         color="#ffaa00"
-        stroke-linecap="round"
-        stroke-linejoin="round"
         className={`${className || "stroke-2 h-12 w-12"}`}
       >
         <path d="M3 2v6h6"></path>
@@ -51,8 +47,6 @@ export const SolutionSvg = ({ className }: { className?: string }) => {
         fill="none"
         stroke="currentColor"
         color="#ffaa00"
-        stroke-linecap="round"
-        stroke-linejoin="round"
         className={`${className || "stroke-2 h-12 w-12"}`}
       >
         <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
