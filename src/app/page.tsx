@@ -6,10 +6,11 @@ import GTestimonials from "@/components/GTestimonials/GTestimonials";
 import GVideoSection from "@/sections/GVideoSection/GVideoSection";
 import GClientSection from "@/sections/GClientSection/GClientSection";
 import GStatSection from "@/sections/GStatSection/GStatSection";
+import GFooter from "@/sections/GFooter/GFooter";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between gap-20">
+    <main className="flex min-h-screen flex-col items-center justify-between">
       <GFunctionSection />
       <GOfferSection />
       <GFeatures />
@@ -18,6 +19,7 @@ export default function Home() {
       <GTestimonials />
       <GClientSection />
       <GStatSection />
+      <GFooter />
     </main>
   );
 }
