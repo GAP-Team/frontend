@@ -34,10 +34,10 @@ const GFunctionSection = () => {
         />
       </div>
       <button
-        className="mt-5 bg-yellow-500 active:bg-yellow-600 font-bold  px-6 py-3 mt-12 rounded-lg shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+        className="mt-5 bg-[#ffb41f] hover:bg-yellow-400 font-bold text-white px-6 py-3 mt-12 rounded-lg shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
         type="button"
       >
-        Jetzt Loslegen <span className="ml-2 text-lg font-bold ">{"->"}</span>
+        Jetzt Loslegen <span className="ml-2 text-lg font-bold text-white ">{"->"}</span>
       </button>
     </div>
   );
@@ -84,7 +84,6 @@ const ServiceStep = ({
   return (
     <div
       className="w-full md:w-auto md:flex-1 p-4 max-w-screen-xl"
-    // className="w-full p-4 md:w-4/12 lg:w-3/12 max-w-md md:max-w-lg"
     >
       <div className="card bg-base-100 border border-black shadow-xl hover:shadow-2xl transition-shadow duration-300">
         <figure className="px-10 pt-10">{icon}</figure>
