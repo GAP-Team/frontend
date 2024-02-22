@@ -13,7 +13,7 @@ import { GapLogo } from '@/components/common/GapLogo/GapLogo';
 function GFooter() {
   return (
     <>
-      <Footer container className='bg-[#37383f] py-10'>
+      <Footer container className='bg-[#37383f] py-8'>
         <div className="w-full">
           <div className="grid w-full justify-between sm:flex sm:justify-evenly md:flex md:grid-cols-1">
             <GapLogo />

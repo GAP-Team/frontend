@@ -1,14 +1,8 @@
 // LandingPage.module.scss
 .loginPageContainer {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  background-color: #f5f5f5;
-  h1 {
-    color: red;
-    font-size: 50px;
-    text-align: center;
-    margin-top: 100px;
-  }
+  width: 100%;
 }
