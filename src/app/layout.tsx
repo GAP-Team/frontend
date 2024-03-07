@@ -3,12 +3,16 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeModeScript } from "flowbite-react";
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v13-appRouter';
+import { ThemeProvider } from '@mui/material/styles';
+import theme from './theme/theme';
+import  CssBaseline  from "@mui/material/CssBaseline";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "GAP",
   description: "The GAP company website",
 };
+
 
 export default function RootLayout({
   children,
@@ -20,7 +24,15 @@ export default function RootLayout({
       <head>
         <ThemeModeScript />
       </head>
-      <body className={inter.className}> <AppRouterCacheProvider>{children} </AppRouterCacheProvider></body>
+      <body className={inter.className}>
+        {" "}
+        <AppRouterCacheProvider >
+          <ThemeProvider theme={theme}>
+          <CssBaseline />
+            {children}
+          </ThemeProvider>
+        </AppRouterCacheProvider>
+      </body>
     </html>
   );
 }

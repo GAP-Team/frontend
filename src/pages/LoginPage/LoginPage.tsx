@@ -1,101 +1,78 @@
 'use client';
 import React from "react";
-import {FormControl} from '@mui/material';
 import { GapLogo } from "@/components/common/GapLogo/GapLogo";
-import { Box, Button, TextField, InputAdornment, Typography, useMediaQuery,Link, useTheme,Paper, Grid, CssBaseline, Container } from '@mui/material';
-
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import InputAdornment from '@mui/material/InputAdornment';
+import Typography from '@mui/material/Typography';
+import Link from '@mui/material/Link';
+import Paper from '@mui/material/Paper';
+import Grid from '@mui/material/Grid';
+import { FaRegEnvelope } from "react-icons/fa";
+import { TbLock } from "react-icons/tb";
+import { PiLockBold } from "react-icons/pi";
 
 export const LoginPage = () => {
   return (
-    // <Box sx={{ bgcolor: '#f9fafa', flexGrow: 1 }}>
-    //   <Container maxWidth="xl" sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-    //     <Grid container spacing={2}>
-    //       <Grid item xs={12} md={6} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-    //         {/* Background Image Section */}
-    //         <Box sx={{ maxWidth: '100%', overflow: 'hidden', position: 'relative' }}>
-    //           <img src="https://c.animaapp.com/t6wtCY7x/img/image.png" alt="Background" style={{ width: '100%', height: 'auto' }} />
-    //           <Typography variant="body2" sx={{ position: 'absolute', top: '10%', left: '50%', transform: 'translate(-50%, -50%)', color: 'white' }}>
-    //             ©2023 GAP GmbH
-    //           </Typography>
-    //           <Typography variant="h2" sx={{ position: 'absolute', top: '10%',  color: 'white' }}>
-    //             Where skills are developed
-    //           </Typography>
-    //           <Typography variant="h5" sx={{ position: 'absolute', top: '30%', color: 'white' }}>
-    //             Gesetzliche Anlagenprüfung
-    //           </Typography>
-    //         </Box>
-    //       </Grid>
-
-    //       <Grid item xs={12} md={6}>
-    //         <Box sx={{ p: 3, display: 'flex', flexDirection: 'column', gap: 4 }}>
-    //           {/* Dynamic Logo Component */}
-    //           <GapLogo color="#0D1F4E" size="sm" />
-
-    //           {/* Login Card */}
-    //           <Box sx={{ p: 3, bgcolor: 'background.paper', borderRadius: 2, boxShadow: 1 }}>
-    //             {/* Login Header */}
-    //             <Typography variant="h6">Anmelden</Typography>
-    //             <Typography variant="body2" sx={{ textDecoration: 'underline', cursor: 'pointer' }}>
-    //               Passwort vergessen
-    //             </Typography>
-
-    //             {/* Form Fields */}
-    //             <Box sx={{ mt: 2 }}>
-    //               <TextField
-    //                 fullWidth
-    //                 label="Username"
-    //                 InputProps={{
-    //                   startAdornment: <InputAdornment position="start">@</InputAdornment>,
-    //                 }}
-    //                 sx={{ mb: 2 }}
-    //               />
-    //               <TextField
-    //                 fullWidth
-    //                 label="Password"
-    //                 type="password"
-    //               />
-    //             </Box>
-
-    //             {/* Registration Prompt and Login Button */}
-    //             <Box sx={{ mt: 2, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-    //               <Typography variant="body2">
-    //                 Noch keinen account? <span style={{ color: '#22a7f1', textDecoration: 'underline', cursor: 'pointer' }}>Registrieren</span>
-    //               </Typography>
-    //               <Button variant="contained">Login</Button>
-    //             </Box>
-    //           </Box>
-
-    //           {/* Help Link */}
-    //           <Box sx={{ display: 'flex', justifyContent: 'flex-start', gap: 1 }}>
-    //             <Typography variant="body2">Hilfe?</Typography>
-    //             <Typography variant="body2" sx={{ textDecoration: 'underline', cursor: 'pointer' }}>Contact Support</Typography>
-    //           </Box>
-    //         </Box>
-    //       </Grid>
-    //     </Grid>
-    //   </Container>
-    // </Box>
     <Grid container component="main" sx={{ height: '100vh'}}>
-      <CssBaseline />
       <Grid
-          item
-          xs={false}
-          md={6}
-          sx={{
-            backgroundImage: 'url(https://c.animaapp.com/t6wtCY7x/img/image.png)',
-            backgroundRepeat: 'no-repeat',
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-          }}
+        item
+        xs={false}
+        md={6}
+        lg={6}
+        sx={{
+          backgroundImage: 'url(https://c.animaapp.com/t6wtCY7x/img/image.png)',
+          backgroundRepeat: 'no-repeat',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          display: { xs: 'none', sm: 'none', md: 'block', lg: 'block', xl: 'block' },
+          height: '100%', 
+        }}
       >
-        <Grid>
-          <Typography variant="h2" color={'white'}>
-             Where skills are developed
+        {/* Make this Box a flex container to use Flexbox properties */}
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            height: '100%', // Take full height of parent Grid
+          }}
+        >
+          {/* Title Typography */}
+          <Typography variant="h2" color="white" sx={{
+            ml: '4rem',
+            mt: '6.8rem',
+            fontWeight: 'bold',
+            fontSize: { xs: '3rem', md: '4.5rem' }, // Responsive font size
+            lineHeight: { xs: '3.3rem', md: '4.8rem' }, // Responsive line height
+            maxWidth: '80%',
+          }}>
+            Where skills are developed
           </Typography>
-          
-        </Grid>
+
+          {/* Subtitle Typography */}
+          <Typography variant="subtitle1" color="white" sx={{
+            ml: '4rem',
+            mt: '2rem',
+            fontSize: '1.5rem',
+            lineHeight: '2.2rem',
+          }}>
+            Gesetzliche Anlagenprüfung
+          </Typography>
+
+          {/* Spacer to push the copyright notice to the bottom */}
+          <Box sx={{ flexGrow: 1 }} />
+
+          {/* Copyright Typography - sticks to the bottom */}
+          <Typography variant="subtitle1" color="white" sx={{
+            ml: '4rem',
+            mb: '2rem', // Add bottom margin if needed
+          }}>
+            ©2023 GAP GmbH
+          </Typography>
+        </Box>
       </Grid>
-      <Grid item xs={12} md={6} component={Paper} >
+      <Grid item xs={12} md={6} lg={6} component={Paper} >
       <Box
         sx={{
           my: 8,
@@ -107,43 +84,53 @@ export const LoginPage = () => {
           }}
           >
           <GapLogo color="#0D1F4E" size="sm" />
-          <Box component="form" noValidate sx={{ mt: 1, padding:3, borderRadius: 2, boxShadow: 3 }}>
-            <Grid container sx={{mb:2}}>
-              <Grid item xs>
-                <Link href="#" variant="h6">
-                  Anmelden
+          <Box component="form" noValidate sx={{ mt: 2, padding:5, borderRadius: '1rem', boxShadow: 3 }}>
+            <Grid container sx={{mb:'2rem',color:'#1E3137'}} >
+              <Grid item xs >
+                <Link href="#" variant="h6" sx={{fontSize:'1.5rem', color:'black', fontWeight:'bold', textDecoration:'none'}}>
+                  Anmelden 
                 </Link>
               </Grid>
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link href="#" variant="body2" sx={{fontSize:'1rem',fontWeight:'bold', color:'black',}}>
                   Passwort vergessen
                 </Link>
               </Grid>
             </Grid>
             <TextField
               fullWidth
-              label="Username"
+              required
+              label="Email"
               InputProps={{
-                startAdornment: <InputAdornment position="start">@</InputAdornment>,
+                startAdornment: <InputAdornment position="start"><FaRegEnvelope /></InputAdornment>,
               }}
-              sx={{ mb: 2 }}
+              sx={{ mb: 4 }}
             />
             <TextField
               fullWidth
               label="Password"
               type="password"
+              InputProps={{
+                startAdornment: <InputAdornment position="start"><PiLockBold /></InputAdornment>,
+              }}
             />
             <Grid container sx={{mt:10}}>
-              <Grid item xs>
-                <Link href="#" variant="body2">
-                Noch keinen account? <span style={{ color: '#22a7f1', textDecoration: 'underline', cursor: 'pointer' }}>Registrieren</span>
-                </Link>
+              <Grid item xs sx={{display:'flex', flexDirection:'column'}}>
+                
+                <Typography  variant="body2" style={{ color: '#475A60', fontSize:'0.875rem', lineHeight:'1.25rem' }}>
+                Noch keinen account? 
+                </Typography>
+                <Link href="#" variant="body2" style={{ color: '#22a7f1', fontSize:'1rem', textDecoration: 'none', cursor: 'pointer' }}>Registrieren</Link>
+                
               </Grid>
               <Grid item>
-                <Button variant="contained">Login</Button>
+                <Button variant="contained" color="gprimary" size="large" sx={{borderRadius:'0.5rem'}}>Login</Button>
               </Grid>
             </Grid>
           </Box>
+          <Typography sx={{color:'#475A60', fontSize:'1rem', marginTop:'3rem',marginRight:'auto', marginLeft:18.5, }} >
+            Hilfe? <Link href="#" color='#1E3137' fontWeight="bold">Contact Support</Link>
+          </Typography>
       </Box>
       </Grid>
     </Grid>
