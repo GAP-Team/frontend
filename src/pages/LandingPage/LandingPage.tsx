@@ -8,11 +8,13 @@ import GTestimonials from "@/components/GTestimonials/GTestimonials";
 import GVideoSection from "@/sections/GVideoSection/GVideoSection";
 import GClientSection from "@/sections/GClientSection/GClientSection";
 import GStatSection from "@/sections/GStatSection/GStatSection";
+import HeroSection from "@/sections/GHeroSection/GHeroSection";
 
 
 export default function LandingPage() {
   return (
     <div className={`${styles.loginPageContainer} gap-20`}>
+      <HeroSection />
       <GFunctionSection />
       <GOfferSection />
       <GFeatures />

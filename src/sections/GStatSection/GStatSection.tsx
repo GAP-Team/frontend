@@ -23,7 +23,7 @@ const GStatSection: React.FC<GStatSectionProps> = ({
                 <h1 className="text-4xl font-bold my-5">{title}</h1>
                 <p className="text-lg font-normal max-w-4xl mx-auto">{subtitle}</p>
                 <div className="flex justify-center xl:justify-start">
-                    <Button className='mt-10' size="lg" >Jetzt anmeldung</Button>
+                    <Button as="a" href="#" className='mt-10 bg-[#005e99] hover:bg-[#0071b8]' size="lg" >Jetzt anmeldung</Button>
                 </div>
                 <div className='flex flex-row gap-5 sm:gap-7 md:gap-10 lg:gap-20 mt-14 justify-center lg:justify-start'>
                     <GCountDown label="Ausschreibungen" counter={12000} />
