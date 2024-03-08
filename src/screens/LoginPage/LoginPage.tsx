@@ -17,7 +17,7 @@ declare module "@mui/material" {
   }
 }
 
-const LoginPage = () => {
+export default function LoginPage(){
   return (
     <Grid container component="main" sx={{ height: '100vh'}}>
       <Grid
@@ -140,5 +140,3 @@ const LoginPage = () => {
     </Grid>
   );
 };
-
-export default LoginPage;
