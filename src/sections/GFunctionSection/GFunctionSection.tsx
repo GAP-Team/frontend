@@ -3,6 +3,9 @@ import TitleSection from "../../components/common/title-section";
 import Badge from "../../components/common/GBadge/GBadge";
 import { AuftrafSvg, AngebotSvg, SolutionSvg } from "../../components/common/function-svg";
 import Link from 'next/link';
+import { Button } from 'flowbite-react';
+import { FaArrowRightLong } from "react-icons/fa6";
+
 
 const GFunctionSection = () => {
   return (
@@ -62,8 +65,8 @@ const IconSeparator = () => {
       </svg>
 
       <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
         fill="none"
         className="md:hidden w-14 h-14"
       >
