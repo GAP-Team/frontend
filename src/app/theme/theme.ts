@@ -5,7 +5,7 @@ import { createTheme } from '@mui/material/styles';
 
 const inter = Inter({
   subsets: ['latin'],
-  weight: ["100", "200", "400", "600", "700"],
+  weight: ["200","300", "400", "600", "700"],
   display: 'swap',
 });
 

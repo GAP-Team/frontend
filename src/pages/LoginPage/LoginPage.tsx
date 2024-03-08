@@ -21,7 +21,7 @@ const LoginPage = () => {
         md={6}
         lg={6}
         sx={{
-          backgroundImage: 'url(https://c.animaapp.com/t6wtCY7x/img/image.png)',
+          backgroundImage: `url(/login-bg.png)`,
           backgroundRepeat: 'no-repeat',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
