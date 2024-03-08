@@ -11,6 +11,11 @@ import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import { FaRegEnvelope } from "react-icons/fa";
 import { PiLockBold } from "react-icons/pi";
+declare module "@mui/material" {
+  interface ButtonPropsColorOverrides {
+    gprimary: true;
+  }
+}
 
 const LoginPage = () => {
   return (
