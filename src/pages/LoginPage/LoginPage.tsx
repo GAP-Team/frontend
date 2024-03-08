@@ -10,10 +10,9 @@ import Link from '@mui/material/Link';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import { FaRegEnvelope } from "react-icons/fa";
-import { TbLock } from "react-icons/tb";
 import { PiLockBold } from "react-icons/pi";
 
-export const LoginPage = () => {
+const LoginPage = () => {
   return (
     <Grid container component="main" sx={{ height: '100vh'}}>
       <Grid
@@ -137,5 +136,4 @@ export const LoginPage = () => {
   );
 };
 
-
-
+export default LoginPage;

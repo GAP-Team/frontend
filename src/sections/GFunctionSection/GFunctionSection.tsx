@@ -2,6 +2,8 @@ import React from "react";
 import TitleSection from "../../components/common/title-section";
 import Badge from "../../components/common/GBadge/GBadge";
 import { AuftrafSvg, AngebotSvg, SolutionSvg } from "../../components/common/function-svg";
+import Link from 'next/link';
+
 const GFunctionSection = () => {
   return (
     <div className="mx-auto p-5 flex flex-col justify-center items-center">
@@ -33,12 +35,13 @@ const GFunctionSection = () => {
           }
         />
       </div>
-      <button
+      <Link 
         className="mt-5 bg-[#ffb41f] hover:bg-yellow-400 font-bold text-white px-6 py-3 mt-12 rounded-lg shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
         type="button"
+        href="/login"
       >
         Jetzt Loslegen <span className="ml-2 text-lg font-bold text-white ">{"->"}</span>
-      </button>
+      </Link >
     </div>
   );
 };
