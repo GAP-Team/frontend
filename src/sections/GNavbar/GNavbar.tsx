@@ -50,7 +50,7 @@ const GNavbar = () => {
           <a className="text-gray-700 transition-colors text-lg font-semibold duration-300 transform lg:mx-8 dark:text-gray-200 dark:hover:text-blue-400 hover:text-[#005e99]" href="#">für Immobilienbetreiber</a>
         </div>
       </div>
-      <Button as='a' href="#" className='block px-5 py-2 mt-4 text-center text-sm text-white rounded-lg text-md lg:mt-0 capitalize lg:w-auto bg-[#005e99] hover:bg-[#0071b8]' size="sm" ><FaArrowRightToBracket className='mr-2 h-5 w-5' />Anmeldung</Button>
+      <Button as='a' href="/login" className='block px-5 py-2 mt-4 text-center text-sm text-white rounded-lg text-md lg:mt-0 capitalize lg:w-auto bg-[#005e99] hover:bg-[#0071b8]' size="sm" ><FaArrowRightToBracket className='mr-2 h-5 w-5' />Anmeldung</Button>
     </nav>
 
   );
