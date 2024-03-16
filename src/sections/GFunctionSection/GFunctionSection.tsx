@@ -2,8 +2,10 @@ import React from "react";
 import TitleSection from "../../components/common/title-section";
 import Badge from "../../components/common/GBadge/GBadge";
 import { AuftrafSvg, AngebotSvg, SolutionSvg } from "../../components/common/function-svg";
+import Link from 'next/link';
 import { Button } from 'flowbite-react';
 import { FaArrowRightLong } from "react-icons/fa6";
+
 
 const GFunctionSection = () => {
   return (
@@ -36,7 +38,13 @@ const GFunctionSection = () => {
           }
         />
       </div>
-      <Button as="a" href="#" className='mt-5 bg-[#ffb41f] hover:bg-yellow-400 text-white font-bold rounded-lg shadow hover:shadow-lg outline-none focus:outline-none ease-linear transition-all duration-150' size="lg">Jetzt anmeldung <FaArrowRightLong className="ml-2 h-5 w-5"/></Button>
+      <Link 
+        className="mb-8 bg-[#ffb41f] hover:bg-yellow-400 font-bold text-white px-6 py-3 mt-12 rounded-lg shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+        type="button"
+        href="/login"
+      >
+        Jetzt Loslegen <span className="ml-2 text-lg font-bold text-white ">{"->"}</span>
+      </Link >
     </div>
   );
 };
