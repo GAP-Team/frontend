@@ -11,11 +11,6 @@ import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import { FaRegEnvelope } from "react-icons/fa";
 import { PiLockBold } from "react-icons/pi";
-declare module "@mui/material" {
-  interface ButtonPropsColorOverrides {
-    gprimary: true;
-  }
-}
 
 export default function LoginPage(){
   return (
@@ -124,7 +119,7 @@ export default function LoginPage(){
                 <Typography  variant="body2" style={{ color: '#475A60', fontSize:'0.875rem', lineHeight:'1.25rem' }}>
                 Noch keinen account? 
                 </Typography>
-                <Link href="#" variant="body2" style={{ color: '#22a7f1', fontSize:'1rem', textDecoration: 'none', cursor: 'pointer' }}>Registrieren</Link>
+                <Link href="/registration" variant="body2" style={{ color: '#22a7f1', fontSize:'1rem', textDecoration: 'none', cursor: 'pointer' }}>Registrieren</Link>
                 
               </Grid>
               <Grid item>
