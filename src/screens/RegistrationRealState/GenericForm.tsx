@@ -18,7 +18,7 @@ interface GenericFormProps {
 
 const GenericForm = ({ value, type }: GenericFormProps): JSX.Element => {
   return (
-    <Box component="form" noValidate sx={{ p: 1, width: 'auto', marginLeft: '1.5rem', mt: "0.5rem" }}>
+    <Box component="form" noValidate sx={{ p: 1, width: 'auto', marginLeft: '1.5rem' }}>
       <Grid container spacing={2}>
         {value == 2 && (
           <>

@@ -1,14 +1,30 @@
 import React from "react";
 import Link from "next/link";
-import { Button } from "flowbite-react"
-import style from "./GButton.module.scss";
-import cx from "classnames";
+import Button,{ButtonProps} from '@mui/material/Button';
+import { SxProps } from "@mui/material";
+interface GButtonProps extends ButtonProps {
+  children?: React.ReactNode;
+}
 
-const GButton = () => {
+const GButton: React.FC<GButtonProps> = ({ children, color="gprimary", sx, ...otherProps }) => {
   return (
-    <Link className={cx(style.gButtonContainer)} href="#">
-      <Button className={cx(style.gbutton)}>hier ist developer branch</Button>
-    </Link>
+    <Link href="#">
+      <Button
+        variant="contained"
+        color={color}
+        size="large"
+        sx={{
+          borderRadius: '0.5rem',
+          py:'0.5rem',
+          fontWeight: 600,
+          textTransform: 'capitalize',
+          ...(sx || {})
+        }}
+      {...otherProps}
+    >
+      {children}
+    </Button>
+   </Link>
   );
 };
 

@@ -32,7 +32,7 @@ const AddresseFirma = () => {
     <Box
       component="form"
       noValidate
-      sx={{ p: 1, width: "auto", marginLeft: "1.5rem", mt: "0.5rem" }}
+      sx={{ p: 1, width: "auto", marginLeft: "1.5rem" }}
     >
       <Grid container spacing={2}>
         <Grid item xs={12}>
