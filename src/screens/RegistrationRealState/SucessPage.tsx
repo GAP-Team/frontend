@@ -23,7 +23,7 @@ const SucessPage: NextPage<SucessPageProps> = ({}) => {
             Registrierung abgeschlossen!
             </Typography>
             
-            <Typography variant='bodymr' maxWidth={'22rem'}>
+            <Typography variant='bodymr' maxWidth={'22rem'} textAlign="center" color="gray.500">
                 You have been added to the project team and permitted to receive any project news and updates
             </Typography>
 
