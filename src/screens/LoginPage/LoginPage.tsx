@@ -127,7 +127,7 @@ export default function LoginPage(){
               </Grid>
             </Grid>
           </Box>
-          <Typography sx={{color:'#475A60', fontSize:'1rem', marginTop:'3rem',marginRight:'auto', marginLeft:18.5, }} >
+          <Typography  sx={{color:'#475A60', fontSize:'1rem', marginTop:'3rem',marginRight:'auto', marginLeft:18.5, }} >
             Hilfe? <Link href="#" color='#1E3137' fontWeight="bold">Contact Support</Link>
           </Typography>
       </Box>

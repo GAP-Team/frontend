@@ -13,7 +13,7 @@ export default function UploadButtons() {
   const theme = useTheme();
 
   return (
-    <Box
+    <Box 
       sx={{
         display: 'flex',
         alignItems: 'center',
@@ -31,10 +31,10 @@ export default function UploadButtons() {
       <Typography  sx={{ mx: 2 }} color="gray.700">
         Dokument hinzuziehen oder
       </Typography>
-        <Button  color="gprimary" sx={{fontWeight:'600'}} component="span">
+        <Button   role={undefined}  tabIndex={-1} color="gprimary" sx={{fontWeight:'600'}} component="label">
           Dokument suchen
-        </Button>
-      <Input accept="*" multiple type="file" id="contained-button-file" />
+        <Input  type="file" id="contained-button-file" />
+      </Button>
     </Box>
   );
 }

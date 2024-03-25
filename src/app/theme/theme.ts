@@ -19,6 +19,158 @@ let theme = createTheme({
     
       variants: [
         {
+          props: { variant: 'h1b' },
+          style: {
+            // define your custom styles here
+            fontSize: '4rem',
+            lineHeight:'4.875rem',
+            fontWeight: '700',
+            // ...other styles
+          },
+        },
+        {
+          props: { variant: 'h2b' },
+          style: {
+            // define your custom styles here
+            fontSize: '2.75rem',
+            lineHeight:'3.25rem',
+            fontWeight: '700',
+            // ...other styles
+          },
+        },
+        {
+          props: { variant: 'h3b' },
+          style: {
+            // define your custom styles here
+            fontSize: '2.1875rem',
+            lineHeight:'3rem',
+            fontWeight: '700',
+            // ...other styles
+          },
+        },
+        {
+          props: { variant: 'h4b' },
+          style: {
+            // define your custom styles here
+            fontSize: '1.5rem',
+            lineHeight:'2rem',
+            fontWeight: '700',
+            // ...other styles
+          },
+        },
+        {
+          props: { variant: 'h4sb' },
+          style: {
+            // define your custom styles here
+            fontSize: '1.5rem',
+            lineHeight:'2.25rem',
+            fontWeight: '600',
+            // ...other styles
+          },
+        },
+        {
+          props: { variant: 'h4r' },
+          style: {
+            // define your custom styles here
+            fontSize: '1.5rem',
+            fontWeight: '400',
+            lineHeight:'2.25rem',
+            // ...other styles
+          },
+        },
+        {
+          props: { variant: 'bodylb' },
+          style: {
+            // define your custom styles here
+            fontSize: '1rem',
+            fontWeight: '700',
+            lineHeight:'1.5rem',
+            // ...other styles
+          },
+        },
+        {
+          props: { variant: 'bodylsb' },
+          style: {
+            // define your custom styles here
+            fontSize: '1rem',
+            fontWeight: '600',
+            lineHeight:'1.5rem',
+            // ...other styles
+          },
+        },
+        {
+          props: { variant: 'bodylr' },
+          style: {
+            // define your custom styles here
+            fontSize: '1rem',
+            fontWeight: '400',
+            lineHeight:'1.5rem',
+            // ...other styles
+          },
+        },
+        {
+          props: { variant: 'bodymsb' },
+          style: {
+            // define your custom styles here
+            fontSize: '0.875rem',
+            fontWeight: '600',
+            lineHeight:'1.25rem',
+            // ...other styles
+          },
+        },
+        {
+          props: { variant: 'bodymu' },
+          style: {
+            // define your custom styles here
+            fontSize: '0.875rem',
+            fontWeight: '600',
+            lineHeight: '1.25rem',
+            textDecorationLine:'underline'
+            // ...other styles
+          },
+        },
+        {
+          props: { variant: 'bodymr' },
+          style: {
+            // define your custom styles here
+            fontSize: '0.875rem',
+            fontWeight: '400',
+            lineHeight: '1.25rem',
+            // ...other styles
+          },
+        },
+        {
+          props: { variant: 'bodysb' },
+          style: {
+            // define your custom styles here
+            fontSize: '0.75rem',
+            fontWeight: '600',
+            lineHeight: '1rem',
+            // ...other styles
+          },
+        },
+        {
+          props: { variant: 'bodyssb' },
+          style: {
+            // define your custom styles here
+            fontSize: '0.75rem',
+            fontWeight: '400',
+            lineHeight: '1rem',
+            // ...other styles
+          },
+        },
+        {
+          props: { variant: 'labelb' },
+          style: {
+            // define your custom styles here
+            fontSize: '0.625rem',
+            fontWeight: '500',
+            lineHeight: '0.75rem',
+            letterSpacing:'0.00625rem',
+            // ...other styles
+          },
+        },
+        {
           props: { variant: 'gsub' },
           style: {
             // define your custom styles here
@@ -26,6 +178,15 @@ let theme = createTheme({
             lineHeight:'1rem',
             fontWeight: '600',
             letterSpacing:'0.0075rem'
+            // ...other styles
+          },
+        },{
+          props: { variant: 'gsub1' },
+          style: {
+            // define your custom styles here
+            fontSize: '0.75rem',
+            lineHeight:'1rem',
+            fontWeight: '400',
             // ...other styles
           },
         },
@@ -83,6 +244,13 @@ theme = createTheme(theme, {
         contrastText: "#fff",
       },
       name: 'gorange',
+    }),
+    ggrey: theme.palette.augmentColor({
+      color: {
+        main: "#E5E9EA",
+        contrastText: "#475A60",
+      },
+      name: 'ggrey',
     }),
     gray: {
       
