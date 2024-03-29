@@ -7,8 +7,6 @@ import Box from "@mui/material/Box";
 import LabelWithAsterisk from "@/components/common/LabelWithAsterisk";
 import { FaPlus } from "react-icons/fa";
 import Button from '@mui/material/Button';
-import IconButton from '@mui/material/IconButton';
-import InputAdornment from '@mui/material/InputAdornment';
 import UploadButtons from "@/components/common/UploadButtons";
 
 interface GenericFormProps {
@@ -74,26 +72,26 @@ const GenericForm = ({ value, type }: GenericFormProps): JSX.Element => {
         {(value==0 || value==1 || type=='contact') && (
           <>
             <Grid item xs={12} sm={6}>
-              <LabelWithAsterisk>YOUR FIRST NAME</LabelWithAsterisk>
+              <LabelWithAsterisk>Ihre Vorname</LabelWithAsterisk>
               <TextField
                 InputProps={{ sx: { borderRadius: "0.5rem" } }}
                 required
                 id="firstName"
                 name="firstName"
-                placeholder="Enter your first name"
+                placeholder="Geben Sie Ihre Vorname"
                 fullWidth
                 autoComplete="given-name"
                 variant="outlined"
               />
             </Grid>
             <Grid item xs={12} sm={6}>
-              <LabelWithAsterisk>YOUR FIRST NAME</LabelWithAsterisk>
+              <LabelWithAsterisk>Ihre Nachname</LabelWithAsterisk>
               <TextField
                 InputProps={{ sx: { borderRadius: "0.5rem" } }}
                 required
                 id="lastName"
                 name="lastName"
-                placeholder="Enter your last name"
+                placeholder="Geben Sie Ihre Nachname"
                 fullWidth
                 autoComplete="family-name"
                 variant="outlined"
@@ -101,13 +99,13 @@ const GenericForm = ({ value, type }: GenericFormProps): JSX.Element => {
             </Grid>
             <Grid item xs={12}>
               <Typography variant="gsub" color="gray.500">
-                WORK EMAIL ADDRESS
+                berufliche E-Mail-Adresse
               </Typography>
               <TextField
                 InputProps={{ sx: { borderRadius: "0.5rem" } }}
                 id="email"
                 name="email"
-                placeholder="Enter your work email address"
+                placeholder="Geben Sie Ihre E-Mail-Adresse"
                 fullWidth
                 variant="outlined"
                 autoComplete="email"
@@ -119,7 +117,7 @@ const GenericForm = ({ value, type }: GenericFormProps): JSX.Element => {
         {value == 0 && (
           <Grid item xs={12}>
             <Typography variant="gsub" color="gray.500">
-              COMPANY NAME
+              Firma NAME
             </Typography>
             <TextField
               InputProps={{ sx: { borderRadius: "0.5rem" } }}
@@ -136,7 +134,7 @@ const GenericForm = ({ value, type }: GenericFormProps): JSX.Element => {
           <>
             <Grid item xs={12}>
               <LabelWithAsterisk>
-                COMPANY NAME
+                Firma NAME
               </LabelWithAsterisk>
               <TextField
                 InputProps={{ sx: { borderRadius: "0.5rem" } }}

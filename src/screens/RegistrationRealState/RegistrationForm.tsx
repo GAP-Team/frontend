@@ -38,7 +38,7 @@ const RegistrationForm: NextPage<RegistrationFormProps> = ({activeStep,steps,han
         href="/"
       >
 
-        STEP  1/ 5
+        Schritt  1/ 5
       </Link>
       
       <GStepper activeStep={activeStep} steps={steps}/>

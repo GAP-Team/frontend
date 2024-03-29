@@ -36,7 +36,7 @@ export const CountrySelector: React.FC<CountrySelectorProps> = ({ onCountrySelec
     <Autocomplete
       options={countries}
       getOptionLabel={(option) => option.name}
-      renderInput={(params) => <TextField {...params} placeholder="Select Country" />}
+      renderInput={(params) => <TextField {...params} placeholder="Land auswählen" />}
       onChange={(_, value) => onCountrySelect(value?.iso2 || '')}
     />
   );
