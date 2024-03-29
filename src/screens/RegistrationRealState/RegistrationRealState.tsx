@@ -99,7 +99,7 @@ const RegistrationRealState = () => {
           onClick={activeStep === 0 ? () => router.back(): handleBack}
         >
           <MdArrowBackIos />
-          Back
+          Zurück
         </Button>
         <Typography variant="h3" sx={{fontSize:'2rem', lineHeight:'2.5rem', fontWeight:'700', marginLeft:'3.75rem', my:'2rem' }}>
           Registrierung
@@ -127,7 +127,7 @@ const RegistrationRealState = () => {
           }
         </Grid>
           <Typography sx={{color:'#475A60', fontSize:'1rem', marginTop:'3rem', marginLeft:'3.75rem', }} >
-            Hilfe? <Link href="#" color='#1E3137' fontWeight="bold">Contact Support</Link>
+            Hilfe? <Link href="#" color='#1E3137' fontWeight="bold">Kontakt Support</Link>
           </Typography>
       </Grid>
     </Grid>
