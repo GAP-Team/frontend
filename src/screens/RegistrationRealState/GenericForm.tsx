@@ -8,6 +8,7 @@ import LabelWithAsterisk from "@/components/common/LabelWithAsterisk";
 import { FaPlus } from "react-icons/fa";
 import Button from '@mui/material/Button';
 import UploadButtons from "@/components/common/UploadButtons";
+import PhoneInput from "@/components/inputs/PhoneInput";
 
 interface GenericFormProps {
   value?: number;
@@ -111,6 +112,7 @@ const GenericForm = ({ value, type }: GenericFormProps): JSX.Element => {
                 autoComplete="email"
               />
             </Grid>
+            <PhoneInput/>
           </>
         )}
 
