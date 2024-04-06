@@ -4,11 +4,11 @@ import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import LabelWithAsterisk from "@/components/common/LabelWithAsterisk";
+import LabelWithAsterisk from "@/components/label/LabelWithAsterisk";
 import { FaPlus } from "react-icons/fa";
 import Button from '@mui/material/Button';
-import UploadButtons from "@/components/button/UploadButtons";
-import PhoneInput from "@/components/inputs/PhoneInput";
+import UploadButtons from "@/components/button/UploadButton";
+import PhoneInput from "@/components/input/PhoneInput";
 
 interface GenericFormProps {
   value?: number;

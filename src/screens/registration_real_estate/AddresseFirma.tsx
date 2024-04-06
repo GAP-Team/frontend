@@ -1,31 +1,29 @@
 'use client';
-import React, {useState} from 'react';
+import React from 'react';
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Box from "@mui/material/Box";
-import LabelWithAsterisk from '@/components/common/LabelWithAsterisk';
-import { CountrySelector } from './CountrySelector';
-import { StateSelector } from './StateSelector';
+import LabelWithAsterisk from '@/components/label/LabelWithAsterisk';
+import GTextInput from '@/components/input/GTextInput';
+import Selector from '@/components/input/Selector';
+import {germanStates} from '@/utils/Constants';
+
 
 interface State {
-  name: string;
-  iso2: string;
+  label: string;
+  value: string;
 }
 
+
 const AddresseFirma = () => {
-  const [selectedCountry, setSelectedCountry] = React.useState('');
   const [selectedState, setSelectedState] = React.useState<State | null>(null);
 
-  const handleCountrySelect = (countryCode: string) => {
-    setSelectedCountry(countryCode);
-    // Reset selected state when country changes
-    setSelectedState(null);
-  };
 
-  const handleStateSelect = (state: State) => {
-    setSelectedState(state);
+  const handleStateSelect = (selectedState: State) => {
+    setSelectedState(selectedState);
   };
+  
 
 
   return (
@@ -35,14 +33,10 @@ const AddresseFirma = () => {
       sx={{ p: 1, width: "auto", marginLeft: "1.5rem" }}
     >
       <Grid container spacing={2}>
-        <Grid item xs={12}>
-          <LabelWithAsterisk>LAND</LabelWithAsterisk>
-          <CountrySelector onCountrySelect={handleCountrySelect} />
-     
-        </Grid>
+       <GTextInput label="Land" value='Deutschland'/>
         <Grid item xs={12}>
           <LabelWithAsterisk>BUNDESLAND</LabelWithAsterisk>
-          <StateSelector countryCode={selectedCountry} onStateSelect={handleStateSelect} />
+          <Selector options={germanStates} onSelect={handleStateSelect}/>
         </Grid>
         <Grid item xs={12} sm={9}>
           <Typography  variant="gsub" color="gray.500" >STRAßE</Typography>

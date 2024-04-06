@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import TitleSection from "../common/title-section";
+import TitleSection from "../label/title-section";
 import Badge from "../badge/GBadge";
 import { Carousel } from "flowbite-react";
 import { Button, Card, ButtonGroup } from "flowbite-react";

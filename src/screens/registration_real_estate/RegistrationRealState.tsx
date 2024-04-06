@@ -1,6 +1,5 @@
 'use client';
 import React from "react";
-import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
@@ -9,6 +8,7 @@ import {MdArrowBackIos}  from "react-icons/md";
 import { useRouter } from 'next/navigation';
 import RegistrationForm from "./RegistrationForm";
 import SucessPage from "./SucessPage";
+import InfoBanner from "@/components/common/InfoBanner";
 
 function getSteps() {
   return ['Grundinformation', 'Adresse der Firma', 'Ansprechpartner', 'Gewerbeanmeldung', 'Zusammenfassung'];
@@ -51,46 +51,11 @@ const RegistrationRealState = () => {
         }}
       >
         {/* Make this Box a flex container to use Flexbox properties */}
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            height: '100%', // Take full height of parent Grid
-          }}
-        >
-          {/* Title Typography */}
-          <Typography variant="h2" color="white" sx={{
-            ml: '4rem',
-            mt: '6.8rem',
-            fontWeight: 'bold',
-            fontSize: { xs: '3rem', md: '4.5rem' }, // Responsive font size
-            lineHeight: { xs: '3.3rem', md: '4.8rem' }, // Responsive line height
-            maxWidth: '80%',
-          }}>
-            Where skills are developed
-          </Typography>
-
-          {/* Subtitle Typography */}
-          <Typography variant="subtitle1" color="white" sx={{
-            ml: '4rem',
-            mt: '2rem',
-            fontSize: '1.5rem',
-            lineHeight: '2.2rem',
-          }}>
-            Gesetzliche Anlagenprüfung
-          </Typography>
-
-          {/* Spacer to push the copyright notice to the bottom */}
-          <Box sx={{ flexGrow: 1 }} />
-
-          {/* Copyright Typography - sticks to the bottom */}
-          <Typography variant="subtitle1" color="white" sx={{
-            ml: '4rem',
-            mb: '2rem', // Add bottom margin if needed
-          }}>
-            ©2023 GAP GmbH
-          </Typography>
-        </Box>
+        <InfoBanner
+        title="Where skills are developed"
+        subtitle="Gesetzliche Anlagenprüfung"
+        copyright="©2023 GAP GmbH"
+      />
       </Grid>
       <Grid item xs={12} md={8} lg={8} sx={{backgroundColor:'#F9FAFA'}} >
       <Button

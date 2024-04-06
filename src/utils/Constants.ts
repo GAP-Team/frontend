@@ -54,20 +54,27 @@ export const listOfOrderTypes = [
         ]
       }
 ]
-export const germanStates = [ 'Baden-Württemberg',
-  'Bavaria',
-  'Berlin',
-  'Brandenburg',
-  'Bremen',
-  'Hamburg',
-  'Hesse',
-  'Lower Saxony',
-  'Mecklenburg-Western Pomerania',
-  'North Rhine-Westphalia',
-  'Rhineland-Palatinate',
-  'Saarland',
-  'Saxony',
-  'Saxony-Anhalt',
-  'Schleswig-Holstein',
-    'Thuringia'
-]
+
+interface Item {
+  label: string;
+  value: string;
+}
+
+export const germanStates: Item[] = [
+  { label: 'Baden-Württemberg', value: 'Baden-Württemberg' },
+  { label: 'Bayern', value: 'Bayern' }, // Bavaria
+  { label: 'Berlin', value: 'Berlin' },
+  { label: 'Brandenburg', value: 'Brandenburg' },
+  { label: 'Bremen', value: 'Bremen' },
+  { label: 'Hamburg', value: 'Hamburg' },
+  { label: 'Hessen', value: 'Hessen' }, // Hesse
+  { label: 'Niedersachsen', value: 'Niedersachsen' }, // Lower Saxony
+  { label: 'Mecklenburg-Vorpommern', value: 'Mecklenburg-Vorpommern' }, // Mecklenburg-Western Pomerania
+  { label: 'Nordrhein-Westfalen', value: 'Nordrhein-Westfalen' }, // North Rhine-Westphalia
+  { label: 'Rheinland-Pfalz', value: 'Rheinland-Pfalz' }, // Rhineland-Palatinate
+  { label: 'Saarland', value: 'Saarland' },
+  { label: 'Sachsen', value: 'Sachsen' }, // Saxony
+  { label: 'Sachsen-Anhalt', value: 'Sachsen-Anhalt' }, // Saxony-Anhalt
+  { label: 'Schleswig-Holstein', value: 'Schleswig-Holstein' },
+  { label: 'Thüringen', value: 'Thüringen' } // Thuringia
+];

@@ -7,7 +7,7 @@ import { Dropdown, DropdownItem } from 'flowbite-react';
 import { Button } from 'flowbite-react';
 import GNavbar from "@/sections/GNavbar/GNavbar";
 import { FaArrowRightLong } from "react-icons/fa6";
-import { germanStates, listOfOrderTypes, listOfTrades } from '@/components/common/Dropdownlist';
+import { germanStates, listOfOrderTypes, listOfTrades } from '@/utils/Constants';
 import heroBackgroundPicture from '../../../public/hero6.jpg';
 import Image from 'next/image';
 const HeroSection = () => {
