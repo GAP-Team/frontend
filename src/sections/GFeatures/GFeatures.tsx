@@ -7,8 +7,8 @@ import {
   BulbSvgIcon,
   VentSvgIcon,
   HomeSvgIcon,
-} from "../../components/common/features-svg";
-import TitleSection from "../../components/common/title-section";
+} from "../../components/svg/features-svg";
+import TitleSection from "../../components/label/title-section";
 
 const GFeatures = () => {
   return (

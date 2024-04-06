@@ -4,7 +4,7 @@ import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Box from "@mui/material/Box";
-import LabelWithAsterisk from '@/components/common/LabelWithAsterisk';
+import LabelWithAsterisk from '@/components/label/LabelWithAsterisk';
 import { CountrySelector } from './CountrySelector';
 import { StateSelector } from './StateSelector';
 
