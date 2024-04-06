@@ -5,8 +5,9 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Box from "@mui/material/Box";
 import LabelWithAsterisk from '@/components/label/LabelWithAsterisk';
-import { CountrySelector } from './CountrySelector';
 import { StateSelector } from './StateSelector';
+import GTextInput from '@/components/input/GTextInput';
+
 
 interface State {
   name: string;
@@ -17,11 +18,6 @@ const AddresseFirma = () => {
   const [selectedCountry, setSelectedCountry] = React.useState('');
   const [selectedState, setSelectedState] = React.useState<State | null>(null);
 
-  const handleCountrySelect = (countryCode: string) => {
-    setSelectedCountry(countryCode);
-    // Reset selected state when country changes
-    setSelectedState(null);
-  };
 
   const handleStateSelect = (state: State) => {
     setSelectedState(state);
@@ -35,11 +31,7 @@ const AddresseFirma = () => {
       sx={{ p: 1, width: "auto", marginLeft: "1.5rem" }}
     >
       <Grid container spacing={2}>
-        <Grid item xs={12}>
-          <LabelWithAsterisk>LAND</LabelWithAsterisk>
-          <CountrySelector onCountrySelect={handleCountrySelect} />
-     
-        </Grid>
+       <GTextInput label="Land" value='Deutschland'/>
         <Grid item xs={12}>
           <LabelWithAsterisk>BUNDESLAND</LabelWithAsterisk>
           <StateSelector countryCode={selectedCountry} onStateSelect={handleStateSelect} />
