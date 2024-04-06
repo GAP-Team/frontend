@@ -1,6 +1,6 @@
 import React from "react";
 import TitleSection from "../../components/common/title-section";
-import Badge from "../../components/common/GBadge/GBadge";
+import Badge from "../../components/badge/GBadge";
 import { AuftrafSvg, AngebotSvg, SolutionSvg } from "../../components/common/function-svg";
 import Link from 'next/link';
 import { Button } from 'flowbite-react';

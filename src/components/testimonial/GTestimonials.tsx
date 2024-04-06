@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import TitleSection from "../common/title-section";
-import Badge from "../common/GBadge/GBadge";
+import Badge from "../badge/GBadge";
 import { Carousel } from "flowbite-react";
 import { Button, Card, ButtonGroup } from "flowbite-react";
 import Image from "next/image";

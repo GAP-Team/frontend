@@ -4,7 +4,7 @@ import GBlogSection from "@/sections/GBlogSection/GBlogSection";
 import GFeatures from "@/sections/GFeatures/GFeatures";
 import GOfferSection from "@/sections/GOfferSection/GOfferSection";
 import GFunctionSection from "@/sections/GFunctionSection/GFunctionSection";
-import GTestimonials from "@/components/GTestimonials/GTestimonials";
+import GTestimonials from "@/components/testimonial/GTestimonials";
 import GVideoSection from "@/sections/GVideoSection/GVideoSection";
 import GClientSection from "@/sections/GClientSection/GClientSection";
 import GStatSection from "@/sections/GStatSection/GStatSection";

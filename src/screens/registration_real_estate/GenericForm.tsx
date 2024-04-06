@@ -7,7 +7,7 @@ import Box from "@mui/material/Box";
 import LabelWithAsterisk from "@/components/common/LabelWithAsterisk";
 import { FaPlus } from "react-icons/fa";
 import Button from '@mui/material/Button';
-import UploadButtons from "@/components/common/UploadButtons";
+import UploadButtons from "@/components/button/UploadButtons";
 import PhoneInput from "@/components/inputs/PhoneInput";
 
 interface GenericFormProps {

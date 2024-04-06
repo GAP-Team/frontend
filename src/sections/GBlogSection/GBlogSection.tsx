@@ -1,5 +1,5 @@
 import React from "react";
-import Badge from "../../components/common/GBadge/GBadge";
+import Badge from "../../components/badge/GBadge";
 import TitleSection from "../../components/common/title-section";
 
 const GBlogSection = () => {

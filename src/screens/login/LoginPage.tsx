@@ -1,6 +1,6 @@
 'use client';
 import React from "react";
-import { GapLogo } from "@/components/common/GapLogo/GapLogo";
+import { GapLogo } from "@/components/logo/GapLogo";
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';

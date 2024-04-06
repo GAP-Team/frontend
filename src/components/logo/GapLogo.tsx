@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import React from "react";
-import gapLogo from "../../../../public/gap-logo.svg";
+import gapLogo from "../../../public/gap-logo.svg";
 import Image from 'next/image';
 import { Roboto, Lalezar } from "next/font/google";
 import classes from "./GapLogo.module.scss";

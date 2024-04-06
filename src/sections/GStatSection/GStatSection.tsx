@@ -1,8 +1,8 @@
 import React, { ReactNode } from 'react'
 import classes from "./GStatSection.module.scss";
 import { Button } from 'flowbite-react';
-import GBadge from '@/components/common/GBadge/GBadge';
-import GCountDown from '@/components/common/GCountdown/GCountDown';
+import GBadge from '@/components/badge/GBadge';
+import GCountDown from '@/components/countdown/GCountDown';
 
 interface GStatSectionProps {
     title?: string;

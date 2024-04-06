@@ -1,12 +1,12 @@
 import { NextPage } from 'next'
 import React from "react";
-import GButton from '@/components/common/GButton/GButton';
+import GButton from '@/components/button/GButton';
 import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
-import GStepper from "@/screens/RegistrationRealState/GStepper";
-import GProgressStepper from "@/screens/RegistrationRealState/GProgressStepper";
-import GTab from "@/screens/RegistrationRealState/GTab";
+import GStepper from "@/screens/registration_real_estate/GStepper";
+import GProgressStepper from "@/screens/registration_real_estate/GProgressStepper";
+import GTab from "@/screens/registration_real_estate/GTab";
 import Divider from '@mui/material/Divider';
 import AddresseFirma from "./AddresseFirma";
 import GenericForm from "./GenericForm";
