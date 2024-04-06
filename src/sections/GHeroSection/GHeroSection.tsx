@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import Badge from "../../components/common/GBadge/GBadge";
+import Badge from "../../components/badge/GBadge";
 import { useState } from "react";
 import { FaCheck } from "react-icons/fa";
 import { Dropdown, DropdownItem } from 'flowbite-react';

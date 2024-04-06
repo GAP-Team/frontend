@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import GBadge from "../../components/common/GBadge/GBadge";
+import GBadge from "../../components/badge/GBadge";
 import {
   AufzugSvgIcon,
   FireSvgIcon,

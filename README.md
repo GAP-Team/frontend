@@ -1,5 +1,11 @@
 GAP Frontend build with Next.js Framework
 
+## Conventions to hold on:
+- name of folders always in **lower case** ot it has multiple words than **like_this**.
+- name of Typescript files in **CamelCase**.
+- structure component folder into categories **input**, **button**, etc.
+- using **G** at the begining of the file name of the Components to refers that GAP Component and not from Framework.
+
 ## Getting Started
 
 - install npm packages

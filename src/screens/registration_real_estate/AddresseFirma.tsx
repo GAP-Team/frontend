@@ -39,30 +39,10 @@ const AddresseFirma = () => {
           <LabelWithAsterisk>LAND</LabelWithAsterisk>
           <CountrySelector onCountrySelect={handleCountrySelect} />
      
-          {/* <TextField
-            required
-            InputProps={{ sx: { borderRadius: '0.5rem' } }}
-            id="land"
-            name="land"
-            placeholder="Wähle das Land aus"
-            fullWidth
-            variant="outlined"
-            autoComplete="land"
-          /> */}
         </Grid>
         <Grid item xs={12}>
           <LabelWithAsterisk>BUNDESLAND</LabelWithAsterisk>
           <StateSelector countryCode={selectedCountry} onStateSelect={handleStateSelect} />
-          {/* <TextField
-            required
-            InputProps={{ sx: { borderRadius: '0.5rem' } }}
-            id="bundesland"
-            name="bundesland"
-            placeholder="Enter your bundesland name"
-            fullWidth
-            autoComplete="organization"
-            variant="outlined"
-            /> */}
         </Grid>
         <Grid item xs={12} sm={9}>
           <Typography  variant="gsub" color="gray.500" >STRAßE</Typography>

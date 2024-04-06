@@ -9,7 +9,7 @@ import {
   FooterTitle,
 } from 'flowbite-react';
 import { BsDribbble, BsFacebook, BsGithub, BsInstagram, BsTwitter } from 'react-icons/bs';
-import { GapLogo } from '@/components/common/GapLogo/GapLogo';
+import { GapLogo } from '@/components/logo/GapLogo';
 function GFooter() {
   return (
     <>

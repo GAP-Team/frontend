@@ -9,7 +9,7 @@ const Input = styled('input')({
   display: 'none',
 });
 
-export default function UploadButtons() {
+export default function UploadButton() {
   const theme = useTheme();
 
   return (

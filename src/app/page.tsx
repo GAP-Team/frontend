@@ -1,4 +1,4 @@
-import LandingPage from "@/screens/LandingPage/LandingPage";
+import LandingPage from "@/screens/landing_page/LandingPage";
 import GFooter from "@/sections/GFooter/GFooter";
 
 export default function Home() {

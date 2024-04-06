@@ -2,9 +2,6 @@ import React, { ReactNode } from 'react';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import TextField from '@mui/material/TextField';
-import GenericForm from './GenericForm';
 
 interface TabPanelProps {
   children?: React.ReactNode;
