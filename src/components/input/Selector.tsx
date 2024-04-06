@@ -4,23 +4,25 @@ import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 
 interface Item {
-  label: string; // Generic label, was 'name' for Country
-  value: string; // Generic value, was 'iso2' for Country
+  label: string; 
+  value: string; 
 }
 
 interface SelectorProps<T extends Item> {
   options: T[];
-  onSelect: (selectedItem: T | null) => void;
+  onSelect: (selectedItem: Item) => void;
   placeholder?: string;
 }
 
-export const Selector = <T extends Item>({ options, onSelect, placeholder = 'Select item' }: SelectorProps<T>) => {
+const Selector = <T extends Item>({ options, onSelect, placeholder = 'Select item' }: SelectorProps<T>) => {
   return (
     <Autocomplete
       options={options}
       getOptionLabel={(option) => option.label}
       renderInput={(params) => <TextField {...params} placeholder={placeholder} />}
-      onChange={(_, value) => onSelect(value)}
+      onChange={(_, value) => onSelect(value!)}
     />
   );
 };
+
+export default Selector;
