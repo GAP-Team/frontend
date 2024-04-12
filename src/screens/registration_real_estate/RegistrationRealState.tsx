@@ -11,7 +11,7 @@ import SucessPage from "./SucessPage";
 import InfoBanner from "@/components/common/InfoBanner";
 
 function getSteps() {
-  return ['Grundinformation', 'Adresse der Firma', 'Ansprechpartner', 'Gewerbeanmeldung', 'Zusammenfassung'];
+  return ['Grundinformation', 'Adresse der Firma', 'Gewerbeanmeldung', 'Zusammenfassung'];
 }
 
 const RegistrationRealState = () => {

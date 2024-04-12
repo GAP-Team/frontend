@@ -1,30 +1,25 @@
-'use client';
-import React from 'react';
-import TextField from '@mui/material/TextField';
-import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
+"use client";
+import React from "react";
+import TextField from "@mui/material/TextField";
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import LabelWithAsterisk from '@/components/label/LabelWithAsterisk';
-import GTextInput from '@/components/input/GTextInput';
-import GSelector from '@/components/input/GSelector';
-import {germanStates} from '@/utils/Constants';
-
+import LabelWithAsterisk from "@/components/label/LabelWithAsterisk";
+import GTextInput from "@/components/input/GTextInput";
+import GSelector from "@/components/input/GSelector";
+import { germanStates } from "@/utils/Constants";
 
 interface State {
   label: string;
   value: string;
 }
 
-
 const AddresseFirma = () => {
   const [selectedState, setSelectedState] = React.useState<State | null>(null);
-
 
   const handleStateSelect = (selectedState: State) => {
     setSelectedState(selectedState);
   };
-  
-
 
   return (
     <Box
@@ -33,18 +28,19 @@ const AddresseFirma = () => {
       sx={{ p: 1, width: "auto", marginLeft: "1.5rem" }}
     >
       <Grid container spacing={2}>
-      <Grid item xs={12}>
-        <LabelWithAsterisk>Land</LabelWithAsterisk>
-       <GTextInput value='Deutschland'/>
-       </Grid>
+        <Grid item xs={12}>
+          <LabelWithAsterisk>Land</LabelWithAsterisk>
+          <GTextInput value="Deutschland" />
+        </Grid>
         <Grid item xs={12}>
           <LabelWithAsterisk>BUNDESLAND</LabelWithAsterisk>
-          <GSelector options={germanStates} onSelect={handleStateSelect}/>
+          <GSelector options={germanStates} onSelect={handleStateSelect} />
         </Grid>
         <Grid item xs={12} sm={9}>
-          <Typography  variant="gsub" color="gray.500" >STRAßE</Typography>
+          <LabelWithAsterisk>STRAßE</LabelWithAsterisk>
+
           <TextField
-            InputProps={{ sx: { borderRadius: '0.5rem' } }}
+            InputProps={{ sx: { borderRadius: "0.5rem" } }}
             id="strasse"
             name="strasse"
             fullWidth
@@ -53,9 +49,10 @@ const AddresseFirma = () => {
           />
         </Grid>
         <Grid item xs={12} sm={3}>
-          <Typography  variant="gsub" color="gray.500">HAUSNR</Typography>
+          <LabelWithAsterisk>HAUSNR</LabelWithAsterisk>
+
           <TextField
-            InputProps={{ sx: { borderRadius: '0.5rem' } }}
+            InputProps={{ sx: { borderRadius: "0.5rem" } }}
             id="hausnr"
             name="hausnr"
             fullWidth
@@ -64,9 +61,9 @@ const AddresseFirma = () => {
           />
         </Grid>
         <Grid item xs={12} sm={3}>
-          <LabelWithAsterisk >PLZ</LabelWithAsterisk>
+          <LabelWithAsterisk>PLZ</LabelWithAsterisk>
           <TextField
-            InputProps={{ sx: { borderRadius: '0.5rem' } }}
+            InputProps={{ sx: { borderRadius: "0.5rem" } }}
             id="plz"
             name="plz"
             fullWidth
@@ -75,9 +72,9 @@ const AddresseFirma = () => {
           />
         </Grid>
         <Grid item xs={12} sm={9}>
-          <LabelWithAsterisk >STADT/ORT</LabelWithAsterisk>
+          <LabelWithAsterisk>STADT/ORT</LabelWithAsterisk>
           <TextField
-            InputProps={{ sx: { borderRadius: '0.5rem' } }}
+            InputProps={{ sx: { borderRadius: "0.5rem" } }}
             id="stadt"
             name="stadt"
             fullWidth
@@ -87,7 +84,7 @@ const AddresseFirma = () => {
         </Grid>
       </Grid>
     </Box>
-  )
-}
+  );
+};
 
-export default AddresseFirma
+export default AddresseFirma;
