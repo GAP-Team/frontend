@@ -1,6 +1,5 @@
 import * as React from 'react';
 import MobileStepper from '@mui/material/MobileStepper';
-import Button from '@mui/material/Button';
 import { SxProps } from '@mui/material'
 
 interface GProgressStepperProps {

@@ -11,7 +11,7 @@ import SucessPage from "./SucessPage";
 import InfoBanner from "@/components/common/InfoBanner";
 
 function getSteps() {
-  return ['Grundinformation', 'Adresse der Firma', 'Ansprechpartner', 'Gewerbeanmeldung', 'Zusammenfassung'];
+  return ['Grundinformation', 'Adresse der Firma', 'Gewerbeanmeldung', 'Zusammenfassung'];
 }
 
 const RegistrationRealState = () => {
@@ -22,7 +22,7 @@ const RegistrationRealState = () => {
 
   const handleNext = () => {
     setActiveStep((prevActiveStep:number) => {
-      return prevActiveStep <= 4 ? prevActiveStep + 1 : prevActiveStep;
+      return prevActiveStep <= 3 ? prevActiveStep + 1 : prevActiveStep;
     });
   };
 
@@ -84,7 +84,7 @@ const RegistrationRealState = () => {
           }}
         >
           
-          {activeStep <= 4  ? (
+          {activeStep <= 3  ? (
           <RegistrationForm activeStep={activeStep} steps={steps} handleBack={handleBack} handleNext={handleNext} />
           ) : (
             <SucessPage/>  

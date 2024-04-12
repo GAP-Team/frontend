@@ -3,7 +3,6 @@ import Image from 'next/image'
 import React from "react";
 import GButton from '@/components/button/GButton';
 import Typography from '@mui/material/Typography';
-import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 
 import sucess_svg from "../../../public/success.svg";
