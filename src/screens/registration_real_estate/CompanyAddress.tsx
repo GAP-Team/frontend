@@ -38,49 +38,19 @@ const AddresseFirma = () => {
         </Grid>
         <Grid item xs={12} sm={9}>
           <LabelWithAsterisk>STRAßE</LabelWithAsterisk>
-
-          <TextField
-            InputProps={{ sx: { borderRadius: "0.5rem" } }}
-            id="strasse"
-            name="strasse"
-            fullWidth
-            autoComplete="given-name"
-            variant="outlined"
-          />
+          <GTextInput placeholder="Straße" id="strasse" name="strasse" />
         </Grid>
         <Grid item xs={12} sm={3}>
           <LabelWithAsterisk>HAUSNR</LabelWithAsterisk>
-
-          <TextField
-            InputProps={{ sx: { borderRadius: "0.5rem" } }}
-            id="hausnr"
-            name="hausnr"
-            fullWidth
-            autoComplete="family-name"
-            variant="outlined"
-          />
+          <GTextInput placeholder="Hausnr" id="hausnr" name="hausnr" />
         </Grid>
         <Grid item xs={12} sm={3}>
           <LabelWithAsterisk>PLZ</LabelWithAsterisk>
-          <TextField
-            InputProps={{ sx: { borderRadius: "0.5rem" } }}
-            id="plz"
-            name="plz"
-            fullWidth
-            autoComplete="given-name"
-            variant="outlined"
-          />
+          <GTextInput placeholder="PLZ" id="plz" name="plz" />
         </Grid>
         <Grid item xs={12} sm={9}>
-          <LabelWithAsterisk>STADT/ORT</LabelWithAsterisk>
-          <TextField
-            InputProps={{ sx: { borderRadius: "0.5rem" } }}
-            id="stadt"
-            name="stadt"
-            fullWidth
-            autoComplete="given-name"
-            variant="outlined"
-          />
+          <LabelWithAsterisk>STADT</LabelWithAsterisk>
+          <GTextInput placeholder="Stadt" id="stadt" name="stadt" />
         </Grid>
       </Grid>
     </Box>

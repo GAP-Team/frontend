@@ -13,6 +13,7 @@ import BasicInformation from "./BasicInformation";
 import SummaryRegistration from "./SummaryRegistration";
 import ComercialPerson from "./CommercialPerson";
 import PrivatePerson from "./PrivatePerson";
+import BusinessRegistration from "./BusinessRegistration";
 
 interface RegistrationFormProps {
   activeStep: number;
@@ -27,7 +28,7 @@ const basictabs = [
   { label: "Dienstleister", content: <BasicInformation value={1} /> },
 ];
 const registertabs = [
-  { label: "Gewerbeperson", content: <ComercialPerson/> },
+  { label: "Gewerbeperson", content: <ComercialPerson /> },
   { label: "Privatperson", content: <PrivatePerson /> },
 ];
 
@@ -52,7 +53,7 @@ const RegistrationForm: NextPage<RegistrationFormProps> = ({
           color="inherit"
           href="/"
         >
-          Schritt 1/ 5
+          Schritt 1/ 4
         </Link>
 
         <GStepper activeStep={activeStep} steps={steps} />
@@ -89,20 +90,12 @@ const RegistrationForm: NextPage<RegistrationFormProps> = ({
               activeStep={activeStep}
             />
           </div>
-          {activeStep == 0 && <GTab tabs={basictabs} />}
+          {activeStep == 0 && <BasicInformation />}
           {activeStep == 1 && <CompanyAddress />}
-          {activeStep == 2 && <BasicInformation type="contact" />}
-          {activeStep == 3 && <GTab tabs={registertabs} />}
-          {activeStep == 4 && <SummaryRegistration />}
+          {activeStep == 2 && <GTab tabs={registertabs} />}
+          {activeStep == 3 && <SummaryRegistration />}
         </div>
         <Grid container justifyContent="flex-end" spacing={2}>
-          {activeStep == 4 && (
-            <Grid item>
-              <GButton color="ggrey" onClick={handleBack}>
-                Zurück
-              </GButton>
-            </Grid>
-          )}
           <Grid item>
             <GButton onClick={handleNext}>Weiter</GButton>
           </Grid>

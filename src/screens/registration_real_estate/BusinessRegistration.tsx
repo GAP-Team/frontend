@@ -5,6 +5,7 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import UploadButtons from "@/components/button/UploadButton";
+import GTextInput from "@/components/input/GTextInput";
 
 interface BusinessRegistrationProps {
   value?: number;
@@ -37,15 +38,10 @@ const BusinessRegistration = ({
           <Typography variant="gsub" color="gray.500">
             HANDELREGISTERNUMMER
           </Typography>
-          <TextField
-            InputProps={{ sx: { borderRadius: "0.5rem" } }}
-            required
+          <GTextInput
+            placeholder="HANDELREGISTERNUMMER"
             id="registernumber"
             name="registernumber"
-            placeholder="HANDELREGISTERNUMMER"
-            fullWidth
-            autoComplete="given-name"
-            variant="outlined"
           />
         </Grid>
 

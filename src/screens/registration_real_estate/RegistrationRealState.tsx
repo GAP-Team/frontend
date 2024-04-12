@@ -22,7 +22,7 @@ const RegistrationRealState = () => {
 
   const handleNext = () => {
     setActiveStep((prevActiveStep:number) => {
-      return prevActiveStep <= 4 ? prevActiveStep + 1 : prevActiveStep;
+      return prevActiveStep <= 3 ? prevActiveStep + 1 : prevActiveStep;
     });
   };
 
@@ -84,7 +84,7 @@ const RegistrationRealState = () => {
           }}
         >
           
-          {activeStep <= 4  ? (
+          {activeStep <= 3  ? (
           <RegistrationForm activeStep={activeStep} steps={steps} handleBack={handleBack} handleNext={handleNext} />
           ) : (
             <SucessPage/>  
