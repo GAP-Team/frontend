@@ -8,9 +8,9 @@ import GStepper from "@/screens/registration_real_estate/GStepper";
 import GProgressStepper from "@/screens/registration_real_estate/GProgressStepper";
 import GTab from "@/screens/registration_real_estate/GTab";
 import Divider from '@mui/material/Divider';
-import AddresseFirma from "./AddresseFirma";
-import GenericForm from "./GenericForm";
-import SummaryImmobilien from "./SummaryImmobilien";
+import AddresseFirma from "./CompanyAddress";
+import GenericForm from "./BasicInformation";
+import SummaryImmobilien from "./SummaryRegistration";
 
 interface RegistrationFormProps {
     activeStep: number;

@@ -14,7 +14,7 @@ interface SelectorProps<T extends Item> {
   placeholder?: string;
 }
 
-const Selector = <T extends Item>({ options, onSelect, placeholder = 'Select item' }: SelectorProps<T>) => {
+const Selector = <T extends Item>({ options, onSelect, placeholder = 'Wählen Sie aus' }: SelectorProps<T>) => {
   return (
     <Autocomplete
       options={options}

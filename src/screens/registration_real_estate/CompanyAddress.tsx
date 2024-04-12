@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography';
 import Box from "@mui/material/Box";
 import LabelWithAsterisk from '@/components/label/LabelWithAsterisk';
 import GTextInput from '@/components/input/GTextInput';
-import Selector from '@/components/input/Selector';
+import GSelector from '@/components/input/GSelector';
 import {germanStates} from '@/utils/Constants';
 
 
@@ -33,10 +33,13 @@ const AddresseFirma = () => {
       sx={{ p: 1, width: "auto", marginLeft: "1.5rem" }}
     >
       <Grid container spacing={2}>
-       <GTextInput label="Land" value='Deutschland'/>
+      <Grid item xs={12}>
+        <LabelWithAsterisk>Land</LabelWithAsterisk>
+       <GTextInput value='Deutschland'/>
+       </Grid>
         <Grid item xs={12}>
           <LabelWithAsterisk>BUNDESLAND</LabelWithAsterisk>
-          <Selector options={germanStates} onSelect={handleStateSelect}/>
+          <GSelector options={germanStates} onSelect={handleStateSelect}/>
         </Grid>
         <Grid item xs={12} sm={9}>
           <Typography  variant="gsub" color="gray.500" >STRAßE</Typography>
