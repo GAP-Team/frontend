@@ -97,6 +97,9 @@ const RegistrationForm: NextPage<RegistrationFormProps> = ({
         </div>
         <Grid container justifyContent="flex-end" spacing={2}>
           <Grid item>
+            <GButton onClick={handleBack} color="ggrey">
+              Zurück
+            </GButton>
             <GButton onClick={handleNext}>Weiter</GButton>
           </Grid>
         </Grid>
