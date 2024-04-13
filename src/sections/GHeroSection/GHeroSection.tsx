@@ -69,7 +69,7 @@ const HeroSection = () => {
                       </div>
 
                       <div className="flex flex-col w-full px-2 sm:px-4 md:w-1/3">
-                        <label htmlFor="type" className="text-sm font-medium text-gray-700">Auftragstyp:</label>
+                        <label htmlFor="type" className="text-sm font-medium text-gray-700">Wählen Sie ein Auftragstyp aus:</label>
                         <Dropdown label="Auftragstypen" size="lg" style={{ width: '90%', alignSelf: 'center', margin: 2 }} color="gray">
                           {listOfOrderTypes.map((category, index) => (
                             <React.Fragment key={index}>
@@ -90,11 +90,11 @@ const HeroSection = () => {
                       </div>
 
                       <div className="flex flex-col w-full px-2 sm:px-4 md:w-1/3">
-                        <label htmlFor="type" className="text-sm font-medium text-gray-700">Auftragstyp:</label>
-                        <Dropdown label="Auftragstypen" size="lg" style={{width: '90%', alignSelf: 'center', margin: 2 }} color="gray">
+                        <label htmlFor="type" className="text-sm font-medium text-gray-700">Wählen Sie ein Bundesland aus:</label>
+                        <Dropdown label="Bundesländer" size="lg" style={{width: '90%', alignSelf: 'center', margin: 2 }} color="gray">
                         <div className="relative w-90% self-center m-2 max-h-60 overflow-y-auto">
                           {germanStates.map((item, ind) => (
-                            <DropdownItem key={ind}>{item}</DropdownItem>
+                            <DropdownItem key={ind}>{item.label}</DropdownItem>
                           ))}
                           </div>
                           </Dropdown>
