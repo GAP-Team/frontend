@@ -1,3 +1,4 @@
+
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
@@ -5,8 +6,8 @@ import { ThemeModeScript } from "flowbite-react";
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v13-appRouter';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from './theme/theme';
-import  CssBaseline  from "@mui/material/CssBaseline";
 const inter = Inter({ subsets: ["latin"] });
+import  CssBaseline  from "@mui/material/CssBaseline";
 
 export const metadata: Metadata = {
   title: "GAP",
