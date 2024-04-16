@@ -12,8 +12,41 @@ import Grid from "@mui/material/Grid";
 import { FaRegEnvelope } from "react-icons/fa";
 import { PiLockBold } from "react-icons/pi";
 import HeroBanner from "../../components/common/InfoBanner";
+import Stack from "@mui/material/Stack";
+import { useFormik } from "formik";
+import * as yup from "yup";
+
+const validationSchema = yup.object({
+  email: yup
+    .string()
+    .email("Enter a valid email")
+    .required("Email is required"),
+  password: yup
+    .string()
+    .required("Password is required")
+    .min(8, "Password should be of minimum 8 characters length")
+    .matches(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+      "Password must contain at least one uppercase letter, one lowercase     letter, one digit, and one special character"
+    ),
+});
 
 export default function LoginPage() {
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+    validationSchema: validationSchema,
+    onSubmit: (values, { resetForm }) => {
+      try {
+        alert(JSON.stringify(values, null, 2));
+      } catch (error: any) {
+        console.log("Error occured", error.message);
+      }
+    },
+  });
+
   return (
     <Grid container component="main" sx={{ height: "100vh" }}>
       <Grid
@@ -55,11 +88,7 @@ export default function LoginPage() {
           }}
         >
           <GapLogo color="#0D1F4E" size="sm" />
-          <Box
-            component="form"
-            noValidate
-            sx={{ mt: 2, padding: 5, borderRadius: "1rem", boxShadow: 3 }}
-          >
+          <Box sx={{ mt: 2, padding: 5, borderRadius: "1rem", boxShadow: 3 }}>
             <Grid container sx={{ mb: "2rem", color: "#1E3137" }}>
               <Grid item xs>
                 <Link
@@ -85,31 +114,53 @@ export default function LoginPage() {
                 </Link>
               </Grid>
             </Grid>
-            <TextField
-              fullWidth
-              required
-              label="Email"
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <FaRegEnvelope />
-                  </InputAdornment>
-                ),
+            <form
+              onSubmit={formik.handleSubmit}
+              style={{
+                marginTop: 1,
+                display: "flex",
+                flexDirection: "column",
+                width: "33rem",
               }}
-              sx={{ mb: 4 }}
-            />
-            <TextField
-              fullWidth
-              label="Password"
-              type="password"
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <PiLockBold />
-                  </InputAdornment>
-                ),
-              }}
-            />
+            >
+              <TextField
+                id="email"
+                name="email"
+                label="Email"
+                value={formik.values.email}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={formik.touched.email && Boolean(formik.errors.email)}
+                helperText={formik.touched.email && formik.errors.email}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <FaRegEnvelope />
+                    </InputAdornment>
+                  ),
+                }}
+                sx={{ mb: 4 }}
+              />
+              <TextField
+                id="password"
+                label="Password"
+                type="password"
+                name="password"
+                value={formik.values.password}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={
+                  formik.touched.password && Boolean(formik.errors.password)
+                }
+                helperText={formik.touched.password && formik.errors.password}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <PiLockBold />
+                    </InputAdornment>
+                  ),
+                }}
+              />
             <Grid container sx={{ mt: 10 }}>
               <Grid item xs sx={{ display: "flex", flexDirection: "column" }}>
                 <Typography
@@ -119,7 +170,7 @@ export default function LoginPage() {
                     fontSize: "0.875rem",
                     lineHeight: "1.25rem",
                   }}
-                >
+                  >
                   Noch keinen account?
                 </Typography>
                 <Link
@@ -131,7 +182,7 @@ export default function LoginPage() {
                     textDecoration: "none",
                     cursor: "pointer",
                   }}
-                >
+                  >
                   Registrieren
                 </Link>
               </Grid>
@@ -140,12 +191,14 @@ export default function LoginPage() {
                   variant="contained"
                   color="gprimary"
                   size="large"
+                  type="submit"
                   sx={{ borderRadius: "0.5rem" }}
                 >
                   Login
                 </Button>
               </Grid>
             </Grid>
+          </form>
           </Box>
           <Typography
             sx={{
