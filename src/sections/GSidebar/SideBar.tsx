@@ -8,7 +8,6 @@ import { IconType } from "react-icons";
 import { styled, Theme, CSSObject } from "@mui/material/styles";
 import Image from "next/image";
 import gapLogo from "../../../public/gap-logo.svg";
-import gapLogoName from "../../../public/icons/gaplogo-name.svg";
 import gapLogoFull from "../../../public/icons/gapfull-logo.svg";
 import { SidebarItemComponent } from "@/components/common/SidebarItemComponent";
 
@@ -89,18 +88,38 @@ const Sidebar: React.FC<SidebarProps> = ({ items }) => {
       onMouseLeave={() => setOpen(false)}
     >
       <List>
-        <ListItem
-          button
-          key={"gaplogo"}
-          sx={{ minWidth: "auto", ml: 0.5, mb: "1rem" }}
-        >
-          <div style={{ width: "2rem", height: "2rem", position: "relative" }}>
-            {open ? (
-              <Image src={gapLogoFull} alt="" />
-            ) : (
-              <Image src={gapLogo} objectFit="contain" layout="fill" alt="" />
-            )}
-          </div>
+        <ListItem key={"gaplogo"} sx={{ minWidth: "auto", mb: "1rem" }}>
+          {open ? (
+            <div
+              style={{
+                width: "100%",
+                height: "3rem",
+                position: "relative",
+              }}
+            >
+              <Image
+                src={gapLogoFull}
+                fill
+                style={{ objectFit: "contain" }}
+                alt="GAP logo"
+              />
+            </div>
+          ) : (
+            <div
+              style={{
+                width: "2rem",
+                height: "2rem",
+                position: "relative",
+              }}
+            >
+              <Image
+                src={gapLogo}
+                fill
+                alt="GAP logo"
+                style={{ objectFit: "contain" }}
+              />
+            </div>
+          )}
         </ListItem>
         {items.map((item, index) => (
           <SidebarItemComponent
