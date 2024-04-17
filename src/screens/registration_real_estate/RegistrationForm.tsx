@@ -6,14 +6,13 @@ import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import GStepper from "@/components/stepper/GStepper";
 import GProgressStepper from "@/components/stepper/GProgressStepper";
-import GTab from "@/components/stepper/GTab";
+import GTab from "@/components/filter/GTab";
 import Divider from "@mui/material/Divider";
 import CompanyAddress from "./CompanyAddress";
 import BasicInformation from "./BasicInformation";
 import SummaryRegistration from "./SummaryRegistration";
 import ComercialPerson from "./CommercialPerson";
 import PrivatePerson from "./PrivatePerson";
-import BusinessRegistration from "./BusinessRegistration";
 
 interface RegistrationFormProps {
   activeStep: number;
