@@ -19,15 +19,15 @@ import * as yup from "yup";
 const validationSchema = yup.object({
   email: yup
     .string()
-    .email("Enter a valid email")
-    .required("Email is required"),
+    .email("Eingabe einer gültigen E-Mail")
+    .required("E-Mail ist erforderlich"),
   password: yup
     .string()
-    .required("Password is required")
-    .min(8, "Password should be of minimum 8 characters length")
+    .required("Passwort ist erforderlich")
+    .min(8, "Das Passwort sollte mindestens 8 Zeichen lang sein")
     .matches(
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-      "Password must contain at least one uppercase letter, one lowercase     letter, one digit, and one special character"
+      "Das Passwort muss mindestens einen Großbuchstaben, einen Kleinbuchstaben, eine Ziffer und ein Sonderzeichen enthalten"
     ),
 });
 
@@ -42,7 +42,7 @@ export default function LoginPage() {
       try {
         alert(JSON.stringify(values, null, 2));
       } catch (error: any) {
-        console.log("Error occured", error.message);
+        console.log("Unable to login user, post reqeust failed",error.name, error.message);
       }
     },
   });
