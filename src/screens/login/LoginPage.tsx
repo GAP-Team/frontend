@@ -13,8 +13,10 @@ import { FaRegEnvelope } from "react-icons/fa";
 import { PiLockBold } from "react-icons/pi";
 import HeroBanner from "../../components/common/InfoBanner";
 import Stack from "@mui/material/Stack";
+import Tooltip from '@mui/material/Tooltip';
 import { useFormik } from "formik";
 import * as yup from "yup";
+import CustomizedTooltips from "@/components/common/ToolTip";
 
 const validationSchema = yup.object({
   email: yup
@@ -123,6 +125,17 @@ export default function LoginPage() {
                 width: "33rem",
               }}
             >
+              <CustomizedTooltips
+                title={
+                  <React.Fragment>
+                  <Typography color="inherit" sx={{fontWeight:600}}>Email-Informationen</Typography>
+                  <Typography variant="body2">
+                    Eingabe einer gültigen E-Mail. e.g abx@xyz.com 
+                  </Typography>
+                  </React.Fragment>
+                }
+              >
+                
               <TextField
                 id="email"
                 name="email"
@@ -140,65 +153,74 @@ export default function LoginPage() {
                   ),
                 }}
                 sx={{ mb: 4 }}
-              />
-              <TextField
-                id="password"
-                label="Password"
-                type="password"
-                name="password"
-                value={formik.values.password}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                error={
-                  formik.touched.password && Boolean(formik.errors.password)
+                />
+              </CustomizedTooltips>
+              <CustomizedTooltips
+                title={
+                  <React.Fragment>
+                  <Typography color="inherit" sx={{fontWeight:600}}>Passwort-Informationen</Typography>
+                  <Typography variant="body2">
+                      Das Passwort muss mindestens einen Großbuchstaben, einen Kleinbuchstaben, eine Ziffer und ein Sonderzeichen enthalten.
+                  </Typography>
+                  </React.Fragment>
                 }
-                helperText={formik.touched.password && formik.errors.password}
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <PiLockBold />
-                    </InputAdornment>
-                  ),
-                }}
-              />
-            <Grid container sx={{ mt: 10 }}>
-              <Grid item xs sx={{ display: "flex", flexDirection: "column" }}>
-                <Typography
-                  variant="body2"
-                  style={{
-                    color: "#475A60",
-                    fontSize: "0.875rem",
-                    lineHeight: "1.25rem",
-                  }}
-                  >
-                  Noch keinen account?
-                </Typography>
-                <Link
-                  href="/registration"
-                  variant="body2"
-                  style={{
-                    color: "#22a7f1",
-                    fontSize: "1rem",
-                    textDecoration: "none",
-                    cursor: "pointer",
-                  }}
-                  >
-                  Registrieren
-                </Link>
-              </Grid>
-              <Grid item>
-                <Button
-                  variant="contained"
-                  color="gprimary"
-                  size="large"
-                  type="submit"
-                  sx={{ borderRadius: "0.5rem" }}
                 >
-                  Login
-                </Button>
-              </Grid>
-            </Grid>
-          </form>
+                    <TextField
+                      id="password"
+                      label="Password"
+                      type="password"
+                      name="password"
+                      value={formik.values.password}
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                      error={formik.touched.password && Boolean(formik.errors.password)}
+                      helperText={formik.touched.password && formik.errors.password}
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <PiLockBold />
+                          </InputAdornment>
+                        ),
+                      }} />
+                  </CustomizedTooltips>
+                  <Grid container sx={{ mt: 10 }}>
+                    <Grid item xs sx={{ display: "flex", flexDirection: "column" }}>
+                      <Typography
+                        variant="body2"
+                        style={{
+                          color: "#475A60",
+                          fontSize: "0.875rem",
+                          lineHeight: "1.25rem",
+                        }}
+                      >
+                        Noch keinen account?
+                      </Typography>
+                      <Link
+                        href="/registration"
+                        variant="body2"
+                        style={{
+                          color: "#22a7f1",
+                          fontSize: "1rem",
+                          textDecoration: "none",
+                          cursor: "pointer",
+                        }}
+                      >
+                        Registrieren
+                      </Link>
+                    </Grid>
+                    <Grid item>
+                      <Button
+                        variant="contained"
+                        color="gprimary"
+                        size="large"
+                        type="submit"
+                        sx={{ borderRadius: "0.5rem" }}
+                      >
+                        Login
+                      </Button>
+                    </Grid>
+                  </Grid>
+            </form>
           </Box>
           <Typography
             sx={{
