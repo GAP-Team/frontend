@@ -1,14 +1,18 @@
 import React from "react";
 import Link from "next/link";
-import Button,{ButtonProps} from '@mui/material/Button';
-import '../button/GButton.module.css';
-import { styled } from '@mui/material/styles';
+import Button, { ButtonProps } from "@mui/material/Button";
+import "../button/GButton.module.css";
+
 interface GButtonProps extends ButtonProps {
   children?: React.ReactNode;
 }
 
-
-const GButton: React.FC<GButtonProps> = ({ children, color="gprimary", sx, ...otherProps }) => {
+const GButton: React.FC<GButtonProps> = ({
+  children,
+  color = "gprimary",
+  sx,
+  ...otherProps
+}) => {
   return (
     <Link href="#">
       <Button
@@ -17,18 +21,18 @@ const GButton: React.FC<GButtonProps> = ({ children, color="gprimary", sx, ...ot
         size="large"
         className="continue"
         sx={{
-          borderRadius: '0.5rem',
-          margin: '0.5rem',
-          py:'0.5rem',
+          borderRadius: "0.5rem",
+          margin: "0.5rem",
+          py: "0.5rem",
           fontWeight: 600,
-          textTransform: 'capitalize',
-          ...(sx || {})
+          textTransform: "capitalize",
+          ...(sx || {}),
         }}
-      {...otherProps}
-    >
-      {children}
-    </Button>
-   </Link>
+        {...otherProps}
+      >
+        {children}
+      </Button>
+    </Link>
   );
 };
 

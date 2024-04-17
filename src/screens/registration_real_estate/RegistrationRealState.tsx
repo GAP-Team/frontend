@@ -52,7 +52,7 @@ const RegistrationRealState = () => {
         md={4}
         lg={4}
         sx={{
-          backgroundImage: `url(/registration-bg.png)`,
+          backgroundImage: `url(/images/registration-bg.png)`,
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover",
           backgroundPosition: "center",

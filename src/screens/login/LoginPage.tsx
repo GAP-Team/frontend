@@ -12,8 +12,6 @@ import Grid from "@mui/material/Grid";
 import { FaRegEnvelope } from "react-icons/fa";
 import { PiLockBold } from "react-icons/pi";
 import HeroBanner from "../../components/common/InfoBanner";
-import Stack from "@mui/material/Stack";
-import Tooltip from '@mui/material/Tooltip';
 import { useFormik } from "formik";
 import * as yup from "yup";
 import CustomizedTooltips from "@/components/common/ToolTip";
@@ -44,7 +42,11 @@ export default function LoginPage() {
       try {
         alert(JSON.stringify(values, null, 2));
       } catch (error: any) {
-        console.log("Unable to login user, post reqeust failed",error.name, error.message);
+        console.log(
+          "Unable to login user, post reqeust failed",
+          error.name,
+          error.message
+        );
       }
     },
   });
@@ -57,7 +59,7 @@ export default function LoginPage() {
         md={6}
         lg={6}
         sx={{
-          backgroundImage: `url(/login-bg.png)`,
+          backgroundImage: `url(/images/login-bg.png)`,
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover",
           backgroundPosition: "center",
@@ -128,98 +130,106 @@ export default function LoginPage() {
               <CustomizedTooltips
                 title={
                   <React.Fragment>
-                  <Typography color="inherit" sx={{fontWeight:600}}>Email-Informationen</Typography>
-                  <Typography variant="body2">
-                    Eingabe einer gültigen E-Mail. e.g abx@xyz.com 
-                  </Typography>
+                    <Typography color="inherit" sx={{ fontWeight: 600 }}>
+                      Email-Informationen
+                    </Typography>
+                    <Typography variant="body2">
+                      Eingabe einer gültigen E-Mail. e.g abx@xyz.com
+                    </Typography>
                   </React.Fragment>
                 }
               >
-                
-              <TextField
-                id="email"
-                name="email"
-                label="Email"
-                value={formik.values.email}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                error={formik.touched.email && Boolean(formik.errors.email)}
-                helperText={formik.touched.email && formik.errors.email}
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <FaRegEnvelope />
-                    </InputAdornment>
-                  ),
-                }}
-                sx={{ mb: 4 }}
+                <TextField
+                  id="email"
+                  name="email"
+                  label="Email"
+                  value={formik.values.email}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  error={formik.touched.email && Boolean(formik.errors.email)}
+                  helperText={formik.touched.email && formik.errors.email}
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <FaRegEnvelope />
+                      </InputAdornment>
+                    ),
+                  }}
+                  sx={{ mb: 4 }}
                 />
               </CustomizedTooltips>
               <CustomizedTooltips
                 title={
                   <React.Fragment>
-                  <Typography color="inherit" sx={{fontWeight:600}}>Passwort-Informationen</Typography>
-                  <Typography variant="body2">
-                      Das Passwort muss mindestens einen Großbuchstaben, einen Kleinbuchstaben, eine Ziffer und ein Sonderzeichen enthalten.
-                  </Typography>
+                    <Typography color="inherit" sx={{ fontWeight: 600 }}>
+                      Passwort-Informationen
+                    </Typography>
+                    <Typography variant="body2">
+                      Das Passwort muss mindestens einen Großbuchstaben, einen
+                      Kleinbuchstaben, eine Ziffer und ein Sonderzeichen
+                      enthalten.
+                    </Typography>
                   </React.Fragment>
                 }
-                >
-                    <TextField
-                      id="password"
-                      label="Password"
-                      type="password"
-                      name="password"
-                      value={formik.values.password}
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                      error={formik.touched.password && Boolean(formik.errors.password)}
-                      helperText={formik.touched.password && formik.errors.password}
-                      InputProps={{
-                        startAdornment: (
-                          <InputAdornment position="start">
-                            <PiLockBold />
-                          </InputAdornment>
-                        ),
-                      }} />
-                  </CustomizedTooltips>
-                  <Grid container sx={{ mt: 10 }}>
-                    <Grid item xs sx={{ display: "flex", flexDirection: "column" }}>
-                      <Typography
-                        variant="body2"
-                        style={{
-                          color: "#475A60",
-                          fontSize: "0.875rem",
-                          lineHeight: "1.25rem",
-                        }}
-                      >
-                        Noch keinen account?
-                      </Typography>
-                      <Link
-                        href="/registration"
-                        variant="body2"
-                        style={{
-                          color: "#22a7f1",
-                          fontSize: "1rem",
-                          textDecoration: "none",
-                          cursor: "pointer",
-                        }}
-                      >
-                        Registrieren
-                      </Link>
-                    </Grid>
-                    <Grid item>
-                      <Button
-                        variant="contained"
-                        color="gprimary"
-                        size="large"
-                        type="submit"
-                        sx={{ borderRadius: "0.5rem" }}
-                      >
-                        Login
-                      </Button>
-                    </Grid>
-                  </Grid>
+              >
+                <TextField
+                  id="password"
+                  label="Password"
+                  type="password"
+                  name="password"
+                  value={formik.values.password}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  error={
+                    formik.touched.password && Boolean(formik.errors.password)
+                  }
+                  helperText={formik.touched.password && formik.errors.password}
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <PiLockBold />
+                      </InputAdornment>
+                    ),
+                  }}
+                />
+              </CustomizedTooltips>
+              <Grid container sx={{ mt: 10 }}>
+                <Grid item xs sx={{ display: "flex", flexDirection: "column" }}>
+                  <Typography
+                    variant="body2"
+                    style={{
+                      color: "#475A60",
+                      fontSize: "0.875rem",
+                      lineHeight: "1.25rem",
+                    }}
+                  >
+                    Noch keinen account?
+                  </Typography>
+                  <Link
+                    href="/registration"
+                    variant="body2"
+                    style={{
+                      color: "#22a7f1",
+                      fontSize: "1rem",
+                      textDecoration: "none",
+                      cursor: "pointer",
+                    }}
+                  >
+                    Registrieren
+                  </Link>
+                </Grid>
+                <Grid item>
+                  <Button
+                    variant="contained"
+                    color="gprimary"
+                    size="large"
+                    type="submit"
+                    sx={{ borderRadius: "0.5rem" }}
+                  >
+                    Login
+                  </Button>
+                </Grid>
+              </Grid>
             </form>
           </Box>
           <Typography
