@@ -11,7 +11,19 @@ import { germanStates, listOfOrderTypes, listOfTrades } from '@/utils/Constants'
 import heroBackgroundPicture from '../../../public/hero6.jpg';
 import Image from 'next/image';
 const HeroSection = () => {
+  const [selectedTrade, setSelectedTrade] = useState("Gewerke");
+  const [selectedOrderType, setSelectedAuftype] = useState("Auftragstypen");
+  const [selectedState, setSelectedState] = useState("Bundesländer");
 
+  const truncateLabel = (label:string) => {
+    const maxLength = 20;
+    if (label.length > maxLength) {
+      return label.substring(0, maxLength) + '...'; // Truncate and append ellipsis
+    }
+    return label;
+  };
+  const truncatedOrderType = truncateLabel(selectedOrderType);
+  
   return (
     <>
       <section className="bg-white w-full dark:bg-gray-900">
@@ -48,18 +60,18 @@ const HeroSection = () => {
                     <form className="flex flex-col justify-center text-center pt-10 pb-4 md:flex-row">
                       <div className="flex flex-col w-full px-2 sm:px-4 md:w-1/3">
                         <label htmlFor="craft" className="text-sm font-medium text-gray-700">Wählen Sie ein Gewerk aus:</label>
-                        <Dropdown label="Gewerke" size="lg" color="gray" style={{ width: '90%', alignSelf: 'center', margin: 2 }}>
+                        <Dropdown label={selectedTrade} size="lg" color="gray" style={{ width: '90%', alignSelf: 'center', margin: 2 }}>
                           {listOfTrades.map((category, index) => (
                             <React.Fragment key={index}>
                               {category.category ? (
                                 <Dropdown label={category.category} size="md" placement="right" style={{ width: '300px' }} color="gray">
                                   {category.items.map((item, itemIndex) => (
-                                    <DropdownItem key={itemIndex}>{item}</DropdownItem>
+                                    <DropdownItem onClick={() => setSelectedTrade(item)} key={itemIndex}>{item}</DropdownItem>
                                   ))}
                                 </Dropdown>
                               ) : (
                                 category.items.map((item, itemIndex) => (
-                                  <DropdownItem key={itemIndex}>{item}</DropdownItem>
+                                  <DropdownItem onClick={() => setSelectedTrade(item)} key={itemIndex}>{item}</DropdownItem>
                                 ))
                               )}
                             </React.Fragment>
@@ -70,18 +82,18 @@ const HeroSection = () => {
 
                       <div className="flex flex-col w-full px-2 sm:px-4 md:w-1/3">
                         <label htmlFor="type" className="text-sm font-medium text-gray-700">Wählen Sie ein Auftragstyp aus:</label>
-                        <Dropdown label="Auftragstypen" size="lg" style={{ width: '90%', alignSelf: 'center', margin: 2 }} color="gray">
+                        <Dropdown label={truncatedOrderType} size="lg" style={{ width: '90%', alignSelf: 'center', margin: 2,overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap',maxWidth:'100%' }} color="gray">
                           {listOfOrderTypes.map((category, index) => (
                             <React.Fragment key={index}>
                               {category.category ? (
                                 <Dropdown label={category.category} size="md" placement="right" style={{ width: '300px' }} color="gray">
                                   {category.items.map((item, itemIndex) => (
-                                    <DropdownItem key={itemIndex}>{item}</DropdownItem>
+                                    <DropdownItem onClick={() => setSelectedAuftype(item)} key={itemIndex}>{item}</DropdownItem>
                                   ))}
                                 </Dropdown>
                               ) : (
                                 category.items.map((item, itemIndex) => (
-                                  <DropdownItem key={itemIndex}>{item}</DropdownItem>
+                                  <DropdownItem onClick={() => setSelectedAuftype(item)} key={itemIndex}>{item}</DropdownItem>
                                 ))
                               )}
                             </React.Fragment>
@@ -91,10 +103,10 @@ const HeroSection = () => {
 
                       <div className="flex flex-col w-full px-2 sm:px-4 md:w-1/3">
                         <label htmlFor="type" className="text-sm font-medium text-gray-700">Wählen Sie ein Bundesland aus:</label>
-                        <Dropdown label="Bundesländer" size="lg" style={{width: '90%', alignSelf: 'center', margin: 2 }} color="gray">
+                        <Dropdown label={selectedState} size="lg" style={{width: '90%', alignSelf: 'center', margin: 2 }} color="gray">
                         <div className="relative w-90% self-center m-2 max-h-60 overflow-y-auto">
                           {germanStates.map((item, ind) => (
-                            <DropdownItem key={ind}>{item.label}</DropdownItem>
+                            <DropdownItem onClick={() => setSelectedState(item.label)} key={ind}>{item.label}</DropdownItem>
                           ))}
                           </div>
                           </Dropdown>
