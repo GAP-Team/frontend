@@ -1,4 +1,13 @@
-GAP Frontend build with Next.js Framework
+## GAP Frontend 
+
+A Next.js 14 and App Router-ready featuring:
+
+- Next.js App Router
+- Optimized for SEO using Next.js's Metadata
+- Styling Landingpage with Tailwind CSS + Daisy + Flowbite
+- Styling GAP dashboards with MUI Library
+
+
 
 ## Conventions to hold on:
 - name of folders always in **lower case** ot it has multiple words than **like_this**.
@@ -26,5 +35,12 @@ npm run dev
 The application is setup to run in docker with docker-compose `docker-compose up`
 
 if you do not want log messages run `docker-compose up -d`
+
+## The App hosted on DigitalOcean
+
+```
+goldfish-app-2ccci.ondigitalocean.app/
+
+```
 
 

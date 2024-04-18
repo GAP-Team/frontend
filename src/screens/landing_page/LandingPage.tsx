@@ -1,15 +1,14 @@
 import React from "react";
 import styles from "./LandingPage.module.scss";
-import GBlogSection from "@/sections/GBlogSection/GBlogSection";
-import GFeatures from "@/sections/GFeatures/GFeatures";
-import GOfferSection from "@/sections/GOfferSection/GOfferSection";
-import GFunctionSection from "@/sections/GFunctionSection/GFunctionSection";
+import GBlogSection from "@/components/common/GBlogSection/GBlogSection";
+import GFeatures from "@/components/common/GFeatures/GFeatures";
+import GOfferSection from "@/components/common/GOfferSection/GOfferSection";
+import GFunctionSection from "@/components/common/GFunctionSection/GFunctionSection";
 import GTestimonials from "@/components/testimonial/GTestimonials";
-import GVideoSection from "@/sections/GVideoSection/GVideoSection";
-import GClientSection from "@/sections/GClientSection/GClientSection";
-import GStatSection from "@/sections/GStatSection/GStatSection";
-import HeroSection from "@/sections/GHeroSection/GHeroSection";
-
+import GVideoSection from "@/components/common/GVideoSection/GVideoSection";
+import GClientSection from "@/components/common/GClientSection/GClientSection";
+import GStatSection from "@/components/common/GStatSection/GStatSection";
+import HeroSection from "@/components/common/GHeroSection/GHeroSection";
 
 export default function LandingPage() {
   return (

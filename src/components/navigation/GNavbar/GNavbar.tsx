@@ -2,7 +2,7 @@ import { Button } from "flowbite-react";
 import Image from "next/image";
 import { useState } from "react";
 import Link from "next/link";
-import gapLogo from "../../../public/icons/gap-logo.svg";
+import gapLogo from "../../../../public/icons/gap-logo.svg";
 import { Lalezar } from "next/font/google";
 import { FaArrowRightToBracket } from "react-icons/fa6";
 const lalezar = Lalezar({ subsets: ["latin"], weight: ["400"] });

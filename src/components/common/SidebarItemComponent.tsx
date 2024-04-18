@@ -1,9 +1,9 @@
 // SidebarItemComponent.tsx
-import React from 'react';
+import React from "react";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import ListItemButton from '@mui/material/ListItemButton';
-import { SidebarItem } from '@/sections/GSidebar/SideBar'; 
+import ListItemButton from "@mui/material/ListItemButton";
+import { SidebarItem } from "@/components/navigation/GSidebar/SideBar";
 
 interface SidebarItemComponentProps {
   item: SidebarItem;
