@@ -1,11 +1,10 @@
 import React from "react";
-import TitleSection from "../../components/label/title-section";
-import Badge from "../../components/badge/GBadge";
-import { AuftrafSvg, AngebotSvg, SolutionSvg } from "../../components/svg/function-svg";
-import Link from 'next/link';
-import { Button } from 'flowbite-react';
+import TitleSection from "../../label/title-section";
+import Badge from "../../badge/GBadge";
+import { AuftrafSvg, AngebotSvg, SolutionSvg } from "../../svg/function-svg";
+import Link from "next/link";
+import { Button } from "flowbite-react";
 import { FaArrowRightLong } from "react-icons/fa6";
-
 
 const GFunctionSection = () => {
   return (
@@ -19,9 +18,7 @@ const GFunctionSection = () => {
         <ServiceStep
           title="Auftrag beschreiben"
           subtitle="Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dicta maxime, maiores reiciendis fuga animi, quidem"
-          icon={
-            <AuftrafSvg className="inline-block  w-10 h-10 stroke-2" />
-          }
+          icon={<AuftrafSvg className="inline-block  w-10 h-10 stroke-2" />}
         />
         <IconSeparator />
         <ServiceStep
@@ -33,18 +30,17 @@ const GFunctionSection = () => {
         <ServiceStep
           title="Auftrag beschreiben"
           subtitle="Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dicta maxime, maiores reiciendis fuga animi, quidem"
-          icon={
-            <SolutionSvg className="inline-block  w-10 h-10 stroke-2" />
-          }
+          icon={<SolutionSvg className="inline-block  w-10 h-10 stroke-2" />}
         />
       </div>
-      <Link 
+      <Link
         className="mb-8 bg-[#ffb41f] hover:bg-yellow-400 font-bold text-white px-6 py-3 mt-12 rounded-lg shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
         type="button"
         href="/login"
       >
-        Jetzt Loslegen <span className="ml-2 text-lg font-bold text-white ">{"->"}</span>
-      </Link >
+        Jetzt Loslegen{" "}
+        <span className="ml-2 text-lg font-bold text-white ">{"->"}</span>
+      </Link>
     </div>
   );
 };
@@ -65,8 +61,8 @@ const IconSeparator = () => {
       </svg>
 
       <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
         fill="none"
         className="md:hidden w-14 h-14"
       >
@@ -88,9 +84,7 @@ const ServiceStep = ({
   title: string;
 }) => {
   return (
-    <div
-      className="w-full md:w-auto md:flex-1 p-4 max-w-screen-xl"
-    >
+    <div className="w-full md:w-auto md:flex-1 p-4 max-w-screen-xl">
       <div className="card bg-base-100 border border-black shadow-xl hover:shadow-2xl transition-shadow duration-300">
         <figure className="px-10 pt-10">{icon}</figure>
         <div className="card-body">

@@ -46,26 +46,7 @@ const RegistrationRealState = () => {
 
   return (
     <Grid container component="main" sx={{ height: "100vh" }}>
-      <Grid
-        item
-        xs={false}
-        md={4}
-        lg={4}
-        sx={{
-          backgroundImage: `url(/images/registration-bg.png)`,
-          backgroundRepeat: "no-repeat",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          display: {
-            xs: "none",
-            sm: "none",
-            md: "block",
-            lg: "block",
-            xl: "block",
-          },
-          height: "100%",
-        }}
-      >
+      <Grid item xs={false} md={4} lg={4} sx={gridStyle}>
         {/* Make this Box a flex container to use Flexbox properties */}
         <InfoBanner
           title="Where skills are developed"
@@ -143,6 +124,22 @@ const RegistrationRealState = () => {
       </Grid>
     </Grid>
   );
+};
+
+// css design
+const gridStyle = {
+  backgroundImage: `url(/images/registration-bg.png)`,
+  backgroundRepeat: "no-repeat",
+  backgroundSize: "cover",
+  backgroundPosition: "center",
+  display: {
+    xs: "none",
+    sm: "none",
+    md: "block",
+    lg: "block",
+    xl: "block",
+  },
+  height: "100%",
 };
 
 export default RegistrationRealState;

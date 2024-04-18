@@ -1,14 +1,14 @@
 "use client";
 import React, { useState } from "react";
-import GBadge from "../../components/badge/GBadge";
+import GBadge from "../../badge/GBadge";
 import {
   AufzugSvgIcon,
   FireSvgIcon,
   BulbSvgIcon,
   VentSvgIcon,
   HomeSvgIcon,
-} from "../../components/svg/features-svg";
-import TitleSection from "../../components/label/title-section";
+} from "../../svg/features-svg";
+import TitleSection from "../../label/title-section";
 
 const GFeatures = () => {
   return (
