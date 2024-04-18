@@ -11,6 +11,7 @@ import { CgNotes } from "react-icons/cg";
 import Sidebar from "@/components/navigation/GSidebar/SideBar";
 import Box from "@mui/material/Box";
 import PropertyFilterPanel from "@/components/filter/PropertyFilterPanel";
+import GAppbar from "@/components/navigation/GAppbar/GAppbar";
 
 const Dashboard = () => {
   const sidebarItems: SidebarItem[] = [
@@ -21,13 +22,15 @@ const Dashboard = () => {
     { icon: MdOutlineNoteAlt, text: "Aufträge" },
     { icon: TbPigMoney, text: "Kosteneinsparung" },
     { icon: FaRegFlag, text: "Favoriten" },
-    // ... add other items here
   ];
 
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box sx={{ display: "flex", justifyContent: "stretch" }}>
       <Sidebar items={sidebarItems} />
-      <PropertyFilterPanel />
+      <Box sx={{ width: "100%" }}>
+        <GAppbar />
+        <PropertyFilterPanel />
+      </Box>
     </Box>
   );
 };
