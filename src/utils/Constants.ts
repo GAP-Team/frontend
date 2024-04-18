@@ -105,10 +105,11 @@ export const ansprechpartner: Detail[] = [
 
 export const adresse: Detail[] = [
   { label: "Land", value: "Germany" },
-  { label: "Straße", value: "Heinrich-Baumann Str. 49" },
-  { label: "Stadt", value: "Schwerin" },
   { label: "Bundesland", value: "Mecklenburg-Vorpom..." },
+  { label: "Straße", value: "Heinrich-Baumann Str. 49" },
+  { label: "Hause Nummer", value: "123" },
   { label: "Postleitzahl", value: "19061" },
+  { label: "Stadt", value: "Schwerin" },
 ];
 export const gewerbeanmeldung: Detail[] = [
   { label: "Handerlregister Nummer", value: "HRB 7890" },

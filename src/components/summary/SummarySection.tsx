@@ -5,8 +5,7 @@ import { styled, useTheme } from '@mui/material/styles';
 import SummaryCard from '@/components/summary/SummaryCard';
 import { FaRegEdit } from 'react-icons/fa';
 import DetailItem from '../common/DetailItem';
-
-interface Detail {
+export interface Detail {
   label: string;
   value: string;
 }

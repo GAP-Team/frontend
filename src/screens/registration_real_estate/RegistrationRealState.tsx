@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
@@ -9,6 +9,16 @@ import { useRouter } from "next/navigation";
 import RegistrationForm from "./RegistrationForm";
 import SucessPage from "./SucessPage";
 import InfoBanner from "@/components/common/InfoBanner";
+import { Formik, Form } from "formik";
+import * as yup from "yup";
+
+interface FormErrors {
+  [key: string]: string;
+}
+
+type ValidateFormFunction = () => Promise<FormErrors>;
+type SetTouchedFunction = (touched: {[key: string]: boolean}) => void;
+type SubmitFormFunction = () => void;
 
 function getSteps() {
   return [
@@ -19,20 +29,102 @@ function getSteps() {
   ];
 }
 
+const validationSchema = yup.object({
+  firstname: yup
+    .string()
+    .required("Vorname ist erforderlich"),
+  lastname: yup
+    .string()
+    .required("Nachname ist erforderlich"),
+  email: yup
+    .string()
+    .email("Eingabe einer gültigen E-Mail")
+    .required("E-Mail ist erforderlich"),
+  telephone: yup
+    .string()
+    .required("Telefonnummer ist erforderlich")
+    .matches(
+      /^(\+?\d{1,3}[- ]?)?\d{10}$/,
+      "Telefonnummer muss gültig sein"
+    ),
+  company: yup
+    .string()
+    .required("Firmenname ist erforderlich"),
+  state: yup
+    .string()
+    .required("Bundesland ist erforderlich"),
+  street: yup
+    .string()
+    .required("Straßenname ist erforderlich"),
+  hausnr: yup
+    .string()
+    .required("Hausnummer ist erforderlich"),
+  plz: yup
+    .string()
+    .required("Postleitzahl ist erforderlich")
+    .matches(
+      /^\d{4,5}$/,
+      "Postleitzahl muss zwischen 4 und 5 Ziffern lang sein"
+    ),
+  city: yup
+    .string()
+    .required("Stadt ist erforderlich"),
+  registrationnum: yup
+    .string()
+});
+
 const RegistrationRealState = () => {
   const router = useRouter();
   const [activeStep, setActiveStep] = React.useState(0);
   const steps = getSteps();
 
-  const handleNext = () => {
-    setActiveStep((prevActiveStep: number) => {
-      return prevActiveStep <= 3 ? prevActiveStep + 1 : prevActiveStep;
-    });
+
+  const handleNext = async (validateForm: ValidateFormFunction,
+    setTouched: SetTouchedFunction,
+    submitForm: SubmitFormFunction): Promise<void> => {
+    // Get the fields to validate for the current step
+    const fieldsPerStep: {[key: number]: string[]} = {
+      0: ['firstname', 'lastname', 'email', 'telephone', 'company'],
+      1: ['state', 'street', 'hausnr', 'plz', 'city'],
+      2: ['registrationnum'], // Adjust fields according to what you need for each step
+    };
+  
+    const fieldsToValidate = fieldsPerStep[activeStep];
+
+    // Validate only the fields for the current step
+    // First, mark fields as touched to ensure errors are shown
+    const touchedUpdates = fieldsToValidate?.reduce((acc, field) => ({
+      ...acc,
+      [field]: true,
+    }), {});
+    setTouched(
+      touchedUpdates
+      );
+      
+    const formErrors = await validateForm();
+    // Check if all these fields are valid
+    const isCurrentStepValid = !fieldsToValidate || fieldsToValidate?.every(
+      (field) => !formErrors[field]
+    );
+
+    if (isCurrentStepValid) {
+      if (activeStep === 3 ) {
+        // If this is the last step and it's valid, submit the form
+        submitForm();
+        setActiveStep((prevActiveStep) => prevActiveStep + 1);
+      } else {
+        // Not the last step, just move to the next step
+        setActiveStep((prevActiveStep) => prevActiveStep + 1);
+      }
+    }
   };
 
   const handleBack = () => {
-    // Check if the active step is already 0 before updating the state
-    if (activeStep > 0) {
+    if (activeStep > 3) {
+      //If user has registered then redirect to new registration
+      setActiveStep(0);
+    } // Check if the active step is already 0 before updating the state
+    else if (activeStep > 0) {
       setActiveStep((prevActiveStep) => prevActiveStep - 1);
     } else {
       // If active step is 0, then push to login
@@ -40,9 +132,29 @@ const RegistrationRealState = () => {
     }
   };
 
-  const handleReset = () => {
-    setActiveStep(0);
-  };
+  const initialValues = {
+      firstname: "",
+      lastname: "",
+      email: "",
+      telephone: "",
+      company: "",
+      country:"Deutschland",
+      state: "",
+      street: "",
+      hausnr: "",
+      plz: "",
+      city: "",
+      registrationnum:"",
+  }
+    
+    const onSubmit= (values:any) => {
+      try {
+        alert(JSON.stringify(values, null, 2));
+      } catch (error: any) {
+        console.log("Unable to login user, post reqeust failed",error.name, error.message);
+      }
+    }
+    
 
   return (
     <Grid container component="main" sx={{ height: "100vh" }}>
@@ -85,7 +197,7 @@ const RegistrationRealState = () => {
             color: "#8D999C",
             marginTop: "2.5rem",
           }}
-          onClick={activeStep === 0 ? () => router.back() : handleBack}
+          onClick={handleBack}
         >
           <MdArrowBackIos />
           Zurück
@@ -102,31 +214,45 @@ const RegistrationRealState = () => {
         >
           Registrierung
         </Typography>
-        <Grid
-          sx={{
-            // my: '2rem',
-            marginLeft: "3.75rem",
-            marginRight: "3.5rem",
-            display: "flex",
-            flexDirection: "row",
-            backgroundColor: "white",
-            height: "37.375rem;",
-            padding: "1.5rem",
-            borderRadius: "0.5rem",
-            boxShadow: "0px 8px 24px 0px rgba(30, 49, 55, 0.08)",
+        <Formik
+          initialValues={initialValues}
+          validationSchema={validationSchema}
+          onSubmit={async (values, { resetForm }) => {
+            await onSubmit(values);
+            resetForm();
           }}
+          enableReinitialize
         >
-          {activeStep <= 3 ? (
-            <RegistrationForm
-              activeStep={activeStep}
-              steps={steps}
-              handleBack={handleBack}
-              handleNext={handleNext}
-            />
-          ) : (
-            <SucessPage />
+          {({ validateForm, setTouched, submitForm }) => (
+            <Form>
+              <Grid
+                sx={{
+                  // my: '2rem',
+                  marginLeft: "3.75rem",
+                  marginRight: "3.5rem",
+                  display: "flex",
+                  flexDirection: "row",
+                  backgroundColor: "white",
+                  height: "37.375rem;",
+                  padding: "1.5rem",
+                  borderRadius: "0.5rem",
+                  boxShadow: "0px 8px 24px 0px rgba(30, 49, 55, 0.08)",
+                }}
+              >
+                {activeStep <= 3 ? (
+                  <RegistrationForm
+                    activeStep={activeStep}
+                    steps={steps}
+                    handleBack={handleBack}
+                    handleNext={() => handleNext(validateForm, setTouched,submitForm)}
+                  />
+                ) : (
+                  <SucessPage />
+                )}
+              </Grid>
+            </Form>
           )}
-        </Grid>
+          </Formik>
         <Typography
           sx={{
             color: "#475A60",
@@ -134,7 +260,7 @@ const RegistrationRealState = () => {
             marginTop: "3rem",
             marginLeft: "3.75rem",
           }}
-        >
+          >
           Hilfe?{" "}
           <Link href="#" color="#1E3137" fontWeight="bold">
             Kontakt Support

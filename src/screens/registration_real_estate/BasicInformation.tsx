@@ -9,13 +9,16 @@ import GTextInput from "@/components/input/GTextInput";
 interface GenericFormProps {
   value?: number;
   type?: string;
+  formik: any;
 }
 
-const BasicInformation = ({ value, type }: GenericFormProps): JSX.Element => {
+const BasicInformation = ({formik}: GenericFormProps): JSX.Element => {
+  React.useEffect(() => {
+    formik.validateForm();
+  }, [])
+  
   return (
     <Box
-      component="form"
-      noValidate
       sx={{ p: 1, width: "auto", marginLeft: "1.5rem" }}
     >
       <Grid container spacing={2}>
@@ -23,16 +26,26 @@ const BasicInformation = ({ value, type }: GenericFormProps): JSX.Element => {
           <LabelWithAsterisk>Ihre Vorname</LabelWithAsterisk>
           <GTextInput
             placeholder="Geben Sie Ihre Vorname"
-            id="firsName"
-            name="firstName"
+            id="firstname"
+            name="firstname"
+            value={formik.values.firstname}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={formik.touched.firstname && Boolean(formik.errors.firstname)}
+            helperText={formik.touched.firstname && formik.errors.firstname}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
           <LabelWithAsterisk>Ihre Nachname</LabelWithAsterisk>
           <GTextInput
             placeholder="Geben Sie Ihre Nachname"
-            id="lastName"
-            name="lastName"
+            id="lastname"
+            name="lastname"
+            value={formik.values.lastname}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={formik.touched.lastname && Boolean(formik.errors.lastname)}
+            helperText={formik.touched.lastname && formik.errors.lastname}
           />
         </Grid>
         <Grid item xs={12}>
@@ -41,12 +54,25 @@ const BasicInformation = ({ value, type }: GenericFormProps): JSX.Element => {
             placeholder="Geben Sie Ihre berufliche E-Mail-Adresse"
             id="email"
             name="email"
+            value={formik.values.email}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={formik.touched.email && Boolean(formik.errors.email)}
+            helperText={formik.touched.email && formik.errors.email}
           />
         </Grid>
 
         <Grid item xs={12}>
           <LabelWithAsterisk>TELEFONNUMMER</LabelWithAsterisk>
-          <PhoneInput />
+          <PhoneInput
+            id="telephone"
+            name="telephone"
+            value={formik.values.telephone}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={formik.touched.telephone && Boolean(formik.errors.telephone)}
+            helperText={formik.touched.telephone && formik.errors.telephone}
+          />
         </Grid>
 
         <Grid item xs={12}>
@@ -55,8 +81,13 @@ const BasicInformation = ({ value, type }: GenericFormProps): JSX.Element => {
             placeholder="Geben Sie Ihre Firma Name"
             id="company"
             name="company"
+            value={formik.values.company}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={formik.touched.company && Boolean(formik.errors.company)}
+            helperText={formik.touched.company && formik.errors.company}
           />
-        </Grid>
+          </Grid>
       </Grid>
     </Box>
   );

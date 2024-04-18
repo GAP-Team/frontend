@@ -1,13 +1,16 @@
-import React from "react";
+import React, { FocusEventHandler } from "react";
 import TextField from "@mui/material/TextField";
 
 interface TextInputProps {
   placeholder?: string;
   value?: string;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  error?: boolean;
+  error?: boolean | undefined;
   id?: string;
   name?: string;
+  label?: string;
+  onBlur?: FocusEventHandler<HTMLInputElement | HTMLTextAreaElement> | undefined;
+  helperText?: string;
 }
 
 const GTextInput: React.FC<TextInputProps> = ({
@@ -17,6 +20,9 @@ const GTextInput: React.FC<TextInputProps> = ({
   error,
   id,
   name,
+  label,
+  onBlur,
+  helperText,
 }) => {
   return (
     <TextField
@@ -27,6 +33,10 @@ const GTextInput: React.FC<TextInputProps> = ({
       variant="outlined"
       value={value}
       placeholder={placeholder}
+      error={error}
+      label={label}
+      onBlur={onBlur}
+      helperText={helperText}
       onChange={onChange}
     />
   );
