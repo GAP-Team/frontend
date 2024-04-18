@@ -10,8 +10,7 @@ import RegistrationForm from "./RegistrationForm";
 import SucessPage from "./SucessPage";
 import InfoBanner from "@/components/common/InfoBanner";
 import { Formik, Form } from "formik";
-import * as yup from "yup";
-
+import { registrationValidationSchema } from "@/utils/ValidationSchema";
 interface FormErrors {
   [key: string]: string;
 }
@@ -28,50 +27,6 @@ function getSteps() {
     "Zusammenfassung",
   ];
 }
-
-const validationSchema = yup.object({
-  firstname: yup
-    .string()
-    .required("Vorname ist erforderlich"),
-  lastname: yup
-    .string()
-    .required("Nachname ist erforderlich"),
-  email: yup
-    .string()
-    .email("Eingabe einer gültigen E-Mail")
-    .required("E-Mail ist erforderlich"),
-  telephone: yup
-    .string()
-    .required("Telefonnummer ist erforderlich")
-    .matches(
-      /^(\+?\d{1,3}[- ]?)?\d{10}$/,
-      "Telefonnummer muss gültig sein"
-    ),
-  company: yup
-    .string()
-    .required("Firmenname ist erforderlich"),
-  state: yup
-    .string()
-    .required("Bundesland ist erforderlich"),
-  street: yup
-    .string()
-    .required("Straßenname ist erforderlich"),
-  hausnr: yup
-    .string()
-    .required("Hausnummer ist erforderlich"),
-  plz: yup
-    .string()
-    .required("Postleitzahl ist erforderlich")
-    .matches(
-      /^\d{4,5}$/,
-      "Postleitzahl muss zwischen 4 und 5 Ziffern lang sein"
-    ),
-  city: yup
-    .string()
-    .required("Stadt ist erforderlich"),
-  registrationnum: yup
-    .string()
-});
 
 const RegistrationRealState = () => {
   const router = useRouter();
@@ -216,7 +171,7 @@ const RegistrationRealState = () => {
         </Typography>
         <Formik
           initialValues={initialValues}
-          validationSchema={validationSchema}
+          validationSchema={registrationValidationSchema}
           onSubmit={async (values, { resetForm }) => {
             await onSubmit(values);
             resetForm();

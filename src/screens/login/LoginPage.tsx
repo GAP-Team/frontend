@@ -15,23 +15,9 @@ import HeroBanner from "../../components/common/InfoBanner";
 import Stack from "@mui/material/Stack";
 import Tooltip from '@mui/material/Tooltip';
 import { useFormik } from "formik";
-import * as yup from "yup";
 import CustomizedTooltips from "@/components/common/ToolTip";
+import { loginValidationSchema } from "@/utils/ValidationSchema";
 
-const validationSchema = yup.object({
-  email: yup
-    .string()
-    .email("Eingabe einer gültigen E-Mail")
-    .required("E-Mail ist erforderlich"),
-  password: yup
-    .string()
-    .required("Passwort ist erforderlich")
-    .min(8, "Das Passwort sollte mindestens 8 Zeichen lang sein")
-    .matches(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-      "Das Passwort muss mindestens einen Großbuchstaben, einen Kleinbuchstaben, eine Ziffer und ein Sonderzeichen enthalten"
-    ),
-});
 
 export default function LoginPage() {
   const formik = useFormik({
@@ -39,7 +25,7 @@ export default function LoginPage() {
       email: "",
       password: "",
     },
-    validationSchema: validationSchema,
+    validationSchema: loginValidationSchema,
     onSubmit: (values, { resetForm }) => {
       try {
         alert(JSON.stringify(values, null, 2));
