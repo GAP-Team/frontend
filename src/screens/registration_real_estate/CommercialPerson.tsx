@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid, TextField, Typography } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import UploadButton from "@/components/button/UploadButton";
 import GTextInput from "@/components/input/GTextInput";
 
