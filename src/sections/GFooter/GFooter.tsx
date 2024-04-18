@@ -1,14 +1,13 @@
 
 import {
   Footer,
-  FooterBrand,
   FooterCopyright,
   FooterIcon,
   FooterLink,
   FooterLinkGroup,
   FooterTitle,
 } from 'flowbite-react';
-import { BsDribbble, BsFacebook, BsGithub, BsInstagram, BsTwitter } from 'react-icons/bs';
+import {  BsFacebook, BsInstagram, BsTwitter } from 'react-icons/bs';
 import { GapLogo } from '@/components/logo/GapLogo';
 function GFooter() {
   return (
