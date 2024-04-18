@@ -17,8 +17,6 @@ const BusinessRegistration = ({
 }: BusinessRegistrationProps): JSX.Element => {
   return (
     <Box
-      component="form"
-      noValidate
       sx={{ p: 1, width: "auto", marginLeft: "1.5rem" }}
     >
       <Grid container spacing={2}>

@@ -3,7 +3,7 @@ import { Grid, Typography } from "@mui/material";
 import UploadButton from "@/components/button/UploadButton";
 import GTextInput from "@/components/input/GTextInput";
 
-const ComercialPerson = (): JSX.Element => {
+const ComercialPerson = ({formik}:any): JSX.Element => {
   return (
     <Grid
       container
@@ -27,8 +27,13 @@ const ComercialPerson = (): JSX.Element => {
         </Typography>
         <GTextInput
           placeholder="HANDELREGISTERNUMMER"
-          id="registernumber"
-          name="registernumber"
+          id="registrationnum"
+          name="registrationnum"
+          value={formik.values.registrationnum}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          error={formik.touched.registrationnum && Boolean(formik.errors.registrationnum)}
+          helperText={formik.touched.registrationnum && formik.errors.registrationnum}
         />
       </Grid>
     </Grid>

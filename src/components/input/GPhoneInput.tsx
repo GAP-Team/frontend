@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FocusEventHandler } from "react";
 import TextField from "@mui/material/TextField";
 import InputAdornment from "@mui/material/InputAdornment";
 
@@ -11,6 +11,8 @@ interface PhoneInputProps {
   id?: string;
   name?: string;
   prefix?: string; // Add prefix prop
+  onBlur?: FocusEventHandler<HTMLInputElement | HTMLTextAreaElement> | undefined;
+  helperText?: string;
 }
 
 const PhoneInput: React.FC<PhoneInputProps> = ({
@@ -22,6 +24,8 @@ const PhoneInput: React.FC<PhoneInputProps> = ({
   id = "phone",
   name = "phone",
   prefix = "+49",
+  onBlur,
+  helperText,
 }) => {
   return (
     <TextField
@@ -38,6 +42,8 @@ const PhoneInput: React.FC<PhoneInputProps> = ({
       variant="outlined"
       value={value}
       onChange={onChange}
+      onBlur={onBlur}
+      helperText={helperText}
       error={error}
     />
   );

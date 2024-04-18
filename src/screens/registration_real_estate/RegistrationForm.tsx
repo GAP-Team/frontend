@@ -1,4 +1,4 @@
-import { NextPage } from "next";
+'use client';
 import React from "react";
 import GButton from "@/components/button/GButton";
 import Typography from "@mui/material/Typography";
@@ -13,6 +13,22 @@ import BasicInformation from "./BasicInformation";
 import SummaryRegistration from "./SummaryRegistration";
 import ComercialPerson from "./CommercialPerson";
 import PrivatePerson from "./PrivatePerson";
+import BusinessRegistration from "./BusinessRegistration";
+import { useFormikContext } from 'formik';
+
+export interface RegisterFormValues{
+  firstname: string,
+  lastname: string,
+  email: string,
+  telephone: string,
+  company: string,
+  state: string,
+  street: string,
+  housenum: string,
+  postalcode: string,
+  city: string,
+  registrationnum:string,
+}
 
 interface RegistrationFormProps {
   activeStep: number;
@@ -21,22 +37,25 @@ interface RegistrationFormProps {
   handleNext: () => void;
 }
 
-const basictabs = [
-  //TODO: have to render seperate component for each tab and not based on value
-  { label: "Immobilienbetreiber", content: <BasicInformation value={0} /> },
-  { label: "Dienstleister", content: <BasicInformation value={1} /> },
-];
-const registertabs = [
-  { label: "Gewerbeperson", content: <ComercialPerson /> },
-  { label: "Privatperson", content: <PrivatePerson /> },
-];
 
-const RegistrationForm: NextPage<RegistrationFormProps> = ({
+const RegistrationForm = ({
   activeStep,
   steps,
   handleBack,
   handleNext,
-}) => {
+}: RegistrationFormProps): JSX.Element => {
+  const formik = useFormikContext();
+
+  const basictabs = [
+    //TODO: have to render seperate component for each tab and not based on value
+    { label: "Immobilienbetreiber", content: <BasicInformation value={0} formik={formik} /> },
+    { label: "Dienstleister", content: <BasicInformation value={1} formik={formik}/> },
+  ];
+  const registertabs = [
+    { label: "Gewerbeperson", content: <ComercialPerson formik={formik} /> },
+    { label: "Privatperson", content: <PrivatePerson /> },
+  ];
+
   return (
     <>
       <Grid item xs={3}>
@@ -89,17 +108,20 @@ const RegistrationForm: NextPage<RegistrationFormProps> = ({
               activeStep={activeStep}
             />
           </div>
-          {activeStep == 0 && <BasicInformation />}
-          {activeStep == 1 && <CompanyAddress />}
-          {activeStep == 2 && <GTab tabs={registertabs} />}
-          {activeStep == 3 && <SummaryRegistration />}
+          {activeStep == 0 && <BasicInformation formik={formik}/>}
+          {activeStep == 1 && <CompanyAddress formik={formik} />}
+          {activeStep == 2 && <GTab tabs={registertabs}/>}
+          {activeStep == 3 && <SummaryRegistration/>}
         </div>
         <Grid container justifyContent="flex-end" spacing={2}>
           <Grid item>
             <GButton onClick={handleBack} color="ggrey">
               Zurück
             </GButton>
-            <GButton onClick={handleNext}>Weiter</GButton>
+            <GButton
+              onClick={handleNext}
+            >{activeStep <= 2 ? "Weiter" :"Einreichen"}
+            </GButton>
           </Grid>
         </Grid>
       </Grid>
@@ -108,3 +130,4 @@ const RegistrationForm: NextPage<RegistrationFormProps> = ({
 };
 
 export default RegistrationForm;
+
