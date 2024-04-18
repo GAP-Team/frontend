@@ -7,7 +7,7 @@ import { createTheme } from "@mui/material";
 import { IconType } from "react-icons";
 import { styled, Theme, CSSObject } from "@mui/material/styles";
 import Image from "next/image";
-import gapLogo from "../../../public/gap-logo.svg";
+import gapLogo from "../../../public/icons/gap-logo.svg";
 import gapLogoFull from "../../../public/icons/gapfull-logo.svg";
 import { SidebarItemComponent } from "@/components/common/SidebarItemComponent";
 
