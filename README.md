@@ -14,6 +14,11 @@ A Next.js 14 and App Router-ready featuring:
 - name of Typescript files in **CamelCase**.
 - structure component folder into categories **input**, **button**, etc.
 - using **G** at the begining of the file name of the Components to refers that GAP Component and not from Framework.
+- **inline-style** with sx props from MUI should be extracted as an **ts object** and defined at the end of each component.
+- icons are mixed between from **Figma**, **Font awsome**, **react-icons** and **MUI icons**.
+- fonts and colors for landingpage defined in **tailwind.config.ts**
+- fonts and colors for dashboards defined in **app/theme.ts**
+
 
 ## Getting Started
 
