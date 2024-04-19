@@ -38,26 +38,13 @@ export default function LoginPage() {
   });
 
   return (
-    <Grid container component="main" sx={{ height: "100vh" }}>
+    <Grid container component="main" sx={styles.mainContainer}>
       <Grid
         item
         xs={false}
         md={6}
         lg={6}
-        sx={{
-          backgroundImage: `url(/images/login-bg.png)`,
-          backgroundRepeat: "no-repeat",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          display: {
-            xs: "none",
-            sm: "none",
-            md: "block",
-            lg: "block",
-            xl: "block",
-          },
-          height: "100%",
-        }}
+        sx={styles.imageSide}
       >
         {/* Make this Box a flex container to use Flexbox properties */}
         <HeroBanner
@@ -68,17 +55,10 @@ export default function LoginPage() {
       </Grid>
       <Grid item xs={12} md={6} lg={6} component={Paper}>
         <Box
-          sx={{
-            my: 8,
-            mx: 4,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            backgroundColor: "white",
-          }}
+          sx={styles.formContainer}
         >
           <GapLogo color="#0D1F4E" size="sm" />
-          <Box sx={{ mt: 2, padding: 5, borderRadius: "1rem", boxShadow: 3 }}>
+          <Box sx={styles.formBox}>
             <Grid container sx={{ mb: "2rem", color: "#1E3137" }}>
               <Grid item xs>
                 <Link
@@ -106,12 +86,7 @@ export default function LoginPage() {
             </Grid>
             <form
               onSubmit={formik.handleSubmit}
-              style={{
-                marginTop: 1,
-                display: "flex",
-                flexDirection: "column",
-                width: "33rem",
-              }}
+              style={styles.formContainerTwo}
             >
               <CustomizedTooltips
                 title={
@@ -183,23 +158,14 @@ export default function LoginPage() {
                 <Grid item xs sx={{ display: "flex", flexDirection: "column" }}>
                   <Typography
                     variant="body2"
-                    style={{
-                      color: "#475A60",
-                      fontSize: "0.875rem",
-                      lineHeight: "1.25rem",
-                    }}
+                    style={styles.registerTypography}
                   >
                     Noch keinen account?
                   </Typography>
                   <Link
                     href="/registration"
                     variant="body2"
-                    style={{
-                      color: "#22a7f1",
-                      fontSize: "1rem",
-                      textDecoration: "none",
-                      cursor: "pointer",
-                    }}
+                    style={styles.link}
                   >
                     Registrieren
                   </Link>
@@ -219,13 +185,7 @@ export default function LoginPage() {
             </form>
           </Box>
           <Typography
-            sx={{
-              color: "#475A60",
-              fontSize: "1rem",
-              marginTop: "3rem",
-              marginRight: "auto",
-              marginLeft: 18.5,
-            }}
+            sx={styles.supportLink}
           >
             Hilfe?{" "}
             <Link href="#" color="#1E3137" fontWeight="bold">
@@ -237,3 +197,55 @@ export default function LoginPage() {
     </Grid>
   );
 }
+
+//Styles
+
+const styles = {
+  mainContainer: { height: "100vh" },
+  imageSide: {
+    backgroundImage: `url(/images/login-bg.png)`,
+    backgroundRepeat: "no-repeat",
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    display: { xs: "none", md: "block" },
+    height: "100%",
+  },
+  formContainer: {
+    my: 8,
+    mx: 4,
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    backgroundColor: "white",
+  },
+  formBox: {
+    padding: 5,
+    borderRadius: "1rem",
+    boxShadow: 3,
+    mt: 2,
+  },
+  formContainerTwo:{
+    marginTop: 1,
+    display: "flex",
+    flexDirection:'column' as 'column',
+    width: "33rem",
+  },
+  link: {
+    color: "#22a7f1",
+    fontSize: "1rem",
+    textDecoration: "none",
+    cursor: "pointer",
+  },
+  registerTypography: {
+    color: "#475A60",
+    fontSize: "0.875rem",
+    lineHeight: "1.25rem",
+  },
+  supportLink: {
+    color: "#475A60",
+    fontSize: "1rem",
+    marginTop: "3rem",
+    marginRight: "auto",
+    marginLeft: 18.5,
+  }
+};

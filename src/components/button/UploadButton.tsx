@@ -12,28 +12,34 @@ const Input = styled('input')({
 export default function UploadButton() {
   const theme = useTheme();
 
+  const styles = {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    border: `1px dashed ${theme.palette.divider}`,
+    borderRadius: "0.5rem",
+    padding: "1rem",
+    backgroundColor: "#F9FAFA",
+    "&:hover": {
+      borderColor: theme.palette.text.primary,
+      backgroundColor: theme.palette.action.hover,
+    },
+  };
+
   return (
-    <Box 
-      sx={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent:'center',
-        border: `1px dashed ${theme.palette.divider}`,
-        borderRadius: '0.5rem',
-        padding: '1rem',
-        backgroundColor:'#F9FAFA',
-        '&:hover': {
-          borderColor: theme.palette.text.primary,
-          backgroundColor: theme.palette.action.hover,
-        },
-      }}
-    >
-      <Typography  sx={{ mx: 2 }} color="gray.700">
+    <Box sx={styles}>
+      <Typography sx={{ mx: 2 }} color="gray.700">
         Dokument hinzuziehen oder
       </Typography>
-        <Button   role={undefined}  tabIndex={-1} color="gprimary" sx={{fontWeight:'600'}} component="label">
-          Dokument suchen
-        <Input  type="file" id="contained-button-file" />
+      <Button
+        role={undefined}
+        tabIndex={-1}
+        color="gprimary"
+        sx={{ fontWeight: "600" }}
+        component="label"
+      >
+        Dokument suchen
+        <Input type="file" id="contained-button-file" />
       </Button>
     </Box>
   );

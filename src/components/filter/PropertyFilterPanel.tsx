@@ -37,18 +37,12 @@ const FilterBar = () => {
     <Container
       color="default"
       maxWidth={false}
-      sx={{
-        backgroundColor: "white",
-        borderRadius: "5px",
-        display: "flex",
-        alignContent: "space-between",
-        justifyContent: "space-between",
-      }}
+      sx={styles.container}
     >
       <Typography
         variant="h6"
         component="div"
-        sx={{ flexGrow: 1, alignContent: "center" }}
+        sx={styles.typography}
       >
         Alle Objekte
       </Typography>
@@ -58,7 +52,7 @@ const FilterBar = () => {
       </Box>
 
       <Box sx={{ flexGrow: 1 }} />
-      <FormControl size="small" sx={{ m: 1, minWidth: 140 }}>
+      <FormControl size="small" sx={styles.formControl}>
         <InputLabel id="property-type-select-label">Anlagentyp</InputLabel>
         <Select
           labelId="property-type-select-label"
@@ -72,7 +66,7 @@ const FilterBar = () => {
           {/* More types */}
         </Select>
       </FormControl>
-      <FormControl size="small" sx={{ m: 1, minWidth: 140 }}>
+      <FormControl size="small" sx={styles.formControl}>
         <InputLabel id="federal-state-select-label">Bundesland</InputLabel>
         <Select
           labelId="federal-state-select-label"
@@ -86,7 +80,7 @@ const FilterBar = () => {
           {/* More states */}
         </Select>
       </FormControl>
-      <FormControl size="small" sx={{ m: 1, minWidth: 140 }}>
+      <FormControl size="small" sx={styles.formControl}>
         <InputLabel id="federal-state-select-label">Stadt</InputLabel>
         <Select
           labelId="federal-state-select-label"
@@ -105,3 +99,22 @@ const FilterBar = () => {
 };
 
 export default FilterBar;
+
+//Styles
+const styles = {
+  container: {
+    backgroundColor: "white",
+    borderRadius: "5px",
+    display: "flex",
+    alignContent: "space-between",
+    justifyContent: "space-between",
+  },
+  typography: {
+    flexGrow: 1,
+    alignContent: "center",
+  },
+  formControl: {
+    m: 1,
+    minWidth: 140,
+  },
+};

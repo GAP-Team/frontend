@@ -16,7 +16,7 @@ let theme = createTheme({
   },
   components: {
     MuiTypography: {
-    
+
       variants: [
         {
           props: { variant: 'h1b' },
@@ -192,8 +192,17 @@ let theme = createTheme({
         },
       ],
     },
+    //preventing the textfeild to overflow when helperText appears incase of error (validation failed)
+    MuiFormHelperText: {
+      styleOverrides: {
+        root: {
+          // Use existing space / prevents shifting content below field
+          marginTop: 0,
+          height: 0,
+        },
+      },
+    },
   },
-
 });
 
 // custom colors of GAP
