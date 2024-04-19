@@ -20,13 +20,5 @@ interface CustomizedTooltipsProps {
 }
   
 export default function CustomizedTooltips({title, children}:CustomizedTooltipsProps) {
-  return (
-      <HtmlTooltip
-        title={
-          title
-        }
-      >
-       {children}
-      </HtmlTooltip>
-  );
+  return <HtmlTooltip title={title}>{children}</HtmlTooltip>;
 }

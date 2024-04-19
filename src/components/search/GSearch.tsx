@@ -17,14 +17,7 @@ export default function CustomizedSearchBar() {
 
   return (
     <div
-      style={{
-        display: "flex",
-        alignItems: "center",
-        borderRadius: "20rem",
-        width: "25rem",
-        backgroundColor: "white",
-        outline: "none",
-      }}
+      style={searchBarStyle}
     >
       <OutlinedInput
         id="outlined-adornment-search"
@@ -45,4 +38,14 @@ export default function CustomizedSearchBar() {
       />
     </div>
   );
+}
+
+//Styles
+const searchBarStyle = {
+  display: "flex",
+  alignItems: "center",
+  borderRadius: "20rem",
+  width: "25rem",
+  backgroundColor: "white",
+  outline: "none",
 }

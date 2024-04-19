@@ -61,17 +61,11 @@ const RegistrationForm = ({
       <Grid item xs={3}>
         <Link
           underline="hover"
-          sx={{
-            display: "flex",
-            fontSize: "0.75rem",
-            fontWeight: "600",
-            alignItems: "center",
-            color: "#A0ADB1",
-          }}
+          sx={styles.stepIndicator}
           color="inherit"
           href="/"
         >
-          Schritt 1/ 4
+          Schritt {activeStep+1}/ 4
         </Link>
 
         <GStepper activeStep={activeStep} steps={steps} />
@@ -82,29 +76,18 @@ const RegistrationForm = ({
       <Grid
         item
         xs={9}
-        sx={{ display: "flex", flexDirection: "column", height: "100%" }}
+        sx={styles.mainContent}
       >
         <div style={{ flexGrow: 1 }}>
           <div className="flex flex-col">
             <Typography
               variant="subtitle2"
-              sx={{
-                display: "flex",
-                fontSize: "0.75rem",
-                marginLeft: "1.5rem",
-                fontWeight: "600",
-              }}
+              sx={styles.subTitle}
             >
               {steps[activeStep]}
             </Typography>
             <GProgressStepper
-              sx={{
-                maxWidth: "none",
-                width: "auto",
-                flexGrow: 1,
-                marginLeft: "1rem",
-                color: "gprimary",
-              }}
+              sx={styles.progressStepper}
               activeStep={activeStep}
             />
           </div>
@@ -131,3 +114,31 @@ const RegistrationForm = ({
 
 export default RegistrationForm;
 
+//Styles
+const styles = {
+  stepIndicator: {
+    display: "flex",
+    fontSize: "0.75rem",
+    fontWeight: "600",
+    alignItems: "center",
+    color: "#A0ADB1",
+  },
+  mainContent: {
+    display: "flex",
+    flexDirection: "column",
+    height: "100%",
+  },
+  subTitle: {
+    display: "flex",
+    fontSize: "0.75rem",
+    marginLeft: "1.5rem",
+    fontWeight: "600",
+  },
+  progressStepper: {
+    maxWidth: "none",
+    width: "auto",
+    flexGrow: 1,
+    marginLeft: "1rem",
+    color: "gprimary",  
+  }
+};

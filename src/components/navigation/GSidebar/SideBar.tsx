@@ -65,6 +65,12 @@ const MyDrawer = styled(Drawer)(
   })
 );
 
+const DrawerLogo = ({ src, open }:{src:string,open:boolean}) => (
+  <div style={{ width: open ? '100%' : '2rem', height: open ? '3rem' : '2rem', position: 'relative' }}>
+    <Image src={src} fill alt="GAP logo" style={{ objectFit: 'contain' }} />
+  </div>
+);
+
 const Sidebar: React.FC<SidebarProps> = ({ items }) => {
   const [open, setOpen] = React.useState(false);
   const [selected, setSelected] = React.useState<string | null>("Dashboard");
@@ -89,36 +95,10 @@ const Sidebar: React.FC<SidebarProps> = ({ items }) => {
     >
       <List>
         <ListItem key={"gaplogo"} sx={{ minWidth: "auto", mb: "1rem" }}>
-          {open ? (
-            <div
-              style={{
-                width: "100%",
-                height: "3rem",
-                position: "relative",
-              }}
-            >
-              <Image
-                src={gapLogoFull}
-                fill
-                style={{ objectFit: "contain" }}
-                alt="GAP logo"
-              />
-            </div>
+        {open ? (
+            <DrawerLogo src={gapLogoFull} open={open} />
           ) : (
-            <div
-              style={{
-                width: "2rem",
-                height: "2rem",
-                position: "relative",
-              }}
-            >
-              <Image
-                src={gapLogo}
-                fill
-                alt="GAP logo"
-                style={{ objectFit: "contain" }}
-              />
-            </div>
+            <DrawerLogo src={gapLogo} open={open} />
           )}
         </ListItem>
         {items.map((item, index) => (

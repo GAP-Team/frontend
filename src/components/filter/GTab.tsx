@@ -45,7 +45,7 @@ const GTab: React.FC<GTabProps> = ({ tabs, tabProps, panelProps }) =>  {
 
   return (
     <>
-    <Box sx={{ bgcolor: '#F1F3F4', width: 'auto', borderRadius: '0.5rem', padding:'0.30rem', marginLeft:'1.5rem',}}>
+    <Box sx={styles.tabsContainer}>
       <Tabs
         value={value}
         onChange={handleChange}
@@ -53,9 +53,7 @@ const GTab: React.FC<GTabProps> = ({ tabs, tabProps, panelProps }) =>  {
         textColor="primary"
         aria-label="two tabs"
         TabIndicatorProps={{ style: { background: 'transparent' } }}
-        sx={{
-          '.Mui-selected': { color: '#1E3137 !important',backgroundColor: '#FFFFFF', borderRadius: '0.4rem',fontWeight:'600',fontSize:'0.875rem', },
-        }}
+        sx={styles.tab}
       >
          {tabs.map((tab, index) => (
             <Tab key={index} label={tab.label} id={`simple-tab-${index}`} aria-controls={`simple-tabpanel-${index}`} />
@@ -73,3 +71,23 @@ const GTab: React.FC<GTabProps> = ({ tabs, tabProps, panelProps }) =>  {
 }
 
 export default GTab;
+
+// Styles
+const styles = {
+  tabsContainer: {
+    bgcolor: '#F1F3F4',
+    width: 'auto',
+    borderRadius: '0.5rem',
+    padding: '0.30rem',
+    marginLeft: '1.5rem',
+  },
+  tab: {
+    '.Mui-selected': {
+      color: '#1E3137 !important',
+      backgroundColor: '#FFFFFF',
+      borderRadius: '0.4rem',
+      fontWeight: '600',
+      fontSize: '0.875rem',
+    },
+  },
+};

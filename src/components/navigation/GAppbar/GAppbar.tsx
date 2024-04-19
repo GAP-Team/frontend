@@ -23,25 +23,25 @@ export default function GAppBar() {
 
   return (
     <Container>
-      <Toolbar sx={{ display: "flex" }}>
+      <Toolbar sx={styles.toolbar}>
         <Typography
           variant="h6"
           noWrap
           component="div"
-          sx={{ display: { xs: "none", sm: "block" } }}
+          sx={styles.title}
         >
           Vierkant Wohungs AG
         </Typography>
 
         <GSearch />
-        <Box sx={{ display: { xs: "none", md: "flex" } }}>
+        <Box  sx={styles.userSection}>
           <IconButton
             size="large"
             aria-label="show 17 new notifications"
             color="inherit"
           >
             <Badge badgeContent={17} color="error">
-              <NotificationsIcon sx={{ fontSize: "2rem" }} />
+              <NotificationsIcon  sx={styles.notificationIcon} />
             </Badge>
           </IconButton>
           <IconButton
@@ -53,18 +53,9 @@ export default function GAppBar() {
             onClick={handleProfileMenuOpen}
             color="inherit"
           >
-            <AccountCircle sx={{ fontSize: "3rem" }} />
+            <AccountCircle sx={styles.accountIcon} />
           </IconButton>
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              alignContent: "center",
-              alignItems: "center",
-              marginLeft: "1rem",
-            }}
-          >
-            {" "}
+          <Box sx={styles.userControls} >
             <Typography>Max Müller</Typography>
             <ArrowDropDownIcon />
           </Box>
@@ -73,3 +64,30 @@ export default function GAppBar() {
     </Container>
   );
 }
+
+// Styles
+const styles = {
+  toolbar: {
+    display: "flex",
+  },
+  title: {
+    display: { xs: "none", sm: "block" }
+  },
+  userSection: {
+    display: { xs: "none", md: "flex" },
+    alignItems: "center",
+  },
+  userControls: {
+    display: "flex",
+    justifyContent: "center",
+    alignContent: "center",
+    alignItems: "center",
+    marginLeft: "1rem",
+  },
+  notificationIcon: {
+    fontSize: "2rem",
+  },
+  accountIcon: {
+    fontSize: "3rem",
+  },
+};

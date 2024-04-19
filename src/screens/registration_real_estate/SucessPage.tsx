@@ -23,12 +23,7 @@ const SucessPage: NextPage<SucessPageProps> = ({}) => {
       xs={12}
       md={12}
       lg={12}
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
+      sx={styles}
     >
       <div style={{ marginBottom: "2rem" }}>
         <Image width={100} height={100} alt="Success" src={sucess_svg} />
@@ -53,3 +48,11 @@ const SucessPage: NextPage<SucessPageProps> = ({}) => {
 };
 
 export default SucessPage;
+
+//Styles
+const styles = {
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  alignItems: "center",
+}

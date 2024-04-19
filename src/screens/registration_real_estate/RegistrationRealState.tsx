@@ -112,8 +112,8 @@ const RegistrationRealState = () => {
     
 
   return (
-    <Grid container component="main" sx={{ height: "100vh" }}>
-      <Grid item xs={false} md={4} lg={4} sx={gridStyle}>
+    <Grid container component="main" sx={styles.mainContainer}>
+      <Grid item xs={false} md={4} lg={4} sx={styles.infoBannerGrid}>
         {/* Make this Box a flex container to use Flexbox properties */}
         <InfoBanner
           title="Where skills are developed"
@@ -121,18 +121,10 @@ const RegistrationRealState = () => {
           copyright="©2023 GAP GmbH"
         />
       </Grid>
-      <Grid item xs={12} md={8} lg={8} sx={{ backgroundColor: "#F9FAFA" }}>
+      <Grid item xs={12} md={8} lg={8} sx={styles.formGrid}>
         <Button
           variant="text"
-          sx={{
-            display: "flex",
-            fontSize: "0.875rem",
-            fontWeight: "600",
-            alignItems: "center",
-            marginLeft: "3.75rem",
-            color: "#8D999C",
-            marginTop: "2.5rem",
-          }}
+          sx={styles.backButton}
           onClick={handleBack}
         >
           <MdArrowBackIos />
@@ -140,13 +132,7 @@ const RegistrationRealState = () => {
         </Button>
         <Typography
           variant="h3"
-          sx={{
-            fontSize: "2rem",
-            lineHeight: "2.5rem",
-            fontWeight: "700",
-            marginLeft: "3.75rem",
-            my: "2rem",
-          }}
+          sx={styles.header}
         >
           Registrierung
         </Typography>
@@ -162,18 +148,7 @@ const RegistrationRealState = () => {
           {({ validateForm, setTouched, submitForm }) => (
             <Form>
               <Grid
-                sx={{
-                  // my: '2rem',
-                  marginLeft: "3.75rem",
-                  marginRight: "3.5rem",
-                  display: "flex",
-                  flexDirection: "row",
-                  backgroundColor: "white",
-                  height: "37.375rem;",
-                  padding: "1.5rem",
-                  borderRadius: "0.5rem",
-                  boxShadow: "0px 8px 24px 0px rgba(30, 49, 55, 0.08)",
-                }}
+                sx={styles.form}
               >
                 {activeStep <= 3 ? (
                   <RegistrationForm
@@ -190,12 +165,7 @@ const RegistrationRealState = () => {
           )}
           </Formik>
         <Typography
-          sx={{
-            color: "#475A60",
-            fontSize: "1rem",
-            marginTop: "3rem",
-            marginLeft: "3.75rem",
-          }}
+          sx={styles.helpText}
           >
           Hilfe?{" "}
           <Link href="#" color="#1E3137" fontWeight="bold">
@@ -207,20 +177,59 @@ const RegistrationRealState = () => {
   );
 };
 
-// css design
-const gridStyle = {
-  backgroundImage: `url(/images/registration-bg.png)`,
-  backgroundRepeat: "no-repeat",
-  backgroundSize: "cover",
-  backgroundPosition: "center",
-  display: {
-    xs: "none",
-    sm: "none",
-    md: "block",
-    lg: "block",
-    xl: "block",
-  },
-  height: "100%",
-};
-
 export default RegistrationRealState;
+
+// css design
+const styles = {
+  mainContainer: { height: "100vh" },
+  infoBannerGrid: {
+    backgroundImage: `url(/images/registration-bg.png)`,
+    backgroundRepeat: "no-repeat",
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    display: {
+      xs: "none",
+      sm: "none",
+      md: "block",
+      lg: "block",
+      xl: "block",
+    },
+    height: "100%",
+  },
+  formGrid: {
+    backgroundColor: "#F9FAFA",
+  },
+  backButton: {
+    display: "flex",
+    fontSize: "0.875rem",
+    fontWeight: "600",
+    alignItems: "center",
+    marginLeft: "3.75rem",
+    marginTop: "2.5rem",
+    color: "#8D999C",
+  },
+  header: {
+    fontSize: "2rem",
+    lineHeight: "2.5rem",
+    fontWeight: "700",
+    marginLeft: "3.75rem",
+    my: "2rem",
+  },
+  form: {
+    marginLeft: "3.75rem",
+    marginRight: "3.5rem",
+    display: "flex",
+    flexDirection: "row",
+    backgroundColor: "white",
+    height: "37.375rem",
+    padding: "1.5rem",
+    borderRadius: "0.5rem",
+    boxShadow: "0px 8px 24px 0px rgba(30, 49, 55, 0.08)",
+  },
+  helpText: {
+    color: "#475A60",
+    fontSize: "1rem",
+    marginTop: "3rem",
+    marginLeft: "3.75rem",
+  }
+};
