@@ -20,7 +20,7 @@ const ObjektAddress = ({formik}:{formik:any}) => {
     const handleStateSelect = (selectedItem: Item): void => {
       const state = selectedItem || '';
       setSelectedState(selectedItem);
-      formik.setFieldValue('state', state?.value );
+      formik?.setFieldValue('state', state?.value );
     };
     
 
