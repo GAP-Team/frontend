@@ -14,10 +14,9 @@ interface Item {
   value: string;
 }
 
-const ObjektAddress = () => {
+const ObjektAddress = ({formik}:{formik:any}) => {
 
     const [selectedState, setSelectedState] = React.useState<Item | null>(null);
-    const formik = useFormikContext();
     const handleStateSelect = (selectedItem: Item): void => {
       const state = selectedItem || '';
       setSelectedState(selectedItem);
@@ -86,3 +85,16 @@ const ObjektAddress = () => {
 }
 
 export default ObjektAddress
+
+//Styles
+const formStyles = {
+  marginLeft: "3.75rem",
+  marginRight: "3.5rem",
+  display: "flex",
+  flexDirection: "row",
+  backgroundColor: "white",
+  height: "41.75rem",
+  padding: "1.5rem",
+  borderRadius: "0.5rem",
+  boxShadow: "0px 8px 24px 0px rgba(30, 49, 55, 0.08)",
+};

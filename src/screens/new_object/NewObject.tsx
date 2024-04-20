@@ -10,7 +10,7 @@ import BackHeader from "@/components/common/BackHeader";
 import SucessPage from "@/components/common/SuccessPage";
 import { Formik, Form } from "formik";
 import AddObjektForm from "./AddObjektForm";
-import { registrationValidationSchema } from "@/utils/ValidationSchema";
+import { addObjektFormSchema } from "@/utils/ValidationSchema";
 import { styles } from "../registration_real_estate/RegistrationRealState";
 import {
   ValidateFormFunction,
@@ -24,15 +24,17 @@ import ObjektDocumentation from "./ObjektDocumentation";
 import ObjektSummary from "./ObjektSummary";
 import SuccessPage from "@/components/common/SuccessPage";
 
+import { useFormikContext } from "formik";
 const NewObject = () => {
-  const router = useRouter();
+    const router = useRouter();
+    const formik = useFormikContext();
 const steps: ActiveStepItem[] = [
       {
         id: 0,
         stepName: "Objektinformation",
         component: <ObjektInformation />,
       },
-      { id: 1, stepName: "Objektanschrift", component: <ObjektAddress /> },
+      { id: 1, stepName: "Objektanschrift", component: <ObjektAddress formik={formik} /> },
       {
         id: 2,
         stepName: "Objektdokumentation",
@@ -106,7 +108,7 @@ const steps: ActiveStepItem[] = [
         />
         <Formik
           initialValues={initialValues}
-          validationSchema={registrationValidationSchema}
+          validationSchema={addObjektFormSchema}
           onSubmit={async (values, { resetForm }) => {
             await onSubmit(values);
             resetForm();
