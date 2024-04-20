@@ -8,8 +8,8 @@ import { SidebarItem } from "@/components/navigation/GSidebar/SideBar";
 interface SidebarItemComponentProps {
   item: SidebarItem;
   open: boolean;
-  selected: string | null;
-  setSelected: (text: string) => void;
+  selected: boolean;
+  setSelected: (item: SidebarItem) => void;
 }
 
 export const SidebarItemComponent: React.FC<SidebarItemComponentProps> = ({
@@ -20,8 +20,8 @@ export const SidebarItemComponent: React.FC<SidebarItemComponentProps> = ({
 }) => {
   return (
     <ListItemButton
-      selected={selected === item.text}
-      onClick={() => setSelected(item.text)}
+      selected={selected}
+      onClick={() => setSelected(item)}
       sx={styles.listItemButton}
     >
       <ListItemIcon sx={{ ...styles.listItemIcon, mr: open ? 3 : "auto" }}>
