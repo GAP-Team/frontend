@@ -76,7 +76,7 @@ const steps: ActiveStepItem[] = [
     buildingType: "",
     objektTag: "",
     contactPerson: "",
-    address: "Deutschland",
+    address: "",
     plz: "",
     city: "",
     state: "",

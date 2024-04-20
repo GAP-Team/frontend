@@ -29,7 +29,7 @@ const AddObjektForm = ({
           color="inherit"
           href="/"
         >
-          Schritt {activeStep?.id + 1} / {steps.length}
+          Schritt {!isBeyondLastStep?activeStep?.id+1:4} / {steps.length}
         </Link>
         <GStepper
           activeStep={activeStep.id}
