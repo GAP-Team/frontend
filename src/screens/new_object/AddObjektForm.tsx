@@ -20,6 +20,45 @@ const AddObjektForm = ({
 }: AddObjektFormProps): JSX.Element => {
   const formik = useFormikContext();
   const isBeyondLastStep = activeStep.id >= steps.length;
+
+  const formOrSuccessContent = isBeyondLastStep ? (
+    <SuccessPage
+      title="Objekt angelegt!"
+      description="You have been added to the project team and permitted to receive any project news and updates"
+      buttonLabel="Go to Dashboard"
+    />
+  ) : (
+    <>
+      <div className="flex flex-col">
+        <Typography variant="subtitle2" sx={styles.subTitle}>
+          {activeStep.stepName}
+        </Typography>
+        <GProgressStepper
+          sx={styles.progressStepper}
+          activeStep={activeStep.id}
+        />
+      </div>
+      {activeStep.component}
+    </>
+  );
+
+  const forwardAndBackBtns = (
+      <>
+        {!isBeyondLastStep && (
+          <GButton onClick={handleBack} color="ggrey">
+            {activeStep.id < steps.length - 1 ? "Zurück" : "Bearbeiten"}
+          </GButton>
+        )}
+        <GButton onClick={handleNext}>
+          {isBeyondLastStep
+            ? "schließen"
+            : activeStep.id < steps.length - 1
+            ? "Weiter"
+            : "Abschlißen"}
+        </GButton>
+      </>
+  );
+
   return (
     <>
       <Grid item xs={2}>
@@ -36,7 +75,6 @@ const AddObjektForm = ({
           steps={steps.map((step) => step.stepName)}
         />
       </Grid>
-
       <Divider orientation="vertical" variant="middle" flexItem />
       <Grid item xs={10} sx={styles.mainContent}>
         <div
@@ -45,42 +83,11 @@ const AddObjektForm = ({
             alignContent: isBeyondLastStep ? "center" : undefined,
           }}
         >
-          {isBeyondLastStep ? (
-            <SuccessPage
-              title="Objekt angelegt!"
-              description="You have been added to the project team and permitted to receive any project news and updates"
-              buttonLabel="Go to Dashboard"
-              redirectUrl="/dashboard"
-            />
-          ) : (
-            <>
-              <div className="flex flex-col">
-                <Typography variant="subtitle2" sx={styles.subTitle}>
-                  {activeStep.stepName}
-                </Typography>
-                <GProgressStepper
-                  sx={styles.progressStepper}
-                  activeStep={activeStep.id}
-                />
-              </div>
-              {activeStep.component}
-            </>
-          )}
+          {formOrSuccessContent}
         </div>
         <Grid container justifyContent="flex-end" spacing={2}>
           <Grid item>
-            {!isBeyondLastStep && (
-              <GButton onClick={handleBack} color="ggrey">
-                {activeStep.id < steps.length - 1 ? "Zurück" : "Bearbeiten"}
-              </GButton>
-            )}
-            <GButton onClick={handleNext}>
-              {isBeyondLastStep
-                ? "schließen"
-                : activeStep.id < steps.length - 1
-                  ? "Weiter"
-                  : "Abschlißen"}
-            </GButton>
+            {forwardAndBackBtns}
           </Grid>
         </Grid>
       </Grid>

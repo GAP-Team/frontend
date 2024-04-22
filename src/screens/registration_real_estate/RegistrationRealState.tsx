@@ -4,20 +4,20 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
-import { MdArrowBackIos } from "react-icons/md";
 import { useRouter } from "next/navigation";
 import RegistrationForm from "./RegistrationForm";
 import SuccessPage from "@/components/common/SuccessPage";
 import InfoBanner from "@/components/common/InfoBanner";
 import { Formik, Form } from "formik";
 import { registrationValidationSchema } from "@/utils/ValidationSchema";
-import BackHeader from "@/components/common/BackHeader";
 import {
   ValidateFormFunction,
   SetTouchedFunction,
   SubmitFormFunction,
   RegistrationFormValues,
 } from "./types";
+import BackButton from "@/components/button/BackButton";
+import PageTitle from "@/components/label/PageTitle";
 
 function getSteps() {
   return [
@@ -127,7 +127,8 @@ const RegistrationRealState = () => {
         />
       </Grid>
       <Grid item xs={12} md={8} lg={8} sx={styles.formGrid}>
-        <BackHeader onBackClick={handleBack} title="Registrierung" />
+        <BackButton onBack={handleBack} />
+        <PageTitle title="Registrierung" />
         <Formik
           initialValues={initialValues}
           validationSchema={registrationValidationSchema}

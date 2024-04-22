@@ -10,9 +10,9 @@ import sucess_svg from "../../../public/icons/success.svg";
 interface SuccessPageProps {
   title: string;
   description: string;
-  buttonLabel: string;
+  buttonLabel?: string;
   imageUrl?: string;
-  redirectUrl: string;
+  redirectUrl?: string;
 }
 
 const SuccessPage: NextPage<SuccessPageProps> = ({
@@ -20,7 +20,7 @@ const SuccessPage: NextPage<SuccessPageProps> = ({
   description,
   buttonLabel,
   imageUrl=sucess_svg,
-  redirectUrl
+  redirectUrl="/"
 }) => {
   const router = useRouter();
 

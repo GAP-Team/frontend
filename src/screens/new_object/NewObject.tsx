@@ -1,13 +1,7 @@
 "use client";
 import React, { useEffect } from "react";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
-import { MdArrowBackIos } from "react-icons/md";
 import { useRouter } from "next/navigation";
-import BackHeader from "@/components/common/BackHeader";
-import SucessPage from "@/components/common/SuccessPage";
 import { Formik, Form } from "formik";
 import AddObjektForm from "./AddObjektForm";
 import { addObjektFormSchema } from "@/utils/ValidationSchema";
@@ -22,9 +16,10 @@ import ObjektInformation from "./ObjektInformation";
 import ObjektAddress from "./ObjektAddress";
 import ObjektDocumentation from "./ObjektDocumentation";
 import ObjektSummary from "./ObjektSummary";
-import SuccessPage from "@/components/common/SuccessPage";
 
 import { useFormikContext } from "formik";
+import BackButton from "@/components/button/BackButton";
+import PageTitle from "@/components/label/PageTitle";
 const NewObject = () => {
     const router = useRouter();
     const formik = useFormikContext();
@@ -101,11 +96,8 @@ const steps: ActiveStepItem[] = [
   return (
     <Grid container component="main">
       <Grid item xs={12} md={12} lg={12} sx={{ backgroundColor: "#F9FAFA" }}>
-        <BackHeader
-          onBackClick={handleBack}
-          title="Objekt 0014"
-          sx={{ button: { ml: "1.5rem", mt: 0 }, header: { ml: "1.5rem" } }}
-        />
+        <BackButton onBack={handleBack} sx={{ml: "1.5rem", mt: 0}} />
+        <PageTitle title="Objekt 0014" sx={{ ml: "1.5rem"}}/>
         <Formik
           initialValues={initialValues}
           validationSchema={addObjektFormSchema}
