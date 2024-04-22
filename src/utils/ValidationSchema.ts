@@ -59,3 +59,28 @@ export const loginValidationSchema = yup.object({
     registrationnum: yup
       .string()
   });
+
+  export const addObjektFormSchema = yup.object().shape({
+    buildingName: yup
+      .string()
+      .required("Gebäudename ist erforderlich.")
+      .min(3, "Gebäudename muss mindestens 3 Zeichen lang sein."),
+    totalArea: yup.string().required("Gesamtfläche ist erforderlich."),
+    buildingType: yup.string().required("Gebäudetyp ist erforderlich."),
+    objektTag: yup.string().required("Objekt-Tag ist erforderlich."),
+    contactPerson: yup
+      .string()
+      .required("Kontaktperson ist erforderlich.")
+      .min(3, "Kontaktperson muss mindestens 3 Zeichen lang sein."),
+    address: yup.string().required("Adresse ist erforderlich."),
+    plz: yup
+      .string()
+      .required("PLZ ist erforderlich.")
+      .matches(/^[0-9]{5}$/, "PLZ muss eine gültige fünfstellige Zahl sein."),
+    city: yup.string().required("Stadt ist erforderlich."),
+    state: yup.string().required("Bundesland ist erforderlich."),
+    serverLink: yup
+      .string()
+      .required("Server-Link ist erforderlich.")
+      .url("Server-Link muss eine gültige URL sein."),
+  });

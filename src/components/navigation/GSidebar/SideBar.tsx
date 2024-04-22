@@ -12,12 +12,16 @@ import gapLogoFull from "../../../../public/icons/gapfull-logo.svg";
 import { SidebarItemComponent } from "@/components/common/SidebarItemComponent";
 
 export interface SidebarItem {
+  id: number;
   icon: IconType;
   text: string;
+  component?: React.ReactElement;
 }
 
 interface SidebarProps {
   items: SidebarItem[];
+  setSelected: (item: SidebarItem) => void;
+  selected: SidebarItem;
 }
 
 const drawerWidth = 240;
@@ -71,9 +75,8 @@ const DrawerLogo = ({ src, open }:{src:string,open:boolean}) => (
   </div>
 );
 
-const Sidebar: React.FC<SidebarProps> = ({ items }) => {
+const Sidebar: React.FC<SidebarProps> = ({ items, setSelected, selected }) => {
   const [open, setOpen] = React.useState(false);
-  const [selected, setSelected] = React.useState<string | null>("Dashboard");
 
   // React.useEffect(() => {
   //     // Automatically select 'Dashboard' if no other selection is made
@@ -103,10 +106,10 @@ const Sidebar: React.FC<SidebarProps> = ({ items }) => {
         </ListItem>
         {items.map((item, index) => (
           <SidebarItemComponent
-            key={item.text}
+            key={index}
             item={item}
             open={open}
-            selected={selected}
+            selected={selected.id === item.id}
             setSelected={setSelected}
           />
         ))}

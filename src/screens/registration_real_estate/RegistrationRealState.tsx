@@ -1,23 +1,23 @@
 "use client";
-import React, { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
-import { MdArrowBackIos } from "react-icons/md";
 import { useRouter } from "next/navigation";
 import RegistrationForm from "./RegistrationForm";
-import SucessPage from "./SucessPage";
+import SuccessPage from "@/components/common/SuccessPage";
 import InfoBanner from "@/components/common/InfoBanner";
 import { Formik, Form } from "formik";
 import { registrationValidationSchema } from "@/utils/ValidationSchema";
-interface FormErrors {
-  [key: string]: string;
-}
-
-type ValidateFormFunction = () => Promise<FormErrors>;
-type SetTouchedFunction = (touched: {[key: string]: boolean}) => void;
-type SubmitFormFunction = () => void;
+import {
+  ValidateFormFunction,
+  SetTouchedFunction,
+  SubmitFormFunction,
+  RegistrationFormValues,
+} from "./types";
+import BackButton from "@/components/button/BackButton";
+import PageTitle from "@/components/label/PageTitle";
 
 function getSteps() {
   return [
@@ -30,40 +30,42 @@ function getSteps() {
 
 const RegistrationRealState = () => {
   const router = useRouter();
-  const [activeStep, setActiveStep] = React.useState(0);
+  const [activeStep, setActiveStep] = useState(0);
   const steps = getSteps();
 
-
-  const handleNext = async (validateForm: ValidateFormFunction,
+  const handleNext = async (
+    validateForm: ValidateFormFunction,
     setTouched: SetTouchedFunction,
-    submitForm: SubmitFormFunction): Promise<void> => {
+    submitForm: SubmitFormFunction
+  ): Promise<void> => {
     // Get the fields to validate for the current step
-    const fieldsPerStep: {[key: number]: string[]} = {
-      0: ['firstname', 'lastname', 'email', 'telephone', 'company'],
-      1: ['state', 'street', 'hausnr', 'plz', 'city'],
-      2: ['registrationnum'], // Adjust fields according to what you need for each step
+    const fieldsPerStep: { [key: number]: string[] } = {
+      0: ["firstname", "lastname", "email", "telephone", "company"],
+      1: ["state", "street", "hausnr", "plz", "city"],
+      2: ["registrationnum"], // Adjust fields according to what you need for each step
     };
-  
+
     const fieldsToValidate = fieldsPerStep[activeStep];
 
     // Validate only the fields for the current step
     // First, mark fields as touched to ensure errors are shown
-    const touchedUpdates = fieldsToValidate?.reduce((acc, field) => ({
-      ...acc,
-      [field]: true,
-    }), {});
-    setTouched(
-      touchedUpdates
-      );
-      
+    const touchedUpdates = fieldsToValidate?.reduce(
+      (acc, field) => ({
+        ...acc,
+        [field]: true,
+      }),
+      {}
+    );
+    setTouched(touchedUpdates);
+
     const formErrors = await validateForm();
     // Check if all these fields are valid
-    const isCurrentStepValid = !fieldsToValidate || fieldsToValidate?.every(
-      (field) => !formErrors[field]
-    );
+    const isCurrentStepValid =
+      !fieldsToValidate ||
+      fieldsToValidate?.every((field) => !formErrors[field]);
 
     if (isCurrentStepValid) {
-      if (activeStep === 3 ) {
+      if (activeStep === 3) {
         // If this is the last step and it's valid, submit the form
         submitForm();
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -87,29 +89,32 @@ const RegistrationRealState = () => {
     }
   };
 
-  const initialValues = {
-      firstname: "",
-      lastname: "",
-      email: "",
-      telephone: "",
-      company: "",
-      country:"Deutschland",
-      state: "",
-      street: "",
-      hausnr: "",
-      plz: "",
-      city: "",
-      registrationnum:"",
-  }
-    
-    const onSubmit= (values:any) => {
-      try {
-        alert(JSON.stringify(values, null, 2));
-      } catch (error: any) {
-        console.log("Unable to login user, post reqeust failed",error.name, error.message);
-      }
+  const initialValues: RegistrationFormValues = {
+    firstname: "",
+    lastname: "",
+    email: "",
+    telephone: "",
+    company: "",
+    country: "Deutschland",
+    state: "",
+    street: "",
+    hausnr: "",
+    plz: "",
+    city: "",
+    registrationnum: "",
+  };
+
+  const onSubmit = (values: any) => {
+    try {
+      alert(JSON.stringify(values, null, 2));
+    } catch (error: any) {
+      console.log(
+        "Unable to login user, post reqeust failed",
+        error.name,
+        error.message
+      );
     }
-    
+  };
 
   return (
     <Grid container component="main" sx={styles.mainContainer}>
@@ -122,20 +127,8 @@ const RegistrationRealState = () => {
         />
       </Grid>
       <Grid item xs={12} md={8} lg={8} sx={styles.formGrid}>
-        <Button
-          variant="text"
-          sx={styles.backButton}
-          onClick={handleBack}
-        >
-          <MdArrowBackIos />
-          Zurück
-        </Button>
-        <Typography
-          variant="h3"
-          sx={styles.header}
-        >
-          Registrierung
-        </Typography>
+        <BackButton onBack={handleBack} />
+        <PageTitle title="Registrierung" />
         <Formik
           initialValues={initialValues}
           validationSchema={registrationValidationSchema}
@@ -147,26 +140,29 @@ const RegistrationRealState = () => {
         >
           {({ validateForm, setTouched, submitForm }) => (
             <Form>
-              <Grid
-                sx={styles.form}
-              >
+              <Grid sx={styles.form}>
                 {activeStep <= 3 ? (
                   <RegistrationForm
                     activeStep={activeStep}
                     steps={steps}
                     handleBack={handleBack}
-                    handleNext={() => handleNext(validateForm, setTouched,submitForm)}
+                    handleNext={() =>
+                      handleNext(validateForm, setTouched, submitForm)
+                    }
                   />
                 ) : (
-                  <SucessPage />
+                  <SuccessPage
+                    title="Registrierung abgeschlossen!"
+                    description="You have been added to the project team and permitted to receive any project news and updates."
+                    buttonLabel="Go to Dashboard"
+                    redirectUrl="/dashboard"
+                  />
                 )}
               </Grid>
             </Form>
           )}
-          </Formik>
-        <Typography
-          sx={styles.helpText}
-          >
+        </Formik>
+        <Typography sx={styles.helpText}>
           Hilfe?{" "}
           <Link href="#" color="#1E3137" fontWeight="bold">
             Kontakt Support
@@ -180,7 +176,7 @@ const RegistrationRealState = () => {
 export default RegistrationRealState;
 
 // css design
-const styles = {
+export const styles = {
   mainContainer: { height: "100vh" },
   infoBannerGrid: {
     backgroundImage: `url(/images/registration-bg.png)`,
@@ -199,22 +195,6 @@ const styles = {
   formGrid: {
     backgroundColor: "#F9FAFA",
   },
-  backButton: {
-    display: "flex",
-    fontSize: "0.875rem",
-    fontWeight: "600",
-    alignItems: "center",
-    marginLeft: "3.75rem",
-    marginTop: "2.5rem",
-    color: "#8D999C",
-  },
-  header: {
-    fontSize: "2rem",
-    lineHeight: "2.5rem",
-    fontWeight: "700",
-    marginLeft: "3.75rem",
-    my: "2rem",
-  },
   form: {
     marginLeft: "3.75rem",
     marginRight: "3.5rem",
@@ -231,5 +211,5 @@ const styles = {
     fontSize: "1rem",
     marginTop: "3rem",
     marginLeft: "3.75rem",
-  }
+  },
 };

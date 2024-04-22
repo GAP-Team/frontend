@@ -1,5 +1,4 @@
 'use client';
-import React from "react";
 import GButton from "@/components/button/GButton";
 import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
@@ -15,20 +14,6 @@ import ComercialPerson from "./CommercialPerson";
 import PrivatePerson from "./PrivatePerson";
 import BusinessRegistration from "./BusinessRegistration";
 import { useFormikContext } from 'formik';
-
-export interface RegisterFormValues{
-  firstname: string,
-  lastname: string,
-  email: string,
-  telephone: string,
-  company: string,
-  state: string,
-  street: string,
-  housenum: string,
-  postalcode: string,
-  city: string,
-  registrationnum:string,
-}
 
 interface RegistrationFormProps {
   activeStep: number;
