@@ -1,4 +1,4 @@
-export interface AddObjektFormValues{
+export interface AddBuildingFormValues{
     buildingName: string;
     totalArea: string;
     buildingType: string;
@@ -17,7 +17,7 @@ export interface ActiveStepItem{
     component?: React.ReactElement;
 }
 
-export interface AddObjektFormProps {
+export interface AddBuildingFormProps {
     activeStep: ActiveStepItem;
     steps: ActiveStepItem[];
     handleBack: () => void;
