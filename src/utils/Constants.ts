@@ -114,3 +114,19 @@ export const adresse: Detail[] = [
 export const gewerbeanmeldung: Detail[] = [
   { label: "Handerlregister Nummer", value: "HRB 7890" },
 ];
+
+export const contactPersonList = [
+  { name: "Markus Richter", role: "Projektingenieur" },
+  { name: "Alexander Schmidt", role: " Geschäftsführer" },
+  { name: "Alexander Schmidt", role: "Vertriebsleiter" },
+  { name: "Katharina Weber", role: "Kundenbetreuer" },
+];
+
+export const buildingTypesList = [
+  { label: "Wohnung", value: "Wohnung" },    // Apartment
+  { label: "Büro", value: "Büro"  },       // Office
+  { label: "Lagerhaus", value: "Lagerhaus" },  // Warehouse
+  { label: "Einzelhandel", value: "Einzelhandel"  }, // Retail
+  { label: "Industrie", value: "Industrie" },    // Industrial
+  { label: "Krankenhaus", value: "Krankenhaus" }  // Hospital
+];

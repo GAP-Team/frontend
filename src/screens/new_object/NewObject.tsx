@@ -23,11 +23,11 @@ import PageTitle from "@/components/label/PageTitle";
 const NewObject = () => {
     const router = useRouter();
     const formik = useFormikContext();
-const steps: ActiveStepItem[] = [
+    const steps: ActiveStepItem[] = [
       {
         id: 0,
         stepName: "Objektinformation",
-        component: <ObjektInformation />,
+        component: <ObjektInformation formik={formik}/>,
       },
       { id: 1, stepName: "Objektanschrift", component: <ObjektAddress formik={formik} /> },
       {
