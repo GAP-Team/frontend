@@ -5,12 +5,12 @@ import { useRouter } from "next/navigation";
 import { Formik, Form } from "formik";
 import AddBuildingForm from "./AddBuildingForm";
 import { addObjektFormSchema } from "@/utils/ValidationSchema";
-import { styles } from "../registration_real_estate/RegistrationRealState";
+import { styles } from "../../registration_real_estate/RegistrationRealState";
 import {
   ValidateFormFunction,
   SetTouchedFunction,
   SubmitFormFunction,
-} from "../registration_real_estate/types";
+} from "../../registration_real_estate/types";
 import { ActiveStepItem, AddBuildingFormValues } from "./types";
 import BuildingInformation from "./BuildingInformation";
 import BuildingAddress from "./BuildingAddress";

@@ -12,7 +12,7 @@ import Sidebar from "@/components/navigation/GSidebar/SideBar";
 import Box from "@mui/material/Box";
 import PropertyFilterPanel from "@/components/filter/PropertyFilterPanel";
 import GAppbar from "@/components/navigation/GAppbar/GAppbar";
-import NewObject from "@/screens/new_building/NewBuilding";
+import NewBuilding from "@/screens/dashboard/buildings/NewBuilding";
 import RealEstateUser from "./real_estate_user/RealEstateUser";
 
 const Dashboard = () => {
@@ -20,7 +20,7 @@ const Dashboard = () => {
     {id:0, icon: LuLayoutDashboard, text: "Dashboard",component:<RealEstateUser /> },
     {id:1, icon: CgNotes, text: "Ausschreibungen", },
     {id:2, icon: MdOutlineDoorSliding, text: "Anlagen" },
-    {id:3, icon: MdOutlineAddHomeWork, text: "Gebäude",component:<NewObject/> },
+    {id:3, icon: MdOutlineAddHomeWork, text: "Gebäude",component:<NewBuilding/> },
     {id:4, icon: MdOutlineNoteAlt, text: "Aufträge"},
     {id:5, icon: TbPigMoney, text: "Kosteneinsparung" },
     {id:6, icon: FaRegFlag, text: "Favoriten" },
