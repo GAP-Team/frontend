@@ -1,5 +1,4 @@
 'use client';
-import React from "react";
 import GButton from "@/components/button/GButton";
 import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";

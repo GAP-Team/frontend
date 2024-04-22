@@ -1,10 +1,8 @@
 "use client";
-import React from "react";
 import GButton from "@/components/button/GButton";
 import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
 import GStepper from "@/components/stepper/GStepper";
 import GProgressStepper from "@/components/stepper/GProgressStepper";
 import Divider from "@mui/material/Divider";

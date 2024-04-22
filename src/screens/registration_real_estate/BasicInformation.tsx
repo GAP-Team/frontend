@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import {useEffect} from "react";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import LabelWithAsterisk from "@/components/label/LabelWithAsterisk";
@@ -13,7 +13,7 @@ interface GenericFormProps {
 }
 
 const BasicInformation = ({formik}: GenericFormProps): JSX.Element => {
-  React.useEffect(() => {
+  useEffect(() => {
     formik.validateForm();
   }, [])
   

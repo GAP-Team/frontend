@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import  { useState } from "react";
 import Grid from "@mui/material/Grid";
 import { useRouter } from "next/navigation";
 import { Formik, Form } from "formik";
@@ -42,7 +42,7 @@ const steps: ActiveStepItem[] = [
         },
     ];
 
-  const [activeStep, setActiveStep] = React.useState<ActiveStepItem>(steps[0]);
+  const [activeStep, setActiveStep] = useState<ActiveStepItem>(steps[0]);
 
   const handleNext = async (
     validateForm: ValidateFormFunction,
