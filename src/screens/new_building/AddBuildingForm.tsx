@@ -7,15 +7,15 @@ import GStepper from "@/components/stepper/GStepper";
 import GProgressStepper from "@/components/stepper/GProgressStepper";
 import Divider from "@mui/material/Divider";
 import { useFormikContext } from "formik";
-import { AddObjektFormProps } from "./types";
+import { AddBuildingFormProps } from "./types";
 import SuccessPage from "@/components/common/SuccessPage";
 
-const AddObjektForm = ({
+const AddBuildingForm = ({
   activeStep,
   steps,
   handleBack,
   handleNext,
-}: AddObjektFormProps): JSX.Element => {
+}: AddBuildingFormProps): JSX.Element => {
   const formik = useFormikContext();
   const isBeyondLastStep = activeStep.id >= steps.length;
 
@@ -93,7 +93,7 @@ const AddObjektForm = ({
   );
 };
 
-export default AddObjektForm;
+export default AddBuildingForm;
 
 //Styles
 const styles = {

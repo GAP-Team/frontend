@@ -3,7 +3,7 @@ import  { useState } from "react";
 import Grid from "@mui/material/Grid";
 import { useRouter } from "next/navigation";
 import { Formik, Form } from "formik";
-import AddObjektForm from "./AddObjektForm";
+import AddBuildingForm from "./AddBuildingForm";
 import { addObjektFormSchema } from "@/utils/ValidationSchema";
 import { styles } from "../registration_real_estate/RegistrationRealState";
 import {
@@ -11,15 +11,15 @@ import {
   SetTouchedFunction,
   SubmitFormFunction,
 } from "../registration_real_estate/types";
-import { ActiveStepItem, AddObjektFormValues } from "./types";
-import ObjektInformation from "./ObjektInformation";
-import ObjektAddress from "./ObjektAddress";
-import ObjektDocumentation from "./ObjektDocumentation";
-import ObjektSummary from "./ObjektSummary";
-
+import { ActiveStepItem, AddBuildingFormValues } from "./types";
+import BuildingInformation from "./BuildingInformation";
+import BuildingAddress from "./BuildingAddress";
+import BuildingDocumentation from "./BuildingDocumentation";
+import BuildingSummary from "./BuildingSummary";
 import { useFormikContext } from "formik";
 import BackButton from "@/components/button/BackButton";
 import PageTitle from "@/components/label/PageTitle";
+
 const NewObject = () => {
     const router = useRouter();
     const formik = useFormikContext();
@@ -27,18 +27,18 @@ const steps: ActiveStepItem[] = [
       {
         id: 0,
         stepName: "Objektinformation",
-        component: <ObjektInformation />,
+        component: <BuildingInformation />,
       },
-      { id: 1, stepName: "Objektanschrift", component: <ObjektAddress formik={formik} /> },
+      { id: 1, stepName: "Objektanschrift", component: <BuildingAddress formik={formik} /> },
       {
         id: 2,
         stepName: "Objektdokumentation",
-        component: <ObjektDocumentation />,
+        component: <BuildingDocumentation />,
       },
       {
         id: 3,
         stepName: "Übersicht Objektdaten",
-        component: <ObjektSummary />,
+        component: <BuildingSummary />,
         },
     ];
 
@@ -67,7 +67,7 @@ const steps: ActiveStepItem[] = [
     }
   };
 
-  const initialValues: AddObjektFormValues = {
+  const initialValues: AddBuildingFormValues = {
     buildingName: "",
     totalArea: "",
     buildingType: "",
@@ -110,7 +110,7 @@ const steps: ActiveStepItem[] = [
           {({ validateForm, setTouched, submitForm }) => (
             <Form>
               <Grid sx={styles.form}>
-                  <AddObjektForm
+                  <AddBuildingForm
                     activeStep={activeStep}
                     steps={steps}
                     handleBack={handleBack}

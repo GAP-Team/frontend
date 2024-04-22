@@ -14,7 +14,7 @@ interface Item {
   value: string;
 }
 
-const ObjektAddress = ({formik}:{formik:any}) => {
+const BuildingAddress = ({formik}:{formik:any}) => {
 
     const [selectedState, setSelectedState] = useState<Item | null>(null);
     const handleStateSelect = (selectedItem: Item): void => {
@@ -84,7 +84,7 @@ const ObjektAddress = ({formik}:{formik:any}) => {
   )
 }
 
-export default ObjektAddress
+export default BuildingAddress
 
 //Styles
 const formStyles = {
