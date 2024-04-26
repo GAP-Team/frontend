@@ -42,12 +42,7 @@ const JobCard: React.FC<JobCardProps> = ({
       />
       <Typography
         variant="h6"
-        sx={{
-          fontWeight: "600",
-          fontSize: "1rem",
-          lineHeight: "1.5rem",
-          pb: "0.5rem",
-        }}
+        sx={styles.title}
       >
         {title}
       </Typography>
@@ -99,6 +94,12 @@ const styles = {
   chip: {
     bgcolor: "purple",
     color: "white",
+  },
+  title:{
+    fontWeight: "600",
+    fontSize: "1rem",
+    lineHeight: "1.5rem",
+    pb: "0.5rem",
   },
   tags: {
     display: "flex",

@@ -3,12 +3,14 @@ import SectionTitle from '@/components/label/SectionTitle'
 import Box from "@mui/material/Box";
 import DividerDecorator from '@/components/divider/DividerDecorator';
 import HeaderSection from '../HeaderSection';
-// import JobCardList from './JobCardList';
+import ApplicationList from './ApplicationList';
+import { applications } from '@/utils/Constants';
 
 const ApplicationsPanel = () => {
   return (
     <>
-      <HeaderSection titletext='NEUE BEWERBUNGEN' count={7} overviewText='Alle anzeigen'/>
+      <HeaderSection titletext='NEUE BEWERBUNGEN' count={7} overviewText='Alle anzeigen' />
+      <ApplicationList applications={applications}/>
     </>
   );
 }
