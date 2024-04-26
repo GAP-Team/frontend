@@ -27,9 +27,6 @@ const styles = {
     display: 'flex',
     flexDirection:'column',
     paddingRight: "0.65rem", // Add padding to the bottom for the scrollbar
-    flexWrap: "nowrap",
-    maxHeight: "18rem",
-    flexShrink: "0",
     gap: "1.25rem",
     overflowY: "auto",
     ...scrollBarStyles,

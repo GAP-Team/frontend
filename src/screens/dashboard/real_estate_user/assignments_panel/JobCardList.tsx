@@ -18,16 +18,13 @@ export default JobCardList;
 // Styles
 const styles = {
   listContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    gap: '1.25rem',
+    overflow: 'auto',
+    paddingBottom: "0.65rem",
     paddingTop: "1rem",
     px: "0.2rem",
-    paddingBottom: "0.65rem", // Add padding to the bottom for the scrollbar
-    display: "flex",
-    flexDirection: "row",
-    flexWrap: "nowrap",
-    maxWidth: "none",
-    flexShrink: "0",
-    gap: "1.25rem",
-    overflowX: "auto",
     ...scrollBarStyles,
   },
 };

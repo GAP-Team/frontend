@@ -5,16 +5,17 @@ import DividerDecorator from '@/components/divider/DividerDecorator';
 import HeaderSection from '../HeaderSection';
 import ApplicationList from './ApplicationList';
 import { applications } from '@/utils/Constants';
+import ScrollableSection from '../ScrollableSection';
 
 const ApplicationsPanel = () => {
   return (
     <>
-      <HeaderSection titletext='NEUE BEWERBUNGEN' count={7} overviewText='Alle anzeigen' />
-      <ApplicationList applications={applications}/>
+      <ScrollableSection>
+        <HeaderSection titletext='NEUE BEWERBUNGEN' count={7} overviewText='Alle anzeigen' />
+        <ApplicationList applications={applications}/>
+      </ScrollableSection>
     </>
   );
 }
 
 export default ApplicationsPanel;
-
-// Styles

@@ -25,14 +25,10 @@ export default ApplicationList;
 const styles = {
   listContainer: {
     display: 'flex',
-    flexDirection:'column',
-    // py: "0.2rem",
-    paddingRight: "0.65rem", // Add padding to the bottom for the scrollbar
-    flexWrap: "nowrap",
-    maxHeight: "18rem",
-    flexShrink: "0",
-    gap: "1rem",
-    overflowY: "auto",
+    flexDirection: 'column',
+    gap: '1rem',
+    paddingRight: "0.65rem",
+    overflowY: 'auto',
     ...scrollBarStyles,
   },
 };
