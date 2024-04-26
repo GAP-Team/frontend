@@ -4,6 +4,7 @@ import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import OverviewPanel from './overview_panel/OverviewPanel';
 import AssignmentsPanel from './assignments_panel/AssignmentsPanel';
+import ApplicationsPanel from './applications_panel/ApplicationsPanel';
 
 export default function RealEstateUser() {
   return (
@@ -21,7 +22,9 @@ export default function RealEstateUser() {
             </Paper>
           </Grid>
           <Grid item xs={7}>
-            <Paper sx={styles.bottomLeftPaper} />
+            <Paper sx={styles.bottomLeftPaper} >
+              <ApplicationsPanel/>
+            </Paper>
           </Grid>
           <Grid item xs={5}>
             <Paper sx={styles.bottomRightPaper} />
@@ -55,11 +58,13 @@ const styles = {
   bottomLeftPaper: {
     height: 'calc(40vh - 12px)',
     width: '100%',
-    boxSizing: 'border-box'
+    boxSizing: 'border-box',
+    p:'1.25rem'
   },
   bottomRightPaper: {
     height: 'calc(40vh - 12px)',
     width: '100%',
-    boxSizing: 'border-box'
+    boxSizing: 'border-box',
+    p:'1.25rem'
   }
 };
