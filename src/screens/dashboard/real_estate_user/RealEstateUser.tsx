@@ -3,6 +3,7 @@ import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import OverviewPanel from './overview_panel/OverviewPanel';
+import AssignmentsPanel from './assignments_panel/AssignmentsPanel';
 
 export default function RealEstateUser() {
   return (
@@ -15,7 +16,9 @@ export default function RealEstateUser() {
       <Grid item xs={9}>
         <Grid container spacing={2}>
           <Grid item xs={12}>
-            <Paper sx={styles.topPaper} />
+            <Paper sx={styles.topPaper} >
+            <AssignmentsPanel/>
+            </Paper>
           </Grid>
           <Grid item xs={7}>
             <Paper sx={styles.bottomLeftPaper} />
@@ -46,7 +49,8 @@ const styles = {
   topPaper: {
     height: 'calc(50vh - 24px)',
     width: '100%',
-    boxSizing: 'border-box'
+    boxSizing: 'border-box',
+    p:'1.25rem'
   },
   bottomLeftPaper: {
     height: 'calc(40vh - 12px)',

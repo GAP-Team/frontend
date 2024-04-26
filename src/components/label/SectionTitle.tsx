@@ -20,4 +20,6 @@ const styles = {
   display: "flex",
   fontSize: "0.75rem",
   fontWeight: "600",
+  lineHeight: "1rem",
+  color: "#8D999C",
 };

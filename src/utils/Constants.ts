@@ -114,3 +114,66 @@ export const adresse: Detail[] = [
 export const gewerbeanmeldung: Detail[] = [
   { label: "Handerlregister Nummer", value: "HRB 7890" },
 ];
+
+export const jobCardsData = [
+  {
+    status: "Offen",
+    offers: 2,
+    title: "Brandschutzprüfung inkl. Reparatur",
+    tags: ["Brandschutz", "Wasserschutz", "Insulation"],
+    location: "G003 Mittelstraße 121",
+    projectId: "A0382",
+    sectionId: "BM 02 Sued",
+  },
+  {
+    status: "Offen",
+    offers: 2,
+    title: "Brandschutzprüfung inkl. Reparatur",
+    tags: ["Brandschutz", "Wasserschutz", "Insulation"],
+    location: "G003 Mittelstraße 121",
+    projectId: "A0382",
+    sectionId: "BM 02 Sued",
+  },
+  {
+    status: "Offen",
+    offers: 2,
+    title: "Brandschutzprüfung inkl. Reparatur",
+    tags: ["Brandschutz", "Wasserschutz", "Insulation"],
+    location: "G003 Mittelstraße 121",
+    projectId: "A0382",
+    sectionId: "BM 02 Sued",
+  },
+  {
+    status: "Offen",
+    offers: 2,
+    title: "Brandschutzprüfung inkl. Reparatur",
+    tags: ["Brandschutz", "Wasserschutz", "Insulation"],
+    location: "G003 Mittelstraße 121",
+    projectId: "A0382",
+    sectionId: "BM 02 Sued",
+  },
+  {
+    status: "Offen",
+    offers: 2,
+    title: "Brandschutzprüfung inkl. Reparatur",
+    tags: [
+      "Brandschutz",
+      "Wasserschutz",
+      "Insulation",
+      "Insulation",
+      "Insulation",
+    ],
+    location: "G003 Mittelstraße 121",
+    projectId: "A0382",
+    sectionId: "BM 02 Sued",
+  },
+  {
+    status: "Offen",
+    offers: 2,
+    title: "Brandschutzprüfung inkl. Reparatur",
+    tags: ["Brandschutz", "Wasserschutz", "Insulation"],
+    location: "G003 Mittelstraße 121",
+    projectId: "A0382",
+    sectionId: "BM 02 Sued",
+  },
+];
