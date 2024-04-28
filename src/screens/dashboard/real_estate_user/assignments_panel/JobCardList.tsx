@@ -1,7 +1,7 @@
 import React from "react";
-import Box from "@mui/material/Box";
 import JobCard from "./JobCard";
 import { jobCardsData } from "@/utils/Constants";
+import Box from '@mui/material/Box';
 import { scrollBarStyles } from "@/components/scrollbar/Scrollbar";
 
 const JobCardList: React.FC = () => {
@@ -21,10 +21,10 @@ const styles = {
     display: 'flex',
     flexDirection: 'row',
     gap: '1.25rem',
-    overflow: 'auto',
     paddingBottom: "0.65rem",
     paddingTop: "1rem",
     px: "0.2rem",
+    overflowX: 'auto',
     ...scrollBarStyles,
   },
 };
