@@ -20,14 +20,14 @@ import { useFormikContext } from "formik";
 import BackButton from "@/components/button/BackButton";
 import PageTitle from "@/components/label/PageTitle";
 
-const NewObject = () => {
+const NewBuilding = () => {
     const router = useRouter();
     const formik = useFormikContext();
 const steps: ActiveStepItem[] = [
       {
         id: 0,
         stepName: "Objektinformation",
-        component: <BuildingInformation />,
+        component: <BuildingInformation formik={formik}/>,
       },
       { id: 1, stepName: "Objektanschrift", component: <BuildingAddress formik={formik} /> },
       {
@@ -127,4 +127,4 @@ const steps: ActiveStepItem[] = [
   );
 };
 
-export default NewObject;
+export default NewBuilding;
