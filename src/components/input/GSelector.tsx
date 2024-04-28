@@ -3,7 +3,7 @@ import React from 'react';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 
-interface Item {
+export interface Item {
   label: string;
   value: string;
 }

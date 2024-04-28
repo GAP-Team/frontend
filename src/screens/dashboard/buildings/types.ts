@@ -24,3 +24,11 @@ export interface AddBuildingFormProps {
     handleNext: () => void;
   }
   
+export interface ContactPersonItem{
+    name: string;
+    role: string;
+}
+export interface Item {
+    label: string;
+    value: string;
+}

@@ -325,4 +325,19 @@ export const news = [
     statusNew: true,
     avatarLetter: "SS",
   },
+
+export const contactPersonList = [
+  { name: "Markus Richter", role: "Projektingenieur" },
+  { name: "Alexander Schmidt", role: " Geschäftsführer" },
+  { name: "Alexander Schmidt", role: "Vertriebsleiter" },
+  { name: "Katharina Weber", role: "Kundenbetreuer" },
+];
+
+export const buildingTypesList = [
+  { label: "Wohnung", value: "Wohnung" },    // Apartment
+  { label: "Büro", value: "Büro"  },       // Office
+  { label: "Lagerhaus", value: "Lagerhaus" },  // Warehouse
+  { label: "Einzelhandel", value: "Einzelhandel"  }, // Retail
+  { label: "Industrie", value: "Industrie" },    // Industrial
+  { label: "Krankenhaus", value: "Krankenhaus" }  // Hospital
 ];
