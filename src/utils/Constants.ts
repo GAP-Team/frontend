@@ -325,6 +325,7 @@ export const news = [
     statusNew: true,
     avatarLetter: "SS",
   },
+]
 
 export const contactPersonList = [
   { name: "Markus Richter", role: "Projektingenieur" },
