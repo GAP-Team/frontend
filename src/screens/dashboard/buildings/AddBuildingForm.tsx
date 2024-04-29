@@ -1,6 +1,5 @@
 "use client";
 import GButton from "@/components/button/GButton";
-import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import GStepper from "@/components/stepper/GStepper";
@@ -9,6 +8,7 @@ import Divider from "@mui/material/Divider";
 import { useFormikContext } from "formik";
 import { AddBuildingFormProps } from "./types";
 import SuccessPage from "@/components/common/SuccessPage";
+import SectionTitle from "@/components/label/SectionTitle";
 
 const AddBuildingForm = ({
   activeStep,
@@ -28,9 +28,7 @@ const AddBuildingForm = ({
   ) : (
     <>
       <div className="flex flex-col">
-        <Typography variant="subtitle2" sx={styles.subTitle}>
-          {activeStep.stepName}
-        </Typography>
+        <SectionTitle text={activeStep.stepName}  sx={styles.subTitle}/>
         <GProgressStepper
           sx={styles.progressStepper}
           activeStep={activeStep.id}
@@ -41,20 +39,20 @@ const AddBuildingForm = ({
   );
 
   const forwardAndBackBtns = (
-      <>
-        {!isBeyondLastStep && (
-          <GButton onClick={handleBack} color="ggrey">
-            {activeStep.id < steps.length - 1 ? "Zurück" : "Bearbeiten"}
-          </GButton>
-        )}
-        <GButton onClick={handleNext}>
-          {isBeyondLastStep
-            ? "schließen"
-            : activeStep.id < steps.length - 1
+    <>
+      {!isBeyondLastStep && (
+        <GButton onClick={handleBack} color="ggrey">
+          {activeStep.id < steps.length - 1 ? "Zurück" : "Bearbeiten"}
+        </GButton>
+      )}
+      <GButton onClick={handleNext}>
+        {isBeyondLastStep
+          ? "schließen"
+          : activeStep.id < steps.length - 1
             ? "Weiter"
             : "Abschlißen"}
-        </GButton>
-      </>
+      </GButton>
+    </>
   );
 
   return (

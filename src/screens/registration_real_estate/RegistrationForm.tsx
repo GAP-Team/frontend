@@ -14,6 +14,7 @@ import ComercialPerson from "./CommercialPerson";
 import PrivatePerson from "./PrivatePerson";
 import BusinessRegistration from "./BusinessRegistration";
 import { useFormikContext } from 'formik';
+import SectionTitle from "@/components/label/SectionTitle";
 
 interface RegistrationFormProps {
   activeStep: number;
@@ -65,12 +66,7 @@ const RegistrationForm = ({
       >
         <div style={{ flexGrow: 1 }}>
           <div className="flex flex-col">
-            <Typography
-              variant="subtitle2"
-              sx={styles.subTitle}
-            >
-              {steps[activeStep]}
-            </Typography>
+            <SectionTitle text={steps[activeStep]} sx={styles.subTitle} />
             <GProgressStepper
               sx={styles.progressStepper}
               activeStep={activeStep}
@@ -124,6 +120,6 @@ const styles = {
     width: "auto",
     flexGrow: 1,
     marginLeft: "1rem",
-    color: "gprimary",  
+    color: "gprimary",
   }
 };

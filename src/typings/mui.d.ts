@@ -24,7 +24,7 @@ import '@mui/material/styles';
     }
 }
   
-  declare module "@mui/material/Button" {
+  declare module "@mui/material" {
     interface ButtonPropsColorOverrides {
         gprimary: true;
         gsecondary: true;
@@ -35,6 +35,16 @@ import '@mui/material/styles';
         gray:true;
       ggrey: true;
     }
+    interface ChipPropsColorOverrides {
+      gprimary: true;
+      gsecondary: true;
+      gyellow: true;
+      ggreen: true;
+      gpurple: true;
+      gorange: true;
+      gray:true;
+      ggrey: true;
+  }
 }
   
   declare module '@mui/material/styles' {

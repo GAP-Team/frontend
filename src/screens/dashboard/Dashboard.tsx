@@ -30,13 +30,13 @@ const Dashboard = () => {
   const [selected, setSelected] = React.useState<SidebarItem>(sidebarItems[0]);
   
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box sx={{ display: "flex", }}>
       <Sidebar
         items={sidebarItems}
         setSelected={setSelected}
         selected={selected}
       />
-      <Box sx={{ width: "100%", height:'100%' }}>
+      <Box sx={{ width: '100%', height: '100%', backgroundColor: '#F1F3F4'}}>
       <GAppbar />
         {selected?.component}
       </Box>
