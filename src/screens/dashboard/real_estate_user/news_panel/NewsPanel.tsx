@@ -2,7 +2,7 @@ import React from 'react'
 import HeaderSection from '../HeaderSection';
 import NewsList from './NewsList';
 import { news } from '@/utils/Constants';
-import ScrollableSection from '../ScrollableSection';
+import ScrollableSection from '../../../../components/common/ScrollableSection';
 
 const NewsPanel = () => {
   return (

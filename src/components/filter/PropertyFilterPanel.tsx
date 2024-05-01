@@ -16,50 +16,30 @@ const filterTab = [
   { label: "anstehende Prüfungen", content: <></> },
 ];
 
-const FilterBar = () => {
+const PropertyFilterPanel = () => {
   const [value, setValue] = React.useState(0);
   const [propertyType, setPropertyType] = React.useState("");
   const [federalState, setFederalState] = React.useState("");
-
-  const handleChange = (event: any, newValue: any) => {
-    setValue(newValue);
-  };
-
-  const handlePropertyTypeChange = (event: any) => {
-    setPropertyType(event.target.value);
-  };
-
-  const handleFederalStateChange = (event: any) => {
-    setFederalState(event.target.value);
-  };
+  const [city, setCity] = React.useState("");
 
   return (
-    <Container
-      color="default"
-      maxWidth={false}
-      sx={styles.container}
-    >
-      <Typography
-        variant="h6"
-        component="div"
-        sx={styles.typography}
-      >
+    <Container maxWidth={false} sx={styles.container}>
+      <Typography variant="h6" sx={styles.typography}>
         Alle Objekte
       </Typography>
 
-      <Box sx={{ flexGrow: 2 }}>
+      <Box sx={{ flexGrow: 1 }}>
         <GTab tabs={filterTab} />
       </Box>
 
-      <Box sx={{ flexGrow: 1 }} />
       <FormControl size="small" sx={styles.formControl}>
-        <InputLabel id="property-type-select-label">Anlagentyp</InputLabel>
+        <InputLabel id="property-type-label">Anlagentyp</InputLabel>
         <Select
-          labelId="property-type-select-label"
+          labelId="property-type-label"
           id="property-type-select"
           value={propertyType}
           label="Anlagentyp"
-          onChange={handlePropertyTypeChange}
+          onChange={(e) => setPropertyType(e.target.value)}
         >
           <MenuItem value="type1">Type 1</MenuItem>
           <MenuItem value="type2">Type 2</MenuItem>
@@ -67,13 +47,13 @@ const FilterBar = () => {
         </Select>
       </FormControl>
       <FormControl size="small" sx={styles.formControl}>
-        <InputLabel id="federal-state-select-label">Bundesland</InputLabel>
+        <InputLabel id="federal-state-label">Bundesland</InputLabel>
         <Select
-          labelId="federal-state-select-label"
+          labelId="federal-state-label"
           id="federal-state-select"
           value={federalState}
           label="Bundesland"
-          onChange={handleFederalStateChange}
+          onChange={(e) => setFederalState(e.target.value)}
         >
           <MenuItem value="state1">State 1</MenuItem>
           <MenuItem value="state2">State 2</MenuItem>
@@ -81,37 +61,38 @@ const FilterBar = () => {
         </Select>
       </FormControl>
       <FormControl size="small" sx={styles.formControl}>
-        <InputLabel id="federal-state-select-label">Stadt</InputLabel>
+        <InputLabel id="city-label">Stadt</InputLabel>
         <Select
-          labelId="federal-state-select-label"
-          id="federal-state-select"
-          value={federalState}
+          labelId="city-label"
+          id="city-select"
+          value={city}
           label="Stadt"
-          onChange={handleFederalStateChange}
+          onChange={(e) => setCity(e.target.value)}
         >
-          <MenuItem value="state1">State 1</MenuItem>
-          <MenuItem value="state2">State 2</MenuItem>
-          {/* More states */}
+          <MenuItem value="city1">City 1</MenuItem>
+          <MenuItem value="city2">City 2</MenuItem>
+          {/* More cities */}
         </Select>
       </FormControl>
     </Container>
   );
 };
 
-export default FilterBar;
+export default PropertyFilterPanel;
 
-//Styles
 const styles = {
   container: {
     backgroundColor: "white",
-    borderRadius: "5px",
     display: "flex",
-    alignContent: "space-between",
+    alignItems: "center",
     justifyContent: "space-between",
+    borderRadius: '0.5rem',
+    mx: 2, // Negative margin to counteract the container's padding
+    py: '0.5rem',
+    width: 'auto', // Ensure it adjusts to full width with negative margins
   },
   typography: {
     flexGrow: 1,
-    alignContent: "center",
   },
   formControl: {
     m: 1,

@@ -20,6 +20,7 @@ import '@mui/material/styles';
       bodymr: true;
       bodysb: true;
       bodyssb: true;
+      bodysr: true;
       labelb: true;
     }
 }
@@ -44,6 +45,16 @@ import '@mui/material/styles';
       gorange: true;
       gray:true;
       ggrey: true;
+    }
+    interface PaginationPropsColorOverrides {
+      gprimary: true;
+      gsecondary: true;
+      gyellow: true;
+      ggreen: true;
+      gpurple: true;
+      gorange: true;
+      gray:true;
+      ggrey: true;
   }
 }
   
@@ -57,6 +68,12 @@ import '@mui/material/styles';
     //     gpurple: Palette['primary'];
     //     gorange: Palette['primary'];
     // }
+    interface PaletteColorOptions {
+      main: string;
+      light?: string;
+      dark?: string;
+      contrastText?: string;
+    }
     interface CustomPalette {
           gray: PaletteColorOptions;
           gprimary: PaletteColorOptions;
@@ -70,7 +87,4 @@ import '@mui/material/styles';
     interface Palette extends CustomPalette {}
     interface PaletteOptions extends CustomPalette { }
     
-    // interface PaletteOptions {
-    //   grey?: PaletteOptions['primary'];
-    // }
   }

@@ -1,10 +1,5 @@
-import React from 'react';
-import RealEstateUser from '@/screens/dashboard/real_estate_user/RealEstateUser';
+import Dashboard from "@/screens/dashboard/Dashboard";
 
 export default function RealEstateUserDashboard() {
-    return (
-        <div>
-            <RealEstateUser/>
-        </div>
-    );
-    }
+  return <Dashboard />;
+}

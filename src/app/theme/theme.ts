@@ -89,7 +89,7 @@ let theme = createTheme({
           },
         },
         {
-          props: { variant: 'bodylsb' },
+          props: { variant: 'bodylsb' }, //Body Text L Semibold
           style: {
             // define your custom styles here
             fontSize: '1rem',
@@ -99,7 +99,7 @@ let theme = createTheme({
           },
         },
         {
-          props: { variant: 'bodylr' },
+          props: { variant: 'bodylr' }, //Body Text L Regular
           style: {
             // define your custom styles here
             fontSize: '1rem',
@@ -109,7 +109,7 @@ let theme = createTheme({
           },
         },
         {
-          props: { variant: 'bodymsb' },
+          props: { variant: 'bodymsb' }, //Body Text M Semibold
           style: {
             // define your custom styles here
             fontSize: '0.875rem',
@@ -119,7 +119,7 @@ let theme = createTheme({
           },
         },
         {
-          props: { variant: 'bodymu' },
+          props: { variant: 'bodymu' }, //Body Text M Underlined
           style: {
             // define your custom styles here
             fontSize: '0.875rem',
@@ -130,7 +130,7 @@ let theme = createTheme({
           },
         },
         {
-          props: { variant: 'bodymr' },
+          props: { variant: 'bodymr' }, //Body Text M Regular
           style: {
             // define your custom styles here
             fontSize: '0.875rem',
@@ -140,7 +140,7 @@ let theme = createTheme({
           },
         },
         {
-          props: { variant: 'bodysb' },
+          props: { variant: 'bodysb' }, //Body Text S Bold
           style: {
             // define your custom styles here
             fontSize: '0.75rem',
@@ -150,7 +150,17 @@ let theme = createTheme({
           },
         },
         {
-          props: { variant: 'bodyssb' },
+          props: { variant: 'bodyssb' }, //Body Text S Semibold
+          style: {
+            // define your custom styles here
+            fontSize: '0.75rem',
+            fontWeight: '600',
+            lineHeight: '1rem',
+            // ...other styles
+          },
+        },
+        {
+          props: { variant: 'bodysr' }, //Body Text S Regular
           style: {
             // define your custom styles here
             fontSize: '0.75rem',
