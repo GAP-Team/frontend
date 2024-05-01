@@ -53,7 +53,7 @@ export default function TenderMenu() {
           Edit card
         </MenuItem>
         <Divider />
-        <MenuItem onClick={handleClose} color="red">
+        <MenuItem onClick={handleClose} sx={{color:'red'}} >
           <ListItemIcon>
             <RiDeleteBin6Line color="red" size={"1.25rem"} />
           </ListItemIcon>
