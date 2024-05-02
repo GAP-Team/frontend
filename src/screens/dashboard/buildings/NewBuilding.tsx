@@ -33,7 +33,7 @@ const steps: ActiveStepItem[] = [
       {
         id: 2,
         stepName: "Objektdokumentation",
-        component: <BuildingDocumentation />,
+        component: <BuildingDocumentation formik={formik}/>,
       },
       {
         id: 3,

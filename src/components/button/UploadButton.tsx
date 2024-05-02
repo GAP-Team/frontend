@@ -4,6 +4,7 @@ import Button from '@mui/material/Button';
 import { useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
+import { FiFileText } from "react-icons/fi";
 
 const Input = styled('input')({
   display: 'none',
@@ -28,7 +29,8 @@ export default function UploadButton() {
 
   return (
     <Box sx={styles}>
-      <Typography sx={{ mx: 2 }} color="gray.700">
+      <FiFileText size="1.5rem" color="#A0ADB1" />
+      <Typography sx={{ mx: '0.8rem' }} color="gray.700">
         Dokument hinzuziehen oder
       </Typography>
       <Button
