@@ -35,16 +35,16 @@ const BuildingDocumentation = ({ formik }: { formik: any }) => {
             SERVER-LINK HINZUFPGEN
           </Typography>
           <GTextInput
-            placeholder="Geben Sie Ihre Link, https://www.icloud.com/notes/xxxx"
-            id="objektTag"
-            name="objektTag"
-            value={formik?.values.objektTag}
+            placeholder="Geben Sie Ihre Link, e.g https://www.icloud.com/notes/xxxx"
+            id="serverLink"
+            name="serverLink"
+            value={formik?.values.serverLink}
             onChange={formik?.handleChange}
             onBlur={formik?.handleBlur}
             error={
-              formik?.touched.objektTag && Boolean(formik?.errors.objektTag)
+              formik?.touched.serverLink && Boolean(formik?.errors.serverLink)
             }
-            helperText={formik?.touched.objektTag && formik?.errors.objektTag}
+            helperText={formik?.touched.serverLink && formik?.errors.serverLink}
           />
         </Grid>
       </Grid>
