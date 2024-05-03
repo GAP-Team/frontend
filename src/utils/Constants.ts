@@ -89,6 +89,8 @@ interface Detail {
   value: string;
 }
 
+
+// Registration default dummy values
 export const grundinformation: Detail[] = [
   { label: "Vorname", value: "Maximillian" },
   { label: "Nachname", value: "Müller-Maier" },
@@ -114,6 +116,29 @@ export const adresse: Detail[] = [
 export const gewerbeanmeldung: Detail[] = [
   { label: "Handerlregister Nummer", value: "HRB 7890" },
 ];
+
+// Objekt/Building Values
+export const buildingInformation: Detail[] = [
+  { label: "Name", value: "G302 - Mittelstraße 14" },
+  { label: "Area", value: "24.58" },
+  { label: "Gebäude Type", value: "Wohngebäude" },
+]
+
+export const buildingContactPersonList: Detail[] = [
+  { label: "Name", value: "Markus Richter" },
+]
+
+export const buildingAddress: Detail[] = [
+  { label: "Address", value: "Mittelstraße 14" },
+  { label: "Postleitzahl", value: "47475" },
+  { label: "Stadt", value: "Kamp-Lintfort" },
+  { label: "State", value: "Mittelstraße 14" },
+  { label: "Bundesland", value: "Nordrhein-Westfahlen" },
+]
+
+export const buildingDocs: Detail[] = [
+  { label: "File", value: "Objektplan A10-29 c.pdf" },
+]
 
 export const jobCardsData = [
   {
