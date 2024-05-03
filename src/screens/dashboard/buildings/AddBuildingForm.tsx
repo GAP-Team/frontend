@@ -22,8 +22,8 @@ const AddBuildingForm = ({
   const formOrSuccessContent = isBeyondLastStep ? (
     <SuccessPage
       title="Objekt angelegt!"
+      description2="Aussschreibung wurde erfolgreich anleget"
       description="You have been added to the project team and permitted to receive any project news and updates"
-      buttonLabel="Go to Dashboard"
     />
   ) : (
     <>

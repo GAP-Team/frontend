@@ -10,6 +10,7 @@ import sucess_svg from "../../../public/icons/success.svg";
 interface SuccessPageProps {
   title: string;
   description: string;
+  description2?: string;
   buttonLabel?: string;
   imageUrl?: string;
   redirectUrl?: string;
@@ -18,6 +19,7 @@ interface SuccessPageProps {
 const SuccessPage: NextPage<SuccessPageProps> = ({
   title,
   description,
+  description2,
   buttonLabel,
   imageUrl=sucess_svg,
   redirectUrl="/"
@@ -29,18 +31,22 @@ const SuccessPage: NextPage<SuccessPageProps> = ({
     router.push(redirectUrl);
   };
 
+  
   return (
     <Grid item xs={12} md={12} lg={12} sx={styles}>
       <div style={{ marginBottom: "2rem" }}>
         <Image width={100} height={100} alt="Success" src={imageUrl} />
       </div>
-      <Typography variant="h4sb">{title}</Typography>
-      <Typography variant="bodymr" style={{ maxWidth: "22rem", textAlign: "center", color: "gray.500" }}>
+      {description2 && (<Typography variant="bodymr" color="#475A60" >{description2}</Typography>)}
+      <Typography variant="h4sb" padding={"0.5rem"}>{title}</Typography>
+      <Typography variant="bodymr" style={{ maxWidth: "22rem", textAlign: "center", color: "#8D999C" }}>
         {description}
       </Typography>
-      <GButton style={{ marginTop: "2rem" }} onClick={handleNavigation}>
-        {buttonLabel}
-      </GButton>
+      {buttonLabel && (
+        <GButton style={{ marginTop: "2rem" }} onClick={handleNavigation}>
+          {buttonLabel}
+        </GButton>
+      )}
     </Grid>
   );
 };
