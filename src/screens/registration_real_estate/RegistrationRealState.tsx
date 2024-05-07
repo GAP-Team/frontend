@@ -101,6 +101,9 @@ const RegistrationRealState = () => {
     hausnr: "",
     plz: "",
     city: "",
+    bsndoc: undefined,
+    landdoc: undefined,
+    approvdoc: undefined,
     registrationnum: "",
   };
 

@@ -6,11 +6,18 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { FiFileText } from "react-icons/fi";
 
+interface UploadButtonProps {
+  value?: string | null | undefined;
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  id?: string;
+  name?: string;
+}
+
 const Input = styled('input')({
   display: 'none',
 });
 
-export default function UploadButton() {
+export default function UploadButton({ value="Dokument hinzuziehen oder", onChange, id, name }: UploadButtonProps) {
   const theme = useTheme();
 
   const styles = {
@@ -31,7 +38,7 @@ export default function UploadButton() {
     <Box sx={styles}>
       <FiFileText size="1.5rem" color="#A0ADB1" />
       <Typography sx={{ mx: '0.8rem' }} color="gray.700">
-        Dokument hinzuziehen oder
+        {value}
       </Typography>
       <Button
         role={undefined}
@@ -41,7 +48,14 @@ export default function UploadButton() {
         component="label"
       >
         Dokument suchen
-        <Input type="file" id="contained-button-file" />
+        <Input
+          type="file"
+          id={id}
+          name={name}
+          accept="application/pdf"
+          onChange={onChange}
+          multiple={false}
+        />
       </Button>
     </Box>
   );

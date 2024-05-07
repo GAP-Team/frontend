@@ -39,7 +39,7 @@ const RegistrationForm = ({
   ];
   const registertabs = [
     { label: "Gewerbeperson", content: <ComercialPerson formik={formik} /> },
-    { label: "Privatperson", content: <PrivatePerson /> },
+    { label: "Privatperson", content: <PrivatePerson formik={formik}/> },
   ];
 
   return (
