@@ -22,7 +22,6 @@ export default function GAppBar() {
   const menuId = "primary-search-account-menu";
 
   return (
-    <Container>
       <Toolbar sx={styles.toolbar}>
         <Typography
           variant="h6"
@@ -30,18 +29,21 @@ export default function GAppBar() {
           component="div"
           sx={styles.title}
         >
-          Vierkant Wohungs AG
+          Vierkant Wohnungs AG
         </Typography>
 
-        <GSearch />
-        <Box  sx={styles.userSection}>
+        <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'center' }}>  
+          <GSearch />
+        </Box>
+
+        <Box sx={styles.userSection}>
           <IconButton
             size="large"
             aria-label="show 17 new notifications"
             color="inherit"
           >
             <Badge badgeContent={17} color="error">
-              <NotificationsIcon  sx={styles.notificationIcon} />
+              <NotificationsIcon sx={styles.notificationIcon} />
             </Badge>
           </IconButton>
           <IconButton
@@ -61,7 +63,6 @@ export default function GAppBar() {
           </Box>
         </Box>
       </Toolbar>
-    </Container>
   );
 }
 
@@ -69,12 +70,17 @@ export default function GAppBar() {
 const styles = {
   toolbar: {
     display: "flex",
+    justifyContent: "space-between", // Ensures the elements are spaced out as desired
   },
   title: {
-    display: { xs: "none", sm: "block" }
+    flexGrow: 0,  // Prevents the title from growing
+    display: { xs: "none", sm: "block" },
+    fontSize: "1.5rem",
+    fontWeight: "700",
+    lineHeight: "2rem"
   },
   userSection: {
-    display: { xs: "none", md: "flex" },
+    display: "flex",
     alignItems: "center",
   },
   userControls: {
