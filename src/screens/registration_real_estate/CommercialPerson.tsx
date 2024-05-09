@@ -13,7 +13,12 @@ const ComercialPerson = ({formik}:any): JSX.Element => {
         <Typography variant="gsub" color="gray.500">
           GEWERBEANMELDUNG
         </Typography>
-        <UploadButton />
+        <UploadButton
+           id="bsndoc"
+           name="bsndoc"
+          value={formik.values.bsndoc}
+          onChange={(ev:any) => { formik.setFieldValue("bsndoc", ev?.target?.files[0]?.name) }}
+        />
       </Grid>
       <Grid item xs={12} sm={12}>
         <Typography variant="gsub" color="gray.500">
