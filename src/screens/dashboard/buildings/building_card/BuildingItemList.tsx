@@ -1,17 +1,17 @@
-// TenderItemList.tsx
+// BuildingItemList.tsx
 import React, { useState } from "react";
 import Grid from "@mui/material/Grid";
 import Pagination from "@mui/material/Pagination";
-import TenderItem from "./TenderItem";
+import TenderItem from "./BuildingItem";
 import { Tender } from "./types";
 import { Box } from "@mui/material";
 
-interface TenderItemListProps {
+interface BuildingItemListProps {
   tenders: Tender[];
   itemsPerPage?: number;
 }
 
-const TenderItemList: React.FC<TenderItemListProps> = ({
+const BuildingItemList: React.FC<BuildingItemListProps> = ({
   tenders,
   itemsPerPage = 8,
 }) => {
@@ -50,7 +50,7 @@ const TenderItemList: React.FC<TenderItemListProps> = ({
   );
 };
 
-export default TenderItemList;
+export default BuildingItemList;
 
 const styles = {
   container: {

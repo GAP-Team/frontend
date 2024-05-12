@@ -11,16 +11,16 @@ import { CgNotes } from "react-icons/cg";
 import Sidebar from "@/components/navigation/GSidebar/SideBar";
 import Box from "@mui/material/Box";
 import GAppbar from "@/components/navigation/GAppbar/GAppbar";
-import NewBuilding from "@/screens/dashboard/buildings/NewBuilding";
+import NewBuilding from "./buildings/add_building_form/NewBuilding";
 import RealEstateUser from "./real_estate_user/RealEstateUser";
-import Tenders from "./tenders/Tenders";
+import Buildings from "./buildings/building_card/Buildings";
 
 const Dashboard = () => {
   const sidebarItems: SidebarItem[] = [
     {id:0, icon: LuLayoutDashboard, text: "Dashboard",component:<RealEstateUser /> },
     {id:1, icon: CgNotes, text: "Ausschreibungen", },
     {id:2, icon: MdOutlineDoorSliding, text: "Anlagen" },
-    {id:3, icon: MdOutlineAddHomeWork, text: "Gebäude",component:<Tenders/> },
+    {id:3, icon: MdOutlineAddHomeWork, text: "Gebäude",component:<Buildings/>},
     {id:4, icon: MdOutlineNoteAlt, text: "Aufträge"},
     {id:5, icon: TbPigMoney, text: "Kosteneinsparung" },
     {id:6, icon: FaRegFlag, text: "Favoriten" },

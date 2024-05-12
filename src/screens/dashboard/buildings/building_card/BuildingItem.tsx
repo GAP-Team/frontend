@@ -1,4 +1,4 @@
-// TenderItem.tsx
+// BuildingItem.tsx
 import { Tender } from "./types";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
@@ -9,15 +9,15 @@ import { CgNotes } from "react-icons/cg";
 import { FaRegFlag } from "react-icons/fa6";
 import { FiFileText } from "react-icons/fi";
 import { scrollBarStyles } from "@/components/scrollbar/Scrollbar";
-import TenderMenu from "./TenderMenu";
+import TenderMenu from "./BuildingMenu";
 import Stack from "@mui/material/Stack";
 import List from "@mui/material/List";
 
-interface TenderItemProps {
+interface BuildingItemProps {
   tender: Tender;
 }
 
-const TenderItem: React.FC<TenderItemProps> = ({ tender }) => {
+const BuildingItem: React.FC<BuildingItemProps> = ({ tender }) => {
   return (
     <Paper sx={styles.card}>
       <Box sx={styles.header}>
@@ -82,7 +82,7 @@ const TenderItem: React.FC<TenderItemProps> = ({ tender }) => {
   );
 };
 
-export default TenderItem;
+export default BuildingItem;
 
 // Styles
 const styles = {

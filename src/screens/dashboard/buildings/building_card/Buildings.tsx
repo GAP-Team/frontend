@@ -1,16 +1,16 @@
-// Tenders.tsx
+// Buildings.tsx
 import React, { useState, useEffect } from "react";
-import TenderItemList from "./TenderItemList";
+import TenderItemList from "./BuildingItemList";
 import Box from "@mui/material/Box";
 import { Tender } from "./types";
 import PropertyFilterPanel from "@/components/filter/PropertyFilterPanel";
-import { dummyTenders } from "@/utils/Constants";
+import { dummyBuildings } from "@/utils/Constants";
 
-const Tenders: React.FC = () => {
-  const [tenders, setTenders] = useState<Tender[]>([]);
+const Buildings: React.FC = () => {
+  const [tenders, setBuildings] = useState<Tender[]>([]);
 
   useEffect(() => {
-    setTenders(dummyTenders); // This could be an API call
+    setBuildings(dummyBuildings); // This could be an API call
   }, []);
 
   return (
@@ -21,7 +21,7 @@ const Tenders: React.FC = () => {
   );
 };
 
-export default Tenders;
+export default Buildings;
 
 // Styles
 const styles = {
