@@ -2,17 +2,17 @@
 import React, { useState } from "react";
 import Grid from "@mui/material/Grid";
 import Pagination from "@mui/material/Pagination";
-import TenderItem from "./BuildingItem";
-import { Tender } from "./types";
+import BuildingItem from "./BuildingItem";
+import { Building } from "./types";
 import { Box } from "@mui/material";
 
 interface BuildingItemListProps {
-  tenders: Tender[];
+  buildings: Building[];
   itemsPerPage?: number;
 }
 
 const BuildingItemList: React.FC<BuildingItemListProps> = ({
-  tenders,
+  buildings,
   itemsPerPage = 8,
 }) => {
   const [page, setPage] = useState<number>(1);
@@ -23,7 +23,7 @@ const BuildingItemList: React.FC<BuildingItemListProps> = ({
   // Calculate current page items
   const indexOfLastItem = page * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = tenders.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = buildings.slice(indexOfFirstItem, indexOfLastItem);
 
   return (
     <Box sx={styles.container}>
@@ -33,14 +33,14 @@ const BuildingItemList: React.FC<BuildingItemListProps> = ({
         // paddingBottom={1}
         sx={{ overflow: "auto", flexGrow: 1 }}
       >
-        {currentItems.map((tender) => (
-          <Grid item xs={12} md={6} lg={3} key={tender.id}>
-            <TenderItem tender={tender} />
+        {currentItems.map((building) => (
+          <Grid item xs={12} md={6} lg={3} key={building.id}>
+            <BuildingItem building={building} />
           </Grid>
         ))}
       </Grid>
       <Pagination
-        count={Math.ceil(tenders.length / itemsPerPage)}
+        count={Math.ceil(buildings.length / itemsPerPage)}
         page={page}
         onChange={handleChange}
         color="primary"

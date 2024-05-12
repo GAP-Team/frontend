@@ -1,13 +1,13 @@
 // Buildings.tsx
 import React, { useState, useEffect } from "react";
-import TenderItemList from "./BuildingItemList";
+import BuildingItemList from "./BuildingItemList";
 import Box from "@mui/material/Box";
-import { Tender } from "./types";
+import { Building } from "./types";
 import PropertyFilterPanel from "@/components/filter/PropertyFilterPanel";
 import { dummyBuildings } from "@/utils/Constants";
 
 const Buildings: React.FC = () => {
-  const [tenders, setBuildings] = useState<Tender[]>([]);
+  const [buildings, setBuildings] = useState<Building[]>([]);
 
   useEffect(() => {
     setBuildings(dummyBuildings); // This could be an API call
@@ -16,7 +16,7 @@ const Buildings: React.FC = () => {
   return (
       <Box sx={styles.mainContainer}>
         <PropertyFilterPanel />
-        <TenderItemList tenders={tenders} />
+        <BuildingItemList buildings={buildings} />
       </Box>
   );
 };

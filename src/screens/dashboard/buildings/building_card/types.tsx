@@ -1,5 +1,5 @@
 // types.ts
-export interface Tender {
+export interface Building {
     id: number;
     title: string;
     noOfInvestment: number;

@@ -5,12 +5,11 @@ import { useRouter } from "next/navigation";
 import { Formik, Form } from "formik";
 import AddBuildingForm from "./AddBuildingForm";
 import { addObjektFormSchema } from "@/utils/ValidationSchema";
-import { styles } from "../../registration_real_estate/RegistrationRealState";
 import {
   ValidateFormFunction,
   SetTouchedFunction,
   SubmitFormFunction,
-} from "../../registration_real_estate/types";
+} from "../../../../typings/types";
 import { ActiveStepItem, AddBuildingFormValues } from "./types";
 import BuildingInformation from "./BuildingInformation";
 import BuildingAddress from "./BuildingAddress";
@@ -128,3 +127,18 @@ const steps: ActiveStepItem[] = [
 };
 
 export default NewBuilding;
+
+//Styles
+const styles = {
+  form: {
+    marginLeft: "3.75rem",
+    marginRight: "3.5rem",
+    display: "flex",
+    flexDirection: "row",
+    backgroundColor: "white",
+    height: "37.375rem",
+    padding: "1.5rem",
+    borderRadius: "0.5rem",
+    boxShadow: "0px 8px 24px 0px rgba(30, 49, 55, 0.08)",
+  },
+}
