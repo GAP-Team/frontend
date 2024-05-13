@@ -1,5 +1,6 @@
 "use client";
 import * as React from "react";
+import { ElementType } from "react";
 import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -77,14 +78,6 @@ const DrawerLogo = ({ src, open }:{src:string,open:boolean}) => (
 
 const Sidebar: React.FC<SidebarProps> = ({ items, setSelected, selected }) => {
   const [open, setOpen] = React.useState(false);
-
-  // React.useEffect(() => {
-  //     // Automatically select 'Dashboard' if no other selection is made
-  //     const dashboardItem = items.find((item) => item.text === 'Dashboard');
-  //     if (dashboardItem && !selected) {
-  //       setSelected(dashboardItem.text);
-  //     }
-  // }, [items, selected]);
 
   const theme = createTheme();
 
