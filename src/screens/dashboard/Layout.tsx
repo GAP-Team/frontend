@@ -1,13 +1,13 @@
 import React, { ReactNode } from "react";
-import Sidebar from "@/components/navigation/GSidebar/SideBar";
+import Sidebar, { SubItem } from "@/components/navigation/GSidebar/SideBar";
 import GAppbar from "@/components/navigation/GAppbar/GAppbar";
 import Box from "@mui/material/Box";
 import { SidebarItem } from "@/components/navigation/GSidebar/SideBar";
 
 interface LayoutProps {
   sidebarItems: SidebarItem[];
-  selected: SidebarItem;
-  setSelected: (item: SidebarItem) => void;
+  selected: SidebarItem | SubItem;
+  setSelected: (item: SidebarItem | SubItem) => void;
   children: ReactNode;
 }
 

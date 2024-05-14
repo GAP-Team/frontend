@@ -10,19 +10,26 @@ import { styled, Theme, CSSObject } from "@mui/material/styles";
 import Image from "next/image";
 import gapLogo from "../../../../public/icons/gap-logo.svg";
 import gapLogoFull from "../../../../public/icons/gapfull-logo.svg";
-import { SidebarItemComponent } from "@/components/common/SidebarItemComponent";
-
+import SidebarItemComponent from "./SidebarItemComponent";
+import { SubSidebarItem } from "./SubSidebarItem";
+import { LuLayoutDashboard } from "react-icons/lu";
+export interface SubItem {
+  id: number;
+  text: string;
+  component?: React.ReactElement;
+}
 export interface SidebarItem {
   id: number;
   icon: IconType;
   text: string;
   component?: React.ReactElement;
+  subItems?: SubItem[];
 }
 
 interface SidebarProps {
   items: SidebarItem[];
-  setSelected: (item: SidebarItem) => void;
-  selected: SidebarItem;
+  setSelected: (item: SidebarItem | SubItem) => void;
+  selected: SidebarItem | SubItem;
 }
 
 const drawerWidth = 240;
@@ -78,7 +85,6 @@ const DrawerLogo = ({ src, open }:{src:string,open:boolean}) => (
 
 const Sidebar: React.FC<SidebarProps> = ({ items, setSelected, selected }) => {
   const [open, setOpen] = React.useState(false);
-
   const theme = createTheme();
 
   return (
@@ -98,6 +104,15 @@ const Sidebar: React.FC<SidebarProps> = ({ items, setSelected, selected }) => {
           )}
         </ListItem>
         {items.map((item, index) => (
+           item.text === "Gebäude" ? 
+          <SubSidebarItem
+            key={index}
+            item={item}
+            open={open}
+            selected={selected.id === item.id}
+            setSelected={setSelected}
+          />
+        :
           <SidebarItemComponent
             key={index}
             item={item}

@@ -7,17 +7,20 @@ import TextField from "@mui/material/TextField";
 import InputAdornment from "@mui/material/InputAdornment";
 import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
+import { default as NextLink } from "next/link";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
 import { FaRegEnvelope } from "react-icons/fa";
 import { PiLockBold } from "react-icons/pi";
 import HeroBanner from "../../components/common/InfoBanner";
 import { useFormik } from "formik";
+import { useRouter } from "next/navigation";
 import CustomizedTooltips from "@/components/common/ToolTip";
 import { loginValidationSchema } from "@/utils/ValidationSchema";
 
 
 export default function LoginPage() {
+  const router = useRouter();
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -27,6 +30,7 @@ export default function LoginPage() {
     onSubmit: (values, { resetForm }) => {
       try {
         alert(JSON.stringify(values, null, 2));
+        router.push("/dashboard");
       } catch (error: any) {
         console.log(
           "Unable to login user, post reqeust failed",
@@ -39,13 +43,7 @@ export default function LoginPage() {
 
   return (
     <Grid container component="main" sx={styles.mainContainer}>
-      <Grid
-        item
-        xs={false}
-        md={6}
-        lg={6}
-        sx={styles.imageSide}
-      >
+      <Grid item xs={false} md={6} lg={6} sx={styles.imageSide}>
         {/* Make this Box a flex container to use Flexbox properties */}
         <HeroBanner
           title="Where skills are developed"
@@ -54,9 +52,7 @@ export default function LoginPage() {
         />
       </Grid>
       <Grid item xs={12} md={6} lg={6} component={Paper}>
-        <Box
-          sx={styles.formContainer}
-        >
+        <Box sx={styles.formContainer}>
           <GapLogo color="#0D1F4E" size="sm" />
           <Box sx={styles.formBox}>
             <Grid container sx={{ mb: "2rem", color: "#1E3137" }}>
@@ -156,10 +152,7 @@ export default function LoginPage() {
               </CustomizedTooltips>
               <Grid container sx={{ mt: 10 }}>
                 <Grid item xs sx={{ display: "flex", flexDirection: "column" }}>
-                  <Typography
-                    variant="body2"
-                    style={styles.registerTypography}
-                  >
+                  <Typography variant="body2" style={styles.registerTypography}>
                     Noch keinen account?
                   </Typography>
                   <Link
@@ -171,22 +164,22 @@ export default function LoginPage() {
                   </Link>
                 </Grid>
                 <Grid item>
-                  <Button
-                    variant="contained"
-                    color="gprimary"
-                    size="large"
-                    type="submit"
-                    sx={{ borderRadius: "0.5rem" }}
-                  >
-                    Login
-                  </Button>
+                    <Button
+                      variant="contained"
+                      color="gprimary"
+                      size="large"
+                      type="submit"
+                      sx={{ borderRadius: "0.5rem" }}
+                    >
+                  {/* <NextLink href="/dashboard"> */}
+                      Login
+                  {/* </NextLink> */}
+                    </Button>
                 </Grid>
               </Grid>
             </form>
           </Box>
-          <Typography
-            sx={styles.supportLink}
-          >
+          <Typography sx={styles.supportLink}>
             Hilfe?{" "}
             <Link href="#" color="#1E3137" fontWeight="bold">
               Contact Support

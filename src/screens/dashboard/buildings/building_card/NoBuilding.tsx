@@ -3,7 +3,7 @@ import  Box  from "@mui/material/Box";
 import Image from "next/image";
 import Typography from "@mui/material/Typography";
 import GButton from "@/components/button/GButton";
-import addObjSrc from "@/../public/icons/add_objekt.svg";
+import addObjSrc from "@/../public/icons/add_building.svg";
 
 const NoBuildingPage: React.FC = () => {
   return (
