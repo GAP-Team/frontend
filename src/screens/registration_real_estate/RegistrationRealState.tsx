@@ -14,8 +14,8 @@ import {
   ValidateFormFunction,
   SetTouchedFunction,
   SubmitFormFunction,
-  RegistrationFormValues,
-} from "./types";
+} from "../../typings/types";
+import { RegistrationFormValues } from "./types";
 import BackButton from "@/components/button/BackButton";
 import PageTitle from "@/components/label/PageTitle";
 

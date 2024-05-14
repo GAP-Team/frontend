@@ -1,18 +1,18 @@
-// TenderItemList.tsx
+// BuildingItemList.tsx
 import React, { useState } from "react";
 import Grid from "@mui/material/Grid";
 import Pagination from "@mui/material/Pagination";
-import TenderItem from "./TenderItem";
-import { Tender } from "./types";
+import BuildingItem from "./BuildingItem";
+import { Building } from "./types";
 import { Box } from "@mui/material";
 
-interface TenderItemListProps {
-  tenders: Tender[];
+interface BuildingItemListProps {
+  buildings: Building[];
   itemsPerPage?: number;
 }
 
-const TenderItemList: React.FC<TenderItemListProps> = ({
-  tenders,
+const BuildingItemList: React.FC<BuildingItemListProps> = ({
+  buildings,
   itemsPerPage = 8,
 }) => {
   const [page, setPage] = useState<number>(1);
@@ -23,7 +23,7 @@ const TenderItemList: React.FC<TenderItemListProps> = ({
   // Calculate current page items
   const indexOfLastItem = page * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = tenders.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = buildings.slice(indexOfFirstItem, indexOfLastItem);
 
   return (
     <Box sx={styles.container}>
@@ -33,14 +33,14 @@ const TenderItemList: React.FC<TenderItemListProps> = ({
         // paddingBottom={1}
         sx={{ overflow: "auto", flexGrow: 1 }}
       >
-        {currentItems.map((tender) => (
-          <Grid item xs={12} md={6} lg={3} key={tender.id}>
-            <TenderItem tender={tender} />
+        {currentItems.map((building) => (
+          <Grid item xs={12} md={6} lg={3} key={building.id}>
+            <BuildingItem building={building} />
           </Grid>
         ))}
       </Grid>
       <Pagination
-        count={Math.ceil(tenders.length / itemsPerPage)}
+        count={Math.ceil(buildings.length / itemsPerPage)}
         page={page}
         onChange={handleChange}
         color="primary"
@@ -50,7 +50,7 @@ const TenderItemList: React.FC<TenderItemListProps> = ({
   );
 };
 
-export default TenderItemList;
+export default BuildingItemList;
 
 const styles = {
   container: {

@@ -368,7 +368,7 @@ export const buildingTypesList = [
   { label: "Krankenhaus", value: "Krankenhaus" }  // Hospital
 ];
 
-export const dummyTenders = [
+export const dummyBuildings = [
   {
     id: 1,
     title: "Building A",
