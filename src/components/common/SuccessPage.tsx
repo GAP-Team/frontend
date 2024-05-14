@@ -24,12 +24,7 @@ const SuccessPage: NextPage<SuccessPageProps> = ({
   imageUrl=sucess_svg,
   redirectUrl="/"
 }) => {
-  const router = useRouter();
 
-  const handleNavigation = () => {
-    console.log(`Navigating to ${redirectUrl}`);
-    router.push(redirectUrl);
-  };
 
   
   return (
@@ -43,7 +38,7 @@ const SuccessPage: NextPage<SuccessPageProps> = ({
         {description}
       </Typography>
       {buttonLabel && (
-        <GButton style={{ marginTop: "2rem" }} onClick={handleNavigation}>
+        <GButton style={{ marginTop: "2rem" }} href={redirectUrl}>
           {buttonLabel}
         </GButton>
       )}

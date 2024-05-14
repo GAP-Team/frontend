@@ -5,13 +5,14 @@ import "../button/GButton.module.css";
 
 interface GButtonProps extends ButtonProps {
   children?: React.ReactNode;
+  href?: string;
   type?: "button" | "reset" | "submit" | undefined;
 }
 
-const GButton: React.FC<GButtonProps> = ({ children,type, color="gprimary", sx, ...otherProps }) => {
+const GButton: React.FC<GButtonProps> = ({ children,type, color="gprimary",href="#", sx, ...otherProps }) => {
 
   return (
-    <Link href="#">
+    <Link href={href}>
       <Button
         variant="contained"
         color={color}
