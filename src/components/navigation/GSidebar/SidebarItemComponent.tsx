@@ -12,7 +12,7 @@ interface SidebarItemComponentProps {
   setSelected: (item: SidebarItem) => void;
 }
 
-export const SidebarItemComponent: React.FC<SidebarItemComponentProps> = ({
+const SidebarItemComponent: React.FC<SidebarItemComponentProps> = ({
   item,
   open,
   selected,
@@ -66,3 +66,5 @@ const styles = {
     fontSize: "0.75rem",
   },
 };
+
+export default SidebarItemComponent;
