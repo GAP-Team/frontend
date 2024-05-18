@@ -1,4 +1,5 @@
 'use client';
+import React from "react";
 import GButton from "@/components/button/GButton";
 import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
@@ -31,6 +32,24 @@ const RegistrationForm = ({
   handleNext,
 }: RegistrationFormProps): JSX.Element => {
   const formik = useFormikContext();
+  const [tabValue, setTabValue] = React.useState(0);
+
+  const handleTabChange = (event:React.SyntheticEvent, newValue:number) => {
+    setTabValue(newValue);
+    //Make user to only be private or commercial person, also their formik values null on selection change
+    //Commercial person, make land and approv doc undefined
+    if (!newValue) {
+      formik.setFieldValue("landdoc", undefined)
+      formik.setFieldValue("approvdoc", undefined)
+    }
+    //Private person, make registrationnum and  bsndoc null
+    else {
+      formik.setFieldValue("registrationnum", "");
+      formik.setFieldValue("bsndoc", undefined);
+    }
+  };
+  
+  
 
   const basictabs = [
     //TODO: have to render seperate component for each tab and not based on value
@@ -74,7 +93,7 @@ const RegistrationForm = ({
           </div>
           {activeStep == 0 && <BasicInformation formik={formik}/>}
           {activeStep == 1 && <CompanyAddress formik={formik} />}
-          {activeStep == 2 && <GTab tabs={registertabs}/>}
+          {activeStep == 2 && <GTab tabs={registertabs} tabvalue={tabValue} handleChange={handleTabChange} />}
           {activeStep == 3 && <SummaryRegistration/>}
         </div>
         <Grid container justifyContent="flex-end" spacing={2}>

@@ -6,13 +6,15 @@ import Box from '@mui/material/Box';
 interface TabPanelProps {
   children?: React.ReactNode;
   index: number;
-  value: number;
+  value: number | undefined;
 }
 
 interface GTabProps {
   tabs: { label: string; content: ReactNode }[];
   tabProps?: object; // Additional props for Tabs component
   panelProps?: object; // Additional props for each TabPanel
+  tabvalue?: number;
+  handleChange: (event: React.SyntheticEvent, newValue: number) => void;
 }
 
 
@@ -36,18 +38,13 @@ function TabPanel(props: TabPanelProps) {
 }
 
 
-const GTab: React.FC<GTabProps> = ({ tabs, tabProps, panelProps }) =>  {
-  const [value, setValue] = React.useState(0);
-
-  const handleChange = (event:React.SyntheticEvent, newValue:number) => {
-    setValue(newValue);
-  };
-
+const GTab: React.FC<GTabProps> = ({ tabs, tabProps, panelProps, tabvalue, handleChange}) =>  {
+ 
   return (
     <>
     <Box sx={styles.tabsContainer}>
       <Tabs
-        value={value}
+        value={tabvalue}
         onChange={handleChange}
         variant="fullWidth"
         textColor="primary"
@@ -62,7 +59,7 @@ const GTab: React.FC<GTabProps> = ({ tabs, tabProps, panelProps }) =>  {
     </Box>
   
        {tabs.map((tab, index) => (
-        <TabPanel key={index} value={value} index={index} {...panelProps}>
+        <TabPanel key={index} value={tabvalue} index={index} {...panelProps}>
           {tab.content}
         </TabPanel>
       ))}
