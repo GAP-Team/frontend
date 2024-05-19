@@ -14,7 +14,7 @@ interface GTabProps {
   tabProps?: object; // Additional props for Tabs component
   panelProps?: object; // Additional props for each TabPanel
   tabvalue?: number;
-  handleChange: (event: React.SyntheticEvent, newValue: number) => void;
+  handleChange?: (event: React.SyntheticEvent, newValue: number) => void;
 }
 
 
