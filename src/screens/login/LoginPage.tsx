@@ -17,7 +17,7 @@ import { useFormik } from "formik";
 import { useRouter } from "next/navigation";
 import CustomizedTooltips from "@/components/common/ToolTip";
 import { loginValidationSchema } from "@/utils/ValidationSchema";
-
+import bcrypt from "bcryptjs";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -27,13 +27,15 @@ export default function LoginPage() {
       password: "",
     },
     validationSchema: loginValidationSchema,
-    onSubmit: (values, { resetForm }) => {
+    onSubmit: async (values, { resetForm }) => {
       try {
-        alert(JSON.stringify(values, null, 2));
+        const hashedPassword = await bcrypt.hash(values.password, 10);
+        const formValues = { ...values, password: hashedPassword };
+        alert(JSON.stringify(formValues, null, 2));
         router.push("/dashboard");
       } catch (error: any) {
         console.log(
-          "Unable to login user, post reqeust failed",
+          "Unable to login user, post request failed",
           error.name,
           error.message
         );
