@@ -6,7 +6,8 @@ import LabelWithAsterisk from "@/components/label/LabelWithAsterisk";
 import GTextInput from "@/components/input/GTextInput";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-import GSelector, { Item } from "@/components/input/GSelector";
+import { Item } from "@/components/input/GSelector";
+import AddSelector from "@/components/input/GAddSelector";
 import { contactPersonList, buildingTypesList } from "@/utils/Constants";
 import Checkbox from "@mui/material/Checkbox";
 import TextField from "@mui/material/TextField";
@@ -20,10 +21,17 @@ const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
 const BuildingInformation = ({ formik }: { formik: any }) => {
   const [selectedBldngType, setSelectedBldngType] = useState<Item>({ label: formik?.values?.buildingType || '', value: formik?.values?.buildingType || '' });
+  const [options, setOptions] = useState<Item[]>(buildingTypesList);
   const handleStateSelect = (selectedItem: Item):void => {
     const state = selectedItem || '';
     setSelectedBldngType(selectedItem);
     formik?.setFieldValue('buildingType', state?.value );
+  };
+  const handleAdd = (newItem: Item) => {
+    setOptions((prevOptions) => [...prevOptions, newItem]);
+  };
+  const handleDelete = (itemToDelete: Item) => {
+    setOptions((prevOptions) => prevOptions.filter(item => item.value !== itemToDelete.value));
   };
   
   return (
@@ -70,8 +78,8 @@ const BuildingInformation = ({ formik }: { formik: any }) => {
         </Grid>
         <Grid item xs={12} sm={6}>
           <LabelWithAsterisk>GEBÄUDETYP</LabelWithAsterisk>
-          <GSelector name="buildingType" options={buildingTypesList}  error={formik?.touched?.buildingType && Boolean(formik?.errors?.buildingType)}
-            helperText={formik?.touched?.buildingType && formik?.errors?.buildingType} onSelect={handleStateSelect} selectedState={selectedBldngType} /> 
+          <AddSelector name="buildingType" options={options} error={formik?.touched?.buildingType && Boolean(formik?.errors?.buildingType)}
+            helperText={formik?.touched?.buildingType && formik?.errors?.buildingType} onSelect={handleStateSelect} selectedState={selectedBldngType} onAdd={handleAdd} onDelete={handleDelete} /> 
         </Grid>
         <Grid item xs={12} sm={3}>
           <Typography variant="gsub" color="gray.500">
