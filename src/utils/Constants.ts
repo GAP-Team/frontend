@@ -113,9 +113,7 @@ export const adresse: Detail[] = [
   { label: "Postleitzahl", value: "19061" },
   { label: "Stadt", value: "Schwerin" },
 ];
-export const gewerbeanmeldung: Detail[] = [
-  { label: "Handerlregister Nummer", value: "HRB 7890" },
-];
+
 
 // Objekt/Building Values
 export const buildingInformation: Detail[] = [
