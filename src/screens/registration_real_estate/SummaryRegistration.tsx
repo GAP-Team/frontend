@@ -5,7 +5,11 @@ import {grundinformation, adresse, gewerbeanmeldung} from '../../utils/Constants
 import { useFormikContext } from 'formik';
 import { Detail } from "@/components/summary/SummarySection";
 
-const SummaryRegistration = () => {
+interface SummaryRegistrationProps{
+  setActiveStep: (num: number) => void;
+}
+
+const SummaryRegistration = ({setActiveStep}:SummaryRegistrationProps) => {
   const formik : any = useFormikContext();
   const formikValuesArray: string[] = Object.values(formik?.values || {});
   const updatedGrundinformation: Detail[] = grundinformation.map((info,index) => ({
@@ -27,13 +31,13 @@ const SummaryRegistration = () => {
     >
       <Grid container spacing={2}>
       <Grid item xs={6}>
-          <SummarySection title="GRUNDINFORMATION" details={updatedGrundinformation} />
+          <SummarySection title="GRUNDINFORMATION" details={updatedGrundinformation} setActiveStep={()=>setActiveStep(0)} />
         </Grid>
         <Grid item xs={12}>
-          <SummarySection title="ADRESSE DER FIRMA" details={updatedAdresse} />
+          <SummarySection title="ADRESSE DER FIRMA" details={updatedAdresse} setActiveStep={()=>setActiveStep(1)}/>
         </Grid>
         <Grid item xs={12}>
-          <SummarySection title="GEWERBEANMELDUNG" details={updatedGewerk} />
+          <SummarySection title="GEWERBEANMELDUNG" details={updatedGewerk} setActiveStep={()=>setActiveStep(2)}/>
         </Grid>
       </Grid>
     </Box>

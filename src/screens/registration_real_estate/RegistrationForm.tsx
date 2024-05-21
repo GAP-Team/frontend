@@ -22,6 +22,7 @@ interface RegistrationFormProps {
   steps: string[];
   handleBack: () => void;
   handleNext: () => void;
+  setActiveStep: (num:number) => void;
 }
 
 
@@ -30,6 +31,7 @@ const RegistrationForm = ({
   steps,
   handleBack,
   handleNext,
+  setActiveStep
 }: RegistrationFormProps): JSX.Element => {
   const formik = useFormikContext();
   const [tabValue, setTabValue] = React.useState(0);
@@ -94,7 +96,7 @@ const RegistrationForm = ({
           {activeStep == 0 && <BasicInformation formik={formik}/>}
           {activeStep == 1 && <CompanyAddress formik={formik} />}
           {activeStep == 2 && <GTab tabs={registertabs} tabvalue={tabValue} handleChange={handleTabChange} />}
-          {activeStep == 3 && <SummaryRegistration/>}
+          {activeStep == 3 && <SummaryRegistration setActiveStep={setActiveStep} />}
         </div>
         <Grid container justifyContent="flex-end" spacing={2}>
           <Grid item>

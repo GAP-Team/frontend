@@ -14,16 +14,17 @@ const EditIcon = styled(FaRegEdit)({
     color: 'grey',
     fontSize: '1rem',
     marginBottom: 2,
+    cursor: 'pointer',
 });
   
-const SummarySection: React.FC<{ title: string; details: Detail[] }> = ({ title, details }) => {
+const SummarySection: React.FC<{ title: string; details: Detail[]; setActiveStep: any; }> = ({ title, details, setActiveStep }) => {
     return (
       <>
         <Box display="flex" alignItems="center" justifyContent="space-between">
           <Typography color="grey.500" variant="gsub">
             {title}
           </Typography>
-          <EditIcon />
+          <EditIcon onClick={setActiveStep} />
         </Box>
         <SummaryCard>
           {details.map((detail, index) => (
