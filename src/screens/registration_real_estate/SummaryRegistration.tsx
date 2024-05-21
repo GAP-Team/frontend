@@ -6,7 +6,7 @@ import { useFormikContext } from 'formik';
 import { Detail } from "@/components/summary/SummarySection";
 
 const SummaryRegistration = () => {
-  const formik = useFormikContext();
+  const formik : any = useFormikContext();
   const formikValuesArray: string[] = Object.values(formik?.values || {});
   const updatedGrundinformation: Detail[] = grundinformation.map((info,index) => ({
     ...info,
@@ -18,7 +18,7 @@ const SummaryRegistration = () => {
   }));
   const updatedGewerk: Detail[] = gewerbeanmeldung.map((info,index) => ({
     ...info,
-    value: formikValuesArray[index+updatedGrundinformation.length+updatedAdresse.length+1] || info.value, // Update or keep original if no value is provided
+    value: formik?.values?.registrationnum || info.value, // Update or keep original if no value is provided
   }));
 
   return (
