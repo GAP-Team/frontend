@@ -17,7 +17,7 @@ const EditIcon = styled(FaRegEdit)({
     cursor: 'pointer',
 });
   
-const SummarySection: React.FC<{ title: string; details: Detail[]; setActiveStep: any; }> = ({ title, details, setActiveStep }) => {
+const SummarySection: React.FC<{ title: string; details: Detail[]; setActiveStep?: any; }> = ({ title, details, setActiveStep }) => {
     return (
       <>
         <Box display="flex" alignItems="center" justifyContent="space-between">
