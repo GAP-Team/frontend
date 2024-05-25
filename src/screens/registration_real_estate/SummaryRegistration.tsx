@@ -5,8 +5,8 @@ import {grundinformation, adresse} from '../../utils/Constants';
 import { useFormikContext } from 'formik';
 import { Detail } from "@/components/summary/SummarySection";
 
-const getGewerbeanmeldung = (formik: any) => {
-  const gewerbeanmeldung = [
+const getBusinessInfo = (formik: any) => {
+  const businessInfo = [
     {
       label: "Gewerbeanmeldung",
       value: [
@@ -19,12 +19,12 @@ const getGewerbeanmeldung = (formik: any) => {
     },
   ];
   if (formik?.values?.registrationnum) {
-    gewerbeanmeldung.unshift({
+    businessInfo.unshift({
       label: "Handerlregister Nummer",
       value: formik?.values?.registrationnum,
     });
   }
-  return gewerbeanmeldung;
+  return businessInfo;
 };
 
 const SummaryRegistration = () => {
@@ -39,7 +39,7 @@ const SummaryRegistration = () => {
     value: formikValuesArray[index+updatedGrundinformation.length+1] || info.value, // Update or keep original if no value is provided
   }));
 
-  const updatedGewermeldung: Detail[] = getGewerbeanmeldung(formik);
+  const updatedBusinessInfo: Detail[] = getBusinessInfo(formik);
 
   return (
     <Box
@@ -53,7 +53,7 @@ const SummaryRegistration = () => {
           <SummarySection title="ADRESSE DER FIRMA" details={updatedAdresse} />
         </Grid>
         <Grid item xs={12}>
-          <SummarySection title="GEWERBEANMELDUNG" details={updatedGewermeldung} />
+          <SummarySection title="GEWERBEANMELDUNG" details={updatedBusinessInfo} />
         </Grid>
       </Grid>
     </Box>
