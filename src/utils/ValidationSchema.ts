@@ -16,50 +16,70 @@ export const loginValidationSchema = yup.object({
       ),
   });
   
-  export const registrationValidationSchema = yup.object({
-    firstname: yup
-      .string()
-      .required("Vorname ist erforderlich"),
-    lastname: yup
-      .string()
-      .required("Nachname ist erforderlich"),
-    email: yup
-      .string()
-      .email("Eingabe einer gültigen E-Mail")
-      .required("E-Mail ist erforderlich"),
-    telephone: yup
-      .string()
-      .required("Telefonnummer ist erforderlich")
-      .matches(
-        /^(\+?\d{1,3}[- ]?)?\d{10}$/,
-        "Telefonnummer muss gültig sein"
-      ),
-    company: yup
-      .string()
-      .required("Firmenname ist erforderlich"),
-    state: yup
-      .string()
-      .required("Bundesland ist erforderlich"),
-    street: yup
-      .string()
-      .required("Straßenname ist erforderlich"),
-    hausnr: yup
-      .string()
-      .required("Hausnummer ist erforderlich"),
-    plz: yup
-      .string()
-      .required("Postleitzahl ist erforderlich")
-      .matches(
-        /^\d{4,5}$/,
-        "Postleitzahl muss zwischen 4 und 5 Ziffern lang sein"
-      ),
-    city: yup
-      .string()
-      .required("Stadt ist erforderlich"),
-    registrationnum: yup
-      .string()
-  });
+export const registrationValidationSchema = yup.object({
+  firstname: yup
+    .string()
+    .required("Vorname ist erforderlich"),
+  lastname: yup
+    .string()
+    .required("Nachname ist erforderlich"),
+  email: yup
+    .string()
+    .email("Eingabe einer gültigen E-Mail")
+    .required("E-Mail ist erforderlich"),
+  telephone: yup
+    .string()
+    .required("Telefonnummer ist erforderlich")
+    .matches(
+      /^(\+?\d{1,3}[- ]?)?\d{10}$/,
+      "Telefonnummer muss gültig sein"
+    ),
+  company: yup
+    .string()
+    .required("Firmenname ist erforderlich"),
+  state: yup
+    .string()
+    .required("Bundesland ist erforderlich"),
+  street: yup
+    .string()
+    .required("Straßenname ist erforderlich"),
+  hausnr: yup
+    .string()
+    .required("Hausnummer ist erforderlich"),
+  plz: yup
+    .string()
+    .required("Postleitzahl ist erforderlich")
+    .matches(
+      /^\d{4,5}$/,
+      "Postleitzahl muss zwischen 4 und 5 Ziffern lang sein"
+    ),
+  city: yup
+    .string()
+    .required("Stadt ist erforderlich"),
+  registrationnum: yup.string(),
+  bsndoc: yup.string(),
+  approvdoc: yup.string(),
+  landdoc: yup.string()
+}).test(
+  'documentRequirement',
+  'Entweder bsndoc, registrationnum, approvdoc oder landdoc ist erforderlich',
+  function (values) {
+    const { bsndoc, registrationnum, approvdoc, landdoc } = values;
 
+    // If any of the four fields is nonempty, return true
+    if (bsndoc || registrationnum || approvdoc || landdoc) {
+      return true;
+    }
+
+    // Otherwise, create an error for each relevant field
+    if (!bsndoc && !registrationnum && !approvdoc && !landdoc) {
+      return this.createError({
+        path: 'registrationnum',
+        message: 'Entweder Dokumente oder eine Registrierungsnummer erforderlich',
+      });
+    }
+  }
+);
   export const addObjektFormSchema = yup.object().shape({
     buildingName: yup
       .string()

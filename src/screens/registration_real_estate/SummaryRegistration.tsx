@@ -12,27 +12,36 @@ interface SummaryRegistrationProps{
 
 const SummaryRegistration = ({setActiveStep}:SummaryRegistrationProps) => {
 
-const getBusinessRegistrationData = (formik: any) => {
-  const businessInfo = [
-    {
-      label: "Gewerbeanmeldung",
-      value: [
-        formik?.values?.bsndoc,
-        formik?.values?.landdoc,
-        formik?.values?.approvdoc,
-      ]
-        .filter(Boolean)
-        .join(", "),
-    },
-  ];
-  if (formik?.values?.registrationnum) {
-    businessInfo.unshift({
-      label: "Handerlregister Nummer",
-      value: formik?.values?.registrationnum,
-    });
-  }
-  return businessInfo;
-};
+  const getBusinessRegistrationData = (formik: any) => {
+    const businessInfo = [];
+
+    const hasDocs = [
+      formik?.values?.bsndoc,
+      formik?.values?.landdoc,
+      formik?.values?.approvdoc,
+    ].some(Boolean);
+
+    if (hasDocs) {
+      businessInfo.push({
+        label: "Gewerbeanmeldung",
+        value: [
+          formik?.values?.bsndoc,
+          formik?.values?.landdoc,
+          formik?.values?.approvdoc,
+        ]
+          .filter(Boolean)
+          .join(", "),
+      });
+    }
+
+    if (formik?.values?.registrationnum) {
+      businessInfo.unshift({
+        label: "Handerlregister Nummer",
+        value: formik?.values?.registrationnum,
+      });
+    }
+    return businessInfo;
+  };
 
 
   const formik : any = useFormikContext();
@@ -60,9 +69,7 @@ const getBusinessRegistrationData = (formik: any) => {
           <SummarySection title="ADRESSE DER FIRMA" details={updatedAdresse} setActiveStep={()=>setActiveStep(1)}/>
         </Grid>
         <Grid item xs={12}>
-
-          <SummarySection title="GEWERBEANMELDUNG" details={updatedBusinessRegistration} />
-
+          <SummarySection title="GEWERBEANMELDUNG" details={updatedBusinessRegistration} setActiveStep={()=>setActiveStep(2)} />
         </Grid>
       </Grid>
     </Box>
