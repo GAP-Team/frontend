@@ -31,7 +31,6 @@ export default function LoginPage() {
       try {
         const hashedPassword = await bcrypt.hash(values.password, 10);
         const formValues = { ...values, password: hashedPassword };
-        alert(JSON.stringify(formValues, null, 2));
         router.push("/dashboard");
       } catch (error: any) {
         console.log(

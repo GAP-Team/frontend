@@ -81,7 +81,6 @@ const steps: ActiveStepItem[] = [
 
   const onSubmit = (values: any) => {
     try {
-      alert(JSON.stringify(values, null, 2));
     } catch (error: any) {
       console.log(
         "Unable to Add Objekt, post reqeust failed",
