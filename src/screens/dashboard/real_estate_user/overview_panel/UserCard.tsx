@@ -17,7 +17,7 @@ const UserCard: React.FC<UserCardProps> = ({
 }) => {
   return (
     <Box sx={styles.card} >
-      <Avatar  src="/broken-image.jpg" sx={styles.avatar}/>
+      <Avatar sx={styles.avatar}/>
       <Box sx={styles.content}>
         <Typography variant="subtitle1" sx={styles.name}>
           {name}
