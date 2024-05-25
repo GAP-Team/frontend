@@ -1,9 +1,31 @@
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import SummarySection from "@/components/summary/SummarySection";
-import {grundinformation, adresse, gewerbeanmeldung} from '../../utils/Constants';
+import {grundinformation, adresse} from '../../utils/Constants';
 import { useFormikContext } from 'formik';
 import { Detail } from "@/components/summary/SummarySection";
+
+const getBusinessRegistrationData = (formik: any) => {
+  const businessInfo = [
+    {
+      label: "Gewerbeanmeldung",
+      value: [
+        formik?.values?.bsndoc,
+        formik?.values?.landdoc,
+        formik?.values?.approvdoc,
+      ]
+        .filter(Boolean)
+        .join(", "),
+    },
+  ];
+  if (formik?.values?.registrationnum) {
+    businessInfo.unshift({
+      label: "Handerlregister Nummer",
+      value: formik?.values?.registrationnum,
+    });
+  }
+  return businessInfo;
+};
 
 const SummaryRegistration = () => {
   const formik : any = useFormikContext();
@@ -16,10 +38,8 @@ const SummaryRegistration = () => {
     ...info,
     value: formikValuesArray[index+updatedGrundinformation.length+1] || info.value, // Update or keep original if no value is provided
   }));
-  const updatedGewerk: Detail[] = gewerbeanmeldung.map((info,index) => ({
-    ...info,
-    value: formik?.values?.registrationnum || info.value, // Update or keep original if no value is provided
-  }));
+
+  const updatedBusinessRegistration: Detail[] = getBusinessRegistrationData(formik);
 
   return (
     <Box
@@ -33,7 +53,7 @@ const SummaryRegistration = () => {
           <SummarySection title="ADRESSE DER FIRMA" details={updatedAdresse} />
         </Grid>
         <Grid item xs={12}>
-          <SummarySection title="GEWERBEANMELDUNG" details={updatedGewerk} />
+          <SummarySection title="GEWERBEANMELDUNG" details={updatedBusinessRegistration} />
         </Grid>
       </Grid>
     </Box>
