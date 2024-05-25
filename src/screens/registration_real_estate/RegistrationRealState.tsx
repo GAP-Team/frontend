@@ -130,7 +130,7 @@ const RegistrationRealState = () => {
         />
       </Grid>
       <Grid item xs={12} md={8} lg={8} sx={styles.formGrid}>
-        <BackButton onBack={handleBack} />
+        <BackButton onBack={handleBack} sx={{ visibility: activeStep <= 3 ? 'visible' : 'hidden' }}/>
         <PageTitle title="Registrierung" />
         <Formik
           initialValues={initialValues}
