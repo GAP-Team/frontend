@@ -109,7 +109,6 @@ const RegistrationRealState = () => {
 
   const onSubmit = (values: any) => {
     try {
-      alert(JSON.stringify(values, null, 2));
     } catch (error: any) {
       console.log(
         "Unable to login user, post reqeust failed",
