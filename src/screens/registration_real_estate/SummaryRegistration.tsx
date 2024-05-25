@@ -12,13 +12,13 @@ interface SummaryRegistrationProps{
 const SummaryRegistration = ({setActiveStep}:SummaryRegistrationProps) => {
   const formik : any = useFormikContext();
   const formikValuesArray: string[] = Object.values(formik?.values || {});
-  const updatedGrundinformation: Detail[] = grundinformation.map((info,index) => ({
+  const updatedBasicInformation: Detail[] = grundinformation.map((info,index) => ({
     ...info,
     value: formikValuesArray[index] || info.value, // Update or keep original if no value is provided
   }));
   const updatedAdresse: Detail[] = adresse.map((info,index) => ({
     ...info,
-    value: formikValuesArray[index+updatedGrundinformation.length+1] || info.value, // Update or keep original if no value is provided
+    value: formikValuesArray[index+updatedBasicInformation.length+1] || info.value, // Update or keep original if no value is provided
   }));
   const updatedGewerk: Detail[] = gewerbeanmeldung.map((info,index) => ({
     ...info,
@@ -31,7 +31,7 @@ const SummaryRegistration = ({setActiveStep}:SummaryRegistrationProps) => {
     >
       <Grid container spacing={2}>
       <Grid item xs={6}>
-          <SummarySection title="GRUNDINFORMATION" details={updatedGrundinformation} setActiveStep={()=>setActiveStep(0)} />
+          <SummarySection title="GRUNDINFORMATION" details={updatedBasicInformation} setActiveStep={()=>setActiveStep(0)} />
         </Grid>
         <Grid item xs={12}>
           <SummarySection title="ADRESSE DER FIRMA" details={updatedAdresse} setActiveStep={()=>setActiveStep(1)}/>
