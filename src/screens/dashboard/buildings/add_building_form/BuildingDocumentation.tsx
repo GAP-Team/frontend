@@ -19,15 +19,11 @@ const BuildingDocumentation = ({ formik }: { formik: any }) => {
           <UploadButton />
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="gsub" color="gray.500">
-            GRUNDRISSE
-          </Typography>
+          <LabelWithAsterisk>GRUNDRISSE</LabelWithAsterisk>
           <UploadButton />
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="gsub" color="gray.500">
-            SONSTIGE DOKUMENTE
-          </Typography>
+          <LabelWithAsterisk>SONSTIGE DOKUMENTE</LabelWithAsterisk>
           <UploadButton />
         </Grid>
         <Grid item xs={12}>
