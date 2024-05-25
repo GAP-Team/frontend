@@ -5,6 +5,13 @@ import {grundinformation, adresse} from '../../utils/Constants';
 import { useFormikContext } from 'formik';
 import { Detail } from "@/components/summary/SummarySection";
 
+
+interface SummaryRegistrationProps{
+  setActiveStep: (num: number) => void;
+}
+
+const SummaryRegistration = ({setActiveStep}:SummaryRegistrationProps) => {
+
 const getBusinessRegistrationData = (formik: any) => {
   const businessInfo = [
     {
@@ -27,16 +34,16 @@ const getBusinessRegistrationData = (formik: any) => {
   return businessInfo;
 };
 
-const SummaryRegistration = () => {
+
   const formik : any = useFormikContext();
   const formikValuesArray: string[] = Object.values(formik?.values || {});
-  const updatedGrundinformation: Detail[] = grundinformation.map((info,index) => ({
+  const updatedBasicInformation: Detail[] = grundinformation.map((info,index) => ({
     ...info,
     value: formikValuesArray[index] || info.value, // Update or keep original if no value is provided
   }));
   const updatedAdresse: Detail[] = adresse.map((info,index) => ({
     ...info,
-    value: formikValuesArray[index+updatedGrundinformation.length+1] || info.value, // Update or keep original if no value is provided
+    value: formikValuesArray[index+updatedBasicInformation.length+1] || info.value, // Update or keep original if no value is provided
   }));
 
   const updatedBusinessRegistration: Detail[] = getBusinessRegistrationData(formik);
@@ -47,13 +54,15 @@ const SummaryRegistration = () => {
     >
       <Grid container spacing={2}>
       <Grid item xs={6}>
-          <SummarySection title="GRUNDINFORMATION" details={updatedGrundinformation} />
+          <SummarySection title="GRUNDINFORMATION" details={updatedBasicInformation} setActiveStep={()=>setActiveStep(0)} />
         </Grid>
         <Grid item xs={12}>
-          <SummarySection title="ADRESSE DER FIRMA" details={updatedAdresse} />
+          <SummarySection title="ADRESSE DER FIRMA" details={updatedAdresse} setActiveStep={()=>setActiveStep(1)}/>
         </Grid>
         <Grid item xs={12}>
+
           <SummarySection title="GEWERBEANMELDUNG" details={updatedBusinessRegistration} />
+
         </Grid>
       </Grid>
     </Box>

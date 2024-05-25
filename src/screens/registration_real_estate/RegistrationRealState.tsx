@@ -151,6 +151,7 @@ const RegistrationRealState = () => {
                     handleNext={() =>
                       handleNext(validateForm, setTouched, submitForm)
                     }
+                    setActiveStep={setActiveStep}
                   />
                 ) : (
                   <SuccessPage
