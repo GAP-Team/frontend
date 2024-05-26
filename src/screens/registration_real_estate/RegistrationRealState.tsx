@@ -42,7 +42,7 @@ const RegistrationRealState = () => {
     const fieldsPerStep: { [key: number]: string[] } = {
       0: ["firstname", "lastname", "email", "telephone", "company"],
       1: ["state", "street", "hausnr", "plz", "city"],
-      2: ["registrationnum"], // Adjust fields according to what you need for each step
+      2: ["registrationnum", "bsndoc", "landdoc", "approvdoc"], // Adjust fields according to what you need for each step
     };
 
     const fieldsToValidate = fieldsPerStep[activeStep];
@@ -101,9 +101,9 @@ const RegistrationRealState = () => {
     hausnr: "",
     plz: "",
     city: "",
-    bsndoc: undefined,
-    landdoc: undefined,
-    approvdoc: undefined,
+    bsndoc: "",
+    landdoc: "",
+    approvdoc: "",
     registrationnum: "",
   };
 
@@ -129,7 +129,10 @@ const RegistrationRealState = () => {
         />
       </Grid>
       <Grid item xs={12} md={8} lg={8} sx={styles.formGrid}>
-        <BackButton onBack={handleBack} sx={{ visibility: activeStep <= 3 ? 'visible' : 'hidden' }}/>
+        <BackButton
+          onBack={handleBack}
+          sx={{ visibility: activeStep <= 3 ? "visible" : "hidden" }}
+        />
         <PageTitle title="Registrierung" />
         <Formik
           initialValues={initialValues}

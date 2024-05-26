@@ -41,13 +41,13 @@ const RegistrationForm = ({
     //Make user to only be private or commercial person, also their formik values null on selection change
     //Commercial person, make land and approv doc undefined
     if (!newValue) {
-      formik.setFieldValue("landdoc", undefined)
-      formik.setFieldValue("approvdoc", undefined)
+      formik.setFieldValue("landdoc", "")
+      formik.setFieldValue("approvdoc", "")
     }
     //Private person, make registrationnum and  bsndoc null
     else {
       formik.setFieldValue("registrationnum", "");
-      formik.setFieldValue("bsndoc", undefined);
+      formik.setFieldValue("bsndoc", "");
     }
   };
   

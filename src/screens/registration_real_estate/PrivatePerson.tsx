@@ -28,7 +28,10 @@ const PrivatePerson = ({formik}:any): JSX.Element => {
           id="approvdoc"
           name="approvdoc"
           value={formik.values.approvdoc}
-          onChange={(ev:any) => { formik.setFieldValue("approvdoc", ev?.target?.files[0]?.name) }}
+          onChange={(ev: any) => { formik.setFieldValue("approvdoc", ev?.target?.files[0]?.name) }}
+          //make error message appear on private form too based on registration form
+          error={formik.touched.registrationnum && Boolean(formik.errors.registrationnum)}
+          helperText={formik.touched.registrationnum && formik.errors.registrationnum}
         />
       </Grid>
     </Grid>
