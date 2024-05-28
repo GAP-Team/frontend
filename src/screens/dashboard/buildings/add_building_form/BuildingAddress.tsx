@@ -14,13 +14,12 @@ interface Item {
   value: string;
 }
 
-const BuildingAddress = ({formik}:{formik:any}) => {
+const BuildingAddress = ({formik}:{formik?:any}) => {
 
     const [selectedState, setSelectedState] = useState<Item | null>(null);
-    const handleStateSelect = (selectedItem: Item): void => {
-      const state = selectedItem || '';
+    const handleStateSelect = (selectedItem: Item | null): void => {
       setSelectedState(selectedItem);
-      formik?.setFieldValue('state', state?.value );
+      formik?.setFieldValue('state', selectedItem ? selectedItem.value : '' );
     };
     
 

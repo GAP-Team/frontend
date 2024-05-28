@@ -6,7 +6,7 @@ import GStepper from "@/components/stepper/GStepper";
 import GProgressStepper from "@/components/stepper/GProgressStepper";
 import Divider from "@mui/material/Divider";
 import { useFormikContext } from "formik";
-import { AddBuildingFormProps } from "./types";
+import { AddBuildingFormProps, AddBuildingFormValues } from "./types";
 import SuccessPage from "@/components/common/SuccessPage";
 import SectionTitle from "@/components/label/SectionTitle";
 
@@ -16,9 +16,9 @@ const AddBuildingForm = ({
   handleBack,
   handleNext,
 }: AddBuildingFormProps): JSX.Element => {
-  const formik = useFormikContext();
+  const formik = useFormikContext<AddBuildingFormValues>();
   const isBeyondLastStep = activeStep.id >= steps.length;
-
+  const StepComponent = steps[activeStep.id]?.component;
   const formOrSuccessContent = isBeyondLastStep ? (
     <SuccessPage
       title="Objekt angelegt!"
@@ -34,7 +34,7 @@ const AddBuildingForm = ({
           activeStep={activeStep.id}
         />
       </div>
-      {activeStep.component}
+      {StepComponent && <StepComponent formik={formik} />}
     </>
   );
 

@@ -2,7 +2,7 @@
 import  { useState } from "react";
 import Grid from "@mui/material/Grid";
 import { useRouter } from "next/navigation";
-import { Formik, Form } from "formik";
+import { Formik, Form, FormikHelpers  } from "formik";
 import AddBuildingForm from "./AddBuildingForm";
 import { addObjektFormSchema } from "@/utils/ValidationSchema";
 import {
@@ -15,38 +15,36 @@ import BuildingInformation from "./BuildingInformation";
 import BuildingAddress from "./BuildingAddress";
 import BuildingDocumentation from "./BuildingDocumentation";
 import BuildingSummary from "./BuildingSummary";
-import { useFormikContext } from "formik";
 import BackButton from "@/components/button/BackButton";
 import PageTitle from "@/components/label/PageTitle";
 
 const NewBuilding = () => {
     const router = useRouter();
-    const formik = useFormikContext();
 const steps: ActiveStepItem[] = [
       {
         id: 0,
         stepName: "Objektinformation",
-        component: <BuildingInformation formik={formik}/>,
+        component: BuildingInformation,
       },
-      { id: 1, stepName: "Objektanschrift", component: <BuildingAddress formik={formik} /> },
+      { id: 1, stepName: "Objektanschrift", component: BuildingAddress },
       {
         id: 2,
         stepName: "Objektdokumentation",
-        component: <BuildingDocumentation formik={formik}/>,
+        component: BuildingDocumentation,
       },
       {
         id: 3,
         stepName: "Übersicht Objektdaten",
-        component: <BuildingSummary />,
+        component: BuildingSummary,
         },
     ];
 
   const [activeStep, setActiveStep] = useState<ActiveStepItem>(steps[0]);
 
   const handleNext = async (
-    validateForm: ValidateFormFunction,
-    setTouched: SetTouchedFunction,
-    submitForm: SubmitFormFunction
+    validateForm: FormikHelpers<AddBuildingFormValues>['validateForm'],
+    setTouched: FormikHelpers<AddBuildingFormValues>['setTouched'],
+    submitForm: FormikHelpers<AddBuildingFormValues>['submitForm']
   ): Promise<void> => {
     const nextStepId = activeStep.id + 1;
     if (nextStepId < steps.length) {
@@ -71,7 +69,7 @@ const steps: ActiveStepItem[] = [
     totalArea: "",
     buildingType: "",
     objektTag: "",
-    contactPerson: "",
+    contactPerson: [],
     address: "",
     plz: "",
     city: "",
@@ -79,17 +77,14 @@ const steps: ActiveStepItem[] = [
     serverLink: "",
   };
 
-  const onSubmit = (values: any) => {
+  const onSubmit = async (values: AddBuildingFormValues, { resetForm }: FormikHelpers<AddBuildingFormValues>) => {
     try {
+      console.log("Form Submitted", values);
+      resetForm();
     } catch (error: any) {
-      console.log(
-        "Unable to Add Objekt, post reqeust failed",
-        error.name,
-        error.message
-      );
+      console.log("Unable to Add Objekt, post request failed", error.name, error.message);
     }
   };
-
   console.log(activeStep)
   return (
     <Grid container component="main">
@@ -99,10 +94,7 @@ const steps: ActiveStepItem[] = [
         <Formik
           initialValues={initialValues}
           validationSchema={addObjektFormSchema}
-          onSubmit={async (values, { resetForm }) => {
-            await onSubmit(values);
-            resetForm();
-          }}
+          onSubmit={onSubmit}
           enableReinitialize
         >
           {({ validateForm, setTouched, submitForm }) => (

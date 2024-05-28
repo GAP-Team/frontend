@@ -6,7 +6,7 @@ import GTextInput from "@/components/input/GTextInput";
 import Typography from "@mui/material/Typography";
 import UploadButton from "@/components/button/UploadButton";
 
-const BuildingDocumentation = ({ formik }: { formik: any }) => {
+const BuildingDocumentation = ({ formik }: { formik?: any }) => {
   return (
     <Box
       component="form"
