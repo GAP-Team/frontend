@@ -103,23 +103,26 @@ const Sidebar: React.FC<SidebarProps> = ({ items, setSelected, selected }) => {
             <DrawerLogo src={gapLogo} open={open} />
           )}
         </ListItem>
-        {items.map((item, index) => (
-           item.text === "Gebäude" ? 
-          <SubSidebarItem
-            key={index}
-            item={item}
-            open={open}
-            selected={selected.id === item.id}
-            setSelected={setSelected}
-          />
-        :
-          <SidebarItemComponent
-            key={index}
-            item={item}
-            open={open}
-            selected={selected.id === item.id}
-            setSelected={setSelected}
-          />
+        {items.map((item) => (
+          <React.Fragment key={item.id}>
+            {item.subItems ? (
+              <SubSidebarItem
+                key={item.id}
+                item={item}
+                open={open}
+                selected={selected.id === item.id || item.subItems.some(subItem => subItem.id === selected.id)}
+                setSelected={setSelected}
+              />
+            ) : (
+              <SidebarItemComponent
+                key={item.id}
+                item={item}
+                open={open}
+                selected={selected.id === item.id}
+                setSelected={setSelected}
+              />
+            )}
+          </React.Fragment>
         ))}
       </List>
     </MyDrawer>
