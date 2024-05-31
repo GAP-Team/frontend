@@ -20,7 +20,7 @@ const Dashboard: React.FC<DashboardProps> = ({ overrideComponent  }) => {
     { id:0, icon: LuLayoutDashboard, text: "Dashboard", component:<RealEstateUser/> },
     { id:1, icon: CgNotes, text: "Ausschreibungen"},
     { id:2, icon: MdOutlineDoorSliding, text: "Anlagen" },
-    { id: 3, icon: MdOutlineAddHomeWork, text: "Gebäude", subItems: [{ id: 0, text: "Alle Gebäude", component:<Buildings /> }, { id: 1, text: "Gebäude hinzufügen", component: <NewBuilding/>}] },
+    { id: 3, icon: MdOutlineAddHomeWork, text: "Gebäude", subItems: [{ id: 30, text: "Alle Gebäude", component:<Buildings /> }, { id: 31, text: "Gebäude hinzufügen", component: <NewBuilding/>}] },
     { id:4, icon: MdOutlineNoteAlt, text: "Aufträge"},
     { id:5, icon: TbPigMoney, text: "Kosteneinsparung" },
     { id:6, icon: FaRegFlag, text: "Favoriten" },
