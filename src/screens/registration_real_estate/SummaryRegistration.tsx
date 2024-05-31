@@ -14,30 +14,22 @@ const SummaryRegistration = ({setActiveStep}:SummaryRegistrationProps) => {
 
   const getBusinessRegistrationData = (formik: any) => {
     const businessInfo = [];
-
-    const hasDocs = [
-      formik?.values?.bsndoc,
-      formik?.values?.landdoc,
-      formik?.values?.approvdoc,
-    ].some(Boolean);
-
-    if (hasDocs) {
-      businessInfo.push({
-        label: "Gewerbeanmeldung",
-        value: [
-          formik?.values?.bsndoc,
-          formik?.values?.landdoc,
-          formik?.values?.approvdoc,
-        ]
-          .filter(Boolean)
-          .join(", "),
-      });
-    }
-
+    const documents = [
+      { label: "Gewerbeanmeldung", value: formik?.values?.bsndoc },
+      { label: "Grundbucheintrag", value: formik?.values?.landdoc },
+      { label: "Genehmigungsunterlagen", value: formik?.values?.approvdoc },
+    ];
+  
+    documents.forEach(doc => {
+      if (doc.value) {
+        businessInfo.push(doc);
+      }
+    });
+  
     if (formik?.values?.registrationnum) {
       businessInfo.unshift({
         label: "Handerlregister Nummer",
-        value: formik?.values?.registrationnum,
+        value: formik.values.registrationnum,
       });
     }
     return businessInfo;
