@@ -6,8 +6,8 @@ import Box from "@mui/material/Box";
 import { Building } from "./types";
 import PropertyFilterPanel from "@/components/filter/PropertyFilterPanel";
 import { dummyBuildings } from "@/utils/Constants";
-import NoBuildingPage from "./NoBuilding";
-
+import NoContentPage from "@/components/common/NoContentPage";
+import addObjSrc from "@/../public/icons/add_building.svg";
 
 const Buildings: React.FC = () => {
   const [buildings, setBuildings] = useState<Building[]>([]);
@@ -16,7 +16,7 @@ const Buildings: React.FC = () => {
     setBuildings(dummyBuildings); // This could be an API call
   }, []);
 
-  const buildingContent = dummyBuildings.length > 0 ? <BuildingItemList buildings={buildings} /> : <NoBuildingPage/>;
+  const buildingContent = dummyBuildings.length > 0 ? <BuildingItemList buildings={buildings} /> : <NoContentPage alt="No Building/Objekt" image={addObjSrc} title="Erstelle ein neues Objekt." buttonLabel="Objekt anlegen" buttonLink="/dashboard/buildings/add_building"/>;
   return (
       <Box sx={styles.mainContainer}>
         <PropertyFilterPanel />
