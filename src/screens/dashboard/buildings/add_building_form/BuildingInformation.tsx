@@ -6,7 +6,7 @@ import LabelWithAsterisk from "@/components/label/LabelWithAsterisk";
 import GTextInput from "@/components/input/GTextInput";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-import { Item } from "@/components/input/GSelector";
+import Selector, { Item } from "@/components/input/GSelector";
 import AddSelector from "@/components/input/GAddSelector";
 import { contactPersonList, buildingTypesList } from "@/utils/Constants";
 import Checkbox from "@mui/material/Checkbox";
@@ -15,25 +15,36 @@ import Autocomplete from "@mui/material/Autocomplete";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import AddIcon from '@mui/icons-material/Add';
+import Dialog from '@mui/material/Dialog';
+import DialogTitle from '@mui/material/DialogTitle';
+import DialogContent from '@mui/material/DialogContent';
+import DialogActions from '@mui/material/DialogActions';
+import { ContactPersonItem } from "./types";
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
-const BuildingInformation = ({ formik }: { formik: any }) => {
-  const [selectedBldngType, setSelectedBldngType] = useState<Item>({ label: formik?.values?.buildingType || '', value: formik?.values?.buildingType || '' });
+const BuildingInformation = ({ formik }: { formik?: any }) => {
+  const [selectedBldngType, setSelectedBldngType] = useState<Item | null>(formik?.values?.buildingType ? { label: formik.values.buildingType, value: formik.values.buildingType } : null);
   const [options, setOptions] = useState<Item[]>(buildingTypesList);
-  const handleStateSelect = (selectedItem: Item):void => {
-    const state = selectedItem || '';
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [newContact, setNewContact] = useState<ContactPersonItem>({ name: '', role: '' });
+
+  const handleStateSelect = (selectedItem: Item | null):void => {
     setSelectedBldngType(selectedItem);
-    formik?.setFieldValue('buildingType', state?.value );
-  };
-  const handleAdd = (newItem: Item) => {
-    setOptions((prevOptions) => [...prevOptions, newItem]);
-  };
-  const handleDelete = (itemToDelete: Item) => {
-    setOptions((prevOptions) => prevOptions.filter(item => item.value !== itemToDelete.value));
+    formik?.setFieldValue('buildingType', selectedItem ? selectedItem.value : '' );
   };
   
+  const handleContactPersonChange = (event: any, value: ContactPersonItem[]) => {
+    formik?.setFieldValue('contactPerson', value);
+  };
+
+  const handleAddContactPerson = () => {
+    formik?.setFieldValue('contactPerson', [...formik.values.contactPerson, newContact]);
+    setNewContact({ name: '', role: '' });
+    setDialogOpen(false);
+  };
+
   return (
     <Box
       component="form"
@@ -78,8 +89,19 @@ const BuildingInformation = ({ formik }: { formik: any }) => {
         </Grid>
         <Grid item xs={12} sm={6}>
           <LabelWithAsterisk>GEBÄUDETYP</LabelWithAsterisk>
-          <AddSelector name="buildingType" options={options} error={formik?.touched?.buildingType && Boolean(formik?.errors?.buildingType)}
-            helperText={formik?.touched?.buildingType && formik?.errors?.buildingType} onSelect={handleStateSelect} selectedState={selectedBldngType} onAdd={handleAdd} onDelete={handleDelete} /> 
+          <Selector
+            name="buildingType"
+            options={options}
+            error={
+              formik?.touched?.buildingType &&
+              Boolean(formik?.errors?.buildingType)
+            }
+            helperText={
+              formik?.touched?.buildingType && formik?.errors?.buildingType
+            }
+            onSelect={handleStateSelect}
+            selectedState={selectedBldngType}
+          />
         </Grid>
         <Grid item xs={12} sm={3}>
           <Typography variant="gsub" color="gray.500">
@@ -104,7 +126,9 @@ const BuildingInformation = ({ formik }: { formik: any }) => {
             id="contactPerson"
             options={contactPersonList}
             disableCloseOnSelect
-            getOptionLabel={(option) => option.name+" - "+option.role}
+            getOptionLabel={(option) => option.name + " - " + option.role}
+            value={formik?.values?.contactPerson || []}
+            onChange={handleContactPersonChange}
             renderOption={(props, option, { selected }) => (
               <li {...props}>
                 <Checkbox
@@ -126,12 +150,44 @@ const BuildingInformation = ({ formik }: { formik: any }) => {
         </Grid>
         <Grid item xs={12} sm={1}>
           <Box display="flex" height="100%" alignItems="flex-end" justifyContent="center">
-            <Button color="gprimary" variant="contained" sx={{height:'3.5rem',width:'100%',borderRadius:'0.5rem'}} >
+            <Button color="gprimary" variant="contained" sx={{height:'3.5rem',width:'100%',borderRadius:'0.5rem'}}  onClick={() => setDialogOpen(true)}>
               <AddIcon sx={{fontSize:'1.5rem'}} />
             </Button>
           </Box>
         </Grid>
       </Grid>
+      <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)}>
+        <DialogTitle>Neuen Ansprechpartner hinzufügen</DialogTitle>
+        <DialogContent>
+          <TextField
+            autoFocus
+            margin="dense"
+            id="name"
+            label="Name"
+            type="text"
+            fullWidth
+            value={newContact.name}
+            onChange={(e) => setNewContact({ ...newContact, name: e.target.value })}
+          />
+          <TextField
+            margin="dense"
+            id="role"
+            label="Rolle"
+            type="text"
+            fullWidth
+            value={newContact.role}
+            onChange={(e) => setNewContact({ ...newContact, role: e.target.value })}
+          />
+        </DialogContent>
+        <DialogActions sx={{padding:'1rem'}}>
+          <Button onClick={() => setDialogOpen(false)} color="gprimary" variant="contained" sx={{marginRight:'1rem'}}  >
+            Abbrechen
+          </Button>
+          <Button onClick={handleAddContactPerson} color="gprimary" variant="contained">
+            Hinzufügen
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Box>
   );
 };

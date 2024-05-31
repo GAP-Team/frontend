@@ -12,13 +12,13 @@ interface GButtonProps extends ButtonProps {
 const GButton: React.FC<GButtonProps> = ({ children,type, color="gprimary",href="#", sx, ...otherProps }) => {
 
   return (
-    <Link href={href}>
+    <Link href={href} passHref>
       <Button
+        component="a"
         variant="contained"
         color={color}
         size="large"
         type={type}
-        className="continue"
         sx={{
           borderRadius: "0.5rem",
           margin: "0.5rem",

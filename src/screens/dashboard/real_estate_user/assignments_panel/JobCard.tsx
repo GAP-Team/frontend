@@ -48,7 +48,7 @@ const JobCard: React.FC<JobCardProps> = ({
       </Typography>
       <Box sx={styles.tags}>
         {tags.map((tag, index) => (
-          <React.Fragment key={tag}>
+          <React.Fragment key={index}>
             <Chip
               icon={<VscDebugBreakpointLog color="white" />}
               color="gprimary"

@@ -3,7 +3,7 @@ export interface AddBuildingFormValues{
     totalArea: string;
     buildingType: string;
     objektTag: string;
-    contactPerson: string;
+    contactPerson: ContactPersonItem[];
     address: string;
     plz: string;
     city: string;
@@ -14,7 +14,7 @@ export interface AddBuildingFormValues{
 export interface ActiveStepItem{
     id: number;
     stepName: string;
-    component?: React.ReactElement;
+    component?: React.ComponentType<{ formik: any }>;
 }
 
 export interface AddBuildingFormProps {
