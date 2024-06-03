@@ -22,28 +22,19 @@ const Selector = <T extends Item>({ name, options, placeholder = 'Wählen Sie au
  
   return (
     <Autocomplete
-      freeSolo
       value={selectedState}
       options={options}
-      getOptionLabel={(option: any) => option?.label}
-      onInputChange={(e, value: string) => {
-        const newValue = { label: value, value: value };
-        onSelect(newValue);
-      }}
-      onChange={(e, value: any) => {
-        if (typeof value === 'string') {
-          const newValue = { label: value, value: value };
-          onSelect(newValue);
-        } else if (value) {
-          onSelect(value);
-        }
-      }}
+      getOptionLabel={(option) => option.value}
+      onChange={(e, value:any) => {
+        onSelect(value);
+        }}
       renderInput={(params) => (
       <TextField
         {...params}
         name={name}
         placeholder={placeholder}
         error={error}
+        // value={selectedState?.value}
         helperText={helperText}
       />
     )}

@@ -12,6 +12,7 @@ import SectionTitle from "@/components/label/SectionTitle";
 
 const AddBuildingForm = ({
   activeStep,
+  setActiveStep,
   steps,
   handleBack,
   handleNext,
@@ -19,6 +20,7 @@ const AddBuildingForm = ({
   const formik = useFormikContext<AddBuildingFormValues>();
   const isBeyondLastStep = activeStep.id >= steps.length;
   const StepComponent = steps[activeStep.id]?.component;
+  const typeOfBtn = activeStep.id + 1 >= steps.length ? "submit" : "button";
   const formOrSuccessContent = isBeyondLastStep ? (
     <SuccessPage
       title="Objekt angelegt!"
@@ -34,7 +36,7 @@ const AddBuildingForm = ({
           activeStep={activeStep.id}
         />
       </div>
-      {StepComponent && <StepComponent formik={formik} />}
+        {StepComponent && <StepComponent formik={formik} setActiveStep={setActiveStep} steps={steps} />}
     </>
   );
 
@@ -45,7 +47,7 @@ const AddBuildingForm = ({
           {activeStep.id < steps.length - 1 ? "Zurück" : "Bearbeiten"}
         </GButton>
       )}
-      <GButton onClick={handleNext}>
+      <GButton type={typeOfBtn} onClick={handleNext} >
         {isBeyondLastStep
           ? "schließen"
           : activeStep.id < steps.length - 1

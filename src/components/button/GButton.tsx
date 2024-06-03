@@ -1,5 +1,4 @@
 import React from "react";
-import Link from "next/link";
 import Button, { ButtonProps } from "@mui/material/Button";
 import "../button/GButton.module.css";
 
@@ -9,12 +8,12 @@ interface GButtonProps extends ButtonProps {
   type?: "button" | "reset" | "submit" | undefined;
 }
 
-const GButton: React.FC<GButtonProps> = ({ children,type, color="gprimary",href="#", sx, ...otherProps }) => {
+const GButton: React.FC<GButtonProps> = ({ children,type, color="gprimary",href, sx, ...otherProps }) => {
 
   return (
-    <Link href={href} passHref>
       <Button
         component="a"
+        href={href}
         variant="contained"
         color={color}
         size="large"
@@ -31,7 +30,6 @@ const GButton: React.FC<GButtonProps> = ({ children,type, color="gprimary",href=
       >
         {children}
       </Button>
-    </Link>
   );
 };
 

@@ -1,54 +1,62 @@
 'use client';
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import { buildingInformation, buildingContactPersonList,buildingAddress,buildingDocs } from "@/utils/Constants";
+import { useFormikContext } from 'formik';
 import SummarySection from "@/components/summary/SummarySection";
 import { Detail } from "@/components/summary/SummarySection";
-import { useFormikContext } from 'formik';
+import { ActiveStepItem } from "./types";
+import { Dispatch, SetStateAction } from "react";
 
-const BuildingSummary = () => {
-  const formik = useFormikContext();
-  const formikValuesArray: string[] = Object.values(formik?.values || {});
-  const updatedBuildingInformation: Detail[] = buildingInformation.map((info,index) => ({
-    ...info,
-    value: formikValuesArray[index] || info.value, // Update or keep original if no value is provided
-  }));
-  const updatedAdresse: Detail[] = buildingAddress.map((info,index) => ({
-    ...info,
-    value: formikValuesArray[index+updatedBuildingInformation.length+1] || info.value, // Update or keep original if no value is provided
-  }));
-  const updatedContactPersonList: Detail[] = buildingContactPersonList.map((info,index) => ({
-    ...info,
-    value: formikValuesArray[index+updatedAdresse.length+updatedBuildingInformation.length+1] || info.value, // Update or keep original if no value is provided
-  }));
+interface BuildingSummaryProps{
+  setActiveStep: React.Dispatch<React.SetStateAction<ActiveStepItem>>;
+  steps: ActiveStepItem[];
+}
+const BuildingSummary = ({setActiveStep,steps}:BuildingSummaryProps) => {
+  const { values } = useFormikContext<any>();
 
-  const updatedDocList: Detail[] = buildingDocs.map((info,index) => ({
-    ...info,
-    value: formikValuesArray[index+updatedContactPersonList.length+updatedAdresse.length+updatedBuildingInformation.length+1] || info.value, // Update or keep original if no value is provided
-  }));
+  const updatedBuildingInformation: Detail[] = [
+    values.buildingName && { label: "Name", value: values.buildingName },
+    values.totalArea && { label: "Area", value: values.totalArea },
+    values.buildingType && { label: "Gebäude Type", value: values.buildingType },
+    values.objektTag && { label: "Objektkürzel", value: values.objektTag }
+  ].filter(Boolean); // Filter out undefined values
+
+  const updatedAddress: Detail[] = [
+    values.address && { label: "Address", value: values.address },
+    values.plz && { label: "Postleitzahl", value: values.plz },
+    values.city && { label: "Stadt", value: values.city },
+    values.state && { label: "State", value: values.state }
+  ].filter(Boolean); // Filter out undefined values
+
+  const updatedContactPersonList: Detail[] = values.contactPerson.length ? values.contactPerson.map((person: any) => ({
+    label: "Name",
+    value: `${person.name} - ${person.role}`
+  })) : [];
+
+  const updatedDocList: Detail[] = [
+    ...values.constructionDocs.length ? values.constructionDocs.map((doc: any) => ({ label: "Baudokument", value: doc.name })) : [{ label: "Baudokument", value: 'dummyname1.pdf' }],
+    ...values.floorplanDocs.length ? values.floorplanDocs.map((doc: any) => ({ label: "Grundrissdokument", value: doc.name })) : [{ label: "Grundrissdokument", value: 'dummyname2.pdf' }],
+    ...values.otherDocs.length ? values.otherDocs.map((doc: any) => ({ label: "Weiteres Dokument", value: doc.name })) : [{ label: "Weiteres Dokument", value: 'dummyname3.pdf' }]
+  ];
 
   return (
-    <Box
-    component="form"
-    noValidate
-    sx={{ p: 1, width: "auto", marginLeft: "1.5rem" }}
-  >
-    <Grid container spacing={2}>
-      <Grid item xs={12}>
-          <SummarySection title="Objektinformationen" details={updatedBuildingInformation} />
+    <Box sx={{ p: 1, width: "auto", marginLeft: "1.5rem" }}>
+      <Grid container spacing={2}>
+        <Grid item xs={12}>
+          <SummarySection title="Objektinformationen" details={updatedBuildingInformation} setActiveStep={()=>setActiveStep(steps[0])}/>
         </Grid>
         <Grid item xs={12}>
-          <SummarySection title="Objektanschrift" details={updatedAdresse} />
+          <SummarySection title="Objektanschrift" details={updatedAddress} setActiveStep={()=>setActiveStep(steps[1])}/>
         </Grid>
         <Grid item xs={6}>
-          <SummarySection title="Ansprechpartner" details={updatedContactPersonList} />
+          <SummarySection title="Ansprechpartner" details={updatedContactPersonList} setActiveStep={()=>setActiveStep(steps[0])} />
         </Grid>
         <Grid item xs={6}>
-          <SummarySection title="Bauunterlagen" details={updatedDocList} />
+          <SummarySection title="Bauunterlagen" details={updatedDocList} setActiveStep={()=>setActiveStep(steps[2])}/>
         </Grid>
-    </Grid>
-  </Box>
-  )
+      </Grid>
+    </Box>
+  );
 }
 
 export default BuildingSummary;

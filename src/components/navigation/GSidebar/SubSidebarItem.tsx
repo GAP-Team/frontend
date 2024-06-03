@@ -52,8 +52,8 @@ export const SubSidebarItem: React.FC<SubSidebarItemProps> = ({
       </ListItemButton>
       <Collapse in={isOpen} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
-          {item.subItems && item.subItems.map((subItem) => (
-            <ListItemButton  sx={styles.subItemButton} onClick={()=>setSelected?.(subItem)} >
+          {item.subItems && item.subItems.map((subItem,idx) => (
+            <ListItemButton  key={idx} sx={styles.subItemButton} onClick={()=>setSelected?.(subItem)} >
               <ListItemText primary={subItem.text} sx={{...styles.listItemText}} />
             </ListItemButton>
           ))}
