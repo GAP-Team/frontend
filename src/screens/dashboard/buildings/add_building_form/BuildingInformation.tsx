@@ -80,9 +80,9 @@ const BuildingInformation = ({ formik }: { formik?: any }) => {
             onChange={formik?.handleChange}
             onBlur={formik?.handleBlur}
             error={
-              formik?.touched.totalArea && Boolean(formik?.errors.totalArea)
+              formik?.touched?.totalArea && Boolean(formik?.errors.totalArea)
             }
-            helperText={formik?.touched.totalArea && formik?.errors.totalArea}
+            helperText={formik?.touched?.totalArea && formik?.errors.totalArea}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -110,9 +110,9 @@ const BuildingInformation = ({ formik }: { formik?: any }) => {
              onChange={formik?.handleChange}
              onBlur={formik?.handleBlur}
              error={
-               formik?.touched.objektTag && Boolean(formik?.errors.objektTag)
+               formik?.touched?.objektTag && Boolean(formik?.errors.objektTag)
              }
-            helperText={formik?.touched.objektTag && formik?.errors.objektTag}
+            helperText={formik?.touched?.objektTag && formik?.errors.objektTag}
           />
         </Grid>
         <Grid item xs={12} sm={11}>
@@ -141,8 +141,8 @@ const BuildingInformation = ({ formik }: { formik?: any }) => {
                 {...params}
                 name="contactPerson"
                 onBlur={formik?.handleBlur}
-                error={formik?.touched.contactPerson && Boolean(formik?.errors.contactPerson)}
-                helperText={formik?.touched.contactPerson && formik?.errors.contactPerson}
+                error={formik?.touched?.contactPerson && Boolean(formik?.errors.contactPerson)}
+                helperText={formik?.touched?.contactPerson && formik?.errors.contactPerson}
               />
             )}
           />
