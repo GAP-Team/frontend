@@ -40,6 +40,7 @@ const NewBuilding = () => {
   const handleNext = async (
     validateForm: FormikHelpers<AddBuildingFormValues>["validateForm"],
     setTouched: FormikHelpers<AddBuildingFormValues>["setTouched"],
+    resetForm: FormikHelpers<AddBuildingFormValues>["resetForm"],
     values: AddBuildingFormValues
   ): Promise<void> => {
     const stepFieldsMap: { [key: number]: string[] } = {
@@ -60,6 +61,7 @@ const NewBuilding = () => {
       } else {
         //post data to API
         alert(JSON.stringify(values, null, 2));
+        await resetForm();
         setActiveStep({ ...activeStep, id: steps.length });
       }
     }
@@ -71,7 +73,7 @@ const NewBuilding = () => {
       setActiveStep(steps[activeStep.id - 1]);
     } else {
       // If active step is 0, then push to login
-      router.push("/login");
+      router.push("/dashboard");
     }
   };
   
@@ -104,7 +106,7 @@ const NewBuilding = () => {
           onSubmit={()=>{}}
           enableReinitialize
         >
-          {({ validateForm, setTouched, values}) => (
+          {({ validateForm, setTouched,resetForm, values}) => (
               <Form>
                 <Grid sx={styles.form}>
                   <AddBuildingForm
@@ -112,7 +114,7 @@ const NewBuilding = () => {
                     steps={steps}
                     handleBack={handleBack}
                     handleNext={()=>
-                      handleNext(validateForm, setTouched, values)
+                      handleNext(validateForm, setTouched,resetForm, values)
                     }
                     setActiveStep={setActiveStep}
                   />

@@ -56,8 +56,8 @@ const BuildingAddress = ({formik}:{formik?:any}) => {
           value={formik?.values.plz}
           onChange={formik?.handleChange}
           onBlur={formik?.handleBlur}
-          error={formik?.touched.plz && Boolean(formik?.errors.plz)}
-          helperText={formik?.touched.plz && formik?.errors.plz}
+          error={formik?.touched?.plz && Boolean(formik?.errors?.plz)}
+          helperText={formik?.touched?.plz && formik?.errors?.plz}
         />
       </Grid>
       <Grid item xs={12} sm={9}>
@@ -69,8 +69,8 @@ const BuildingAddress = ({formik}:{formik?:any}) => {
           value={formik?.values.city}
           onChange={formik?.handleChange}
           onBlur={formik?.handleBlur}
-          error={formik?.touched.city && Boolean(formik?.errors.city)}
-          helperText={formik?.touched.city && formik?.errors.city}
+          error={formik?.touched?.city && Boolean(formik?.errors?.city)}
+          helperText={formik?.touched?.city && formik?.errors?.city}
         />
       </Grid>
       <Grid item xs={12}>
