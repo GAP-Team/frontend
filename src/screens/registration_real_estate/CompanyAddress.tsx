@@ -1,12 +1,13 @@
 "use client";
 import { useEffect, useState } from "react";
-import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import LabelWithAsterisk from "@/components/label/LabelWithAsterisk";
 import GTextInput from "@/components/input/GTextInput";
 import GSelector from "@/components/input/GSelector";
 import { germanStates } from "@/utils/Constants";
+import GoogleAutocomplete from "@/components/input/GoogleAutocomplete";
+import { geocodeByAddress } from 'react-places-autocomplete';
 
 interface Item {
   label: string;
@@ -15,10 +16,39 @@ interface Item {
 
 const CompanyAddress = ({formik}:any) => {
   const [selectedState, setSelectedState] = useState<Item | null>(null);
-  const handleStateSelect = (selectedItem: Item):void => {
-    const state = selectedItem || '';
+  
+  const handleStateSelect = (selectedItem: Item): void => {
     setSelectedState(selectedItem);
-    formik.setFieldValue('state', state?.value );
+    formik.setFieldValue('state', selectedItem?.value);
+  };
+  
+  const handleAddressSelect = async (value: string) => {
+    try {
+      const results = await geocodeByAddress(value);
+      const addressComponents = results[0].address_components;
+      
+      let street = "";
+      let city = "";
+      let postalCode = "";
+      
+      addressComponents.forEach(component => {
+        if (component.types.includes("route")) {
+          street = component.long_name;
+        }
+        if (component.types.includes("locality") || component.types.includes("sublocality")) {
+          city = component.long_name;
+        }
+        if (component.types.includes("postal_code")) {
+          postalCode = component.long_name;
+        }
+      });
+      
+      formik.setFieldValue('street', street || value);
+      formik.setFieldValue('city', city);
+      formik.setFieldValue('plz', postalCode);
+    } catch (error) {
+      console.error("Error geocoding address: ", error);
+    }
   };
   
   useEffect(() => {
@@ -43,12 +73,13 @@ const CompanyAddress = ({formik}:any) => {
         </Grid>
         <Grid item xs={12} sm={9}>
           <LabelWithAsterisk>STRAßE</LabelWithAsterisk>
-          <GTextInput
+          <GoogleAutocomplete
             placeholder="Straße"
-            id="street"
             name="street"
+            id="street"
             value={formik.values.street}
             onChange={formik.handleChange}
+            onSelect={handleAddressSelect}
             onBlur={formik.handleBlur}
             error={formik.touched.street && Boolean(formik.errors.street)}
             helperText={formik.touched.street && formik.errors.street}
