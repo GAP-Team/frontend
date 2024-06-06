@@ -87,20 +87,36 @@ export const registrationValidationSchema = yup.object({
       .min(3, "Gebäudename muss mindestens 3 Zeichen lang sein."),
     totalArea: yup.string().required("Gesamtfläche ist erforderlich."),
     buildingType: yup.string().required("Gebäudetyp ist erforderlich."),
-    objektTag: yup.string().required("Objekt-Tag ist erforderlich."),
-    contactPerson: yup
-      .string()
-      .required("Kontaktperson ist erforderlich.")
-      .min(3, "Kontaktperson muss mindestens 3 Zeichen lang sein."),
+    objektTag: yup.string().required("ObjektTag ist erforderlich."),
+    contactPerson: yup.array().of(
+      yup.object({
+        name: yup.string(),
+        role: yup.string(),
+      })
+    ).min(1, "Mindestens eine Kontaktperson ist erforderlich."),
     address: yup.string().required("Adresse ist erforderlich."),
     plz: yup
       .string()
-      .required("PLZ ist erforderlich.")
-      .matches(/^[0-9]{5}$/, "PLZ muss eine gültige fünfstellige Zahl sein."),
+      .required("Postleitzahl ist erforderlich")
+      .matches(
+        /^\d{4,5}$/,
+        "Postleitzahl muss zwischen 4 und 5 Ziffern lang sein"
+      ),
     city: yup.string().required("Stadt ist erforderlich."),
     state: yup.string().required("Bundesland ist erforderlich."),
+    constructionDocs: yup
+      .array()
+      .of(yup.mixed().required())
+      .min(1, "Mindestens ein Baudokument ist erforderlich."),
+    floorplanDocs: yup
+      .array()
+      .of(yup.mixed().required())
+      .min(1, "Mindestens ein Grundrissdokument ist erforderlich."),
+    otherDocs: yup
+      .array()
+      .of(yup.mixed().required())
+      .min(1, "Mindestens ein weiteres Dokument ist erforderlich."),
     serverLink: yup
       .string()
-      .required("Server-Link ist erforderlich.")
       .url("Server-Link muss eine gültige URL sein."),
   });

@@ -35,7 +35,7 @@ export default function UploadButton({ value, onChange, id, name, error, helperT
       backgroundColor: theme.palette.action.hover,
     },
   };
-  const fileText = value == "" ? "Dokument hinzuziehen oder" : value;
+  const fileText = !value  ? "Dokument hinzuziehen oder" : value;
   return (
     <>
       <Box sx={styles}>

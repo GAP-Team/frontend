@@ -1,3 +1,6 @@
+import { FormikHelpers } from "formik";
+import { Dispatch, SetStateAction } from "react";
+
 export interface AddBuildingFormValues{
     buildingName: string;
     totalArea: string;
@@ -8,17 +11,21 @@ export interface AddBuildingFormValues{
     plz: string;
     city: string;
     state: string;
+    constructionDocs: File[];
+    floorplanDocs: File[];
+    otherDocs: File[];
     serverLink: string;
 }
 
 export interface ActiveStepItem{
     id: number;
     stepName: string;
-    component?: React.ComponentType<{ formik: any }>;
+    component?: React.ComponentType<{ formik?: any, setActiveStep:React.Dispatch<React.SetStateAction<ActiveStepItem>>, steps:ActiveStepItem[] }>;
 }
 
 export interface AddBuildingFormProps {
     activeStep: ActiveStepItem;
+    setActiveStep: React.Dispatch<React.SetStateAction<ActiveStepItem>>;
     steps: ActiveStepItem[];
     handleBack: () => void;
     handleNext: () => void;

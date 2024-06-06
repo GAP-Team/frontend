@@ -358,12 +358,17 @@ export const contactPersonList = [
 ];
 
 export const buildingTypesList = [
-  { label: "Wohnung", value: "Wohnung" },    // Apartment
-  { label: "Büro", value: "Büro"  },       // Office
-  { label: "Lagerhaus", value: "Lagerhaus" },  // Warehouse
-  { label: "Einzelhandel", value: "Einzelhandel"  }, // Retail
-  { label: "Industrie", value: "Industrie" },    // Industrial
-  { label: "Krankenhaus", value: "Krankenhaus" }  // Hospital
+  { label: "Bürogebäude", value: "Bürogebäude" },  // Office building
+  { label: "Bahnhof", value: "Bahnhof" },  // Train station
+  { label: "Einkaufscenter/Verkaufsstätte", value: "Einkaufscenter/Verkaufsstätte" },  // Shopping center/retail
+  { label: "Flughafen", value: "Flughafen" },  // Airport
+  { label: "Garage", value: "Garage" },  // Garage
+  { label: "Pflegeheim", value: "Pflegeheim" },  // Nursing home
+  { label: "Logisitkhalle/Produktionshalle", value: "Logisitkhalle/Produktionshalle" },  // Logistics/production hall
+  { label: "Hochhaus", value: "Hochhaus" },  // Skyscraper
+  { label: "Hotel", value: "Hotel" },  // Hotel
+  { label: "Krankenhaus", value: "Krankenhaus" },  // Hospital
+  { label: "Wohnhaus", value: "Wohnhaus" }  // Residential building
 ];
 
 export const dummyBuildings = [

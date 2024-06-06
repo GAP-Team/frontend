@@ -38,9 +38,9 @@ const BuildingDocumentation = ({ formik }: { formik?: any }) => {
             onChange={formik?.handleChange}
             onBlur={formik?.handleBlur}
             error={
-              formik?.touched.serverLink && Boolean(formik?.errors.serverLink)
+              formik?.touched?.serverLink && Boolean(formik?.errors?.serverLink)
             }
-            helperText={formik?.touched.serverLink && formik?.errors.serverLink}
+            helperText={formik?.touched?.serverLink && formik?.errors?.serverLink}
           />
         </Grid>
       </Grid>

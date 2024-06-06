@@ -3,6 +3,7 @@ import GButton from "@/components/button/GButton";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import GStepper from "@/components/stepper/GStepper";
+import { useRouter } from "next/navigation";
 import GProgressStepper from "@/components/stepper/GProgressStepper";
 import Divider from "@mui/material/Divider";
 import { useFormikContext } from "formik";
@@ -12,6 +13,7 @@ import SectionTitle from "@/components/label/SectionTitle";
 
 const AddBuildingForm = ({
   activeStep,
+  setActiveStep,
   steps,
   handleBack,
   handleNext,
@@ -19,6 +21,11 @@ const AddBuildingForm = ({
   const formik = useFormikContext<AddBuildingFormValues>();
   const isBeyondLastStep = activeStep.id >= steps.length;
   const StepComponent = steps[activeStep.id]?.component;
+  const typeOfBtn = activeStep.id + 1 >= steps.length ? "submit" : "button";
+  const router = useRouter();
+  const handleRoute = () => {
+    router.push("/dashboard/buildings");
+  }
   const formOrSuccessContent = isBeyondLastStep ? (
     <SuccessPage
       title="Objekt angelegt!"
@@ -34,7 +41,7 @@ const AddBuildingForm = ({
           activeStep={activeStep.id}
         />
       </div>
-      {StepComponent && <StepComponent formik={formik} />}
+        {StepComponent && <StepComponent formik={formik} setActiveStep={setActiveStep} steps={steps} />}
     </>
   );
 
@@ -45,7 +52,7 @@ const AddBuildingForm = ({
           {activeStep.id < steps.length - 1 ? "Zurück" : "Bearbeiten"}
         </GButton>
       )}
-      <GButton onClick={handleNext}>
+      <GButton type={typeOfBtn} onClick={!isBeyondLastStep ? handleNext : handleRoute} >
         {isBeyondLastStep
           ? "schließen"
           : activeStep.id < steps.length - 1
