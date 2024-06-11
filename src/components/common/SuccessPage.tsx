@@ -29,8 +29,8 @@ const SuccessPage: NextPage<SuccessPageProps> = ({
   
   return (
     <Grid item xs={12} md={12} lg={12} sx={styles}>
-      <div style={{ marginBottom: "2rem" }}>
-        <Image width={100} height={100} alt="Success" src={imageUrl} />
+      <div style={{ marginBottom: "2rem", position:"relative", height:'8rem',width:'8rem' }}>
+        <Image priority alt="Success" src={imageUrl} fill/>
       </div>
       {description2 && (<Typography variant="bodymr" color="#475A60" >{description2}</Typography>)}
       <Typography variant="h4sb" padding={"0.5rem"}>{title}</Typography>

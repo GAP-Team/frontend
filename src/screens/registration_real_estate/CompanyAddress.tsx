@@ -52,8 +52,10 @@ const CompanyAddress = ({formik}:any) => {
   };
   
   useEffect(() => {
-    setSelectedState({ label: formik.values?.state || '', value: formik.values?.state || '' });
-  },[])
+    const stateValue = formik.values?.state || '';
+    const matchedState = germanStates.find(state => state.value === stateValue) || { label: stateValue, value: stateValue };
+    setSelectedState(matchedState);
+  }, []);
 
   return (
     <Box
