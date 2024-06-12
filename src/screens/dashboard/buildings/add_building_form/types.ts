@@ -34,6 +34,7 @@ export interface AddBuildingFormProps {
 export interface ContactPersonItem{
     name: string;
     role: string;
+    email?: string;
 }
 export interface Item {
     label: string;
