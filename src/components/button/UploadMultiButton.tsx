@@ -47,6 +47,31 @@ export default function UploadMultiButton({
     },
   };
 
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (onChange) {
+      const files = Array.from(event.target.files || []);
+      const newFiles = value ? [...value, ...files] : files;
+      const syntheticEvent = {
+        target: {
+          name: name || "",
+          value: newFiles,
+        },
+      } as any;
+      onChange(syntheticEvent);
+    }
+  };
+
+  const handleDelete = (index: number) => {
+    const newValue = value?.filter((_, i) => i !== index) || [];
+    const syntheticEvent = {
+      target: {
+        name: name || "",
+        value: newValue,
+      },
+    } as any;
+    onChange && onChange(syntheticEvent);
+  };
+
   return (
     <>
       <Box sx={styles}>
@@ -63,16 +88,7 @@ export default function UploadMultiButton({
             <Chip
               key={index}
               label={file.name}
-              onDelete={() => {
-                const newValue = value.filter((_, i) => i !== index);
-                const syntheticEvent = {
-                  target: {
-                    name: name || "",
-                    value: newValue,
-                  },
-                } as any;
-                onChange && onChange(syntheticEvent);
-              }}
+              onDelete={() => handleDelete(index)}
             />
           ))}
         <Button
@@ -88,19 +104,7 @@ export default function UploadMultiButton({
             id={id}
             name={name}
             accept="application/pdf"
-            onChange={(event) => {
-              if (onChange) {
-                const files = Array.from(event.target.files || []);
-                const newFiles = value ? [...value, ...files] : files;
-                const syntheticEvent = {
-                  target: {
-                    name: name || "",
-                    value: newFiles,
-                  },
-                } as any;
-                onChange(syntheticEvent);
-              }
-            }}
+            onChange={handleFileChange}
             multiple
           />
         </Button>
