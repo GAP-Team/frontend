@@ -14,6 +14,7 @@ export const metadata: Metadata = {
   description: "The GAP company website",
 };
 
+const googleMapsApiUrl = `${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_BASE_URL}?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}&libraries=places`;
 
 export default function RootLayout({
   children,
@@ -27,7 +28,7 @@ export default function RootLayout({
         <script
           async
           defer
-          src={`https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}&libraries=places`}
+          src={googleMapsApiUrl}
         ></script>
       </head>
       <body className={inter.className}>
