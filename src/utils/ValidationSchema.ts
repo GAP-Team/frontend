@@ -115,8 +115,8 @@ export const registrationValidationSchema = yup.object({
       .min(1, "Mindestens ein Grundrissdokument ist erforderlich."),
     otherDocs: yup
       .array()
-      .of(yup.mixed().required())
-      .min(1, "Mindestens ein weiteres Dokument ist erforderlich."),
+      .of(yup.mixed().required()),
+      // .min(1, "Mindestens ein weiteres Dokument ist erforderlich."),
     serverLink: yup
       .string()
       .url("Server-Link muss eine gültige URL sein."),

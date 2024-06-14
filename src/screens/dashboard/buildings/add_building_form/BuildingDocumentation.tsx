@@ -5,6 +5,7 @@ import LabelWithAsterisk from "@/components/label/LabelWithAsterisk";
 import GTextInput from "@/components/input/GTextInput";
 import Typography from "@mui/material/Typography";
 import UploadButton from "@/components/button/UploadButton";
+import UploadMultiButton from "@/components/button/UploadMultiButton";
 
 const BuildingDocumentation = ({ formik }: { formik?: any }) => {
   return (
@@ -16,15 +17,36 @@ const BuildingDocumentation = ({ formik }: { formik?: any }) => {
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <LabelWithAsterisk>BAUUNTERLAGEN</LabelWithAsterisk>
-          <UploadButton />
+          <UploadMultiButton
+            id="constructionDocs"
+            name="constructionDocs"
+            value={formik.values.constructionDocs}
+            onChange={formik.handleChange}
+            error={formik.touched.constructionDocs && Boolean(formik.errors.constructionDocs)}
+            helperText={formik.touched.constructionDocs && formik.errors.constructionDocs}
+          />
         </Grid>
         <Grid item xs={12}>
           <LabelWithAsterisk>GRUNDRISSE</LabelWithAsterisk>
-          <UploadButton />
+          <UploadMultiButton
+            id="floorplanDocs"
+            name="floorplanDocs"
+            value={formik.values.floorplanDocs}
+            onChange={formik.handleChange}
+            error={formik.touched.floorplanDocs && Boolean(formik.errors.floorplanDocs)}
+            helperText={formik.touched.floorplanDocs && formik.errors.floorplanDocs}
+          />
         </Grid>
         <Grid item xs={12}>
           <LabelWithAsterisk>SONSTIGE DOKUMENTE</LabelWithAsterisk>
-          <UploadButton />
+          <UploadMultiButton
+            id="otherDocs"
+            name="otherDocs"
+            value={formik.values.otherDocs}
+            onChange={formik.handleChange}
+            error={formik.touched.otherDocs && Boolean(formik.errors.otherDocs)}
+            helperText={formik.touched.otherDocs && formik.errors.otherDocs}
+          />
         </Grid>
         <Grid item xs={12}>
           <Typography variant="gsub" color="gray.500">
