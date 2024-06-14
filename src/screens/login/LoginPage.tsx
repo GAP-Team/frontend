@@ -19,6 +19,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 import CustomizedTooltips from "@/components/common/ToolTip";
 import { loginValidationSchema } from "@/utils/ValidationSchema";
 
+import authAPIs from "@/api/auth";
 import userAPIs from "@/api/user";
 import { setAccessToken } from "@/utils/helperJWT";
 import HeroBanner from "../../components/common/InfoBanner";
@@ -37,7 +38,7 @@ export default function LoginPage() {
         /*const hashedPassword = await bcrypt.hash(values.password, 10);
         const formValues = { ...values, password: hashedPassword };*/
         const formValues = { ...values, password: values.password };
-        const res = await userAPIs.login(formValues);
+        const res = await authAPIs.login(formValues);
         if (res) {
           const { access_token } = res.data;
 
