@@ -1,6 +1,9 @@
 import axios from 'axios';
 import Cookies from "js-cookie";
-const api = axios.create({ baseURL: 'http://localhost:3001' });
+
+export const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
+
+const api = axios.create({ baseURL: baseUrl });
 
 
 api.interceptors.request.use(
@@ -19,22 +22,14 @@ api.interceptors.request.use(
   (err) => Promise.reject(err)
 );
 api.interceptors.response.use((response:any) => {
-  return response
-}, async function (error:any) {
-  const originalRequest = error.config;
-  if (error.response && error.response.status === 403 && !originalRequest._retry) {
-    Cookies.remove('access_token')
+    return response
+  }, async function (error:any) {
+    const originalRequest = error.config;
+    if (error.response && error.response.status === 403 && !originalRequest._retry) {
+      Cookies.remove('access_token')
+    }
+    return Promise.reject(error);
   }
-  return Promise.reject(error);
-});
+);
 
-
-const apiCalls = {
-
-  /* Authentication Routes */
-  login: (data: any) => api.post('/auth/login', data),
-
-}
-
-
-export default apiCalls;
+export default api;
