@@ -1,23 +1,28 @@
 "use client";
 import React from "react";
-import { GapLogo } from "@/components/logo/GapLogo";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
-import InputAdornment from "@mui/material/InputAdornment";
-import Typography from "@mui/material/Typography";
-import Link from "@mui/material/Link";
-import { default as NextLink } from "next/link";
-import Paper from "@mui/material/Paper";
-import Grid from "@mui/material/Grid";
-import { FaRegEnvelope } from "react-icons/fa";
-import { PiLockBold } from "react-icons/pi";
-import HeroBanner from "../../components/common/InfoBanner";
+
+import bcrypt from "bcryptjs";
 import { useFormik } from "formik";
+import Box from "@mui/material/Box";
+import Link from "@mui/material/Link";
+import Grid from "@mui/material/Grid";
+import Paper from "@mui/material/Paper";
+import Button from "@mui/material/Button";
 import { useRouter } from "next/navigation";
+import { PiLockBold } from "react-icons/pi";
+import { FaRegEnvelope } from "react-icons/fa";
+import TextField from "@mui/material/TextField";
+import { default as NextLink } from "next/link";
+import Typography from "@mui/material/Typography";
+import { GapLogo } from "@/components/logo/GapLogo";
+import InputAdornment from "@mui/material/InputAdornment";
 import CustomizedTooltips from "@/components/common/ToolTip";
 import { loginValidationSchema } from "@/utils/ValidationSchema";
-import bcrypt from "bcryptjs";
+
+import authAPIs from "@/api/auth";
+import userAPIs from "@/api/user";
+import { setAccessToken } from "@/utils/helperJWT";
+import HeroBanner from "../../components/common/InfoBanner";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -29,9 +34,26 @@ export default function LoginPage() {
     validationSchema: loginValidationSchema,
     onSubmit: async (values, { resetForm }) => {
       try {
-        const hashedPassword = await bcrypt.hash(values.password, 10);
-        const formValues = { ...values, password: hashedPassword };
-        router.push("/dashboard");
+
+        /*const hashedPassword = await bcrypt.hash(values.password, 10);
+        const formValues = { ...values, password: hashedPassword };*/
+        const formValues = { ...values, password: values.password };
+        const res = await authAPIs.login(formValues);
+        if (res) {
+          const { access_token } = res.data;
+
+          if (access_token) {
+            setAccessToken(access_token);
+            router.push("/dashboard");
+        }
+        let data = {
+            "status": "SUCCEED",
+            "email": formValues.email
+        }
+        } else {
+          
+        }
+        
       } catch (error: any) {
         console.log(
           "Unable to login user, post request failed",
@@ -41,6 +63,10 @@ export default function LoginPage() {
       }
     },
   });
+
+  const pageRedirectAfterLogin = async (access_token: string) => {
+    router.push('/');
+  }
 
   return (
     <Grid container component="main" sx={styles.mainContainer}>
