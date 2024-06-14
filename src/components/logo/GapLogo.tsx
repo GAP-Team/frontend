@@ -46,12 +46,12 @@ export const GapLogo = ({ size, color = 'white', src }: GapLogoProps): JSX.Eleme
     
     return (
         <div className={`flex flex-row justify-start items-center gap-4 p-8`} style={inlineStyles.textColor}> 
-           <div className="flex justify-center items-center">
+            <div style={{position:"relative",display:'flex', height:imageSize,width:imageSize, justifyContent:'center', alignItems:'center' }}>
                 <Image
-                width={imageSize}
-                height={imageSize}
+                priority
                 alt="Follow us on Twitter"
                 src={src??gapLogo}
+                fill
                 />
             </div>
             <span className={`${lalezar.className} ${textSize}  text-center md:mt-3`}> 

@@ -18,27 +18,27 @@ interface SelectorProps<T extends Item> {
   helperText?: string;
 }
 
-const Selector = <T extends Item>({ name, options, placeholder = 'Wählen Sie aus',onSelect,selectedState,error, helperText }: SelectorProps<T>) => {
- 
+const Selector = <T extends Item>({ name, options, placeholder = 'Wählen Sie aus', onSelect, selectedState, error, helperText }: SelectorProps<T>) => {
+
   return (
     <Autocomplete
       value={selectedState}
       options={options}
       getOptionLabel={(option) => option.value}
-      onChange={(e, value:any) => {
-        onSelect(value);
-        }}
+      isOptionEqualToValue={(options, value) => options.valueOf === value.valueOf}
+      onChange={(e, value: Item | null) => {
+        onSelect(value as Item);
+      }}
       renderInput={(params) => (
-      <TextField
-        {...params}
-        name={name}
-        placeholder={placeholder}
-        error={error}
-        // value={selectedState?.value}
-        helperText={helperText}
-      />
-    )}
-  />
+        <TextField
+          {...params}
+          name={name}
+          placeholder={placeholder}
+          error={error}
+          helperText={helperText}
+        />
+      )}
+    />
   );
 };
 
