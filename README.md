@@ -27,6 +27,8 @@ A Next.js 14 and App Router-ready featuring:
 npm install
 ```
 
+- rename `.env.example`into `.env` and update the real variables in `.env` 
+
 - run the development server:
 
 ```
