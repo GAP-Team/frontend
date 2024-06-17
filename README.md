@@ -27,7 +27,7 @@ A Next.js 14 and App Router-ready featuring:
 npm install
 ```
 
-- rename `.env.example`into `.env` and update the real variables in `.env` 
+- copy the `.env.example` into `.env` and update the real variables in `.env` 
 
 - run the development server:
 
@@ -49,5 +49,10 @@ if you do not want log messages run `docker-compose up -d`
 goldfish-app-2ccci.ondigitalocean.app/
 
 ```
+
+## Important:
+- `.env.example`should always be up-tp-date with Dummy variables
+
+
 
 
