@@ -454,3 +454,15 @@ export const dummyBuildings = [
     noOfTenders: 5,
   },
 ];
+
+export const tenderTypesList = [
+  { label: "Reperatur", value: "Reperatur" },
+  { label: "Wartung", value: "Wartung" },
+  { label: "Installation", value: "Installation" },
+  { label: "Prüfung", value: "Prüfung" },
+  { label: "SV Begleitung", value: "SV_Begleitung" },
+  { label: "Beratung/Planprüfung", value: "Beratung_Planpruefung" },
+  { label: "Konzepterstellung BSK", value: "Konzepterstellung_BSK" },
+  { label: "Konzepterstellung Löschanlage", value: "Konzepterstellung_Loeschanlage" },
+  { label: "Brandwache", value: "Brandwache" },
+];

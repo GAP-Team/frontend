@@ -120,3 +120,34 @@ export const registrationValidationSchema = yup.object({
       .string()
       .url("Server-Link muss eine gültige URL sein."),
   });
+
+  export const addTenderValidationSchema = [
+    yup.object().shape({
+      clientName: yup.string().required("Required"),
+      tenderName: yup.string().required("Required"),
+      tenderForm: yup.string().required("Required"), 
+      tenderType: yup.string().required("Beschreiben Sie bitte den gewünschten Ausschreibungstyp"),
+    }),
+    yup.object({
+      buildingName: yup.string().required("Required"),
+      systemName: yup.string().required("Required"),
+      systemType: yup.string().required("Required"),
+    }),
+    yup.object({
+      detailDescription: yup.string(),
+    }),
+    yup.object({
+      urgency: yup.string(),
+      fromDate: yup.date(),
+      toDate: yup.date(),
+      safetyWorkRequired: yup.string(),
+      freeParkingAvailable: yup.string(),
+    }),
+    yup.object({
+      documentChoice: yup.string(),
+      constructionDocs: yup.array().of(yup.mixed()),
+      floorplanDocs: yup.array().of(yup.mixed()),
+      systemDocs: yup.array().of(yup.mixed()),
+      serverLink: yup.string(),
+    }),
+  ];

@@ -5,12 +5,12 @@ interface TextInputProps {
   placeholder?: string;
   value?: string;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  error?: boolean | undefined;
+  error?: boolean;
   id?: string;
   name?: string;
   label?: string;
-  onBlur?: FocusEventHandler<HTMLInputElement | HTMLTextAreaElement> | undefined;
-  helperText?: string;
+  onBlur?: FocusEventHandler<HTMLInputElement | HTMLTextAreaElement>;
+  helperText?: string | undefined | boolean; // Ensure this is string | undefined
 }
 
 const GTextInput: React.FC<TextInputProps> = ({

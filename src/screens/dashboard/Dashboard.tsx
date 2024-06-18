@@ -11,6 +11,7 @@ import RealEstateUser from "./real_estate_user/RealEstateUser";
 import Buildings from "./buildings/building_card/Buildings";
 import NewBuilding from "./buildings/add_building_form/NewBuilding";
 import Tenders from "./tenders/Tenders";
+import NewTender from "./tenders/add_tender_form/NewTender";
 
 interface DashboardProps {
   overrideComponent?:React.ReactElement;
@@ -19,7 +20,7 @@ interface DashboardProps {
 const Dashboard: React.FC<DashboardProps> = ({ overrideComponent  }) => {
   const sidebarItems: SidebarItem[] = [
     { id:0, icon: LuLayoutDashboard, text: "Dashboard", component:<RealEstateUser/> },
-    { id:1, icon: CgNotes, text: "Ausschreibungen", component: <Tenders/>},
+    { id:1, icon: CgNotes, text: "Ausschreibungen", subItems: [{ id: 30, text: "Alle", component:<Tenders /> }, { id: 31, text: "Hinzufügen", component: <NewTender/>}]},
     { id:2, icon: MdOutlineDoorSliding, text: "Anlagen" },
     { id: 3, icon: MdOutlineAddHomeWork, text: "Gebäude", subItems: [{ id: 30, text: "Alle Gebäude", component:<Buildings /> }, { id: 31, text: "Gebäude hinzufügen", component: <NewBuilding/>}] },
     { id:4, icon: MdOutlineNoteAlt, text: "Aufträge"},
