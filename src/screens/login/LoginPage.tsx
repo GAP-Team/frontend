@@ -20,7 +20,6 @@ import CustomizedTooltips from "@/components/common/ToolTip";
 import { loginValidationSchema } from "@/utils/ValidationSchema";
 
 import authAPIs from "@/api/auth";
-import userAPIs from "@/api/user";
 import { setAccessToken } from "@/utils/helperJWT";
 import HeroBanner from "../../components/common/InfoBanner";
 
@@ -45,13 +44,13 @@ export default function LoginPage() {
           if (access_token) {
             setAccessToken(access_token);
             router.push("/dashboard");
-        }
-        let data = {
+          }
+          let data = {
             "status": "SUCCEED",
             "email": formValues.email
-        }
+          }
         } else {
-          
+          alert("LogIn error");
         }
         
       } catch (error: any) {
