@@ -6,8 +6,8 @@ export interface AddTenderFormValues{
     tenderType: string;
     //Tender Building feilds = Form 2
     buildingName: string;
-    systemName: string;
-    systemType: string;
+    equipmentName: string;
+    equipmentType: string;
     //Description feild = Form 3
     detailDescription: string;
     //Classification = Form 4
@@ -20,6 +20,6 @@ export interface AddTenderFormValues{
     documentChoice: string;
     constructionDocs: File[];
     floorplanDocs: File[];
-    systemDocs: File[];
+    equipmentDocs: File[];
     serverLink: string;
 }

@@ -21,11 +21,11 @@ const TenderInformation = () => {
       ? { label: formik.values.tenderType, value: formik.values.tenderType }
       : null
   );
-  const [options, setOptions] = useState<Item[]>(tenderTypesList);
   const handleTenderTypeSelect = (selectedItem: Item | null): void => {
     setSelectedTenderType(selectedItem);
     formik?.setFieldValue("tenderType", selectedItem ? selectedItem.value : "");
   };
+  
   return (
     <Box
       component="form"
@@ -107,7 +107,7 @@ const TenderInformation = () => {
           <LabelWithAsterisk>AUSSCHREIBUNGSTYP</LabelWithAsterisk>
           <GTextSelector
             name="tenderType"
-            options={options}
+            options={tenderTypesList}
             error={
               formik?.touched?.tenderType && Boolean(formik?.errors?.tenderType)
             }

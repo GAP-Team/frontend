@@ -466,3 +466,20 @@ export const tenderTypesList = [
   { label: "Konzepterstellung Löschanlage", value: "Konzepterstellung_Loeschanlage" },
   { label: "Brandwache", value: "Brandwache" },
 ];
+
+export const equipmentTypesList = [
+  { label: "Brandschutztüren/Brandschutztore", value: "Brandschutztüren/Brandschutztore" },
+  { label: "Brandmeldeanlage/Alarmierungsanlage", value: "Brandmeldeanlage/Alarmierungsanlage" },
+  { label: "CO-Warnanlagen", value: "CO-Warnanlagen" },
+  { label: "Dampf und Druckanlagen", value: "Dampf und Druckanlagen" },
+  { label: "DGUV V3 - ortsveränderliche elektrtechnische Prüfung", value: "DGUV V3 - ortsveränderliche elektrtechnische Prüfung" },
+  { label: "Explosionsschutzanlagen (EX-Schutz)", value: "Explosionsschutzanlagen (EX-Schutz)" },
+  { label: "Feuerlöschanlagen", value: "Feuerlöschanlagen" },
+  { label: "Fördertechnik (Aufzüge, Rolltreppen, etc)", value: "Fördertechnik (Aufzüge, Rolltreppen, etc)" },
+  { label: "Lüftungsanlagen/Raumlufttechnischeanlagen (Brandschutzklappen)", value: "Lüftungsanlagen/Raumlufttechnischeanlagen (Brandschutzklappen)" },
+  { label: "Rauchabzugsanlagen/Druckbelüftungsanlagen", value: "Rauchabzugsanlagen/Druckbelüftungsanlagen" },
+  { label: "Sicherheitsbeleuchtung", value: "Sicherheitsbeleuchtung" },
+  { label: "Sicherheitsstrom", value: "Sicherheitsstrom" },
+  { label: "Tanks mit wassergefährdeten Stoffen - Heizöltanks, etc.", value: "Tanks mit wassergefährdeten Stoffen - Heizöltanks, etc." },
+  { label: "Tragbare Feuerlöscher", value: "Tragbare Feuerlöscher" },
+];

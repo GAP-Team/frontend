@@ -4,13 +4,25 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import LabelWithAsterisk from "@/components/label/LabelWithAsterisk";
 import GTextInput from "@/components/input/GTextInput";
+import TextField from '@mui/material/TextField';
+import Autocomplete from '@mui/material/Autocomplete';
 import { useFormikContext } from "formik";
 import { AddTenderFormValues } from "./types";
-
+import { dummyBuildings, equipmentTypesList } from "@/utils/Constants";
+import GTextSelector from "@/components/input/GTextSelector";
+import { Item } from "../../types";
 
 const TenderBuilding = () => {
   const formik = useFormikContext<AddTenderFormValues>();
-
+  const [selectedEquipmntType, setSelectedEquipmntType] = useState<Item | null>(
+    formik?.values?.tenderType
+      ? { label: formik.values.tenderType, value: formik.values.tenderType }
+      : null
+  );
+  const handleEquipmntTypeSelect = (selectedItem: Item | null): void => {
+    setSelectedEquipmntType(selectedItem);
+    formik?.setFieldValue("equipmentType", selectedItem ? selectedItem.value : "");
+  };
   return (
     <Box
       component="form"
@@ -19,16 +31,56 @@ const TenderBuilding = () => {
     >
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <LabelWithAsterisk>NAME DES AUFTRAGGEBERS</LabelWithAsterisk>
-          <GTextInput
-            placeholder="Anschrift"
-            id="clientName"
-            name="clientName"
-            value={formik?.values?.clientName}
-            onChange={formik?.handleChange}
-            onBlur={formik?.handleBlur}
-            error={formik?.touched?.clientName && Boolean(formik?.errors?.clientName)}
-            helperText={formik?.touched?.clientName && formik?.errors?.clientName}
+          <LabelWithAsterisk>OBJEKT AUSWÄHLEN</LabelWithAsterisk>
+          <Autocomplete
+            freeSolo
+            id="free-solo-1-demo"
+            disableClearable
+            options={dummyBuildings.map((option) => option.title)}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label="Objekt suchen"
+                InputProps={{
+                  ...params.InputProps,
+                  type: "search",
+                }}
+              />
+            )}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <LabelWithAsterisk>ANLAGE AUSWÄHLEN</LabelWithAsterisk>
+          <Autocomplete
+            freeSolo
+            id="free-solo-2-demo"
+            disableClearable
+            options={dummyBuildings.map((option) => option.title)}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label="Anlagen suchen"
+                InputProps={{
+                  ...params.InputProps,
+                  type: "search",
+                }}
+              />
+            )}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <LabelWithAsterisk>ANLAGENTYP</LabelWithAsterisk>
+          <GTextSelector
+            name="equipmentType"
+            options={equipmentTypesList}
+            error={
+              formik?.touched?.equipmentType && Boolean(formik?.errors?.equipmentType)
+            }
+            helperText={
+              formik?.touched?.equipmentType && formik?.errors?.equipmentType
+            }
+            onSelect={handleEquipmntTypeSelect}
+            selectedState={selectedEquipmntType}
           />
         </Grid>
       </Grid>
@@ -37,4 +89,3 @@ const TenderBuilding = () => {
 };
 
 export default TenderBuilding;
-

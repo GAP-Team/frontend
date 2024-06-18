@@ -69,8 +69,8 @@ const NewTender = () => {
     tenderForm: "",
     tenderType: "",
     buildingName: "",
-    systemName: "",
-    systemType: "",
+    equipmentName: "",
+    equipmentType: "",
     detailDescription: "",
     urgency: "",
     fromDate: new Date(),
@@ -80,7 +80,7 @@ const NewTender = () => {
     documentChoice: "",
     constructionDocs: [],
     floorplanDocs: [],
-    systemDocs: [],
+    equipmentDocs: [],
     serverLink: "",
   };
 

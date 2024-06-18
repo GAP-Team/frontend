@@ -130,8 +130,8 @@ export const registrationValidationSchema = yup.object({
     }),
     yup.object({
       buildingName: yup.string().required("Required"),
-      systemName: yup.string().required("Required"),
-      systemType: yup.string().required("Required"),
+      equipmentName: yup.string().required("Required"),
+      equipmentType: yup.string().required("Beschreiben Sie bitte den gewünschten Anlagentypenbeschreibung"),
     }),
     yup.object({
       detailDescription: yup.string(),
@@ -147,7 +147,7 @@ export const registrationValidationSchema = yup.object({
       documentChoice: yup.string(),
       constructionDocs: yup.array().of(yup.mixed()),
       floorplanDocs: yup.array().of(yup.mixed()),
-      systemDocs: yup.array().of(yup.mixed()),
+      equipmentDocs: yup.array().of(yup.mixed()),
       serverLink: yup.string(),
     }),
   ];
