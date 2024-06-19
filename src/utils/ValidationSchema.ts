@@ -9,11 +9,6 @@ export const loginValidationSchema = yup.object({
     password: yup
       .string()
       .required("Passwort ist erforderlich")
-      .min(8, "Das Passwort sollte mindestens 8 Zeichen lang sein")
-      .matches(
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-        "Das Passwort muss mindestens einen Großbuchstaben, einen Kleinbuchstaben, eine Ziffer und ein Sonderzeichen enthalten"
-      ),
   });
   
 export const registrationValidationSchema = yup.object({
