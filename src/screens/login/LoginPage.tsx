@@ -1,6 +1,5 @@
 "use client";
 import React from "react";
-
 import bcrypt from "bcryptjs";
 import { useFormik } from "formik";
 import Box from "@mui/material/Box";
@@ -12,13 +11,11 @@ import { useRouter } from "next/navigation";
 import { PiLockBold } from "react-icons/pi";
 import { FaRegEnvelope } from "react-icons/fa";
 import TextField from "@mui/material/TextField";
-import { default as NextLink } from "next/link";
 import Typography from "@mui/material/Typography";
 import { GapLogo } from "@/components/logo/GapLogo";
 import InputAdornment from "@mui/material/InputAdornment";
 import CustomizedTooltips from "@/components/common/ToolTip";
 import { loginValidationSchema } from "@/utils/ValidationSchema";
-
 import authAPIs from "@/api/auth";
 import userAPIs from "@/api/user";
 import { setAccessToken } from "@/utils/helperJWT";
@@ -45,8 +42,8 @@ export default function LoginPage() {
           if (access_token) {
             setAccessToken(access_token);
             router.push("/dashboard");
-        }
-        let data = {
+          }
+          let data = {
             "status": "SUCCEED",
             "email": formValues.email
         }
@@ -71,7 +68,6 @@ export default function LoginPage() {
   return (
     <Grid container component="main" sx={styles.mainContainer}>
       <Grid item xs={false} md={6} lg={6} sx={styles.imageSide}>
-        {/* Make this Box a flex container to use Flexbox properties */}
         <HeroBanner
           title="Where skills are developed"
           subtitle="Gesetzliche Anlagenprüfung"
@@ -177,31 +173,40 @@ export default function LoginPage() {
                   }}
                 />
               </CustomizedTooltips>
-              <Grid container sx={{ mt: 10 }}>
-                <Grid item xs sx={{ display: "flex", flexDirection: "column" }}>
-                  <Typography variant="body2" style={styles.registerTypography}>
-                    Noch keinen account?
-                  </Typography>
-                  <Link
-                    href="/registration"
-                    variant="body2"
-                    style={styles.link}
-                  >
-                    Registrieren
-                  </Link>
+              <Grid container sx={{ mt: 10 }} alignItems="center">
+                <Grid item xs>
+                  <Box>
+                    <Typography
+                      variant="body2"
+                      style={styles.registerTypography}
+                    >
+                      Noch keinen account?
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      component="div"
+                      style={styles.registerLinkContainer}
+                    >
+                      <Link
+                        href="/registration"
+                        variant="body2"
+                        style={styles.link}
+                      >
+                        Registrieren
+                      </Link>
+                    </Typography>
+                  </Box>
                 </Grid>
                 <Grid item>
-                    <Button
-                      variant="contained"
-                      color="gprimary"
-                      size="large"
-                      type="submit"
-                      sx={{ borderRadius: "0.5rem" }}
-                    >
-                  {/* <NextLink href="/dashboard"> */}
-                      Login
-                  {/* </NextLink> */}
-                    </Button>
+                  <Button
+                    variant="contained"
+                    color="gprimary"
+                    size="large"
+                    type="submit"
+                    sx={{ borderRadius: "0.5rem" }}
+                  >
+                    Login
+                  </Button>
                 </Grid>
               </Grid>
             </form>
@@ -260,6 +265,10 @@ const styles = {
     color: "#475A60",
     fontSize: "0.875rem",
     lineHeight: "1.25rem",
+  },
+  registerLinkContainer: {
+    display: "block",
+    marginTop: "0.25rem",
   },
   supportLink: {
     color: "#475A60",
