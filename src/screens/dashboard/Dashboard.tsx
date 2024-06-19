@@ -1,16 +1,17 @@
 'use client';
-import React, { useState, memo, useEffect } from "react";
-import { SidebarItem, SubItem } from "@/components/navigation/GSidebar/SideBar";
-import { MdOutlineDoorSliding, MdOutlineAddHomeWork, MdOutlineNoteAlt } from "react-icons/md";
-import { TbPigMoney } from "react-icons/tb";
-import { FaRegFlag } from "react-icons/fa";
-import { LuLayoutDashboard } from "react-icons/lu";
 import { CgNotes } from "react-icons/cg";
+import { FaRegFlag } from "react-icons/fa";
+import { TbPigMoney } from "react-icons/tb";
+import { LuLayoutDashboard } from "react-icons/lu";
+import React, { useState, memo, useEffect } from "react";
+import { MdOutlineDoorSliding, MdOutlineAddHomeWork, MdOutlineNoteAlt } from "react-icons/md";
+
 import Layout from './Layout';
-import RealEstateUser from "./real_estate_user/RealEstateUser";
-import Buildings from "./buildings/building_card/Buildings";
-import NewBuilding from "./buildings/add_building_form/NewBuilding";
 import Tenders from "./tenders/Tenders";
+import Buildings from "./buildings/building_card/Buildings";
+import RealEstateUser from "./real_estate_user/RealEstateUser";
+import NewBuilding from "./buildings/add_building_form/NewBuilding";
+import { SidebarItem, SubItem } from "@/components/navigation/GSidebar/SideBar";
 
 interface DashboardProps {
   overrideComponent?:React.ReactElement;

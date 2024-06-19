@@ -4,11 +4,13 @@ import * as jwt from 'jsonwebtoken'
 export const verifyJWT = (access_token: string) => {
     try{
         let token = null;
-        if (!access_token)
-            token = getAccessToken()
+        if (!access_token) token = getAccessToken()
+        
         token = access_token
         if (!token) return null
-        const payload = jwt.verify(token, getAccessTokenSecret());
+        
+        const payload = jwt.verify(token, getAccessToken());
+            
         return payload
     }
     catch{

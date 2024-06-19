@@ -1,5 +1,5 @@
 "use client"
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 import { checkIsLoggedIn } from "@/utils/helperJWT";
@@ -9,11 +9,15 @@ export default function DashboardPage() {
 
   const router = useRouter();
 
+  const [ isLoggedIn, setIsLoggedIn ] = useState<Boolean>(false);
+
   useEffect(() => {
     if(!checkIsLoggedIn()){
       router.push("/login");
+    }else{
+      setIsLoggedIn(true);
     }
   },[]);
   
-  return <Dashboard />;
+  return isLoggedIn && <Dashboard />;
 }
