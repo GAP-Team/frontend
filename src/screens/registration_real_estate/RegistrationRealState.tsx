@@ -1,23 +1,27 @@
 "use client";
-import { useEffect, useState } from "react";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
+import { 
+  useEffect, useState 
+} from "react";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
+import { Formik, Form } from "formik";
+import Button from "@mui/material/Button";
 import { useRouter } from "next/navigation";
 import RegistrationForm from "./RegistrationForm";
-import SuccessPage from "@/components/common/SuccessPage";
-import InfoBanner from "@/components/common/InfoBanner";
-import { Formik, Form } from "formik";
-import { registrationValidationSchema } from "@/utils/ValidationSchema";
+import Typography from "@mui/material/Typography";
+
 import {
   ValidateFormFunction,
   SetTouchedFunction,
   SubmitFormFunction,
-} from "../../typings/types";
-import { RegistrationFormValues } from "./types";
-import BackButton from "@/components/button/BackButton";
-import PageTitle from "@/components/label/PageTitle";
+  } from "../../typings/types";
+  import userAPIs from "@/api/user";
+  import { RegistrationFormValues } from "./types";
+  import PageTitle from "@/components/label/PageTitle";
+  import BackButton from "@/components/button/BackButton";
+  import InfoBanner from "@/components/common/InfoBanner";
+  import SuccessPage from "@/components/common/SuccessPage";
+  import { registrationValidationSchema } from "@/utils/ValidationSchema";
 
 function getSteps() {
   return [
@@ -40,7 +44,7 @@ const RegistrationRealState = () => {
   ): Promise<void> => {
     // Get the fields to validate for the current step
     const fieldsPerStep: { [key: number]: string[] } = {
-      0: ["firstname", "lastname", "email", "telephone", "company"],
+      0: ["firstname", "lastname", "email", "password", "confirmPassword", "telephone", "company"],
       1: ["state", "street", "hausnr", "plz", "city"],
       2: ["registrationnum", "bsndoc", "landdoc", "approvdoc"], // Adjust fields according to what you need for each step
     };
@@ -93,6 +97,8 @@ const RegistrationRealState = () => {
     firstname: "",
     lastname: "",
     email: "",
+    password: "",
+    confirmPassword: "",
     company: "",
     telephone: "",
     country: "Deutschland",

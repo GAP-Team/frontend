@@ -47,7 +47,7 @@ const NewBuilding = () => {
     const stepFieldsMap: { [key: number]: string[] } = {
       0: ["buildingName", "totalArea", "buildingType", "objektTag", "contactPerson"],
       1: ["address", "plz", "city", "state"],
-      2: ["serverLink"],
+      2: ["serverLink", "constructionDocs", "floorplanDocs", "otherDocs"],
     };
     const currentStepFields = stepFieldsMap[activeStep.id];
     setTouched(currentStepFields?.reduce((acc, field) => ({ ...acc, [field]: true }), {}));

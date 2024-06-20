@@ -9,11 +9,6 @@ export const loginValidationSchema = yup.object({
     password: yup
       .string()
       .required("Passwort ist erforderlich")
-      .min(8, "Das Passwort sollte mindestens 8 Zeichen lang sein")
-      .matches(
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-        "Das Passwort muss mindestens einen Großbuchstaben, einen Kleinbuchstaben, eine Ziffer und ein Sonderzeichen enthalten"
-      ),
   });
   
 export const registrationValidationSchema = yup.object({
@@ -27,6 +22,16 @@ export const registrationValidationSchema = yup.object({
     .string()
     .email("Eingabe einer gültigen E-Mail")
     .required("E-Mail ist erforderlich"),
+  password: yup
+    .string()
+    .required("Passwort ist erforderlich")
+    .min(8, "Das Passwort sollte mindestens 8 Zeichen lang sein")
+    .matches(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+      "Das Passwort muss Groß- und Kleinbuchstaben, eine Ziffer und ein Sonderzeichen enthalten"
+  ),
+  confirmPassword: yup.string().oneOf([yup.ref('password'), undefined], 'Passwörter müssen übereinstimmen')
+    .required("Passwort bestätigen ist erforderlich"),
   telephone: yup
     .string()
     .required("Telefonnummer ist erforderlich")
@@ -92,6 +97,7 @@ export const registrationValidationSchema = yup.object({
       yup.object({
         name: yup.string(),
         role: yup.string(),
+        email: yup.string().email("Eingabe einer gültigen E-Mail"),
       })
     ).min(1, "Mindestens eine Kontaktperson ist erforderlich."),
     address: yup.string().required("Adresse ist erforderlich."),
@@ -114,8 +120,8 @@ export const registrationValidationSchema = yup.object({
       .min(1, "Mindestens ein Grundrissdokument ist erforderlich."),
     otherDocs: yup
       .array()
-      .of(yup.mixed().required())
-      .min(1, "Mindestens ein weiteres Dokument ist erforderlich."),
+      .of(yup.mixed().required()),
+      // .min(1, "Mindestens ein weiteres Dokument ist erforderlich."),
     serverLink: yup
       .string()
       .url("Server-Link muss eine gültige URL sein."),

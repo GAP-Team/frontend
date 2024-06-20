@@ -28,7 +28,7 @@ const BuildingInformation = ({ formik }: { formik?: any }) => {
   const [selectedBldngType, setSelectedBldngType] = useState<Item | null>(formik?.values?.buildingType ? { label: formik.values.buildingType, value: formik.values.buildingType } : null);
   const [options, setOptions] = useState<Item[]>(buildingTypesList);
   const [dialogOpen, setDialogOpen] = useState(false);
-  const [newContact, setNewContact] = useState<ContactPersonItem>({ name: '', role: '' });
+  const [newContact, setNewContact] = useState<ContactPersonItem>({name:'', role:'', email:''});
 
   const handleStateSelect = (selectedItem: Item | null):void => {
     setSelectedBldngType(selectedItem);
@@ -42,7 +42,9 @@ const BuildingInformation = ({ formik }: { formik?: any }) => {
   const handleAddContactPerson = () => {
     if (newContact.name && newContact.role) {
       formik?.setFieldValue('contactPerson', [...formik.values.contactPerson, newContact]);
-      setNewContact({ name: '', role: '' });
+      //API call here
+      //for POST for adding the new contact Person
+      setNewContact({ name: '', role: '', email: ''});
       setDialogOpen(false);
     } 
   };
@@ -120,8 +122,9 @@ const BuildingInformation = ({ formik }: { formik?: any }) => {
           <Autocomplete
             multiple
             id="contactPerson"
+            freeSolo
             options={contactPersonList}
-            disableCloseOnSelect
+            isOptionEqualToValue={(options, value) => options.name == value.name}
             getOptionLabel={(option) => option.name + " - " + option.role}
             value={formik?.values?.contactPerson || []}
             onChange={handleContactPersonChange}
@@ -171,14 +174,24 @@ const BuildingInformation = ({ formik }: { formik?: any }) => {
             sx={{marginBottom:'1rem'}}
           />
           <TextField
-            margin="dense"
             id="role"
+            margin="dense"
             label="Rolle"
             fullWidth
             value={newContact.role}
             onChange={(e) => setNewContact({ ...newContact, role: e.target.value })}
             error={!newContact.role && Boolean(formik?.errors.contactPerson)}
             helperText={!newContact.role && formik?.errors.contactPerson}
+          />
+           <TextField
+            id="email"
+            label="Email"
+            margin="dense"
+            fullWidth
+            value={newContact.email}
+            onChange={(e) => setNewContact({ ...newContact, email: e.target.value })}
+            error={!newContact.email && Boolean(formik?.errors.email)}
+            helperText={!newContact.email && formik?.errors.email}
           />
         </DialogContent>
         <DialogActions sx={{padding:'1rem'}}>

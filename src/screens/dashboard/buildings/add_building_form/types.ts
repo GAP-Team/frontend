@@ -17,4 +17,5 @@ export interface AddBuildingFormValues{
 export interface ContactPersonItem{
     name: string;
     role: string;
+    email?: string;
 }
