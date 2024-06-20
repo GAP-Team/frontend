@@ -6,7 +6,6 @@ import { LuLayoutDashboard } from "react-icons/lu";
 import React, { useState, memo, useEffect } from "react";
 import { MdOutlineDoorSliding, MdOutlineAddHomeWork, MdOutlineNoteAlt } from "react-icons/md";
 import Layout from './Layout';
-import Tenders from "./tenders/Tenders";
 import Buildings from "./buildings/building_card/Buildings";
 import RealEstateUser from "./real_estate_user/RealEstateUser";
 import NewBuilding from "./buildings/add_building_form/NewBuilding";
