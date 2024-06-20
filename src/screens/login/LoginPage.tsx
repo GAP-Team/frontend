@@ -23,47 +23,39 @@ import HeroBanner from "../../components/common/InfoBanner";
 
 export default function LoginPage() {
   const router = useRouter();
+  const [loginError, setLoginError] = React.useState<string | null>(null);
+
   const formik = useFormik({
     initialValues: {
       email: "",
       password: "",
     },
     validationSchema: loginValidationSchema,
-    onSubmit: async (values, { resetForm }) => {
+    onSubmit: async (values, { setSubmitting, resetForm }) => {
       try {
 
-        /*const hashedPassword = await bcrypt.hash(values.password, 10);
-        const formValues = { ...values, password: hashedPassword };*/
-        const formValues = { ...values, password: values.password };
-        const res = await authAPIs.login(formValues);
-        if (res) {
-          const { access_token } = res.data;
+        const res = await authAPIs.login(values);
+        if (res?.data?.access_token) {
+          setAccessToken(res.data.access_token);
+          router.push("/dashboard");
 
-          if (access_token) {
-            setAccessToken(access_token);
-            router.push("/dashboard");
-          }
-          let data = {
-            "status": "SUCCEED",
-            "email": formValues.email
-        }
         } else {
-          
+          setLoginError("Email oder Passwort ist falsch");
         }
-        
       } catch (error: any) {
-        console.log(
-          "Unable to login user, post request failed",
-          error.name,
-          error.message
-        );
+        setLoginError("Email oder Passwort ist falsch");
+        console.log("Unable to login user, post request failed", error.name, error.message);
+      } finally {
+        setSubmitting(false);
       }
     },
   });
 
-  const pageRedirectAfterLogin = async (access_token: string) => {
-    router.push('/');
-  }
+  const handleChange = (field: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
+    setLoginError(null);
+    formik.setFieldValue(field, e.target.value);
+    formik.setFieldTouched(field, true);
+  };
 
   return (
     <Grid container component="main" sx={styles.mainContainer}>
@@ -103,20 +95,15 @@ export default function LoginPage() {
                 </Link>
               </Grid>
             </Grid>
-            <form
-              onSubmit={formik.handleSubmit}
-              style={styles.formContainerTwo}
-            >
+            <form onSubmit={formik.handleSubmit} style={styles.formContainerTwo}>
               <CustomizedTooltips
                 title={
-                  <React.Fragment>
+                  <>
                     <Typography color="inherit" sx={{ fontWeight: 600 }}>
                       Email-Informationen
                     </Typography>
-                    <Typography variant="body2">
-                      Eingabe einer gültigen E-Mail. e.g abx@xyz.com
-                    </Typography>
-                  </React.Fragment>
+                    <Typography variant="body2">Eingabe einer gültigen E-Mail. e.g abx@xyz.com</Typography>
+                  </>
                 }
               >
                 <TextField
@@ -124,7 +111,7 @@ export default function LoginPage() {
                   name="email"
                   label="Email"
                   value={formik.values.email}
-                  onChange={formik.handleChange}
+                  onChange={handleChange("email")}
                   onBlur={formik.handleBlur}
                   error={formik.touched.email && Boolean(formik.errors.email)}
                   helperText={formik.touched.email && formik.errors.email}
@@ -138,64 +125,43 @@ export default function LoginPage() {
                   sx={{ mb: 4 }}
                 />
               </CustomizedTooltips>
-              <CustomizedTooltips
-                title={
-                  <React.Fragment>
-                    <Typography color="inherit" sx={{ fontWeight: 600 }}>
-                      Passwort-Informationen
-                    </Typography>
-                    <Typography variant="body2">
-                      Das Passwort muss mindestens einen Großbuchstaben, einen
-                      Kleinbuchstaben, eine Ziffer und ein Sonderzeichen
-                      enthalten.
-                    </Typography>
-                  </React.Fragment>
-                }
-              >
-                <TextField
-                  id="password"
-                  label="Password"
-                  type="password"
-                  name="password"
-                  value={formik.values.password}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  error={
-                    formik.touched.password && Boolean(formik.errors.password)
-                  }
-                  helperText={formik.touched.password && formik.errors.password}
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <PiLockBold />
-                      </InputAdornment>
-                    ),
-                  }}
-                />
-              </CustomizedTooltips>
-              <Grid container sx={{ mt: 10 }} alignItems="center">
-                <Grid item xs>
-                  <Box>
-                    <Typography
-                      variant="body2"
-                      style={styles.registerTypography}
-                    >
-                      Noch keinen account?
-                    </Typography>
-                    <Typography
-                      variant="body2"
-                      component="div"
-                      style={styles.registerLinkContainer}
-                    >
-                      <Link
-                        href="/registration"
-                        variant="body2"
-                        style={styles.link}
-                      >
-                        Registrieren
-                      </Link>
-                    </Typography>
-                  </Box>
+
+              <TextField
+                id="password"
+                label="Password"
+                type="password"
+                name="password"
+                value={formik.values.password}
+                onChange={handleChange("password")}
+                onBlur={formik.handleBlur}
+                error={formik.touched.password && Boolean(formik.errors.password)}
+                helperText={formik.touched.password && formik.errors.password}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <PiLockBold />
+                    </InputAdornment>
+                  ),
+                }}
+              />
+             <Box sx={styles.errorBox} style={{ visibility: loginError ? 'visible' : 'hidden' }}>
+                <Typography color="error">
+                  {loginError}
+                </Typography>
+              </Box>
+              <Grid container sx={{ mt: 10 }}>
+                <Grid item xs sx={{ display: "flex", flexDirection: "column" }}>
+                  <Typography variant="body2" style={styles.registerTypography}>
+                    Noch keinen account?
+                  </Typography>
+                  <Link
+                    href="/registration"
+                    variant="body2"
+                    style={styles.link}
+                  >
+                    Registrieren
+                  </Link>
+
                 </Grid>
                 <Grid item>
                   <Button
@@ -204,6 +170,8 @@ export default function LoginPage() {
                     size="large"
                     type="submit"
                     sx={{ borderRadius: "0.5rem" }}
+                    disabled={formik.isSubmitting}
+
                   >
                     Login
                   </Button>
@@ -254,6 +222,10 @@ const styles = {
     display: "flex",
     flexDirection:'column' as 'column',
     width: "33rem",
+  },
+  errorBox: {
+    minHeight: '2rem', // adjust based on your needs
+    marginTop: '1rem',
   },
   link: {
     color: "#22a7f1",
