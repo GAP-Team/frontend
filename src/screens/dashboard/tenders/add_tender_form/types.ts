@@ -23,3 +23,8 @@ export interface AddTenderFormValues{
     equipmentDocs: File[];
     serverLink: string;
 }
+export interface ActiveStepItem {
+    id: number;
+    stepName: string;
+    component?: () => JSX.Element;
+  }

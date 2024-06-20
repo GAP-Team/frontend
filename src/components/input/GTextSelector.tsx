@@ -14,7 +14,7 @@ interface GTextSelectorProps<T extends Item> {
   name: string;
   onSelect: (selectedItem: Item) => void;
   error?: boolean;
-  helperText?: string | undefined | boolean;
+  helperText?: React.ReactNode | undefined;
 }
 
 const GTextSelector = <T extends Item>({ name, options, placeholder = 'Wählen Sie aus', onSelect, selectedState, error, helperText }: GTextSelectorProps<T>) => {

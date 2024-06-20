@@ -1,6 +1,6 @@
 export interface AddBuildingFormValues{
     buildingName: string;
-    totalArea: string;
+    totalArea: number;
     buildingType: string;
     objektTag: string;
     contactPerson: ContactPersonItem[];

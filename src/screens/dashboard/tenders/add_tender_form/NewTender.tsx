@@ -6,22 +6,12 @@ import { Formik, Form, FormikHelpers } from "formik";
 import { addTenderValidationSchema } from "@/utils/ValidationSchema";
 import BackButton from "@/components/button/BackButton";
 import PageTitle from "@/components/label/PageTitle";
-import { AddTenderFormValues } from "./types";
-// import { ActiveStepItem } from "../../types";
-import { Divider, Link } from "@mui/material";
-import GStepper from "@/components/stepper/GStepper";
+import { AddTenderFormValues, ActiveStepItem } from "./types";
 import SuccessPage from "@/components/common/SuccessPage";
-import GProgressStepper from "@/components/stepper/GProgressStepper";
 import SectionTitle from "@/components/label/SectionTitle";
-import GButton from "@/components/button/GButton";
+import AddTenderForm from "./AddTenderForm"; 
 import TenderInformation from "./TenderInformation";
 import TenderBuilding from "./TenderBuilding";
-
-export interface ActiveStepItem {
-  id: number;
-  stepName: string;
-  component?: any;
-}
 
 const NewTender = () => {
   const router = useRouter();
@@ -94,10 +84,6 @@ const NewTender = () => {
     <>
       <div className="flex flex-col">
         <SectionTitle text={activeStep.stepName} sx={styles.subTitle} />
-        <GProgressStepper
-          sx={styles.progressStepper}
-          activeStep={activeStep.id}
-        />
       </div>
       {StepComponent && <StepComponent />}
     </>
@@ -116,55 +102,15 @@ const NewTender = () => {
           {({ isSubmitting, handleSubmit }) => (
             <Form>
               <Grid sx={styles.form}>
-                <Grid item xs={2}>
-                  <Link
-                    underline="hover"
-                    sx={styles.stepIndicator}
-                    color="inherit"
-                    href="/"
-                  >
-                    Schritt {activeStep?.id + 1} / {steps.length}
-                  </Link>
-                  <GStepper
-                    activeStep={activeStep.id}
-                    steps={steps.map((step) => step.stepName)}
-                  />
-                </Grid>
-                <Divider orientation="vertical" variant="middle" flexItem />
-                <Grid item xs={10} sx={styles.mainContent}>
-                  <div
-                    style={{
-                      flexGrow: 1,
-                      alignContent: isBeyondLastStep ? "center" : undefined,
-                    }}
-                  >
-                    {formOrSuccessContent}
-                  </div>
-                  <Grid container justifyContent="flex-end" spacing={2}>
-                    <Grid item>
-                      <GButton
-                        disabled={activeStep?.id === 0}
-                        onClick={handleBack}
-                        color="ggrey"
-                      >
-                        {activeStep.id < steps.length - 1
-                          ? "Zurück"
-                          : "Bearbeiten"}
-                      </GButton>
-                      <GButton
-                        onClick={() => handleSubmit}
-                        type="submit"
-                        disabled={isSubmitting}
-                      >
-                        {isBeyondLastStep
-                          ? "Schließen"
-                          : activeStep.id < steps.length - 1
-                            ? "Weiter"
-                            : "Abschließen"}
-                      </GButton>
-                    </Grid>
-                  </Grid>
-                </Grid>
+                <AddTenderForm
+                  activeStep={activeStep}
+                  steps={steps}
+                  handleBack={handleBack}
+                  handleSubmit={handleSubmit}
+                  isSubmitting={isSubmitting}
+                  isBeyondLastStep={isBeyondLastStep}
+                  formOrSuccessContent={formOrSuccessContent}
+                />
               </Grid>
             </Form>
           )}
@@ -188,28 +134,10 @@ const styles = {
     borderRadius: "0.5rem",
     boxShadow: "0px 8px 24px 0px rgba(30, 49, 55, 0.08)",
   },
-  stepIndicator: {
-    display: "flex",
-    fontSize: "0.75rem",
-    fontWeight: "600",
-    alignItems: "center",
-    color: "#A0ADB1",
-  },
-  mainContent: {
-    display: "flex",
-    flexDirection: "column",
-  },
   subTitle: {
     display: "flex",
     fontSize: "0.75rem",
     marginLeft: "1.5rem",
     fontWeight: "600",
-  },
-  progressStepper: {
-    maxWidth: "none",
-    width: "auto",
-    flexGrow: 1,
-    marginLeft: "1rem",
-    color: "gprimary",
   },
 };

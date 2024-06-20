@@ -85,7 +85,7 @@ export const registrationValidationSchema = yup.object({
       .string()
       .required("Gebäudename ist erforderlich.")
       .min(3, "Gebäudename muss mindestens 3 Zeichen lang sein."),
-    totalArea: yup.string().required("Gesamtfläche ist erforderlich."),
+    totalArea: yup.number().typeError("Gesamtfläche muss eine Zahl sein.").required("Gesamtfläche ist erforderlich.").min(1, "Gesamtfläche muss größer als 0 sein."),
     buildingType: yup.string().required("Gebäudetyp ist erforderlich."),
     objektTag: yup.string().required("ObjektTag ist erforderlich."),
     contactPerson: yup.array().of(

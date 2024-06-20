@@ -10,7 +10,7 @@ interface TextInputProps {
   name?: string;
   label?: string;
   onBlur?: FocusEventHandler<HTMLInputElement | HTMLTextAreaElement>;
-  helperText?: string | undefined | boolean; // Ensure this is string | undefined
+  helperText?: React.ReactNode | undefined; 
 }
 
 const GTextInput: React.FC<TextInputProps> = ({
