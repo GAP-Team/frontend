@@ -1,6 +1,5 @@
 "use client";
 import React from "react";
-
 import bcrypt from "bcryptjs";
 import { useFormik } from "formik";
 import Box from "@mui/material/Box";
@@ -12,13 +11,11 @@ import { useRouter } from "next/navigation";
 import { PiLockBold } from "react-icons/pi";
 import { FaRegEnvelope } from "react-icons/fa";
 import TextField from "@mui/material/TextField";
-import { default as NextLink } from "next/link";
 import Typography from "@mui/material/Typography";
 import { GapLogo } from "@/components/logo/GapLogo";
 import InputAdornment from "@mui/material/InputAdornment";
 import CustomizedTooltips from "@/components/common/ToolTip";
 import { loginValidationSchema } from "@/utils/ValidationSchema";
-
 import authAPIs from "@/api/auth";
 import userAPIs from "@/api/user";
 import { setAccessToken } from "@/utils/helperJWT";
@@ -36,10 +33,12 @@ export default function LoginPage() {
     validationSchema: loginValidationSchema,
     onSubmit: async (values, { setSubmitting, resetForm }) => {
       try {
+
         const res = await authAPIs.login(values);
         if (res?.data?.access_token) {
           setAccessToken(res.data.access_token);
           router.push("/dashboard");
+
         } else {
           setLoginError("Email oder Passwort ist falsch");
         }
@@ -61,7 +60,6 @@ export default function LoginPage() {
   return (
     <Grid container component="main" sx={styles.mainContainer}>
       <Grid item xs={false} md={6} lg={6} sx={styles.imageSide}>
-        {/* Make this Box a flex container to use Flexbox properties */}
         <HeroBanner
           title="Where skills are developed"
           subtitle="Gesetzliche Anlagenprüfung"
@@ -127,6 +125,7 @@ export default function LoginPage() {
                   sx={{ mb: 4 }}
                 />
               </CustomizedTooltips>
+
               <TextField
                 id="password"
                 label="Password"
@@ -162,6 +161,7 @@ export default function LoginPage() {
                   >
                     Registrieren
                   </Link>
+
                 </Grid>
                 <Grid item>
                   <Button
@@ -171,6 +171,7 @@ export default function LoginPage() {
                     type="submit"
                     sx={{ borderRadius: "0.5rem" }}
                     disabled={formik.isSubmitting}
+
                   >
                     Login
                   </Button>
@@ -236,6 +237,10 @@ const styles = {
     color: "#475A60",
     fontSize: "0.875rem",
     lineHeight: "1.25rem",
+  },
+  registerLinkContainer: {
+    display: "block",
+    marginTop: "0.25rem",
   },
   supportLink: {
     color: "#475A60",
