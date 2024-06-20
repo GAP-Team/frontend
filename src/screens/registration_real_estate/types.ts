@@ -2,6 +2,8 @@ export interface RegistrationFormValues {
   firstname: string;
   lastname: string;
   email: string;
+  password: string;
+  confirmPassword: string;
   telephone: string;
   company: string;
   country: string;
