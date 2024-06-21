@@ -8,7 +8,7 @@ export interface AddBuildingFormValues{
     objektTag: string;
     contactPerson: ContactPersonItem[];
     address: string;
-    plz: string;
+    pin: string;
     city: string;
     state: string;
     constructionDocs: File[];

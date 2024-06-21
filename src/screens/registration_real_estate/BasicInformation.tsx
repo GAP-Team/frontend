@@ -26,26 +26,26 @@ const BasicInformation = ({formik}: GenericFormProps): JSX.Element => {
           <LabelWithAsterisk>Ihre Vorname</LabelWithAsterisk>
           <GTextInput
             placeholder="Geben Sie Ihre Vorname"
-            id="firstname"
-            name="firstname"
-            value={formik.values.firstname}
+            id="firstName"
+            name="firstName"
+            value={formik.values.firstName}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            error={formik.touched.firstname && Boolean(formik.errors.firstname)}
-            helperText={formik.touched.firstname && formik.errors.firstname}
+            error={formik.touched.firstName && Boolean(formik.errors.firstName)}
+            helperText={formik.touched.firstName && formik.errors.firstName}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
           <LabelWithAsterisk>Ihre Nachname</LabelWithAsterisk>
           <GTextInput
             placeholder="Geben Sie Ihre Nachname"
-            id="lastname"
-            name="lastname"
-            value={formik.values.lastname}
+            id="lastName"
+            name="lastName"
+            value={formik.values.lastName}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            error={formik.touched.lastname && Boolean(formik.errors.lastname)}
-            helperText={formik.touched.lastname && formik.errors.lastname}
+            error={formik.touched.lastName && Boolean(formik.errors.lastName)}
+            helperText={formik.touched.lastName && formik.errors.lastName}
           />
         </Grid>
         <Grid item xs={12}>

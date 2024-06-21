@@ -44,8 +44,8 @@ const RegistrationRealState = () => {
   ): Promise<void> => {
     // Get the fields to validate for the current step
     const fieldsPerStep: { [key: number]: string[] } = {
-      0: ["firstname", "lastname", "email", "telephone", "company"],
-      1: ["state", "street", "hausnr", "plz", "city"],
+      0: ["firstName", "lastName", "email", "password", "telephone", "company", "role"],
+      1: ["state", "street", "houseName", "pin", "city"],
       2: ["registrationnum", "bsndoc", "landdoc", "approvdoc"], // Adjust fields according to what you need for each step
     };
 
@@ -63,6 +63,7 @@ const RegistrationRealState = () => {
     setTouched(touchedUpdates);
 
     const formErrors = await validateForm();
+
     // Check if all these fields are valid
     const isCurrentStepValid =
       !fieldsToValidate ||
@@ -94,16 +95,18 @@ const RegistrationRealState = () => {
   };
 
   const initialValues: RegistrationFormValues = {
-    firstname: "",
-    lastname: "",
+    firstName: "",
+    lastName: "",
     email: "",
+    password: "Rihab123hfjsahf768$",
     company: "",
     telephone: "",
+    role: "",
     country: "Deutschland",
     state: "",
     street: "",
-    hausnr: "",
-    plz: "",
+    houseName: "",
+    pin: "",
     city: "",
     bsndoc: "",
     landdoc: "",
@@ -111,8 +114,28 @@ const RegistrationRealState = () => {
     registrationnum: "",
   };
 
-  const onSubmit = (values: any) => {
+  const onSubmit = async (values: any) => {
     try {
+      
+      let addressObj = {
+        country: values.country,
+        state: values.state,
+        street: values.street,
+        houseName: values.houseName,
+        pin: values.pin,
+        city: values.city,
+      }
+
+      delete values.country;
+      delete values.state;
+      delete values.street;
+      delete values.houseName;
+      delete values.pin;
+      delete values.city;
+      
+      values.address = addressObj;
+      const res = await userAPIs.register(values);
+
     } catch (error: any) {
       console.log(
         "Unable to login user, post reqeust failed",

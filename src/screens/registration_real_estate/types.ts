@@ -1,14 +1,16 @@
 export interface RegistrationFormValues {
-  firstname: string;
-  lastname: string;
+  firstName: string;
+  lastName: string;
   email: string;
+  role: string;
+  password: string;
   telephone: string;
   company: string;
   country: string;
   state: string;
   street: string;
-  hausnr: string;
-  plz: string;
+  houseName: string;
+  pin: string;
   city: string;
   bsndoc: string | null | undefined,
   landdoc: string | null | undefined,

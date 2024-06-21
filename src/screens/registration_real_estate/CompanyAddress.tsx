@@ -45,7 +45,7 @@ const CompanyAddress = ({formik}:any) => {
       
       formik.setFieldValue('street', street || value);
       formik.setFieldValue('city', city);
-      formik.setFieldValue('plz', postalCode);
+      formik.setFieldValue('pin', postalCode);
     } catch (error) {
       console.error("Error geocoding address: ", error);
     }
@@ -91,26 +91,26 @@ const CompanyAddress = ({formik}:any) => {
           <LabelWithAsterisk>HAUSNR</LabelWithAsterisk>
           <GTextInput
             placeholder="Hausnr"
-            id="hausnr"
-            name="hausnr"
-            value={formik.values.hausnr}
+            id="houseName"
+            name="houseName"
+            value={formik.values.houseName}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            error={formik.touched.hausnr && Boolean(formik.errors.hausnr)}
-            helperText={formik.touched.hausnr && formik.errors.hausnr}
+            error={formik.touched.houseName && Boolean(formik.errors.houseName)}
+            helperText={formik.touched.houseName && formik.errors.houseName}
           />
         </Grid>
         <Grid item xs={12} sm={3}>
           <LabelWithAsterisk>PLZ</LabelWithAsterisk>
           <GTextInput
             placeholder="PLZ"
-            id="plz"
-            name="plz"
-            value={formik.values.plz}
+            id="pin"
+            name="pin"
+            value={formik.values.pin}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            error={formik.touched.plz && Boolean(formik.errors.plz)}
-            helperText={formik.touched.plz && formik.errors.plz}
+            error={formik.touched.pin && Boolean(formik.errors.pin)}
+            helperText={formik.touched.pin && formik.errors.pin}
           />
         </Grid>
         <Grid item xs={12} sm={9}>

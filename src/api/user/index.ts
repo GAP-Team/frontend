@@ -2,7 +2,7 @@ import api from "../axios";
 
 const userAPIs = {
 
-    /* Authentication Routes */
+    /* User Registration Routes */
     register: (data: any) => api.post('/users/register', data),
   
 }

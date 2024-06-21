@@ -17,10 +17,10 @@ export const loginValidationSchema = yup.object({
   });
   
 export const registrationValidationSchema = yup.object({
-  firstname: yup
+  firstName: yup
     .string()
     .required("Vorname ist erforderlich"),
-  lastname: yup
+  lastName: yup
     .string()
     .required("Nachname ist erforderlich"),
   email: yup
@@ -43,10 +43,10 @@ export const registrationValidationSchema = yup.object({
   street: yup
     .string()
     .required("Straßenname ist erforderlich"),
-  hausnr: yup
+    houseName: yup
     .string()
     .required("Hausnummer ist erforderlich"),
-  plz: yup
+  pin: yup
     .string()
     .required("Postleitzahl ist erforderlich")
     .matches(
@@ -96,7 +96,7 @@ export const registrationValidationSchema = yup.object({
       })
     ).min(1, "Mindestens eine Kontaktperson ist erforderlich."),
     address: yup.string().required("Adresse ist erforderlich."),
-    plz: yup
+    pin: yup
       .string()
       .required("Postleitzahl ist erforderlich")
       .matches(
