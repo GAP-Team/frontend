@@ -36,6 +36,7 @@ export default function LoginPage() {
 
         /*const hashedPassword = await bcrypt.hash(values.password, 10);
         const formValues = { ...values, password: hashedPassword };*/
+        
         const formValues = { ...values, password: values.password };
         const res = await authAPIs.login(formValues);
         if (res) {
