@@ -61,8 +61,35 @@ const BasicInformation = ({formik}: GenericFormProps): JSX.Element => {
             helperText={formik.touched.email && formik.errors.email}
           />
         </Grid>
-
-        <Grid item xs={12}>
+        <Grid item xs={12} sm={8}>
+          <LabelWithAsterisk>Passwort</LabelWithAsterisk>
+          <GTextInput
+            type="password"
+            placeholder="Geben Sie Ihre Passwort"
+            id="password"
+            name="password"
+            value={formik.values.password}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={formik.touched.password && Boolean(formik.errors.password)}
+            helperText={formik.touched.password && formik.errors.password}
+          />
+        </Grid>
+        <Grid item xs={12} sm={4}>
+          <LabelWithAsterisk>Passwort bestätigen</LabelWithAsterisk>
+          <GTextInput
+            type="password"
+            placeholder="Geben Sie Ihre Passwort bestätigen"
+            id="confirmPassword"
+            name="confirmPassword"
+            value={formik.values.confirmPassword}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={formik.touched.confirmPassword && Boolean(formik.errors.confirmPassword)}
+            helperText={formik.touched.confirmPassword && formik.errors.confirmPassword}
+          />
+        </Grid>
+        <Grid item xs={12} sm={6} mt={1}>
           <LabelWithAsterisk>TELEFONNUMMER</LabelWithAsterisk>
           <PhoneInput
             id="telephone"
@@ -74,8 +101,7 @@ const BasicInformation = ({formik}: GenericFormProps): JSX.Element => {
             helperText={formik.touched.telephone && formik.errors.telephone}
           />
         </Grid>
-
-        <Grid item xs={12}>
+        <Grid item xs={12} sm={6} mt={1}>
           <LabelWithAsterisk>Firma NAME</LabelWithAsterisk>
           <GTextInput
             placeholder="Geben Sie Ihre Firma Name"
@@ -87,7 +113,7 @@ const BasicInformation = ({formik}: GenericFormProps): JSX.Element => {
             error={formik.touched.company && Boolean(formik.errors.company)}
             helperText={formik.touched.company && formik.errors.company}
           />
-          </Grid>
+        </Grid>
       </Grid>
     </Box>
   );

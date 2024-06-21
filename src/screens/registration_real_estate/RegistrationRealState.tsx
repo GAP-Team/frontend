@@ -44,7 +44,7 @@ const RegistrationRealState = () => {
   ): Promise<void> => {
     // Get the fields to validate for the current step
     const fieldsPerStep: { [key: number]: string[] } = {
-      0: ["firstName", "lastName", "email", "password", "telephone", "company", "role"],
+      0: ["firstName", "lastName", "email", "password", "confirmPassword", "telephone", "company", "role"],
       1: ["state", "street", "houseName", "pin", "city"],
       2: ["registrationnum", "bsndoc", "landdoc", "approvdoc"], // Adjust fields according to what you need for each step
     };
@@ -99,6 +99,7 @@ const RegistrationRealState = () => {
     lastName: "",
     email: "",
     password: "Rihab123hfjsahf768$",
+    confirmPassword: "",
     company: "",
     telephone: "",
     role: "",
