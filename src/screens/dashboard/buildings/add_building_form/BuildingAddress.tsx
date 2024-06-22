@@ -51,13 +51,13 @@ const BuildingAddress = ({formik}:{formik?:any}) => {
         <LabelWithAsterisk>POSTLEITZAHL</LabelWithAsterisk>
         <GTextInput
           placeholder="PLZ"
-          id="plz"
-          name="plz"
-          value={formik?.values.plz}
+          id="pin"
+          name="pin"
+          value={formik?.values.pin}
           onChange={formik?.handleChange}
           onBlur={formik?.handleBlur}
-          error={formik?.touched?.plz && Boolean(formik?.errors?.plz)}
-          helperText={formik?.touched?.plz && formik?.errors?.plz}
+          error={formik?.touched?.pin && Boolean(formik?.errors?.pin)}
+          helperText={formik?.touched?.pin && formik?.errors?.pin}
         />
       </Grid>
       <Grid item xs={12} sm={9}>

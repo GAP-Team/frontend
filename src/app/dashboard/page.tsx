@@ -13,7 +13,7 @@ export default function DashboardPage() {
 
   useEffect(() => {
     if(!checkIsLoggedIn()){
-      router.push("/login");
+      router.push("/login"); 
     }else{
       setIsLoggedIn(true);
     }

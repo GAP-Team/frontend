@@ -33,10 +33,13 @@ export default function LoginPage() {
     onSubmit: async (values, { setSubmitting, resetForm }) => {
       try {
 
-        const res = await authAPIs.login(values);
-        if (res?.data?.access_token) {
-          setAccessToken(res.data.access_token);
-          router.push("/dashboard");
+        /*const hashedPassword = await bcrypt.hash(values.password, 10);
+        const formValues = { ...values, password: hashedPassword };*/
+        
+        const formValues = { ...values, password: values.password };
+        const res = await authAPIs.login(formValues);
+        if (res) {
+          const { access_token } = res.data;
 
         } else {
           setLoginError("Email oder Passwort ist falsch");
