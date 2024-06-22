@@ -151,19 +151,29 @@ export default function LoginPage() {
                   {loginError}
                 </Typography>
               </Box>
-              <Grid container sx={{ mt: 10 }}>
-                <Grid item xs sx={{ display: "flex", flexDirection: "column" }}>
-                  <Typography variant="body2" style={styles.registerTypography}>
-                    Noch keinen account?
-                  </Typography>
-                  <Link
-                    href="/registration"
-                    variant="body2"
-                    style={styles.link}
-                  >
-                    Registrieren
-                  </Link>
-
+              <Grid container sx={{ mt: 10 }} alignItems="center">
+                <Grid item xs>
+                  <Box>
+                      <Typography
+                        variant="body2"
+                        style={styles.registerTypography}
+                      >
+                        Noch keinen account?
+                      </Typography>
+                      <Typography
+                        variant="body2"
+                        component="div"
+                        style={styles.registerLinkContainer}
+                      >
+                        <Link
+                          href="/registration"
+                          variant="body2"
+                          style={styles.link}
+                        >
+                          Registrieren
+                        </Link>
+                      </Typography>
+                  </Box>
                 </Grid>
                 <Grid item>
                   <Button
