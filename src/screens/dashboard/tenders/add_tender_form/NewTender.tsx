@@ -12,6 +12,7 @@ import SectionTitle from "@/components/label/SectionTitle";
 import AddTenderForm from "./AddTenderForm"; 
 import TenderInformation from "./TenderInformation";
 import TenderBuilding from "./TenderBuilding";
+import TenderDescription from "./TenderDescription";
 
 const NewTender = () => {
   const router = useRouter();
@@ -22,7 +23,7 @@ const NewTender = () => {
       component: TenderInformation,
     },
     { id: 1, stepName: "Objekt / Anlage", component: TenderBuilding },
-    { id: 2, stepName: "Beschreibung" },
+    { id: 2, stepName: "Beschreibung", component: TenderDescription },
     { id: 3, stepName: "Einstufung" },
     { id: 4, stepName: "Dokumente" },
   ];
