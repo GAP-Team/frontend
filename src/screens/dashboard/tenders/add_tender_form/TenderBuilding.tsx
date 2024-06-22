@@ -35,11 +35,17 @@ const TenderBuilding = () => {
           <Autocomplete
             freeSolo
             id="free-solo-1-demo"
+            value={formik.values.buildingName}
             disableClearable
             options={dummyBuildings.map((option) => option.title)}
+            onChange={formik.handleChange}
+            onInputChange={formik.handleChange}
             renderInput={(params) => (
               <TextField
                 {...params}
+                name="buildingName"
+                error={formik?.touched?.buildingName && Boolean(formik?.errors?.buildingName)}
+                helperText={formik?.touched?.buildingName && formik?.errors?.buildingName}
                 label="Objekt suchen"
                 InputProps={{
                   ...params.InputProps,
@@ -54,11 +60,17 @@ const TenderBuilding = () => {
           <Autocomplete
             freeSolo
             id="free-solo-2-demo"
+            value={formik.values.equipmentName}
             disableClearable
             options={dummyBuildings.map((option) => option.title)}
+            onChange={formik.handleChange}
+            onInputChange={formik.handleChange}
             renderInput={(params) => (
               <TextField
                 {...params}
+                name="equipmentName"
+                error={formik?.touched?.equipmentName && Boolean(formik?.errors?.equipmentName)}
+                helperText={formik?.touched?.equipmentName && formik?.errors?.equipmentName}
                 label="Anlagen suchen"
                 InputProps={{
                   ...params.InputProps,

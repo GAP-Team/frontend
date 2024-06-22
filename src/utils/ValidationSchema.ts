@@ -135,8 +135,8 @@ export const registrationValidationSchema = yup.object({
       tenderType: yup.string().required("Beschreiben Sie bitte den gewünschten Ausschreibungstyp"),
     }),
     yup.object({
-      buildingName: yup.string().required("Required"),
-      equipmentName: yup.string().required("Required"),
+      buildingName: yup.string(),
+      equipmentName: yup.string(),
       equipmentType: yup.string().required("Beschreiben Sie bitte den gewünschten Anlagentypenbeschreibung"),
     }),
     yup.object({
