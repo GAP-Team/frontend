@@ -95,16 +95,6 @@ export default function LoginPage() {
               </Grid>
             </Grid>
             <form onSubmit={formik.handleSubmit} style={styles.formContainerTwo}>
-              <CustomizedTooltips
-                title={
-                  <>
-                    <Typography color="inherit" sx={{ fontWeight: 600 }}>
-                      Email-Informationen
-                    </Typography>
-                    <Typography variant="body2">Eingabe einer gültigen E-Mail. e.g abx@xyz.com</Typography>
-                  </>
-                }
-              >
                 <TextField
                   id="email"
                   name="email"
@@ -123,8 +113,6 @@ export default function LoginPage() {
                   }}
                   sx={{ mb: 4 }}
                 />
-              </CustomizedTooltips>
-
               <TextField
                 id="password"
                 label="Password"
