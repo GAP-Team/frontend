@@ -6,13 +6,8 @@ import LabelWithAsterisk from "@/components/label/LabelWithAsterisk";
 import PhoneInput from "@/components/input/GPhoneInput";
 import GTextInput from "@/components/input/GTextInput";
 
-interface GenericFormProps {
-  value?: number;
-  type?: string;
-  formik: any;
-}
 
-const BasicInformation = ({formik}: GenericFormProps): JSX.Element => {
+const BasicInformation = ({formik}: any): JSX.Element => {
   useEffect(() => {
     formik.validateForm();
   }, [])
