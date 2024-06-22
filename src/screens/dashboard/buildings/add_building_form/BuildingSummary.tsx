@@ -4,8 +4,7 @@ import Box from "@mui/material/Box";
 import { useFormikContext } from 'formik';
 import SummarySection from "@/components/summary/SummarySection";
 import { Detail } from "@/components/summary/SummarySection";
-import { ActiveStepItem } from "./types";
-import { Dispatch, SetStateAction } from "react";
+import { ActiveStepItem } from "../../types";
 
 interface BuildingSummaryProps{
   setActiveStep: React.Dispatch<React.SetStateAction<ActiveStepItem>>;

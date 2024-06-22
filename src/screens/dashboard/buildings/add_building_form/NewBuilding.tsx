@@ -5,7 +5,8 @@ import { useRouter } from "next/navigation";
 import { Formik, Form, FormikHelpers, useFormik, FormikErrors } from "formik";
 import AddBuildingForm from "./AddBuildingForm";
 import { addObjektFormSchema } from "@/utils/ValidationSchema";
-import { ActiveStepItem, AddBuildingFormValues } from "./types";
+import { AddBuildingFormValues } from "./types";
+import { ActiveStepItem } from "../../types";
 import BuildingInformation from "./BuildingInformation";
 import BuildingAddress from "./BuildingAddress";
 import BuildingDocumentation from "./BuildingDocumentation";
@@ -56,7 +57,7 @@ const NewBuilding = () => {
 
     if (!hasErrors) {
       const nextStepId = activeStep.id + 1;
-      if (nextStepId < steps.length) {
+      if (nextStepId < steps.length) { 
         setActiveStep(steps[nextStepId]);
       } else {
         //post data to API
@@ -79,7 +80,7 @@ const NewBuilding = () => {
   
   const initialValues: AddBuildingFormValues = {
     buildingName: "",
-    totalArea: "",
+    totalArea: 0,
     buildingType: "",
     objektTag: "",
     contactPerson: [],

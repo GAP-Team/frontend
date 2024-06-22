@@ -90,7 +90,7 @@ export const registrationValidationSchema = yup.object({
       .string()
       .required("Gebäudename ist erforderlich.")
       .min(3, "Gebäudename muss mindestens 3 Zeichen lang sein."),
-    totalArea: yup.string().required("Gesamtfläche ist erforderlich."),
+    totalArea: yup.number().typeError("Gesamtfläche muss eine Zahl sein.").required("Gesamtfläche ist erforderlich.").min(1, "Gesamtfläche muss größer als 0 sein."),
     buildingType: yup.string().required("Gebäudetyp ist erforderlich."),
     objektTag: yup.string().required("ObjektTag ist erforderlich."),
     contactPerson: yup.array().of(
@@ -126,3 +126,34 @@ export const registrationValidationSchema = yup.object({
       .string()
       .url("Server-Link muss eine gültige URL sein."),
   });
+
+  export const addTenderValidationSchema = [
+    yup.object().shape({
+      clientName: yup.string().required("Required"),
+      tenderName: yup.string().required("Required"),
+      tenderForm: yup.string().required("Required"), 
+      tenderType: yup.string().required("Beschreiben Sie bitte den gewünschten Ausschreibungstyp"),
+    }),
+    yup.object({
+      buildingName: yup.string().required("Required"),
+      equipmentName: yup.string().required("Required"),
+      equipmentType: yup.string().required("Beschreiben Sie bitte den gewünschten Anlagentypenbeschreibung"),
+    }),
+    yup.object({
+      detailDescription: yup.string(),
+    }),
+    yup.object({
+      urgency: yup.string(),
+      fromDate: yup.date(),
+      toDate: yup.date(),
+      safetyWorkRequired: yup.string(),
+      freeParkingAvailable: yup.string(),
+    }),
+    yup.object({
+      documentChoice: yup.string(),
+      constructionDocs: yup.array().of(yup.mixed()),
+      floorplanDocs: yup.array().of(yup.mixed()),
+      equipmentDocs: yup.array().of(yup.mixed()),
+      serverLink: yup.string(),
+    }),
+  ];

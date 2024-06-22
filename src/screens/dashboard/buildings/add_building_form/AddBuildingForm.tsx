@@ -7,7 +7,8 @@ import { useRouter } from "next/navigation";
 import GProgressStepper from "@/components/stepper/GProgressStepper";
 import Divider from "@mui/material/Divider";
 import { useFormikContext } from "formik";
-import { AddBuildingFormProps, AddBuildingFormValues } from "./types";
+import { AddBuildingFormValues } from "./types";
+import { AddComponentFormProps } from "../../types";
 import SuccessPage from "@/components/common/SuccessPage";
 import SectionTitle from "@/components/label/SectionTitle";
 
@@ -17,7 +18,7 @@ const AddBuildingForm = ({
   steps,
   handleBack,
   handleNext,
-}: AddBuildingFormProps): JSX.Element => {
+}: AddComponentFormProps): JSX.Element => {
   const formik = useFormikContext<AddBuildingFormValues>();
   const isBeyondLastStep = activeStep.id >= steps.length;
   const StepComponent = steps[activeStep.id]?.component;
