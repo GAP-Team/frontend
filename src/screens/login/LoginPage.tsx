@@ -38,8 +38,9 @@ export default function LoginPage() {
         
         const formValues = { ...values, password: values.password };
         const res = await authAPIs.login(formValues);
-        if (res) {
-          const { access_token } = res.data;
+        if (res?.data?.access_token) {
+          setAccessToken(res.data.access_token);
+          router.push("/dashboard");
 
         } else {
           setLoginError("Email oder Passwort ist falsch");
