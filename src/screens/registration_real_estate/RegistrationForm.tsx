@@ -39,10 +39,21 @@ const RegistrationForm = ({
   const [stakeholderTyp, setStakeholderTyp] = React.useState(0);
 
   useEffect(() => {
+
     if (personTypeTab == 0) {
       formik.setFieldValue("businessType", "business");      
     }
+
+    if (stakeholderTyp == 0) {
+      alert("realStateUser");
+      formik.setFieldValue("role", "realStateUser");
+    }else{
+      alert("serviceProvider");
+      formik.setFieldValue("role", "serviceProvider");
+    }
+
   }, []);
+
   const handlePersonTabChange = (event:React.SyntheticEvent, newValue:number) => {
 
     setPersonTyp(newValue);
@@ -64,10 +75,18 @@ const RegistrationForm = ({
       formik.setFieldValue("registrationnum", "");
       formik.setFieldValue("business_registration_doc", "");
     }
+
   };
   
   const handleStakeholderTabChange = (event: React.SyntheticEvent, newValue: number) => {
+
     setStakeholderTyp(newValue);
+
+    if (newValue == 0) {
+      formik.setFieldValue("role", "realStateUser");
+    } else {
+      formik.setFieldValue("role", "serviceProvider");
+    }
   }
 
   const basictabs = [

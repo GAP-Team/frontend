@@ -172,6 +172,7 @@ const RegistrationRealState = () => {
       delete values.telephone;
       delete values.houseName;
       delete values.businessType;
+      delete values.confirmPassword;
       delete values.approval_document;
       delete values.approval_document_key;
       delete values.business_registration_doc;
@@ -181,6 +182,8 @@ const RegistrationRealState = () => {
 
       values.company = companyObj;
       values.password = hashedPassword;
+      values.confirmPassword = hashedPassword;
+      console.log("Form Values: ====------> ", values); return;
       
       const res = await userAPIs.register(values);
 
