@@ -43,9 +43,10 @@ const CompanyAddress = ({formik}:any) => {
         }
       });
       
-      formik.setFieldValue('street', street || value);
       formik.setFieldValue('city', city);
-      formik.setFieldValue('pin', postalCode);
+      formik.setFieldValue('zip', postalCode);
+      formik.setFieldValue('street', street || value);
+
     } catch (error) {
       console.error("Error geocoding address: ", error);
     }
@@ -104,13 +105,13 @@ const CompanyAddress = ({formik}:any) => {
           <LabelWithAsterisk>PLZ</LabelWithAsterisk>
           <GTextInput
             placeholder="PLZ"
-            id="pin"
-            name="pin"
-            value={formik.values.pin}
+            id="zip"
+            name="zip"
+            value={formik.values.zip}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            error={formik.touched.pin && Boolean(formik.errors.pin)}
-            helperText={formik.touched.pin && formik.errors.pin}
+            error={formik.touched.zip && Boolean(formik.errors.zip)}
+            helperText={formik.touched.zip && formik.errors.zip}
           />
         </Grid>
         <Grid item xs={12} sm={9}>

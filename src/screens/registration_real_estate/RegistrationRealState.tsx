@@ -34,6 +34,7 @@ function getSteps() {
 }
 
 const RegistrationRealState = () => {
+
   const router = useRouter();
   const [activeStep, setActiveStep] = useState(0);
   const steps = getSteps();
@@ -46,7 +47,7 @@ const RegistrationRealState = () => {
     // Get the fields to validate for the current step
     const fieldsPerStep: { [key: number]: string[] } = {
       0: ["firstName", "lastName", "email", "password", "confirmPassword", "telephone", "company", "role"],
-      1: ["state", "street", "houseName", "pin", "city"],
+      1: ["state", "street", "houseName", "zip", "city"],
       2: ["registrationnum", "business_registration_doc", "land_register_entry_document", "approval_document"],
     };
 
@@ -96,7 +97,7 @@ const RegistrationRealState = () => {
   };
 
   const initialValues: RegistrationFormValues = {
-    pin: "",
+    zip: "",
     city: "",
     role: "",
     email: "",
@@ -109,8 +110,8 @@ const RegistrationRealState = () => {
     telephone: "",
     houseName: "",
     confirmPassword: "",
-    registrationnum: "",
     approval_document: "",
+    registrationNumber: "",
     country: "Deutschland",
     business_registration_doc: "",
     land_register_entry_document: "",
@@ -125,26 +126,45 @@ const RegistrationRealState = () => {
         state: values.state,
         street: values.street,
         houseName: values.houseName,
-        pin: values.pin,
+        zip: values.zip,
         city: values.city,
       }
 
-      let docObj = {
-        name: "",
-        key: ""
-      };
+      let docObj = [];
       
       if (values.businessType == "business") {
-        docObj.name = values.business_registration_doc;
-        docObj.key = values.business_registration_doc_key;
-      } else {
-        if (values.approval_document != "") {
-          docObj.name = values.approval_document;
-          docObj.key = values.approval_document_key;
-        } else {
-          docObj.name = values.land_register_entry_document;
-          docObj.key = values.land_register_entry_document_key;
+
+        let brTemp = {
+          name: values.business_registration_doc,
+          key: values.business_registration_doc_key
         }
+
+        docObj.push(brTemp);
+
+      } else {
+
+        if (values.approval_document != "") {
+
+          let adTemp = {
+            name: values.approval_document,
+            key: values.approval_document_key
+          }
+
+          docObj.push(adTemp);
+
+        }
+
+        if(values.land_register_entry_document != "") {
+
+          let lrTemp = {
+            name: values.land_register_entry_document,
+            key: values.land_register_entry_document_key
+          };
+
+          docObj.push(lrTemp);
+
+        }
+
       }
 
       let companyObj = {
@@ -154,15 +174,12 @@ const RegistrationRealState = () => {
         address: addressObj,
         business: {
           businessType: values.businessType,
-          registrationNumber: null,
-          
-          documents: docObj
+          registrationNumber: values.registrationNumber,
+          documents: docObj          
         }
       }
-
-      const hashedPassword = await bcrypt.hash(values.password, 10);
       
-      delete values.pin;
+      delete values.zip;
       delete values.city;
       delete values.state;
       delete values.street;
@@ -180,9 +197,15 @@ const RegistrationRealState = () => {
       delete values.business_registration_doc_key;
       delete values.land_register_entry_document_key;
 
+      const hashedPassword = await bcrypt.hash(values.password, 10);
+
+      values.updatedAt = null;
       values.company = companyObj;
+      values.registeredAt = new Date();
       values.password = hashedPassword;
-      values.confirmPassword = hashedPassword;
+      values.manufacturer_experience = "one";
+
+      console.log("Final dataset : ==========> ", values); return;
       
       const res = await userAPIs.register(values);
 
