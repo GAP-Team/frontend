@@ -62,22 +62,22 @@ export const registrationValidationSchema = yup.object({
     .string()
     .required("Stadt ist erforderlich"),
   registrationnum: yup.string(),
-  bsndoc: yup.string(),
-  approvdoc: yup.string(),
-  landdoc: yup.string()
+  business_registration_doc: yup.string(),
+  approval_document: yup.string(),
+  land_register_entry_document: yup.string()
 }).test(
   'documentRequirement',
-  'Entweder bsndoc, registrationnum, approvdoc oder landdoc ist erforderlich',
+  'Entweder business registration doc, registrationnum, approval document oder land register entry document ist erforderlich',
   function (values) {
-    const { bsndoc, registrationnum, approvdoc, landdoc } = values;
+    const { business_registration_doc, registrationnum, approval_document, land_register_entry_document } = values;
 
     // If any of the four fields is nonempty, return true
-    if (bsndoc || registrationnum || approvdoc || landdoc) {
+    if (business_registration_doc || registrationnum || approval_document || land_register_entry_document) {
       return true;
     }
 
     // Otherwise, create an error for each relevant field
-    if (!bsndoc && !registrationnum && !approvdoc && !landdoc) {
+    if (!business_registration_doc && !registrationnum && !approval_document && !land_register_entry_document) {
       return this.createError({
         path: 'registrationnum',
         message: 'Entweder Dokumente oder eine Registrierungsnummer erforderlich',

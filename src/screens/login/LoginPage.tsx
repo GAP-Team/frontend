@@ -12,13 +12,14 @@ import { PiLockBold } from "react-icons/pi";
 import { FaRegEnvelope } from "react-icons/fa";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import { GapLogo } from "@/components/logo/GapLogo";
 import InputAdornment from "@mui/material/InputAdornment";
-import CustomizedTooltips from "@/components/common/ToolTip";
-import { loginValidationSchema } from "@/utils/ValidationSchema";
+
 import authAPIs from "@/api/auth";
 import { setAccessToken } from "@/utils/helperJWT";
+import { GapLogo } from "@/components/logo/GapLogo";
 import HeroBanner from "../../components/common/InfoBanner";
+import CustomizedTooltips from "@/components/common/ToolTip";
+import { loginValidationSchema } from "@/utils/ValidationSchema";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -33,13 +34,16 @@ export default function LoginPage() {
     onSubmit: async (values, { setSubmitting, resetForm }) => {
       try {
 
-        /*const hashedPassword = await bcrypt.hash(values.password, 10);
-        const formValues = { ...values, password: hashedPassword };*/
+        const hashedPassword = await bcrypt.hash(values.password, 10);
+        const formValues = { ...values, password: hashedPassword };
         
-        const formValues = { ...values, password: values.password };
+        /*const formValues = { ...values, password: values.password };*/
+
         const res = await authAPIs.login(formValues);
         if (res) {
+          
           const { access_token } = res.data;
+          setAccessToken(access_token);
 
         } else {
           setLoginError("Email oder Passwort ist falsch");

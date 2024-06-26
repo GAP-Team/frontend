@@ -1,21 +1,22 @@
 'use client';
-import React from "react";
-import GButton from "@/components/button/GButton";
-import Typography from "@mui/material/Typography";
+import React, {useEffect} from "react";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
-import GStepper from "@/components/stepper/GStepper";
-import GProgressStepper from "@/components/stepper/GProgressStepper";
-import GTab from "@/components/filter/GTab";
-import Divider from "@mui/material/Divider";
-import CompanyAddress from "./CompanyAddress";
-import BasicInformation from "./BasicInformation";
-import SummaryRegistration from "./SummaryRegistration";
-import ComercialPerson from "./CommercialPerson";
-import PrivatePerson from "./PrivatePerson";
-import BusinessRegistration from "./BusinessRegistration";
 import { useFormikContext } from 'formik';
+import Divider from "@mui/material/Divider";
+import Typography from "@mui/material/Typography";
+
+import PrivatePerson from "./PrivatePerson";
+import GTab from "@/components/filter/GTab";
+import CompanyAddress from "./CompanyAddress";
+import ComercialPerson from "./CommercialPerson";
+import GButton from "@/components/button/GButton";
+import BasicInformation from "./BasicInformation";
+import GStepper from "@/components/stepper/GStepper";
+import SummaryRegistration from "./SummaryRegistration";
+import BusinessRegistration from "./BusinessRegistration";
 import SectionTitle from "@/components/label/SectionTitle";
+import GProgressStepper from "@/components/stepper/GProgressStepper";
 
 interface RegistrationFormProps {
   activeStep: number;
@@ -25,7 +26,6 @@ interface RegistrationFormProps {
   setActiveStep: (num:number) => void;
 }
 
-
 const RegistrationForm = ({
   activeStep,
   steps,
@@ -33,25 +33,38 @@ const RegistrationForm = ({
   handleNext,
   setActiveStep
 }: RegistrationFormProps): JSX.Element => {
+
   const formik = useFormikContext();
   const [tabValue, setTabValue] = React.useState(0);
 
+  useEffect(() => {
+    if (tabValue == 0) {
+      formik.setFieldValue("businessType", "business");      
+    }
+  }, []);
+
   const handleTabChange = (event:React.SyntheticEvent, newValue:number) => {
+    
     setTabValue(newValue);
+
+    if (newValue == 0) {
+      formik.setFieldValue("businessType", "business");
+    } else {
+      formik.setFieldValue("businessType", "private");
+    }
+
     //Make user to only be private or commercial person, also their formik values null on selection change
     //Commercial person, make land and approv doc undefined
     if (!newValue) {
-      formik.setFieldValue("landdoc", "")
-      formik.setFieldValue("approvdoc", "")
+      formik.setFieldValue("approval_document", "")
+      formik.setFieldValue("land_register_entry_document", "")
     }
     //Private person, make registrationnum and  bsndoc null
     else {
       formik.setFieldValue("registrationnum", "");
-      formik.setFieldValue("bsndoc", "");
+      formik.setFieldValue("business_registration_doc", "");
     }
   };
-  
-  
 
   const basictabs = [
     //TODO: have to render seperate component for each tab and not based on value
