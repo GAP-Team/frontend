@@ -16,7 +16,9 @@ const BuildingDocumentation = ({ formik }: { formik?: any }) => {
     >
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <LabelWithAsterisk>BAUUNTERLAGEN</LabelWithAsterisk>
+          <Typography variant="gsub" color="gray.500">
+            BAUUNTERLAGEN
+          </Typography>
           <UploadMultiButton
             id="constructionDocs"
             name="constructionDocs"
@@ -27,7 +29,9 @@ const BuildingDocumentation = ({ formik }: { formik?: any }) => {
           />
         </Grid>
         <Grid item xs={12}>
-          <LabelWithAsterisk>GRUNDRISSE</LabelWithAsterisk>
+          <Typography variant="gsub" color="gray.500">
+            GRUNDRISSE
+          </Typography>
           <UploadMultiButton
             id="floorplanDocs"
             name="floorplanDocs"
@@ -38,7 +42,9 @@ const BuildingDocumentation = ({ formik }: { formik?: any }) => {
           />
         </Grid>
         <Grid item xs={12}>
-          <LabelWithAsterisk>SONSTIGE DOKUMENTE</LabelWithAsterisk>
+          <Typography variant="gsub" color="gray.500">
+            SONSTIGE DOKUMENTE
+          </Typography>
           <UploadMultiButton
             id="otherDocs"
             name="otherDocs"
