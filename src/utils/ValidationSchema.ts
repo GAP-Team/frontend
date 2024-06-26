@@ -146,8 +146,8 @@ export const registrationValidationSchema = yup.object({
       urgency: yup.string(),
       fromDate: yup.date(),
       toDate: yup.date(),
-      safetyWorkRequired: yup.string(),
-      freeParkingAvailable: yup.string(),
+      safetyWorkRequired: yup.boolean(),
+      freeParkingAvailable: yup.boolean(),
     }),
     yup.object({
       documentChoice: yup.string(),

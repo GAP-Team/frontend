@@ -1,8 +1,9 @@
-export interface AddTenderFormValues{
+import { Dayjs } from 'dayjs';
+export interface AddTenderFormValues {
     //Tender Info feilds = Form 1
     clientName: string;
     tenderName: string;
-    tenderForm: string; 
+    tenderForm: string;
     tenderType: string;
     //Tender Building feilds = Form 2
     buildingName: string;
@@ -12,10 +13,10 @@ export interface AddTenderFormValues{
     detailDescription: string;
     //Classification = Form 4
     urgency: string;
-    fromDate: Date;
-    toDate: Date;
-    safetyWorkRequired: string;
-    freeParkingAvailable: string;
+    fromDate: Dayjs | null;
+    toDate: Dayjs | null;
+    safetyWorkRequired: boolean;
+    freeParkingAvailable: boolean;
     //Documentation = Form 5 
     documentChoice: string;
     constructionDocs: File[];
