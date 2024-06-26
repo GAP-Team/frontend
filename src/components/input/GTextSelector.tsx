@@ -1,4 +1,3 @@
-// GTextSelector.tsx
 import React from 'react';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
@@ -15,11 +14,10 @@ interface GTextSelectorProps<T extends Item> {
   name: string;
   onSelect: (selectedItem: Item) => void;
   error?: boolean;
-  helperText?: string;
+  helperText?: React.ReactNode | undefined;
 }
 
-const GTextSelector = <T extends Item>({ name, options, placeholder = 'Wählen Sie aus',onSelect,selectedState,error, helperText }: GTextSelectorProps<T>) => {
- 
+const GTextSelector = <T extends Item>({ name, options, placeholder = 'Wählen Sie aus', onSelect, selectedState, error, helperText }: GTextSelectorProps<T>) => {
   return (
     <Autocomplete
       freeSolo
@@ -40,15 +38,15 @@ const GTextSelector = <T extends Item>({ name, options, placeholder = 'Wählen S
         }
       }}
       renderInput={(params) => (
-      <TextField
-        {...params}
-        name={name}
-        placeholder={placeholder}
-        error={error}
-        helperText={helperText}
-      />
-    )}
-  />
+        <TextField
+          {...params}
+          name={name}
+          placeholder={placeholder}
+          error={error}
+          helperText={helperText}
+        />
+      )}
+    />
   );
 };
 

@@ -40,10 +40,9 @@ export default function LoginPage() {
         /*const formValues = { ...values, password: values.password };*/
 
         const res = await authAPIs.login(formValues);
-        if (res) {
-          
-          const { access_token } = res.data;
-          setAccessToken(access_token);
+        if (res?.data?.access_token) {
+          setAccessToken(res.data.access_token);
+          router.push("/dashboard");
 
         } else {
           setLoginError("Email oder Passwort ist falsch");
@@ -102,16 +101,6 @@ export default function LoginPage() {
               </Grid>
             </Grid>
             <form onSubmit={formik.handleSubmit} style={styles.formContainerTwo}>
-              <CustomizedTooltips
-                title={
-                  <>
-                    <Typography color="inherit" sx={{ fontWeight: 600 }}>
-                      Email-Informationen
-                    </Typography>
-                    <Typography variant="body2">Eingabe einer gültigen E-Mail. e.g abx@xyz.com</Typography>
-                  </>
-                }
-              >
                 <TextField
                   id="email"
                   name="email"
@@ -130,8 +119,6 @@ export default function LoginPage() {
                   }}
                   sx={{ mb: 4 }}
                 />
-              </CustomizedTooltips>
-
               <TextField
                 id="password"
                 label="Password"
@@ -155,19 +142,29 @@ export default function LoginPage() {
                   {loginError}
                 </Typography>
               </Box>
-              <Grid container sx={{ mt: 10 }}>
-                <Grid item xs sx={{ display: "flex", flexDirection: "column" }}>
-                  <Typography variant="body2" style={styles.registerTypography}>
-                    Noch keinen account?
-                  </Typography>
-                  <Link
-                    href="/registration"
-                    variant="body2"
-                    style={styles.link}
-                  >
-                    Registrieren
-                  </Link>
-
+              <Grid container sx={{ mt: 10 }} alignItems="center">
+                <Grid item xs>
+                  <Box>
+                      <Typography
+                        variant="body2"
+                        style={styles.registerTypography}
+                      >
+                        Noch keinen account?
+                      </Typography>
+                      <Typography
+                        variant="body2"
+                        component="div"
+                        style={styles.registerLinkContainer}
+                      >
+                        <Link
+                          href="/registration"
+                          variant="body2"
+                          style={styles.link}
+                        >
+                          Registrieren
+                        </Link>
+                      </Typography>
+                  </Box>
                 </Grid>
                 <Grid item>
                   <Button

@@ -1,0 +1,91 @@
+import React from "react";
+import Grid from "@mui/material/Grid";
+import { Divider, Link } from "@mui/material";
+import GStepper from "@/components/stepper/GStepper";
+import GButton from "@/components/button/GButton";
+import GProgressStepper from "@/components/stepper/GProgressStepper";
+import { ActiveStepItem } from "./types";
+
+interface AddTenderFormProps {
+  activeStep: ActiveStepItem;
+  steps: ActiveStepItem[];
+  handleBack: () => void;
+  handleSubmit: () => void;
+  isSubmitting: boolean;
+  isBeyondLastStep: boolean;
+  formOrSuccessContent: React.ReactNode;
+}
+
+const AddTenderForm: React.FC<AddTenderFormProps> = ({
+  activeStep,
+  steps,
+  handleBack,
+  handleSubmit,
+  isSubmitting,
+  isBeyondLastStep,
+  formOrSuccessContent,
+}) => {
+  return (
+    <>
+      <Grid item xs={2}>
+        <Link
+          underline="hover"
+          sx={styles.stepIndicator}
+          color="inherit"
+          href="/"
+        >
+          Schritt {activeStep?.id + 1} / {steps.length}
+        </Link>
+        <GStepper
+          activeStep={activeStep.id}
+          steps={steps.map((step) => step.stepName)}
+        />
+      </Grid>
+      <Divider orientation="vertical" variant="middle" flexItem />
+      <Grid item xs={10} sx={styles.mainContent}>
+        <div
+          style={{
+            flexGrow: 1,
+            alignContent: isBeyondLastStep ? "center" : undefined,
+          }}
+        >
+          {formOrSuccessContent}
+        </div>
+        <Grid container justifyContent="flex-end" spacing={2}>
+          <Grid item>
+            <GButton
+              disabled={activeStep?.id === 0}
+              onClick={handleBack}
+              color="ggrey"
+            >
+              {activeStep.id < steps.length - 1 ? "Zurück" : "Bearbeiten"}
+            </GButton>
+            <GButton onClick={handleSubmit} type="submit" disabled={isSubmitting}>
+              {isBeyondLastStep
+                ? "Schließen"
+                : activeStep.id < steps.length - 1
+                ? "Weiter"
+                : "Abschließen"}
+            </GButton>
+          </Grid>
+        </Grid>
+      </Grid>
+    </>
+  );
+};
+
+export default AddTenderForm;
+
+const styles = {
+  stepIndicator: {
+    display: "flex",
+    fontSize: "0.75rem",
+    fontWeight: "600",
+    alignItems: "center",
+    color: "#A0ADB1",
+  },
+  mainContent: {
+    display: "flex",
+    flexDirection: "column",
+  },
+};

@@ -35,17 +35,17 @@ const RegistrationForm = ({
 }: RegistrationFormProps): JSX.Element => {
 
   const formik = useFormikContext();
-  const [tabValue, setTabValue] = React.useState(0);
+  const [personTypeTab, setPersonTyp] = React.useState(0);
+  const [stakeholderTyp, setStakeholderTyp] = React.useState(0);
 
   useEffect(() => {
-    if (tabValue == 0) {
+    if (personTypeTab == 0) {
       formik.setFieldValue("businessType", "business");      
     }
   }, []);
+  const handlePersonTabChange = (event:React.SyntheticEvent, newValue:number) => {
 
-  const handleTabChange = (event:React.SyntheticEvent, newValue:number) => {
-    
-    setTabValue(newValue);
+    setPersonTyp(newValue);
 
     if (newValue == 0) {
       formik.setFieldValue("businessType", "business");
@@ -56,8 +56,8 @@ const RegistrationForm = ({
     //Make user to only be private or commercial person, also their formik values null on selection change
     //Commercial person, make land and approv doc undefined
     if (!newValue) {
-      formik.setFieldValue("approval_document", "")
-      formik.setFieldValue("land_register_entry_document", "")
+      formik.setFieldValue("approval_document", "");
+      formik.setFieldValue("land_register_entry_document", "");
     }
     //Private person, make registrationnum and  bsndoc null
     else {
@@ -65,11 +65,15 @@ const RegistrationForm = ({
       formik.setFieldValue("business_registration_doc", "");
     }
   };
+  
+  const handleStakeholderTabChange = (event: React.SyntheticEvent, newValue: number) => {
+    setStakeholderTyp(newValue);
+  }
 
   const basictabs = [
     //TODO: have to render seperate component for each tab and not based on value
-    { label: "Immobilienbetreiber", content: <BasicInformation value={0} formik={formik} /> },
-    { label: "Dienstleister", content: <BasicInformation value={1} formik={formik}/> },
+    { label: "Immobilienbetreiber", content: <BasicInformation formik={formik} /> },
+    { label: "Dienstleister", content: <></>},
   ];
   const registertabs = [
     { label: "Gewerbeperson", content: <ComercialPerson formik={formik} /> },
@@ -106,9 +110,9 @@ const RegistrationForm = ({
               activeStep={activeStep}
             />
           </div>
-          {activeStep == 0 && <BasicInformation formik={formik}/>}
+          {activeStep == 0 && <GTab tabs={basictabs} tabvalue={stakeholderTyp} handleChange={handleStakeholderTabChange}/>}
           {activeStep == 1 && <CompanyAddress formik={formik} />}
-          {activeStep == 2 && <GTab tabs={registertabs} tabvalue={tabValue} handleChange={handleTabChange} />}
+          {activeStep == 2 && <GTab tabs={registertabs} tabvalue={personTypeTab} handleChange={handlePersonTabChange} />}
           {activeStep == 3 && <SummaryRegistration setActiveStep={setActiveStep} />}
         </div>
         <Grid container justifyContent="flex-end" spacing={2}>
