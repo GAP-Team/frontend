@@ -183,7 +183,6 @@ const RegistrationRealState = () => {
       values.company = companyObj;
       values.password = hashedPassword;
       values.confirmPassword = hashedPassword;
-      console.log("Form Values: ====------> ", values); return;
       
       const res = await userAPIs.register(values);
 
