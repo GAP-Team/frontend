@@ -13,6 +13,7 @@ import AddTenderForm from "./AddTenderForm";
 import TenderInformation from "./TenderInformation";
 import TenderBuilding from "./TenderBuilding";
 import TenderDescription from "./TenderDescription";
+import TenderClassification from "./TenderClassification";
 
 const NewTender = () => {
   const router = useRouter();
@@ -24,7 +25,7 @@ const NewTender = () => {
     },
     { id: 1, stepName: "Objekt / Anlage", component: TenderBuilding },
     { id: 2, stepName: "Beschreibung", component: TenderDescription },
-    { id: 3, stepName: "Einstufung" },
+    { id: 3, stepName: "Einstufung", component: TenderClassification },
     { id: 4, stepName: "Dokumente" },
   ];
 
@@ -64,10 +65,10 @@ const NewTender = () => {
     equipmentType: "",
     detailDescription: "",
     urgency: "",
-    fromDate: new Date(),
-    toDate: new Date(),
-    safetyWorkRequired: "",
-    freeParkingAvailable: "",
+    fromDate: null,
+    toDate: null,
+    safetyWorkRequired: false,
+    freeParkingAvailable: false,
     documentChoice: "",
     constructionDocs: [],
     floorplanDocs: [],
