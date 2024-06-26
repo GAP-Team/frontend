@@ -1,10 +1,10 @@
-import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import SummarySection from "@/components/summary/SummarySection";
-import {grundinformation, adresse} from '../../utils/Constants';
+import Grid from "@mui/material/Grid";
 import { useFormikContext } from 'formik';
-import { Detail } from "@/components/summary/SummarySection";
 
+import { Detail } from "@/components/summary/SummarySection";
+import {grundinformation, adresse} from '../../utils/Constants';
+import SummarySection from "@/components/summary/SummarySection";
 
 interface SummaryRegistrationProps{
   setActiveStep: (num: number) => void;
@@ -15,9 +15,9 @@ const SummaryRegistration = ({setActiveStep}:SummaryRegistrationProps) => {
   const getBusinessRegistrationData = (formik: any) => {
     const businessInfo = [];
     const documents = [
-      { label: "Gewerbeanmeldung", value: formik?.values?.bsndoc },
-      { label: "Grundbucheintrag", value: formik?.values?.landdoc },
-      { label: "Genehmigungsunterlagen", value: formik?.values?.approvdoc },
+      { label: "Gewerbeanmeldung", value: formik?.values?.business_registration_doc },
+      { label: "Grundbucheintrag", value: formik?.values?.land_register_entry_document },
+      { label: "Genehmigungsunterlagen", value: formik?.values?.approval_document },
     ];
   
     documents.forEach(doc => {

@@ -1,8 +1,31 @@
+import React, { useState } from "react";
 import { Grid, Typography } from "@mui/material";
-import UploadButton from "@/components/button/UploadButton";
+
+import { handleUploadDoc } from "@/utils/uploadToS3";
 import GTextInput from "@/components/input/GTextInput";
+import UploadButton from "@/components/button/UploadButton";
 
 const ComercialPerson = ({formik}:any): JSX.Element => {
+
+  const [ isRegNumNeed, setIsRegNumNeed ] = useState<Boolean>(true);
+
+  const handleS3 = async (ev: any) => {
+
+    let uploadStat = await handleUploadDoc(ev);
+
+    if (uploadStat) {
+      const { name, key } = uploadStat;
+      
+      formik.setFieldValue("business_registration_doc", name);
+      formik.setFieldValue("business_registration_doc_key", key);
+
+      setIsRegNumNeed(false);
+
+    } else {
+      alert("Document not uploaded, try again later");
+    }
+  }
+
   return (
     <Grid
       container
@@ -14,10 +37,10 @@ const ComercialPerson = ({formik}:any): JSX.Element => {
           GEWERBEANMELDUNG
         </Typography>
         <UploadButton
-           id="bsndoc"
-           name="bsndoc"
-          value={formik.values.bsndoc}
-          onChange={(ev:any) => { formik.setFieldValue("bsndoc", ev?.target?.files[0]?.name) }}
+           id="business_registration_doc"
+           name="business_registration_doc"
+          value={formik.values.business_registration_doc}
+          onChange={(ev:any) => { handleS3(ev) }}
         />
       </Grid>
       <Grid item xs={12} sm={12}>
@@ -36,8 +59,9 @@ const ComercialPerson = ({formik}:any): JSX.Element => {
           value={formik.values.registrationnum}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
-          error={formik.touched.registrationnum && Boolean(formik.errors.registrationnum)}
+          error={formik.touched.registrationnum && Boolean(isRegNumNeed)}
           helperText={formik.touched.registrationnum && formik.errors.registrationnum}
+          // error={formik.touched.registrationnum && Boolean(formik.errors.registrationnum)}
         />
       </Grid>
     </Grid>

@@ -2,6 +2,7 @@
 import { 
   useEffect, useState 
 } from "react";
+import bcrypt from "bcryptjs";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import { Formik, Form } from "formik";
@@ -46,7 +47,7 @@ const RegistrationRealState = () => {
     const fieldsPerStep: { [key: number]: string[] } = {
       0: ["firstName", "lastName", "email", "password", "confirmPassword", "telephone", "company", "role"],
       1: ["state", "street", "houseName", "pin", "city"],
-      2: ["registrationnum", "bsndoc", "landdoc", "approvdoc"], // Adjust fields according to what you need for each step
+      2: ["registrationnum", "business_registration_doc", "land_register_entry_document", "approval_document"],
     };
 
     const fieldsToValidate = fieldsPerStep[activeStep];
@@ -95,28 +96,29 @@ const RegistrationRealState = () => {
   };
 
   const initialValues: RegistrationFormValues = {
-    firstName: "",
-    lastName: "",
-    email: "",
-    password: "Rihab123hfjsahf768$",
-    confirmPassword: "",
-    company: "",
-    telephone: "",
-    role: "",
-    country: "Deutschland",
-    state: "",
-    street: "",
-    houseName: "",
     pin: "",
     city: "",
-    bsndoc: "",
-    landdoc: "",
-    approvdoc: "",
+    role: "",
+    email: "",
+    state: "",
+    street: "",
+    company: "",
+    lastName: "",
+    password: "",
+    firstName: "",
+    telephone: "",
+    houseName: "",
+    confirmPassword: "",
     registrationnum: "",
+    approval_document: "",
+    country: "Deutschland",
+    business_registration_doc: "",
+    land_register_entry_document: "",
   };
 
   const onSubmit = async (values: any) => {
-    try {
+
+    try {      
       
       let addressObj = {
         country: values.country,
@@ -127,23 +129,73 @@ const RegistrationRealState = () => {
         city: values.city,
       }
 
-      delete values.country;
-      delete values.state;
-      delete values.street;
-      delete values.houseName;
+      let docObj = {
+        name: "",
+        key: ""
+      };
+      
+      if (values.businessType == "business") {
+        docObj.name = values.business_registration_doc;
+        docObj.key = values.business_registration_doc_key;
+      } else {
+        if (values.approval_document != "") {
+          docObj.name = values.approval_document;
+          docObj.key = values.approval_document_key;
+        } else {
+          docObj.name = values.land_register_entry_document;
+          docObj.key = values.land_register_entry_document_key;
+        }
+      }
+
+      let companyObj = {
+        name: values.company,
+        phonenumber: values.telephone,
+        numberOfEmployees: null,
+        address: addressObj,
+        business: {
+          businessType: values.businessType,
+          registrationNumber: null,
+          
+          documents: docObj
+        }
+      }
+
+      const hashedPassword = await bcrypt.hash(values.password, 10);
+      
       delete values.pin;
       delete values.city;
+      delete values.state;
+      delete values.street;
+      delete values.country;
+      delete values.company;
+      delete values.password;
+      delete values.telephone;
+      delete values.houseName;
+      delete values.businessType;
+      delete values.confirmPassword;
+      delete values.approval_document;
+      delete values.approval_document_key;
+      delete values.business_registration_doc;
+      delete values.land_register_entry_document;
+      delete values.business_registration_doc_key;
+      delete values.land_register_entry_document_key;
+
+      values.company = companyObj;
+      values.password = hashedPassword;
+      values.confirmPassword = hashedPassword;
       
-      values.address = addressObj;
       const res = await userAPIs.register(values);
 
     } catch (error: any) {
+
       console.log(
         "Unable to login user, post reqeust failed",
         error.name,
         error.message
       );
+
     }
+
   };
 
   return (
