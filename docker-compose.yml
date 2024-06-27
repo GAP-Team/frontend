@@ -1,0 +1,19 @@
+services:
+  gap_frontend:
+    container_name: gap_frontend
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+      - /app/node_modules/
+    networks:
+      - gap_network
+    environment:
+      - NODE_ENV=development
+
+networks:
+  gap_network:
+  
