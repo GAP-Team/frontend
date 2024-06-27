@@ -33,9 +33,10 @@ const BuildingSummary = ({setActiveStep,steps}:BuildingSummaryProps) => {
   })) : [];
 
   const updatedDocList: Detail[] = [
-    ...values.constructionDocs.length ? values.constructionDocs.map((doc: any) => ({ label: "Baudokument", value: doc.name })) : [{ label: "Baudokument", value: 'dummyname1.pdf' }],
-    ...values.floorplanDocs.length ? values.floorplanDocs.map((doc: any) => ({ label: "Grundrissdokument", value: doc.name })) : [{ label: "Grundrissdokument", value: 'dummyname2.pdf' }],
-    ...values.otherDocs.length ? values.otherDocs.map((doc: any) => ({ label: "Weiteres Dokument", value: doc.name })) : [{ label: "Weiteres Dokument", value: 'dummyname3.pdf' }]
+    ...values.constructionDocs.length ? values.constructionDocs.map((doc: any) => ({ label: "Baudokument", value: doc.name })) : [],
+    ...values.floorplanDocs.length ? values.floorplanDocs.map((doc: any) => ({ label: "Grundrissdokument", value: doc.name })) : [],
+    ...values.otherDocs.length ? values.otherDocs.map((doc: any) => ({ label: "Weiteres Dokument", value: doc.name })) : [],
+    ...values.serverLink.length ? [({label:"Server Link", value: values.serverLink})]: [],
   ];
 
   return (
@@ -50,9 +51,11 @@ const BuildingSummary = ({setActiveStep,steps}:BuildingSummaryProps) => {
         <Grid item xs={6}>
           <SummarySection title="Ansprechpartner" details={updatedContactPersonList} setActiveStep={()=>setActiveStep(steps[0])} />
         </Grid>
-        <Grid item xs={6}>
-          <SummarySection title="Bauunterlagen" details={updatedDocList} setActiveStep={()=>setActiveStep(steps[2])}/>
-        </Grid>
+        {updatedDocList.length > 0 && (
+          <Grid item xs={6}>
+            <SummarySection title="Bauunterlagen" details={updatedDocList} setActiveStep={() => setActiveStep(steps[2])} />
+          </Grid>
+        )}
       </Grid>
     </Box>
   );

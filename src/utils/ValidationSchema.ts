@@ -112,16 +112,13 @@ export const registrationValidationSchema = yup.object({
     state: yup.string().required("Bundesland ist erforderlich."),
     constructionDocs: yup
       .array()
-      .of(yup.mixed().required())
-      .min(1, "Mindestens ein Baudokument ist erforderlich."),
+      .of(yup.mixed().required()),
     floorplanDocs: yup
       .array()
-      .of(yup.mixed().required())
-      .min(1, "Mindestens ein Grundrissdokument ist erforderlich."),
+      .of(yup.mixed().required()),
     otherDocs: yup
       .array()
       .of(yup.mixed().required()),
-      // .min(1, "Mindestens ein weiteres Dokument ist erforderlich."),
     serverLink: yup
       .string()
       .url("Server-Link muss eine gültige URL sein."),
@@ -146,8 +143,8 @@ export const registrationValidationSchema = yup.object({
       urgency: yup.string(),
       fromDate: yup.date(),
       toDate: yup.date(),
-      safetyWorkRequired: yup.string(),
-      freeParkingAvailable: yup.string(),
+      safetyWorkRequired: yup.boolean(),
+      freeParkingAvailable: yup.boolean(),
     }),
     yup.object({
       documentChoice: yup.string(),
