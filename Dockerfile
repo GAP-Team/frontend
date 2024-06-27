@@ -13,6 +13,10 @@ RUN npm install
 # Copy the rest of the application code
 COPY . .
 
+# Copy environment files
+COPY .env.development .env.development
+COPY .env.production .env.production
+
 # Build the Next.js app
 RUN npm run build
 
@@ -37,4 +41,4 @@ COPY --from=builder /app/next.config.mjs ./
 EXPOSE 3000
 
 # Define the command to start the Next.js app
-CMD ["npm", "start"]
+CMD ["npm", "run", "start"]
