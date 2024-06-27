@@ -46,7 +46,7 @@ const NewBuilding = () => {
   ): Promise<void> => {
     const stepFieldsMap: { [key: number]: string[] } = {
       0: ["buildingName", "totalArea", "buildingType", "objektTag", "contactPerson"],
-      1: ["address", "pin", "city", "state"],
+      1: ["address", "zip", "city", "state"],
       2: ["serverLink", "constructionDocs", "floorplanDocs", "otherDocs"],
     };
     const currentStepFields = stepFieldsMap[activeStep.id];
@@ -85,7 +85,7 @@ const NewBuilding = () => {
     objektTag: "",
     contactPerson: [],
     address: "",
-    pin: "",
+    zip: "",
     city: "",
     state: "",
     constructionDocs: [],

@@ -59,9 +59,9 @@ const ComercialPerson = ({formik}:any): JSX.Element => {
           value={formik.values.registrationNumber}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
-          error={formik.touched.registrationNumber && Boolean(isRegNumNeed)}
+          // error={formik.touched.registrationNumber && Boolean(isRegNumNeed)}
           helperText={formik.touched.registrationNumber && formik.errors.registrationNumber}
-          // error={formik.touched.registrationNumber && Boolean(formik.errors.registrationNumber)}
+          error={formik.touched.registrationNumber && Boolean(formik.errors.registrationNumber)}
         />
       </Grid>
     </Grid>

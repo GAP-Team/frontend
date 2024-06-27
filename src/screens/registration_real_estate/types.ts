@@ -7,11 +7,11 @@ export interface RegistrationFormValues {
   street: string;
   company: string;
   country: string;
+  houseNo: string;
   lastName: string;
   password: string;
   telephone: string;
   firstName: string;
-  houseName: string;
   confirmPassword: string;
   registrationNumber: string;
   approval_document:string | null | undefined;

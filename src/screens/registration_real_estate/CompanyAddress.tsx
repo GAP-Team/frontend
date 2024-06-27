@@ -92,13 +92,13 @@ const CompanyAddress = ({formik}:any) => {
           <LabelWithAsterisk>HAUSNR</LabelWithAsterisk>
           <GTextInput
             placeholder="Hausnr"
-            id="houseName"
-            name="houseName"
-            value={formik.values.houseName}
+            id="houseNo"
+            name="houseNo"
+            value={formik.values.houseNo}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            error={formik.touched.houseName && Boolean(formik.errors.houseName)}
-            helperText={formik.touched.houseName && formik.errors.houseName}
+            error={formik.touched.houseNo && Boolean(formik.errors.houseNo)}
+            helperText={formik.touched.houseNo && formik.errors.houseNo}
           />
         </Grid>
         <Grid item xs={12} sm={3}>

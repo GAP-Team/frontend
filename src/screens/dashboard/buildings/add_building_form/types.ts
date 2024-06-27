@@ -5,7 +5,7 @@ export interface AddBuildingFormValues{
     objektTag: string;
     contactPerson: ContactPersonItem[];
     address: string;
-    pin: string;
+    zip: string;
     city: string;
     state: string;
     constructionDocs: File[];

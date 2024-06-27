@@ -47,7 +47,7 @@ const RegistrationRealState = () => {
     // Get the fields to validate for the current step
     const fieldsPerStep: { [key: number]: string[] } = {
       0: ["firstName", "lastName", "email", "password", "confirmPassword", "telephone", "company", "role"],
-      1: ["state", "street", "houseName", "zip", "city"],
+      1: ["state", "street", "houseNo", "zip", "city"],
       2: ["registrationnum", "business_registration_doc", "land_register_entry_document", "approval_document"],
     };
 
@@ -104,11 +104,11 @@ const RegistrationRealState = () => {
     state: "",
     street: "",
     company: "",
+    houseNo: "",
     lastName: "",
     password: "",
     firstName: "",
     telephone: "",
-    houseName: "",
     confirmPassword: "",
     approval_document: "",
     registrationNumber: "",
@@ -119,15 +119,15 @@ const RegistrationRealState = () => {
 
   const onSubmit = async (values: any) => {
 
-    try {      
+    try {
       
       let addressObj = {
-        country: values.country,
-        state: values.state,
-        street: values.street,
-        houseName: values.houseName,
         zip: values.zip,
         city: values.city,
+        state: values.state,
+        street: values.street,
+        houseNo: values.houseNo,
+        country: values.country,
       }
 
       let docObj = [];
@@ -166,7 +166,6 @@ const RegistrationRealState = () => {
         }
 
       }
-
       let companyObj = {
         name: values.company,
         phonenumber: values.telephone,
@@ -179,15 +178,20 @@ const RegistrationRealState = () => {
         }
       }
       
+      let currentDate = new Date();
+      const isoString = currentDate.toISOString();
+      const formateDate = isoString.slice(0, 11) + '00:00:00.000Z';
+      const hashedPassword = await bcrypt.hash(values.password, 10);
+
       delete values.zip;
       delete values.city;
       delete values.state;
       delete values.street;
       delete values.country;
       delete values.company;
+      delete values.houseNo;
       delete values.password;
       delete values.telephone;
-      delete values.houseName;
       delete values.businessType;
       delete values.confirmPassword;
       delete values.approval_document;
@@ -197,20 +201,15 @@ const RegistrationRealState = () => {
       delete values.business_registration_doc_key;
       delete values.land_register_entry_document_key;
 
-      const hashedPassword = await bcrypt.hash(values.password, 10);
-
       values.updatedAt = null;
       values.company = companyObj;
-      values.registeredAt = new Date();
       values.password = hashedPassword;
-      values.manufacturer_experience = "one";
-
-      console.log("Final dataset : ==========> ", values); return;
+      values.registeredAt = formateDate;
+      values.manufacturer_experience = "one";      
       
       const res = await userAPIs.register(values);
 
     } catch (error: any) {
-
       console.log(
         "Unable to login user, post reqeust failed",
         error.name,
