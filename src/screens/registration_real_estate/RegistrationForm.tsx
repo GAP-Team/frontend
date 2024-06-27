@@ -45,10 +45,8 @@ const RegistrationForm = ({
     }
 
     if (stakeholderTyp == 0) {
-      alert("realStateUser");
       formik.setFieldValue("role", "realStateUser");
     }else{
-      alert("serviceProvider");
       formik.setFieldValue("role", "serviceProvider");
     }
 

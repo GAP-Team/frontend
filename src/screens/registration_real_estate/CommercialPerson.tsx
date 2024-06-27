@@ -54,14 +54,14 @@ const ComercialPerson = ({formik}:any): JSX.Element => {
         </Typography>
         <GTextInput
           placeholder="HANDELREGISTERNUMMER"
-          id="registrationnum"
-          name="registrationnum"
-          value={formik.values.registrationnum}
+          id="registrationNumber"
+          name="registrationNumber"
+          value={formik.values.registrationNumber}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
-          error={formik.touched.registrationnum && Boolean(isRegNumNeed)}
-          helperText={formik.touched.registrationnum && formik.errors.registrationnum}
-          // error={formik.touched.registrationnum && Boolean(formik.errors.registrationnum)}
+          // error={formik.touched.registrationNumber && Boolean(isRegNumNeed)}
+          helperText={formik.touched.registrationNumber && formik.errors.registrationNumber}
+          error={formik.touched.registrationNumber && Boolean(formik.errors.registrationNumber)}
         />
       </Grid>
     </Grid>
