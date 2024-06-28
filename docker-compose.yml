@@ -1,19 +1,22 @@
+version: '3.8'
+
 services:
   gap_frontend:
     container_name: gap_frontend
     build:
-      context: ./
+      context: .
       dockerfile: Dockerfile
     ports:
       - "3000:3000"
     volumes:
-      - .:/app
+      # Exclude the .next directory from being overridden
+      - .:/app:cached
       - /app/node_modules/
+      - /app/.next
     networks:
       - gap_network
     environment:
-      - NODE_ENV=development
+      - NODE_ENV=production
 
 networks:
   gap_network:
-  
