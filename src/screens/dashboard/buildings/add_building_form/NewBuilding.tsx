@@ -99,7 +99,6 @@ const NewBuilding = () => {
   return (
     <Grid container component="main">
       <Grid item xs={12} md={12} lg={12} sx={{ backgroundColor: "#F9FAFA" }}>
-        <BackButton onBack={handleBack} sx={{ ml: "1.5rem", mt: 0 }} />
         <PageTitle title="Objekt 0014" sx={{ ml: "1.5rem" }} />
         <Formik
           initialValues={initialValues}
