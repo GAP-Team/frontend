@@ -4,7 +4,6 @@ import Grid from "@mui/material/Grid";
 import { useRouter } from "next/navigation";
 import { Formik, Form, FormikHelpers } from "formik";
 import { addTenderValidationSchema } from "@/utils/ValidationSchema";
-import BackButton from "@/components/button/BackButton";
 import PageTitle from "@/components/label/PageTitle";
 import { AddTenderFormValues, ActiveStepItem } from "./types";
 import SuccessPage from "@/components/common/SuccessPage";
@@ -14,6 +13,10 @@ import TenderInformation from "./TenderInformation";
 import TenderBuilding from "./TenderBuilding";
 import TenderDescription from "./TenderDescription";
 import TenderClassification from "./TenderClassification";
+import GProgressStepper from "@/components/stepper/GProgressStepper";
+import Link from "next/link";
+import { IconButton } from "@mui/material";
+import { CgClose } from "react-icons/cg";
 
 const NewTender = () => {
   const router = useRouter();
@@ -58,7 +61,7 @@ const NewTender = () => {
   const initialValues: AddTenderFormValues = {
     clientName: "",
     tenderName: "",
-    tenderForm: "",
+    tenderForm: "Handwerker",
     tenderType: "",
     buildingName: "",
     equipmentName: "",
@@ -84,9 +87,22 @@ const NewTender = () => {
     />
   ) : (
     <>
-      <div className="flex flex-col">
-        <SectionTitle text={activeStep.stepName} sx={styles.subTitle} />
-      </div>
+      <Grid container alignItems="center">
+        <Grid item xs>
+          <SectionTitle text={activeStep.stepName} sx={styles.subTitle} />
+          <GProgressStepper
+            sx={styles.progressStepper}
+            activeStep={activeStep.id}
+          />
+        </Grid>
+        <Grid item>
+          <Link href="/dashboard/tenders" type="button">
+            <IconButton sx={{ marginLeft: "auto" }} size="medium">
+              <CgClose color="red" />
+            </IconButton>
+          </Link>
+        </Grid>
+      </Grid>
       {StepComponent && <StepComponent />}
     </>
   );
@@ -94,7 +110,6 @@ const NewTender = () => {
   return (
     <Grid container component="main">
       <Grid item xs={12} md={12} lg={12} sx={{ backgroundColor: "#F9FAFA" }}>
-        <BackButton onBack={handleBack} sx={{ ml: "1.5rem", mt: 0 }} />
         <PageTitle title="Objekt 0014" sx={{ ml: "1.5rem" }} />
         <Formik
           initialValues={initialValues}
@@ -141,5 +156,12 @@ const styles = {
     fontSize: "0.75rem",
     marginLeft: "1.5rem",
     fontWeight: "600",
+  },
+  progressStepper: {
+    maxWidth: "none",
+    width: "auto",
+    flexGrow: 1,
+    marginLeft: "1rem",
+    color: "gprimary",
   },
 };
