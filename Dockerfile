@@ -12,12 +12,11 @@ RUN npm install
 
 # Copy the rest of your application code
 COPY . .
+COPY .env .env
 
 # Build the Next.js application
 RUN npm run build
 
-# Ensure the NODE_ENV is set to production
-ENV NODE_ENV=production
 
 # Expose the port the app runs on
 EXPOSE 3000
