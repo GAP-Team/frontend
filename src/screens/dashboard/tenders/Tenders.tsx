@@ -9,7 +9,7 @@ import addTenderSrc from "@/../public/icons/add_tender.svg";
 const Tenders: React.FC = () => {
 
 
-  const tenderContent = <NoContentPage alt="No Tenders" image={addTenderSrc} title="Erstelle eine neue Ausschreibung." buttonLabel="Ausschreibung erstellen" />;
+  const tenderContent = <NoContentPage alt="No Tenders" image={addTenderSrc} title="Erstelle eine neue Ausschreibung." buttonLabel="Ausschreibung erstellen"  buttonLink="/dashboard/tenders/add_tender"/>;
   return (
       <Box sx={styles.mainContainer}>
         <PropertyFilterPanel />

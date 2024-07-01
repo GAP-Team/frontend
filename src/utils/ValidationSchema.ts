@@ -126,9 +126,9 @@ export const registrationValidationSchema = yup.object({
 
   export const addTenderValidationSchema = [
     yup.object().shape({
-      clientName: yup.string().required("Required"),
-      tenderName: yup.string().required("Required"),
-      tenderForm: yup.string().required("Required"), 
+      clientName: yup.string().required("Auftraggebers ist erforderlich"),
+      tenderName: yup.string().required("Ausschreibung ist erforderlich"),
+      tenderForm: yup.string().required("Ausschreibungsart ist erforderlich"),
       tenderType: yup.string().required("Beschreiben Sie bitte den gewünschten Ausschreibungstyp"),
     }),
     yup.object({
