@@ -15,6 +15,7 @@ import Typography from "@mui/material/Typography";
 import InputAdornment from "@mui/material/InputAdornment";
 
 import authAPIs from "@/api/auth";
+import userAPIs from "@/api/user";
 import { setAccessToken } from "@/utils/helperJWT";
 import { GapLogo } from "@/components/logo/GapLogo";
 import HeroBanner from "../../components/common/InfoBanner";
@@ -34,18 +35,33 @@ export default function LoginPage() {
     onSubmit: async (values, { setSubmitting, resetForm }) => {
       try {
 
-        const hashedPassword = await bcrypt.hash(values.password, 10);
-        const formValues = { ...values, password: hashedPassword };
-        
-        /*const formValues = { ...values, password: values.password };*/
+        let query = {email: values.email};
+        const userDataByEmail = await userAPIs.getUserData(query);
 
-        const res = await authAPIs.login(formValues);
-        if (res?.data?.access_token) {
-          setAccessToken(res.data.access_token);
-          router.push("/dashboard");
-
+        if (!userDataByEmail) {
+          alert("User not found...!");
         } else {
-          setLoginError("Email oder Passwort ist falsch");
+
+          let userPassword = userDataByEmail.data.password;
+          
+          const isMatch = await bcrypt.compare(values.password, userPassword);
+          
+          if (isMatch) {
+
+            const formValues = { ...values, password: userPassword };
+            const res = await authAPIs.login(formValues);
+            if (res?.data?.access_token) {
+              setAccessToken(res.data.access_token);
+              router.push("/dashboard");
+    
+            } else {
+              setLoginError("Email oder Passwort ist falsch");
+            }
+            
+          } else {
+            alert("Wrong password...!");
+          }  
+          
         }
       } catch (error: any) {
         setLoginError("Email oder Passwort ist falsch");
