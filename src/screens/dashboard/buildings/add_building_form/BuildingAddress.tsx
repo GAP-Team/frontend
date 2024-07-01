@@ -1,6 +1,5 @@
 'use client';
 import  { useState, useEffect } from "react";
-import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import LabelWithAsterisk from "@/components/label/LabelWithAsterisk";
@@ -8,7 +7,8 @@ import GTextInput from "@/components/input/GTextInput";
 import GSelector from "@/components/input/GSelector";
 import { germanStates } from "@/utils/Constants";
 import { useFormikContext } from 'formik';
-
+import GoogleAutocomplete from "@/components/input/GoogleAutocomplete";
+import { geocodeByAddress } from 'react-places-autocomplete';
 interface Item {
   label: string;
   value: string;
@@ -22,6 +22,43 @@ const BuildingAddress = ({formik}:{formik?:any}) => {
       formik?.setFieldValue('state', selectedItem ? selectedItem.value : '' );
     };
     
+    const handleAddressSelect = async (value: string) => {
+      try {
+        const results = await geocodeByAddress(value);
+        const addressComponents = results[0].address_components;
+        
+        let street = "";
+        let city = "";
+        let postalCode = "";
+        
+        addressComponents.forEach(component => {
+          if (component.types.includes("route")) {
+            street = component.long_name;
+          }
+          if (component.types.includes("locality") || component.types.includes("sublocality")) {
+            city = component.long_name;
+          }
+          if (component.types.includes("postal_code")) {
+            postalCode = component.long_name;
+          }
+        });
+        
+        formik.setFieldValue('city', city);
+        formik.setFieldValue('zip', postalCode);
+        formik.setFieldValue('address', street || value);
+        // Clear errors and touched status
+        formik.setFieldError('city', '');
+        formik.setFieldError('zip', '');
+        formik.setFieldError('address', '');
+
+        formik.setFieldTouched('city', false);
+        formik.setFieldTouched('zip', false);
+        formik.setFieldTouched('address', false);
+  
+      } catch (error) {
+        console.error("Error geocoding address: ", error);
+      }
+    };
 
     useEffect(() => {
       setSelectedState({ label: formik?.values?.state || '', value: formik?.values?.state || '' });
@@ -36,11 +73,12 @@ const BuildingAddress = ({formik}:{formik?:any}) => {
     <Grid container spacing={2}>
       <Grid item xs={12}>
         <LabelWithAsterisk>ANSCHRIFT</LabelWithAsterisk>
-        <GTextInput
+        <GoogleAutocomplete
           placeholder="Anschrift"
           id="address"
           name="address"
           value={formik?.values?.address}
+          onSelect={handleAddressSelect}
           onChange={formik?.handleChange}
           onBlur={formik?.handleBlur}
           error={formik?.touched?.address && Boolean(formik?.errors?.address)}

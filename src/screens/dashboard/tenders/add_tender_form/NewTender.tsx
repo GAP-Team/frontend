@@ -17,6 +17,8 @@ import GProgressStepper from "@/components/stepper/GProgressStepper";
 import Link from "next/link";
 import { IconButton } from "@mui/material";
 import { CgClose } from "react-icons/cg";
+import TenderDocumentation from "./TenderDocumentation";
+
 
 const NewTender = () => {
   const router = useRouter();
@@ -29,11 +31,11 @@ const NewTender = () => {
     { id: 1, stepName: "Objekt / Anlage", component: TenderBuilding },
     { id: 2, stepName: "Beschreibung", component: TenderDescription },
     { id: 3, stepName: "Einstufung", component: TenderClassification },
-    { id: 4, stepName: "Dokumente" },
+    { id: 4, stepName: "Dokumente", component: TenderDocumentation },
   ];
 
   const [activeStep, setActiveStep] = useState<ActiveStepItem>(steps[0]);
-  const isBeyondLastStep = activeStep.id >= steps.length;
+  const [isSubmitted, setIsSubmitted] = useState(false);
   const StepComponent = steps[activeStep.id]?.component;
 
   const handleNext = (
@@ -42,6 +44,7 @@ const NewTender = () => {
   ) => {
     if (activeStep?.id === steps.length - 1) {
       console.log("Form values", values);
+      setIsSubmitted(true);
       actions.setSubmitting(false);
     } else {
       setActiveStep(steps[activeStep.id + 1]);
@@ -72,21 +75,22 @@ const NewTender = () => {
     toDate: null,
     safetyWorkRequired: false,
     freeParkingAvailable: false,
-    documentChoice: "",
+    documentChoice: "Keine Dokumente vorhanden",
     constructionDocs: [],
     floorplanDocs: [],
     equipmentDocs: [],
     serverLink: "",
   };
 
-  const formOrSuccessContent = isBeyondLastStep ? (
+  const formOrSuccessContent = isSubmitted ? (
     <SuccessPage
-      title="Objekt angelegt!"
+      title="Ausschreibung Online!"
       description2="Aussschreibung wurde erfolgreich anleget"
       description="You have been added to the project team and permitted to receive any project news and updates"
     />
   ) : (
     <>
+
       <Grid container alignItems="center">
         <Grid item xs>
           <SectionTitle text={activeStep.stepName} sx={styles.subTitle} />
@@ -125,7 +129,7 @@ const NewTender = () => {
                   handleBack={handleBack}
                   handleSubmit={handleSubmit}
                   isSubmitting={isSubmitting}
-                  isBeyondLastStep={isBeyondLastStep}
+                  isBeyondLastStep={isSubmitted}
                   formOrSuccessContent={formOrSuccessContent}
                 />
               </Grid>
