@@ -51,7 +51,8 @@ const AddTenderForm: React.FC<AddTenderFormProps> = ({
         >
           {formOrSuccessContent}
         </div>
-        <Grid container justifyContent="flex-end" spacing={2}>
+        {!isBeyondLastStep && (
+          <Grid container justifyContent="flex-end" spacing={2}>
           <Grid item>
             <GButton
               disabled={activeStep?.id === 0}
@@ -69,6 +70,7 @@ const AddTenderForm: React.FC<AddTenderFormProps> = ({
             </GButton>
           </Grid>
         </Grid>
+        )}
       </Grid>
     </>
   );
