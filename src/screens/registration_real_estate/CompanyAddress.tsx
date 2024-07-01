@@ -69,11 +69,7 @@ const CompanyAddress = ({formik}:any) => {
           <LabelWithAsterisk>Land</LabelWithAsterisk>
           <GTextInput value="Deutschland" />
         </Grid>
-        <Grid item xs={12}>
-          <LabelWithAsterisk>BUNDESLAND</LabelWithAsterisk>
-          <GSelector name="state" options={germanStates}  error={formik?.touched?.state && Boolean(formik?.errors?.state)}
-            helperText={formik?.touched?.state && formik?.errors?.state} onSelect={handleStateSelect} selectedState={selectedState} />
-        </Grid>
+       
         <Grid item xs={12} sm={9}>
           <LabelWithAsterisk>STRAßE</LabelWithAsterisk>
           <GoogleAutocomplete
@@ -126,6 +122,11 @@ const CompanyAddress = ({formik}:any) => {
             error={formik.touched.city && Boolean(formik.errors.city)}
             helperText={formik.touched.city && formik.errors.city}
           />
+        </Grid>
+        <Grid item xs={12}>
+          <LabelWithAsterisk>BUNDESLAND</LabelWithAsterisk>
+          <GSelector name="state" options={germanStates}  error={formik?.touched?.state && Boolean(formik?.errors?.state)}
+            helperText={formik?.touched?.state && formik?.errors?.state} onSelect={handleStateSelect} selectedState={selectedState} />
         </Grid>
       </Grid>
     </Box>
