@@ -205,7 +205,7 @@ const RegistrationRealState = () => {
       values.company = companyObj;
       values.password = hashedPassword;
       values.registeredAt = formateDate;
-      values.manufacturer_experience = "one";      
+      values.manufacturer_experience = null;      
       
       const res = await userAPIs.register(values);
 

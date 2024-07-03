@@ -33,10 +33,10 @@ const BuildingSummary = ({setActiveStep,steps}:BuildingSummaryProps) => {
   })) : [];
 
   const updatedDocList: Detail[] = [
-    ...values.constructionDocs.length ? values.constructionDocs.map((doc: any) => ({ label: "Baudokument", value: doc.name })) : [],
-    ...values.floorplanDocs.length ? values.floorplanDocs.map((doc: any) => ({ label: "Grundrissdokument", value: doc.name })) : [],
-    ...values.otherDocs.length ? values.otherDocs.map((doc: any) => ({ label: "Weiteres Dokument", value: doc.name })) : [],
-    ...values.serverLink.length ? [({label:"Server Link", value: values.serverLink})]: [],
+    ...values.constructionDocs?.length ? values.constructionDocs.map((doc: any) => ({ label: "Baudokument", value: doc.name })) : [],
+    ...values.floorplanDocs?.length ? values.floorplanDocs.map((doc: any) => ({ label: "Grundrissdokument", value: doc.name })) : [],
+    ...values.otherDocs?.length ? values.otherDocs.map((doc: any) => ({ label: "Weiteres Dokument", value: doc.name })) : [],
+    ...values.serverLink?.length ? [({label:"Server Link", value: values.serverLink})]: [],
   ];
 
   return (

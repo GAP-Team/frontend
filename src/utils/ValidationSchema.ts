@@ -95,10 +95,11 @@ export const registrationValidationSchema = yup.object({
     // buildingAbbreviation: yup.string(),
     contactPerson: yup.array().of(
       yup.object({
-        firstName: yup.string(),
+        email: yup.string(),
         lastName: yup.string(),
-        phoneNumber: yup.string(),
-        email: yup.string().email("Eingabe einer gültigen E-Mail"),
+        firstName: yup.string(),
+        // phoneNumber: yup.string(),
+        // email: yup.string().email("Eingabe einer gültigen E-Mail"),
       })
     ).min(1, "Mindestens eine Kontaktperson ist erforderlich."),
     street: yup.string().required("STRAßE ist erforderlich."),
@@ -128,9 +129,9 @@ export const registrationValidationSchema = yup.object({
 
   export const addTenderValidationSchema = [
     yup.object().shape({
-      clientName: yup.string().required("Required"),
-      tenderName: yup.string().required("Required"),
-      tenderForm: yup.string().required("Required"), 
+      clientName: yup.string().required("Auftraggebers ist erforderlich"),
+      tenderName: yup.string().required("Ausschreibung ist erforderlich"),
+      tenderForm: yup.string().required("Ausschreibungsart ist erforderlich"),
       tenderType: yup.string().required("Beschreiben Sie bitte den gewünschten Ausschreibungstyp"),
     }),
     yup.object({
@@ -143,16 +144,39 @@ export const registrationValidationSchema = yup.object({
     }),
     yup.object({
       urgency: yup.string(),
-      fromDate: yup.date(),
-      toDate: yup.date(),
+      fromDate: yup.date().nullable(),
+      toDate: yup.date().nullable(),
       safetyWorkRequired: yup.boolean(),
       freeParkingAvailable: yup.boolean(),
     }),
-    yup.object({
+    yup.object().shape({
       documentChoice: yup.string(),
       constructionDocs: yup.array().of(yup.mixed()),
       floorplanDocs: yup.array().of(yup.mixed()),
       equipmentDocs: yup.array().of(yup.mixed()),
-      serverLink: yup.string(),
+      serverLink: yup.string()
+      .test('requiredLink', 'Server link ist erforderlich.', function (value) {
+        const { documentChoice } = this.parent;
+        if (documentChoice === 'Server verküpfung') {
+          return !!value;
+        }
+        return true;
+      })
+      .url('Server-Link muss eine gültige URL sein.'),
+    }).test('requiredDocs', 'Laden Sie mindestens ein Dokument hoch', function (values) {
+      const { documentChoice, constructionDocs, floorplanDocs, equipmentDocs } = values;
+      if (documentChoice == 'Jetzt hochladen Empholen') {
+        if (
+          (!constructionDocs || constructionDocs.length == 0) &&
+          (!floorplanDocs || floorplanDocs.length == 0) &&
+          (!equipmentDocs || equipmentDocs.length == 0)
+        ) {
+          return this.createError({
+            path: 'constructionDocs',
+            message: 'Laden Sie mindestens ein Dokument hoch',
+          });
+        }
+      }
+      return true;
     }),
   ];

@@ -117,8 +117,18 @@ const NewBuilding = () => {
   };
   
   const handleSubmit = async (values: any) => {
+
     try {
       
+      let addressObj = {
+        zip: values.zip,
+        city: values.city,
+        state: values.state,
+        street: values.street,
+        country: values.country,
+        houseNumber: values.houseNumber,
+      }
+
       let docObj: any[] = [];
   
       let selectedOtherDocsFiles = values?.otherDocs;
@@ -147,36 +157,25 @@ const NewBuilding = () => {
   
         });
       }
-  
-      let addressObj = {
-        zip: values.zip,
-        city: values.city,
-        state: values.state,
-        street: values.street,
-        country: values.country,
-        houseNumber: values.houseNumber,
-      }
       
       let currentDate = new Date();
       const isoString = currentDate.toISOString();
       const formateDate = isoString.slice(0, 11) + '00:00:00.000Z';
-  
-      delete values.zip;
-      delete values.city;
-      delete values.state;
-      delete values.street;
-      delete values.country;
-      delete values.otherDocs;
-      delete values.houseNumber;
-      delete values.floorplanDocs;
-      delete values.constructionDocs;
-  
-      values.documents = docObj;
-      values.address = addressObj;
-      values.createdAt = formateDate;
-      values.documentUploadType = "app";
-  
-      const createBuildingResponse = await buildingAPIs.create(values);
+
+      let arrangedDataObj= {
+        name: values.name,
+        documents: docObj,
+        address: addressObj,
+        createdAt: formateDate,
+        documentUploadType: "app",
+        totalArea: values.totalArea,
+        serverLink: values.serverLink,
+        buildingType: values.buildingType,
+        contactPerson: values.contactPerson,
+        buildingAbbreviation: values.buildingAbbreviation,
+      }
+      
+      const createBuildingResponse = await buildingAPIs.create(arrangedDataObj);
 
     } catch (error: any) {
       console.log(
@@ -191,7 +190,6 @@ const NewBuilding = () => {
   return (
     <Grid container component="main">
       <Grid item xs={12} md={12} lg={12} sx={{ backgroundColor: "#F9FAFA" }}>
-        <BackButton onBack={handleBack} sx={{ ml: "1.5rem", mt: 0 }} />
         <PageTitle title="Objekt 0014" sx={{ ml: "1.5rem" }} />
         <Formik
           initialValues={initialValues}

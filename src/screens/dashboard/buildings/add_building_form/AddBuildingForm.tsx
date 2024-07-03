@@ -12,6 +12,8 @@ import GStepper from "@/components/stepper/GStepper";
 import SuccessPage from "@/components/common/SuccessPage";
 import SectionTitle from "@/components/label/SectionTitle";
 import GProgressStepper from "@/components/stepper/GProgressStepper";
+import { IconButton } from "@mui/material";
+import { CgClose } from "react-icons/cg";
 
 const AddBuildingForm = ({
   steps,
@@ -40,13 +42,23 @@ const AddBuildingForm = ({
     />
   ) : (
     <>
-      <div className="flex flex-col">
-        <SectionTitle text={activeStep.stepName}  sx={styles.subTitle}/>
-        <GProgressStepper
+        <Grid container alignItems="center">
+          <Grid item xs>
+            <SectionTitle text={activeStep.stepName} sx={styles.subTitle} />
+            <GProgressStepper
           sx={styles.progressStepper}
           activeStep={activeStep.id}
         />
-      </div>
+          </Grid>
+          <Grid item>
+            <Link href="/dashboard/buildings">
+              <IconButton sx={{marginLeft:'auto'}} size="medium">
+                <CgClose color="red" />
+              </IconButton>
+            </Link>
+          </Grid>
+        </Grid>
+        
         {StepComponent && <StepComponent formik={formik} setActiveStep={setActiveStep} steps={steps} />}
     </>
   );
