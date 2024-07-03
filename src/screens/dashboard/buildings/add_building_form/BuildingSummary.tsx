@@ -14,10 +14,10 @@ const BuildingSummary = ({setActiveStep,steps}:BuildingSummaryProps) => {
   const { values } = useFormikContext<any>();
 
   const updatedBuildingInformation: Detail[] = [
-    values.buildingName && { label: "Name", value: values.buildingName },
+    values.name && { label: "Name", value: values.name },
     values.totalArea && { label: "Area", value: values.totalArea },
     values.buildingType && { label: "Gebäude Type", value: values.buildingType },
-    values.objektTag && { label: "Objektkürzel", value: values.objektTag }
+    values.buildingAbbreviation && { label: "Objektkürzel", value: values.buildingAbbreviation }
   ].filter(Boolean); // Filter out undefined values
 
   const updatedAddress: Detail[] = [
@@ -29,7 +29,7 @@ const BuildingSummary = ({setActiveStep,steps}:BuildingSummaryProps) => {
 
   const updatedContactPersonList: Detail[] = values.contactPerson.length ? values.contactPerson.map((person: any) => ({
     label: "Name",
-    value: `${person.name} - ${person.role}`
+    value: `${person.firstName} ${person.lastName}`
   })) : [];
 
   const updatedDocList: Detail[] = [

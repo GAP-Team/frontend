@@ -1,34 +1,36 @@
 "use client";
-import { useState, useEffect } from "react";
-import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import LabelWithAsterisk from "@/components/label/LabelWithAsterisk";
-import GTextInput from "@/components/input/GTextInput";
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
-import { Item } from "@/components/input/GSelector";
-import { contactPersonList, buildingTypesList } from "@/utils/Constants";
-import Checkbox from "@mui/material/Checkbox";
-import TextField from "@mui/material/TextField";
-import Autocomplete from "@mui/material/Autocomplete";
-import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
-import CheckBoxIcon from "@mui/icons-material/CheckBox";
-import AddIcon from '@mui/icons-material/Add';
+import Grid from "@mui/material/Grid";
 import Dialog from '@mui/material/Dialog';
+import Button from "@mui/material/Button";
+import { useState, useEffect } from "react";
+import Checkbox from "@mui/material/Checkbox";
+import AddIcon from '@mui/icons-material/Add';
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
 import DialogTitle from '@mui/material/DialogTitle';
+import Autocomplete from "@mui/material/Autocomplete";
+import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
-import { ContactPersonItem } from "./types";
-import GTextSelector from "@/components/input/GTextSelector";
+import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 
-const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
+import { ContactPersonItem } from "./types";
+import { Item } from "@/components/input/GSelector";
+import GTextInput from "@/components/input/GTextInput";
+import GTextSelector from "@/components/input/GTextSelector";
+import LabelWithAsterisk from "@/components/label/LabelWithAsterisk";
+import { contactPersonList, buildingTypesList } from "@/utils/Constants";
+
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
+const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 
 const BuildingInformation = ({ formik }: { formik?: any }) => {
-  const [selectedBldngType, setSelectedBldngType] = useState<Item | null>(formik?.values?.buildingType ? { label: formik.values.buildingType, value: formik.values.buildingType } : null);
-  const [options, setOptions] = useState<Item[]>(buildingTypesList);
+  
   const [dialogOpen, setDialogOpen] = useState(false);
-  const [newContact, setNewContact] = useState<ContactPersonItem>({name:'', role:'', email:''});
+  const [options, setOptions] = useState<Item[]>(buildingTypesList);
+  const [newContact, setNewContact] = useState<ContactPersonItem>({firstName:'', lastName:'', email:'', phoneNumber: ''});
+  const [selectedBldngType, setSelectedBldngType] = useState<Item | null>(formik?.values?.buildingType ? { label: formik.values.buildingType, value: formik.values.buildingType } : null);
 
   const handleStateSelect = (selectedItem: Item | null):void => {
     setSelectedBldngType(selectedItem);
@@ -40,11 +42,11 @@ const BuildingInformation = ({ formik }: { formik?: any }) => {
   };
 
   const handleAddContactPerson = () => {
-    if (newContact.name && newContact.role) {
+    if (newContact.firstName && newContact.lastName) {
       formik?.setFieldValue('contactPerson', [...formik.values.contactPerson, newContact]);
       //API call here
       //for POST for adding the new contact Person
-      setNewContact({ name: '', role: '', email: ''});
+      setNewContact({ firstName: '', lastName: '', email: '', phoneNumber: ''});
       setDialogOpen(false);
     } 
   };
@@ -59,17 +61,17 @@ const BuildingInformation = ({ formik }: { formik?: any }) => {
         <Grid item xs={12}>
           <LabelWithAsterisk> NAME DES GEBÄUDES</LabelWithAsterisk>
           <GTextInput
-            id="buildingName"
-            name="buildingName"
-            value={formik?.values?.buildingName}
+            id="name"
+            name="name"
+            value={formik?.values?.name}
             onChange={formik?.handleChange}
             onBlur={formik?.handleBlur}
             error={
-              formik?.touched?.buildingName &&
-              Boolean(formik?.errors?.buildingName)
+              formik?.touched?.name &&
+              Boolean(formik?.errors?.name)
             }
             helperText={
-              formik?.touched?.buildingName && formik?.errors?.buildingName
+              formik?.touched?.name && formik?.errors?.name
             }
           />
         </Grid>
@@ -106,15 +108,15 @@ const BuildingInformation = ({ formik }: { formik?: any }) => {
         <Grid item xs={12} sm={3}>
           <Typography variant="gsub" color="gray.500"> OBJEKTKÜRZEL / TAG ANLEGEN</Typography>
           <GTextInput
-             id="objektTag"
-             name="objektTag"
-             value={formik?.values.objektTag}
+             id="buildingAbbreviation"
+             name="buildingAbbreviation"
+             value={formik?.values.buildingAbbreviation}
              onChange={formik?.handleChange}
              onBlur={formik?.handleBlur}
              error={
-               formik?.touched?.objektTag && Boolean(formik?.errors.objektTag)
+               formik?.touched?.buildingAbbreviation && Boolean(formik?.errors.buildingAbbreviation)
              }
-            helperText={formik?.touched?.objektTag && formik?.errors.objektTag}
+            helperText={formik?.touched?.buildingAbbreviation && formik?.errors.buildingAbbreviation}
           />
         </Grid>
         <Grid item xs={12} sm={11}>
@@ -124,8 +126,8 @@ const BuildingInformation = ({ formik }: { formik?: any }) => {
             id="contactPerson"
             freeSolo
             options={contactPersonList}
-            isOptionEqualToValue={(options, value) => options.name == value.name}
-            getOptionLabel={(option) => option.name + " - " + option.role}
+            isOptionEqualToValue={(options, value) => options.firstName == value.lastName}
+            getOptionLabel={(option) => option.firstName + " " + option.lastName}
             value={formik?.values?.contactPerson || []}
             onChange={handleContactPersonChange}
             renderOption={(props, option, { selected }) => (
@@ -136,7 +138,7 @@ const BuildingInformation = ({ formik }: { formik?: any }) => {
                   style={{ marginRight: 8 }}
                   checked={selected}
                 />
-                {`${option?.name} - ${option?.role}`}
+                {`${option?.firstName} ${option?.lastName}`}
               </li>
             )}
             renderInput={(params) => (
@@ -162,18 +164,18 @@ const BuildingInformation = ({ formik }: { formik?: any }) => {
         <DialogTitle>Neuen Ansprechpartner hinzufügen</DialogTitle>
         <DialogContent>
           <TextField
-            id="name"
+            id="firstName"
             margin="dense"
             autoFocus
-            label="Name"
+            label="Vorname"
             fullWidth
-            value={newContact.name}
-            onChange={(e) => setNewContact({ ...newContact, name: e.target.value })}
-            error={!newContact.name && Boolean(formik?.errors.contactPerson)}
-            helperText={!newContact.name && formik?.errors.contactPerson}
+            value={newContact.firstName}
+            onChange={(e) => setNewContact({ ...newContact, firstName: e.target.value })}
+            error={!newContact.firstName && Boolean(formik?.errors.contactPerson)}
+            helperText={!newContact.firstName && formik?.errors.contactPerson}
             sx={{marginBottom:'1rem'}}
           />
-          <TextField
+          {/* <TextField
             id="role"
             margin="dense"
             label="Rolle"
@@ -182,8 +184,18 @@ const BuildingInformation = ({ formik }: { formik?: any }) => {
             onChange={(e) => setNewContact({ ...newContact, role: e.target.value })}
             error={!newContact.role && Boolean(formik?.errors.contactPerson)}
             helperText={!newContact.role && formik?.errors.contactPerson}
+          /> */}
+          <TextField
+            id="lastName"
+            margin="dense"
+            label="Nachname"
+            fullWidth
+            value={newContact.lastName}
+            onChange={(e) => setNewContact({ ...newContact, lastName: e.target.value })}
+            error={!newContact.lastName && Boolean(formik?.errors.contactPerson)}
+            helperText={!newContact.lastName && formik?.errors.contactPerson}
           />
-           <TextField
+          <TextField
             id="email"
             label="Email"
             margin="dense"
@@ -192,6 +204,16 @@ const BuildingInformation = ({ formik }: { formik?: any }) => {
             onChange={(e) => setNewContact({ ...newContact, email: e.target.value })}
             error={!newContact.email && Boolean(formik?.errors.email)}
             helperText={!newContact.email && formik?.errors.email}
+          />
+          <TextField
+            id="phoneNumber"
+            label="Telefonnummer"
+            margin="dense"
+            fullWidth
+            value={newContact.phoneNumber}
+            onChange={(e) => setNewContact({ ...newContact, phoneNumber: e.target.value })}
+            error={!newContact.phoneNumber && Boolean(formik?.errors.phoneNumber)}
+            helperText={!newContact.phoneNumber && formik?.errors.phoneNumber}
           />
         </DialogContent>
         <DialogActions sx={{padding:'1rem'}}>

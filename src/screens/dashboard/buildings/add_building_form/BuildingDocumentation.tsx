@@ -1,13 +1,16 @@
 "use client";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import LabelWithAsterisk from "@/components/label/LabelWithAsterisk";
-import GTextInput from "@/components/input/GTextInput";
 import Typography from "@mui/material/Typography";
+
+import { handleUploadDoc } from "@/utils/uploadToS3";
+import GTextInput from "@/components/input/GTextInput";
 import UploadButton from "@/components/button/UploadButton";
+import LabelWithAsterisk from "@/components/label/LabelWithAsterisk";
 import UploadMultiButton from "@/components/button/UploadMultiButton";
 
 const BuildingDocumentation = ({ formik }: { formik?: any }) => {
+
   return (
     <Box
       component="form"
@@ -23,6 +26,7 @@ const BuildingDocumentation = ({ formik }: { formik?: any }) => {
             id="constructionDocs"
             name="constructionDocs"
             value={formik.values.constructionDocs}
+            // onChange={(ev:any) => { handleConstructionS3Upload(ev) }}
             onChange={formik.handleChange}
             error={formik.touched.constructionDocs && Boolean(formik.errors.constructionDocs)}
             helperText={formik.touched.constructionDocs && formik.errors.constructionDocs}

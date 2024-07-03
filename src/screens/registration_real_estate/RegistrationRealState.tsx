@@ -211,7 +211,7 @@ const RegistrationRealState = () => {
 
     } catch (error: any) {
       console.log(
-        "Unable to login user, post reqeust failed",
+        "Unable to register user, post reqeust failed",
         error.name,
         error.message
       );
