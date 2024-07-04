@@ -48,7 +48,7 @@ const RegistrationRealState = () => {
     const fieldsPerStep: { [key: number]: string[] } = {
       0: ["firstName", "lastName", "email", "password", "confirmPassword", "telephone", "company", "role"],
       1: ["state", "street", "houseNo", "zip", "city"],
-      2: ["registrationnum", "business_registration_doc", "land_register_entry_document", "approval_document"],
+      2: ["registrationNumber", "business_registration_doc", "land_register_entry_document", "approval_document"],
     };
 
     const fieldsToValidate = fieldsPerStep[activeStep];
@@ -97,22 +97,22 @@ const RegistrationRealState = () => {
   };
 
   const initialValues: RegistrationFormValues = {
-    zip: "",
-    city: "",
-    role: "",
+    firstName: "",
+    lastName: "",
     email: "",
+    company: "",
+    role: "",
+    country: "Deutschland",
     state: "",
     street: "",
-    company: "",
     houseNo: "",
-    lastName: "",
+    zip: "",
+    city: "",
     password: "",
-    firstName: "",
     telephone: "",
     confirmPassword: "",
     approval_document: "",
     registrationNumber: "",
-    country: "Deutschland",
     business_registration_doc: "",
     land_register_entry_document: "",
   };
