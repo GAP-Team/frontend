@@ -17,6 +17,7 @@ import BackButton from "@/components/button/BackButton";
 import BuildingDocumentation from "./BuildingDocumentation";
 import { addObjektFormSchema } from "@/utils/ValidationSchema";
 import { handleUploadDoc, handleUploadMultipleDoc } from "@/utils/uploadToS3";
+import { array } from "yup";
 
 
 const NewBuilding = () => {
@@ -48,6 +49,12 @@ const NewBuilding = () => {
 
   const [activeStep, setActiveStep] = useState<ActiveStepItem>(steps[0]);
 
+  const [documentObject, setDocumentObject] = useState<any>([]);
+  
+  const [isOtherDocsUploaded, setIsOtherDocsUploaded] = useState<Boolean>(false);
+  const [isFloorPlanDocsUploaded, setIsFloorPlanDocsUploaded] = useState<Boolean>(false);
+  const [isConstructionDocsUploaded, setIsConstructionDocsUploaded] = useState<Boolean>(false);
+
   const handleNext = async (
     validateForm: FormikHelpers<AddBuildingFormValues>["validateForm"],
     setTouched: FormikHelpers<AddBuildingFormValues>["setTouched"],
@@ -75,11 +82,9 @@ const NewBuilding = () => {
         setActiveStep(steps[nextStepId]);
       } else {
         //post data to API
-        await handleSubmit(values);
-        submitForm();
-        // console.log("From Next: ---------> ", values);
+        await uploadAllDocuments(values);
         // await handleSubmit(values);
-        // alert(JSON.stringify(values, null, 2));
+        submitForm();
         
         setActiveStep({ ...activeStep, id: steps.length });
       }
@@ -116,7 +121,7 @@ const NewBuilding = () => {
     serverLink: "",
   };
   
-  const handleSubmit = async (values: any) => {
+  const handleSubmit = async (values: any, docObj: any[]) => {
 
     try {
       
@@ -127,35 +132,6 @@ const NewBuilding = () => {
         street: values.street,
         country: values.country,
         houseNumber: values.houseNumber,
-      }
-
-      let docObj: any[] = [];
-  
-      let selectedOtherDocsFiles = values?.otherDocs;
-      let selectedFloorplanDocsFiles = values?.floorplanDocs;
-      let selectedConstructionFiles = values?.constructionDocs;
-  
-      if (selectedOtherDocsFiles.length > 0) {
-        selectedOtherDocsFiles.forEach( async (odFiles: any) => {
-          let odFileDocUpload = await handleUploadMultipleDoc(odFiles);
-          
-          docObj.push(odFileDocUpload);
-        });
-      }
-      if (selectedFloorplanDocsFiles.length > 0) {
-        selectedFloorplanDocsFiles.forEach( async (fdFiles: any) => {
-          let fdFileDocUpload = await handleUploadMultipleDoc(fdFiles);
-          
-          docObj.push(fdFileDocUpload);
-        });
-      }
-      if (selectedConstructionFiles.length > 0) {
-        selectedConstructionFiles.forEach( async (cdFiles: any) => {
-          let cdFileDocUpload = await handleUploadMultipleDoc(cdFiles);
-          
-          docObj.push(cdFileDocUpload);
-  
-        });
       }
       
       let currentDate = new Date();
@@ -175,7 +151,7 @@ const NewBuilding = () => {
         buildingAbbreviation: values.buildingAbbreviation,
       }
       
-      const createBuildingResponse = await buildingAPIs.create(arrangedDataObj);
+      saveBuildingData(arrangedDataObj);
 
     } catch (error: any) {
       console.log(
@@ -185,6 +161,32 @@ const NewBuilding = () => {
       );
     }
 
+  }
+
+  const uploadAllDocuments = async (values: any) => {
+
+    let docObj: any[] = [];
+    var itemsProcessed = 0;
+    let selectedOtherDocsFiles = values?.otherDocs;
+    let selectedFloorplanDocsFiles = values?.floorplanDocs;
+    let selectedConstructionFiles = values?.constructionDocs;
+
+    const allFiles = [...selectedOtherDocsFiles, ...selectedFloorplanDocsFiles, ...selectedConstructionFiles];
+
+    
+    allFiles.forEach( async (file, index, array) => {
+      let fdFileDocUpload = await handleUploadMultipleDoc(file);
+      docObj.push(fdFileDocUpload);
+      itemsProcessed++;
+
+      if (itemsProcessed == array.length) {
+        handleSubmit(values, docObj);
+      }
+    })
+  }
+
+  const saveBuildingData = async (data :any) => {
+    const createBuildingResponse = await buildingAPIs.create(data);
   }
 
   return (

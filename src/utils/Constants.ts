@@ -351,10 +351,10 @@ export const news = [
 ]
 
 export const contactPersonList = [
-  { firstName: "Markus", lastName: "Richter", email: "Projektingenieur" },
-  { firstName: "Alexander", lastName: "Schmidt", email: " Geschäftsführer" },
-  { firstName: "Alexande", lastName: "Schmidt", email: "Vertriebsleiter" },
-  { firstName: "Katharina", lastName: "Weber", email: "Kundenbetreuer" },
+  { firstName: "Markus", lastName: "Richter", email: "lrojektingenieur@abc.com" },
+  { firstName: "Alexander", lastName: "Schmidt", email: "lgeschäftsführer@abc.com" },
+  { firstName: "Alexande", lastName: "Schmidt", email: "lertriebsleiter@abc.com" },
+  { firstName: "Katharina", lastName: "Weber", email: "lundenbetreuer@abc.com" },
 ];
 
 export const buildingTypesList = [

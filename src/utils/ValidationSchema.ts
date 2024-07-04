@@ -95,11 +95,10 @@ export const registrationValidationSchema = yup.object({
     // buildingAbbreviation: yup.string(),
     contactPerson: yup.array().of(
       yup.object({
-        email: yup.string(),
         lastName: yup.string(),
         firstName: yup.string(),
-        // phoneNumber: yup.string(),
-        // email: yup.string().email("Eingabe einer gültigen E-Mail"),
+        phoneNumber: yup.string(),
+        email: yup.string().email("Eingabe einer gültigen E-Mail"),
       })
     ).min(1, "Mindestens eine Kontaktperson ist erforderlich."),
     street: yup.string().required("STRAßE ist erforderlich."),
@@ -122,9 +121,9 @@ export const registrationValidationSchema = yup.object({
     otherDocs: yup
       .array()
       .of(yup.mixed().required()),
-    /*serverLink: yup
+    serverLink: yup
       .string()
-      .url("Server-Link muss eine gültige URL sein."),*/
+      .url("Server-Link muss eine gültige URL sein."),
   });
 
   export const addTenderValidationSchema = [

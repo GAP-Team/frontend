@@ -165,14 +165,15 @@ const BuildingInformation = ({ formik }: { formik?: any }) => {
         <DialogContent>
           <TextField
             id="firstName"
+            name="firstName"
             margin="dense"
             autoFocus
             label="Vorname"
             fullWidth
             value={newContact.firstName}
             onChange={(e) => setNewContact({ ...newContact, firstName: e.target.value })}
-            error={!newContact.firstName && Boolean(formik?.errors.contactPerson)}
-            helperText={!newContact.firstName && formik?.errors.contactPerson}
+            error={!newContact.firstName && Boolean(formik?.errors.firstName)}
+            helperText={!newContact.firstName && formik?.errors.firstName}
             sx={{marginBottom:'1rem'}}
           />
           {/* <TextField
@@ -187,16 +188,18 @@ const BuildingInformation = ({ formik }: { formik?: any }) => {
           /> */}
           <TextField
             id="lastName"
+            name="lastName"
             margin="dense"
             label="Nachname"
             fullWidth
             value={newContact.lastName}
             onChange={(e) => setNewContact({ ...newContact, lastName: e.target.value })}
-            error={!newContact.lastName && Boolean(formik?.errors.contactPerson)}
-            helperText={!newContact.lastName && formik?.errors.contactPerson}
+            error={!newContact.lastName && Boolean(formik?.errors.lastName)}
+            helperText={!newContact.lastName && formik?.errors.lastName}
           />
           <TextField
             id="email"
+            name="email"
             label="Email"
             margin="dense"
             fullWidth
