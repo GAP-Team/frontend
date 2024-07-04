@@ -62,8 +62,8 @@ const PrivatePerson = ({formik}:any): JSX.Element => {
           value={formik.values.approval_document}
           onChange={(ev: any) => { handleS3ApprvDoc(ev) }}
           //make error message appear on private form too based on registration form
-          error={formik.touched.registrationnum && Boolean(formik.errors.registrationnum)}
-          helperText={formik.touched.registrationnum && formik.errors.registrationnum}
+          error={formik.touched.registrationNumber && Boolean(formik.errors.registrationNumber)}
+          helperText={formik.touched.registrationNumber && formik.errors.registrationNumber}
         />
       </Grid>
     </Grid>
