@@ -110,18 +110,41 @@ export const registrationValidationSchema = yup.object({
       ),
     city: yup.string().required("Stadt ist erforderlich."),
     state: yup.string().required("Bundesland ist erforderlich."),
+    documentChoice: yup.string(),
     constructionDocs: yup
       .array()
-      .of(yup.mixed().required()),
+      .of(yup.mixed()),
     floorplanDocs: yup
       .array()
-      .of(yup.mixed().required()),
+      .of(yup.mixed()),
     otherDocs: yup
       .array()
-      .of(yup.mixed().required()),
+      .of(yup.mixed()),
     serverLink: yup
       .string()
-      .url("Server-Link muss eine gültige URL sein."),
+      .test('requiredLink', 'Server link ist erforderlich.', function (value) {
+        const { documentChoice } = this.parent;
+        if (documentChoice === 'Server verküpfung') {
+          return !!value;
+        }
+        return true;
+      })
+      .url('Server-Link muss eine gültige URL sein.'),
+  }).test('requiredDocs', 'Laden Sie mindestens ein Dokument hoch', function (values) {
+    const { documentChoice, constructionDocs, floorplanDocs, otherDocs } = values;
+    if (documentChoice == 'Jetzt hochladen Empholen') {
+      if (
+        (!constructionDocs || constructionDocs.length == 0) &&
+        (!floorplanDocs || floorplanDocs.length == 0) &&
+        (!otherDocs || otherDocs.length == 0)
+      ) {
+        return this.createError({
+          path: 'constructionDocs',
+          message: 'Laden Sie mindestens ein Dokument hoch',
+        });
+      }
+    }
+    return true;
   });
 
   export const addTenderValidationSchema = [

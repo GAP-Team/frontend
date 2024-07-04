@@ -88,6 +88,7 @@ const NewBuilding = () => {
     zip: "",
     city: "",
     state: "",
+    documentChoice: "Keine Dokumente vorhanden",
     constructionDocs: [],
     floorplanDocs: [],
     otherDocs: [],
