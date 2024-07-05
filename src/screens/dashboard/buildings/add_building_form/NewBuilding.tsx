@@ -6,6 +6,7 @@ import { Formik, Form, FormikHelpers, useFormik, FormikErrors } from "formik";
 
 import buildingAPIs from "@/api/building";
 import { ActiveStepItem } from "../../types";
+import { getLogger } from "@/components/Logger";
 import AddBuildingForm from "./AddBuildingForm";
 import { AddBuildingFormValues } from "./types";
 import BuildingAddress from "./BuildingAddress";
@@ -17,12 +18,12 @@ import BackButton from "@/components/button/BackButton";
 import BuildingDocumentation from "./BuildingDocumentation";
 import { addObjektFormSchema } from "@/utils/ValidationSchema";
 import { handleUploadDoc, handleUploadMultipleDoc } from "@/utils/uploadToS3";
-import { array } from "yup";
 
 
 const NewBuilding = () => {
 
   const router = useRouter();
+  const logger = getLogger("new-building");
 
   const steps: ActiveStepItem[] = [
     {
@@ -68,6 +69,10 @@ const NewBuilding = () => {
       1: ["zip", "street", "country", "houseNumber", "city", "state"],
       2: ["serverLink", "constructionDocs", "floorplanDocs", "otherDocs"],
     };
+
+    logger.error("a error message from Home");
+    logger.debug("a debug message from Home");
+    logger.info("a info message from Home");
 
     const currentStepFields = stepFieldsMap[activeStep.id];
 
@@ -123,6 +128,10 @@ const NewBuilding = () => {
   
   const handleSubmit = async (values: any, docObj: any[]) => {
 
+    logger.error("a error message from Home");
+    logger.debug("a debug message from Home");
+    logger.info("a info message from Home");
+
     try {
       
       let addressObj = {
@@ -154,11 +163,12 @@ const NewBuilding = () => {
       saveBuildingData(arrangedDataObj);
 
     } catch (error: any) {
-      console.log(
-        "Unable to create a new building, post reqeust failed",
-        error.name,
-        error.message
-      );
+      // console.log(
+      //   "Unable to create a new building, post reqeust failed",
+      //   error.name,
+      //   error.message
+      // );
+      logger.error("Unable to create a new building, post reqeust failed");
     }
 
   }
