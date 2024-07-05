@@ -48,7 +48,7 @@ const RegistrationRealState = () => {
     const fieldsPerStep: { [key: number]: string[] } = {
       0: ["firstName", "lastName", "email", "password", "confirmPassword", "telephone", "company", "role"],
       1: ["state", "street", "houseNo", "zip", "city"],
-      2: ["registrationnum", "business_registration_doc", "land_register_entry_document", "approval_document"],
+      2: ["registrationNumber", "business_registration_doc", "land_register_entry_document", "approval_document"],
     };
 
     const fieldsToValidate = fieldsPerStep[activeStep];
@@ -211,7 +211,7 @@ const RegistrationRealState = () => {
 
     } catch (error: any) {
       console.log(
-        "Unable to login user, post reqeust failed",
+        "Unable to register user, post reqeust failed",
         error.name,
         error.message
       );
