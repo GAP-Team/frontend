@@ -10,7 +10,7 @@ const ComercialPerson = ({formik}:any): JSX.Element => {
   const [ isRegNumNeed, setIsRegNumNeed ] = useState<Boolean>(true);
 
   const handleS3 = async (ev: any) => {
-
+    
     let uploadStat = await handleUploadDoc(ev);
 
     if (uploadStat) {

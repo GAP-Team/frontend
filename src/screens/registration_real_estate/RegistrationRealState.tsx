@@ -48,7 +48,7 @@ const RegistrationRealState = () => {
     const fieldsPerStep: { [key: number]: string[] } = {
       0: ["firstName", "lastName", "email", "password", "confirmPassword", "telephone", "company", "role"],
       1: ["state", "street", "houseNo", "zip", "city"],
-      2: ["registrationnum", "business_registration_doc", "land_register_entry_document", "approval_document"],
+      2: ["registrationNumber", "business_registration_doc", "land_register_entry_document", "approval_document"],
     };
 
     const fieldsToValidate = fieldsPerStep[activeStep];
