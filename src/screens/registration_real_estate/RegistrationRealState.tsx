@@ -97,22 +97,22 @@ const RegistrationRealState = () => {
   };
 
   const initialValues: RegistrationFormValues = {
-    zip: "",
-    city: "",
-    role: "",
+    firstName: "",
+    lastName: "",
     email: "",
+    company: "",
+    role: "",
+    country: "Deutschland",
     state: "",
     street: "",
-    company: "",
     houseNo: "",
-    lastName: "",
+    zip: "",
+    city: "",
     password: "",
-    firstName: "",
     telephone: "",
     confirmPassword: "",
     approval_document: "",
     registrationNumber: "",
-    country: "Deutschland",
     business_registration_doc: "",
     land_register_entry_document: "",
   };
@@ -211,7 +211,7 @@ const RegistrationRealState = () => {
 
     } catch (error: any) {
       console.log(
-        "Unable to login user, post reqeust failed",
+        "Unable to register user, post reqeust failed",
         error.name,
         error.message
       );
