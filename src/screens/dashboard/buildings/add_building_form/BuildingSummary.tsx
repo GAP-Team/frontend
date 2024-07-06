@@ -24,7 +24,7 @@ const BuildingSummary = ({setActiveStep,steps}:BuildingSummaryProps) => {
     values.address && { label: "Address", value: values.address },
     values.zip && { label: "Postleitzahl", value: values.zip },
     values.city && { label: "Stadt", value: values.city },
-    values.state && { label: "State", value: values.state }
+    values.state && { label: "Bundesland", value: values.state }
   ].filter(Boolean); // Filter out undefined values
 
   const updatedContactPersonList: Detail[] = values.contactPerson.length ? values.contactPerson.map((person: any) => ({
