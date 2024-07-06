@@ -26,10 +26,10 @@ const SummaryRegistration = ({setActiveStep}:SummaryRegistrationProps) => {
       }
     });
   
-    if (formik?.values?.registrationnum) {
+    if (formik?.values?.registrationNumber) {
       businessInfo.unshift({
-        label: "Handerlregister Nummer",
-        value: formik.values.registrationnum,
+        label: "Handelregister Nummer",
+        value: formik.values.registrationNumber,
       });
     }
     return businessInfo;

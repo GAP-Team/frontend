@@ -119,7 +119,7 @@ const NewBuilding = () => {
     street: "",
     houseNumber: "",
     country: "Deutschland",
-
+    documentChoice: "Jetzt hochladen Empfohlen",
     constructionDocs: [],
     floorplanDocs: [],
     otherDocs: [],

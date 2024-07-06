@@ -70,9 +70,9 @@ const RegistrationForm = ({
       formik.setFieldValue("approval_document", "");
       formik.setFieldValue("land_register_entry_document", "");
     }
-    //Private person, make registrationnum and  bsndoc null
+    //Private person, make registrationNumber and  bsndoc null
     else {
-      formik.setFieldValue("registrationnum", "");
+      formik.setFieldValue("registrationNumber", "");
       formik.setFieldValue("business_registration_doc", "");
     }
 

@@ -6,6 +6,9 @@ export interface AddBuildingFormValues{
     street: string;
     country: string;
     totalArea: number;
+    documentChoice: string;
+    constructionDocs: File[];
+    floorplanDocs: File[];
     otherDocs: File[];
     serverLink: string;
     houseNumber: string;
