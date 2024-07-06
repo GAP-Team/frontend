@@ -8,6 +8,7 @@ export interface AddBuildingFormValues{
     zip: string;
     city: string;
     state: string;
+    documentChoice: string;
     constructionDocs: File[];
     floorplanDocs: File[];
     otherDocs: File[];

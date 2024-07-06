@@ -88,6 +88,7 @@ const NewBuilding = () => {
     zip: "",
     city: "",
     state: "",
+    documentChoice: "Jetzt hochladen Empfohlen",
     constructionDocs: [],
     floorplanDocs: [],
     otherDocs: [],
