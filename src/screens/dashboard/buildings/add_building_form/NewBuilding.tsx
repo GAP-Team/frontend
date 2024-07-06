@@ -88,7 +88,7 @@ const NewBuilding = () => {
     zip: "",
     city: "",
     state: "",
-    documentChoice: "Keine Dokumente vorhanden",
+    documentChoice: "Jetzt hochladen Empfohlen",
     constructionDocs: [],
     floorplanDocs: [],
     otherDocs: [],

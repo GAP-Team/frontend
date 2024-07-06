@@ -23,7 +23,7 @@ const BuildingDocumentation = ({ formik }: { formik?: any }) => {
           <Typography variant="gsub" color="gray.500">
             DOKUMENTE
           </Typography>
-          <FormControl sx={{ display: "block", mt: 1 }}>
+          <FormControl sx={{ display: "block" }}>
             <RadioGroup
               id="documentChoice"
               name="documentChoice"
@@ -31,12 +31,16 @@ const BuildingDocumentation = ({ formik }: { formik?: any }) => {
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
             >
-              <Grid container spacing={1}>
+              <Grid container spacing={0.5}>
                 <Grid item xs={4}>
                   <FormControlLabel
-                    value="Jetzt hochladen Empholen"
+                    value="Jetzt hochladen Empfohlen"
                     control={<Radio />}
-                    label="Jetzt hochladen Empholen"
+                    label={
+                      <Typography>
+                        Jetzt hochladen <span style={{ fontWeight: '600', color: '#22A7F1' }}>Empfohlen</span>
+                      </Typography>
+                    }
                   />
                 </Grid>
                 <Grid item xs={4}>
@@ -62,16 +66,16 @@ const BuildingDocumentation = ({ formik }: { formik?: any }) => {
                 </Grid>
                 <Grid item xs={4}>
                   <FormControlLabel
-                    value="Vor Ort zur Verfügung stellen"
+                    value="Dokumente vor Ort zur Verfügung stellen"
                     control={<Radio />}
-                    label="Vor Ort zur Verfügung stellen"
+                    label="Dokumente vor Ort zur Verfügung stellen"
                   />
                 </Grid>
               </Grid>
             </RadioGroup>
           </FormControl>
         </Grid>
-        {formik.values.documentChoice === "Jetzt hochladen Empholen" && (
+        {formik.values.documentChoice === "Jetzt hochladen Empfohlen" && (
           <>
             <Grid item xs={12}>
               <Typography variant="gsub" color="gray.500">
