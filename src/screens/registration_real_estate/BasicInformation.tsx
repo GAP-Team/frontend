@@ -44,7 +44,7 @@ const BasicInformation = ({formik}: any): JSX.Element => {
           />
         </Grid>
         <Grid item xs={12}>
-          <LabelWithAsterisk>berufliche E-Mail-Adresse</LabelWithAsterisk>
+          <LabelWithAsterisk>Berufliche E-Mail-Adresse</LabelWithAsterisk>
           <GTextInput
             placeholder="Geben Sie Ihre berufliche E-Mail-Adresse"
             id="email"
@@ -85,7 +85,7 @@ const BasicInformation = ({formik}: any): JSX.Element => {
           />
         </Grid>
         <Grid item xs={12} sm={6} mt={1}>
-          <LabelWithAsterisk>TELEFONNUMMER</LabelWithAsterisk>
+          <LabelWithAsterisk>Telefonnummer</LabelWithAsterisk>
           <PhoneInput
             id="telephone"
             name="telephone"
@@ -97,7 +97,7 @@ const BasicInformation = ({formik}: any): JSX.Element => {
           />
         </Grid>
         <Grid item xs={12} sm={6} mt={1}>
-          <LabelWithAsterisk>Firma NAME</LabelWithAsterisk>
+          <LabelWithAsterisk>Firma name</LabelWithAsterisk>
           <GTextInput
             placeholder="Geben Sie Ihre Firma Name"
             id="company"

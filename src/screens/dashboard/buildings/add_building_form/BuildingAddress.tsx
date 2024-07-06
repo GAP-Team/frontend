@@ -45,15 +45,15 @@ const BuildingAddress = ({formik}:{formik?:any}) => {
         
         formik.setFieldValue('city', city);
         formik.setFieldValue('zip', postalCode);
-        formik.setFieldValue('address', street || value);
+        formik.setFieldValue('street', street || value);
         // Clear errors and touched status
         formik.setFieldError('city', '');
         formik.setFieldError('zip', '');
-        formik.setFieldError('address', '');
+        formik.setFieldError('street', '');
 
         formik.setFieldTouched('city', false);
         formik.setFieldTouched('zip', false);
-        formik.setFieldTouched('address', false);
+        formik.setFieldTouched('street', false);
   
       } catch (error) {
         console.error("Error geocoding address: ", error);
@@ -66,58 +66,81 @@ const BuildingAddress = ({formik}:{formik?:any}) => {
     
   return (
     <Box
-    component="form"
-    noValidate
-    sx={{ p: 1, width: "auto", marginLeft: "1.5rem" }}
-  >
-    <Grid container spacing={2}>
-      <Grid item xs={12}>
-        <LabelWithAsterisk>ANSCHRIFT</LabelWithAsterisk>
-        <GoogleAutocomplete
-          placeholder="Anschrift"
-          id="address"
-          name="address"
-          value={formik?.values?.address}
-          onSelect={handleAddressSelect}
-          onChange={formik?.handleChange}
-          onBlur={formik?.handleBlur}
-          error={formik?.touched?.address && Boolean(formik?.errors?.address)}
-          helperText={formik?.touched?.address && formik?.errors?.address}
-        />
+      component="form"
+      noValidate
+      sx={{ p: 1, width: "auto", marginLeft: "1.5rem" }}
+    >
+      <Grid container spacing={2}>
+        <Grid item xs={6}>
+          <LabelWithAsterisk>STRAßE</LabelWithAsterisk>
+          {/* <GTextInput
+            placeholder="STRAßE"
+            id="street"
+            name="street"
+            value={formik?.values?.street}
+            onChange={formik?.handleChange}
+            onBlur={formik?.handleBlur}
+            error={formik?.touched?.street && Boolean(formik?.errors?.street)}
+            helperText={formik?.touched?.street && formik?.errors?.street}
+          /> */}
+          <GoogleAutocomplete
+            placeholder="STRAßE"
+            id="street"
+            name="street"
+            value={formik?.values?.street}
+            onSelect={handleAddressSelect}
+            onChange={formik?.handleChange}
+            onBlur={formik?.handleBlur}
+            error={formik?.touched?.street && Boolean(formik?.errors?.street)}
+            helperText={formik?.touched?.street && formik?.errors?.street}
+          />
+        </Grid>
+        <Grid item xs={6}>
+          <LabelWithAsterisk>HAUSNR</LabelWithAsterisk>
+          <GTextInput
+            placeholder="HAUSNR"
+            id="houseNumber"
+            name="houseNumber"
+            value={formik?.values?.houseNumber}
+            onChange={formik?.handleChange}
+            onBlur={formik?.handleBlur}
+            error={formik?.touched?.houseNumber && Boolean(formik?.errors?.houseNumber)}
+            helperText={formik?.touched?.houseNumber && formik?.errors?.houseNumber}
+          />
+        </Grid>
+        <Grid item xs={12} sm={3}>
+          <LabelWithAsterisk>POSTLEITZAHL</LabelWithAsterisk>
+          <GTextInput
+            placeholder="PLZ"
+            id="zip"
+            name="zip"
+            value={formik?.values.zip}
+            onBlur={formik?.handleBlur}
+            onChange={formik?.handleChange}
+            error={formik?.touched?.zip && Boolean(formik?.errors?.zip)}
+            helperText={formik?.touched?.zip && formik?.errors?.zip}
+          />
+        </Grid>
+        <Grid item xs={12} sm={9}>
+          <LabelWithAsterisk>STADT</LabelWithAsterisk>
+          <GTextInput
+            placeholder="Stadt"
+            id="city"
+            name="city"
+            value={formik?.values.city}
+            onChange={formik?.handleChange}
+            onBlur={formik?.handleBlur}
+            error={formik?.touched?.city && Boolean(formik?.errors?.city)}
+            helperText={formik?.touched?.city && formik?.errors?.city}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <LabelWithAsterisk>BUNDESLAND</LabelWithAsterisk>
+          <GSelector name="state" options={germanStates}  error={formik?.touched?.state && Boolean(formik?.errors?.state)}
+            helperText={formik?.touched?.state && formik?.errors?.state} onSelect={handleStateSelect} selectedState={selectedState} />
+        </Grid>
       </Grid>
-      <Grid item xs={12} sm={3}>
-        <LabelWithAsterisk>POSTLEITZAHL</LabelWithAsterisk>
-        <GTextInput
-          placeholder="PLZ"
-          id="zip"
-          name="zip"
-          value={formik?.values.zip}
-          onChange={formik?.handleChange}
-          onBlur={formik?.handleBlur}
-          error={formik?.touched?.zip && Boolean(formik?.errors?.zip)}
-          helperText={formik?.touched?.zip && formik?.errors?.zip}
-        />
-      </Grid>
-      <Grid item xs={12} sm={9}>
-        <LabelWithAsterisk>STADT</LabelWithAsterisk>
-        <GTextInput
-          placeholder="Stadt"
-          id="city"
-          name="city"
-          value={formik?.values.city}
-          onChange={formik?.handleChange}
-          onBlur={formik?.handleBlur}
-          error={formik?.touched?.city && Boolean(formik?.errors?.city)}
-          helperText={formik?.touched?.city && formik?.errors?.city}
-        />
-      </Grid>
-      <Grid item xs={12}>
-        <LabelWithAsterisk>BUNDESLAND</LabelWithAsterisk>
-        <GSelector name="state" options={germanStates}  error={formik?.touched?.state && Boolean(formik?.errors?.state)}
-          helperText={formik?.touched?.state && formik?.errors?.state} onSelect={handleStateSelect} selectedState={selectedState} />
-      </Grid>
-    </Grid>
-  </Box>
+    </Box>
   )
 }
 

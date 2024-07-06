@@ -86,21 +86,23 @@ export const registrationValidationSchema = yup.object({
   }
 );
   export const addObjektFormSchema = yup.object().shape({
-    buildingName: yup
+    name: yup
       .string()
       .required("Gebäudename ist erforderlich.")
       .min(3, "Gebäudename muss mindestens 3 Zeichen lang sein."),
     totalArea: yup.number().typeError("Gesamtfläche muss eine Zahl sein.").required("Gesamtfläche ist erforderlich.").min(1, "Gesamtfläche muss größer als 0 sein."),
     buildingType: yup.string().required("Gebäudetyp ist erforderlich."),
-    objektTag: yup.string(),
+    // buildingAbbreviation: yup.string(),
     contactPerson: yup.array().of(
       yup.object({
-        name: yup.string(),
-        role: yup.string(),
+        lastName: yup.string(),
+        firstName: yup.string(),
+        phoneNumber: yup.string(),
         email: yup.string().email("Eingabe einer gültigen E-Mail"),
       })
     ).min(1, "Mindestens eine Kontaktperson ist erforderlich."),
-    address: yup.string().required("Adresse ist erforderlich."),
+    street: yup.string().required("STRAßE ist erforderlich."),
+    houseNumber: yup.string().required("HAUSNR ist erforderlich."),
     zip: yup
       .string()
       .required("Postleitzahl ist erforderlich")
@@ -155,7 +157,7 @@ export const registrationValidationSchema = yup.object({
       tenderType: yup.string().required("Beschreiben Sie bitte den gewünschten Ausschreibungstyp"),
     }),
     yup.object({
-      buildingName: yup.string(),
+      name: yup.string(),
       equipmentName: yup.string(),
       equipmentType: yup.string().required("Beschreiben Sie bitte den gewünschten Anlagentypenbeschreibung"),
     }),
@@ -185,7 +187,7 @@ export const registrationValidationSchema = yup.object({
       .url('Server-Link muss eine gültige URL sein.'),
     }).test('requiredDocs', 'Laden Sie mindestens ein Dokument hoch', function (values) {
       const { documentChoice, constructionDocs, floorplanDocs, equipmentDocs } = values;
-      if (documentChoice == 'Jetzt hochladen Empholen') {
+      if (documentChoice == 'Jetzt hochladen Empfohlen') {
         if (
           (!constructionDocs || constructionDocs.length == 0) &&
           (!floorplanDocs || floorplanDocs.length == 0) &&

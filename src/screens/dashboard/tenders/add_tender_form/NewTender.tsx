@@ -80,7 +80,7 @@ const NewTender = () => {
     toDate: null,
     safetyWorkRequired: false,
     freeParkingAvailable: false,
-    documentChoice: "Keine Dokumente vorhanden",
+    documentChoice: "Jetzt hochladen Empfohlen",
     constructionDocs: [],
     floorplanDocs: [],
     equipmentDocs: [],

@@ -1,10 +1,12 @@
 "use client";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import LabelWithAsterisk from "@/components/label/LabelWithAsterisk";
-import GTextInput from "@/components/input/GTextInput";
 import Typography from "@mui/material/Typography";
+
+import { handleUploadDoc } from "@/utils/uploadToS3";
+import GTextInput from "@/components/input/GTextInput";
 import UploadButton from "@/components/button/UploadButton";
+import LabelWithAsterisk from "@/components/label/LabelWithAsterisk";
 import UploadMultiButton from "@/components/button/UploadMultiButton";
 import FormControl from "@mui/material/FormControl";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -12,6 +14,7 @@ import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 
 const BuildingDocumentation = ({ formik }: { formik?: any }) => {
+
   return (
     <Box
       component="form"
@@ -19,10 +22,7 @@ const BuildingDocumentation = ({ formik }: { formik?: any }) => {
       sx={{ p: 1, width: "auto", marginLeft: "1.5rem" }}
     >
       <Grid container spacing={2}>
-        <Grid item xs={12}>
-          <Typography variant="gsub" color="gray.500">
-            DOKUMENTE
-          </Typography>
+      
           <FormControl sx={{ display: "block" }}>
             <RadioGroup
               id="documentChoice"
@@ -74,6 +74,7 @@ const BuildingDocumentation = ({ formik }: { formik?: any }) => {
               </Grid>
             </RadioGroup>
           </FormControl>
+
         </Grid>
         {formik.values.documentChoice === "Jetzt hochladen Empfohlen" && (
           <>
@@ -148,7 +149,6 @@ const BuildingDocumentation = ({ formik }: { formik?: any }) => {
             />
           </Grid>
         )}
-      </Grid>
     </Box>
   );
 };
