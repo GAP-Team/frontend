@@ -1,34 +1,39 @@
 "use client";
-import GButton from "@/components/button/GButton";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
-import GStepper from "@/components/stepper/GStepper";
-import { useRouter } from "next/navigation";
-import GProgressStepper from "@/components/stepper/GProgressStepper";
-import Divider from "@mui/material/Divider";
 import { useFormikContext } from "formik";
+import { useRouter } from "next/navigation";
+import Divider from "@mui/material/Divider";
+
 import { AddBuildingFormValues } from "./types";
+import GButton from "@/components/button/GButton";
 import { AddComponentFormProps } from "../../types";
+import GStepper from "@/components/stepper/GStepper";
 import SuccessPage from "@/components/common/SuccessPage";
 import SectionTitle from "@/components/label/SectionTitle";
+import GProgressStepper from "@/components/stepper/GProgressStepper";
 import { IconButton } from "@mui/material";
 import { CgClose } from "react-icons/cg";
 
 const AddBuildingForm = ({
-  activeStep,
-  setActiveStep,
   steps,
+  activeStep,
   handleBack,
   handleNext,
+  setActiveStep,
 }: AddComponentFormProps): JSX.Element => {
-  const formik = useFormikContext<AddBuildingFormValues>();
-  const isBeyondLastStep = activeStep.id >= steps.length;
-  const StepComponent = steps[activeStep.id]?.component;
-  const typeOfBtn = activeStep.id + 1 >= steps.length ? "submit" : "button";
+
   const router = useRouter();
+  const formik = useFormikContext<AddBuildingFormValues>();
+
+  const StepComponent = steps[activeStep.id]?.component;
+  const isBeyondLastStep = activeStep.id >= steps.length;
+  const typeOfBtn = activeStep.id + 1 >= steps.length ? "submit" : "button";
+
   const handleRoute = () => {
     router.push("/dashboard/buildings");
   }
+  
   const formOrSuccessContent = isBeyondLastStep ? (
     <SuccessPage
       title="Objekt angelegt!"

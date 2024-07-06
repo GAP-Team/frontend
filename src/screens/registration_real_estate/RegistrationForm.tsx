@@ -16,7 +16,9 @@ import GStepper from "@/components/stepper/GStepper";
 import SummaryRegistration from "./SummaryRegistration";
 import BusinessRegistration from "./BusinessRegistration";
 import SectionTitle from "@/components/label/SectionTitle";
+import { realStateUsers, serviceProvider } from "@/utils/Constants";
 import GProgressStepper from "@/components/stepper/GProgressStepper";
+
 
 interface RegistrationFormProps {
   activeStep: number;
@@ -45,9 +47,9 @@ const RegistrationForm = ({
     }
 
     if (stakeholderTyp == 0) {
-      formik.setFieldValue("role", "realStateUser");
+      formik.setFieldValue("role", realStateUsers);
     }else{
-      formik.setFieldValue("role", "serviceProvider");
+      formik.setFieldValue("role", serviceProvider);
     }
 
   }, []);
@@ -81,9 +83,9 @@ const RegistrationForm = ({
     setStakeholderTyp(newValue);
 
     if (newValue == 0) {
-      formik.setFieldValue("role", "realStateUser");
+      formik.setFieldValue("role", realStateUsers);
     } else {
-      formik.setFieldValue("role", "serviceProvider");
+      formik.setFieldValue("role", serviceProvider);
     }
   }
 
