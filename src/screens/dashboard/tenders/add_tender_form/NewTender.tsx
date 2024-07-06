@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Grid from "@mui/material/Grid";
 import { useRouter } from "next/navigation";
 import { Formik, Form, FormikHelpers } from "formik";
@@ -37,6 +37,11 @@ const NewTender = () => {
   const [activeStep, setActiveStep] = useState<ActiveStepItem>(steps[0]);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const StepComponent = steps[activeStep.id]?.component;
+
+  useEffect(() => {
+    setActiveStep(steps[0]);
+    setIsSubmitted(false);
+  }, []);
 
   const handleNext = (
     values: AddTenderFormValues,
