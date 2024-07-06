@@ -148,12 +148,12 @@ const NewBuilding = () => {
       const formateDate = isoString.slice(0, 11) + '00:00:00.000Z';
 
       let arrangedDataObj= {
-        name: values.name,
+        buildingName: values.name,
         documents: docObj,
         address: addressObj,
         createdAt: formateDate,
         documentUploadType: "app",
-        totalArea: values.totalArea,
+        totalArea: Number(values.totalArea),
         serverLink: values.serverLink,
         buildingType: values.buildingType,
         contactPerson: values.contactPerson,
