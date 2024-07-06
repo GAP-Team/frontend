@@ -39,7 +39,7 @@ export default function LoginPage() {
         const userDataByEmail = await userAPIs.getUserData(query);
 
         if (!userDataByEmail) {
-          alert("User not found...!");
+          setLoginError("Benutzer existiert nicht");
         } else {
 
           let userPassword = userDataByEmail.data.password;
