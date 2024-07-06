@@ -187,7 +187,7 @@ export const registrationValidationSchema = yup.object({
       .url('Server-Link muss eine gültige URL sein.'),
     }).test('requiredDocs', 'Laden Sie mindestens ein Dokument hoch', function (values) {
       const { documentChoice, constructionDocs, floorplanDocs, equipmentDocs } = values;
-      if (documentChoice == 'Jetzt hochladen Empholen') {
+      if (documentChoice == 'Jetzt hochladen Empfohlen') {
         if (
           (!constructionDocs || constructionDocs.length == 0) &&
           (!floorplanDocs || floorplanDocs.length == 0) &&
