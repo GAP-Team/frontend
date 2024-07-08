@@ -15,8 +15,8 @@ import { Item } from "../../types";
 const TenderBuilding = () => {
   const formik = useFormikContext<AddTenderFormValues>();
   const [selectedEquipmntType, setSelectedEquipmntType] = useState<Item | null>(
-    formik?.values?.tenderType
-      ? { label: formik.values.tenderType, value: formik.values.tenderType }
+    formik?.values?.equipmentType
+      ? { label: formik.values.equipmentType, value: formik.values.equipmentType }
       : null
   );
   const handleEquipmntTypeSelect = (selectedItem: Item | null): void => {

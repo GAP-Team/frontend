@@ -28,7 +28,7 @@ const SummaryRegistration = ({setActiveStep}:SummaryRegistrationProps) => {
   
     if (formik?.values?.registrationNumber) {
       businessInfo.unshift({
-        label: "Handerlregister Nummer",
+        label: "Handelregister Nummer",
         value: formik.values.registrationNumber,
       });
     }

@@ -1,21 +1,28 @@
 export interface AddBuildingFormValues{
-    buildingName: string;
-    totalArea: number;
-    buildingType: string;
-    objektTag: string;
-    contactPerson: ContactPersonItem[];
-    address: string;
     zip: string;
+    name: string;
     city: string;
     state: string;
+    street: string;
+    country: string;
+    totalArea: number;
+    documentChoice: string;
     constructionDocs: File[];
     floorplanDocs: File[];
     otherDocs: File[];
     serverLink: string;
+    houseNumber: string;
+    buildingType: string;
+    floorplanDocs: File[];
+    constructionDocs: File[];
+    buildingAbbreviation: string;
+    contactPerson: ContactPersonItem[];
 }
 
 export interface ContactPersonItem{
-    name: string;
-    role: string;
-    email?: string;
+    firstName: string;
+    lastName: string;
+    phoneNumber: string;
+    // role: string;
+    email: string;
 }

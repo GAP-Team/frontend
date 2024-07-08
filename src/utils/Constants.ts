@@ -351,10 +351,10 @@ export const news = [
 ]
 
 export const contactPersonList = [
-  { name: "Markus Richter", role: "Projektingenieur" },
-  { name: "Alexander Schmidt", role: " Geschäftsführer" },
-  { name: "Alexander Schmidt", role: "Vertriebsleiter" },
-  { name: "Katharina Weber", role: "Kundenbetreuer" },
+  { firstName: "Markus", lastName: "Richter", email: "lrojektingenieur@abc.com" },
+  { firstName: "Alexander", lastName: "Schmidt", email: "lgeschäftsführer@abc.com" },
+  { firstName: "Alexande", lastName: "Schmidt", email: "lertriebsleiter@abc.com" },
+  { firstName: "Katharina", lastName: "Weber", email: "lundenbetreuer@abc.com" },
 ];
 
 export const buildingTypesList = [
@@ -483,3 +483,6 @@ export const equipmentTypesList = [
   { label: "Tanks mit wassergefährdeten Stoffen - Heizöltanks, etc.", value: "Tanks mit wassergefährdeten Stoffen - Heizöltanks, etc." },
   { label: "Tragbare Feuerlöscher", value: "Tragbare Feuerlöscher" },
 ];
+
+export const realStateUsers = "REAL_ESTATE_USER";
+export const serviceProvider = "SERVICE_PROVIDER";

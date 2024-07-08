@@ -1,29 +1,41 @@
 "use client";
-import React,{ useState } from "react";
 import Grid from "@mui/material/Grid";
+import React,{ useState } from "react";
 import { useRouter } from "next/navigation";
-import { Formik, Form, FormikHelpers, useFormik, FormikErrors } from "formik";
-import AddBuildingForm from "./AddBuildingForm";
-import { addObjektFormSchema } from "@/utils/ValidationSchema";
-import { AddBuildingFormValues } from "./types";
+import { Formik, Form, FormikHelpers, useFormik, FormikErrors } from "formik";  
+
+import buildingAPIs from "@/api/building";
 import { ActiveStepItem } from "../../types";
-import BuildingInformation from "./BuildingInformation";
+import { getLogger } from "@/components/Logger";
+import AddBuildingForm from "./AddBuildingForm";
+import { AddBuildingFormValues } from "./types";
 import BuildingAddress from "./BuildingAddress";
-import BuildingDocumentation from "./BuildingDocumentation";
 import BuildingSummary from "./BuildingSummary";
-import BackButton from "@/components/button/BackButton";
+import { SubmitFormFunction } from "@/typings/types";
 import PageTitle from "@/components/label/PageTitle";
+import BuildingInformation from "./BuildingInformation";
+import BackButton from "@/components/button/BackButton";
+import BuildingDocumentation from "./BuildingDocumentation";
+import { addObjektFormSchema } from "@/utils/ValidationSchema";
+import { handleUploadDoc, handleUploadMultipleDoc } from "@/utils/uploadToS3";
 
 
 const NewBuilding = () => {
+
   const router = useRouter();
+  const logger = getLogger("new-building");
+
   const steps: ActiveStepItem[] = [
     {
       id: 0,
       stepName: "Objektinformation",
       component: BuildingInformation,
     },
-    { id: 1, stepName: "Objektanschrift", component: BuildingAddress },
+    { 
+      id: 1, 
+      stepName: "Objektanschrift", 
+      component: BuildingAddress
+    },
     {
       id: 2,
       stepName: "Objektdokumentation",
@@ -38,18 +50,32 @@ const NewBuilding = () => {
 
   const [activeStep, setActiveStep] = useState<ActiveStepItem>(steps[0]);
 
+  const [documentObject, setDocumentObject] = useState<any>([]);
+  
+  const [isOtherDocsUploaded, setIsOtherDocsUploaded] = useState<Boolean>(false);
+  const [isFloorPlanDocsUploaded, setIsFloorPlanDocsUploaded] = useState<Boolean>(false);
+  const [isConstructionDocsUploaded, setIsConstructionDocsUploaded] = useState<Boolean>(false);
+
   const handleNext = async (
     validateForm: FormikHelpers<AddBuildingFormValues>["validateForm"],
     setTouched: FormikHelpers<AddBuildingFormValues>["setTouched"],
-    resetForm: FormikHelpers<AddBuildingFormValues>["resetForm"],
+    submitForm: SubmitFormFunction,
+    // resetForm: FormikHelpers<AddBuildingFormValues>["resetForm"],
     values: AddBuildingFormValues
   ): Promise<void> => {
+
     const stepFieldsMap: { [key: number]: string[] } = {
-      0: ["buildingName", "totalArea", "buildingType", "objektTag", "contactPerson"],
-      1: ["address", "zip", "city", "state"],
+      0: ["name", "totalArea", "buildingType", "buildingAbbreviation", "contactPerson"],
+      1: ["zip", "street", "country", "houseNumber", "city", "state"],
       2: ["serverLink", "constructionDocs", "floorplanDocs", "otherDocs"],
     };
+
+    logger.error("a error message from Home");
+    logger.debug("a debug message from Home");
+    logger.info("a info message from Home");
+
     const currentStepFields = stepFieldsMap[activeStep.id];
+
     setTouched(currentStepFields?.reduce((acc, field) => ({ ...acc, [field]: true }), {}));
 
     const errors = await validateForm();
@@ -61,13 +87,15 @@ const NewBuilding = () => {
         setActiveStep(steps[nextStepId]);
       } else {
         //post data to API
-        alert(JSON.stringify(values, null, 2));
-        await resetForm();
+        await uploadAllDocuments(values);
+        // await handleSubmit(values);
+        submitForm();
+        
         setActiveStep({ ...activeStep, id: steps.length });
       }
     }
-  };
 
+  };
 
   const handleBack = () => {
     if (activeStep.id > 0) {
@@ -79,22 +107,97 @@ const NewBuilding = () => {
   };
   
   const initialValues: AddBuildingFormValues = {
-    buildingName: "",
+    name: "",
     totalArea: 0,
     buildingType: "",
-    objektTag: "",
+    buildingAbbreviation: "",
     contactPerson: [],
-    address: "",
+
     zip: "",
     city: "",
     state: "",
+    street: "",
+    houseNumber: "",
+    country: "Deutschland",
+    documentChoice: "Jetzt hochladen Empfohlen",
     constructionDocs: [],
     floorplanDocs: [],
     otherDocs: [],
     serverLink: "",
   };
   
+  const handleSubmit = async (values: any, docObj: any[]) => {
 
+    logger.error("a error message from Home");
+    logger.debug("a debug message from Home");
+    logger.info("a info message from Home");
+
+    try {
+      
+      let addressObj = {
+        zip: values.zip,
+        city: values.city,
+        state: values.state,
+        street: values.street,
+        country: values.country,
+        houseNumber: values.houseNumber,
+      }
+      
+      let currentDate = new Date();
+      const isoString = currentDate.toISOString();
+      const formateDate = isoString.slice(0, 11) + '00:00:00.000Z';
+
+      let arrangedDataObj= {
+        buildingName: values.name,
+        documents: docObj,
+        address: addressObj,
+        createdAt: formateDate,
+        documentUploadType: "app",
+        totalArea: Number(values.totalArea),
+        serverLink: values.serverLink,
+        buildingType: values.buildingType,
+        contactPerson: values.contactPerson,
+        buildingAbbreviation: values.buildingAbbreviation,
+      }
+      
+      saveBuildingData(arrangedDataObj);
+
+    } catch (error: any) {
+      // console.log(
+      //   "Unable to create a new building, post reqeust failed",
+      //   error.name,
+      //   error.message
+      // );
+      logger.error("Unable to create a new building, post reqeust failed");
+    }
+
+  }
+
+  const uploadAllDocuments = async (values: any) => {
+
+    let docObj: any[] = [];
+    var itemsProcessed = 0;
+    let selectedOtherDocsFiles = values?.otherDocs;
+    let selectedFloorplanDocsFiles = values?.floorplanDocs;
+    let selectedConstructionFiles = values?.constructionDocs;
+
+    const allFiles = [...selectedOtherDocsFiles, ...selectedFloorplanDocsFiles, ...selectedConstructionFiles];
+
+    
+    allFiles.forEach( async (file, index, array) => {
+      let fdFileDocUpload = await handleUploadMultipleDoc(file);
+      docObj.push(fdFileDocUpload);
+      itemsProcessed++;
+
+      if (itemsProcessed == array.length) {
+        handleSubmit(values, docObj);
+      }
+    })
+  }
+
+  const saveBuildingData = async (data :any) => {
+    const createBuildingResponse = await buildingAPIs.create(data);
+  }
 
   return (
     <Grid container component="main">
@@ -103,23 +206,23 @@ const NewBuilding = () => {
         <Formik
           initialValues={initialValues}
           validationSchema={addObjektFormSchema}
-          onSubmit={()=>{}}
+          onSubmit={ async (values, { resetForm }) => {}}
           enableReinitialize
         >
-          {({ validateForm, setTouched,resetForm, values}) => (
-              <Form>
-                <Grid sx={styles.form}>
-                  <AddBuildingForm
-                    activeStep={activeStep}
-                    steps={steps}
-                    handleBack={handleBack}
-                    handleNext={()=>
-                      handleNext(validateForm, setTouched,resetForm, values)
-                    }
-                    setActiveStep={setActiveStep}
-                  />
-                </Grid>
-              </Form>
+          {({ validateForm, setTouched, submitForm, values}) => (
+            <Form>
+              <Grid sx={styles.form}>
+                <AddBuildingForm
+                  steps={steps}
+                  activeStep={activeStep}
+                  handleBack={handleBack}
+                  handleNext={()=>
+                    handleNext(validateForm, setTouched, submitForm, values)
+                  }
+                  setActiveStep={setActiveStep}
+                />
+              </Grid>
+            </Form>
           )}
         </Formik>
       </Grid>

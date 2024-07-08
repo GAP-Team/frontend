@@ -14,29 +14,29 @@ const BuildingSummary = ({setActiveStep,steps}:BuildingSummaryProps) => {
   const { values } = useFormikContext<any>();
 
   const updatedBuildingInformation: Detail[] = [
-    values.buildingName && { label: "Name", value: values.buildingName },
+    values.name && { label: "Name", value: values.name },
     values.totalArea && { label: "Area", value: values.totalArea },
     values.buildingType && { label: "Gebäude Type", value: values.buildingType },
-    values.objektTag && { label: "Objektkürzel", value: values.objektTag }
+    values.buildingAbbreviation && { label: "Objektkürzel", value: values.buildingAbbreviation }
   ].filter(Boolean); // Filter out undefined values
 
   const updatedAddress: Detail[] = [
     values.address && { label: "Address", value: values.address },
     values.zip && { label: "Postleitzahl", value: values.zip },
     values.city && { label: "Stadt", value: values.city },
-    values.state && { label: "State", value: values.state }
+    values.state && { label: "Bundesland", value: values.state }
   ].filter(Boolean); // Filter out undefined values
 
   const updatedContactPersonList: Detail[] = values.contactPerson.length ? values.contactPerson.map((person: any) => ({
     label: "Name",
-    value: `${person.name} - ${person.role}`
+    value: `${person.firstName} ${person.lastName}`
   })) : [];
 
   const updatedDocList: Detail[] = [
-    ...values.constructionDocs.length ? values.constructionDocs.map((doc: any) => ({ label: "Baudokument", value: doc.name })) : [],
-    ...values.floorplanDocs.length ? values.floorplanDocs.map((doc: any) => ({ label: "Grundrissdokument", value: doc.name })) : [],
-    ...values.otherDocs.length ? values.otherDocs.map((doc: any) => ({ label: "Weiteres Dokument", value: doc.name })) : [],
-    ...values.serverLink.length ? [({label:"Server Link", value: values.serverLink})]: [],
+    ...values.constructionDocs?.length ? values.constructionDocs.map((doc: any) => ({ label: "Baudokument", value: doc.name })) : [],
+    ...values.floorplanDocs?.length ? values.floorplanDocs.map((doc: any) => ({ label: "Grundrissdokument", value: doc.name })) : [],
+    ...values.otherDocs?.length ? values.otherDocs.map((doc: any) => ({ label: "Weiteres Dokument", value: doc.name })) : [],
+    ...values.serverLink?.length ? [({label:"Server Link", value: values.serverLink})]: [],
   ];
 
   return (

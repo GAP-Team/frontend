@@ -21,12 +21,12 @@ interface DashboardProps {
 const Dashboard: React.FC<DashboardProps> = ({ overrideComponent  }) => {
   const sidebarItems: SidebarItem[] = [
     { id:0, icon: LuLayoutDashboard, text: "Dashboard", component:<RealEstateUser/> },
-    { id:1, icon: CgNotes, text: "Ausschreibungen", subItems: [{ id: 10, text: "Alle Ausschreibungen", component:<Tenders /> }, { id: 11, text: "Neue hinzufügen", component: <NewTender/>}]},
+    { id:1, icon: CgNotes, text: "Ausschreibungen", subItems: [{ id: 10, text: "Alle Ausschreibungen", component:<Tenders /> }, { id: 11, text: "Neue Ausschreibung", component: <NewTender/>}]},
     { id:2, icon: MdOutlineDoorSliding, text: "Anlagen" },
     { id: 3, icon: MdOutlineAddHomeWork, text: "Gebäude", subItems: [{ id: 30, text: "Alle Gebäude", component:<Buildings /> }, { id: 31, text: "Gebäude hinzufügen", component: <NewBuilding/>}] },
-    { id:4, icon: MdOutlineNoteAlt, text: "Aufträge"},
-    { id:5, icon: TbPigMoney, text: "Kosteneinsparung" },
-    { id:6, icon: FaRegFlag, text: "Favoriten" },
+    // { id:4, icon: MdOutlineNoteAlt, text: "Aufträge"},
+    { id:4, icon: TbPigMoney, text: "Kosteneinsparung" },
+    { id:5, icon: FaRegFlag, text: "Favoriten" },
   ];
 
   const [selected, setSelected] = useState<SidebarItem | SubItem>(sidebarItems[0]);
