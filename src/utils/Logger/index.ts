@@ -1,5 +1,5 @@
-import pino, { Logger } from "pino";
-import logLevelData from "@/utils/log-level";
+/*import pino, { Logger } from "pino";
+import logLevelData from "@/utils/Logger/log-level";
 
 const logLevels = new Map<string, string>(Object.entries(logLevelData));
 
@@ -9,4 +9,17 @@ export function getLogLevel(logger: string): string {
 
 export function getLogger(name: string): Logger {
     return pino({ name, level: getLogLevel(name) });
-}
+}*/
+
+import pino from 'pino';
+
+const logger = pino({
+  transport: {
+    target: 'pino-pretty',
+    options: {
+      colorize: true,
+    },
+  },
+});
+
+export default logger;
