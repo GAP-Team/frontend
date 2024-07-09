@@ -6,8 +6,6 @@ import { Formik, Form, FormikHelpers, useFormik, FormikErrors } from "formik";
 
 import buildingAPIs from "@/api/building";
 import { ActiveStepItem } from "../../types";
-import logger from "@/utils/Logger";
-// import { getLogger } from "@/utils/Logger";
 import AddBuildingForm from "./AddBuildingForm";
 import { AddBuildingFormValues } from "./types";
 import BuildingAddress from "./BuildingAddress";
@@ -24,10 +22,6 @@ import { handleUploadDoc, handleUploadMultipleDoc } from "@/utils/uploadToS3";
 const NewBuilding = () => {
 
   const router = useRouter();
-  // const logger = getLogger("new-building");
-  logger.error("------------------------- > a error message from Home");
-  logger.debug(".....................> a debug message from Home");
-  logger.info("==========================> a info message from Home");
 
   const steps: ActiveStepItem[] = [
     {
@@ -53,6 +47,12 @@ const NewBuilding = () => {
   ];
 
   const [activeStep, setActiveStep] = useState<ActiveStepItem>(steps[0]);
+
+  const [documentObject, setDocumentObject] = useState<any>([]);
+  
+  const [isOtherDocsUploaded, setIsOtherDocsUploaded] = useState<Boolean>(false);
+  const [isFloorPlanDocsUploaded, setIsFloorPlanDocsUploaded] = useState<Boolean>(false);
+  const [isConstructionDocsUploaded, setIsConstructionDocsUploaded] = useState<Boolean>(false);
 
   const handleNext = async (
     validateForm: FormikHelpers<AddBuildingFormValues>["validateForm"],
@@ -153,12 +153,11 @@ const NewBuilding = () => {
       saveBuildingData(arrangedDataObj);
 
     } catch (error: any) {
-      // console.log(
-      //   "Unable to create a new building, post reqeust failed",
-      //   error.name,
-      //   error.message
-      // );
-      logger.error("Unable to create a new building, post reqeust failed");
+      console.log(
+        "Unable to create a new building, post reqeust failed",
+        error.name,
+        error.message
+      );
     }
 
   }
