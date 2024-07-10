@@ -1,37 +1,17 @@
 import { Grid, Typography } from "@mui/material";
 
-import { handleUploadDoc } from "@/utils/uploadToS3";
 import UploadButton from "@/components/button/UploadButton";
 
 const PrivatePerson = ({formik}:any): JSX.Element => {
 
-  const handleS3ApprvDoc = async (ev: any) => {
-
-    let uploadStat = await handleUploadDoc(ev);
-
-    if (uploadStat) {
-      const { name, key } = uploadStat;
-      
-      formik.setFieldValue("approval_document", name);
-      formik.setFieldValue("approval_document_key", key);
-
-    } else {
-      alert("Document not uploaded, try again later");
-    }
+  const setUploadApprvDoc = async (ev: any) => {
+    formik.setFieldValue("approval_document_file", ev);
+    formik.setFieldValue("approval_document", ev?.target.value);
   }
-  const handleS3LandDoc = async (ev: any) => {
 
-    let uploadStat = await handleUploadDoc(ev);
-
-    if (uploadStat) {
-      const { name, key } = uploadStat;
-      
-      formik.setFieldValue("land_register_entry_document", name);
-      formik.setFieldValue("land_register_entry_document_key", key);
-
-    } else {
-      alert("Document not uploaded, try again later");
-    }
+  const setUploadLandDoc = async (ev: any) => {
+    formik.setFieldValue("land_register_entry_document_file", ev);
+    formik.setFieldValue("land_register_entry_document", ev?.target.value);
   }
 
   return (
@@ -43,8 +23,8 @@ const PrivatePerson = ({formik}:any): JSX.Element => {
         <UploadButton
           id="land_register_entry_document"
           name="land_register_entry_document"
+          onChange={(ev:any) => { setUploadLandDoc(ev) }}
           value={formik.values.land_register_entry_document}
-          onChange={(ev:any) => { handleS3LandDoc(ev) }}
         />
       </Grid>
       <Grid item xs={12} sm={12}>
@@ -60,7 +40,7 @@ const PrivatePerson = ({formik}:any): JSX.Element => {
           id="approval_document"
           name="approval_document"
           value={formik.values.approval_document}
-          onChange={(ev: any) => { handleS3ApprvDoc(ev) }}
+          onChange={(ev: any) => { setUploadApprvDoc(ev) }}
           //make error message appear on private form too based on registration form
           error={formik.touched.registrationNumber && Boolean(formik.errors.registrationNumber)}
           helperText={formik.touched.registrationNumber && formik.errors.registrationNumber}
