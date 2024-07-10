@@ -12,6 +12,7 @@ export interface RegistrationFormValues {
   password: string;
   telephone: string;
   firstName: string;
+  businessType: string;
   confirmPassword: string;
   registrationNumber: string;
   approval_document:string | null | undefined;
