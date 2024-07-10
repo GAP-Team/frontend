@@ -1,15 +1,29 @@
 import React, { useState } from "react";
 import { Grid, Typography } from "@mui/material";
 
+import { handleUploadDoc } from "@/utils/uploadToS3";
 import GTextInput from "@/components/input/GTextInput";
 import UploadButton from "@/components/button/UploadButton";
 
 const ComercialPerson = ({formik}:any): JSX.Element => {
 
-  const setUploadDoc = async (ev: any) => {
+  const [ isRegNumNeed, setIsRegNumNeed ] = useState<Boolean>(true);
+
+  const handleS3 = async (ev: any) => {
     
-    formik.setFieldValue("business_registration_doc_file", ev);
-    formik.setFieldValue("business_registration_doc", ev?.target.value);
+    let uploadStat = await handleUploadDoc(ev);
+
+    if (uploadStat) {
+      const { name, key } = uploadStat;
+      
+      formik.setFieldValue("business_registration_doc", name);
+      formik.setFieldValue("business_registration_doc_key", key);
+
+      setIsRegNumNeed(false);
+
+    } else {
+      alert("Document not uploaded, try again later");
+    }
   }
 
   return (
@@ -23,10 +37,10 @@ const ComercialPerson = ({formik}:any): JSX.Element => {
           GEWERBEANMELDUNG
         </Typography>
         <UploadButton
-          id="business_registration_doc"
-          name="business_registration_doc"
-          onChange={(ev:any) => { setUploadDoc(ev) }}
+           id="business_registration_doc"
+           name="business_registration_doc"
           value={formik.values.business_registration_doc}
+          onChange={(ev:any) => { handleS3(ev) }}
         />
       </Grid>
       <Grid item xs={12} sm={12}>
