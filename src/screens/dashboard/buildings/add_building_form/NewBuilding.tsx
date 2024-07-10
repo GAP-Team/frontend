@@ -152,11 +152,11 @@ const NewBuilding = () => {
         documents: docObj,
         address: addressObj,
         createdAt: formateDate,
-        documentUploadType: "app",
-        totalArea: Number(values.totalArea),
         serverLink: values.serverLink,
         buildingType: values.buildingType,
+        totalArea: Number(values.totalArea),
         contactPerson: values.contactPerson,
+        documentUploadType: values.documentChoice,
         buildingAbbreviation: values.buildingAbbreviation,
       }
       
