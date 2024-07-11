@@ -1,4 +1,5 @@
 "use client";
+import moment from 'moment';
 import Grid from "@mui/material/Grid";
 import React,{ useState } from "react";
 import { useRouter } from "next/navigation";
@@ -134,8 +135,7 @@ const NewBuilding = () => {
       }
       
       let currentDate = new Date();
-      const isoString = currentDate.toISOString();
-      const formateDate = isoString.slice(0, 11) + '00:00:00.000Z';
+      const formateDate = moment(currentDate).format('YYYY-MM-DDTHH:mm:ss.SSS[Z]');
 
       let arrangedDataObj= {
         buildingName: values.name,
