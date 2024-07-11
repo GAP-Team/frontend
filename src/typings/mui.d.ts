@@ -55,7 +55,11 @@ import '@mui/material/styles';
       gorange: true;
       gray:true;
       ggrey: true;
-  }
+    }
+    interface CircularProgressPropsColorOverrides {
+      gprimary: true;
+      gsecondary: true;
+    }
 }
   
   declare module '@mui/material/styles' {
