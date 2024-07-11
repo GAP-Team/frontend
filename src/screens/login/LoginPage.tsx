@@ -34,34 +34,14 @@ export default function LoginPage() {
     validationSchema: loginValidationSchema,
     onSubmit: async (values, { setSubmitting, resetForm }) => {
       try {
+        const formValues = { ...values, password: values.password };
+        const res = await authAPIs.login(formValues);
 
-        let query = {email: values.email};
-        const userDataByEmail = await userAPIs.getUserData(query);
-
-        if (!userDataByEmail) {
-          setLoginError("Benutzer existiert nicht");
+        if (res?.data?.access_token) {
+          setAccessToken(res.data.access_token);
+          router.push("/dashboard");
         } else {
-
-          let userPassword = userDataByEmail.data.password;
-          
-          const isMatch = await bcrypt.compare(values.password, userPassword);
-          
-          if (isMatch) {
-
-            const formValues = { ...values, password: userPassword };
-            const res = await authAPIs.login(formValues);
-            if (res?.data?.access_token) {
-              setAccessToken(res.data.access_token);
-              router.push("/dashboard");
-    
-            } else {
-              setLoginError("Email oder Passwort ist falsch");
-            }
-            
-          } else {
-            alert("Wrong password...!");
-          }  
-          
+          setLoginError("Email oder Passwort ist falsch");
         }
       } catch (error: any) {
         setLoginError("Email oder Passwort ist falsch");
