@@ -43,7 +43,6 @@ export default function LoginPage() {
         } else {
           setLoginError("Email oder Passwort ist falsch");
         }
-
       } catch (error: any) {
         setLoginError("Email oder Passwort ist falsch");
         console.log("Unable to login user, post request failed", error.name, error.message);
