@@ -12,13 +12,14 @@ import RegistrationForm from "./RegistrationForm";
 import Typography from "@mui/material/Typography";
 
 import {
-  ValidateFormFunction,
   SetTouchedFunction,
   SubmitFormFunction,
+  ValidateFormFunction,
   } from "../../typings/types";
   import userAPIs from "@/api/user";
   import { RegistrationFormValues } from "./types";
   import PageTitle from "@/components/label/PageTitle";
+  import { handleUploadDoc } from "@/utils/uploadToS3";
   import BackButton from "@/components/button/BackButton";
   import InfoBanner from "@/components/common/InfoBanner";
   import SuccessPage from "@/components/common/SuccessPage";
@@ -115,9 +116,10 @@ const RegistrationRealState = () => {
     registrationNumber: "",
     business_registration_doc: "",
     land_register_entry_document: "",
+    businessType: "",
   };
 
-  const onSubmit = async (values: any) => {
+  const onSubmit = async (values: any, docObj: any) => {
 
     try {
       
@@ -130,42 +132,6 @@ const RegistrationRealState = () => {
         country: values.country,
       }
 
-      let docObj = [];
-      
-      if (values.businessType == "business") {
-
-        let brTemp = {
-          name: values.business_registration_doc,
-          key: values.business_registration_doc_key
-        }
-
-        docObj.push(brTemp);
-
-      } else {
-
-        if (values.approval_document != "") {
-
-          let adTemp = {
-            name: values.approval_document,
-            key: values.approval_document_key
-          }
-
-          docObj.push(adTemp);
-
-        }
-
-        if(values.land_register_entry_document != "") {
-
-          let lrTemp = {
-            name: values.land_register_entry_document,
-            key: values.land_register_entry_document_key
-          };
-
-          docObj.push(lrTemp);
-
-        }
-
-      }
       let companyObj = {
         name: values.company,
         phonenumber: values.telephone,
@@ -174,7 +140,7 @@ const RegistrationRealState = () => {
         business: {
           businessType: values.businessType,
           registrationNumber: values.registrationNumber,
-          documents: docObj          
+          documents: docObj
         }
       }
       
@@ -182,32 +148,20 @@ const RegistrationRealState = () => {
       const isoString = currentDate.toISOString();
       const formateDate = isoString.slice(0, 11) + '00:00:00.000Z';
       const hashedPassword = await bcrypt.hash(values.password, 10);
-
-      delete values.zip;
-      delete values.city;
-      delete values.state;
-      delete values.street;
-      delete values.country;
-      delete values.company;
-      delete values.houseNo;
-      delete values.password;
-      delete values.telephone;
-      delete values.businessType;
-      delete values.confirmPassword;
-      delete values.approval_document;
-      delete values.approval_document_key;
-      delete values.business_registration_doc;
-      delete values.land_register_entry_document;
-      delete values.business_registration_doc_key;
-      delete values.land_register_entry_document_key;
-
-      values.updatedAt = null;
-      values.company = companyObj;
-      values.password = hashedPassword;
-      values.registeredAt = formateDate;
-      values.manufacturer_experience = null;      
       
-      const res = await userAPIs.register(values);
+      let arrangedDataObj= {
+        firstName: values.firstName,
+        lastName: values.lastName,
+        password: hashedPassword,
+        email: values.email,
+        role: values.role,
+        company: companyObj,
+        manufacturer_experience: null,
+        registeredAt: formateDate,
+        updatedAt: null
+      }
+      
+      const res = await userAPIs.register(arrangedDataObj);
 
     } catch (error: any) {
       console.log(
@@ -217,8 +171,49 @@ const RegistrationRealState = () => {
       );
 
     }
-
   };
+
+  const uploadAllDocuments = async (values: any, type: string) => {
+    
+    let docObj: any[] = [];
+    let allFiles: any[] = [];
+
+    var itemsProcessed = 0;
+    
+    if (values?.approval_document_file || values?.land_register_entry_document_file || values?.business_registration_doc_file) {
+      
+      if (type == "business") {
+
+        let selectedBussinessRegFiles = values?.business_registration_doc_file;
+  
+        let fdFileDocUpload = await handleUploadDoc(selectedBussinessRegFiles);
+        docObj.push(fdFileDocUpload);
+        
+        onSubmit(values, docObj);
+
+      }else{
+
+        let selectedApprovalDocsFiles = values?.approval_document_file;
+        let selectedLandRegDocsFiles = values?.land_register_entry_document_file;
+        
+        allFiles = [selectedApprovalDocsFiles, selectedLandRegDocsFiles];
+        
+        allFiles.forEach( async (file, index, array) => {
+          let fdFileDocUpload = await handleUploadDoc(file);
+          docObj.push(fdFileDocUpload);
+          itemsProcessed++;
+    
+          if (itemsProcessed == array.length) {
+            onSubmit(values, docObj);
+          }
+        })
+
+      }
+
+    } else {      
+      onSubmit(values, []);
+    }
+  }
 
   return (
     <Grid container component="main" sx={styles.mainContainer}>
@@ -240,7 +235,7 @@ const RegistrationRealState = () => {
           initialValues={initialValues}
           validationSchema={registrationValidationSchema}
           onSubmit={async (values, { resetForm }) => {
-            await onSubmit(values);
+            await uploadAllDocuments(values, values?.businessType);
             resetForm();
           }}
           enableReinitialize
