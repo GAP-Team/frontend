@@ -4,6 +4,7 @@ import React,{ useState } from "react";
 import { useRouter } from "next/navigation";
 import { Formik, Form, FormikHelpers, useFormik, FormikErrors } from "formik";  
 
+import userAPIs from "@/api/user";
 import buildingAPIs from "@/api/building";
 import { ActiveStepItem } from "../../types";
 import { getLogger } from "@/components/Logger";
@@ -70,10 +71,6 @@ const NewBuilding = () => {
       2: ["serverLink", "constructionDocs", "floorplanDocs", "otherDocs"],
     };
 
-    logger.error("a error message from Home");
-    logger.debug("a debug message from Home");
-    logger.info("a info message from Home");
-
     const currentStepFields = stepFieldsMap[activeStep.id];
 
     setTouched(currentStepFields?.reduce((acc, field) => ({ ...acc, [field]: true }), {}));
@@ -128,9 +125,9 @@ const NewBuilding = () => {
   
   const handleSubmit = async (values: any, docObj: any[]) => {
 
-    logger.error("a error message from Home");
-    logger.debug("a debug message from Home");
-    logger.info("a info message from Home");
+    // logger.error("a error message from Home");
+    // logger.debug("a debug message from Home");
+    // logger.info("a info message from Home");
 
     try {
       
@@ -163,12 +160,7 @@ const NewBuilding = () => {
       saveBuildingData(arrangedDataObj);
 
     } catch (error: any) {
-      // console.log(
-      //   "Unable to create a new building, post reqeust failed",
-      //   error.name,
-      //   error.message
-      // );
-      logger.error("Unable to create a new building, post reqeust failed");
+      logger.error("Unable to create a new building, post reqeust failed "+error.name, error.message);
     }
 
   }
@@ -182,7 +174,6 @@ const NewBuilding = () => {
     let selectedConstructionFiles = values?.constructionDocs;
 
     const allFiles = [...selectedOtherDocsFiles, ...selectedFloorplanDocsFiles, ...selectedConstructionFiles];
-
     
     allFiles.forEach( async (file, index, array) => {
       let fdFileDocUpload = await handleUploadMultipleDoc(file);
@@ -192,11 +183,41 @@ const NewBuilding = () => {
       if (itemsProcessed == array.length) {
         handleSubmit(values, docObj);
       }
-    })
+    });
+
   }
 
   const saveBuildingData = async (data :any) => {
+    
     const createBuildingResponse = await buildingAPIs.create(data);
+    let lastId = createBuildingResponse?.data?._id;
+    
+    if (createBuildingResponse) {
+      if (data.contactPerson.length > 0) {
+        
+        let cPersons = data.contactPerson;
+        
+        cPersons.forEach( async (cp: any, indx: string) => {
+
+          let userBuildings: any[] = [];
+          
+          if (userBuildings) {
+            userBuildings = [...cp.buildings];
+            userBuildings.push(lastId);
+          } else {
+            userBuildings = [lastId];
+          }
+
+          let buildingQuery = {
+            buildings: userBuildings
+          };
+          
+          const userUpdateStatus = await userAPIs.updateUser(cp._id, buildingQuery);
+
+        });
+        
+      }
+    }
   }
 
   return (
