@@ -63,6 +63,7 @@ const TenderClassification = () => {
             <DatePicker
               name="fromDate"
               label="Zeitfenster von"
+              format="DD.MM.YYYY"
               value={formik?.values?.fromDate}
               onChange={(value) => formik?.setFieldValue('fromDate', value)}
             />
@@ -76,6 +77,7 @@ const TenderClassification = () => {
             <DatePicker
               name="toDate"
               label="Zeitfenster bis"
+              format="DD.MM.YYYY"
               value={formik?.values?.toDate}
               onChange={(value) => formik?.setFieldValue('toDate', value)}
             />
