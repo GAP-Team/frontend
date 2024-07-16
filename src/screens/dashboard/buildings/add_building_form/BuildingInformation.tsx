@@ -132,7 +132,8 @@ const BuildingInformation = ({ formik }: { formik?: any }) => {
           />
         </Grid>
         <Grid item xs={12} sm={11}>
-          <LabelWithAsterisk>ANSPRECHPARTNER HINZUFÜGEN</LabelWithAsterisk>
+          {/* <LabelWithAsterisk></LabelWithAsterisk> */}
+          <Typography variant="gsub" color="gray.500"> ANSPRECHPARTNER HINZUFÜGEN</Typography>
           <Autocomplete
             multiple
             id="contactPerson"
