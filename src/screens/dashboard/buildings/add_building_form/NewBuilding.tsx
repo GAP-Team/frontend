@@ -1,4 +1,5 @@
 "use client";
+import moment from 'moment';
 import Grid from "@mui/material/Grid";
 import React,{ useState } from "react";
 import { useRouter } from "next/navigation";
@@ -50,12 +51,6 @@ const NewBuilding = () => {
 
   const [activeStep, setActiveStep] = useState<ActiveStepItem>(steps[0]);
 
-  const [documentObject, setDocumentObject] = useState<any>([]);
-  
-  const [isOtherDocsUploaded, setIsOtherDocsUploaded] = useState<Boolean>(false);
-  const [isFloorPlanDocsUploaded, setIsFloorPlanDocsUploaded] = useState<Boolean>(false);
-  const [isConstructionDocsUploaded, setIsConstructionDocsUploaded] = useState<Boolean>(false);
-
   const handleNext = async (
     validateForm: FormikHelpers<AddBuildingFormValues>["validateForm"],
     setTouched: FormikHelpers<AddBuildingFormValues>["setTouched"],
@@ -69,10 +64,6 @@ const NewBuilding = () => {
       1: ["zip", "street", "country", "houseNumber", "city", "state"],
       2: ["serverLink", "constructionDocs", "floorplanDocs", "otherDocs"],
     };
-
-    logger.error("a error message from Home");
-    logger.debug("a debug message from Home");
-    logger.info("a info message from Home");
 
     const currentStepFields = stepFieldsMap[activeStep.id];
 
@@ -128,10 +119,6 @@ const NewBuilding = () => {
   
   const handleSubmit = async (values: any, docObj: any[]) => {
 
-    logger.error("a error message from Home");
-    logger.debug("a debug message from Home");
-    logger.info("a info message from Home");
-
     try {
       
       let addressObj = {
@@ -144,19 +131,18 @@ const NewBuilding = () => {
       }
       
       let currentDate = new Date();
-      const isoString = currentDate.toISOString();
-      const formateDate = isoString.slice(0, 11) + '00:00:00.000Z';
+      const formateDate = moment(currentDate).format('YYYY-MM-DDTHH:mm:ss.SSS[Z]');
 
       let arrangedDataObj= {
         buildingName: values.name,
         documents: docObj,
         address: addressObj,
         createdAt: formateDate,
+        documentUploadType: "app",
+        totalArea: Number(values.totalArea),
         serverLink: values.serverLink,
         buildingType: values.buildingType,
-        totalArea: Number(values.totalArea),
         contactPerson: values.contactPerson,
-        documentUploadType: values.documentChoice,
         buildingAbbreviation: values.buildingAbbreviation,
       }
       
