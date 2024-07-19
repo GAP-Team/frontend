@@ -15,6 +15,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 
+import userAPIs from "@/api/user";
 import { ContactPersonItem } from "./types";
 import { Item } from "@/components/input/GSelector";
 import GTextInput from "@/components/input/GTextInput";
@@ -29,8 +30,19 @@ const BuildingInformation = ({ formik }: { formik?: any }) => {
   
   const [dialogOpen, setDialogOpen] = useState(false);
   const [options, setOptions] = useState<Item[]>(buildingTypesList);
+  const [contactPersons, setContactPersons] = useState<any[]>(contactPersonList);
   const [newContact, setNewContact] = useState<ContactPersonItem>({firstName:'', lastName:'', email:'', phoneNumber: ''});
   const [selectedBldngType, setSelectedBldngType] = useState<Item | null>(formik?.values?.buildingType ? { label: formik.values.buildingType, value: formik.values.buildingType } : null);
+
+
+  useEffect(() => {
+    getAllUsers();
+  }, []);
+
+  const getAllUsers = async () => {
+    let allUsers = await userAPIs.getAllUser();
+    setContactPersons(allUsers.data);
+  }
 
   const handleStateSelect = (selectedItem: Item | null):void => {
     setSelectedBldngType(selectedItem);
@@ -120,12 +132,13 @@ const BuildingInformation = ({ formik }: { formik?: any }) => {
           />
         </Grid>
         <Grid item xs={12} sm={11}>
-          <LabelWithAsterisk>ANSPRECHPARTNER HINZUFÜGEN</LabelWithAsterisk>
+          <Typography variant="gsub" color="gray.500"> ANSPRECHPARTNER HINZUFÜGEN</Typography>
           <Autocomplete
             multiple
             id="contactPerson"
             freeSolo
-            options={contactPersonList}
+            // options={contactPersonList}
+            options={contactPersons}
             isOptionEqualToValue={(options, value) => options.firstName == value.lastName}
             getOptionLabel={(option) => option.firstName + " " + option.lastName}
             value={formik?.values?.contactPerson || []}

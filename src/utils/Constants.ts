@@ -453,6 +453,15 @@ export const dummyBuildings = [
     noOfInvestment: 2,
     noOfTenders: 5,
   },
+  {
+    id: 10,
+    title: "Building K",
+    address: "Mittelstraße 409, 47475 Kamp-Lintfort",
+    area: 43938,
+    filesNames: [],
+    noOfInvestment: 2,
+    noOfTenders: 5,
+  },
 ];
 
 export const tenderTypesList = [

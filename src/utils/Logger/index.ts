@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 /*import pino, { Logger } from "pino";
+=======
+import pino, { Logger } from "pino";
+>>>>>>> ed70b46b9f9e707849cb8ec5132e40385418b1ae
 import logLevelData from "@/utils/Logger/log-level";
 
 const logLevels = new Map<string, string>(Object.entries(logLevelData));

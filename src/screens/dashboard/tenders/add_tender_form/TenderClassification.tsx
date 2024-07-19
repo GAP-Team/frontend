@@ -83,7 +83,7 @@ const TenderClassification = () => {
           </LocalizationProvider>
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="gsub" color="gray.500">SICHERHEIT ARBEIT ERFODERLICH</Typography>
+          <Typography variant="gsub" color="gray.500">Sicherheitsunterweisung Erforderlich</Typography>
         </Grid>
         <Grid item xs={12}>
           <FormControlLabel
