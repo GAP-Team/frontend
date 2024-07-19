@@ -36,7 +36,7 @@ const BuildingInformation = ({ formik }: { formik?: any }) => {
 
 
   useEffect(() => {
-    getAllUsers();
+    // getAllUsers();
   }, []);
 
   const getAllUsers = async () => {
@@ -137,8 +137,8 @@ const BuildingInformation = ({ formik }: { formik?: any }) => {
             multiple
             id="contactPerson"
             freeSolo
-            // options={contactPersonList}
-            options={contactPersons}
+            // options={contactPersons}
+            options={[]}
             isOptionEqualToValue={(options, value) => options.firstName == value.lastName}
             getOptionLabel={(option) => option.firstName + " " + option.lastName}
             value={formik?.values?.contactPerson || []}
