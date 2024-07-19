@@ -100,7 +100,7 @@ export const registrationValidationSchema = yup.object({
         phoneNumber: yup.string(),
         email: yup.string().email("Eingabe einer gültigen E-Mail"),
       })
-    ).min(1, "Mindestens eine Kontaktperson ist erforderlich."),
+    ).min(0, "Mindestens eine Kontaktperson ist erforderlich."),
     street: yup.string().required("STRAßE ist erforderlich."),
     houseNumber: yup.string().required("HAUSNR ist erforderlich."),
     zip: yup
