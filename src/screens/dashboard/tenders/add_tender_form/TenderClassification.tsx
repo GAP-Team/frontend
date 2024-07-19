@@ -84,40 +84,6 @@ const TenderClassification = () => {
           </Box>
           </LocalizationProvider>
         </Grid>
-        <Grid item xs={12}>
-          <Typography variant="gsub" color="gray.500">Sicherheitsunterweisung Erforderlich</Typography>
-        </Grid>
-        <Grid item xs={12}>
-          <FormControlLabel
-            control={
-              <Checkbox
-                id="safetyWorkRequired"
-                name="safetyWorkRequired"
-                checked={formik?.values?.safetyWorkRequired}
-                onChange={formik?.handleChange}
-                onBlur={formik?.handleBlur}
-              />
-            }
-            label="Erforderlich"
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <Typography variant="gsub" color="gray.500">KOSTENLOSE PARLPLÄTZE VERFÜGBAR</Typography>
-        </Grid>
-        <Grid item xs={12}>
-          <FormControlLabel
-            control={
-              <Checkbox
-                id="freeParkingAvailable"
-                name="freeParkingAvailable"
-                checked={formik?.values?.freeParkingAvailable}
-                onChange={formik?.handleChange}
-                onBlur={formik?.handleBlur}
-              />
-            }
-            label="Verfügbar"
-          />
-        </Grid>
       </Grid>
     </Box>
   );
