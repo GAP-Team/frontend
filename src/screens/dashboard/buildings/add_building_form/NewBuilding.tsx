@@ -25,10 +25,6 @@ const NewBuilding = () => {
 
   const router = useRouter();
   const logger = getLogger("new-building");
-  
-  logger.error("------------------------- > a error message from Home");
-  logger.debug(".....................> a debug message from Home");
-  logger.info("==========================> a info message from Home");
 
   const steps: ActiveStepItem[] = [
     {
