@@ -5,6 +5,7 @@ import React,{ useState } from "react";
 import { useRouter } from "next/navigation";
 import { Formik, Form, FormikHelpers, useFormik, FormikErrors } from "formik";  
 
+import userAPIs from "@/api/user";
 import buildingAPIs from "@/api/building";
 import { ActiveStepItem } from "../../types";
 import { getLogger } from "@/utils/Logger";
@@ -149,12 +150,7 @@ const NewBuilding = () => {
       saveBuildingData(arrangedDataObj);
 
     } catch (error: any) {
-      // console.log(
-      //   "Unable to create a new building, post reqeust failed",
-      //   error.name,
-      //   error.message
-      // );
-      logger.error("Unable to create a new building, post reqeust failed");
+      logger.error("Unable to create a new building, post reqeust failed "+error.name, error.message);
     }
 
   }
@@ -186,7 +182,36 @@ const NewBuilding = () => {
   }
 
   const saveBuildingData = async (data :any) => {
+    
     const createBuildingResponse = await buildingAPIs.create(data);
+    let lastId = createBuildingResponse?.data?._id;
+    
+    if (createBuildingResponse) {
+      if (data.contactPerson.length > 0) {
+        
+        let cPersons = data.contactPerson;
+        
+        cPersons.forEach( async (cp: any, indx: string) => {
+
+          let userBuildings: any[] = [];
+          
+          if (userBuildings) {
+            userBuildings = [...cp.buildings];
+            userBuildings.push(lastId);
+          } else {
+            userBuildings = [lastId];
+          }
+
+          let buildingQuery = {
+            buildings: userBuildings
+          };
+          
+          const userUpdateStatus = await userAPIs.updateUser(cp._id, buildingQuery);
+
+        });
+        
+      }
+    }
   }
 
   return (
