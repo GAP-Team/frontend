@@ -36,7 +36,7 @@ const BuildingInformation = ({ formik }: { formik?: any }) => {
 
 
   useEffect(() => {
-    getAllUsers();
+    // getAllUsers();
   }, []);
 
   const getAllUsers = async () => {
@@ -132,13 +132,13 @@ const BuildingInformation = ({ formik }: { formik?: any }) => {
           />
         </Grid>
         <Grid item xs={12} sm={11}>
-          <LabelWithAsterisk>ANSPRECHPARTNER HINZUFÜGEN</LabelWithAsterisk>
+          <Typography variant="gsub" color="gray.500"> ANSPRECHPARTNER HINZUFÜGEN</Typography>
           <Autocomplete
             multiple
             id="contactPerson"
             freeSolo
-            // options={contactPersonList}
-            options={contactPersons}
+            // options={contactPersons}
+            options={[]}
             isOptionEqualToValue={(options, value) => options.firstName == value.lastName}
             getOptionLabel={(option) => option.firstName + " " + option.lastName}
             value={formik?.values?.contactPerson || []}

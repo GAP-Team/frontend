@@ -1,5 +1,5 @@
 import pino, { Logger } from "pino";
-import logLevelData from "@/utils/log-level";
+import logLevelData from "@/utils/Logger/log-level";
 
 const logLevels = new Map<string, string>(Object.entries(logLevelData));
 

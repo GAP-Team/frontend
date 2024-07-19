@@ -18,6 +18,13 @@ interface JobCardProps {
   projectId: string;
   sectionId: string;
 }
+const statusStyles: { [key: string]: { bgcolor: string; color: string } } = {
+  offen: { bgcolor: "#E7E0FF", color: "#582EFF" },
+  abgeschlossen: { bgcolor: "#96E9CB", color: "#056643" },
+  "in Bearbeitung": { bgcolor: "#FDFCE0", color: "#EB9700" },
+  "Freigabe ausstehend": { bgcolor: "#E5F5FA", color: "#22A7F1" },
+  Nachprüfung: { bgcolor: "#FFE1D7", color: "#EB4444" },
+};
 
 const JobCard: React.FC<JobCardProps> = ({
   status,
@@ -28,10 +35,13 @@ const JobCard: React.FC<JobCardProps> = ({
   projectId,
   sectionId,
 }) => {
+
+  const chipStyles = statusStyles[status] ||  statusStyles["offen"];
+  
   return (
     <Paper sx={styles.card} elevation={4}>
       <Box sx={styles.header}>
-        <Chip label={status} sx={styles.chip} />
+        <Chip label={status} sx={{ ...chipStyles }} />
         <Icon sx={{ color: "orange" }}>
           <BsClockFill />
         </Icon>
@@ -64,10 +74,10 @@ const JobCard: React.FC<JobCardProps> = ({
         {location}
       </Typography>
       <Typography variant="body2" sx={{ pl: 2 }}>
-        {projectId}
+        {`--> ${projectId}`}
       </Typography>
       <Typography variant="body2" sx={{ pl: 4 }}>
-        {sectionId}
+        {`--> ${sectionId}`}
       </Typography>
     </Paper>
   );
@@ -81,7 +91,7 @@ const styles = {
     p: "1.25rem",
     borderRadius: "0.5rem",
     maxWidth: "15rem", // Adjust the width as needed
-    maxHeight: "21rem",
+    height: "21rem",
     flexShrink: 0,
     overflow: "auto",
     mb: "0.35rem",

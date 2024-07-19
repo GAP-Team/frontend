@@ -2,6 +2,7 @@
 import { 
   useEffect, useState 
 } from "react";
+import moment from 'moment';
 import bcrypt from "bcryptjs";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
@@ -95,7 +96,7 @@ const RegistrationRealState = () => {
       // If active step is 0, then push to login
       router.push("/login");
     }
-  };
+  };  
 
   const initialValues: RegistrationFormValues = {
     firstName: "",
@@ -145,8 +146,8 @@ const RegistrationRealState = () => {
       }
       
       let currentDate = new Date();
-      const isoString = currentDate.toISOString();
-      const formateDate = isoString.slice(0, 11) + '00:00:00.000Z';
+      const formateDate = moment(currentDate).format('YYYY-MM-DDTHH:mm:ss.SSS[Z]');
+
       const hashedPassword = await bcrypt.hash(values.password, 10);
       
       let arrangedDataObj= {
