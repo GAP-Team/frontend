@@ -183,16 +183,20 @@ const NewBuilding = () => {
 
     const allFiles = [...selectedOtherDocsFiles, ...selectedFloorplanDocsFiles, ...selectedConstructionFiles];
 
-    
-    allFiles.forEach( async (file, index, array) => {
-      let fdFileDocUpload = await handleUploadMultipleDoc(file);
-      docObj.push(fdFileDocUpload);
-      itemsProcessed++;
+    if (allFiles.length > 0) {
+      allFiles.forEach( async (file, index, array) => {
+        let fdFileDocUpload = await handleUploadMultipleDoc(file);
+        docObj.push(fdFileDocUpload);
+        itemsProcessed++;
+  
+        if (itemsProcessed == array.length) {
+          handleSubmit(values, docObj);
+        }
+      });      
+    } else {
+      handleSubmit(values, docObj);      
+    }
 
-      if (itemsProcessed == array.length) {
-        handleSubmit(values, docObj);
-      }
-    })
   }
 
   const saveBuildingData = async (data :any) => {
