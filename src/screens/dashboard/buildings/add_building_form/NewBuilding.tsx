@@ -7,7 +7,7 @@ import { Formik, Form, FormikHelpers, useFormik, FormikErrors } from "formik";
 
 import buildingAPIs from "@/api/building";
 import { ActiveStepItem } from "../../types";
-import { getLogger } from "@/components/Logger";
+import { getLogger } from "@/utils/Logger";
 import AddBuildingForm from "./AddBuildingForm";
 import { AddBuildingFormValues } from "./types";
 import BuildingAddress from "./BuildingAddress";
