@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import bcrypt from "bcryptjs";
 import { useFormik } from "formik";
 import Box from "@mui/material/Box";
@@ -7,6 +7,7 @@ import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
+import CircularProgress from "@mui/material/CircularProgress";
 import { useRouter } from "next/navigation";
 import { PiLockBold } from "react-icons/pi";
 import { FaRegEnvelope } from "react-icons/fa";
@@ -19,12 +20,12 @@ import userAPIs from "@/api/user";
 import { setAccessToken } from "@/utils/helperJWT";
 import { GapLogo } from "@/components/logo/GapLogo";
 import HeroBanner from "../../components/common/InfoBanner";
-import CustomizedTooltips from "@/components/common/ToolTip";
 import { loginValidationSchema } from "@/utils/ValidationSchema";
 
 export default function LoginPage() {
   const router = useRouter();
-  const [loginError, setLoginError] = React.useState<string | null>(null);
+  const [loginError, setLoginError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
   const formik = useFormik({
     initialValues: {
@@ -34,6 +35,20 @@ export default function LoginPage() {
     validationSchema: loginValidationSchema,
     onSubmit: async (values, { setSubmitting, resetForm }) => {
       try {
+        setLoading(true);
+        let query = {email: values.email};
+        const userDataByEmail = await userAPIs.getUserData(query);
+
+        if (!userDataByEmail) {
+          setLoginError("Benutzer existiert nicht");
+        } else {
+
+          let userPassword = userDataByEmail.data.password;
+          
+          const isMatch = await bcrypt.compare(values.password, userPassword);
+
+          if (isMatch) {
+
         const formValues = { ...values, password: values.password };
         const res = await authAPIs.login(formValues);
 
@@ -48,6 +63,7 @@ export default function LoginPage() {
         console.log("Unable to login user, post request failed", error.name, error.message);
       } finally {
         setSubmitting(false);
+        setLoading(false);
       }
     },
   });
@@ -97,24 +113,24 @@ export default function LoginPage() {
               </Grid>
             </Grid>
             <form onSubmit={formik.handleSubmit} style={styles.formContainerTwo}>
-                <TextField
-                  id="email"
-                  name="email"
-                  label="Email"
-                  value={formik.values.email}
-                  onChange={handleChange("email")}
-                  onBlur={formik.handleBlur}
-                  error={formik.touched.email && Boolean(formik.errors.email)}
-                  helperText={formik.touched.email && formik.errors.email}
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <FaRegEnvelope />
-                      </InputAdornment>
-                    ),
-                  }}
-                  sx={{ mb: 4 }}
-                />
+              <TextField
+                id="email"
+                name="email"
+                label="Email"
+                value={formik.values.email}
+                onChange={handleChange("email")}
+                onBlur={formik.handleBlur}
+                error={formik.touched.email && Boolean(formik.errors.email)}
+                helperText={formik.touched.email && formik.errors.email}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <FaRegEnvelope />
+                    </InputAdornment>
+                  ),
+                }}
+                sx={{ mb: 4 }}
+              />
               <TextField
                 id="password"
                 label="Password"
@@ -133,7 +149,7 @@ export default function LoginPage() {
                   ),
                 }}
               />
-             <Box sx={styles.errorBox} style={{ visibility: loginError ? 'visible' : 'hidden' }}>
+              <Box sx={styles.errorBox} style={{ visibility: loginError ? 'visible' : 'hidden' }}>
                 <Typography color="error">
                   {loginError}
                 </Typography>
@@ -141,25 +157,25 @@ export default function LoginPage() {
               <Grid container sx={{ mt: 10 }} alignItems="center">
                 <Grid item xs>
                   <Box>
-                      <Typography
+                    <Typography
+                      variant="body2"
+                      style={styles.registerTypography}
+                    >
+                      Noch keinen account?
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      component="div"
+                      style={styles.registerLinkContainer}
+                    >
+                      <Link
+                        href="/registration"
                         variant="body2"
-                        style={styles.registerTypography}
+                        style={styles.link}
                       >
-                        Noch keinen account?
-                      </Typography>
-                      <Typography
-                        variant="body2"
-                        component="div"
-                        style={styles.registerLinkContainer}
-                      >
-                        <Link
-                          href="/registration"
-                          variant="body2"
-                          style={styles.link}
-                        >
-                          Registrieren
-                        </Link>
-                      </Typography>
+                        Registrieren
+                      </Link>
+                    </Typography>
                   </Box>
                 </Grid>
                 <Grid item>
@@ -169,8 +185,8 @@ export default function LoginPage() {
                     size="large"
                     type="submit"
                     sx={{ borderRadius: "0.5rem" }}
-                    disabled={formik.isSubmitting}
-
+                    disabled={formik.isSubmitting || loading}
+                    endIcon={loading && <CircularProgress color="gprimary" size={24} />}
                   >
                     Login
                   </Button>
