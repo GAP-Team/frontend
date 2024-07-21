@@ -49,20 +49,14 @@ export default function LoginPage() {
 
           if (isMatch) {
 
-            const formValues = { ...values, password: userPassword };
-            const res = await authAPIs.login(formValues);
-            if (res?.data?.access_token) {
-              setAccessToken(res.data.access_token);
-              router.push("/dashboard");
-    
-            } else {
-              setLoginError("Email oder Passwort ist falsch");
-            }
-            
-          } else {
-            alert("Wrong password...!");
-          }
-          
+        const formValues = { ...values, password: values.password };
+        const res = await authAPIs.login(formValues);
+
+        if (res?.data?.access_token) {
+          setAccessToken(res.data.access_token);
+          router.push("/dashboard");
+        } else {
+          setLoginError("Email oder Passwort ist falsch");
         }
       } catch (error: any) {
         setLoginError("Email oder Passwort ist falsch");

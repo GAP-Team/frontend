@@ -63,6 +63,7 @@ const TenderClassification = () => {
             <DatePicker
               name="fromDate"
               label="Zeitfenster von"
+              format="DD.MM.YYYY"
               value={formik?.values?.fromDate}
               onChange={(value) => formik?.setFieldValue('fromDate', value)}
             />
@@ -76,45 +77,12 @@ const TenderClassification = () => {
             <DatePicker
               name="toDate"
               label="Zeitfenster bis"
+              format="DD.MM.YYYY"
               value={formik?.values?.toDate}
               onChange={(value) => formik?.setFieldValue('toDate', value)}
             />
           </Box>
           </LocalizationProvider>
-        </Grid>
-        <Grid item xs={12}>
-          <Typography variant="gsub" color="gray.500">SICHERHEIT ARBEIT ERFODERLICH</Typography>
-        </Grid>
-        <Grid item xs={12}>
-          <FormControlLabel
-            control={
-              <Checkbox
-                id="safetyWorkRequired"
-                name="safetyWorkRequired"
-                checked={formik?.values?.safetyWorkRequired}
-                onChange={formik?.handleChange}
-                onBlur={formik?.handleBlur}
-              />
-            }
-            label="Erforderlich"
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <Typography variant="gsub" color="gray.500">KOSTENLOSE PARLPLÄTZE VERFÜGBAR</Typography>
-        </Grid>
-        <Grid item xs={12}>
-          <FormControlLabel
-            control={
-              <Checkbox
-                id="freeParkingAvailable"
-                name="freeParkingAvailable"
-                checked={formik?.values?.freeParkingAvailable}
-                onChange={formik?.handleChange}
-                onBlur={formik?.handleBlur}
-              />
-            }
-            label="Verfügbar"
-          />
         </Grid>
       </Grid>
     </Box>

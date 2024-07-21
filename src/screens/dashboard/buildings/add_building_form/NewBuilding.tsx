@@ -1,12 +1,14 @@
 "use client";
+import moment from 'moment';
 import Grid from "@mui/material/Grid";
 import React,{ useState } from "react";
 import { useRouter } from "next/navigation";
 import { Formik, Form, FormikHelpers, useFormik, FormikErrors } from "formik";  
 
+import userAPIs from "@/api/user";
 import buildingAPIs from "@/api/building";
 import { ActiveStepItem } from "../../types";
-import { getLogger } from "@/components/Logger";
+import { getLogger } from "@/utils/Logger";
 import AddBuildingForm from "./AddBuildingForm";
 import { AddBuildingFormValues } from "./types";
 import BuildingAddress from "./BuildingAddress";
@@ -50,12 +52,6 @@ const NewBuilding = () => {
 
   const [activeStep, setActiveStep] = useState<ActiveStepItem>(steps[0]);
 
-  const [documentObject, setDocumentObject] = useState<any>([]);
-  
-  const [isOtherDocsUploaded, setIsOtherDocsUploaded] = useState<Boolean>(false);
-  const [isFloorPlanDocsUploaded, setIsFloorPlanDocsUploaded] = useState<Boolean>(false);
-  const [isConstructionDocsUploaded, setIsConstructionDocsUploaded] = useState<Boolean>(false);
-
   const handleNext = async (
     validateForm: FormikHelpers<AddBuildingFormValues>["validateForm"],
     setTouched: FormikHelpers<AddBuildingFormValues>["setTouched"],
@@ -69,10 +65,6 @@ const NewBuilding = () => {
       1: ["zip", "street", "country", "houseNumber", "city", "state"],
       2: ["serverLink", "constructionDocs", "floorplanDocs", "otherDocs"],
     };
-
-    logger.error("a error message from Home");
-    logger.debug("a debug message from Home");
-    logger.info("a info message from Home");
 
     const currentStepFields = stepFieldsMap[activeStep.id];
 
@@ -128,10 +120,6 @@ const NewBuilding = () => {
   
   const handleSubmit = async (values: any, docObj: any[]) => {
 
-    logger.error("a error message from Home");
-    logger.debug("a debug message from Home");
-    logger.info("a info message from Home");
-
     try {
       
       let addressObj = {
@@ -144,8 +132,7 @@ const NewBuilding = () => {
       }
       
       let currentDate = new Date();
-      const isoString = currentDate.toISOString();
-      const formateDate = isoString.slice(0, 11) + '00:00:00.000Z';
+      const formateDate = moment(currentDate).format('YYYY-MM-DDTHH:mm:ss.SSS[Z]');
 
       let arrangedDataObj= {
         buildingName: values.name,
@@ -163,12 +150,7 @@ const NewBuilding = () => {
       saveBuildingData(arrangedDataObj);
 
     } catch (error: any) {
-      // console.log(
-      //   "Unable to create a new building, post reqeust failed",
-      //   error.name,
-      //   error.message
-      // );
-      logger.error("Unable to create a new building, post reqeust failed");
+      logger.error("Unable to create a new building, post reqeust failed "+error.name, error.message);
     }
 
   }
@@ -183,20 +165,53 @@ const NewBuilding = () => {
 
     const allFiles = [...selectedOtherDocsFiles, ...selectedFloorplanDocsFiles, ...selectedConstructionFiles];
 
-    
-    allFiles.forEach( async (file, index, array) => {
-      let fdFileDocUpload = await handleUploadMultipleDoc(file);
-      docObj.push(fdFileDocUpload);
-      itemsProcessed++;
+    if (allFiles.length > 0) {
+      allFiles.forEach( async (file, index, array) => {
+        let fdFileDocUpload = await handleUploadMultipleDoc(file);
+        docObj.push(fdFileDocUpload);
+        itemsProcessed++;
+  
+        if (itemsProcessed == array.length) {
+          handleSubmit(values, docObj);
+        }
+      });      
+    } else {
+      handleSubmit(values, docObj);      
+    }
 
-      if (itemsProcessed == array.length) {
-        handleSubmit(values, docObj);
-      }
-    })
   }
 
   const saveBuildingData = async (data :any) => {
+    
     const createBuildingResponse = await buildingAPIs.create(data);
+    let lastId = createBuildingResponse?.data?._id;
+    
+    if (createBuildingResponse) {
+      if (data.contactPerson.length > 0) {
+        
+        let cPersons = data.contactPerson;
+        
+        cPersons.forEach( async (cp: any, indx: string) => {
+
+          let userBuildings: any[] = [];
+          
+          if (userBuildings) {
+            userBuildings = [...cp.buildings];
+            userBuildings.push(lastId);
+          } else {
+            userBuildings = [lastId];
+          }
+
+          let buildingQuery = {
+            buildings: userBuildings
+          };
+          
+          const userUpdateStatus = await userAPIs.updateUser(cp._id, buildingQuery);
+
+        });
+        
+      }
+    }
   }
 
   return (

@@ -4,7 +4,10 @@ import Box from "@mui/material/Box";
 import GTextInput from "@/components/input/GTextInput";
 import { useFormikContext } from "formik";
 import { AddTenderFormValues } from "./types";
-import  Typography  from "@mui/material/Typography";
+import Typography from "@mui/material/Typography";
+import FormControl from "@mui/material/FormControl";
+import Checkbox from "@mui/material/Checkbox";
+import FormControlLabel from "@mui/material/FormControlLabel";
 
 const TenderDescription = () => {
   const formik = useFormikContext<AddTenderFormValues>();
@@ -22,7 +25,7 @@ const TenderDescription = () => {
             id="detailDescription"
             placeholder="Bitte schreiben Sie hier Ihre Beschreibung"
             multiline
-            rows={10}
+            rows={8}
             variant="outlined"
             fullWidth
             name="detailDescription"
@@ -35,6 +38,40 @@ const TenderDescription = () => {
             helperText={
               formik?.touched?.detailDescription && formik?.errors?.detailDescription
             }
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <Typography variant="gsub" color="gray.500">SICHERHEIT ARBEIT ERFODERLICH</Typography>
+        </Grid>
+        <Grid item xs={12}>
+          <FormControlLabel
+            control={
+              <Checkbox
+                id="safetyWorkRequired"
+                name="safetyWorkRequired"
+                checked={formik?.values?.safetyWorkRequired}
+                onChange={formik?.handleChange}
+                onBlur={formik?.handleBlur}
+              />
+            }
+            label="Erforderlich"
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <Typography variant="gsub" color="gray.500">KOSTENLOSE PARLPLÄTZE VERFÜGBAR</Typography>
+        </Grid>
+        <Grid item xs={12}>
+          <FormControlLabel
+            control={
+              <Checkbox
+                id="freeParkingAvailable"
+                name="freeParkingAvailable"
+                checked={formik?.values?.freeParkingAvailable}
+                onChange={formik?.handleChange}
+                onBlur={formik?.handleBlur}
+              />
+            }
+            label="Verfügbar"
           />
         </Grid>
       </Grid>
