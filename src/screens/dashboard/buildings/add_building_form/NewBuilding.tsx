@@ -18,6 +18,7 @@ import PageTitle from "@/components/label/PageTitle";
 import BuildingInformation from "./BuildingInformation";
 import BackButton from "@/components/button/BackButton";
 import BuildingDocumentation from "./BuildingDocumentation";
+import CircularProgress from "@mui/material/CircularProgress";
 import { addObjektFormSchema } from "@/utils/ValidationSchema";
 import { handleUploadDoc, handleUploadMultipleDoc } from "@/utils/uploadToS3";
 
@@ -50,6 +51,7 @@ const NewBuilding = () => {
     },
   ];
 
+  const [loading, setLoading] = useState<boolean>(false);
   const [activeStep, setActiveStep] = useState<ActiveStepItem>(steps[0]);
 
   const handleNext = async (
@@ -157,6 +159,8 @@ const NewBuilding = () => {
 
   const uploadAllDocuments = async (values: any) => {
 
+    setLoading(true);
+
     let docObj: any[] = [];
     var itemsProcessed = 0;
     let selectedOtherDocsFiles = values?.otherDocs;
@@ -212,6 +216,8 @@ const NewBuilding = () => {
         
       }
     }
+
+    setLoading(false);
   }
 
   return (
@@ -235,6 +241,7 @@ const NewBuilding = () => {
                     handleNext(validateForm, setTouched, submitForm, values)
                   }
                   setActiveStep={setActiveStep}
+                  loading={loading}
                 />
               </Grid>
             </Form>
