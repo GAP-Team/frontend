@@ -49,23 +49,25 @@ export default function LoginPage() {
 
           if (isMatch) {
 
-        const formValues = { ...values, password: values.password };
-        const res = await authAPIs.login(formValues);
+            const formValues = { ...values, password: values.password };
+            const res = await authAPIs.login(formValues);
 
-        if (res?.data?.access_token) {
-          setAccessToken(res.data.access_token);
-          router.push("/dashboard");
-        } else {
-          setLoginError("Email oder Passwort ist falsch");
+            if (res?.data?.access_token) {
+              setAccessToken(res.data.access_token);
+              router.push("/dashboard");
+            } else {
+              setLoginError("Email oder Passwort ist falsch");
+            }
+          } 
         }
-      } catch (error: any) {
+      }catch (error: any) {
         setLoginError("Email oder Passwort ist falsch");
         console.log("Unable to login user, post request failed", error.name, error.message);
-      } finally {
+      }finally {
         setSubmitting(false);
         setLoading(false);
       }
-    },
+    }
   });
 
   const handleChange = (field: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
