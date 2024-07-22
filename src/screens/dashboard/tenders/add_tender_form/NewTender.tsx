@@ -75,7 +75,7 @@ const NewTender = () => {
     equipmentName: "",
     equipmentType: "",
     detailDescription: "",
-    urgency: "",
+    urgency: "Nicht Dringend",
     fromDate: null,
     toDate: null,
     safetyWorkRequired: false,
