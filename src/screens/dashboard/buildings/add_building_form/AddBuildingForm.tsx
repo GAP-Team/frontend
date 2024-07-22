@@ -1,9 +1,12 @@
 "use client";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
+import { CgClose } from "react-icons/cg";
 import { useFormikContext } from "formik";
+import { IconButton } from "@mui/material";
 import { useRouter } from "next/navigation";
 import Divider from "@mui/material/Divider";
+import CircularProgress from "@mui/material/CircularProgress";
 
 import { AddBuildingFormValues } from "./types";
 import GButton from "@/components/button/GButton";
@@ -12,12 +15,11 @@ import GStepper from "@/components/stepper/GStepper";
 import SuccessPage from "@/components/common/SuccessPage";
 import SectionTitle from "@/components/label/SectionTitle";
 import GProgressStepper from "@/components/stepper/GProgressStepper";
-import { IconButton } from "@mui/material";
-import { CgClose } from "react-icons/cg";
 
 const AddBuildingForm = ({
   steps,
   activeStep,
+  loading,
   handleBack,
   handleNext,
   setActiveStep,
@@ -35,6 +37,7 @@ const AddBuildingForm = ({
   }
   
   const formOrSuccessContent = isBeyondLastStep ? (
+    !loading && 
     <SuccessPage
       title="Objekt angelegt!"
       description2="Aussschreibung wurde erfolgreich anleget"
@@ -42,24 +45,24 @@ const AddBuildingForm = ({
     />
   ) : (
     <>
-        <Grid container alignItems="center">
-          <Grid item xs>
-            <SectionTitle text={activeStep.stepName} sx={styles.subTitle} />
-            <GProgressStepper
-          sx={styles.progressStepper}
-          activeStep={activeStep.id}
-        />
-          </Grid>
-          <Grid item>
-            <Link href="/dashboard/buildings">
-              <IconButton sx={{marginLeft:'auto'}} size="medium">
-                <CgClose color="red" />
-              </IconButton>
-            </Link>
-          </Grid>
+      <Grid container alignItems="center">
+        <Grid item xs>
+          <SectionTitle text={activeStep.stepName} sx={styles.subTitle} />
+          <GProgressStepper
+        sx={styles.progressStepper}
+        activeStep={activeStep.id}
+      />
         </Grid>
-        
-        {StepComponent && <StepComponent formik={formik} setActiveStep={setActiveStep} steps={steps} />}
+        <Grid item>
+          <Link href="/dashboard/buildings">
+            <IconButton sx={{marginLeft:'auto'}} size="medium">
+              <CgClose color="red" />
+            </IconButton>
+          </Link>
+        </Grid>
+      </Grid>
+      
+      {StepComponent && <StepComponent formik={formik} setActiveStep={setActiveStep} steps={steps} />}
     </>
   );
 
@@ -70,13 +73,17 @@ const AddBuildingForm = ({
           {activeStep.id < steps.length - 1 ? "Zurück" : "Bearbeiten"}
         </GButton>
       )}
-      <GButton type={typeOfBtn} onClick={!isBeyondLastStep ? handleNext : handleRoute} >
-        {isBeyondLastStep
-          ? "schließen"
-          : activeStep.id < steps.length - 1
-            ? "Weiter"
-            : "Abschlißen"}
-      </GButton>
+      {loading ?
+        <CircularProgress color="gprimary" size={24} />
+      :
+        <GButton type={typeOfBtn} onClick={!isBeyondLastStep ? handleNext : handleRoute} >
+          {isBeyondLastStep
+            ? "schließen"
+            : activeStep.id < steps.length - 1
+              ? "Weiter"
+              : "Abschlißen"}
+        </GButton>
+      }
     </>
   );
 

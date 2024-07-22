@@ -11,6 +11,7 @@ export interface AddComponentFormProps {
     steps: ActiveStepItem[];
     handleBack: () => void;
     handleNext: () => void;
+    loading: boolean;
 }
   
 export interface Item {
