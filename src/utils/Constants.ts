@@ -109,7 +109,7 @@ export const adresse: Detail[] = [
   { label: "Land", value: "Germany" },
   { label: "Bundesland", value: "Mecklenburg-Vorpom..." },
   { label: "Straße", value: "Heinrich-Baumann Str. 49" },
-  { label: "Hause Nummer", value: "123" },
+  { label: "Hausnummer", value: "123" },
   { label: "Postleitzahl", value: "19061" },
   { label: "Stadt", value: "Schwerin" },
 ];
