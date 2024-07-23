@@ -1,3 +1,4 @@
+'use client';
 import LandingPage from "@/screens/landing_page/LandingPage";
 import GFooter from "@/components/common/GFooter/GFooter";
 
