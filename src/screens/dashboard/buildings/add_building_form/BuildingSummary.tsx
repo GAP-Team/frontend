@@ -21,7 +21,8 @@ const BuildingSummary = ({setActiveStep,steps}:BuildingSummaryProps) => {
   ].filter(Boolean); // Filter out undefined values
 
   const updatedAddress: Detail[] = [
-    values.address && { label: "Address", value: values.address },
+    values.street && { label: "Straße", value: values.street },
+    values.houseNumber && { label: "Hausnummer", value: values.houseNumber },
     values.zip && { label: "Postleitzahl", value: values.zip },
     values.city && { label: "Stadt", value: values.city },
     values.state && { label: "Bundesland", value: values.state }

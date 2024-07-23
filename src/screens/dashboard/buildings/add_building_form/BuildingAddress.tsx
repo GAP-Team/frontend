@@ -84,7 +84,7 @@ const BuildingAddress = ({formik}:{formik?:any}) => {
             helperText={formik?.touched?.street && formik?.errors?.street}
           /> */}
           <GoogleAutocomplete
-            placeholder="STRAßE"
+            placeholder="Straße"
             id="street"
             name="street"
             value={formik?.values?.street}
@@ -96,9 +96,9 @@ const BuildingAddress = ({formik}:{formik?:any}) => {
           />
         </Grid>
         <Grid item xs={6}>
-          <LabelWithAsterisk>HAUSNR</LabelWithAsterisk>
+          <LabelWithAsterisk>HAUSNUMMER</LabelWithAsterisk>
           <GTextInput
-            placeholder="HAUSNR"
+            placeholder="Hausnummer"
             id="houseNumber"
             name="houseNumber"
             value={formik?.values?.houseNumber}
@@ -111,7 +111,7 @@ const BuildingAddress = ({formik}:{formik?:any}) => {
         <Grid item xs={12} sm={3}>
           <LabelWithAsterisk>POSTLEITZAHL</LabelWithAsterisk>
           <GTextInput
-            placeholder="PLZ"
+            placeholder="Plz"
             id="zip"
             name="zip"
             value={formik?.values.zip}
