@@ -92,6 +92,8 @@ const NewTender = () => {
       title="Ausschreibung Online!"
       description2="Aussschreibung wurde erfolgreich anleget"
       description="You have been added to the project team and permitted to receive any project news and updates"
+      buttonLabel="Schließen"
+      redirectUrl="/dashboard/tenders"
     />
   ) : (
     <>
