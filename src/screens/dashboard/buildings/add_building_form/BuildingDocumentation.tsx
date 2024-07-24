@@ -21,7 +21,7 @@ const BuildingDocumentation = ({ formik }: { formik?: any }) => {
       noValidate
       sx={{ p: 1, width: "auto", marginLeft: "1.5rem" }}
     >
-      <Grid container spacing={2}>
+      <Grid container spacing={1} ml={0.10}>
       
           <FormControl sx={{ display: "block" }}>
             <RadioGroup
@@ -31,7 +31,7 @@ const BuildingDocumentation = ({ formik }: { formik?: any }) => {
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
             >
-              <Grid container spacing={0.5}>
+              <Grid container spacing={1}>
                 <Grid item xs={4}>
                   <FormControlLabel
                     value="Jetzt hochladen Empfohlen"

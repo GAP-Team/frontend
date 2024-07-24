@@ -21,7 +21,8 @@ const BuildingSummary = ({setActiveStep,steps}:BuildingSummaryProps) => {
   ].filter(Boolean); // Filter out undefined values
 
   const updatedAddress: Detail[] = [
-    values.address && { label: "Address", value: values.address },
+    values.street && { label: "Straße", value: values.street },
+    values.houseNumber && { label: "Hausnummer", value: values.houseNumber },
     values.zip && { label: "Postleitzahl", value: values.zip },
     values.city && { label: "Stadt", value: values.city },
     values.state && { label: "Bundesland", value: values.state }
@@ -48,9 +49,11 @@ const BuildingSummary = ({setActiveStep,steps}:BuildingSummaryProps) => {
         <Grid item xs={12}>
           <SummarySection title="Objektanschrift" details={updatedAddress} setActiveStep={()=>setActiveStep(steps[1])}/>
         </Grid>
-        <Grid item xs={6}>
-          <SummarySection title="Ansprechpartner" details={updatedContactPersonList} setActiveStep={()=>setActiveStep(steps[0])} />
-        </Grid>
+        {updatedContactPersonList.length > 0 && (
+          <Grid item xs={6}>
+           <SummarySection title="Ansprechpartner" details={updatedContactPersonList} setActiveStep={()=>setActiveStep(steps[0])} />
+          </Grid>
+        )}
         {updatedDocList.length > 0 && (
           <Grid item xs={6}>
             <SummarySection title="Bauunterlagen" details={updatedDocList} setActiveStep={() => setActiveStep(steps[2])} />
