@@ -14,6 +14,7 @@ import NewTender from "./tenders/add_tender_form/NewTender";
 import { SidebarItem, SubItem } from "@/components/navigation/GSidebar/SideBar";
 
 
+
 interface DashboardProps {
   overrideComponent?:React.ReactElement;
 }
@@ -30,6 +31,7 @@ const Dashboard: React.FC<DashboardProps> = ({ overrideComponent  }) => {
   ];
 
   const [selected, setSelected] = useState<SidebarItem | SubItem>(sidebarItems[0]);
+
 
   useEffect(() => {
     if (overrideComponent) {

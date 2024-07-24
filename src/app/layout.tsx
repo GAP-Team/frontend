@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { ThemeModeScript } from "flowbite-react";
-import { ThemeProvider } from '@mui/material/styles';
-import  CssBaseline  from "@mui/material/CssBaseline";
-import { AppRouterCacheProvider } from '@mui/material-nextjs/v13-appRouter';
+import { ThemeProvider } from "@mui/material/styles";
+import CssBaseline from "@mui/material/CssBaseline";
+import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
+import ReduxProvider from "../lib/ReduxProvider";
 
 import "./globals.css";
-import theme from './theme/theme';
+import theme from "./theme/theme";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,24 +22,19 @@ export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
-}>) {  
-
+}>) {
   return (
     <html lang="en">
       <head>
         <ThemeModeScript />
-        <script
-          async
-          defer
-          src={googleMapsApiUrl}
-        ></script>
+        <script async defer src={googleMapsApiUrl}></script>
       </head>
       <body className={inter.className}>
         {" "}
-        <AppRouterCacheProvider >
+        <AppRouterCacheProvider>
           <ThemeProvider theme={theme}>
-          <CssBaseline />
-            {children}
+            <CssBaseline />
+            <ReduxProvider>{children}</ReduxProvider>
           </ThemeProvider>
         </AppRouterCacheProvider>
       </body>
