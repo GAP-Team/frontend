@@ -6,6 +6,7 @@ import Box from "@mui/material/Box";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
+import { useDispatch } from "react-redux";
 import Button from "@mui/material/Button";
 import { useRouter } from "next/navigation";
 import { PiLockBold } from "react-icons/pi";
@@ -20,10 +21,12 @@ import { setAccessToken } from "@/utils/helperJWT";
 import { GapLogo } from "@/components/logo/GapLogo";
 import HeroBanner from "../../components/common/InfoBanner";
 import { loginValidationSchema } from "@/utils/ValidationSchema";
+import { setUser } from "@/lib/features/userSlice";
 
 export default function LoginPage() {
 
   const router = useRouter();
+  const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const [loginError, setLoginError] = React.useState<string | null>(null);
 
@@ -41,6 +44,7 @@ export default function LoginPage() {
         const res = await authAPIs.login(formValues);
 
         if (res?.data?.access_token) {
+          dispatch(setUser(res.data));
           setAccessToken(res.data.access_token);
           router.push("/dashboard");
         } else {
