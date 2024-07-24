@@ -12,8 +12,7 @@ import NewBuilding from "./buildings/add_building_form/NewBuilding";
 import Tenders from "./tenders/Tenders";
 import NewTender from "./tenders/add_tender_form/NewTender";
 import { SidebarItem, SubItem } from "@/components/navigation/GSidebar/SideBar";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../../../store/store";
+
 
 
 interface DashboardProps {
@@ -32,12 +31,9 @@ const Dashboard: React.FC<DashboardProps> = ({ overrideComponent  }) => {
   ];
 
   const [selected, setSelected] = useState<SidebarItem | SubItem>(sidebarItems[0]);
-  const dispatch = useDispatch<AppDispatch>();
-  const user = useSelector((state: RootState) => state.user);
 
 
   useEffect(() => {
-    dispatch({type: 'SET_USER', payload: {name: 'John Doe'}});
     if (overrideComponent) {
       setSelected({...selected, component: overrideComponent}); // Only updating the component part
     }
