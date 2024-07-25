@@ -7,6 +7,7 @@ interface UserState {
     _id: string,
     company: {},
     role: string,
+    buildings: [],
     email: string,
     firstName: string,
     lastName: string,
@@ -23,6 +24,7 @@ const initialState: UserState = {
     company: {},
     lastName: "",
     firstName: "",
+    buildings: [],
     manufacturer_experience: "",
   },
 };
@@ -38,6 +40,7 @@ const userSlice = createSlice({
       state.user.company = action.payload.user.company;
       state.user.lastName = action.payload.user.lastName;
       state.user.firstName = action.payload.user.firstName;
+      state.user.buildings = action.payload.user.buildings;
       state.user.manufacturer_experience = action.payload.user.manufacturer_experience;
     },
   },
@@ -46,5 +49,6 @@ const userSlice = createSlice({
 export const { setUser } = userSlice.actions;
 
 export const currentUserId = (state: RootState) => state.user.user._id;
+export const currentUserBuildings = (state: RootState) => state.user.user.buildings;
 
 export default userSlice.reducer;
