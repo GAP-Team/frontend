@@ -1,10 +1,10 @@
 // BuildingItemList.tsx
-import React, { useState } from "react";
-import Grid from "@mui/material/Grid";
-import Pagination from "@mui/material/Pagination";
-import BuildingItem from "./BuildingItem";
 import { Building } from "./types";
 import { Box } from "@mui/material";
+import Grid from "@mui/material/Grid";
+import React, { useState } from "react";
+import BuildingItem from "./BuildingItem";
+import Pagination from "@mui/material/Pagination";
 
 interface BuildingItemListProps {
   buildings: Building[];
@@ -15,6 +15,7 @@ const BuildingItemList: React.FC<BuildingItemListProps> = ({
   buildings,
   itemsPerPage = 8,
 }) => {
+
   const [page, setPage] = useState<number>(1);
   const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value);
@@ -34,7 +35,7 @@ const BuildingItemList: React.FC<BuildingItemListProps> = ({
         sx={{ overflow: "auto", flexGrow: 1 }}
       >
         {currentItems.map((building) => (
-          <Grid item xs={12} md={6} lg={3} key={building.id}>
+          <Grid item xs={12} md={6} lg={3} key={building._id}>
             <BuildingItem building={building} />
           </Grid>
         ))}
