@@ -5,6 +5,7 @@ export interface Building {
     buildingType: string;
     noOfInvestment: number;
     noOfTenders: number;
+    totalArea: number;
     address: {
       country: string,
       state: string,

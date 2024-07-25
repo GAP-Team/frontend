@@ -37,7 +37,7 @@ const BuildingItem: React.FC<BuildingItemProps> = ({ building }) => {
             variant="bodymsb"
             fontWeight={500}
             color="black"
-          >{`${building.noOfInvestment} Anlagen`}</Typography>
+          >{`0 Anlagen`}</Typography>
         </Stack>
         <Stack direction="row" alignItems="center" gap={2}>
           <CgNotes size="1.5rem" color="#A0ADB1" />
@@ -45,7 +45,7 @@ const BuildingItem: React.FC<BuildingItemProps> = ({ building }) => {
             variant="bodymsb"
             color="black"
             fontWeight={500}
-          >{`${building.noOfTenders} `}</Typography> {/* Ausschreibungen */}
+          >{`0 Ausschreibungen`}</Typography>
         </Stack>
       </Box>
       <Divider sx={styles.divider} orientation="horizontal" />
@@ -56,16 +56,16 @@ const BuildingItem: React.FC<BuildingItemProps> = ({ building }) => {
             variant="bodymr"
             color="black"
           >
-            {`${building.address.houseNumber} ${building.address.street} ${building.address.city} ${building.address.state}`}
+            {`${building.address.houseNumber} ${building.address.street} ${building.address.city} ${building.address.state} ${building.address.zip} ${building.address.country}`}
           </Typography>
           <Typography
             variant="bodymr"
             color="black"
-          >{`${building.address.zip} ${building.address.country}`}</Typography>
+          >{`${building.totalArea} qm`}</Typography>
         </Stack>
       </Stack>
       <List sx={styles.listContainer}>
-      {Array.isArray(building?.documents) && building?.documents?.length > 0 ?
+      {Array.isArray(building?.documents) && building?.documents?.length > 0 &&
         building?.documents?.map((document, index) => (
           <Stack
             direction="row"
@@ -81,13 +81,6 @@ const BuildingItem: React.FC<BuildingItemProps> = ({ building }) => {
             >{`${document.name}`}</Typography>
           </Stack>
         ))
-      :
-        <Typography
-          variant="bodymr"
-          color="#22A7F1"
-        >
-          0 Documents
-        </Typography>
       }
       </List>
     </Paper>
