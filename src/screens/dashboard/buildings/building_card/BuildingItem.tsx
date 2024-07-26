@@ -1,17 +1,18 @@
 // BuildingItem.tsx
-import { Building } from "./types";
-import Paper from "@mui/material/Paper";
-import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import Divider from "@mui/material/Divider";
-import { IoExtensionPuzzleOutline } from "react-icons/io5";
+import List from "@mui/material/List";
+import Paper from "@mui/material/Paper";
+import Stack from "@mui/material/Stack";
 import { CgNotes } from "react-icons/cg";
 import { FaRegFlag } from "react-icons/fa6";
 import { FiFileText } from "react-icons/fi";
-import { scrollBarStyles } from "@/components/scrollbar/Scrollbar";
+import Divider from "@mui/material/Divider";
+import Typography from "@mui/material/Typography";
+import { IoExtensionPuzzleOutline } from "react-icons/io5";
+
+import { Building } from "./types";
 import BuildingMenu from "./BuildingMenu";
-import Stack from "@mui/material/Stack";
-import List from "@mui/material/List";
+import { scrollBarStyles } from "@/components/scrollbar/Scrollbar";
 
 interface BuildingItemProps {
   building: Building;
@@ -22,9 +23,9 @@ const BuildingItem: React.FC<BuildingItemProps> = ({ building }) => {
     <Paper sx={styles.card}>
       <Box sx={styles.header}>
         <Box sx={styles.title}>
-          <Typography variant="bodylsb">{building.title}</Typography>
+          <Typography variant="bodylsb">{building.buildingName}</Typography>
           <Typography variant="bodymr" color="#22A7F1">
-            Gebäudetypbezeichnung
+            {building.buildingType}
           </Typography>
         </Box>
         <BuildingMenu />
@@ -36,7 +37,7 @@ const BuildingItem: React.FC<BuildingItemProps> = ({ building }) => {
             variant="bodymsb"
             fontWeight={500}
             color="black"
-          >{`${building.noOfInvestment} Anlagen`}</Typography>
+          >{`0 Anlagen`}</Typography>
         </Stack>
         <Stack direction="row" alignItems="center" gap={2}>
           <CgNotes size="1.5rem" color="#A0ADB1" />
@@ -44,7 +45,7 @@ const BuildingItem: React.FC<BuildingItemProps> = ({ building }) => {
             variant="bodymsb"
             color="black"
             fontWeight={500}
-          >{`${building.noOfTenders} Ausschreibungen`}</Typography>
+          >{`0 Ausschreibungen`}</Typography>
         </Stack>
       </Box>
       <Divider sx={styles.divider} orientation="horizontal" />
@@ -54,15 +55,18 @@ const BuildingItem: React.FC<BuildingItemProps> = ({ building }) => {
           <Typography
             variant="bodymr"
             color="black"
-          >{`${building.address}`}</Typography>
+          >
+            {`${building.address.street} ${building.address.houseNumber} ${building.address.zip} ${building.address.city}`}
+          </Typography>
           <Typography
             variant="bodymr"
             color="black"
-          >{`${building.area} qm`}</Typography>
+          >{`${building.totalArea} qm`}</Typography>
         </Stack>
       </Stack>
       <List sx={styles.listContainer}>
-        {building?.filesNames?.map((filename, index) => (
+      {Array.isArray(building?.documents) && building?.documents?.length > 0 &&
+        building?.documents?.map((document, index) => (
           <Stack
             direction="row"
             alignItems="center"
@@ -74,9 +78,10 @@ const BuildingItem: React.FC<BuildingItemProps> = ({ building }) => {
             <Typography
               variant="bodymr"
               color="#22A7F1"
-            >{`${filename}`}</Typography>
+            >{`${document.name}`}</Typography>
           </Stack>
-        ))}
+        ))
+      }
       </List>
     </Paper>
   );
