@@ -5,7 +5,7 @@ export interface AddBuildingFormValues{
     state: string;
     street: string;
     country: string;
-    totalArea: number;
+    totalArea: string;
     documentChoice: string;
     constructionDocs: File[];
     floorplanDocs: File[];
