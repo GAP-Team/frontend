@@ -27,8 +27,7 @@ const Buildings: React.FC = () => {
   }, []);
   
   const getUserBuildings = async () => {
-    // const buildings = await buildingAPIs.getBuildings(userId);
-    const buildings = await buildingAPIs.getBuildings("668251aed64e28e273e30803");
+    const buildings = await buildingAPIs.getBuildings(userId);
 
     // setBuildings(dummyBuildings);
     setBuildings(buildings.data);
