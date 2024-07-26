@@ -56,7 +56,7 @@ const BuildingItem: React.FC<BuildingItemProps> = ({ building }) => {
             variant="bodymr"
             color="black"
           >
-            {`${building.address.houseNumber} ${building.address.street} ${building.address.city} ${building.address.state} ${building.address.zip} ${building.address.country}`}
+            {`${building.address.street} ${building.address.houseNumber} ${building.address.zip} ${building.address.city}`}
           </Typography>
           <Typography
             variant="bodymr"

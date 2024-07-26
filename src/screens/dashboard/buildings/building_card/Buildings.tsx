@@ -27,14 +27,13 @@ const Buildings: React.FC = () => {
   }, []);
   
   const getUserBuildings = async () => {
-    const buildings = await buildingAPIs.getBuildings(userId);
+    const allBuildings = await buildingAPIs.getBuildings(userId);
 
     // setBuildings(dummyBuildings);
-    setBuildings(buildings.data);
-    console.log("Buildings: ===---> ", buildings.data);
+    setBuildings(allBuildings.data);
   }
 
-  const buildingContent = dummyBuildings.length > 0 ? <BuildingItemList buildings={buildings} /> : <NoContentPage alt="No Building/Objekt" image={addObjSrc} title="Erstelle ein neues Objekt." buttonLabel="Objekt anlegen" buttonLink="/dashboard/buildings/add_building"/>;
+  const buildingContent = buildings?.length > 0 ? <BuildingItemList buildings={buildings} /> : <NoContentPage alt="No Building/Objekt" image={addObjSrc} title="Erstelle ein neues Objekt." buttonLabel="Objekt anlegen" buttonLink="/dashboard/buildings/add_building"/>;
   return (
       <Box sx={styles.mainContainer}>
         <PropertyFilterPanel />
