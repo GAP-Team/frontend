@@ -102,7 +102,7 @@ const NewBuilding = () => {
   
   const initialValues: AddBuildingFormValues = {
     name: "",
-    totalArea: 0,
+    totalArea: "",
     buildingType: "",
     buildingAbbreviation: "",
     contactPerson: [],
