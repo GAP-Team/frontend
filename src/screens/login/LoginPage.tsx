@@ -48,8 +48,6 @@ export default function LoginPage() {
         if (res?.data?.access_token) {
           dispatch(setUser(res.data));
           setAccessToken(res.data.access_token);
-          Cookies.set('userId', res.data.session._id);
-          localStorage.setItem("userId", res.data.session._id);
           router.push("/dashboard");
         } else {
           setLoginError("Email oder Passwort ist falsch");

@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { ThemeModeScript } from "flowbite-react";
@@ -24,8 +23,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-
-  useEffect(() => {},[])
 
   return (
     <html lang="en">

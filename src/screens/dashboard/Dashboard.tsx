@@ -5,14 +5,14 @@ import { TbPigMoney } from "react-icons/tb";
 import { LuLayoutDashboard } from "react-icons/lu";
 import React, { useState, memo, useEffect } from "react";
 import { MdOutlineDoorSliding, MdOutlineAddHomeWork, MdOutlineNoteAlt } from "react-icons/md";
+
 import Layout from './Layout';
+import Tenders from "./tenders/Tenders";
 import Buildings from "./buildings/building_card/Buildings";
+import NewTender from "./tenders/add_tender_form/NewTender";
 import RealEstateUser from "./real_estate_user/RealEstateUser";
 import NewBuilding from "./buildings/add_building_form/NewBuilding";
-import Tenders from "./tenders/Tenders";
-import NewTender from "./tenders/add_tender_form/NewTender";
 import { SidebarItem, SubItem } from "@/components/navigation/GSidebar/SideBar";
-
 
 
 interface DashboardProps {
@@ -20,6 +20,7 @@ interface DashboardProps {
 }
 
 const Dashboard: React.FC<DashboardProps> = ({ overrideComponent  }) => {
+
   const sidebarItems: SidebarItem[] = [
     { id:0, icon: LuLayoutDashboard, text: "Dashboard", component:<RealEstateUser/> },
     { id:1, icon: CgNotes, text: "Ausschreibungen", subItems: [{ id: 10, text: "Alle Ausschreibungen", component:<Tenders /> }, { id: 11, text: "Neue Ausschreibung", component: <NewTender/>}]},
@@ -31,7 +32,6 @@ const Dashboard: React.FC<DashboardProps> = ({ overrideComponent  }) => {
   ];
 
   const [selected, setSelected] = useState<SidebarItem | SubItem>(sidebarItems[0]);
-
 
   useEffect(() => {
     if (overrideComponent) {

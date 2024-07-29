@@ -12,7 +12,6 @@ interface UserState {
     firstName: string,
     lastName: string,
     manufacturer_experience: string,
-
   };
 }
 
@@ -34,14 +33,14 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     setUser: (state, action: PayloadAction<UserState>) => {      
-      state.user._id = action.payload.user._id;
-      state.user.role = action.payload.user.role;
-      state.user.email = action.payload.user.email;
-      state.user.company = action.payload.user.company;
-      state.user.lastName = action.payload.user.lastName;
-      state.user.firstName = action.payload.user.firstName;
-      state.user.buildings = action.payload.user.buildings;
-      state.user.manufacturer_experience = action.payload.user.manufacturer_experience;
+      state.user._id = action.payload?.user?._id;
+      state.user.role = action.payload?.user?.role;
+      state.user.email = action.payload?.user?.email;
+      state.user.company = action.payload?.user?.company;
+      state.user.lastName = action.payload?.user?.lastName;
+      state.user.firstName = action.payload?.user?.firstName;
+      state.user.buildings = action.payload?.user?.buildings;
+      state.user.manufacturer_experience = action.payload?.user?.manufacturer_experience;
     },
   },
 });
