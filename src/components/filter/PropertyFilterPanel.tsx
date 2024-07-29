@@ -10,6 +10,9 @@ import {
   Typography,
 } from "@mui/material";
 import GTab from "@/components/filter/GTab";
+import { Button } from "flowbite-react";
+
+import buildingAPIs from "@/api/building";
 
 const filterTab = [
   { label: "Filter", content: <></> },
@@ -21,6 +24,10 @@ const PropertyFilterPanel = () => {
   const [propertyType, setPropertyType] = React.useState("");
   const [federalState, setFederalState] = React.useState("");
   const [city, setCity] = React.useState("");
+
+  const checkAPI = async () => {
+    const buildings = await buildingAPIs.getBuildings("668251aed64e28e273e30803", "Munich", "Bayern");
+  }
 
   return (
     <Container maxWidth={false} sx={styles.container}>
@@ -74,6 +81,7 @@ const PropertyFilterPanel = () => {
           {/* More cities */}
         </Select>
       </FormControl>
+      <Button onClick={checkAPI}>Check</Button>
     </Container>
   );
 };
