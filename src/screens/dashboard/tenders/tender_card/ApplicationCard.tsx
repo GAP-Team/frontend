@@ -6,9 +6,14 @@ import Typography from "@mui/material/Typography";
 import Avatar from "@mui/material/Avatar";
 import Paper from "@mui/material/Paper";
 import CircularProgress from "@mui/material/CircularProgress";
+import Skeleton from "@mui/material/Skeleton";
 import GButton from "@/components/button/GButton";
 
-const ApplicationCard = () => {
+interface ApplicationCardProps {
+  loading?: boolean;
+}
+
+const ApplicationCard: React.FC<ApplicationCardProps> = ({ loading = false }) => {
   const avatarLetter = "M";
   const companyName = "Mayer Prüfungs GmbH";
   const location = "Sindelfingen";
@@ -19,6 +24,45 @@ const ApplicationCard = () => {
   const specialServices = 4;
   const employees = 15;
   const discount = 18;
+
+  if (loading) {
+    return (
+      <Paper sx={styles.paper}>
+        <Box sx={styles.headerContainer}>
+          <Box sx={{ width: "80%", ml: "0.5rem" }}>
+            <Box sx={styles.avatarContainer}>
+              <Skeleton variant="circular" width={40} height={40} sx={{ mr: 2 }} />
+              <Box sx={styles.companyInfo}>
+                <Skeleton variant="text" width={150} />
+                <Skeleton variant="text" width={100} />
+              </Box>
+            </Box>
+            <Box sx={styles.tagsContainer}>
+              <Skeleton variant="text" width={60} sx={styles.tag} />
+              <Skeleton variant="text" width={60} sx={styles.tag} />
+              <Skeleton variant="text" width={60} sx={styles.tag} />
+            </Box>
+            <Box sx={styles.priceContainer}>
+              <Skeleton variant="text" width={80} />
+              <Skeleton variant="text" width={60} />
+              <Skeleton variant="text" width={60} />
+            </Box>
+          </Box>
+          <Box sx={styles.progressContainer}>
+            <Skeleton variant="circular" width={80} height={80} />
+            <Skeleton variant="text" width={60} sx={styles.discountText} />
+          </Box>
+        </Box>
+        <Box sx={styles.buttonContainer}>
+          <Skeleton variant="rectangular" width={120} height={40} />
+          <Box sx={styles.additionalInfoContainer}>
+            <Skeleton variant="text" width={100} sx={styles.specialServices} />
+            <Skeleton variant="text" width={80} />
+          </Box>
+        </Box>
+      </Paper>
+    );
+  }
 
   return (
     <Paper sx={styles.paper}>
@@ -35,23 +79,14 @@ const ApplicationCard = () => {
           </Box>
           <Box sx={styles.tagsContainer}>
             {tags.map((tag, index) => (
-              <Typography
-                key={index}
-                variant="bodymr"
-                color="blue.main"
-                sx={styles.tag}
-              >
+              <Typography key={index} variant="bodymr" color="blue.main" sx={styles.tag}>
                 {tag}
               </Typography>
             ))}
           </Box>
           <Box sx={styles.priceContainer}>
-            <Typography variant="bodylsb" >
-              {price}
-            </Typography>
-            <Typography variant="bodylsb">
-              {distance}
-            </Typography>
+            <Typography variant="bodylsb">{price}</Typography>
+            <Typography variant="bodylsb">{distance}</Typography>
             <Typography variant="bodylsb" color="error">
               {deadline} Frist
             </Typography>
@@ -67,20 +102,12 @@ const ApplicationCard = () => {
               sx={styles.circularProgress}
             />
             <Box sx={styles.progressTextContainer}>
-              <Typography
-                variant="bodylsb"
-                component="div"
-                color="textSecondary"
-              >
+              <Typography variant="bodylsb" component="div" color="textSecondary">
                 {`${discount}%`}
               </Typography>
             </Box>
           </Box>
-          <Typography
-            variant="bodymsb"
-            color="grey.500"
-            sx={styles.discountText}
-          >
+          <Typography variant="bodymsb" color="grey.500" sx={styles.discountText}>
             Günstiger
           </Typography>
         </Box>
