@@ -140,6 +140,7 @@ export const buildingDocs: Detail[] = [
 
 export const jobCardsData = [
   {
+    id: "1",
     status: "offen",
     offers: 2,
     title: "Brandschutzprüfung inkl. Reparatur",
@@ -149,6 +150,7 @@ export const jobCardsData = [
     sectionId: "BM 02 Sued",
   },
   {
+    id: "2",
     status: "abgeschlossen",
     offers: 5,
     title: "Wartung der Klimaanlage",
@@ -158,6 +160,7 @@ export const jobCardsData = [
     sectionId: "CL 01 Nord",
   },
   {
+    id: "3",
     status: "in Bearbeitung",
     offers: 3,
     title: "Inspektion der Heizung",
@@ -167,6 +170,7 @@ export const jobCardsData = [
     sectionId: "HT 03 Ost",
   },
   {
+    id: "4",
     status: "Freigabe ausstehend",
     offers: 1,
     title: "Überprüfung der Wasserversorgung",
@@ -176,6 +180,7 @@ export const jobCardsData = [
     sectionId: "WS 04 West",
   },
   {
+    id: "5",
     status: "Nachprüfung",
     offers: 4,
     title: "Elektrische Installation",
@@ -185,6 +190,7 @@ export const jobCardsData = [
     sectionId: "EL 02 Süd",
   },
   {
+    id: "6",
     status: "offen",
     offers: 2,
     title: "Fensterreparatur",
