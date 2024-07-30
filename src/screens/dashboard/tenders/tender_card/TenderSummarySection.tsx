@@ -1,36 +1,79 @@
-
 "use client";
 
-import HeaderSection from '../../real_estate_user/HeaderSection';
+import HeaderSection from "../../real_estate_user/HeaderSection";
 import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
-import Dialog from '@mui/material/Dialog';
-import Button from "@mui/material/Button";
-import { useState, useEffect } from "react";
-import Checkbox from "@mui/material/Checkbox";
-import AddIcon from '@mui/icons-material/Add';
-import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import DialogTitle from '@mui/material/DialogTitle';
-import Autocomplete from "@mui/material/Autocomplete";
-import CheckBoxIcon from "@mui/icons-material/CheckBox";
-import DialogContent from '@mui/material/DialogContent';
-import DialogActions from '@mui/material/DialogActions';
-import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
-import userAPIs from "@/api/user";
-import { Item } from "@/components/input/GSelector";
-import GTextInput from "@/components/input/GTextInput";
-import GTextSelector from "@/components/input/GTextSelector";
-import LabelWithAsterisk from "@/components/label/LabelWithAsterisk";
-import { contactPersonList, buildingTypesList } from "@/utils/Constants";
+import Image from "next/image";
+import stepperHorizontal from "../../../../../public/icons/stepper-horizontal.svg";
+import Grid from "@mui/material/Grid";
+import { MdOutlineEdit } from "react-icons/md";
+import LabeledTextWithIcon from "@/components/label/LabelTextWithIcon";
+import Divider from "@mui/material/Divider";
+import GButton from "@/components/button/GButton";
+
+const summaryData = [
+  { label: "Name des Auftraggebers", value: "Fire Service GmbH" },
+  { label: "Name der Ausschreibung", value: "Fire Service GmbH" },
+  { label: "Ausschreibungsart", value: "Handwerker" },
+  { label: "Ausschreibungstyp", value: "SV-Begleitung" },
+  { label: "Objekt", value: "Handwerker" },
+  { label: "Anlage", value: "Handwerker" },
+  { label: "Anlagetyp", value: "Handwerker" },
+  { label: "Dringlichkeit", value: "Eröffnungstermin" },
+  { label: "Zeitfenster available", value: "14. Jan 2024 - 28 Mar. 2025" },
+  { label: "Detailbeschreibung", value: "Klicken Sie hier, um zu sehen" },
+  { label: "Dokumente", value: "Vor Ort zur Verfügung stellen" },
+];
 
 const TenderSummarySection = () => {
   return (
     <>
      <HeaderSection titletext='DATEN ÜBERPRÜFEN' />
-     <Typography variant="bodymsb">Summary</Typography>
+      <Typography variant="bodymsb">Summary</Typography>
+      <Box sx={styles.imageContainer}>
+        <Image
+          priority
+          alt="stepper"
+          src={stepperHorizontal}
+          width={700}
+          style={{ marginTop: "1rem", marginBottom: "3rem" }}
+        />
+      </Box>
+      <Grid container spacing={2} marginLeft={1}>
+        {summaryData.map((item, index) => (
+          <Grid item xs={6} key={index} paddingBottom={2}>
+            <LabeledTextWithIcon
+              text={item.label}
+              Icon={MdOutlineEdit}
+              iconColor="#22A7F1"
+              iconSize="1.4rem"
+              fontSize="1.2rem"
+              textColor="blue.main"
+              iconMarginLeft="0.8rem"
+            />
+            <Typography variant="bodylr" mt="0.2rem">{item.value}</Typography>
+          </Grid>
+        ))}
+      </Grid>
+      <Divider variant="middle" orientation="horizontal" flexItem />
+      <Grid container justifyContent="flex-end" spacing={2} marginTop={'0.4rem'} >
+        <Grid item>
+          <GButton color="gprimary" variant="outlined" >Bearbeiten</GButton>
+          <GButton color="ggreen">Speichern</GButton>
+        </Grid>
+      </Grid>
     </>
   );
 }
 
 export default TenderSummarySection;
+
+const styles = {
+  imageContainer: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    width: "100%",
+    textAlign: "center",
+  },
+};

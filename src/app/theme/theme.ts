@@ -287,6 +287,10 @@ theme = createTheme(theme, {
     text: {
       primary: "#1E3137",
     },
+    blue: {
+      main: "#22A7F1",
+      contrastText: "#fff",
+    }
   },
 });
 

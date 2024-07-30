@@ -10,6 +10,7 @@ import { TenderProps } from "./types";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import TenderSummarySection from "./TenderSummarySection";
+import ApplicationCard from "./ApplicationCard";
 
 interface TenderDetailsProps {
   id: string;
@@ -36,6 +37,17 @@ const TenderDetails: React.FC<TenderDetailsProps> = ({ id }) => {
           </Paper>
         </Grid>
         <Grid item xs={8}>
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <ApplicationCard />
+            </Grid>
+            <Grid item xs={12}>
+              <ApplicationCard />
+            </Grid>
+            <Grid item xs={12}>
+              <ApplicationCard />
+            </Grid>
+          </Grid>
         </Grid>
         <Grid item xs={2}>
         </Grid>
