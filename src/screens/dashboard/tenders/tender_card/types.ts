@@ -1,4 +1,5 @@
 export interface TenderProps {
+  id:string,
   status: string;
   offers: number;
   title: string;

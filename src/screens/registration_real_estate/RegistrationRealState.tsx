@@ -25,6 +25,7 @@ import {
   import InfoBanner from "@/components/common/InfoBanner";
   import SuccessPage from "@/components/common/SuccessPage";
   import { registrationValidationSchema } from "@/utils/ValidationSchema";
+import EmailVerification from "./EmailVerification";
 
 function getSteps() {
   return [
@@ -255,12 +256,7 @@ const RegistrationRealState = () => {
                     setActiveStep={setActiveStep}
                   />
                 ) : (
-                  <SuccessPage
-                    title="Registrierung abgeschlossen!"
-                    description="You have been added to the project team and permitted to receive any project news and updates."
-                    buttonLabel="Go to Dashboard"
-                    redirectUrl="/dashboard"
-                  />
+                  <EmailVerification/>
                 )}
               </Grid>
             </Form>

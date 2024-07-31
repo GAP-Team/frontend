@@ -23,15 +23,16 @@ const Buildings: React.FC = () => {
   const [buildings, setBuildings] = useState<Building[]>([]);
 
   useEffect(() => {
-    getUserBuildings();
+    getUserBuildings("", "");
   }, []);
   
-  const getUserBuildings = async () => {
-    // const allBuildings = await buildingAPIs.getBuildings(userId);
-    const allBuildings = await buildingAPIs.getBuildings("668251aed64e28e273e30803", "", "");
-
-    // setBuildings(dummyBuildings);
+  const getUserBuildings = async (city: string, federalState: string) => {
+    const allBuildings = await buildingAPIs.getBuildings(userId, city, federalState);
     setBuildings(allBuildings.data);
+  }
+
+  const onStateCityChange = (city: string, federalState: string) => {    
+    getUserBuildings(city, federalState);
   }
 
   const buildingContent = buildings?.length > 0 ? 
@@ -46,7 +47,7 @@ const Buildings: React.FC = () => {
     />;
   return (
       <Box sx={styles.mainContainer}>
-        <PropertyFilterPanel />
+        <PropertyFilterPanel handleOnChange={onStateCityChange} />
         {buildingContent}
       </Box>
   );
