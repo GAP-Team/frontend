@@ -1,5 +1,10 @@
 "use client";
-import React from "react";
+import React, 
+  {
+    useState,
+    useEffect
+  }
+from "react";
 import {
   Container,
   Box,
@@ -9,7 +14,11 @@ import {
   Select,
   Typography,
 } from "@mui/material";
+import { useDispatch, useSelector } from 'react-redux';
+
+import buildingAPIs from "@/api/building";
 import GTab from "@/components/filter/GTab";
+import { currentUserId } from "@/lib/features/userSlice";
 
 const filterTab = [
   { label: "Filter", content: <></> },
@@ -17,10 +26,31 @@ const filterTab = [
 ];
 
 const PropertyFilterPanel = () => {
-  const [value, setValue] = React.useState(0);
-  const [propertyType, setPropertyType] = React.useState("");
-  const [federalState, setFederalState] = React.useState("");
-  const [city, setCity] = React.useState("");
+
+  const userId = useSelector(currentUserId);
+
+  const [city, setCity] = useState("");
+  const [value, setValue] = useState(0);
+  const [userCities, setUserCities] = useState([]);
+  const [userStates, setUserStates] = useState([]);
+  const [propertyType, setPropertyType] = useState("");
+  const [federalState, setFederalState] = useState("");
+
+  useEffect(() => {
+    getUserStatesCities();
+  }, []);
+
+  const getUserStatesCities = async () => {
+    
+    let cs = await buildingAPIs.getUserStatesCities(userId);
+
+    if (cs?.data?.cities.length > 0) {
+      setUserCities(cs?.data?.cities);
+    }
+    if (cs?.data?.states.length > 0) {
+      setUserStates(cs?.data?.states);
+    }
+  }
 
   return (
     <Container maxWidth={false} sx={styles.container}>
@@ -55,9 +85,9 @@ const PropertyFilterPanel = () => {
           label="Bundesland"
           onChange={(e) => setFederalState(e.target.value)}
         >
-          <MenuItem value="state1">State 1</MenuItem>
-          <MenuItem value="state2">State 2</MenuItem>
-          {/* More states */}
+          {userStates?.map((state) => {
+            return <MenuItem value={state}>{state}</MenuItem>
+          })}
         </Select>
       </FormControl>
       <FormControl size="small" sx={styles.formControl}>
@@ -69,9 +99,9 @@ const PropertyFilterPanel = () => {
           label="Stadt"
           onChange={(e) => setCity(e.target.value)}
         >
-          <MenuItem value="city1">City 1</MenuItem>
-          <MenuItem value="city2">City 2</MenuItem>
-          {/* More cities */}
+          {userCities?.map((city) => {
+            return <MenuItem value={city}>{city}</MenuItem>
+          })}
         </Select>
       </FormControl>
     </Container>
