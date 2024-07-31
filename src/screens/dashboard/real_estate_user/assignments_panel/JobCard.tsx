@@ -8,8 +8,10 @@ import Icon from "@mui/material/Icon"; // or a specific icon component from @mui
 import { BsClockFill } from "react-icons/bs";
 import SectionTitle from "@/components/label/SectionTitle";
 import { VscDebugBreakpointLog } from "react-icons/vsc";
+import { useRouter } from "next/navigation"; 
 
 interface JobCardProps {
+  id: string,
   status: string;
   offers: number;
   title: string;
@@ -27,6 +29,7 @@ const statusStyles: { [key: string]: { bgcolor: string; color: string } } = {
 };
 
 const JobCard: React.FC<JobCardProps> = ({
+  id,
   status,
   offers,
   title,
@@ -35,11 +38,16 @@ const JobCard: React.FC<JobCardProps> = ({
   projectId,
   sectionId,
 }) => {
+  const router = useRouter();
+
+  const handleClick = () => {
+    router.push(`/dashboard/tenders/${id}`);
+  };
 
   const chipStyles = statusStyles[status] ||  statusStyles["offen"];
-  
+
   return (
-    <Paper sx={styles.card} elevation={4}>
+    <Paper sx={styles.card} elevation={4} onClick={handleClick} style={{cursor: 'pointer'}}>
       <Box sx={styles.header}>
         <Chip label={status} sx={{ ...chipStyles }} />
         <Icon sx={{ color: "orange" }}>
@@ -95,6 +103,7 @@ const styles = {
     flexShrink: 0,
     overflow: "auto",
     mb: "0.35rem",
+    cursor: "pointer",
   },
   header: {
     display: "flex",

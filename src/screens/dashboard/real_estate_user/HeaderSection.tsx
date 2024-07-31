@@ -4,9 +4,9 @@ import SectionTitle from '@/components/label/SectionTitle'; // Ensure this impor
 import DividerDecorator from '@/components/divider/DividerDecorator'; // Ensure this import path is correct
 
 interface HeaderSectionProps {
-  count: number;
-  titletext: string;  
-  overviewText: string;
+  count?: number;
+  titletext: string;
+  overviewText?: string;
 }
 
 const HeaderSection: React.FC<HeaderSectionProps> = ({
@@ -18,15 +18,12 @@ const HeaderSection: React.FC<HeaderSectionProps> = ({
     <>
       <Box sx={styles.headerSection}>
         <Box>
-          <SectionTitle
-            text={`${titletext} (${count})`}
-          />
-          <DividerDecorator sx={{bgcolor:'#2356FF'}} />
+          <SectionTitle text={count !== undefined ? `${titletext} (${count})` : titletext} />
+          <DividerDecorator sx={{ bgcolor: "#2356FF" }} />
         </Box>
-        <SectionTitle
-            text={overviewText}
-            sx={styles.overviewSection}
-          />
+        {overviewText && (
+          <SectionTitle text={overviewText} sx={styles.overviewSection} />
+        )}
       </Box>
     </>
   );
