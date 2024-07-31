@@ -42,8 +42,7 @@ const PropertyFilterPanel = () => {
 
   const getUserStatesCities = async () => {
     
-    // let cs = await buildingAPIs.getUserStatesCities(userId);
-    let cs = await buildingAPIs.getUserStatesCities("668251aed64e28e273e30803");
+    let cs = await buildingAPIs.getUserStatesCities(userId);
 
     if (cs?.data?.cities.length > 0) {
       setUserCities(cs?.data?.cities);
