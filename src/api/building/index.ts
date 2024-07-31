@@ -4,7 +4,10 @@ const buildingAPIs = {
 
     /* Building Routes */ 
     create: (data: any) => api.post('/buildings/create', data),
+
     getUserStatesCities: (id: string) => api.get(`/buildings/${id}/get-user-state-city`),
+    getBuildings: (userId: string) => api.get(`/buildings/${userId}`),
+  
 }
 
 export default buildingAPIs;

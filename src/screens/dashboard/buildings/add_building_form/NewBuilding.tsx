@@ -3,6 +3,7 @@ import moment from 'moment';
 import Grid from "@mui/material/Grid";
 import React,{ useState } from "react";
 import { useRouter } from "next/navigation";
+import { useDispatch, useSelector, useStore } from 'react-redux'
 import { Formik, Form, FormikHelpers, useFormik, FormikErrors } from "formik";  
 
 import userAPIs from "@/api/user";
@@ -21,12 +22,15 @@ import BuildingDocumentation from "./BuildingDocumentation";
 import CircularProgress from "@mui/material/CircularProgress";
 import { addObjektFormSchema } from "@/utils/ValidationSchema";
 import { handleUploadDoc, handleUploadMultipleDoc } from "@/utils/uploadToS3";
+import { currentUserId, currentUserBuildings } from '@/lib/features/userSlice';
 
 
 const NewBuilding = () => {
 
   const router = useRouter();
   const logger = getLogger("new-building");
+  const userId = useSelector(currentUserId);
+  const userBuildings = useSelector(currentUserBuildings);
 
   const steps: ActiveStepItem[] = [
     {
@@ -60,7 +64,7 @@ const NewBuilding = () => {
     submitForm: SubmitFormFunction,
     // resetForm: FormikHelpers<AddBuildingFormValues>["resetForm"],
     values: AddBuildingFormValues
-  ): Promise<void> => {
+  ): Promise<void> => {    
 
     const stepFieldsMap: { [key: number]: string[] } = {
       0: ["name", "totalArea", "buildingType", "buildingAbbreviation", "contactPerson"],
@@ -102,7 +106,7 @@ const NewBuilding = () => {
   
   const initialValues: AddBuildingFormValues = {
     name: "",
-    totalArea: 0,
+    totalArea: "",
     buildingType: "",
     buildingAbbreviation: "",
     contactPerson: [],
@@ -188,33 +192,24 @@ const NewBuilding = () => {
   const saveBuildingData = async (data :any) => {
     
     const createBuildingResponse = await buildingAPIs.create(data);
-    let lastId = createBuildingResponse?.data?._id;
     
     if (createBuildingResponse) {
-      if (data.contactPerson.length > 0) {
-        
-        let cPersons = data.contactPerson;
-        
-        cPersons.forEach( async (cp: any, indx: string) => {
 
-          let userBuildings: any[] = [];
-          
-          if (userBuildings) {
-            userBuildings = [...cp.buildings];
-            userBuildings.push(lastId);
-          } else {
-            userBuildings = [lastId];
-          }
-
-          let buildingQuery = {
-            buildings: userBuildings
-          };
-          
-          const userUpdateStatus = await userAPIs.updateUser(cp._id, buildingQuery);
-
-        });
-        
+      let userPreviousBuildings: any[] = [];
+      let lastId = createBuildingResponse?.data?._id;
+      
+      if (userBuildings?.length > 0) {
+        userPreviousBuildings = [...userBuildings];
+        userPreviousBuildings.push(lastId);
+      }else{
+        userPreviousBuildings = [lastId];
       }
+
+      let buildingQuery = {
+        buildings: userPreviousBuildings
+      };
+      
+      const userUpdateStatus = await userAPIs.updateUser(userId, buildingQuery);
     }
 
     setLoading(false);

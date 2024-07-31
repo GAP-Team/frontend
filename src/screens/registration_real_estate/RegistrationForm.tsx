@@ -18,6 +18,7 @@ import BusinessRegistration from "./BusinessRegistration";
 import SectionTitle from "@/components/label/SectionTitle";
 import { realStateUsers, serviceProvider } from "@/utils/Constants";
 import GProgressStepper from "@/components/stepper/GProgressStepper";
+import CircularProgress from "@mui/material/CircularProgress";
 
 
 interface RegistrationFormProps {
@@ -141,6 +142,8 @@ const RegistrationForm = ({
             </GButton>
             <GButton
               onClick={handleNext}
+              disabled={formik.isSubmitting }
+              endIcon={formik.isSubmitting && <CircularProgress color="gprimary" size={24} />}
             >{activeStep <= 2 ? "Weiter" :"Einreichen"}
             </GButton>
           </Grid>
