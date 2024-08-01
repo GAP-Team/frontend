@@ -22,5 +22,9 @@ export interface Building {
         key: string,
       }
     ] | null | undefined;
-  }
+}
+
+export interface PropertyFilterProps {
+  handleOnChange: (city: string, federalState: string) => void;
+}
   

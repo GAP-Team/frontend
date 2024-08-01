@@ -19,13 +19,18 @@ import { useDispatch, useSelector } from 'react-redux';
 import buildingAPIs from "@/api/building";
 import GTab from "@/components/filter/GTab";
 import { currentUserId } from "@/lib/features/userSlice";
+import { PropertyFilterProps } from "@/screens/dashboard/buildings/building_card/types";
 
 const filterTab = [
   { label: "Filter", content: <></> },
   { label: "anstehende Prüfungen", content: <></> },
 ];
 
-const PropertyFilterPanel = () => {
+
+
+const PropertyFilterPanel = ({ 
+  handleOnChange 
+}: PropertyFilterProps): JSX.Element => {
 
   const userId = useSelector(currentUserId);
 
@@ -39,6 +44,10 @@ const PropertyFilterPanel = () => {
   useEffect(() => {
     getUserStatesCities();
   }, []);
+
+  useEffect(() => {
+    handleOnChange(city, federalState);
+  }, [city, federalState]);
 
   const getUserStatesCities = async () => {
     

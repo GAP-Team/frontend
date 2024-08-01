@@ -23,20 +23,31 @@ const Buildings: React.FC = () => {
   const [buildings, setBuildings] = useState<Building[]>([]);
 
   useEffect(() => {
-    getUserBuildings();
+    getUserBuildings("", "");
   }, []);
   
-  const getUserBuildings = async () => {
-    const allBuildings = await buildingAPIs.getBuildings(userId);
-
-    // setBuildings(dummyBuildings);
+  const getUserBuildings = async (city: string, federalState: string) => {
+    const allBuildings = await buildingAPIs.getBuildings(userId, city, federalState);
     setBuildings(allBuildings.data);
   }
 
-  const buildingContent = buildings?.length > 0 ? <BuildingItemList buildings={buildings} /> : <NoContentPage alt="No Building/Objekt" image={addObjSrc} title="Erstelle ein neues Objekt." buttonLabel="Objekt anlegen" buttonLink="/dashboard/buildings/add_building"/>;
+  const onStateCityChange = (city: string, federalState: string) => {    
+    getUserBuildings(city, federalState);
+  }
+
+  const buildingContent = buildings?.length > 0 ? 
+    <BuildingItemList buildings={buildings} /> 
+  : 
+    <NoContentPage 
+    image={addObjSrc} 
+      alt="No Building/Objekt" 
+      buttonLabel="Objekt anlegen" 
+      title="Erstelle ein neues Objekt." 
+      buttonLink="/dashboard/buildings/add_building"
+    />;
   return (
       <Box sx={styles.mainContainer}>
-        <PropertyFilterPanel />
+        <PropertyFilterPanel handleOnChange={onStateCityChange} />
         {buildingContent}
       </Box>
   );
