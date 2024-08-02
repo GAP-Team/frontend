@@ -40,7 +40,7 @@ const AddBuildingForm = ({
     !loading && 
     <SuccessPage
       title="Objekt angelegt!"
-      description2="Objekt wurde erfolgreich anleget"
+      description2="Objekt wurde erfolgreich angelegt"
     />
   ) : (
     <>
