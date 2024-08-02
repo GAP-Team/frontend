@@ -41,7 +41,7 @@ const ComercialPerson = ({formik}:any): JSX.Element => {
           HANDELSREGISTERNUMMER 
         </Typography>
         <GTextInput
-          placeholder="HANDELREGISTERNUMMER"
+          placeholder="HANDELSREGISTERNUMMER"
           id="registrationNumber"
           name="registrationNumber"
           value={formik.values.registrationNumber}
