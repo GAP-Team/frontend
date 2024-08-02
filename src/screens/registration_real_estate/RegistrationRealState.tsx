@@ -161,7 +161,7 @@ const RegistrationRealState = () => {
       }
 
     } catch (error: any) {
-      if (error.response && error.response.status === 400) {
+      if (error.response && error.response?.data?.error == 'User already exists') {
         setOpenSnackbar(true);
         setActiveStep(0);
       } else {
