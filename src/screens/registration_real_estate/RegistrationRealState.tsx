@@ -9,9 +9,17 @@ import Grid from "@mui/material/Grid";
 import { Formik, Form } from "formik";
 import Button from "@mui/material/Button";
 import { useRouter } from "next/navigation";
+import ReactDOMServer from 'react-dom/server';
 import RegistrationForm from "./RegistrationForm";
 import Typography from "@mui/material/Typography";
+import { UseDispatch, useSelector } from "react-redux";
 
+import {
+  emailTemplateFoot,
+  emailTemplateSubject,
+  emailTemplateGreetins,
+  emailTemplateVerificationText,
+} from "@/utils/Constants";
 import {
   SetTouchedFunction,
   SubmitFormFunction,
@@ -25,6 +33,8 @@ import { handleUploadDoc } from "@/utils/uploadToS3";
 import BackButton from "@/components/button/BackButton";
 import InfoBanner from "@/components/common/InfoBanner";
 import SuccessPage from "@/components/common/SuccessPage";
+import { currentUserEmail } from "@/lib/features/userSlice";
+import EmailTemplate from "@/components/EmailTemplate/Template";
 import { registrationValidationSchema } from "@/utils/ValidationSchema";
 
 function getSteps() {
@@ -38,9 +48,10 @@ function getSteps() {
 
 const RegistrationRealState = () => {
 
+  const steps = getSteps();
   const router = useRouter();
   const [activeStep, setActiveStep] = useState(0);
-  const steps = getSteps();
+  const currentEmail = useSelector(currentUserEmail);
 
   const handleNext = async (
     validateForm: ValidateFormFunction,
@@ -87,6 +98,8 @@ const RegistrationRealState = () => {
   };
 
   const handleBack = () => {
+
+    sendVerificationEmail("Sudipto", "rihab@gap-pruefen.de");
 
     if (activeStep > 3) {
       //If user has registered then redirect to new registration
@@ -164,35 +177,10 @@ const RegistrationRealState = () => {
         updatedAt: null
       }
       
-      const res = await userAPIs.register(arrangedDataObj);let firstName = "Sudipto";
-      let verificationCode = Math.floor(100000 + Math.random() * 900000);
-
-      const emailTemplate = `
-        <!DOCTYPE html>
-        <html>
-          <head>
-            <title>Subject: Verify Your Email for <b>GAP (Gesetzliche Anlagen Prüfen)</b></title>
-          </head>
-          <body>
-            <p>Dear `+values.firstName+`,</p>
-            <p>
-              Thank you for registering with GAP (Gesetzliche Anlagen Prüfen)! To complete your registration and activate your account, 
-              please verify your email address by entering the verification code provided below.
-            </p>
-            <p>Your Verification Code: `+verificationCode+` </p>
-            <p>his verification helps us ensure the security of your account and provides you with a seamless experience on our platform.</p>
-            <p>If you did not create an account with GAP, please disregard this email.</p>
-            <p>Should you encounter any issues during the verification process, feel free to contact our support team at [Support Email] for assistance.</p>
-            <p>Thank you for choosing GAP to manage and maintain your real estate facilities efficiently.</p>
-            <footer>
-              <p>Best regards,</p>
-              <p>The GAP Team</p>
-              <p>info@gap.com</p>
-              <p>Düsseldorf, Germany</p>
-            </footer>
-          </body>
-        </html>
-      `;
+      const res = await userAPIs.register(arrangedDataObj);
+      
+      sendVerificationEmail(values.firstName, values.email);
+      
 
     } catch (error: any) {
       console.log(
@@ -202,6 +190,49 @@ const RegistrationRealState = () => {
       );
 
     }
+  };
+
+  const sendVerificationEmail = (name: string, email: string) => {
+
+    let verificationCode = Math.floor(100000 + Math.random() * 900000);
+    const emailTemplate = renderEmailTemplate(name, verificationCode);
+
+    const emailText = `Dear ${name}, ${emailTemplateGreetins} ${emailTemplateVerificationText} ${verificationCode} ${emailTemplateFoot}`;
+    
+    let readyEmailStructure = {
+      source: currentEmail,
+      "destination": {
+        "toAddresses": [
+          email
+        ]
+      },
+      "message": {
+        "subject": {
+          "data": emailTemplateSubject,
+          "charset": "UTF-8"
+        },
+        "body": {
+          "text": {
+            "data": emailText,
+            "charset": "UTF-8"
+          },
+          "html": {
+            "data": emailTemplate,
+            "charset": "UTF-8"
+          }
+        }
+      }
+    }
+    
+    console.log("Ready Email Structure: ===---> ", readyEmailStructure);
+    
+
+  }
+
+  const renderEmailTemplate = (name: string, verificationCode: number) => {
+    const element = <EmailTemplate name={name} verificationCode={verificationCode} />;
+    const htmlString = ReactDOMServer.renderToStaticMarkup(element);
+    return htmlString;
   };
 
   const uploadAllDocuments = async (values: any, type: string) => {
