@@ -9,23 +9,33 @@ import Grid from "@mui/material/Grid";
 import { Formik, Form } from "formik";
 import Button from "@mui/material/Button";
 import { useRouter } from "next/navigation";
+import ReactDOMServer from 'react-dom/server';
 import RegistrationForm from "./RegistrationForm";
 import Typography from "@mui/material/Typography";
+import { UseDispatch, useSelector } from "react-redux";
 
+import {
+  emailTemplateFoot,
+  emailTemplateSubject,
+  emailTemplateGreetins,
+  emailTemplateVerificationText,
+} from "@/utils/Constants";
 import {
   SetTouchedFunction,
   SubmitFormFunction,
   ValidateFormFunction,
-  } from "../../typings/types";
-  import userAPIs from "@/api/user";
-  import { RegistrationFormValues } from "./types";
-  import PageTitle from "@/components/label/PageTitle";
-  import { handleUploadDoc } from "@/utils/uploadToS3";
-  import BackButton from "@/components/button/BackButton";
-  import InfoBanner from "@/components/common/InfoBanner";
-  import SuccessPage from "@/components/common/SuccessPage";
-  import { registrationValidationSchema } from "@/utils/ValidationSchema";
+} from "../../typings/types";
+import userAPIs from "@/api/user";
+import { RegistrationFormValues } from "./types";
 import EmailVerification from "./EmailVerification";
+import PageTitle from "@/components/label/PageTitle";
+import { handleUploadDoc } from "@/utils/uploadToS3";
+import BackButton from "@/components/button/BackButton";
+import InfoBanner from "@/components/common/InfoBanner";
+import SuccessPage from "@/components/common/SuccessPage";
+import { currentUserEmail } from "@/lib/features/userSlice";
+import EmailTemplate from "@/components/EmailTemplate/Template";
+import { registrationValidationSchema } from "@/utils/ValidationSchema";
 
 function getSteps() {
   return [
@@ -38,9 +48,10 @@ function getSteps() {
 
 const RegistrationRealState = () => {
 
+  const steps = getSteps();
   const router = useRouter();
   const [activeStep, setActiveStep] = useState(0);
-  const steps = getSteps();
+  const currentEmail = useSelector(currentUserEmail);
 
   const handleNext = async (
     validateForm: ValidateFormFunction,
@@ -87,6 +98,9 @@ const RegistrationRealState = () => {
   };
 
   const handleBack = () => {
+
+    sendVerificationEmail("Sudipto", "rihab@gap-pruefen.de");
+
     if (activeStep > 3) {
       //If user has registered then redirect to new registration
       setActiveStep(0);
@@ -164,6 +178,9 @@ const RegistrationRealState = () => {
       }
       
       const res = await userAPIs.register(arrangedDataObj);
+      
+      sendVerificationEmail(values.firstName, values.email);
+      
 
     } catch (error: any) {
       console.log(
@@ -173,6 +190,49 @@ const RegistrationRealState = () => {
       );
 
     }
+  };
+
+  const sendVerificationEmail = (name: string, email: string) => {
+
+    let verificationCode = Math.floor(100000 + Math.random() * 900000);
+    const emailTemplate = renderEmailTemplate(name, verificationCode);
+
+    const emailText = `Dear ${name}, ${emailTemplateGreetins} ${emailTemplateVerificationText} ${verificationCode} ${emailTemplateFoot}`;
+    
+    let readyEmailStructure = {
+      source: currentEmail,
+      "destination": {
+        "toAddresses": [
+          email
+        ]
+      },
+      "message": {
+        "subject": {
+          "data": emailTemplateSubject,
+          "charset": "UTF-8"
+        },
+        "body": {
+          "text": {
+            "data": emailText,
+            "charset": "UTF-8"
+          },
+          "html": {
+            "data": emailTemplate,
+            "charset": "UTF-8"
+          }
+        }
+      }
+    }
+    
+    console.log("Ready Email Structure: ===---> ", readyEmailStructure);
+    
+
+  }
+
+  const renderEmailTemplate = (name: string, verificationCode: number) => {
+    const element = <EmailTemplate name={name} verificationCode={verificationCode} />;
+    const htmlString = ReactDOMServer.renderToStaticMarkup(element);
+    return htmlString;
   };
 
   const uploadAllDocuments = async (values: any, type: string) => {
@@ -216,6 +276,7 @@ const RegistrationRealState = () => {
       onSubmit(values, []);
     }
   }
+  
 
   return (
     <Grid container component="main" sx={styles.mainContainer}>
