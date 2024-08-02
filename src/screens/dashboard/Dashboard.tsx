@@ -28,7 +28,7 @@ const Dashboard: React.FC<DashboardProps> = ({ overrideComponent  }) => {
     { id: 3, icon: MdOutlineAddHomeWork, text: "Gebäude", subItems: [{ id: 30, text: "Alle Gebäude", component:<Buildings /> }, { id: 31, text: "Gebäude hinzufügen", component: <NewBuilding/>}] },
     // { id:4, icon: MdOutlineNoteAlt, text: "Aufträge"},
     { id:4, icon: TbPigMoney, text: "Kosteneinsparung" },
-    { id:5, icon: FaRegFlag, text: "Favoriten" },
+    // { id:5, icon: FaRegFlag, text: "Favoriten" }, // NOT INCLUDED IN GP-V1
   ];
 
   const [selected, setSelected] = useState<SidebarItem | SubItem>(sidebarItems[0]);
