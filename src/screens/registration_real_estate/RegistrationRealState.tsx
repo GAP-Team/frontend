@@ -16,16 +16,16 @@ import {
   SetTouchedFunction,
   SubmitFormFunction,
   ValidateFormFunction,
-  } from "../../typings/types";
-  import userAPIs from "@/api/user";
-  import { RegistrationFormValues } from "./types";
-  import PageTitle from "@/components/label/PageTitle";
-  import { handleUploadDoc } from "@/utils/uploadToS3";
-  import BackButton from "@/components/button/BackButton";
-  import InfoBanner from "@/components/common/InfoBanner";
-  import SuccessPage from "@/components/common/SuccessPage";
-  import { registrationValidationSchema } from "@/utils/ValidationSchema";
+} from "../../typings/types";
+import userAPIs from "@/api/user";
+import { RegistrationFormValues } from "./types";
 import EmailVerification from "./EmailVerification";
+import PageTitle from "@/components/label/PageTitle";
+import { handleUploadDoc } from "@/utils/uploadToS3";
+import BackButton from "@/components/button/BackButton";
+import InfoBanner from "@/components/common/InfoBanner";
+import SuccessPage from "@/components/common/SuccessPage";
+import { registrationValidationSchema } from "@/utils/ValidationSchema";
 
 function getSteps() {
   return [
@@ -87,6 +87,7 @@ const RegistrationRealState = () => {
   };
 
   const handleBack = () => {
+
     if (activeStep > 3) {
       //If user has registered then redirect to new registration
       setActiveStep(0);
@@ -163,7 +164,35 @@ const RegistrationRealState = () => {
         updatedAt: null
       }
       
-      const res = await userAPIs.register(arrangedDataObj);
+      const res = await userAPIs.register(arrangedDataObj);let firstName = "Sudipto";
+      let verificationCode = Math.floor(100000 + Math.random() * 900000);
+
+      const emailTemplate = `
+        <!DOCTYPE html>
+        <html>
+          <head>
+            <title>Subject: Verify Your Email for <b>GAP (Gesetzliche Anlagen Prüfen)</b></title>
+          </head>
+          <body>
+            <p>Dear `+values.firstName+`,</p>
+            <p>
+              Thank you for registering with GAP (Gesetzliche Anlagen Prüfen)! To complete your registration and activate your account, 
+              please verify your email address by entering the verification code provided below.
+            </p>
+            <p>Your Verification Code: `+verificationCode+` </p>
+            <p>his verification helps us ensure the security of your account and provides you with a seamless experience on our platform.</p>
+            <p>If you did not create an account with GAP, please disregard this email.</p>
+            <p>Should you encounter any issues during the verification process, feel free to contact our support team at [Support Email] for assistance.</p>
+            <p>Thank you for choosing GAP to manage and maintain your real estate facilities efficiently.</p>
+            <footer>
+              <p>Best regards,</p>
+              <p>The GAP Team</p>
+              <p>info@gap.com</p>
+              <p>Düsseldorf, Germany</p>
+            </footer>
+          </body>
+        </html>
+      `;
 
     } catch (error: any) {
       console.log(
@@ -216,6 +245,7 @@ const RegistrationRealState = () => {
       onSubmit(values, []);
     }
   }
+  
 
   return (
     <Grid container component="main" sx={styles.mainContainer}>
