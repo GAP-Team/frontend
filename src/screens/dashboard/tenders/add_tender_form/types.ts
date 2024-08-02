@@ -1,3 +1,4 @@
+import { Dispatch, SetStateAction } from "react";
 import { Dayjs } from 'dayjs';
 export interface AddTenderFormValues {
     //Tender Info feilds = Form 1
@@ -27,5 +28,10 @@ export interface AddTenderFormValues {
 export interface ActiveStepItem {
     id: number;
     stepName: string;
-    component?: () => JSX.Element;
-  }
+    component?: React.ComponentType<StepComponentProps>;
+}
+  
+export interface StepComponentProps {
+  setActiveStep: Dispatch<SetStateAction<ActiveStepItem>>;
+  steps: ActiveStepItem[];
+}
