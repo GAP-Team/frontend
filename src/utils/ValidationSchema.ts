@@ -48,9 +48,7 @@ export const registrationValidationSchema = yup.object({
   street: yup
     .string()
     .required("Straßenname ist erforderlich"),
-  houseNo: yup
-    .string()
-    .required("Hausnummer ist erforderlich"),
+  houseNo: yup.number().typeError("Hausnummer muss eine Zahl sein.").required("Hausnummer ist erforderlich.").positive("Hausnummer muss größer als 0 sein.").integer("Hausnummer muss eine ganze Zahl sein."),
   zip: yup
     .string()
     .required("Postleitzahl ist erforderlich")
@@ -102,7 +100,7 @@ export const registrationValidationSchema = yup.object({
       })
     ).min(0, "Mindestens eine Kontaktperson ist erforderlich."),
     street: yup.string().required("STRAßE ist erforderlich."),
-    houseNumber: yup.string().required("HAUSNR ist erforderlich."),
+    houseNumber: yup.number().typeError("Hausnummer muss eine Zahl sein.").required("Hausnummer ist erforderlich.").positive("Hausnummer muss größer als 0 sein.").integer("Hausnummer muss eine ganze Zahl sein."),
     zip: yup
       .string()
       .required("Postleitzahl ist erforderlich")
