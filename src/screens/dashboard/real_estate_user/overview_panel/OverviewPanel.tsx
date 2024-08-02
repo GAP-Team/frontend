@@ -17,7 +17,7 @@ const OverviewPanel = () => {
       />
       <DividerDecorator />
       <Box sx={styles.statsSection}>
-        <StatisticsItem number="3" text="aktive Ausschreibung" />
+        <StatisticsItem number="3" color='#FECB00' text="aktive Ausschreibung" />
         <Divider orientation="vertical" flexItem sx={styles.dividerStats} />
         <StatisticsItem number="11" text="laufende Projekte" />
       </Box>
