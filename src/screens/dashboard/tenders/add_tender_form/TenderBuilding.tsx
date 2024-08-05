@@ -23,6 +23,15 @@ const TenderBuilding = () => {
     setSelectedEquipmntType(selectedItem);
     formik?.setFieldValue("equipmentType", selectedItem ? selectedItem.value : "");
   };
+
+  const handleBuildingNameChange = (event: any, value: string | null) => {
+    formik?.setFieldValue("buildingName", value);
+  };
+
+  const handleEquipmentNameChange = (event: any, value: string | null) => {
+    formik?.setFieldValue("equipmentName", value);
+  };
+
   return (
     <Box
       component="form"
@@ -38,8 +47,8 @@ const TenderBuilding = () => {
             value={formik.values.buildingName}
             disableClearable
             options={dummyBuildings.map((option) => option.title)}
-            onChange={formik.handleChange}
-            onInputChange={formik.handleChange}
+            onChange={handleBuildingNameChange}
+            onInputChange={handleBuildingNameChange}
             renderInput={(params) => (
               <TextField
                 {...params}
@@ -63,8 +72,8 @@ const TenderBuilding = () => {
             value={formik.values.equipmentName}
             disableClearable
             options={dummyBuildings.map((option) => option.title)}
-            onChange={formik.handleChange}
-            onInputChange={formik.handleChange}
+            onChange={handleEquipmentNameChange}
+            onInputChange={handleEquipmentNameChange}
             renderInput={(params) => (
               <TextField
                 {...params}

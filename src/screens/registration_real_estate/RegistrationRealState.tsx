@@ -9,8 +9,18 @@ import Snackbar from "@mui/material/Snackbar";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
 import Typography from "@mui/material/Typography";
 import { useRouter } from "next/navigation";
+import ReactDOMServer from 'react-dom/server';
 import RegistrationForm from "./RegistrationForm";
 import EmailVerification from "./EmailVerification";
+import Typography from "@mui/material/Typography";
+import { UseDispatch, useSelector } from "react-redux";
+
+import {
+  emailTemplateFoot,
+  emailTemplateSubject,
+  emailTemplateGreetins,
+  emailTemplateVerificationText,
+} from "@/utils/Constants";
 import {
   SetTouchedFunction,
   SubmitFormFunction,
@@ -18,10 +28,16 @@ import {
 } from "../../typings/types";
 import userAPIs from "@/api/user";
 import { RegistrationFormValues } from "./types";
+
+import EmailVerification from "./EmailVerification";
 import PageTitle from "@/components/label/PageTitle";
 import { handleUploadDoc } from "@/utils/uploadToS3";
 import BackButton from "@/components/button/BackButton";
 import InfoBanner from "@/components/common/InfoBanner";
+import SuccessPage from "@/components/common/SuccessPage";
+import { currentUserEmail } from "@/lib/features/userSlice";
+import EmailTemplate from "@/components/EmailTemplate/Template";
+
 import { registrationValidationSchema } from "@/utils/ValidationSchema";
 
 function getSteps() {
@@ -45,6 +61,9 @@ const RegistrationRealState = () => {
   const [activeStep, setActiveStep] = useState(0);
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const steps = getSteps();
+
+  const currentEmail = useSelector(currentUserEmail);
+
 
   const handleNext = async (
     validateForm: ValidateFormFunction,
@@ -84,7 +103,14 @@ const RegistrationRealState = () => {
   };
 
   const handleBack = () => {
-    if (activeStep > 0) {
+
+    sendVerificationEmail("Sudipto", "rihab@gap-pruefen.de");
+
+    if (activeStep > 3) {
+      //If user has registered then redirect to new registration
+      setActiveStep(0);
+    } // Check if the active step is already 0 before updating the state
+    else if (activeStep > 0) {
       setActiveStep((prevActiveStep) => prevActiveStep - 1);
     } else {
       router.push("/login");
@@ -154,6 +180,9 @@ const RegistrationRealState = () => {
       };
 
       const res = await userAPIs.register(arrangedDataObj);
+      
+      sendVerificationEmail(values.firstName, values.email);
+      
 
       // If registration is successful, move to email verification step
       if (res.status === 201) {
@@ -172,6 +201,49 @@ const RegistrationRealState = () => {
         );
       }
     }
+  };
+
+  const sendVerificationEmail = (name: string, email: string) => {
+
+    let verificationCode = Math.floor(100000 + Math.random() * 900000);
+    const emailTemplate = renderEmailTemplate(name, verificationCode);
+
+    const emailText = `Dear ${name}, ${emailTemplateGreetins} ${emailTemplateVerificationText} ${verificationCode} ${emailTemplateFoot}`;
+    
+    let readyEmailStructure = {
+      source: currentEmail,
+      "destination": {
+        "toAddresses": [
+          email
+        ]
+      },
+      "message": {
+        "subject": {
+          "data": emailTemplateSubject,
+          "charset": "UTF-8"
+        },
+        "body": {
+          "text": {
+            "data": emailText,
+            "charset": "UTF-8"
+          },
+          "html": {
+            "data": emailTemplate,
+            "charset": "UTF-8"
+          }
+        }
+      }
+    }
+    
+    console.log("Ready Email Structure: ===---> ", readyEmailStructure);
+    
+
+  }
+
+  const renderEmailTemplate = (name: string, verificationCode: number) => {
+    const element = <EmailTemplate name={name} verificationCode={verificationCode} />;
+    const htmlString = ReactDOMServer.renderToStaticMarkup(element);
+    return htmlString;
   };
 
   const uploadAllDocuments = async (values: any, type: string) => {
@@ -209,6 +281,7 @@ const RegistrationRealState = () => {
     } else {
       onSubmit(values, []);
     }
+
   };
 
   const handleSnackbarClose = (
@@ -220,6 +293,10 @@ const RegistrationRealState = () => {
     }
     setOpenSnackbar(false);
   };
+
+  }
+  
+
 
   return (
     <Grid container component="main" sx={styles.mainContainer}>

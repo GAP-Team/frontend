@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import React, { useEffect, useState } from "react";
 import Grid from "@mui/material/Grid";
 import { useRouter } from "next/navigation";
@@ -18,7 +18,8 @@ import Link from "next/link";
 import { IconButton } from "@mui/material";
 import { CgClose } from "react-icons/cg";
 import TenderDocumentation from "./TenderDocumentation";
-
+import TenderSummary from "./TenderSummary";
+import { StepComponentProps } from "./types";
 
 const NewTender = () => {
   const router = useRouter();
@@ -32,11 +33,12 @@ const NewTender = () => {
     { id: 2, stepName: "Beschreibung", component: TenderDescription },
     { id: 3, stepName: "Einstufung", component: TenderClassification },
     { id: 4, stepName: "Dokumente", component: TenderDocumentation },
+    { id: 5, stepName: "Übersicht Anlage", component: TenderSummary },
   ];
 
   const [activeStep, setActiveStep] = useState<ActiveStepItem>(steps[0]);
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const StepComponent = steps[activeStep.id]?.component;
+  const StepComponent = steps[activeStep.id]?.component as React.ComponentType<StepComponentProps>;
 
   useEffect(() => {
     setActiveStep(steps[0]);
@@ -114,7 +116,7 @@ const NewTender = () => {
           </Link>
         </Grid>
       </Grid>
-      {StepComponent && <StepComponent />}
+      {StepComponent && <StepComponent setActiveStep={setActiveStep} steps={steps} />}
     </>
   );
 
