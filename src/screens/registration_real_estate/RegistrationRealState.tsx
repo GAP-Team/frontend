@@ -1,16 +1,17 @@
 "use client";
-import { 
-  useEffect, useState 
-} from "react";
+import React, { useEffect, useState } from "react";
 import moment from 'moment';
 import bcrypt from "bcryptjs";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import { Formik, Form } from "formik";
-import Button from "@mui/material/Button";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert, { AlertProps } from "@mui/material/Alert";
+import Typography from "@mui/material/Typography";
 import { useRouter } from "next/navigation";
 import ReactDOMServer from 'react-dom/server';
 import RegistrationForm from "./RegistrationForm";
+import EmailVerification from "./EmailVerification";
 import Typography from "@mui/material/Typography";
 import { UseDispatch, useSelector } from "react-redux";
 
@@ -27,6 +28,7 @@ import {
 } from "../../typings/types";
 import userAPIs from "@/api/user";
 import { RegistrationFormValues } from "./types";
+
 import EmailVerification from "./EmailVerification";
 import PageTitle from "@/components/label/PageTitle";
 import { handleUploadDoc } from "@/utils/uploadToS3";
@@ -35,6 +37,7 @@ import InfoBanner from "@/components/common/InfoBanner";
 import SuccessPage from "@/components/common/SuccessPage";
 import { currentUserEmail } from "@/lib/features/userSlice";
 import EmailTemplate from "@/components/EmailTemplate/Template";
+
 import { registrationValidationSchema } from "@/utils/ValidationSchema";
 
 function getSteps() {
@@ -46,19 +49,27 @@ function getSteps() {
   ];
 }
 
-const RegistrationRealState = () => {
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
+  props,
+  ref,
+) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
-  const steps = getSteps();
+const RegistrationRealState = () => {
   const router = useRouter();
   const [activeStep, setActiveStep] = useState(0);
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const steps = getSteps();
+
   const currentEmail = useSelector(currentUserEmail);
+
 
   const handleNext = async (
     validateForm: ValidateFormFunction,
     setTouched: SetTouchedFunction,
     submitForm: SubmitFormFunction
   ): Promise<void> => {
-    // Get the fields to validate for the current step
     const fieldsPerStep: { [key: number]: string[] } = {
       0: ["firstName", "lastName", "email", "password", "confirmPassword", "telephone", "company", "role"],
       1: ["state", "street", "houseNo", "zip", "city"],
@@ -67,8 +78,6 @@ const RegistrationRealState = () => {
 
     const fieldsToValidate = fieldsPerStep[activeStep];
 
-    // Validate only the fields for the current step
-    // First, mark fields as touched to ensure errors are shown
     const touchedUpdates = fieldsToValidate?.reduce(
       (acc, field) => ({
         ...acc,
@@ -80,18 +89,14 @@ const RegistrationRealState = () => {
 
     const formErrors = await validateForm();
 
-    // Check if all these fields are valid
     const isCurrentStepValid =
       !fieldsToValidate ||
       fieldsToValidate?.every((field) => !formErrors[field]);
 
     if (isCurrentStepValid) {
-      if (activeStep === 3) {
-        // If this is the last step and it's valid, submit the form
+      if (activeStep === steps.length - 1) {
         submitForm();
-        setActiveStep((prevActiveStep) => prevActiveStep + 1);
       } else {
-        // Not the last step, just move to the next step
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
       }
     }
@@ -108,10 +113,9 @@ const RegistrationRealState = () => {
     else if (activeStep > 0) {
       setActiveStep((prevActiveStep) => prevActiveStep - 1);
     } else {
-      // If active step is 0, then push to login
       router.push("/login");
     }
-  };  
+  };
 
   const initialValues: RegistrationFormValues = {
     firstName: "",
@@ -136,19 +140,17 @@ const RegistrationRealState = () => {
   };
 
   const onSubmit = async (values: any, docObj: any) => {
-
     try {
-      
-      let addressObj = {
+      const addressObj = {
         zip: values.zip,
         city: values.city,
         state: values.state,
         street: values.street,
         houseNo: values.houseNo,
         country: values.country,
-      }
+      };
 
-      let companyObj = {
+      const companyObj = {
         name: values.company,
         phonenumber: values.telephone,
         numberOfEmployees: null,
@@ -156,16 +158,16 @@ const RegistrationRealState = () => {
         business: {
           businessType: values.businessType,
           registrationNumber: values.registrationNumber,
-          documents: docObj
-        }
-      }
-      
-      let currentDate = new Date();
+          documents: docObj,
+        },
+      };
+
+      const currentDate = new Date();
       const formateDate = moment(currentDate).format('YYYY-MM-DDTHH:mm:ss.SSS[Z]');
 
       const hashedPassword = await bcrypt.hash(values.password, 10);
-      
-      let arrangedDataObj= {
+
+      const arrangedDataObj = {
         firstName: values.firstName,
         lastName: values.lastName,
         password: hashedPassword,
@@ -174,21 +176,30 @@ const RegistrationRealState = () => {
         company: companyObj,
         manufacturer_experience: null,
         registeredAt: formateDate,
-        updatedAt: null
-      }
-      
+        updatedAt: null,
+      };
+
       const res = await userAPIs.register(arrangedDataObj);
       
       sendVerificationEmail(values.firstName, values.email);
       
 
-    } catch (error: any) {
-      console.log(
-        "Unable to register user, post reqeust failed",
-        error.name,
-        error.message
-      );
+      // If registration is successful, move to email verification step
+      if (res.status === 201) {
+        setActiveStep(steps.length);
+      }
 
+    } catch (error: any) {
+      if (error.response && error.response?.data?.error == 'User already exists') {
+        setOpenSnackbar(true);
+        setActiveStep(0);
+      } else {
+        console.log(
+          "Unable to register user, post request failed",
+          error.name,
+          error.message
+        );
+      }
     }
   };
 
@@ -236,52 +247,60 @@ const RegistrationRealState = () => {
   };
 
   const uploadAllDocuments = async (values: any, type: string) => {
-    
-    let docObj: any[] = [];
-    let allFiles: any[] = [];
+    const docObj: any[] = [];
+    const allFiles: any[] = [];
 
-    var itemsProcessed = 0;
-    
     if (values?.approval_document_file || values?.land_register_entry_document_file || values?.business_registration_doc_file) {
-      
-      if (type == "business") {
+      if (type === "business") {
+        const selectedBusinessRegFiles = values?.business_registration_doc_file;
 
-        let selectedBussinessRegFiles = values?.business_registration_doc_file;
-  
-        let fdFileDocUpload = await handleUploadDoc(selectedBussinessRegFiles);
+        const fdFileDocUpload = await handleUploadDoc(selectedBusinessRegFiles);
         docObj.push(fdFileDocUpload);
-        
+
         onSubmit(values, docObj);
 
-      }else{
+      } else {
+        const selectedApprovalDocsFiles = values?.approval_document_file;
+        const selectedLandRegDocsFiles = values?.land_register_entry_document_file;
 
-        let selectedApprovalDocsFiles = values?.approval_document_file;
-        let selectedLandRegDocsFiles = values?.land_register_entry_document_file;
-        
-        allFiles = [selectedApprovalDocsFiles, selectedLandRegDocsFiles];
-        
-        allFiles.forEach( async (file, index, array) => {
-          let fdFileDocUpload = await handleUploadDoc(file);
+        allFiles.push(selectedApprovalDocsFiles, selectedLandRegDocsFiles);
+
+        let itemsProcessed = 0;
+
+        allFiles.forEach(async (file, index, array) => {
+          const fdFileDocUpload = await handleUploadDoc(file);
           docObj.push(fdFileDocUpload);
           itemsProcessed++;
-    
-          if (itemsProcessed == array.length) {
+
+          if (itemsProcessed === array.length) {
             onSubmit(values, docObj);
           }
-        })
-
+        });
       }
 
-    } else {      
+    } else {
       onSubmit(values, []);
     }
+
+  };
+
+  const handleSnackbarClose = (
+    event?: React.SyntheticEvent | Event,
+    reason?: string
+  ) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpenSnackbar(false);
+  };
+
   }
   
+
 
   return (
     <Grid container component="main" sx={styles.mainContainer}>
       <Grid item xs={false} md={4} lg={4} sx={styles.infoBannerGrid}>
-        {/* Make this Box a flex container to use Flexbox properties */}
         <InfoBanner
           title="Where skills are developed"
           subtitle="Gesetzliche Anlagenprüfung"
@@ -291,7 +310,7 @@ const RegistrationRealState = () => {
       <Grid item xs={12} md={8} lg={8} sx={styles.formGrid}>
         <BackButton
           onBack={handleBack}
-          sx={{ visibility: activeStep <= 3 ? "visible" : "hidden" }}
+          sx={{ visibility: activeStep <= steps.length - 1 ? "visible" : "hidden" }}
         />
         <PageTitle title="Registrierung" />
         <Formik
@@ -299,14 +318,13 @@ const RegistrationRealState = () => {
           validationSchema={registrationValidationSchema}
           onSubmit={async (values, { resetForm }) => {
             await uploadAllDocuments(values, values?.businessType);
-            resetForm();
           }}
           enableReinitialize
         >
           {({ validateForm, setTouched, submitForm }) => (
             <Form>
               <Grid sx={styles.form}>
-                {activeStep <= 3 ? (
+                {activeStep < steps.length ? (
                   <RegistrationForm
                     activeStep={activeStep}
                     steps={steps}
@@ -317,7 +335,7 @@ const RegistrationRealState = () => {
                     setActiveStep={setActiveStep}
                   />
                 ) : (
-                  <EmailVerification/>
+                  <EmailVerification />
                 )}
               </Grid>
             </Form>
@@ -329,6 +347,16 @@ const RegistrationRealState = () => {
             Kontakt Support
           </Link>
         </Typography>
+        <Snackbar
+          anchorOrigin={{'vertical':'top','horizontal':'right'}}
+          open={openSnackbar}
+          autoHideDuration={6000}
+          onClose={handleSnackbarClose}
+        >
+          <Alert onClose={handleSnackbarClose} severity="error" sx={{ width: '100%' }}>
+            Die E-Mail-Adresse des Benutzers existiert bereits. Bitte loggen Sie sich ein.
+          </Alert>
+        </Snackbar>
       </Grid>
     </Grid>
   );
@@ -336,7 +364,6 @@ const RegistrationRealState = () => {
 
 export default RegistrationRealState;
 
-// css design
 export const styles = {
   mainContainer: { height: "100vh" },
   infoBannerGrid: {

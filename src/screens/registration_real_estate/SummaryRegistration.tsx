@@ -60,9 +60,11 @@ const SummaryRegistration = ({setActiveStep}:SummaryRegistrationProps) => {
         <Grid item xs={12}>
           <SummarySection title="ADRESSE DER FIRMA" details={updatedAdresse} setActiveStep={()=>setActiveStep(1)}/>
         </Grid>
-        <Grid item xs={12}>
+        {updatedBusinessRegistration?.length > 0 &&
+          (<Grid item xs={12}>
           <SummarySection title="GEWERBEANMELDUNG" details={updatedBusinessRegistration} setActiveStep={()=>setActiveStep(2)} />
-        </Grid>
+          </Grid>)
+        }
       </Grid>
     </Box>
   );
