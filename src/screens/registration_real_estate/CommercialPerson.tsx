@@ -38,10 +38,10 @@ const ComercialPerson = ({formik}:any): JSX.Element => {
       </Grid>
       <Grid item xs={12} sm={12}>
         <Typography variant="gsub" color="gray.500">
-          HANDELREGISTERNUMMER
+          HANDELSREGISTERNUMMER 
         </Typography>
         <GTextInput
-          placeholder="HANDELREGISTERNUMMER"
+          placeholder="HANDELSREGISTERNUMMER"
           id="registrationNumber"
           name="registrationNumber"
           value={formik.values.registrationNumber}
