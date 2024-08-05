@@ -8,6 +8,7 @@ const userAPIs = {
     getUserDataById: (id: any) => api.get(`/users/by-id/${id}`),
     getUserData: (data: any) => api.post('/users/by-email', data),
     updateUser: (id: string, data: any) => api.patch(`/users/${id}`, data),
+    sendVerificationEmail: (data: any) => api.post('/emails/send-email', data),
   
 }
 
