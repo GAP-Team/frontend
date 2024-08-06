@@ -32,7 +32,7 @@ const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    setUser: (state, action: PayloadAction<UserState>) => {      
+    setUser: (state, action: PayloadAction<UserState>) => {
       state.user._id = action.payload?.user?._id;
       state.user.role = action.payload?.user?.role;
       state.user.email = action.payload?.user?.email;
@@ -42,10 +42,13 @@ const userSlice = createSlice({
       state.user.buildings = action.payload?.user?.buildings;
       state.user.manufacturer_experience = action.payload?.user?.manufacturer_experience;
     },
+    setUserBuildings: (state, action) => {
+      state.user.buildings = action.payload;
+    }
   },
 });
 
-export const { setUser } = userSlice.actions;
+export const { setUser, setUserBuildings } = userSlice.actions;
 
 export const currentUserId = (state: RootState) => state.user.user._id;
 export const currentUserEmail = (state: RootState) => state.user.user.email;
