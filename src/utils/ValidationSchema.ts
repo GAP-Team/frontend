@@ -36,8 +36,8 @@ export const registrationValidationSchema = yup.object({
     .string()
     .required("Telefonnummer ist erforderlich")
     .matches(
-      /^(\+?\d{1,3}[- ]?)?\d{10}$/,
-      "Telefonnummer muss gültig sein"
+      /^\d{10,14}$/,
+      "Telefonnummer muss nur Zahlen enthalten und zwischen 10 und 14 Ziffern lang sein"
     ),
   company: yup
     .string()
