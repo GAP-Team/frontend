@@ -18,6 +18,7 @@ import { SubmitFormFunction } from "@/typings/types";
 import PageTitle from "@/components/label/PageTitle";
 import BuildingInformation from "./BuildingInformation";
 import BackButton from "@/components/button/BackButton";
+import { setUserBuildings } from '@/lib/features/userSlice';
 import BuildingDocumentation from "./BuildingDocumentation";
 import CircularProgress from "@mui/material/CircularProgress";
 import { addObjektFormSchema } from "@/utils/ValidationSchema";
@@ -28,6 +29,7 @@ import { currentUserId, currentUserBuildings } from '@/lib/features/userSlice';
 const NewBuilding = () => {
 
   const router = useRouter();
+  const dispatch = useDispatch();
   const logger = getLogger("new-building");
   const userId = useSelector(currentUserId);
   const userBuildings = useSelector(currentUserBuildings);
@@ -199,17 +201,23 @@ const NewBuilding = () => {
       let lastId = createBuildingResponse?.data?._id;
       
       if (userBuildings?.length > 0) {
+        
         userPreviousBuildings = [...userBuildings];
         userPreviousBuildings.push(lastId);
       }else{
         userPreviousBuildings = [lastId];
       }
-
       let buildingQuery = {
         buildings: userPreviousBuildings
       };
       
       const userUpdateStatus = await userAPIs.updateUser(userId, buildingQuery);
+      
+      if (userUpdateStatus?.data?.acknowledged) {
+        dispatch(setUserBuildings(userPreviousBuildings));        
+      } else {
+        console.log("User data building update error");
+      }
     }
 
     setLoading(false);
