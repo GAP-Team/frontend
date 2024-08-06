@@ -1,7 +1,9 @@
 import * as React from "react";
+import Cookies from "js-cookie";
 import Box from "@mui/material/Box";
 import Menu from "@mui/material/Menu";
 import Badge from "@mui/material/Badge";
+import { useRouter } from "next/navigation";
 import Divider from "@mui/material/Divider";
 import Toolbar from "@mui/material/Toolbar";
 import MenuItem from "@mui/material/MenuItem";
@@ -11,14 +13,19 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import ListItemIcon from "@mui/material/ListItemIcon";
+import { UseDispatch, useSelector } from "react-redux";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 
+import authAPIs from "@/api/auth";
 import GSearch from "@/components/search/GSearch";
+import { currentUserId } from "@/lib/features/userSlice";
 
 export default function GAppBar() {
 
+  const router = useRouter();
+  const userId = useSelector(currentUserId);
   const menuId = "primary-search-account-menu";
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -33,8 +40,14 @@ export default function GAppBar() {
     setAnchorEl(null);
   };
 
-  const handleLogout = () => {
-    handleClose()
+  const handleLogout = async () => {
+    const logoutStatus = await authAPIs.logout(userId);
+    if (logoutStatus?.data?.status?.acknowledged) {
+      Cookies.remove('access_token');
+      localStorage.removeItem("access_token");
+      handleClose();
+      router.push("/login");
+    }
   }
 
   return (
@@ -100,7 +113,7 @@ export default function GAppBar() {
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
-        <MenuItem onClick={handleLogout} style={menuItemStyles.mainProfileMenu} >
+        <MenuItem onClick={()=>{}} style={menuItemStyles.mainProfileMenu} >
           <ListItemIcon>
             <AccountCircle sx={menuItemStyles.mainProfileMenu} />
           </ListItemIcon>
