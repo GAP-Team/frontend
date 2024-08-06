@@ -1,19 +1,22 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, 
+  { 
+    useState, 
+    useEffect, 
+  } 
+from "react";
 import moment from 'moment';
 import bcrypt from "bcryptjs";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import { Formik, Form } from "formik";
-import Snackbar from "@mui/material/Snackbar";
-import MuiAlert, { AlertProps } from "@mui/material/Alert";
-import Typography from "@mui/material/Typography";
 import { useRouter } from "next/navigation";
+import Snackbar from "@mui/material/Snackbar";
 import ReactDOMServer from 'react-dom/server';
 import RegistrationForm from "./RegistrationForm";
-import EmailVerification from "./EmailVerification";
 import Typography from "@mui/material/Typography";
 import { UseDispatch, useSelector } from "react-redux";
+import MuiAlert, { AlertProps } from "@mui/material/Alert";
 
 import {
   emailTemplateFoot,
@@ -57,12 +60,13 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
 });
 
 const RegistrationRealState = () => {
+
+  const steps = getSteps();
   const router = useRouter();
+  const currentEmail = useSelector(currentUserEmail);
+
   const [activeStep, setActiveStep] = useState(0);
   const [openSnackbar, setOpenSnackbar] = useState(false);
-  const steps = getSteps();
-
-  const currentEmail = useSelector(currentUserEmail);
 
 
   const handleNext = async (
@@ -293,10 +297,6 @@ const RegistrationRealState = () => {
     }
     setOpenSnackbar(false);
   };
-
-  }
-  
-
 
   return (
     <Grid container component="main" sx={styles.mainContainer}>
