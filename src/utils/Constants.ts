@@ -96,14 +96,14 @@ interface Detail {
 export const grundinformation: Detail[] = [
   { label: "Vorname", value: "Maximillian" },
   { label: "Nachname", value: "Müller-Maier" },
-  { label: "Email", value: "müller-maire@gmail.com" },
-  { label: "Company", value: "Fire Protection GmbH" },
+  { label: "E-mail-Adresse", value: "müller-maire@gmail.com" },
+  { label: "Unternehmen", value: "Fire Protection GmbH" },
 ];
 
 export const ansprechpartner: Detail[] = [
   { label: "Vorname", value: "Maximillian" },
   { label: "Nachname", value: "Müller-Maier" },
-  { label: "Email", value: "müller-maire@gmail.com" },
+  { label: "E-Mail-Adresse", value: "müller-maire@gmail.com" },
   { label: "Tel. Nummer", value: "+4916090010020" },
 ];
 
