@@ -9,7 +9,7 @@ import sucess_svg from "../../../public/icons/success.svg";
 
 interface SuccessPageProps {
   title: string;
-  description: string;
+  description?: string;
   description2?: string;
   buttonLabel?: string;
   imageUrl?: string;
@@ -34,9 +34,11 @@ const SuccessPage: NextPage<SuccessPageProps> = ({
       </div>
       {description2 && (<Typography variant="bodymr" color="#475A60" >{description2}</Typography>)}
       <Typography variant="h4sb" padding={"0.5rem"}>{title}</Typography>
-      <Typography variant="bodymr" style={{ maxWidth: "22rem", textAlign: "center", color: "#8D999C" }}>
+      {description &&
+        (<Typography variant="bodymr" style={{ maxWidth: "22rem", textAlign: "center", color: "#8D999C" }}>
         {description}
-      </Typography>
+        </Typography>)
+      }
       {buttonLabel && (
         <GButton style={{ marginTop: "2rem" }} href={redirectUrl}>
           {buttonLabel}
