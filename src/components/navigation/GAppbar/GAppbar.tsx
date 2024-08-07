@@ -76,10 +76,10 @@ export default function GAppBar() {
       <Box sx={styles.userSection}>
         <IconButton
           size="large"
-          aria-label="show 17 new notifications"
+          aria-label="show 0 new notifications"
           color="inherit"
         >
-          <Badge badgeContent={17} color="error">
+          <Badge badgeContent={0} color="error">
             <NotificationsIcon sx={styles.notificationIcon} />
           </Badge>
         </IconButton>
