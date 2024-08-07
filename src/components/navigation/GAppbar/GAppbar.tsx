@@ -20,13 +20,21 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 
 import authAPIs from "@/api/auth";
 import GSearch from "@/components/search/GSearch";
-import { currentUserId } from "@/lib/features/userSlice";
+import { 
+  currentUserId,
+  currentUserName,
+  currentUserCompany
+} from "@/lib/features/userSlice";
 
 export default function GAppBar() {
 
   const router = useRouter();
   const userId = useSelector(currentUserId);
+  const userName = useSelector(currentUserName);
+  const userCompany = useSelector(currentUserCompany);
+
   const menuId = "primary-search-account-menu";
+
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState<null | HTMLElement>(null);
   
@@ -58,7 +66,7 @@ export default function GAppBar() {
         component="div"
         sx={styles.title}
       >
-        Vierkant Wohnungs AG
+        {userCompany?.name}
       </Typography>
 
       <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'center' }}>  
@@ -86,7 +94,7 @@ export default function GAppBar() {
           <AccountCircle sx={styles.accountIcon} />
         </IconButton>
         <Box sx={styles.userControls} >
-          <Typography>Max Müller</Typography>
+          <Typography>{userName}</Typography>
           <IconButton
           edge="end"
           size="large"

@@ -52,6 +52,8 @@ export const { setUser, setUserBuildings } = userSlice.actions;
 
 export const currentUserId = (state: RootState) => state.user.user._id;
 export const currentUserEmail = (state: RootState) => state.user.user.email;
+export const currentUserCompany = (state: RootState) => state.user.user.company;
 export const currentUserBuildings = (state: RootState) => state.user.user.buildings;
+export const currentUserName = (state: RootState) => `${state.user.user.firstName} ${state.user.user.lastName}`;
 
 export default userSlice.reducer;
