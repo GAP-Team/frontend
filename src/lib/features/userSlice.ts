@@ -50,6 +50,7 @@ const userSlice = createSlice({
 
 export const { setUser, setUserBuildings } = userSlice.actions;
 
+export const currentUser = (state: RootState) => state.user.user;
 export const currentUserId = (state: RootState) => state.user.user._id;
 export const currentUserEmail = (state: RootState) => state.user.user.email;
 export const currentUserCompany = (state: RootState) => state.user.user.company;

@@ -21,7 +21,7 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import authAPIs from "@/api/auth";
 import GSearch from "@/components/search/GSearch";
 import { 
-  currentUserId,
+  currentUser,
   currentUserName,
   currentUserCompany
 } from "@/lib/features/userSlice";
@@ -29,7 +29,7 @@ import {
 export default function GAppBar() {
 
   const router = useRouter();
-  const userId = useSelector(currentUserId);
+  const user = useSelector(currentUser);
   const userName = useSelector(currentUserName);
   const userCompany = useSelector(currentUserCompany);
 
@@ -49,7 +49,7 @@ export default function GAppBar() {
   };
 
   const handleLogout = async () => {
-    const logoutStatus = await authAPIs.logout(userId);
+    const logoutStatus = await authAPIs.logout(user?._id);
     if (logoutStatus?.data?.status?.acknowledged) {
       Cookies.remove('access_token');
       localStorage.removeItem("access_token");
@@ -66,7 +66,7 @@ export default function GAppBar() {
         component="div"
         sx={styles.title}
       >
-        {userCompany?.name}
+        {user?.company?.name}
       </Typography>
 
       <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'center' }}>  
@@ -94,7 +94,7 @@ export default function GAppBar() {
           <AccountCircle sx={styles.accountIcon} />
         </IconButton>
         <Box sx={styles.userControls} >
-          <Typography>{userName}</Typography>
+          <Typography>{`${user?.firstName} ${user?.lastName}`}</Typography>
           <IconButton
           edge="end"
           size="large"
