@@ -41,10 +41,16 @@ const TenderClassification = () => {
                 label="Nicht Dringend"
                 sx={{ marginBottom: 0 }}
               />
-              <FormControlLabel
-                value="Frist Feuerwehr"
+                <FormControlLabel
+                value="Dringend"
                 control={<Radio />}
-                label="Frist Feuerwehr"
+                label="Dringend"
+                sx={{ marginBottom: 0 }}
+              />
+              <FormControlLabel
+                value="Frist Bauamt"
+                control={<Radio />}
+                label="Frist Bauamt"
                 sx={{ marginBottom: 0 }}
               />
               <FormControlLabel
