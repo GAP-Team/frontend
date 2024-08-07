@@ -53,10 +53,10 @@ const PropertyFilterPanel = ({
     
     let cs = await buildingAPIs.getUserStatesCities(userId);
 
-    if (cs?.data?.cities.length > 0) {
+    if (cs?.data?.cities?.length > 0) {
       setUserCities(cs?.data?.cities);
     }
-    if (cs?.data?.states.length > 0) {
+    if (cs?.data?.states?.length > 0) {
       setUserStates(cs?.data?.states);
     }
   }
@@ -94,9 +94,13 @@ const PropertyFilterPanel = ({
           label="Bundesland"
           onChange={(e) => setFederalState(e.target.value)}
         >
-          {userStates?.map((state) => {
-            return <MenuItem value={state}>{state}</MenuItem>
-          })}
+          {userStates?.length > 0 ?
+            userStates?.map((state) => {
+              return <MenuItem value={state}>{state}</MenuItem>
+            })
+            :
+            <MenuItem value="">Keine Staaten</MenuItem>
+          }
         </Select>
       </FormControl>
       <FormControl size="small" sx={styles.formControl}>
@@ -108,9 +112,13 @@ const PropertyFilterPanel = ({
           label="Stadt"
           onChange={(e) => setCity(e.target.value)}
         >
-          {userCities?.map((city) => {
-            return <MenuItem value={city}>{city}</MenuItem>
-          })}
+          {userCities?.length > 0 ?
+            userCities?.map((city) => {
+              return <MenuItem value={city}>{city}</MenuItem>
+            })
+            :
+            <MenuItem value="">Keine Städte</MenuItem>
+          }
         </Select>
       </FormControl>
     </Container>
