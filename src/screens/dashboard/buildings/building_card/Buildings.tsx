@@ -42,8 +42,9 @@ const Buildings: React.FC = () => {
       image={addObjSrc} 
       alt="No Building/Objekt" 
       buttonLabel="Objekt anlegen" 
-      title="Erstelle ein neues Objekt." 
+      title="Noch keine Objekte angelegt" 
       buttonLink="/dashboard/buildings/add_building"
+      description="Du hast noch keine Objekte angelegt, wenn Du Deine Objekte erstellt hast findest Du sie hier."
     />;
   return (
       <Box sx={styles.mainContainer}>

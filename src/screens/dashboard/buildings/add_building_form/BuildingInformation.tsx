@@ -88,7 +88,7 @@ const BuildingInformation = ({ formik }: { formik?: any }) => {
           />
         </Grid>
         <Grid item xs={12} sm={3}>
-          <LabelWithAsterisk>GESAMMTFLÄCHE</LabelWithAsterisk>
+          <LabelWithAsterisk>GESAMMTFLÄCHE (in qm)</LabelWithAsterisk>
           <GTextInput
             id="totalArea"
             name="totalArea"
