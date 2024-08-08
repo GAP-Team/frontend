@@ -7,10 +7,11 @@ import Typography from "@mui/material/Typography";
 import { FiFileText } from "react-icons/fi";
 import FormHelperText from "@mui/material/FormHelperText";
 import Chip from "@mui/material/Chip";
+import { useDropzone } from "react-dropzone";
 
 interface UploadMultiButtonProps {
   value?: File[] | null | undefined;
-  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange?: (event: any) => void;
   id?: string;
   name?: string;
   error?: boolean;
@@ -47,9 +48,8 @@ export default function UploadMultiButton({
     },
   };
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = (files: File[]) => {
     if (onChange) {
-      const files = Array.from(event.target.files || []);
       const newFiles = value ? [...value, ...files] : files;
       const syntheticEvent = {
         target: {
@@ -72,9 +72,21 @@ export default function UploadMultiButton({
     onChange && onChange(syntheticEvent);
   };
 
+  const onDrop = (acceptedFiles: File[]) => {
+    handleFileChange(acceptedFiles);
+  };
+
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    onDrop,
+    accept: {
+      'application/pdf': ['.pdf']
+    },
+  });
+
   return (
     <>
-      <Box sx={styles}>
+      <Box sx={styles} {...getRootProps()}>
+        <Input {...getInputProps()} />
         {!value || value.length === 0 ? (
           <>
             <FiFileText size="1.5rem" color="#A0ADB1" />
@@ -104,7 +116,7 @@ export default function UploadMultiButton({
             id={id}
             name={name}
             accept="application/pdf"
-            onChange={handleFileChange}
+            onChange={(event) => handleFileChange(Array.from(event.target.files || []))}
             multiple
           />
         </Button>

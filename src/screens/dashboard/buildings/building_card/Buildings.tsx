@@ -12,14 +12,14 @@ import { Building } from "./types";
 import buildingAPIs from "@/api/building";
 import BuildingItemList from "./BuildingItemList";
 import { dummyBuildings } from "@/utils/Constants";
-import { currentUserId } from "@/lib/features/userSlice";
+import { currentUser } from "@/lib/features/userSlice";
 import addObjSrc from "@/../public/icons/add_building.svg";
 import NoContentPage from "@/components/common/NoContentPage";
 import PropertyFilterPanel from "@/components/filter/PropertyFilterPanel";
 
 const Buildings: React.FC = () => {
 
-  const userId = useSelector(currentUserId);
+  const user = useSelector(currentUser);
   const [buildings, setBuildings] = useState<Building[]>([]);
 
   useEffect(() => {
@@ -27,7 +27,7 @@ const Buildings: React.FC = () => {
   }, []);
   
   const getUserBuildings = async (city: string, federalState: string) => {
-    const allBuildings = await buildingAPIs.getBuildings(userId, city, federalState);
+    const allBuildings = await buildingAPIs.getBuildings(user?._id, city, federalState);
     setBuildings(allBuildings.data);
   }
 
@@ -39,11 +39,12 @@ const Buildings: React.FC = () => {
     <BuildingItemList buildings={buildings} /> 
   : 
     <NoContentPage 
-    image={addObjSrc} 
+      image={addObjSrc} 
       alt="No Building/Objekt" 
       buttonLabel="Objekt anlegen" 
-      title="Erstelle ein neues Objekt." 
+      title="Noch keine Objekte angelegt" 
       buttonLink="/dashboard/buildings/add_building"
+      description="Du hast noch keine Objekte angelegt, wenn Du Deine Objekte erstellt hast findest Du sie hier."
     />;
   return (
       <Box sx={styles.mainContainer}>

@@ -146,23 +146,23 @@ const RegistrationRealState = () => {
   const onSubmit = async (values: any, docObj: any) => {
     try {
       const addressObj = {
-        zip: values.zip,
         city: values.city,
         state: values.state,
         street: values.street,
-        houseNo: values.houseNo,
         country: values.country,
+        zip: Number(values.zip),
+        houseNo: Number(values.houseNo),
       };
 
       const companyObj = {
-        name: values.company,
-        phonenumber: values.telephone,
-        numberOfEmployees: null,
         address: addressObj,
+        name: values.company,
+        numberOfEmployees: null,
+        phonenumber: Number(values.telephone),
         business: {
+          documents: docObj,
           businessType: values.businessType,
           registrationNumber: values.registrationNumber,
-          documents: docObj,
         },
       };
 
@@ -181,7 +181,7 @@ const RegistrationRealState = () => {
         manufacturer_experience: null,
         registeredAt: formateDate,
         updatedAt: null,
-      };
+      };    
 
       const res = await userAPIs.register(arrangedDataObj);
 
@@ -190,10 +190,11 @@ const RegistrationRealState = () => {
       }else{
         console.log("Registration Failed...!!!");        
       }
-
+      
       // If registration is successful, move to email verification step
       if (res.status === 201) {
         setActiveStep(steps.length);
+        sendVerificationEmail(values.firstName, values.email);
       }
 
     } catch (error: any) {
@@ -243,18 +244,11 @@ const RegistrationRealState = () => {
       }
     }
 
-    console.log("Ready Email Structure: ===---> ", readyEmailStructure);
-
     let sendEmailStatus = await userAPIs.sendVerificationEmail(readyEmailStructure);
 
-    console.log("Send Email Status: ===---> ", sendEmailStatus);    
-
-    /*if (sendEmailStatus) {
+    if (sendEmailStatus.status == 201) {
       setIsVerificationEmailSent(true);
-    }*/
-    
-    console.log("Email Status: ===---> ", sendEmailStatus);
-    
+    }
 
   }
 
@@ -349,7 +343,7 @@ const RegistrationRealState = () => {
                     setActiveStep={setActiveStep}
                   />
                 ) : (
-                  <EmailVerification />
+                  isVerificationEmailSent && <EmailVerification />
                 )}
               </Grid>
             </Form>

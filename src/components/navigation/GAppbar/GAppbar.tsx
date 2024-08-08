@@ -20,13 +20,21 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 
 import authAPIs from "@/api/auth";
 import GSearch from "@/components/search/GSearch";
-import { currentUserId } from "@/lib/features/userSlice";
+import { 
+  currentUser,
+  currentUserName,
+  currentUserCompany
+} from "@/lib/features/userSlice";
 
 export default function GAppBar() {
 
   const router = useRouter();
-  const userId = useSelector(currentUserId);
+  const user = useSelector(currentUser);
+  const userName = useSelector(currentUserName);
+  const userCompany = useSelector(currentUserCompany);
+
   const menuId = "primary-search-account-menu";
+
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState<null | HTMLElement>(null);
   
@@ -41,7 +49,7 @@ export default function GAppBar() {
   };
 
   const handleLogout = async () => {
-    const logoutStatus = await authAPIs.logout(userId);
+    const logoutStatus = await authAPIs.logout(user?._id);
     if (logoutStatus?.data?.status?.acknowledged) {
       Cookies.remove('access_token');
       localStorage.removeItem("access_token");
@@ -58,7 +66,7 @@ export default function GAppBar() {
         component="div"
         sx={styles.title}
       >
-        Vierkant Wohnungs AG
+        {user?.company?.name}
       </Typography>
 
       <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'center' }}>  
@@ -68,10 +76,10 @@ export default function GAppBar() {
       <Box sx={styles.userSection}>
         <IconButton
           size="large"
-          aria-label="show 17 new notifications"
+          aria-label="show 0 new notifications"
           color="inherit"
         >
-          <Badge badgeContent={17} color="error">
+          <Badge badgeContent={0} color="error">
             <NotificationsIcon sx={styles.notificationIcon} />
           </Badge>
         </IconButton>
@@ -86,7 +94,7 @@ export default function GAppBar() {
           <AccountCircle sx={styles.accountIcon} />
         </IconButton>
         <Box sx={styles.userControls} >
-          <Typography>Max Müller</Typography>
+          <Typography>{`${user?.firstName} ${user?.lastName}`}</Typography>
           <IconButton
           edge="end"
           size="large"

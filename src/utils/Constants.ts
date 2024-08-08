@@ -96,14 +96,14 @@ interface Detail {
 export const grundinformation: Detail[] = [
   { label: "Vorname", value: "Maximillian" },
   { label: "Nachname", value: "Müller-Maier" },
-  { label: "Email", value: "müller-maire@gmail.com" },
-  { label: "Company", value: "Fire Protection GmbH" },
+  { label: "E-mail-Adresse", value: "müller-maire@gmail.com" },
+  { label: "Unternehmen", value: "Fire Protection GmbH" },
 ];
 
 export const ansprechpartner: Detail[] = [
   { label: "Vorname", value: "Maximillian" },
   { label: "Nachname", value: "Müller-Maier" },
-  { label: "Email", value: "müller-maire@gmail.com" },
+  { label: "E-Mail-Adresse", value: "müller-maire@gmail.com" },
   { label: "Tel. Nummer", value: "+4916090010020" },
 ];
 
@@ -502,7 +502,8 @@ export const serviceProvider = "SERVICE_PROVIDER";
 export const emailTemplateSubject = `Subject: Verify Your Email for GAP (Gesetzliche Anlagen Prüfen)`;
 export const emailTemplateGreetins = `Thank you for registering with GAP (Gesetzliche Anlagen Prüfen)! To complete your registration and activate your account, please verify your email address by entering the verification code provided below.`;
 export const emailTemplateVerificationText = `Your Verification Code: `;
-export const emailTemplateFoot = `This verification helps us ensure the security of your account and provides you with a seamless experience on our platform. If you did not create an account with GAP, please disregard this email. Should you encounter any issues during the verification process, feel free to contact our support team at support@gap.com for assistance. Thank you for choosing GAP to manage and maintain your real estate facilities efficiently.
+export const emailTemplateFoot = `This verification helps us ensure the security of your account and provides you with a seamless experience on our platform. If you did not create an account with GAP, please disregard this email. Should you encounter any issues during the verification process, feel free to contact our support team at support@gap.com for assistance. Thank you for choosing GAP to manage and maintain your real estate facilities efficiently.`;
+export const emailSignature = `
 Best regards,  
 The GAP Team  
 info@gap.com

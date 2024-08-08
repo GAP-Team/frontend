@@ -1,4 +1,7 @@
+import Divider from "@mui/material/Divider";
+
 import { 
+    emailSignature,
     emailTemplateFoot,
     emailTemplateGreetins,
     emailTemplateVerificationText,
@@ -11,6 +14,8 @@ const EmailTemplate = ({name, verificationCode}) => (
         <p>{emailTemplateGreetins}</p>
         <p>{emailTemplateVerificationText} {verificationCode} </p>
         <p>{emailTemplateFoot}</p>
+        <Divider />
+        <p>{emailSignature}</p>
     </body>
     </html>
 )

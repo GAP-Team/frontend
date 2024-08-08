@@ -23,15 +23,15 @@ import BuildingDocumentation from "./BuildingDocumentation";
 import CircularProgress from "@mui/material/CircularProgress";
 import { addObjektFormSchema } from "@/utils/ValidationSchema";
 import { handleUploadDoc, handleUploadMultipleDoc } from "@/utils/uploadToS3";
-import { currentUserId, currentUserBuildings } from '@/lib/features/userSlice';
+import { currentUser, currentUserBuildings } from '@/lib/features/userSlice';
 
 
 const NewBuilding = () => {
 
   const router = useRouter();
   const dispatch = useDispatch();
+  const user = useSelector(currentUser);
   const logger = getLogger("new-building");
-  const userId = useSelector(currentUserId);
   const userBuildings = useSelector(currentUserBuildings);
 
   const steps: ActiveStepItem[] = [
@@ -211,7 +211,7 @@ const NewBuilding = () => {
         buildings: userPreviousBuildings
       };
       
-      const userUpdateStatus = await userAPIs.updateUser(userId, buildingQuery);
+      const userUpdateStatus = await userAPIs.updateUser(user?._id, buildingQuery);
       
       if (userUpdateStatus?.data?.acknowledged) {
         dispatch(setUserBuildings(userPreviousBuildings));        
@@ -226,7 +226,7 @@ const NewBuilding = () => {
   return (
     <Grid container component="main">
       <Grid item xs={12} md={12} lg={12} sx={{ backgroundColor: "#F9FAFA" }}>
-        <PageTitle title="Objekt 0014" sx={{ ml: "1.5rem" }} />
+        <PageTitle title="Neues Objekt erstellen" sx={{ ml: "1.5rem" }} />
         <Formik
           initialValues={initialValues}
           validationSchema={addObjektFormSchema}
