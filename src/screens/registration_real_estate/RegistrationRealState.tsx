@@ -42,6 +42,7 @@ import { currentUserEmail } from "@/lib/features/userSlice";
 import EmailTemplate from "@/components/EmailTemplate/Template";
 
 import { registrationValidationSchema } from "@/utils/ValidationSchema";
+import { boolean } from "yup";
 
 function getSteps() {
   return [
@@ -64,6 +65,7 @@ const RegistrationRealState = () => {
   const steps = getSteps();
   const router = useRouter();
   const currentEmail = useSelector(currentUserEmail);
+  const [isVerificationEmailSent, setIsVerificationEmailSent] = useState<boolean>(false);
 
   const [activeStep, setActiveStep] = useState(0);
   const [openSnackbar, setOpenSnackbar] = useState(false);
@@ -107,8 +109,6 @@ const RegistrationRealState = () => {
   };
 
   const handleBack = () => {
-
-    sendVerificationEmail("Sudipto", "rihab@gap-pruefen.de");
 
     if (activeStep > 3) {
       //If user has registered then redirect to new registration
@@ -184,6 +184,12 @@ const RegistrationRealState = () => {
       };    
 
       const res = await userAPIs.register(arrangedDataObj);
+
+      if (res?.data.email) {
+        sendVerificationEmail(values.firstName, values.email);
+      }else{
+        console.log("Registration Failed...!!!");        
+      }
       
       // If registration is successful, move to email verification step
       if (res.status === 201) {
@@ -205,7 +211,7 @@ const RegistrationRealState = () => {
     }
   };
 
-  const sendVerificationEmail = (name: string, email: string) => {
+  const sendVerificationEmail = async (name: string, email: string) => {
 
     let verificationCode = Math.floor(100000 + Math.random() * 900000);
     const emailTemplate = renderEmailTemplate(name, verificationCode);
@@ -213,13 +219,14 @@ const RegistrationRealState = () => {
     const emailText = `Dear ${name}, ${emailTemplateGreetins} ${emailTemplateVerificationText} ${verificationCode} ${emailTemplateFoot}`;
     
     let readyEmailStructure = {
-      source: currentEmail,
-      "destination": {
+      source: "rihab@gap-pruefen.de",
+      destination: {
         "toAddresses": [
-          email
+          // email
+          "sudipto@gap-pruefen.de"
         ]
       },
-      "message": {
+      message: {
         "subject": {
           "data": emailTemplateSubject,
           "charset": "UTF-8"
@@ -236,9 +243,12 @@ const RegistrationRealState = () => {
         }
       }
     }
-    
-    console.log("Ready Email Structure: ===---> ", readyEmailStructure);
-    
+
+    let sendEmailStatus = await userAPIs.sendVerificationEmail(readyEmailStructure);
+
+    if (sendEmailStatus.status == 201) {
+      setIsVerificationEmailSent(true);
+    }
 
   }
 
@@ -333,7 +343,7 @@ const RegistrationRealState = () => {
                     setActiveStep={setActiveStep}
                   />
                 ) : (
-                  <EmailVerification />
+                  isVerificationEmailSent && <EmailVerification />
                 )}
               </Grid>
             </Form>
