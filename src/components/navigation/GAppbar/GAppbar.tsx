@@ -49,7 +49,8 @@ export default function GAppBar() {
   };
 
   const handleLogout = async () => {
-    const logoutStatus = await authAPIs.logout(user?._id);
+    let data = { userId: user?._id}
+    const logoutStatus = await authAPIs.logout(data);
     if (logoutStatus?.data?.status?.acknowledged) {
       Cookies.remove('access_token');
       localStorage.removeItem("access_token");
