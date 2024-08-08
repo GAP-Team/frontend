@@ -6,19 +6,19 @@ import React,
   }
 from "react";
 import {
-  Container,
   Box,
-  MenuItem,
-  FormControl,
-  InputLabel,
   Select,
+  MenuItem,
+  Container,
+  InputLabel,
   Typography,
+  FormControl,
 } from "@mui/material";
 import { useDispatch, useSelector } from 'react-redux';
 
 import buildingAPIs from "@/api/building";
 import GTab from "@/components/filter/GTab";
-import { currentUserId } from "@/lib/features/userSlice";
+import { currentUser } from "@/lib/features/userSlice";
 import { PropertyFilterProps } from "@/screens/dashboard/buildings/building_card/types";
 
 const filterTab = [
@@ -32,7 +32,7 @@ const PropertyFilterPanel = ({
   handleOnChange 
 }: PropertyFilterProps): JSX.Element => {
 
-  const userId = useSelector(currentUserId);
+  const user = useSelector(currentUser);
 
   const [city, setCity] = useState("");
   const [value, setValue] = useState(0);
@@ -51,12 +51,12 @@ const PropertyFilterPanel = ({
 
   const getUserStatesCities = async () => {
     
-    let cs = await buildingAPIs.getUserStatesCities(userId);
+    let cs = await buildingAPIs.getUserStatesCities(user?._id);
 
-    if (cs?.data?.cities.length > 0) {
+    if (cs?.data?.cities?.length > 0) {
       setUserCities(cs?.data?.cities);
     }
-    if (cs?.data?.states.length > 0) {
+    if (cs?.data?.states?.length > 0) {
       setUserStates(cs?.data?.states);
     }
   }
@@ -94,9 +94,13 @@ const PropertyFilterPanel = ({
           label="Bundesland"
           onChange={(e) => setFederalState(e.target.value)}
         >
-          {userStates?.map((state) => {
-            return <MenuItem value={state}>{state}</MenuItem>
-          })}
+          {userStates?.length > 0 ?
+            userStates?.map((state) => {
+              return <MenuItem value={state}>{state}</MenuItem>
+            })
+            :
+            <MenuItem value="">Keine Staaten</MenuItem>
+          }
         </Select>
       </FormControl>
       <FormControl size="small" sx={styles.formControl}>
@@ -108,9 +112,13 @@ const PropertyFilterPanel = ({
           label="Stadt"
           onChange={(e) => setCity(e.target.value)}
         >
-          {userCities?.map((city) => {
-            return <MenuItem value={city}>{city}</MenuItem>
-          })}
+          {userCities?.length > 0 ?
+            userCities?.map((city) => {
+              return <MenuItem value={city}>{city}</MenuItem>
+            })
+            :
+            <MenuItem value="">Keine Städte</MenuItem>
+          }
         </Select>
       </FormControl>
     </Container>

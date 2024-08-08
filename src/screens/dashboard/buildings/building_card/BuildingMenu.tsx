@@ -50,14 +50,14 @@ export default function BuildingMenu() {
           <ListItemIcon>
             <FaRegEdit color="#A0ADB1" size={"1.25rem"} />
           </ListItemIcon>
-          Edit card
+          Bearbeiten
         </MenuItem>
         <Divider />
         <MenuItem onClick={handleClose} sx={{color:'red'}} >
           <ListItemIcon>
             <RiDeleteBin6Line color="red" size={"1.25rem"} />
           </ListItemIcon>
-          Delete
+          Löschen
         </MenuItem>
       </Menu>
     </>

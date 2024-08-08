@@ -14,9 +14,9 @@ const BuildingSummary = ({setActiveStep,steps}:BuildingSummaryProps) => {
   const { values } = useFormikContext<any>();
 
   const updatedBuildingInformation: Detail[] = [
-    values.name && { label: "Name", value: values.name },
-    values.totalArea && { label: "Area", value: values.totalArea },
-    values.buildingType && { label: "Gebäude Type", value: values.buildingType },
+    values.name && { label: "Name des Gebäudes", value: values.name },
+    values.totalArea && { label: "Gesamtfläche (in qm) ", value: values.totalArea },
+    values.buildingType && { label: "Gebäudetyp", value: values.buildingType },
     values.buildingAbbreviation && { label: "Objektkürzel", value: values.buildingAbbreviation }
   ].filter(Boolean); // Filter out undefined values
 

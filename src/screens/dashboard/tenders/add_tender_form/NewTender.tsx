@@ -33,7 +33,7 @@ const NewTender = () => {
     { id: 2, stepName: "Beschreibung", component: TenderDescription },
     { id: 3, stepName: "Einstufung", component: TenderClassification },
     { id: 4, stepName: "Dokumente", component: TenderDocumentation },
-    { id: 5, stepName: "Übersicht Anlage", component: TenderSummary },
+    { id: 5, stepName: "Übersicht Ausschreibung", component: TenderSummary },
   ];
 
   const [activeStep, setActiveStep] = useState<ActiveStepItem>(steps[0]);
@@ -92,8 +92,8 @@ const NewTender = () => {
   const formOrSuccessContent = isSubmitted ? (
     <SuccessPage
       title="Ausschreibung Online!"
-      description2="Aussschreibung wurde erfolgreich anleget"
-      description="You have been added to the project team and permitted to receive any project news and updates"
+      description2="Aussschreibung wurde erfolgreich angelegt"
+      description="Du kannst Ihre Ausschreibung in der Ausschreibung-übersicht sehen und bearbeiten."
       buttonLabel="Schließen"
       redirectUrl="/dashboard/tenders"
     />
@@ -123,7 +123,7 @@ const NewTender = () => {
   return (
     <Grid container component="main">
       <Grid item xs={12} md={12} lg={12} sx={{ backgroundColor: "#F9FAFA" }}>
-        <PageTitle title="Objekt 0014" sx={{ ml: "1.5rem" }} />
+        <PageTitle title="Neue Ausschreibung veröffentlichen" sx={{ ml: "1.5rem" }} />
         <Formik
           initialValues={initialValues}
           validationSchema={addTenderValidationSchema[activeStep?.id]}
