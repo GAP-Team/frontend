@@ -226,7 +226,7 @@ const NewBuilding = () => {
   return (
     <Grid container component="main">
       <Grid item xs={12} md={12} lg={12} sx={{ backgroundColor: "#F9FAFA" }}>
-        <PageTitle title="Objekt 0014" sx={{ ml: "1.5rem" }} />
+        <PageTitle title="Neues Objekt erstellen" sx={{ ml: "1.5rem" }} />
         <Formik
           initialValues={initialValues}
           validationSchema={addObjektFormSchema}
