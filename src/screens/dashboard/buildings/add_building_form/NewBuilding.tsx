@@ -195,29 +195,8 @@ const NewBuilding = () => {
     
     const createBuildingResponse = await buildingAPIs.create(data);
     
-    if (createBuildingResponse) {
-
-      let userPreviousBuildings: any[] = [];
-      let lastId = createBuildingResponse?.data?._id;
-      
-      if (userBuildings?.length > 0) {
-        
-        userPreviousBuildings = [...userBuildings];
-        userPreviousBuildings.push(lastId);
-      }else{
-        userPreviousBuildings = [lastId];
-      }
-      let buildingQuery = {
-        buildings: userPreviousBuildings
-      };
-      
-      const userUpdateStatus = await userAPIs.updateUser(user?._id, buildingQuery);
-      
-      if (userUpdateStatus?.data?.acknowledged) {
-        dispatch(setUserBuildings(userPreviousBuildings));        
-      } else {
-        console.log("User data building update error");
-      }
+    if (createBuildingResponse?.data?.buildingId != "") {
+      dispatch(setUserBuildings(createBuildingResponse?.data?.userBuildings));
     }
 
     setLoading(false);
