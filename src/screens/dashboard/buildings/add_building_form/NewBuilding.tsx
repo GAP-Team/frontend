@@ -153,6 +153,7 @@ const NewBuilding = () => {
         contactPerson: values.contactPerson,
         documentUploadType: values.documentChoice,
         buildingAbbreviation: values.buildingAbbreviation,
+        userId: user?._id,
       }
       
       saveBuildingData(arrangedDataObj);
