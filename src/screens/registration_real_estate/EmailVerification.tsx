@@ -1,25 +1,41 @@
 // EmailVerification.tsx
 "use client";
-import React, { useState, useEffect } from "react";
-import Grid from "@mui/material/Grid";
-import Typography from "@mui/material/Typography";
-import TextField from "@mui/material/TextField";
-import CircularProgress from "@mui/material/CircularProgress";
-import { IoMailUnread } from "react-icons/io5";
-import GButton from "@/components/button/GButton";
-import SuccessPage from "@/components/common/SuccessPage";
-import userAPIs from "@/api/user";
-import { Button } from "@mui/material";
+import React, 
+  { 
+    useState, 
+    useEffect 
+  } 
+from "react";
 import pino from "pino";
+import Grid from "@mui/material/Grid";
+import { Button } from "@mui/material";
+import { IoMailUnread } from "react-icons/io5";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
+import { useDispatch, useSelector } from 'react-redux'
+import CircularProgress from "@mui/material/CircularProgress";
+
+import userAPIs from "@/api/user";
+import GButton from "@/components/button/GButton";
+import { currentUser } from "@/lib/features/userSlice";
+import SuccessPage from "@/components/common/SuccessPage";
 
 const logger = pino();
 
-const EmailVerification = () => {
+interface EmailVerificationProps{
+  newUserId: string,
+  newUserEmail: string,
+}
+
+const EmailVerification = ({ newUserId, newUserEmail }: EmailVerificationProps) => {
+
+  const user = useSelector(currentUser);
+
   const [loading, setLoading] = useState(false);
-  const [verificationCode, setVerificationCode] = useState(["","","","","","",]);
-  const [verificationSuccess, setVerificationSuccess] = useState(false);
   const [resendTimer, setResendTimer] = useState(30);
   const [resendDisabled, setResendDisabled] = useState(true);
+  const [verificationSuccess, setVerificationSuccess] = useState(false);
+  const [verificationCode, setVerificationCode] = useState(["","","","","","",]);
 
   useEffect(() => {
     let timer: NodeJS.Timeout;
@@ -50,10 +66,26 @@ const EmailVerification = () => {
     setLoading(true);
     try {
       const code = verificationCode.join("");
-      // const res = await userAPIs.verifyEmail(code);
-      setLoading(false);
-      setVerificationSuccess(true);
-      // onSuccess();
+      
+      if (code != "") {
+        let verificationQuery = {
+          userId: newUserId,
+          email: newUserEmail,
+          token: code
+        }
+        
+        const res = await userAPIs.verifyEmail(verificationQuery);
+        
+        if(res?.data?.status){
+          setLoading(false);
+          setVerificationSuccess(true);
+          // onSuccess();
+        }
+      }else{
+        console.log("Verification code cannot be blank...!!!");
+        
+      }
+        
     } catch (error: any) {
       logger.error(
         "Unable to verify email, post request failed",
