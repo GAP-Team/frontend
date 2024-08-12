@@ -143,10 +143,11 @@ const NewBuilding = () => {
       const formateDate = moment(currentDate).format('YYYY-MM-DDTHH:mm:ss.SSS[Z]');
 
       let arrangedDataObj= {
-        buildingName: values.name,
+        userId: user?._id,
         documents: docObj,
         address: addressObj,
         createdAt: formateDate,
+        buildingName: values.name,
         serverLink: values.serverLink,
         buildingType: values.buildingType,
         totalArea: Number(values.totalArea),
@@ -196,7 +197,9 @@ const NewBuilding = () => {
     const createBuildingResponse = await buildingAPIs.create(data);
     
     if (createBuildingResponse?.data?.buildingId != "") {
-      dispatch(setUserBuildings(createBuildingResponse?.data?.userBuildings));
+      let oldBuildings = [...userBuildings];
+      oldBuildings.push(createBuildingResponse?.data?.buildingId);
+      dispatch(setUserBuildings(oldBuildings));
     }
 
     setLoading(false);
