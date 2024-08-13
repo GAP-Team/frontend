@@ -18,12 +18,6 @@ export interface AddTenderFormValues {
     toDate: Dayjs | null;
     safetyWorkRequired: boolean;
     freeParkingAvailable: boolean;
-    //Documentation = Form 5 
-    documentChoice: string;
-    constructionDocs: File[];
-    floorplanDocs: File[];
-    equipmentDocs: File[];
-    serverLink: string;
 }
 export interface ActiveStepItem {
     id: number;
