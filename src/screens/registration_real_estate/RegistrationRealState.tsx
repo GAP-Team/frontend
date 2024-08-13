@@ -65,10 +65,12 @@ const RegistrationRealState = () => {
   const steps = getSteps();
   const router = useRouter();
   const currentEmail = useSelector(currentUserEmail);
-  const [isVerificationEmailSent, setIsVerificationEmailSent] = useState<boolean>(false);
 
+  const [newUserId, setNewUserId] = useState("");
   const [activeStep, setActiveStep] = useState(0);
+  const [newUserEmail, setNewUserEmail] = useState("");
   const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [isVerificationEmailSent, setIsVerificationEmailSent] = useState<boolean>(false);
 
 
   const handleNext = async (
@@ -184,17 +186,13 @@ const RegistrationRealState = () => {
       };    
 
       const res = await userAPIs.register(arrangedDataObj);
-
-      if (res?.data.email) {
-        sendVerificationEmail(values.firstName, values.email);
-      }else{
-        console.log("Registration Failed...!!!");        
-      }
       
       // If registration is successful, move to email verification step
       if (res.status === 201) {
         setActiveStep(steps.length);
-        sendVerificationEmail(values.firstName, values.email);
+        setNewUserId(res?.data?._id);
+        setNewUserEmail(values.email);
+        sendVerificationEmail(values.firstName, values.email, res?.data?._id);
       }
 
     } catch (error: any) {
@@ -211,10 +209,17 @@ const RegistrationRealState = () => {
     }
   };
 
-  const sendVerificationEmail = async (name: string, email: string) => {
+  const sendVerificationEmail = async (name: string, email: string, userId: string) => {
 
     let verificationCode = Math.floor(100000 + Math.random() * 900000);
     const emailTemplate = renderEmailTemplate(name, verificationCode);
+
+    let currentDate = new Date().toLocaleString('de-DE', {
+      timeZone: 'Europe/Berlin',
+      hour12: false,
+    });
+    let expiresAt = moment(currentDate).add(15, 'minutes');
+    const formateDate = moment(expiresAt).format('YYYY-MM-DDTHH:mm:ss.SSS[Z]');
 
     const emailText = `Dear ${name}, ${emailTemplateGreetins} ${emailTemplateVerificationText} ${verificationCode} ${emailTemplateFoot}`;
     
@@ -222,8 +227,7 @@ const RegistrationRealState = () => {
       source: "rihab@gap-pruefen.de",
       destination: {
         "toAddresses": [
-          // email
-          "sudipto@gap-pruefen.de"
+          email
         ]
       },
       message: {
@@ -244,7 +248,19 @@ const RegistrationRealState = () => {
       }
     }
 
-    let sendEmailStatus = await userAPIs.sendVerificationEmail(readyEmailStructure);
+    let verificationTokenSaveQuery = {
+      userId: userId,
+      email: email,
+      token: verificationCode,
+      expiresAt: formateDate
+    }
+
+    let emailQurey = {
+      emailStructure: readyEmailStructure,
+      saveToken: verificationTokenSaveQuery,
+    }
+
+    let sendEmailStatus = await userAPIs.sendVerificationEmail(emailQurey);
 
     if (sendEmailStatus.status == 201) {
       setIsVerificationEmailSent(true);
@@ -343,7 +359,7 @@ const RegistrationRealState = () => {
                     setActiveStep={setActiveStep}
                   />
                 ) : (
-                  isVerificationEmailSent && <EmailVerification />
+                  isVerificationEmailSent && <EmailVerification newUserId={newUserId} newUserEmail={newUserEmail} />
                 )}
               </Grid>
             </Form>
