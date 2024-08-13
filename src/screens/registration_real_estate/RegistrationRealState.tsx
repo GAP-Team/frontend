@@ -68,6 +68,7 @@ const RegistrationRealState = () => {
 
   const [newUserId, setNewUserId] = useState("");
   const [activeStep, setActiveStep] = useState(0);
+  const [resendEmail, setResendEmail] = useState({});
   const [newUserEmail, setNewUserEmail] = useState("");
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [isVerificationEmailSent, setIsVerificationEmailSent] = useState<boolean>(false);
@@ -248,6 +249,8 @@ const RegistrationRealState = () => {
       }
     }
 
+    setResendEmail(readyEmailStructure);
+
     let verificationTokenSaveQuery = {
       userId: userId,
       email: email,
@@ -359,7 +362,7 @@ const RegistrationRealState = () => {
                     setActiveStep={setActiveStep}
                   />
                 ) : (
-                  isVerificationEmailSent && <EmailVerification newUserId={newUserId} newUserEmail={newUserEmail} />
+                  isVerificationEmailSent && <EmailVerification newUserId={newUserId} newUserEmail={newUserEmail} resendEmail={resendEmail} />
                 )}
               </Grid>
             </Form>

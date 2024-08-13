@@ -25,9 +25,10 @@ const logger = pino();
 interface EmailVerificationProps{
   newUserId: string,
   newUserEmail: string,
+  resendEmail:{}
 }
 
-const EmailVerification = ({ newUserId, newUserEmail }: EmailVerificationProps) => {
+const EmailVerification = ({ newUserId, newUserEmail, resendEmail }: EmailVerificationProps) => {
 
   const user = useSelector(currentUser);
 
@@ -99,8 +100,7 @@ const EmailVerification = ({ newUserId, newUserEmail }: EmailVerificationProps) 
   const handleResendCode = async () => {
     setResendDisabled(true);
     try {
-      // await userAPIs.resendVerificationCode();
-      logger.info("Verification code resent");
+      await userAPIs.reSendVerificationEmail(resendEmail);
     } catch (error: any) {
       logger.error(
         "Unable to resend code, post request failed",
