@@ -32,6 +32,7 @@ const NewTender = () => {
     { id: 1, stepName: "Objekt / Anlage", component: TenderBuilding },
     { id: 2, stepName: "Beschreibung", component: TenderDescription },
     { id: 3, stepName: "Einstufung", component: TenderClassification },
+    // { id: 4, stepName: "Dokumente", component: TenderDocumentation },
     { id: 4, stepName: "Übersicht Ausschreibung", component: TenderSummary },
   ];
 
@@ -81,6 +82,11 @@ const NewTender = () => {
     toDate: null,
     safetyWorkRequired: false,
     freeParkingAvailable: false,
+    documentChoice: "Jetzt hochladen Empfohlen",
+    constructionDocs: [],
+    floorplanDocs: [],
+    equipmentDocs: [],
+    serverLink: "",
   };
 
   const formOrSuccessContent = isSubmitted ? (
