@@ -8,12 +8,13 @@ import { Formik, Form, FormikHelpers, useFormik, FormikErrors } from "formik";
 
 import userAPIs from "@/api/user";
 import buildingAPIs from "@/api/building";
-import { ActiveStepItem } from "../../types";
 import { getLogger } from "@/utils/Logger";
+import { ActiveStepItem } from "../../types";
 import AddBuildingForm from "./AddBuildingForm";
 import { AddBuildingFormValues } from "./types";
 import BuildingAddress from "./BuildingAddress";
 import BuildingSummary from "./BuildingSummary";
+import { DocumentTypies } from '@/utils/Constants';
 import { SubmitFormFunction } from "@/typings/types";
 import PageTitle from "@/components/label/PageTitle";
 import BuildingInformation from "./BuildingInformation";
@@ -188,7 +189,7 @@ const NewBuilding = () => {
 
         let fdFileDocUpload = await handleUploadMultipleDoc(file);
         let newDocObj = fdFileDocUpload;
-        newDocObj.documentType = "SONSTIGE";
+        newDocObj.documentType = DocumentTypies.SONSTIGE;
 
         docObj.push(newDocObj);
         otherItemsProcessed++;
@@ -203,7 +204,7 @@ const NewBuilding = () => {
 
         let fdFileDocUpload = await handleUploadMultipleDoc(file);
         let newDocObj = fdFileDocUpload;
-        newDocObj.documentType = "GRUNDRISSE";
+        newDocObj.documentType = DocumentTypies.GRUNDRISSE;
 
         docObj.push(newDocObj);
         floorplanItemsProcessed++;
@@ -218,7 +219,7 @@ const NewBuilding = () => {
 
         let fdFileDocUpload = await handleUploadMultipleDoc(file);
         let newDocObj = fdFileDocUpload;
-        newDocObj.documentType = "BAUUNTERLAGEN";
+        newDocObj.documentType = DocumentTypies.BAUUNTERLAGEN;
 
         docObj.push(newDocObj);
         constructionItemsProcessed++;
