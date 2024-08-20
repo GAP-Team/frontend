@@ -1,9 +1,9 @@
 "use client";
 import moment from 'moment';
 import Grid from "@mui/material/Grid";
-import React,{ useState } from "react";
+import React,{ useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { useDispatch, useSelector, useStore } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux';
 import { Formik, Form, FormikHelpers, useFormik, FormikErrors } from "formik";  
 
 import userAPIs from "@/api/user";
@@ -59,6 +59,10 @@ const NewBuilding = () => {
 
   const [loading, setLoading] = useState<boolean>(false);
   const [activeStep, setActiveStep] = useState<ActiveStepItem>(steps[0]);
+
+  const [ allOtherItemsProcessed, setAllOtherItemsProcessed ] = useState<boolean>(false);
+  const [ allFloorplanItemsProcessed, setAllFloorplanItemsProcessed ] = useState<boolean>(false);
+  const [ allConstructionItemsProcessed, setAllConstructionItemsProcessed ] = useState<boolean>(false);
 
   const handleNext = async (
     validateForm: FormikHelpers<AddBuildingFormValues>["validateForm"],
@@ -169,27 +173,69 @@ const NewBuilding = () => {
     setLoading(true);
 
     let docObj: any[] = [];
-    var itemsProcessed = 0;
+    var otherItemsProcessed = 0;
+    var floorplanItemsProcessed = 0;
+    var constructionItemsProcessed = 0;
     let selectedOtherDocsFiles = values?.otherDocs;
     let selectedFloorplanDocsFiles = values?.floorplanDocs;
     let selectedConstructionFiles = values?.constructionDocs;
 
     const allFiles = [...selectedOtherDocsFiles, ...selectedFloorplanDocsFiles, ...selectedConstructionFiles];
+    
 
-    if (allFiles.length > 0) {
-      allFiles.forEach( async (file, index, array) => {
+    if (selectedOtherDocsFiles.length > 0) {
+      selectedOtherDocsFiles.forEach( async (file: any, index: any, array: string | any[]) => {
+
         let fdFileDocUpload = await handleUploadMultipleDoc(file);
-        docObj.push(fdFileDocUpload);
-        itemsProcessed++;
+        let newDocObj = fdFileDocUpload;
+        newDocObj.documentType = "SONSTIGE";
+
+        docObj.push(newDocObj);
+        otherItemsProcessed++;
   
-        if (itemsProcessed == array.length) {
-          handleSubmit(values, docObj);
+        if (otherItemsProcessed == array.length) {
+          handleUpdateDocObject(allFiles.length, docObj, values);
         }
       });      
-    } else {
-      handleSubmit(values, docObj);      
     }
+    if (selectedFloorplanDocsFiles.length > 0) {
+      selectedFloorplanDocsFiles.forEach( async (file: any, index: any, array: string | any[]) => {
 
+        let fdFileDocUpload = await handleUploadMultipleDoc(file);
+        let newDocObj = fdFileDocUpload;
+        newDocObj.documentType = "GRUNDRISSE";
+
+        docObj.push(newDocObj);
+        floorplanItemsProcessed++;
+  
+        if (floorplanItemsProcessed == array.length) {
+          handleUpdateDocObject(allFiles.length, docObj, values);
+        }
+      });
+    }
+    if (selectedConstructionFiles.length > 0) {
+      selectedConstructionFiles.forEach( async (file: any, index: any, array: string | any[]) => {
+
+        let fdFileDocUpload = await handleUploadMultipleDoc(file);
+        let newDocObj = fdFileDocUpload;
+        newDocObj.documentType = "BAUUNTERLAGEN";
+
+        docObj.push(newDocObj);
+        constructionItemsProcessed++;
+  
+        if (constructionItemsProcessed == array.length) {
+          handleUpdateDocObject(allFiles.length, docObj, values);
+        }
+      });      
+    }
+  }
+
+  const handleUpdateDocObject = (totalFiles: number, docObj: any, values: any) => {
+    let docDataArray = [...docObj];
+
+    if (totalFiles === docDataArray.length) {
+      handleSubmit(values, docDataArray);
+    }
   }
 
   const saveBuildingData = async (data :any) => {
