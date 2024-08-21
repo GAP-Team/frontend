@@ -20,6 +20,7 @@ export interface Building {
       {
         name: string,
         key: string,
+        documentType: string,
       }
     ] | null | undefined;
 }
