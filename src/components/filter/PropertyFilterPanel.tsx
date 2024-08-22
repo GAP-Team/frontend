@@ -119,6 +119,7 @@ const PropertyFilterPanel = ({
         </FormControl>
         <Box sx={{ ml: 1, display: 'flex'}}>
           <GButton onClick={()=>handleOnChange(city,federalState)}>Filter</GButton>
+
           <GButton onClick={handleReset}>Reset</GButton>
         </Box>
       </Box>
