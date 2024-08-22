@@ -37,10 +37,6 @@ const PropertyFilterPanel = ({
     getUserStatesCities();
   }, []);
 
-  useEffect(() => {
-    handleOnChange(city, federalState);
-  }, [city, federalState]);
-
   const getUserStatesCities = async () => {
     
     let cs = await buildingAPIs.getUserStatesCities(user?._id);
@@ -122,7 +118,8 @@ const PropertyFilterPanel = ({
           </Select>
         </FormControl>
         <Box sx={{ ml: 1, display: 'flex'}}>
-          <GButton>Filter</GButton>
+          <GButton onClick={()=>handleOnChange(city,federalState)}>Filter</GButton>
+
           <GButton onClick={handleReset}>Reset</GButton>
         </Box>
       </Box>
