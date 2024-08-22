@@ -68,6 +68,7 @@ const RegistrationRealState = () => {
 
   const [newUserId, setNewUserId] = useState("");
   const [activeStep, setActiveStep] = useState(0);
+  const [newUserName, setNewUserName] = useState("");
   const [resendEmail, setResendEmail] = useState({});
   const [newUserEmail, setNewUserEmail] = useState("");
   const [openSnackbar, setOpenSnackbar] = useState(false);
@@ -193,6 +194,7 @@ const RegistrationRealState = () => {
         setActiveStep(steps.length);
         setNewUserId(res?.data?._id);
         setNewUserEmail(values.email);
+        setNewUserName(res?.data?.firstName);
         sendVerificationEmail(values.firstName, values.email, res?.data?._id);
       }
 
@@ -249,8 +251,6 @@ const RegistrationRealState = () => {
       }
     }
 
-    setResendEmail(readyEmailStructure);
-
     let verificationTokenSaveQuery = {
       userId: userId,
       email: email,
@@ -261,7 +261,7 @@ const RegistrationRealState = () => {
     let emailQurey = {
       emailStructure: readyEmailStructure,
       saveToken: verificationTokenSaveQuery,
-    }
+    }    
 
     let sendEmailStatus = await userAPIs.sendVerificationEmail(emailQurey);
 
@@ -362,7 +362,13 @@ const RegistrationRealState = () => {
                     setActiveStep={setActiveStep}
                   />
                 ) : (
-                  isVerificationEmailSent && <EmailVerification newUserId={newUserId} newUserEmail={newUserEmail} resendEmail={resendEmail} />
+                  isVerificationEmailSent && 
+                    <EmailVerification 
+                      newUserId={newUserId}
+                      newUserName={newUserName}
+                      newUserEmail={newUserEmail}
+                      resendVerificationEmail={sendVerificationEmail}
+                    />
                 )}
               </Grid>
             </Form>
