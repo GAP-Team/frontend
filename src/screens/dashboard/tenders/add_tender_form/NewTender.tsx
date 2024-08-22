@@ -32,8 +32,8 @@ const NewTender = () => {
     { id: 1, stepName: "Objekt / Anlage", component: TenderBuilding },
     { id: 2, stepName: "Beschreibung", component: TenderDescription },
     { id: 3, stepName: "Einstufung", component: TenderClassification },
-    { id: 4, stepName: "Dokumente", component: TenderDocumentation },
-    { id: 5, stepName: "Übersicht Ausschreibung", component: TenderSummary },
+    // { id: 4, stepName: "Dokumente", component: TenderDocumentation },
+    { id: 4, stepName: "Übersicht Ausschreibung", component: TenderSummary },
   ];
 
   const [activeStep, setActiveStep] = useState<ActiveStepItem>(steps[0]);

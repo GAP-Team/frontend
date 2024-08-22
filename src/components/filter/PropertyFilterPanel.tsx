@@ -14,19 +14,12 @@ import {
   Typography,
   FormControl,
 } from "@mui/material";
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import buildingAPIs from "@/api/building";
-import GTab from "@/components/filter/GTab";
 import { currentUser } from "@/lib/features/userSlice";
 import { PropertyFilterProps } from "@/screens/dashboard/buildings/building_card/types";
-
-const filterTab = [
-  { label: "Filter", content: <></> },
-  { label: "anstehende Prüfungen", content: <></> },
-];
-
-
+import GButton from "../button/GButton";
 
 const PropertyFilterPanel = ({ 
   handleOnChange 
@@ -35,19 +28,14 @@ const PropertyFilterPanel = ({
   const user = useSelector(currentUser);
 
   const [city, setCity] = useState("");
-  const [value, setValue] = useState(0);
-  const [userCities, setUserCities] = useState([]);
-  const [userStates, setUserStates] = useState([]);
   const [propertyType, setPropertyType] = useState("");
   const [federalState, setFederalState] = useState("");
+  const [userCities, setUserCities] = useState([]);
+  const [userStates, setUserStates] = useState([]);
 
   useEffect(() => {
     getUserStatesCities();
   }, []);
-
-  useEffect(() => {
-    handleOnChange(city, federalState);
-  }, [city, federalState]);
 
   const getUserStatesCities = async () => {
     
@@ -59,7 +47,14 @@ const PropertyFilterPanel = ({
     if (cs?.data?.states?.length > 0) {
       setUserStates(cs?.data?.states);
     }
-  }
+  };
+
+  const handleReset = () => {
+    setCity("");
+    setPropertyType("");
+    setFederalState("");
+    handleOnChange("", "");
+  };
 
   return (
     <Container maxWidth={false} sx={styles.container}>
@@ -67,60 +62,67 @@ const PropertyFilterPanel = ({
         Alle Objekte
       </Typography>
 
-      <Box sx={{ flexGrow: 1 }}>
-        <GTab tabs={filterTab} />
-      </Box>
+      <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
+        <FormControl size="small" sx={styles.formControl}>
+          <InputLabel id="property-type-label">Anlagentyp</InputLabel>
+          <Select
+            labelId="property-type-label"
+            id="property-type-select"
+            value={propertyType}
+            label="Anlagentyp"
+            onChange={(e) => setPropertyType(e.target.value)}
+          >
+            <MenuItem value="type1">Type 1</MenuItem>
+            <MenuItem value="type2">Type 2</MenuItem>
+            {/* More types */}
+          </Select>
+        </FormControl>
+        <FormControl size="small" sx={styles.formControl}>
+          <InputLabel id="federal-state-label">Bundesland</InputLabel>
+          <Select
+            labelId="federal-state-label"
+            id="federal-state-select"
+            value={federalState}
+            label="Bundesland"
+            onChange={(e) => setFederalState(e.target.value)}
+          >
+            {userStates?.length > 0 ? (
+              userStates?.map((state) => (
+                <MenuItem key={state} value={state}>
+                  {state}
+                </MenuItem>
+              ))
+            ) : (
+              <MenuItem value="">Keine Staaten</MenuItem>
+            )}
+          </Select>
+        </FormControl>
+        <FormControl size="small" sx={styles.formControl}>
+          <InputLabel id="city-label">Stadt</InputLabel>
+          <Select
+            labelId="city-label"
+            id="city-select"
+            value={city}
+            label="Stadt"
+            onChange={(e) => setCity(e.target.value)}
+          >
+            {userCities?.length > 0 ? (
+              userCities?.map((city) => (
+                <MenuItem key={city} value={city}>
+                  {city}
+                </MenuItem>
+              ))
+            ) : (
+              <MenuItem value="">Keine Städte</MenuItem>
+            )}
+          </Select>
+        </FormControl>
+        <Box sx={{ ml: 1, display: 'flex'}}>
+          <GButton onClick={()=>handleOnChange(city,federalState)}>Filter</GButton>
 
-      <FormControl size="small" sx={styles.formControl}>
-        <InputLabel id="property-type-label">Anlagentyp</InputLabel>
-        <Select
-          labelId="property-type-label"
-          id="property-type-select"
-          value={propertyType}
-          label="Anlagentyp"
-          onChange={(e) => setPropertyType(e.target.value)}
-        >
-          <MenuItem value="type1">Type 1</MenuItem>
-          <MenuItem value="type2">Type 2</MenuItem>
-          {/* More types */}
-        </Select>
-      </FormControl>
-      <FormControl size="small" sx={styles.formControl}>
-        <InputLabel id="federal-state-label">Bundesland</InputLabel>
-        <Select
-          labelId="federal-state-label"
-          id="federal-state-select"
-          value={federalState}
-          label="Bundesland"
-          onChange={(e) => setFederalState(e.target.value)}
-        >
-          {userStates?.length > 0 ?
-            userStates?.map((state) => {
-              return <MenuItem value={state}>{state}</MenuItem>
-            })
-            :
-            <MenuItem value="">Keine Staaten</MenuItem>
-          }
-        </Select>
-      </FormControl>
-      <FormControl size="small" sx={styles.formControl}>
-        <InputLabel id="city-label">Stadt</InputLabel>
-        <Select
-          labelId="city-label"
-          id="city-select"
-          value={city}
-          label="Stadt"
-          onChange={(e) => setCity(e.target.value)}
-        >
-          {userCities?.length > 0 ?
-            userCities?.map((city) => {
-              return <MenuItem value={city}>{city}</MenuItem>
-            })
-            :
-            <MenuItem value="">Keine Städte</MenuItem>
-          }
-        </Select>
-      </FormControl>
+          <GButton onClick={handleReset}>Reset</GButton>
+        </Box>
+      </Box>
     </Container>
   );
 };
@@ -133,10 +135,10 @@ const styles = {
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
-    borderRadius: '0.5rem',
-    mx: 2, // Negative margin to counteract the container's padding
-    py: '0.5rem',
-    width: 'auto', // Ensure it adjusts to full width with negative margins
+    borderRadius: "0.5rem",
+    mx: 2, 
+    py: "0.5rem",
+    width: "auto", 
   },
   typography: {
     flexGrow: 1,
