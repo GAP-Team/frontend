@@ -5,11 +5,8 @@ import Menu from "@mui/material/Menu";
 import Badge from "@mui/material/Badge";
 import { useRouter } from "next/navigation";
 import Divider from "@mui/material/Divider";
-import Toolbar from "@mui/material/Toolbar";
 import MenuItem from "@mui/material/MenuItem";
-import Container from "@mui/material/Container";
-import { MdOutlineLogout } from "react-icons/md";
-import { RiDeleteBin6Line } from "react-icons/ri";
+import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import ListItemIcon from "@mui/material/ListItemIcon";
@@ -20,7 +17,10 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 
 import authAPIs from "@/api/auth";
 import GSearch from "@/components/search/GSearch";
-import { 
+import { MdOutlineLogout } from "react-icons/md";
+import { Business, CreditCard, Email, Lock } from "@mui/icons-material";
+
+import {
   currentUser,
   currentUserName,
   currentUserCompany
@@ -36,8 +36,8 @@ export default function GAppBar() {
   const menuId = "primary-search-account-menu";
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState<null | HTMLElement>(null);
-  
+  const [activeMenuItem, setActiveMenuItem] = React.useState<string>("Mein Profil"); // Default active menu item
+
   const open = Boolean(anchorEl);
 
   const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
@@ -57,7 +57,12 @@ export default function GAppBar() {
       handleClose();
       router.push("/login");
     }
-  }
+  };
+
+  const handleMenuItemClick = (menuItem: string) => {
+    setActiveMenuItem(menuItem);
+    handleClose();
+  };
 
   return (
     <Toolbar sx={styles.toolbar}>
@@ -84,29 +89,12 @@ export default function GAppBar() {
             <NotificationsIcon sx={styles.notificationIcon} />
           </Badge>
         </IconButton>
-        <IconButton
-          edge="end"
-          size="large"
-          color="inherit"
-          aria-haspopup="true"
-          aria-controls={menuId}
-          aria-label="account of current user"
-        >
+        <Box sx={styles.userControls} onClick={handleProfileMenuOpen}>
           <AccountCircle sx={styles.accountIcon} />
-        </IconButton>
-        <Box sx={styles.userControls} >
-          <Typography>{`${user?.firstName} ${user?.lastName}`}</Typography>
-          <IconButton
-          edge="end"
-          size="large"
-          color="inherit"
-          aria-haspopup="true"
-          aria-controls={menuId}
-          onClick={handleProfileMenuOpen}
-          aria-label="account of current user"
-        >
-          <ArrowDropDownIcon />
-        </IconButton>
+          <Typography sx={styles.userName}>
+            {`${user?.firstName} ${user?.lastName}`}
+          </Typography>
+          <ArrowDropDownIcon sx={styles.dropDownIcon} />
         </Box>
       </Box>
       <Menu
@@ -114,22 +102,84 @@ export default function GAppBar() {
         id="account-menu"
         open={open}
         onClose={handleClose}
-        onClick={handleClose}
         PaperProps={{
           elevation: 0,
-          sx: menuStyles
+          sx: { ...menuStyles, borderRadius: "6px", width: "260px" },
         }}
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
-        <MenuItem onClick={()=>{}} style={menuItemStyles.mainProfileMenu} >
+        <MenuItem
+          onClick={() => handleMenuItemClick("Mein Profil")}
+          sx={{
+            ...menuItemStyles.menuItem,
+            ...(activeMenuItem === "Mein Profil" && menuItemStyles.activeMenuItem),
+          }}
+        >
           <ListItemIcon>
-            <AccountCircle sx={menuItemStyles.mainProfileMenu} />
+            <AccountCircle
+              sx={{
+                ...menuItemStyles.iconStyle,
+                ...(activeMenuItem === "Mein Profil" && menuItemStyles.activeIconStyle),
+              }}
+            />
           </ListItemIcon>
           Mein Profil
         </MenuItem>
+        <MenuItem
+          onClick={() => handleMenuItemClick("Unternehmens Profil")}
+          sx={{
+            ...menuItemStyles.menuItem,
+            ...(activeMenuItem === "Unternehmens Profil" && menuItemStyles.activeMenuItem),
+          }}
+        >
+          <ListItemIcon>
+            <Business
+              sx={{
+                ...menuItemStyles.iconStyle,
+                ...(activeMenuItem === "Unternehmens Profil" && menuItemStyles.activeIconStyle),
+              }}
+            />
+          </ListItemIcon>
+          Unternehmens Profil
+        </MenuItem>
         <Divider />
-        <MenuItem onClick={handleLogout} style={menuItemStyles.logoutMenu} >
+        <MenuItem
+          onClick={() => handleMenuItemClick("E-Mail ändern")}
+          sx={{
+            ...menuItemStyles.menuItem,
+            ...(activeMenuItem === "E-Mail ändern" && menuItemStyles.activeMenuItem),
+          }}
+        >
+          <ListItemIcon>
+            <Email
+              sx={{
+                ...menuItemStyles.iconStyle,
+                ...(activeMenuItem === "E-Mail ändern" && menuItemStyles.activeIconStyle),
+              }}
+            />
+          </ListItemIcon>
+          E-Mail ändern
+        </MenuItem>
+        <MenuItem
+          onClick={() => handleMenuItemClick("Passwort ändern")}
+          sx={{
+            ...menuItemStyles.menuItem,
+            ...(activeMenuItem === "Passwort ändern" && menuItemStyles.activeMenuItem),
+          }}
+        >
+          <ListItemIcon>
+            <Lock
+              sx={{
+                ...menuItemStyles.iconStyle,
+                ...(activeMenuItem === "Passwort ändern" && menuItemStyles.activeIconStyle),
+              }}
+            />
+          </ListItemIcon>
+          Passwort ändern
+        </MenuItem>
+        <Divider />
+        <MenuItem onClick={handleLogout} sx={menuItemStyles.logoutMenu}>
           <ListItemIcon>
             <MdOutlineLogout color="#eb4444" size={"1.25rem"} />
           </ListItemIcon>
@@ -159,10 +209,13 @@ const styles = {
   },
   userControls: {
     display: "flex",
-    justifyContent: "center",
-    alignContent: "center",
     alignItems: "center",
     marginLeft: "1rem",
+    cursor: "pointer", // Ensures that the whole area is clickable
+  },
+  userName: {
+    marginLeft: "0.5rem",
+    fontSize: "1rem",
   },
   notificationIcon: {
     fontSize: "2rem",
@@ -170,38 +223,55 @@ const styles = {
   accountIcon: {
     fontSize: "3rem",
   },
+  dropDownIcon: {
+    marginLeft: "0.5rem",
+  },
 };
 
 const menuStyles = {
   overflow: "visible",
   filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
   mt: 1.5,
-  "& .MuiAvatar-root": {
-    width: 32,
-    height: 32,
-    ml: -0.5,
-    mr: 1,
-  },
-  "&::before": {
-    content: '""',
-    display: "block",
-    position: "absolute",
-    top: 0,
-    right: 14,
-    width: 10,
-    height: 10,
-    bgcolor: "background.paper",
-    transform: "translateY(-50%) rotate(45deg)",
-    zIndex: 0,
-  },
+  bgcolor: "background.paper",
+  padding: "10px",
+  py: "0",
 };
 
 const menuItemStyles = {
-  logoutMenu:{
-    color: "#eb4444"
+  menuItem: {
+    padding: "10px 20px",
+    color: "#6B7280",
+    fontSize: "0.875rem",
+    borderRadius: "0.5rem",
+    '&:hover': {
+      backgroundColor: "#E5F5FA",
+      color: "#22A7F1",
+      fontWeight: 600,
+      '& .MuiSvgIcon-root': {
+        color: "#22A7F1",
+      },
+    },
   },
-  mainProfileMenu: {
-    size: "1.25rem",
-    color: "#A0ADB1"
-  }
-}
+  activeMenuItem: {
+    color: "#22A7F1",
+    backgroundColor: "#E5F5FA !important",
+    fontWeight: 600,
+  },
+  iconStyle: {
+    color: "#9CA3AF",
+    fontSize: "1.5rem",
+  },
+  activeIconStyle: {
+    color: "#22A7F1",
+    fontSize: "1.5rem",
+  },
+  logoutMenu: {
+    padding: "10px 20px",
+    color: "#eb4444",
+    fontSize: "0.875rem",
+    borderRadius: "0.5rem",
+    '&:hover': {
+      backgroundColor: "#FFE1D7",
+    },
+  },
+};
