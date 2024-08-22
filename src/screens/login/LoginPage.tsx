@@ -191,7 +191,7 @@ export default function LoginPage() {
           <Typography sx={styles.supportLink}>
             Hilfe?{" "}
             <Link href="#" color="#1E3137" fontWeight="bold">
-              Contact Support
+            Support kontaktieren
             </Link>
           </Typography>
         </Box>

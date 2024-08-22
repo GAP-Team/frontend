@@ -48,7 +48,7 @@ const Buildings: React.FC = () => {
     />;
   return (
       <Box sx={styles.mainContainer}>
-        <PropertyFilterPanel handleOnChange={onStateCityChange} />
+        <PropertyFilterPanel handleOnChange={onStateCityChange} title="Alle Objekte"/>
         {buildingContent}
       </Box>
   );

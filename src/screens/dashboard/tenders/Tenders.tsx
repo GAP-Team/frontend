@@ -19,7 +19,7 @@ const Tenders: React.FC = () => {
   const tenderContent = tenders.length > 0 ? <TenderList tenders={tenders} /> : <NoContentPage alt="No Tenders" image={addTenderSrc} title="Erstelle eine neue Ausschreibung." buttonLabel="Ausschreibung erstellen"  buttonLink="/dashboard/tenders/add_tender"/>;
   return (
       <Box sx={styles.mainContainer}>
-        <PropertyFilterPanel handleOnChange={() => {}} />
+        <PropertyFilterPanel handleOnChange={() => {}} title="Alle Ausschreibungen"/>
         {tenderContent}
       </Box>
   );

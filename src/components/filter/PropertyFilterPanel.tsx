@@ -22,7 +22,7 @@ import { PropertyFilterProps } from "@/screens/dashboard/buildings/building_card
 import GButton from "../button/GButton";
 
 const PropertyFilterPanel = ({ 
-  handleOnChange 
+  handleOnChange, title 
 }: PropertyFilterProps): JSX.Element => {
 
   const user = useSelector(currentUser);
@@ -59,7 +59,7 @@ const PropertyFilterPanel = ({
   return (
     <Container maxWidth={false} sx={styles.container}>
       <Typography variant="h6" sx={styles.typography}>
-        Alle Objekte
+      {title}
       </Typography>
 
       <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>

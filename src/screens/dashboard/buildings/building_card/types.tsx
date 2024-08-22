@@ -20,5 +20,6 @@ export interface Building {
 
 export interface PropertyFilterProps {
   handleOnChange: (city: string, federalState: string) => void;
+  title: string;
 }
   
