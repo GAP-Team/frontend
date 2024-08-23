@@ -23,11 +23,13 @@ import SuccessPage from "@/components/common/SuccessPage";
 const logger = pino();
 
 interface EmailVerificationProps{
-  newUserId: string,
-  newUserEmail: string,
+  newUserId: string;
+  newUserName: string;
+  newUserEmail: string;
+  resendVerificationEmail: (name: string, email: string, id: string) => void;
 }
 
-const EmailVerification = ({ newUserId, newUserEmail }: EmailVerificationProps) => {
+const EmailVerification = ({ newUserId, newUserName, newUserEmail, resendVerificationEmail }: EmailVerificationProps) => {
 
   const user = useSelector(currentUser);
 
@@ -98,16 +100,7 @@ const EmailVerification = ({ newUserId, newUserEmail }: EmailVerificationProps) 
 
   const handleResendCode = async () => {
     setResendDisabled(true);
-    try {
-      // await userAPIs.resendVerificationCode();
-      logger.info("Verification code resent");
-    } catch (error: any) {
-      logger.error(
-        "Unable to resend code, post request failed",
-        error.name,
-        error.message
-      );
-    }
+    resendVerificationEmail(newUserName, newUserEmail, newUserId);
   };
 
   return (

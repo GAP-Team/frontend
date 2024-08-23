@@ -10,6 +10,7 @@ const userAPIs = {
     verifyEmail: (data: any) => api.post('/users/verify-user-token', data),
     updateUser: (id: string, data: any) => api.patch(`/users/${id}`, data),
     sendVerificationEmail: (data: any) => api.post('/emails/send-email', data),
+    reSendVerificationEmail: (data: any) => api.post('/emails/resend-email', data),
   
 }
 

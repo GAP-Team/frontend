@@ -5,7 +5,8 @@ import React,
     useEffect, 
   } 
 from "react";
-import moment from 'moment';
+// import moment from 'moment';
+import moment from 'moment-timezone';
 import bcrypt from "bcryptjs";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
@@ -68,6 +69,8 @@ const RegistrationRealState = () => {
 
   const [newUserId, setNewUserId] = useState("");
   const [activeStep, setActiveStep] = useState(0);
+  const [newUserName, setNewUserName] = useState("");
+  const [resendEmail, setResendEmail] = useState({});
   const [newUserEmail, setNewUserEmail] = useState("");
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [isVerificationEmailSent, setIsVerificationEmailSent] = useState<boolean>(false);
@@ -168,7 +171,10 @@ const RegistrationRealState = () => {
         },
       };
 
-      const currentDate = new Date();
+      let currentDate = new Date().toLocaleString('de-DE', {
+        timeZone: 'Europe/Berlin',
+        hour12: false,
+      });
       const formateDate = moment(currentDate).format('YYYY-MM-DDTHH:mm:ss.SSS[Z]');
 
       const hashedPassword = await bcrypt.hash(values.password, 10);
@@ -192,6 +198,7 @@ const RegistrationRealState = () => {
         setActiveStep(steps.length);
         setNewUserId(res?.data?._id);
         setNewUserEmail(values.email);
+        setNewUserName(res?.data?.firstName);
         sendVerificationEmail(values.firstName, values.email, res?.data?._id);
       }
 
@@ -208,18 +215,13 @@ const RegistrationRealState = () => {
       }
     }
   };
-
+  
   const sendVerificationEmail = async (name: string, email: string, userId: string) => {
 
     let verificationCode = Math.floor(100000 + Math.random() * 900000);
     const emailTemplate = renderEmailTemplate(name, verificationCode);
 
-    let currentDate = new Date().toLocaleString('de-DE', {
-      timeZone: 'Europe/Berlin',
-      hour12: false,
-    });
-    let expiresAt = moment(currentDate).add(15, 'minutes');
-    const formateDate = moment(expiresAt).format('YYYY-MM-DDTHH:mm:ss.SSS[Z]');
+    let expiresAt = moment().tz('Europe/Berlin').add(15, 'minutes').format('YYYY-MM-DDTHH:mm:ss.SSS[Z]');
 
     const emailText = `Dear ${name}, ${emailTemplateGreetins} ${emailTemplateVerificationText} ${verificationCode} ${emailTemplateFoot}`;
     
@@ -252,13 +254,13 @@ const RegistrationRealState = () => {
       userId: userId,
       email: email,
       token: verificationCode,
-      expiresAt: formateDate
+      expiresAt: expiresAt
     }
 
     let emailQurey = {
       emailStructure: readyEmailStructure,
       saveToken: verificationTokenSaveQuery,
-    }
+    }    
 
     let sendEmailStatus = await userAPIs.sendVerificationEmail(emailQurey);
 
@@ -359,12 +361,19 @@ const RegistrationRealState = () => {
                     setActiveStep={setActiveStep}
                   />
                 ) : (
-                  isVerificationEmailSent && <EmailVerification newUserId={newUserId} newUserEmail={newUserEmail} />
+                  isVerificationEmailSent && 
+                    <EmailVerification 
+                      newUserId={newUserId}
+                      newUserName={newUserName}
+                      newUserEmail={newUserEmail}
+                      resendVerificationEmail={sendVerificationEmail}
+                    />
                 )}
               </Grid>
             </Form>
           )}
         </Formik>
+        
         <Typography sx={styles.helpText}>
           Hilfe?{" "}
           <Link href="#" color="#1E3137" fontWeight="bold">
