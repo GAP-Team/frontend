@@ -46,7 +46,7 @@ const TenderBuilding = () => {
             id="free-solo-1-demo"
             value={formik.values.buildingName}
             disableClearable
-            options={dummyBuildings.map((option) => option.title)}
+            options={dummyBuildings.map((option) => option.buildingName)}
             onChange={handleBuildingNameChange}
             onInputChange={handleBuildingNameChange}
             renderInput={(params) => (
@@ -71,7 +71,7 @@ const TenderBuilding = () => {
             id="free-solo-2-demo"
             value={formik.values.equipmentName}
             disableClearable
-            options={dummyBuildings.map((option) => option.title)}
+            options={dummyBuildings.map((option) => option.buildingName)}
             onChange={handleEquipmentNameChange}
             onInputChange={handleEquipmentNameChange}
             renderInput={(params) => (

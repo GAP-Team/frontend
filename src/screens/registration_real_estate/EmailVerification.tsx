@@ -176,9 +176,9 @@ const EmailVerification = ({ newUserId, newUserEmail }: EmailVerificationProps) 
         </Grid>
       ) : (
         <SuccessPage
-          title="Verification Successful!"
-          description="Your email has been verified successfully."
-          buttonLabel="Go to Dashboard"
+          title="Verifizierung erfolgreich!"
+          description="Ihre E-Mail wurde erfolgreich verifiziert."
+          buttonLabel="Zum Dashboard gehen"
           redirectUrl="/dashboard"
         />
       )}

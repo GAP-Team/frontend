@@ -1,3 +1,4 @@
+'use client';
 import * as React from "react";
 import Cookies from "js-cookie";
 import Box from "@mui/material/Box";
