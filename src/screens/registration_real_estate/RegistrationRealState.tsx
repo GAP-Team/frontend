@@ -5,7 +5,8 @@ import React,
     useEffect, 
   } 
 from "react";
-import moment from 'moment';
+// import moment from 'moment';
+import moment from 'moment-timezone';
 import bcrypt from "bcryptjs";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
@@ -170,7 +171,10 @@ const RegistrationRealState = () => {
         },
       };
 
-      const currentDate = new Date();
+      let currentDate = new Date().toLocaleString('de-DE', {
+        timeZone: 'Europe/Berlin',
+        hour12: false,
+      });
       const formateDate = moment(currentDate).format('YYYY-MM-DDTHH:mm:ss.SSS[Z]');
 
       const hashedPassword = await bcrypt.hash(values.password, 10);
@@ -211,18 +215,13 @@ const RegistrationRealState = () => {
       }
     }
   };
-
+  
   const sendVerificationEmail = async (name: string, email: string, userId: string) => {
 
     let verificationCode = Math.floor(100000 + Math.random() * 900000);
     const emailTemplate = renderEmailTemplate(name, verificationCode);
 
-    let currentDate = new Date().toLocaleString('de-DE', {
-      timeZone: 'Europe/Berlin',
-      hour12: false,
-    });
-    let expiresAt = moment(currentDate).add(15, 'minutes');
-    const formateDate = moment(expiresAt).format('YYYY-MM-DDTHH:mm:ss.SSS[Z]');
+    let expiresAt = moment().tz('Europe/Berlin').add(15, 'minutes').format('YYYY-MM-DDTHH:mm:ss.SSS[Z]');
 
     const emailText = `Dear ${name}, ${emailTemplateGreetins} ${emailTemplateVerificationText} ${verificationCode} ${emailTemplateFoot}`;
     
@@ -255,7 +254,7 @@ const RegistrationRealState = () => {
       userId: userId,
       email: email,
       token: verificationCode,
-      expiresAt: formateDate
+      expiresAt: expiresAt
     }
 
     let emailQurey = {
@@ -374,6 +373,7 @@ const RegistrationRealState = () => {
             </Form>
           )}
         </Formik>
+        
         <Typography sx={styles.helpText}>
           Hilfe?{" "}
           <Link href="#" color="#1E3137" fontWeight="bold">
