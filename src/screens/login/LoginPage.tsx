@@ -1,6 +1,5 @@
 "use client";
-import React, 
-{ useState } from "react";
+import React, { useState } from "react";
 import bcrypt from "bcryptjs";
 import Cookies from "js-cookie";
 import { useFormik } from "formik";
@@ -26,7 +25,6 @@ import { loginValidationSchema } from "@/utils/ValidationSchema";
 import { setUser } from "@/lib/features/userSlice";
 
 export default function LoginPage() {
-
   const router = useRouter();
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
@@ -40,7 +38,6 @@ export default function LoginPage() {
     validationSchema: loginValidationSchema,
     onSubmit: async (values, { setSubmitting, resetForm }) => {
       try {
-
         setLoading(true);
         const formValues = { ...values, password: values.password };
         const res = await authAPIs.login(formValues);
@@ -49,12 +46,21 @@ export default function LoginPage() {
           dispatch(setUser(res.data));
           setAccessToken(res.data.access_token);
           router.push("/dashboard");
-        } else {
-          setLoginError("Email oder Passwort ist falsch");
         }
       } catch (error: any) {
-        setLoginError("Email oder Passwort ist falsch");
-        console.log("Unable to login user, post request failed", error.name, error.message);
+        if (error.response?.status === 401) {
+          setLoginError("E-Mail oder Passwort ist falsch");
+        } else {
+          setLoginError(
+            "Ein Benutzer mit diesem Email konnte nicht gefunden werden"
+          );
+        }
+
+        console.log(
+          "Unable to login user, post request failed",
+          error.name,
+          error.message
+        );
       } finally {
         setSubmitting(false);
         setLoading(false);
@@ -62,11 +68,12 @@ export default function LoginPage() {
     },
   });
 
-  const handleChange = (field: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
-    setLoginError(null);
-    formik.setFieldValue(field, e.target.value);
-    formik.setFieldTouched(field, true);
-  };
+  const handleChange =
+    (field: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
+      setLoginError(null);
+      formik.setFieldValue(field, e.target.value);
+      formik.setFieldTouched(field, true);
+    };
 
   return (
     <Grid container component="main" sx={styles.mainContainer}>
@@ -106,25 +113,28 @@ export default function LoginPage() {
                 </Link>
               </Grid>
             </Grid>
-            <form onSubmit={formik.handleSubmit} style={styles.formContainerTwo}>
-                <TextField
-                  id="email"
-                  name="email"
-                  label="Email"
-                  value={formik.values.email}
-                  onChange={handleChange("email")}
-                  onBlur={formik.handleBlur}
-                  error={formik.touched.email && Boolean(formik.errors.email)}
-                  helperText={formik.touched.email && formik.errors.email}
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <FaRegEnvelope />
-                      </InputAdornment>
-                    ),
-                  }}
-                  sx={{ mb: 4 }}
-                />
+            <form
+              onSubmit={formik.handleSubmit}
+              style={styles.formContainerTwo}
+            >
+              <TextField
+                id="email"
+                name="email"
+                label="Email"
+                value={formik.values.email}
+                onChange={handleChange("email")}
+                onBlur={formik.handleBlur}
+                error={formik.touched.email && Boolean(formik.errors.email)}
+                helperText={formik.touched.email && formik.errors.email}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <FaRegEnvelope />
+                    </InputAdornment>
+                  ),
+                }}
+                sx={{ mb: 4 }}
+              />
               <TextField
                 id="password"
                 label="Password"
@@ -133,7 +143,9 @@ export default function LoginPage() {
                 value={formik.values.password}
                 onChange={handleChange("password")}
                 onBlur={formik.handleBlur}
-                error={formik.touched.password && Boolean(formik.errors.password)}
+                error={
+                  formik.touched.password && Boolean(formik.errors.password)
+                }
                 helperText={formik.touched.password && formik.errors.password}
                 InputProps={{
                   startAdornment: (
@@ -143,33 +155,34 @@ export default function LoginPage() {
                   ),
                 }}
               />
-             <Box sx={styles.errorBox} style={{ visibility: loginError ? 'visible' : 'hidden' }}>
-                <Typography color="error">
-                  {loginError}
-                </Typography>
+              <Box
+                sx={styles.errorBox}
+                style={{ visibility: loginError ? "visible" : "hidden" }}
+              >
+                <Typography color="error">{loginError}</Typography>
               </Box>
               <Grid container sx={{ mt: 10 }} alignItems="center">
                 <Grid item xs>
                   <Box>
-                      <Typography
+                    <Typography
+                      variant="body2"
+                      style={styles.registerTypography}
+                    >
+                      Noch keinen account?
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      component="div"
+                      style={styles.registerLinkContainer}
+                    >
+                      <Link
+                        href="/registration"
                         variant="body2"
-                        style={styles.registerTypography}
+                        style={styles.link}
                       >
-                        Noch keinen account?
-                      </Typography>
-                      <Typography
-                        variant="body2"
-                        component="div"
-                        style={styles.registerLinkContainer}
-                      >
-                        <Link
-                          href="/registration"
-                          variant="body2"
-                          style={styles.link}
-                        >
-                          Registrieren
-                        </Link>
-                      </Typography>
+                        Registrieren
+                      </Link>
+                    </Typography>
                   </Box>
                 </Grid>
                 <Grid item>
@@ -180,7 +193,9 @@ export default function LoginPage() {
                     type="submit"
                     sx={{ borderRadius: "0.5rem" }}
                     disabled={formik.isSubmitting || loading}
-                    endIcon={loading && <CircularProgress color="gprimary" size={24} />}
+                    endIcon={
+                      loading && <CircularProgress color="gprimary" size={24} />
+                    }
                   >
                     Login
                   </Button>
@@ -191,7 +206,7 @@ export default function LoginPage() {
           <Typography sx={styles.supportLink}>
             Hilfe?{" "}
             <Link href="#" color="#1E3137" fontWeight="bold">
-            Support kontaktieren
+              Support kontaktieren
             </Link>
           </Typography>
         </Box>
@@ -226,15 +241,15 @@ const styles = {
     boxShadow: 3,
     mt: 2,
   },
-  formContainerTwo:{
+  formContainerTwo: {
     marginTop: 1,
     display: "flex",
-    flexDirection:'column' as 'column',
+    flexDirection: "column" as "column",
     width: "33rem",
   },
   errorBox: {
-    minHeight: '2rem', // adjust based on your needs
-    marginTop: '1rem',
+    minHeight: "2rem", // adjust based on your needs
+    marginTop: "1rem",
   },
   link: {
     color: "#22a7f1",
@@ -257,5 +272,5 @@ const styles = {
     marginTop: "3rem",
     marginRight: "auto",
     marginLeft: 18.5,
-  }
+  },
 };
