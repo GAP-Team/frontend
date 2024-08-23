@@ -35,7 +35,7 @@ const Buildings: React.FC = () => {
     getUserBuildings(city, federalState);
   }
 
-  const buildingContent = buildings?.length > 0 ? 
+  const buildingContent = buildings?.length > 0 ?
     <BuildingItemList buildings={buildings} /> 
   : 
     <NoContentPage 
@@ -45,7 +45,9 @@ const Buildings: React.FC = () => {
       title="Noch keine Objekte angelegt" 
       buttonLink="/dashboard/buildings/add_building"
       description="Du hast noch keine Objekte angelegt, wenn Du Deine Objekte erstellt hast findest Du sie hier."
-    />;
+    />
+  ;
+
   return (
       <Box sx={styles.mainContainer}>
         <PropertyFilterPanel handleOnChange={onStateCityChange} title="Alle Objekte"/>

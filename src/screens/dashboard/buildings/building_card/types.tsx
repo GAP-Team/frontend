@@ -15,11 +15,24 @@ export interface Building {
       zip: string,
     };
     area: number; // Area in square meters
-    documents:{ name: string; key: string; }[] | null | undefined;
+    filesNames: string[] | null | undefined;
+    documents: [
+      {
+        name: string,
+        key: string,
+        documentType: string,
+      }
+    ]
 }
 
 export interface PropertyFilterProps {
   handleOnChange: (city: string, federalState: string) => void;
   title: string;
+}
+
+export interface Document {
+  key: string,
+  name: string,
+  documentType: string,
 }
   
