@@ -1,123 +1,57 @@
 "use client";
-import moment from 'moment';
-import Grid from "@mui/material/Grid";
-import React,{ useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import moment from "moment";
 import { useRouter } from "next/navigation";
-import { useDispatch, useSelector } from 'react-redux';
-import { Formik, Form, FormikHelpers, useFormik, FormikErrors } from "formik";  
+import { useDispatch, useSelector } from "react-redux";
+import { Formik, Form, FormikHelpers } from "formik";
+import Grid from "@mui/material/Grid";
+import CircularProgress from "@mui/material/CircularProgress";
 
 import userAPIs from "@/api/user";
 import buildingAPIs from "@/api/building";
 import { getLogger } from "@/utils/Logger";
 import { ActiveStepItem } from "../../types";
-import AddBuildingForm from "./AddBuildingForm";
 import { AddBuildingFormValues } from "./types";
+import { SubmitFormFunction } from "@/typings/types";
+import { setUserBuildings, currentUser, currentUserBuildings } from '@/lib/features/userSlice';
+
+import PageTitle from "@/components/label/PageTitle";
+import AddBuildingForm from "./AddBuildingForm";
 import BuildingAddress from "./BuildingAddress";
 import BuildingSummary from "./BuildingSummary";
-import { DocumentTypies } from '@/utils/Constants';
-import { SubmitFormFunction } from "@/typings/types";
-import PageTitle from "@/components/label/PageTitle";
 import BuildingInformation from "./BuildingInformation";
-import BackButton from "@/components/button/BackButton";
-import { setUserBuildings } from '@/lib/features/userSlice';
 import BuildingDocumentation from "./BuildingDocumentation";
-import CircularProgress from "@mui/material/CircularProgress";
-import { addObjektFormSchema } from "@/utils/ValidationSchema";
-import { handleUploadDoc, handleUploadMultipleDoc } from "@/utils/uploadToS3";
-import { currentUser, currentUserBuildings } from '@/lib/features/userSlice';
 
+import { DocumentTypies } from "@/utils/Constants";
+import { addObjektFormSchema } from "@/utils/ValidationSchema";
+import { handleUploadMultipleDoc } from "@/utils/uploadToS3";
+
+// Logger
+const logger = getLogger("new-building");
 
 const NewBuilding = () => {
-
   const router = useRouter();
   const dispatch = useDispatch();
   const user = useSelector(currentUser);
-  const logger = getLogger("new-building");
   const userBuildings = useSelector(currentUserBuildings);
-
+  
   const steps: ActiveStepItem[] = [
-    {
-      id: 0,
-      stepName: "Objektinformation",
-      component: BuildingInformation,
-    },
-    { 
-      id: 1, 
-      stepName: "Objektanschrift", 
-      component: BuildingAddress
-    },
-    {
-      id: 2,
-      stepName: "Objektdokumentation",
-      component: BuildingDocumentation,
-    },
-    {
-      id: 3,
-      stepName: "Übersicht Objektdaten",
-      component: BuildingSummary,
-    },
+    { id: 0, stepName: "Objektinformation", component: BuildingInformation },
+    { id: 1, stepName: "Objektanschrift", component: BuildingAddress },
+    { id: 2, stepName: "Objektdokumentation", component: BuildingDocumentation },
+    { id: 3, stepName: "Übersicht Objektdaten", component: BuildingSummary },
   ];
 
   const [loading, setLoading] = useState<boolean>(false);
   const [activeStep, setActiveStep] = useState<ActiveStepItem>(steps[0]);
 
-  const [ allOtherItemsProcessed, setAllOtherItemsProcessed ] = useState<boolean>(false);
-  const [ allFloorplanItemsProcessed, setAllFloorplanItemsProcessed ] = useState<boolean>(false);
-  const [ allConstructionItemsProcessed, setAllConstructionItemsProcessed ] = useState<boolean>(false);
 
-  const handleNext = async (
-    validateForm: FormikHelpers<AddBuildingFormValues>["validateForm"],
-    setTouched: FormikHelpers<AddBuildingFormValues>["setTouched"],
-    submitForm: SubmitFormFunction,
-    // resetForm: FormikHelpers<AddBuildingFormValues>["resetForm"],
-    values: AddBuildingFormValues
-  ): Promise<void> => {    
-
-    const stepFieldsMap: { [key: number]: string[] } = {
-      0: ["name", "totalArea", "buildingType", "buildingAbbreviation", "contactPerson"],
-      1: ["zip", "street", "country", "houseNumber", "city", "state"],
-      2: ["serverLink", "constructionDocs", "floorplanDocs", "otherDocs"],
-    };
-
-    const currentStepFields = stepFieldsMap[activeStep.id];
-
-    setTouched(currentStepFields?.reduce((acc, field) => ({ ...acc, [field]: true }), {}));
-
-    const errors = await validateForm();
-    const hasErrors = currentStepFields?.some(field => (errors as any)[field]);
-
-    if (!hasErrors) {
-      const nextStepId = activeStep.id + 1;
-      if (nextStepId < steps.length) { 
-        setActiveStep(steps[nextStepId]);
-      } else {
-        //post data to API
-        await uploadAllDocuments(values);
-        // await handleSubmit(values);
-        submitForm();
-        
-        setActiveStep({ ...activeStep, id: steps.length });
-      }
-    }
-
-  };
-
-  const handleBack = () => {
-    if (activeStep.id > 0) {
-      setActiveStep(steps[activeStep.id - 1]);
-    } else {
-      // If active step is 0, then push to login
-      router.push("/dashboard");
-    }
-  };
-  
   const initialValues: AddBuildingFormValues = {
     name: "",
     totalArea: "",
     buildingType: "",
     buildingAbbreviation: "",
     contactPerson: [],
-
     zip: "",
     city: "",
     state: "",
@@ -130,12 +64,47 @@ const NewBuilding = () => {
     otherDocs: [],
     serverLink: "",
   };
-  
-  const handleSubmit = async (values: any, docObj: any[]) => {
 
+  const stepFieldsMap: { [key: number]: string[] } = {
+    0: ["name", "totalArea", "buildingType", "buildingAbbreviation", "contactPerson"],
+    1: ["zip", "street", "country", "houseNumber", "city", "state"],
+    2: ["serverLink", "constructionDocs", "floorplanDocs", "otherDocs"],
+  };
+
+  const handleNext = async (
+    validateForm: FormikHelpers<AddBuildingFormValues>["validateForm"],
+    setTouched: FormikHelpers<AddBuildingFormValues>["setTouched"],
+    submitForm: SubmitFormFunction,
+    values: AddBuildingFormValues
+  ): Promise<void> => {
+    const currentStepFields = stepFieldsMap[activeStep.id];
+    setTouched(currentStepFields?.reduce((acc, field) => ({ ...acc, [field]: true }), {}));
+
+    const errors = await validateForm();
+    const hasErrors = currentStepFields?.some(field => (errors as any)[field]);
+
+    if (!hasErrors) {
+      const nextStepId = activeStep.id + 1;
+      if (nextStepId < steps.length) {
+        setActiveStep(steps[nextStepId]);
+      } else {
+        await uploadAllDocuments(values);
+        setActiveStep({ ...activeStep, id: steps.length });
+      }
+    }
+  };
+
+  const handleBack = () => {
+    if (activeStep.id > 0) {
+      setActiveStep(steps[activeStep.id - 1]);
+    } else {
+      router.push("/dashboard");
+    }
+  };
+
+  const handleSubmit = async (values: AddBuildingFormValues, docObj: any[] = []) => {
     try {
-      
-      let addressObj = {
+      const addressObj = {
         zip: values.zip,
         city: values.city,
         state: values.state,
@@ -143,9 +112,8 @@ const NewBuilding = () => {
         country: values.country,
         houseNumber: values.houseNumber,
       }
-      
-      let currentDate = new Date();
-      const formateDate = moment(currentDate).format('YYYY-MM-DDTHH:mm:ss.SSS[Z]');
+
+      const formateDate = moment().format('YYYY-MM-DDTHH:mm:ss.SSS[Z]');
 
       let arrangedDataObj= {
         userId: user?._id,
@@ -166,91 +134,35 @@ const NewBuilding = () => {
     } catch (error: any) {
       logger.error("Unable to create a new building, post reqeust failed "+error.name, error.message);
     }
+  };
 
-  }
-
-  const uploadAllDocuments = async (values: any) => {
-
+  const uploadAllDocuments = async (values: AddBuildingFormValues) => {
     setLoading(true);
+    const docObj: any[] = [];
 
-    let docObj: any[] = [];
-    var otherItemsProcessed = 0;
-    var floorplanItemsProcessed = 0;
-    var constructionItemsProcessed = 0;
-    let selectedOtherDocsFiles = values?.otherDocs;
-    let selectedFloorplanDocsFiles = values?.floorplanDocs;
-    let selectedConstructionFiles = values?.constructionDocs;
+    const uploadDocuments = async (files: File[], docType: string) => {
+      for (const file of files) {
+        const uploadedDoc = await handleUploadMultipleDoc(file);
+        uploadedDoc.documentType = docType;
+        docObj.push(uploadedDoc);
+      }
+    };
 
-    const allFiles = [...selectedOtherDocsFiles, ...selectedFloorplanDocsFiles, ...selectedConstructionFiles];
-    
+    await uploadDocuments(values.otherDocs, DocumentTypies.SONSTIGE);
+    await uploadDocuments(values.floorplanDocs, DocumentTypies.GRUNDRISSE);
+    await uploadDocuments(values.constructionDocs, DocumentTypies.BAUUNTERLAGEN);
 
-    if (selectedOtherDocsFiles.length > 0) {
-      selectedOtherDocsFiles.forEach( async (file: any, index: any, array: string | any[]) => {
-
-        let fdFileDocUpload = await handleUploadMultipleDoc(file);
-        let newDocObj = fdFileDocUpload;
-        newDocObj.documentType = DocumentTypies.SONSTIGE;
-
-        docObj.push(newDocObj);
-        otherItemsProcessed++;
-  
-        if (otherItemsProcessed == array.length) {
-          handleUpdateDocObject(allFiles.length, docObj, values);
-        }
-      });      
-    }
-    if (selectedFloorplanDocsFiles.length > 0) {
-      selectedFloorplanDocsFiles.forEach( async (file: any, index: any, array: string | any[]) => {
-
-        let fdFileDocUpload = await handleUploadMultipleDoc(file);
-        let newDocObj = fdFileDocUpload;
-        newDocObj.documentType = DocumentTypies.GRUNDRISSE;
-
-        docObj.push(newDocObj);
-        floorplanItemsProcessed++;
-  
-        if (floorplanItemsProcessed == array.length) {
-          handleUpdateDocObject(allFiles.length, docObj, values);
-        }
-      });
-    }
-    if (selectedConstructionFiles.length > 0) {
-      selectedConstructionFiles.forEach( async (file: any, index: any, array: string | any[]) => {
-
-        let fdFileDocUpload = await handleUploadMultipleDoc(file);
-        let newDocObj = fdFileDocUpload;
-        newDocObj.documentType = DocumentTypies.BAUUNTERLAGEN;
-
-        docObj.push(newDocObj);
-        constructionItemsProcessed++;
-  
-        if (constructionItemsProcessed == array.length) {
-          handleUpdateDocObject(allFiles.length, docObj, values);
-        }
-      });      
-    }
-  }
-
-  const handleUpdateDocObject = (totalFiles: number, docObj: any, values: any) => {
-    let docDataArray = [...docObj];
-
-    if (totalFiles === docDataArray.length) {
-      handleSubmit(values, docDataArray);
-    }
-  }
-
-  const saveBuildingData = async (data :any) => {
-    
-    const createBuildingResponse = await buildingAPIs.create(data);
-    
-    if (createBuildingResponse?.data?.buildingId != "") {
-      let oldBuildings = [...userBuildings];
-      oldBuildings.push(createBuildingResponse?.data?.buildingId);
-      dispatch(setUserBuildings(oldBuildings));
-    }
-
+    handleSubmit(values, docObj);
     setLoading(false);
-  }
+  };
+
+  const saveBuildingData = async (data: any) => {
+    const createBuildingResponse = await buildingAPIs.create(data);
+    if (createBuildingResponse?.data?.buildingId) {
+      const updatedBuildings = [...userBuildings, createBuildingResponse.data.buildingId];
+      dispatch(setUserBuildings(updatedBuildings));
+    }
+  };
 
   return (
     <Grid container component="main">
@@ -259,19 +171,17 @@ const NewBuilding = () => {
         <Formik
           initialValues={initialValues}
           validationSchema={addObjektFormSchema}
-          onSubmit={ async (values, { resetForm }) => {}}
+          onSubmit={() => {}}
           enableReinitialize
         >
-          {({ validateForm, setTouched, submitForm, values}) => (
+          {({ validateForm, setTouched, submitForm, values }) => (
             <Form>
               <Grid sx={styles.form}>
                 <AddBuildingForm
                   steps={steps}
                   activeStep={activeStep}
                   handleBack={handleBack}
-                  handleNext={()=>
-                    handleNext(validateForm, setTouched, submitForm, values)
-                  }
+                  handleNext={() => handleNext(validateForm, setTouched, submitForm, values)}
                   setActiveStep={setActiveStep}
                   loading={loading}
                 />
