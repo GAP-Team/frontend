@@ -15,6 +15,7 @@ export interface Building {
       zip: string,
     };
     area: number; // Area in square meters
+<<<<<<< HEAD
     filesNames: string[] | null | undefined;
     documents: [
       {
@@ -23,6 +24,11 @@ export interface Building {
         documentType: string,
       }
     ]
+=======
+
+    documents:{ name: string; key: string; }[] | null | undefined;
+
+>>>>>>> 6de870b8163cce611fb6ddc4340928cc46f0b0ce
 }
 
 export interface PropertyFilterProps {
