@@ -15,6 +15,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import s3APIs from "@/api/s3";
 import { Building } from "./types";
 import BuildingMenu from "./BuildingMenu";
+import DocumentList from "./DocumentList ";
 import { scrollBarStyles } from "@/components/scrollbar/Scrollbar";
 
 interface BuildingItemProps {
@@ -22,26 +23,6 @@ interface BuildingItemProps {
 }
 
 const BuildingItem: React.FC<BuildingItemProps> = ({ building }) => {
-
-  const [ selectedIndex, setSelectedIndex ] = useState<number>();
-  const [ isDownloading, setIsDownloading ] = useState<boolean>(false);
-
-  const handleDownloadFile = async (selectedIndex: number, fileKey: string) => {
-    setSelectedIndex(selectedIndex);
-    setIsDownloading(true);
-    
-    let fileDetails = await s3APIs.getFile(fileKey);
-
-    const url = window.URL.createObjectURL(new Blob([fileDetails.data], { type: 'application/pdf' }));
-
-    const link = document.createElement('a');
-    link.href = url;
-    link.setAttribute('download', fileKey);
-
-    link.click();
-    
-    setIsDownloading(false);    
-  }
 
   return (
     <Paper sx={styles.card}>
@@ -88,94 +69,13 @@ const BuildingItem: React.FC<BuildingItemProps> = ({ building }) => {
           >{`${building.totalArea} qm`}</Typography>
         </Stack>
       </Stack>
-      <List sx={styles.listContainer}>
-        <Typography
-          variant="bodymr"
-          color="black"
-        >Bauunterlagen</Typography>
-        {Array.isArray(building?.documents) && building?.documents?.length > 0 &&
-          building?.documents?.map((document, index) => (
-
-            document?.documentType == "BAUUNTERLAGEN" && 
-            <Stack
-              direction="row"
-              alignItems="center"
-              py="0.55rem"
-              gap={2}
-              key={index}
-            >
-              <FiFileText size="1.5rem" color="#22A7F1" />
-              <Typography
-                variant="bodymr"
-                color="#22A7F1"
-                onClick={() => handleDownloadFile(index, document.key)}
-                style={{cursor: 'pointer'}}
-              >
-                {`${document.name}`}
-                {index === selectedIndex && isDownloading && <CircularProgress color="gprimary" size={20} style={{marginTop: '5px', marginLeft: '5rem'}} /> }
-              </Typography>
-            </Stack>
-          ))
-        }
-        <Divider />
-        <Typography
-          variant="bodymr"
-          color="black"
-        >Grundrisse</Typography>
-        {Array.isArray(building?.documents) && building?.documents?.length > 0 &&
-          building?.documents?.map((document, index) => (
-
-            document?.documentType == "GRUNDRISSE" && 
-            <Stack
-              direction="row"
-              alignItems="center"
-              py="0.55rem"
-              gap={2}
-              key={index}
-            >
-              <FiFileText size="1.5rem" color="#22A7F1" />
-              <Typography
-                variant="bodymr"
-                color="#22A7F1"
-                onClick={() => handleDownloadFile(index, document.key)}
-                style={{cursor: 'pointer'}}
-              >
-                {`${document.name}`}
-                {index === selectedIndex && isDownloading && <CircularProgress color="gprimary" size={20} style={{marginTop: '5px', marginLeft: '5rem'}} /> }
-              </Typography>
-            </Stack>
-          ))
-        }
-        <Divider />
-        <Typography
-          variant="bodymr"
-          color="black"
-        >Sonstige Dokumente</Typography>
-        {Array.isArray(building?.documents) && building?.documents?.length > 0 &&
-          building?.documents?.map((document, index) => (
-
-            document?.documentType == "SONSTIGE" && 
-            <Stack
-              direction="row"
-              alignItems="center"
-              py="0.55rem"
-              gap={2}
-              key={index}
-            >
-              <FiFileText size="1.5rem" color="#22A7F1" />
-              <Typography
-                variant="bodymr"
-                color="#22A7F1"
-                onClick={() => handleDownloadFile(index, document.key)}
-                style={{cursor: 'pointer'}}
-              >
-                {`${document.name}`}
-                {index === selectedIndex && isDownloading && <CircularProgress color="gprimary" size={20} style={{marginTop: '5px', marginLeft: '5rem'}} /> }
-              </Typography>
-            </Stack>
-          ))
-        }
-      </List>
+      {building?.documents?.length > 0 && 
+        <>
+          <DocumentList title={"Bauunterlagen"} documentType={"BAUUNTERLAGEN"} documents={building?.documents} />
+          <DocumentList title={"Grundrisse"} documentType={"GRUNDRISSE"} documents={building?.documents} />
+          <DocumentList title={"Sonstige Dokumente"} documentType={"SONSTIGE"} documents={building?.documents} />
+        </>
+      }
     </Paper>
   );
 };
@@ -205,13 +105,5 @@ const styles = {
   content: {
     flexGrow: 1,
     overflow: "auto",
-  },
-  listContainer: {
-    flexGrow: 1,
-    paddingTop: "0.5rem",
-    overflow: "auto",
-    // maxHeight: "8rem",
-    paddingRight: "0.65rem", // Add padding to the bottom for the scrollbar
-    ...scrollBarStyles,
-  },
+  }
 };

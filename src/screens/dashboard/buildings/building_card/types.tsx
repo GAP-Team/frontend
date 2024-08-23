@@ -22,10 +22,16 @@ export interface Building {
         key: string,
         documentType: string,
       }
-    ] | null | undefined;
+    ]
 }
 
 export interface PropertyFilterProps {
   handleOnChange: (city: string, federalState: string) => void;
+}
+
+export interface Document {
+  key: string,
+  name: string,
+  documentType: string,
 }
   
