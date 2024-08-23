@@ -1,19 +1,20 @@
 "use client";
 import moment from 'moment';
 import Grid from "@mui/material/Grid";
-import React,{ useState } from "react";
+import React,{ useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { useDispatch, useSelector, useStore } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux';
 import { Formik, Form, FormikHelpers, useFormik, FormikErrors } from "formik";  
 
 import userAPIs from "@/api/user";
 import buildingAPIs from "@/api/building";
-import { ActiveStepItem } from "../../types";
 import { getLogger } from "@/utils/Logger";
+import { ActiveStepItem } from "../../types";
 import AddBuildingForm from "./AddBuildingForm";
 import { AddBuildingFormValues } from "./types";
 import BuildingAddress from "./BuildingAddress";
 import BuildingSummary from "./BuildingSummary";
+import { DocumentTypies } from '@/utils/Constants';
 import { SubmitFormFunction } from "@/typings/types";
 import PageTitle from "@/components/label/PageTitle";
 import BuildingInformation from "./BuildingInformation";
@@ -59,6 +60,10 @@ const NewBuilding = () => {
 
   const [loading, setLoading] = useState<boolean>(false);
   const [activeStep, setActiveStep] = useState<ActiveStepItem>(steps[0]);
+
+  const [ allOtherItemsProcessed, setAllOtherItemsProcessed ] = useState<boolean>(false);
+  const [ allFloorplanItemsProcessed, setAllFloorplanItemsProcessed ] = useState<boolean>(false);
+  const [ allConstructionItemsProcessed, setAllConstructionItemsProcessed ] = useState<boolean>(false);
 
   const handleNext = async (
     validateForm: FormikHelpers<AddBuildingFormValues>["validateForm"],
@@ -169,27 +174,69 @@ const NewBuilding = () => {
     setLoading(true);
 
     let docObj: any[] = [];
-    var itemsProcessed = 0;
+    var otherItemsProcessed = 0;
+    var floorplanItemsProcessed = 0;
+    var constructionItemsProcessed = 0;
     let selectedOtherDocsFiles = values?.otherDocs;
     let selectedFloorplanDocsFiles = values?.floorplanDocs;
     let selectedConstructionFiles = values?.constructionDocs;
 
     const allFiles = [...selectedOtherDocsFiles, ...selectedFloorplanDocsFiles, ...selectedConstructionFiles];
+    
 
-    if (allFiles.length > 0) {
-      allFiles.forEach( async (file, index, array) => {
+    if (selectedOtherDocsFiles.length > 0) {
+      selectedOtherDocsFiles.forEach( async (file: any, index: any, array: string | any[]) => {
+
         let fdFileDocUpload = await handleUploadMultipleDoc(file);
-        docObj.push(fdFileDocUpload);
-        itemsProcessed++;
+        let newDocObj = fdFileDocUpload;
+        newDocObj.documentType = DocumentTypies.SONSTIGE;
+
+        docObj.push(newDocObj);
+        otherItemsProcessed++;
   
-        if (itemsProcessed == array.length) {
-          handleSubmit(values, docObj);
+        if (otherItemsProcessed == array.length) {
+          handleUpdateDocObject(allFiles.length, docObj, values);
         }
       });      
-    } else {
-      handleSubmit(values, docObj);      
     }
+    if (selectedFloorplanDocsFiles.length > 0) {
+      selectedFloorplanDocsFiles.forEach( async (file: any, index: any, array: string | any[]) => {
 
+        let fdFileDocUpload = await handleUploadMultipleDoc(file);
+        let newDocObj = fdFileDocUpload;
+        newDocObj.documentType = DocumentTypies.GRUNDRISSE;
+
+        docObj.push(newDocObj);
+        floorplanItemsProcessed++;
+  
+        if (floorplanItemsProcessed == array.length) {
+          handleUpdateDocObject(allFiles.length, docObj, values);
+        }
+      });
+    }
+    if (selectedConstructionFiles.length > 0) {
+      selectedConstructionFiles.forEach( async (file: any, index: any, array: string | any[]) => {
+
+        let fdFileDocUpload = await handleUploadMultipleDoc(file);
+        let newDocObj = fdFileDocUpload;
+        newDocObj.documentType = DocumentTypies.BAUUNTERLAGEN;
+
+        docObj.push(newDocObj);
+        constructionItemsProcessed++;
+  
+        if (constructionItemsProcessed == array.length) {
+          handleUpdateDocObject(allFiles.length, docObj, values);
+        }
+      });      
+    }
+  }
+
+  const handleUpdateDocObject = (totalFiles: number, docObj: any, values: any) => {
+    let docDataArray = [...docObj];
+
+    if (totalFiles === docDataArray.length) {
+      handleSubmit(values, docDataArray);
+    }
   }
 
   const saveBuildingData = async (data :any) => {

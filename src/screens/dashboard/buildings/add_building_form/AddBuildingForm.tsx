@@ -48,9 +48,9 @@ const AddBuildingForm = ({
         <Grid item xs>
           <SectionTitle text={activeStep.stepName} sx={styles.subTitle} />
           <GProgressStepper
-        sx={styles.progressStepper}
-        activeStep={activeStep.id}
-      />
+            sx={styles.progressStepper}
+            activeStep={activeStep.id}
+          />
         </Grid>
         <Grid item>
           <Link href="/dashboard/buildings">
