@@ -21,7 +21,9 @@ const DocumentList: React.FC<DocumentListProps> = ({
   documentType,
   documents,
 }) => {
-  const [selectedIndex, setSelectedIndex] = useState<number | undefined>(undefined);
+  const [selectedIndex, setSelectedIndex] = useState<number | undefined>(
+    undefined
+  );
   const [isDownloading, setIsDownloading] = useState<boolean>(false);
 
   const handleDownloadFile = async (
@@ -49,7 +51,8 @@ const DocumentList: React.FC<DocumentListProps> = ({
 
   return (
     <List sx={{ ...styles.listContainer }}>
-      {documents?.filter((doc) => doc.documentType === documentType).length > 0 && (
+      {documents?.filter((doc) => doc.documentType === documentType).length >
+        0 && (
         <Typography variant="body1" color="black">
           {title}
         </Typography>
@@ -64,7 +67,9 @@ const DocumentList: React.FC<DocumentListProps> = ({
               <Typography
                 variant="body1"
                 color="#22A7F1"
-                onClick={() => handleDownloadFile(index, document.key, document.name)}
+                onClick={() =>
+                  handleDownloadFile(index, document.key, document.name)
+                }
                 style={{
                   cursor: "pointer",
                   overflow: "hidden",
@@ -87,7 +92,8 @@ const DocumentList: React.FC<DocumentListProps> = ({
           </Fragment>
         ))}
 
-      {documents?.filter((doc) => doc.documentType === documentType).length > 0 && <Divider />}
+      {documents?.filter((doc) => doc.documentType === documentType).length >
+        0 && <Divider />}
     </List>
   );
 };

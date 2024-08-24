@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import FormControl from "@mui/material/FormControl";
@@ -24,7 +24,7 @@ const TenderDocumentation = () => {
           <Typography variant="gsub" color="gray.500">
             DOKUMENTE
           </Typography>
-          <FormControl sx={{ display: "block"}}>
+          <FormControl sx={{ display: "block" }}>
             <RadioGroup
               id="documentChoice"
               name="documentChoice"
@@ -39,7 +39,10 @@ const TenderDocumentation = () => {
                     control={<Radio />}
                     label={
                       <Typography>
-                        Jetzt hochladen <span style={{ fontWeight: '600', color: '#22A7F1' }}>Empfohlen</span>
+                        Jetzt hochladen{" "}
+                        <span style={{ fontWeight: "600", color: "#22A7F1" }}>
+                          Empfohlen
+                        </span>
                       </Typography>
                     }
                   />
@@ -111,7 +114,8 @@ const TenderDocumentation = () => {
                   Boolean(formik.errors.floorplanDocs)
                 }
                 helperText={
-                  formik.touched.floorplanDocs && formik.errors.floorplanDocs?.toString()
+                  formik.touched.floorplanDocs &&
+                  formik.errors.floorplanDocs?.toString()
                 }
               />
             </Grid>
@@ -125,9 +129,13 @@ const TenderDocumentation = () => {
                 value={formik.values.equipmentDocs}
                 onChange={formik.handleChange}
                 error={
-                  formik.touched.equipmentDocs && Boolean(formik.errors.equipmentDocs)
+                  formik.touched.equipmentDocs &&
+                  Boolean(formik.errors.equipmentDocs)
                 }
-                helperText={formik.touched.equipmentDocs && formik.errors.equipmentDocs?.toString()}
+                helperText={
+                  formik.touched.equipmentDocs &&
+                  formik.errors.equipmentDocs?.toString()
+                }
               />
             </Grid>
           </>

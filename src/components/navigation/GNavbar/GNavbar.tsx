@@ -17,13 +17,8 @@ const GNavbar = () => {
           href="#"
           className="flex flex-row justify-start items-center gap-4"
         >
-          <div style={{position:"relative", height:'3rem',width:'3rem' }}>
-            <Image
-              alt="Follow us on Twitter"
-              src={gapLogo}
-              fill
-              priority
-            />
+          <div style={{ position: "relative", height: "3rem", width: "3rem" }}>
+            <Image alt="Follow us on Twitter" src={gapLogo} fill priority />
           </div>
           <p
             className={`${lalezar.className} text-[#0D1F4E] text-3xl md:text-5xl  text-center md:mt-3 `}

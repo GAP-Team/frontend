@@ -17,7 +17,7 @@ interface SubSidebarItemProps {
   item: SidebarItem;
   open: boolean;
   selected?: boolean;
-  setSelected?: (item:SubItem) => void;
+  setSelected?: (item: SubItem) => void;
 }
 
 export const SubSidebarItem: React.FC<SubSidebarItemProps> = ({
@@ -35,69 +35,79 @@ export const SubSidebarItem: React.FC<SubSidebarItemProps> = ({
   }, [open]);
 
   const handleToggle = () => {
-    
     if (open) {
       setIsOpen(!isOpen);
     }
   };
 
   return (
-      <>
-      <ListItemButton selected={selected}  onClick={handleToggle} sx={{ ...styles.listItemButton, ...(isOpen && styles.noMarginBottom) }}>
+    <>
+      <ListItemButton
+        selected={selected}
+        onClick={handleToggle}
+        sx={{ ...styles.listItemButton, ...(isOpen && styles.noMarginBottom) }}
+      >
         <ListItemIcon sx={{ ...styles.listItemIcon, mr: open ? 3 : "auto" }}>
           <item.icon />
         </ListItemIcon>
-        <ListItemText primary={item.text} sx={{ opacity: open ? 1 : 0 }}/>
-        { isOpen ? <ExpandLess /> : <ExpandMore />}
+        <ListItemText primary={item.text} sx={{ opacity: open ? 1 : 0 }} />
+        {isOpen ? <ExpandLess /> : <ExpandMore />}
       </ListItemButton>
       <Collapse in={isOpen} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
-          {item.subItems && item.subItems.map((subItem,idx) => (
-            <ListItemButton  key={idx} sx={styles.subItemButton} onClick={()=>setSelected?.(subItem)} >
-              <ListItemText primary={subItem.text} sx={{...styles.listItemText}} />
-            </ListItemButton>
-          ))}
+          {item.subItems &&
+            item.subItems.map((subItem, idx) => (
+              <ListItemButton
+                key={idx}
+                sx={styles.subItemButton}
+                onClick={() => setSelected?.(subItem)}
+              >
+                <ListItemText
+                  primary={subItem.text}
+                  sx={{ ...styles.listItemText }}
+                />
+              </ListItemButton>
+            ))}
         </List>
       </Collapse>
-
     </>
   );
 };
 
 //styles
 const styles = {
-    listItemButton: {
-      "&.Mui-selected": {
-        backgroundColor: "#E5F5FA",
+  listItemButton: {
+    "&.Mui-selected": {
+      backgroundColor: "#E5F5FA",
+      color: "#22A7F1",
+      "& .MuiListItemIcon-root": {
         color: "#22A7F1",
-        "& .MuiListItemIcon-root": {
-          color: "#22A7F1",
-        },
-        "&:hover": {
-          backgroundColor: "#E5F5FA",
-        },
       },
       "&:hover": {
         backgroundColor: "#E5F5FA",
-        color: "#22A7F1",
-        "& .MuiListItemIcon-root": {
-          color: "#22A7F1",
-        },
       },
-      marginBottom: "1.5rem", // Distance between items
-      ".MuiListItemIcon-root": { fontSize: "1.5rem" }, // Icon size
     },
-    listItemIcon: {
-      minWidth: "auto",
+    "&:hover": {
+      backgroundColor: "#E5F5FA",
+      color: "#22A7F1",
+      "& .MuiListItemIcon-root": {
+        color: "#22A7F1",
+      },
     },
-    listItemText: {
-      fontWeight: "500",
-      fontSize: "0.95rem",
-      lineHeight:'1rem',
-    },
-    noMarginBottom: {
-        marginBottom: 0, // Removes the margin when the item is open
-    },
+    marginBottom: "1.5rem", // Distance between items
+    ".MuiListItemIcon-root": { fontSize: "1.5rem" }, // Icon size
+  },
+  listItemIcon: {
+    minWidth: "auto",
+  },
+  listItemText: {
+    fontWeight: "500",
+    fontSize: "0.95rem",
+    lineHeight: "1rem",
+  },
+  noMarginBottom: {
+    marginBottom: 0, // Removes the margin when the item is open
+  },
   subItemButton: {
     "&.Mui-selected": {
       backgroundColor: "#E5F5FA",
@@ -116,6 +126,6 @@ const styles = {
         color: "#22A7F1",
       },
     },
-      pl: 8, // Padding left for sub-items
-    },
-  };
+    pl: 8, // Padding left for sub-items
+  },
+};

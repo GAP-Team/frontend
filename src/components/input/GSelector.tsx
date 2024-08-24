@@ -1,7 +1,7 @@
 // Selector.tsx
-import React from 'react';
-import TextField from '@mui/material/TextField';
-import Autocomplete from '@mui/material/Autocomplete';
+import React from "react";
+import TextField from "@mui/material/TextField";
+import Autocomplete from "@mui/material/Autocomplete";
 
 export interface Item {
   label: string;
@@ -18,14 +18,23 @@ interface SelectorProps<T extends Item> {
   helperText?: string;
 }
 
-const Selector = <T extends Item>({ name, options, placeholder = 'Wählen Sie aus', onSelect, selectedState, error, helperText }: SelectorProps<T>) => {
-
+const Selector = <T extends Item>({
+  name,
+  options,
+  placeholder = "Wählen Sie aus",
+  onSelect,
+  selectedState,
+  error,
+  helperText,
+}: SelectorProps<T>) => {
   return (
     <Autocomplete
       value={selectedState}
       options={options}
       getOptionLabel={(option) => option.value}
-      isOptionEqualToValue={(options, value) => options.valueOf === value.valueOf}
+      isOptionEqualToValue={(options, value) =>
+        options.valueOf === value.valueOf
+      }
       onChange={(e, value: Item | null) => {
         onSelect(value as Item);
       }}

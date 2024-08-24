@@ -14,14 +14,13 @@ import LabelWithAsterisk from "@/components/label/LabelWithAsterisk";
 import UploadMultiButton from "@/components/button/UploadMultiButton";
 
 const BuildingDocumentation = ({ formik }: { formik?: any }) => {
-
   return (
     <Box
       noValidate
       component="form"
       sx={{ p: 1, width: "auto", marginLeft: "1.5rem" }}
     >
-      <Grid container spacing={1} ml={0.10}>
+      <Grid container spacing={1} ml={0.1}>
         <FormControl sx={{ display: "block" }}>
           <RadioGroup
             id="documentChoice"
@@ -37,7 +36,10 @@ const BuildingDocumentation = ({ formik }: { formik?: any }) => {
                   control={<Radio />}
                   label={
                     <Typography>
-                      Jetzt hochladen <span style={{ fontWeight: '600', color: '#22A7F1' }}>Empfohlen</span>
+                      Jetzt hochladen{" "}
+                      <span style={{ fontWeight: "600", color: "#22A7F1" }}>
+                        Empfohlen
+                      </span>
                     </Typography>
                   }
                 />
@@ -109,7 +111,8 @@ const BuildingDocumentation = ({ formik }: { formik?: any }) => {
                 Boolean(formik.errors.floorplanDocs)
               }
               helperText={
-                formik.touched.floorplanDocs && formik.errors.floorplanDocs?.toString()
+                formik.touched.floorplanDocs &&
+                formik.errors.floorplanDocs?.toString()
               }
             />
           </Grid>
@@ -122,8 +125,12 @@ const BuildingDocumentation = ({ formik }: { formik?: any }) => {
               name="otherDocs"
               value={formik.values.otherDocs}
               onChange={formik.handleChange}
-              error={formik.touched.otherDocs && Boolean(formik.errors.otherDocs)}
-              helperText={formik.touched.otherDocs && formik.errors.otherDocs?.toString()}
+              error={
+                formik.touched.otherDocs && Boolean(formik.errors.otherDocs)
+              }
+              helperText={
+                formik.touched.otherDocs && formik.errors.otherDocs?.toString()
+              }
             />
           </Grid>
         </>

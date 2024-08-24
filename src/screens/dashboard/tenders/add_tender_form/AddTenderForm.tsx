@@ -53,23 +53,27 @@ const AddTenderForm: React.FC<AddTenderFormProps> = ({
         </div>
         {!isBeyondLastStep && (
           <Grid container justifyContent="flex-end" spacing={2}>
-          <Grid item>
-            <GButton
-              disabled={activeStep?.id === 0}
-              onClick={handleBack}
-              color="ggrey"
-            >
-              {activeStep.id < steps.length - 1 ? "Zurück" : "Bearbeiten"}
-            </GButton>
-            <GButton onClick={handleSubmit} type="submit" disabled={isSubmitting}>
-              {isBeyondLastStep
-                ? "Schließen"
-                : activeStep.id < steps.length - 1
-                ? "Weiter"
-                : "Abschließen"}
-            </GButton>
+            <Grid item>
+              <GButton
+                disabled={activeStep?.id === 0}
+                onClick={handleBack}
+                color="ggrey"
+              >
+                {activeStep.id < steps.length - 1 ? "Zurück" : "Bearbeiten"}
+              </GButton>
+              <GButton
+                onClick={handleSubmit}
+                type="submit"
+                disabled={isSubmitting}
+              >
+                {isBeyondLastStep
+                  ? "Schließen"
+                  : activeStep.id < steps.length - 1
+                    ? "Weiter"
+                    : "Abschließen"}
+              </GButton>
+            </Grid>
           </Grid>
-        </Grid>
         )}
       </Grid>
     </>

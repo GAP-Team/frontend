@@ -1,5 +1,5 @@
-import { Button,SxProps, Theme } from '@mui/material';
-import { MdArrowBackIos } from 'react-icons/md';
+import { Button, SxProps, Theme } from "@mui/material";
+import { MdArrowBackIos } from "react-icons/md";
 
 interface BackButtonProps {
   onBack: () => void;
@@ -9,11 +9,7 @@ interface BackButtonProps {
 const BackButton: React.FC<BackButtonProps> = ({ onBack, sx }) => {
   const btnstyles = { ...backButtonStyles, ...sx };
   return (
-    <Button
-      variant="text"
-      sx={btnstyles}
-      onClick={onBack}
-    >
+    <Button variant="text" sx={btnstyles} onClick={onBack}>
       <MdArrowBackIos />
       Zurück
     </Button>
@@ -23,7 +19,7 @@ const BackButton: React.FC<BackButtonProps> = ({ onBack, sx }) => {
 export default BackButton;
 
 //Styles
-const backButtonStyles: SxProps<Theme>={
+const backButtonStyles: SxProps<Theme> = {
   display: "flex",
   fontSize: "0.875rem",
   fontWeight: "600",

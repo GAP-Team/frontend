@@ -15,7 +15,6 @@ const BuildingItemList: React.FC<BuildingItemListProps> = ({
   buildings,
   itemsPerPage = 8,
 }) => {
-
   const [page, setPage] = useState<number>(1);
   const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value);

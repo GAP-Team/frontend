@@ -4,8 +4,8 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import LabelWithAsterisk from "@/components/label/LabelWithAsterisk";
 import GTextInput from "@/components/input/GTextInput";
-import TextField from '@mui/material/TextField';
-import Autocomplete from '@mui/material/Autocomplete';
+import TextField from "@mui/material/TextField";
+import Autocomplete from "@mui/material/Autocomplete";
 import { useFormikContext } from "formik";
 import { AddTenderFormValues } from "./types";
 import { dummyBuildings, equipmentTypesList } from "@/utils/Constants";
@@ -16,12 +16,18 @@ const TenderBuilding = () => {
   const formik = useFormikContext<AddTenderFormValues>();
   const [selectedEquipmntType, setSelectedEquipmntType] = useState<Item | null>(
     formik?.values?.equipmentType
-      ? { label: formik.values.equipmentType, value: formik.values.equipmentType }
+      ? {
+          label: formik.values.equipmentType,
+          value: formik.values.equipmentType,
+        }
       : null
   );
   const handleEquipmntTypeSelect = (selectedItem: Item | null): void => {
     setSelectedEquipmntType(selectedItem);
-    formik?.setFieldValue("equipmentType", selectedItem ? selectedItem.value : "");
+    formik?.setFieldValue(
+      "equipmentType",
+      selectedItem ? selectedItem.value : ""
+    );
   };
 
   const handleBuildingNameChange = (event: any, value: string | null) => {
@@ -53,8 +59,13 @@ const TenderBuilding = () => {
               <TextField
                 {...params}
                 name="buildingName"
-                error={formik?.touched?.buildingName && Boolean(formik?.errors?.buildingName)}
-                helperText={formik?.touched?.buildingName && formik?.errors?.buildingName}
+                error={
+                  formik?.touched?.buildingName &&
+                  Boolean(formik?.errors?.buildingName)
+                }
+                helperText={
+                  formik?.touched?.buildingName && formik?.errors?.buildingName
+                }
                 label="Objekt suchen"
                 InputProps={{
                   ...params.InputProps,
@@ -78,8 +89,14 @@ const TenderBuilding = () => {
               <TextField
                 {...params}
                 name="equipmentName"
-                error={formik?.touched?.equipmentName && Boolean(formik?.errors?.equipmentName)}
-                helperText={formik?.touched?.equipmentName && formik?.errors?.equipmentName}
+                error={
+                  formik?.touched?.equipmentName &&
+                  Boolean(formik?.errors?.equipmentName)
+                }
+                helperText={
+                  formik?.touched?.equipmentName &&
+                  formik?.errors?.equipmentName
+                }
                 label="Anlagen suchen"
                 InputProps={{
                   ...params.InputProps,
@@ -95,7 +112,8 @@ const TenderBuilding = () => {
             name="equipmentType"
             options={equipmentTypesList}
             error={
-              formik?.touched?.equipmentType && Boolean(formik?.errors?.equipmentType)
+              formik?.touched?.equipmentType &&
+              Boolean(formik?.errors?.equipmentType)
             }
             helperText={
               formik?.touched?.equipmentType && formik?.errors?.equipmentType

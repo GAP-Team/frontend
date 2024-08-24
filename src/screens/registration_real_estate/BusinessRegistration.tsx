@@ -15,9 +15,7 @@ const BusinessRegistration = ({
   type,
 }: BusinessRegistrationProps): JSX.Element => {
   return (
-    <Box
-      sx={{ p: 1, width: "auto", marginLeft: "1.5rem" }}
-    >
+    <Box sx={{ p: 1, width: "auto", marginLeft: "1.5rem" }}>
       <Grid container spacing={2}>
         <Grid item xs={12} sm={12}>
           <Typography variant="gsub" color="gray.500">

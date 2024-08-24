@@ -17,7 +17,9 @@ const TenderTitleBar: React.FC<TenderTitleBarProps> = ({
   return (
     <Container maxWidth={false} sx={styles.container}>
       <Typography sx={styles.titleTypography}>{title} • &nbsp;</Typography>
-      <Typography sx={styles.desTypography}>{projectId} <span style={{ color: "black" }}>•</span> &nbsp;</Typography>
+      <Typography sx={styles.desTypography}>
+        {projectId} <span style={{ color: "black" }}>•</span> &nbsp;
+      </Typography>
       <Typography sx={styles.desTypography}>{location}</Typography>
     </Container>
   );

@@ -16,7 +16,7 @@ const TenderList: React.FC<TenderListProps> = ({ tenders }) => {
       <TenderHeader code="F004" address="Mittelstraße 401, 37292 Essen" />
       <TenderItems tenders={tenders} />
       <Divider variant="middle" orientation="horizontal" flexItem />
-          
+
       <TenderHeader code="F003" address="Mittelstraße 401, 66125 Saarbrucken" />
       <TenderItems tenders={tenders} />
       <Divider variant="middle" orientation="horizontal" flexItem />

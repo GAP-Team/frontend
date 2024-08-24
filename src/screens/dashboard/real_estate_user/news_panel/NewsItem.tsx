@@ -1,9 +1,4 @@
-import {
-  ListItem,
-  Avatar,
-  Typography,
-  Box,
-} from "@mui/material";
+import { ListItem, Avatar, Typography, Box } from "@mui/material";
 import { NewsItemProps } from "./types";
 
 const NewsItem: React.FC<NewsItemProps> = ({

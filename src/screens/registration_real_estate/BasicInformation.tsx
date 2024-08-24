@@ -1,21 +1,18 @@
 "use client";
-import {useEffect} from "react";
+import { useEffect } from "react";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import LabelWithAsterisk from "@/components/label/LabelWithAsterisk";
 import PhoneInput from "@/components/input/GPhoneInput";
 import GTextInput from "@/components/input/GTextInput";
 
-
-const BasicInformation = ({formik}: any): JSX.Element => {
+const BasicInformation = ({ formik }: any): JSX.Element => {
   useEffect(() => {
     formik.validateForm();
-  }, [])
-  
+  }, []);
+
   return (
-    <Box
-      sx={{ p: 1, width: "auto", marginLeft: "1.5rem" }}
-    >
+    <Box sx={{ p: 1, width: "auto", marginLeft: "1.5rem" }}>
       <Grid container spacing={2}>
         <Grid item xs={12} sm={6}>
           <LabelWithAsterisk>Ihre Vorname</LabelWithAsterisk>
@@ -80,8 +77,13 @@ const BasicInformation = ({formik}: any): JSX.Element => {
             value={formik.values.confirmPassword}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            error={formik.touched.confirmPassword && Boolean(formik.errors.confirmPassword)}
-            helperText={formik.touched.confirmPassword && formik.errors.confirmPassword}
+            error={
+              formik.touched.confirmPassword &&
+              Boolean(formik.errors.confirmPassword)
+            }
+            helperText={
+              formik.touched.confirmPassword && formik.errors.confirmPassword
+            }
           />
         </Grid>
         <Grid item xs={12} sm={6} mt={1}>

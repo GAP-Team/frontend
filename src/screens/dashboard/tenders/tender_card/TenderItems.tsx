@@ -9,13 +9,9 @@ interface TenderItemsProps {
 
 const TenderItems: React.FC<TenderItemsProps> = ({ tenders }) => {
   return (
-    <Grid
-      container
-      spacing={"1.25rem"}
-      sx={{ overflow: "auto", flexGrow: 1 }}
-    >
+    <Grid container spacing={"1.25rem"} sx={{ overflow: "auto", flexGrow: 1 }}>
       {tenders.map((data, index) => (
-        <Grid item key={index} >
+        <Grid item key={index}>
           <JobCard key={index} {...data} />
         </Grid>
       ))}

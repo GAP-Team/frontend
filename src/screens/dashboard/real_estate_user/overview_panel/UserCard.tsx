@@ -16,8 +16,8 @@ const UserCard: React.FC<UserCardProps> = ({
   numberOfRequests,
 }) => {
   return (
-    <Box sx={styles.card} >
-      <Avatar sx={styles.avatar}/>
+    <Box sx={styles.card}>
+      <Avatar sx={styles.avatar} />
       <Box sx={styles.content}>
         <Typography variant="subtitle1" sx={styles.name}>
           {name}
@@ -47,24 +47,24 @@ const styles = {
     backgroundColor: "#1C45CC", // Adjust the color as needed
     borderRadius: "0.5rem",
     color: "white",
-    gap: '1rem',
-    mt:'0.75rem',
+    gap: "1rem",
+    mt: "0.75rem",
     padding: "0.75rem",
   },
   content: {
     display: "flex",
     flexDirection: "column",
-    },
+  },
   avatar: {
-      width: '2.5rem',
-      height:'2.5rem'
+    width: "2.5rem",
+    height: "2.5rem",
   },
   name: {
     fontSize: "0.875rem",
     fontWeight: 600,
     lineHeight: "1.25rem",
   },
-  designation:{
+  designation: {
     fontSize: "0.75rem",
     fontWeight: 400,
     lineHeight: "1rem",
@@ -78,7 +78,7 @@ const styles = {
     px: "1rem", // Horizontal padding
   },
   daysNumber: {
-    fontSize: "1.5rem", 
+    fontSize: "1.5rem",
     lineHeight: "2rem",
     fontWeight: 700,
   },

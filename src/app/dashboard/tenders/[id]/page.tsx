@@ -9,5 +9,5 @@ import TenderDetails from "@/screens/dashboard/tenders/tender_card/TenderDetails
 export default function TenderOverview() {
   const params = useParams();
   const id = Array.isArray(params.id) ? params.id[0] : params.id;
-  return (<Dashboard overrideComponent={<TenderDetails id={id} />} />)
+  return <Dashboard overrideComponent={<TenderDetails id={id} />} />;
 }

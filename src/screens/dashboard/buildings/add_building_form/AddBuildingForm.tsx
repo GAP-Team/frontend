@@ -24,7 +24,6 @@ const AddBuildingForm = ({
   handleNext,
   setActiveStep,
 }: AddComponentFormProps): JSX.Element => {
-
   const router = useRouter();
   const formik = useFormikContext<AddBuildingFormValues>();
 
@@ -34,14 +33,15 @@ const AddBuildingForm = ({
 
   const handleRoute = () => {
     router.push("/dashboard/buildings");
-  }
-  
+  };
+
   const formOrSuccessContent = isBeyondLastStep ? (
-    !loading && 
-    <SuccessPage
-      title="Objekt angelegt!"
-      description2="Objekt wurde erfolgreich angelegt"
-    />
+    !loading && (
+      <SuccessPage
+        title="Objekt angelegt!"
+        description2="Objekt wurde erfolgreich angelegt"
+      />
+    )
   ) : (
     <>
       <Grid container alignItems="center">
@@ -54,14 +54,20 @@ const AddBuildingForm = ({
         </Grid>
         <Grid item>
           <Link href="/dashboard/buildings">
-            <IconButton sx={{marginLeft:'auto'}} size="medium">
+            <IconButton sx={{ marginLeft: "auto" }} size="medium">
               <CgClose color="red" />
             </IconButton>
           </Link>
         </Grid>
       </Grid>
-      
-      {StepComponent && <StepComponent formik={formik} setActiveStep={setActiveStep} steps={steps} />}
+
+      {StepComponent && (
+        <StepComponent
+          formik={formik}
+          setActiveStep={setActiveStep}
+          steps={steps}
+        />
+      )}
     </>
   );
 
@@ -72,17 +78,20 @@ const AddBuildingForm = ({
           {activeStep.id < steps.length - 1 ? "Zurück" : "Bearbeiten"}
         </GButton>
       )}
-      {loading ?
+      {loading ? (
         <CircularProgress color="gprimary" size={24} />
-      :
-        <GButton type={typeOfBtn} onClick={!isBeyondLastStep ? handleNext : handleRoute} >
+      ) : (
+        <GButton
+          type={typeOfBtn}
+          onClick={!isBeyondLastStep ? handleNext : handleRoute}
+        >
           {isBeyondLastStep
             ? "schließen"
             : activeStep.id < steps.length - 1
               ? "Weiter"
               : "Abschlißen"}
         </GButton>
-      }
+      )}
     </>
   );
 
@@ -95,7 +104,7 @@ const AddBuildingForm = ({
           color="inherit"
           href="/"
         >
-          Schritt {!isBeyondLastStep?activeStep?.id+1:4} / {steps.length}
+          Schritt {!isBeyondLastStep ? activeStep?.id + 1 : 4} / {steps.length}
         </Link>
         <GStepper
           activeStep={activeStep.id}
@@ -113,9 +122,7 @@ const AddBuildingForm = ({
           {formOrSuccessContent}
         </div>
         <Grid container justifyContent="flex-end" spacing={2}>
-          <Grid item>
-            {forwardAndBackBtns}
-          </Grid>
+          <Grid item>{forwardAndBackBtns}</Grid>
         </Grid>
       </Grid>
     </>

@@ -1,10 +1,5 @@
 "use client";
-import React, 
-  {
-    useState,
-    useEffect
-  }
-from "react";
+import React, { useState, useEffect } from "react";
 import {
   Box,
   Select,
@@ -14,17 +9,17 @@ import {
   Typography,
   FormControl,
 } from "@mui/material";
-import { useSelector } from 'react-redux';
+import { useSelector } from "react-redux";
 
 import buildingAPIs from "@/api/building";
 import { currentUser } from "@/lib/features/userSlice";
 import { PropertyFilterProps } from "@/screens/dashboard/buildings/building_card/types";
 import GButton from "../button/GButton";
 
-const PropertyFilterPanel = ({ 
-  handleOnChange, title 
+const PropertyFilterPanel = ({
+  handleOnChange,
+  title,
 }: PropertyFilterProps): JSX.Element => {
-
   const user = useSelector(currentUser);
 
   const [city, setCity] = useState("");
@@ -38,7 +33,6 @@ const PropertyFilterPanel = ({
   }, []);
 
   const getUserStatesCities = async () => {
-    
     let cs = await buildingAPIs.getUserStatesCities(user?._id);
 
     if (cs?.data?.cities?.length > 0) {
@@ -59,10 +53,17 @@ const PropertyFilterPanel = ({
   return (
     <Container maxWidth={false} sx={styles.container}>
       <Typography variant="h6" sx={styles.typography}>
-      {title}
+        {title}
       </Typography>
 
-      <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
+      <Box
+        sx={{
+          flexGrow: 1,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "flex-end",
+        }}
+      >
         <FormControl size="small" sx={styles.formControl}>
           <InputLabel id="property-type-label">Anlagentyp</InputLabel>
           <Select
@@ -117,8 +118,10 @@ const PropertyFilterPanel = ({
             )}
           </Select>
         </FormControl>
-        <Box sx={{ ml: 1, display: 'flex'}}>
-          <GButton onClick={()=>handleOnChange(city,federalState)}>Filter</GButton>
+        <Box sx={{ ml: 1, display: "flex" }}>
+          <GButton onClick={() => handleOnChange(city, federalState)}>
+            Filter
+          </GButton>
 
           <GButton onClick={handleReset}>Reset</GButton>
         </Box>
@@ -136,9 +139,9 @@ const styles = {
     alignItems: "center",
     justifyContent: "space-between",
     borderRadius: "0.5rem",
-    mx: 2, 
+    mx: 2,
     py: "0.5rem",
-    width: "auto", 
+    width: "auto",
   },
   typography: {
     flexGrow: 1,

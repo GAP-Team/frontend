@@ -11,7 +11,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 
 const TenderDescription = () => {
   const formik = useFormikContext<AddTenderFormValues>();
-  
+
   return (
     <Box
       component="form"
@@ -20,7 +20,9 @@ const TenderDescription = () => {
     >
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <Typography variant="gsub" color="gray.500">DETAILBESCHREIBUNG</Typography>
+          <Typography variant="gsub" color="gray.500">
+            DETAILBESCHREIBUNG
+          </Typography>
           <GTextInput
             id="detailDescription"
             placeholder="Bitte schreiben Sie hier Ihre Beschreibung"
@@ -33,15 +35,19 @@ const TenderDescription = () => {
             onChange={formik?.handleChange}
             onBlur={formik?.handleBlur}
             error={
-              formik?.touched?.detailDescription && Boolean(formik?.errors?.detailDescription)
+              formik?.touched?.detailDescription &&
+              Boolean(formik?.errors?.detailDescription)
             }
             helperText={
-              formik?.touched?.detailDescription && formik?.errors?.detailDescription
+              formik?.touched?.detailDescription &&
+              formik?.errors?.detailDescription
             }
           />
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="gsub" color="gray.500">SICHERHEIT ARBEIT ERFODERLICH</Typography>
+          <Typography variant="gsub" color="gray.500">
+            SICHERHEIT ARBEIT ERFODERLICH
+          </Typography>
         </Grid>
         <Grid item xs={12}>
           <FormControlLabel
@@ -58,7 +64,9 @@ const TenderDescription = () => {
           />
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="gsub" color="gray.500">KOSTENLOSE PARLPLÄTZE VERFÜGBAR</Typography>
+          <Typography variant="gsub" color="gray.500">
+            KOSTENLOSE PARLPLÄTZE VERFÜGBAR
+          </Typography>
         </Grid>
         <Grid item xs={12}>
           <FormControlLabel

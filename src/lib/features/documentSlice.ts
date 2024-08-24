@@ -1,29 +1,29 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-import { RootState } from '../store';
+import { RootState } from "../store";
 
 interface DocumentState {
-    key: string,
-    name: string,
-    documentType: string
+  key: string;
+  name: string;
+  documentType: string;
 }
 
 const initialState: DocumentState = {
-    key: "",
-    name: "",
-    documentType: ""
-}
+  key: "",
+  name: "",
+  documentType: "",
+};
 
 const documentSclice = createSlice({
-    name: 'document',
-    initialState,
-    reducers: {
-        setDocumentType: (state, action: PayloadAction<any>) => {
-            console.log("action.payload: ----> ", action.payload);
-            
-            state.documentType = action.payload?.documentType;
-        }
-    }
+  name: "document",
+  initialState,
+  reducers: {
+    setDocumentType: (state, action: PayloadAction<any>) => {
+      console.log("action.payload: ----> ", action.payload);
+
+      state.documentType = action.payload?.documentType;
+    },
+  },
 });
 
 export const { setDocumentType } = documentSclice.actions;

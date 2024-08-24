@@ -25,7 +25,7 @@ const TenderInformation = () => {
     setSelectedTenderType(selectedItem);
     formik?.setFieldValue("tenderType", selectedItem ? selectedItem.value : "");
   };
-  
+
   return (
     <Box
       component="form"

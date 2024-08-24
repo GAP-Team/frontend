@@ -1,11 +1,11 @@
-import * as React from 'react';
-import { styled } from '@mui/system';
-import Button from '@mui/material/Button';
-import { useTheme } from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
+import * as React from "react";
+import { styled } from "@mui/system";
+import Button from "@mui/material/Button";
+import { useTheme } from "@mui/material/styles";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
 import { FiFileText } from "react-icons/fi";
-import FormHelperText from '@mui/material/FormHelperText';
+import FormHelperText from "@mui/material/FormHelperText";
 interface UploadButtonProps {
   value?: string | null | undefined;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -15,11 +15,18 @@ interface UploadButtonProps {
   helperText?: string | boolean;
 }
 
-const Input = styled('input')({
-  display: 'none',
+const Input = styled("input")({
+  display: "none",
 });
 
-export default function UploadButton({ value, onChange, id, name, error, helperText }: UploadButtonProps) {
+export default function UploadButton({
+  value,
+  onChange,
+  id,
+  name,
+  error,
+  helperText,
+}: UploadButtonProps) {
   const theme = useTheme();
 
   const styles = {
@@ -35,7 +42,7 @@ export default function UploadButton({ value, onChange, id, name, error, helperT
       backgroundColor: theme.palette.action.hover,
     },
   };
-  const fileText = !value  ? "Dokument hinzuziehen oder" : value;
+  const fileText = !value ? "Dokument hinzuziehen oder" : value;
   return (
     <>
       <Box sx={styles}>

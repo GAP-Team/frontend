@@ -12,13 +12,11 @@ import { Building } from "./types";
 import BuildingMenu from "./BuildingMenu";
 import DocumentList from "./DocumentList ";
 
-
 interface BuildingItemProps {
   building: Building;
 }
 
 const BuildingItem: React.FC<BuildingItemProps> = ({ building }) => {
-
   return (
     <Paper sx={styles.card}>
       <Box sx={styles.header}>
@@ -52,10 +50,7 @@ const BuildingItem: React.FC<BuildingItemProps> = ({ building }) => {
       <Stack direction="row" gap={2} alignItems="flex-start">
         <FaRegFlag size="1.5rem" color="#A0ADB1" />
         <Stack direction="column" gap={1}>
-          <Typography
-            variant="bodymr"
-            color="black"
-          >
+          <Typography variant="bodymr" color="black">
             {`${building.address.street} ${building.address.houseNumber} ${building.address.zip} ${building.address.city}`}
           </Typography>
           <Typography
@@ -64,13 +59,25 @@ const BuildingItem: React.FC<BuildingItemProps> = ({ building }) => {
           >{`${building.totalArea} qm`}</Typography>
         </Stack>
       </Stack>
-      {building?.documents?.length > 0 && 
+      {building?.documents?.length > 0 && (
         <>
-          <DocumentList title={"Bauunterlagen"} documentType={"BAUUNTERLAGEN"} documents={building?.documents} />
-          <DocumentList title={"Grundrisse"} documentType={"GRUNDRISSE"} documents={building?.documents} />
-          <DocumentList title={"Sonstige Dokumente"} documentType={"SONSTIGE"} documents={building?.documents} />
+          <DocumentList
+            title={"Bauunterlagen"}
+            documentType={"BAUUNTERLAGEN"}
+            documents={building?.documents}
+          />
+          <DocumentList
+            title={"Grundrisse"}
+            documentType={"GRUNDRISSE"}
+            documents={building?.documents}
+          />
+          <DocumentList
+            title={"Sonstige Dokumente"}
+            documentType={"SONSTIGE"}
+            documents={building?.documents}
+          />
         </>
-      }
+      )}
     </Paper>
   );
 };
@@ -100,5 +107,5 @@ const styles = {
   content: {
     flexGrow: 1,
     overflow: "auto",
-  }
+  },
 };

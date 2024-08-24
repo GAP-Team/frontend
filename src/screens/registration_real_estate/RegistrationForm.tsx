@@ -1,8 +1,8 @@
-'use client';
-import React, {useEffect} from "react";
+"use client";
+import React, { useEffect } from "react";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
-import { useFormikContext } from 'formik';
+import { useFormikContext } from "formik";
 import Divider from "@mui/material/Divider";
 import Typography from "@mui/material/Typography";
 
@@ -20,13 +20,12 @@ import { realStateUsers, serviceProvider } from "@/utils/Constants";
 import GProgressStepper from "@/components/stepper/GProgressStepper";
 import CircularProgress from "@mui/material/CircularProgress";
 
-
 interface RegistrationFormProps {
   activeStep: number;
   steps: string[];
   handleBack: () => void;
   handleNext: () => void;
-  setActiveStep: (num:number) => void;
+  setActiveStep: (num: number) => void;
 }
 
 const RegistrationForm = ({
@@ -34,29 +33,28 @@ const RegistrationForm = ({
   steps,
   handleBack,
   handleNext,
-  setActiveStep
+  setActiveStep,
 }: RegistrationFormProps): JSX.Element => {
-
   const formik = useFormikContext();
   const [personTypeTab, setPersonTyp] = React.useState(0);
   const [stakeholderTyp, setStakeholderTyp] = React.useState(0);
 
   useEffect(() => {
-
     if (personTypeTab == 0) {
-      formik.setFieldValue("businessType", "business");      
+      formik.setFieldValue("businessType", "business");
     }
 
     if (stakeholderTyp == 0) {
       formik.setFieldValue("role", realStateUsers);
-    }else{
+    } else {
       formik.setFieldValue("role", serviceProvider);
     }
-
   }, []);
 
-  const handlePersonTabChange = (event:React.SyntheticEvent, newValue:number) => {
-
+  const handlePersonTabChange = (
+    event: React.SyntheticEvent,
+    newValue: number
+  ) => {
     setPersonTyp(newValue);
 
     if (newValue == 0) {
@@ -76,11 +74,12 @@ const RegistrationForm = ({
       formik.setFieldValue("registrationNumber", "");
       formik.setFieldValue("business_registration_doc", "");
     }
-
   };
-  
-  const handleStakeholderTabChange = (event: React.SyntheticEvent, newValue: number) => {
 
+  const handleStakeholderTabChange = (
+    event: React.SyntheticEvent,
+    newValue: number
+  ) => {
     setStakeholderTyp(newValue);
 
     if (newValue == 0) {
@@ -88,16 +87,19 @@ const RegistrationForm = ({
     } else {
       formik.setFieldValue("role", serviceProvider);
     }
-  }
+  };
 
   const basictabs = [
     //TODO: have to render seperate component for each tab and not based on value
-    { label: "Immobilienbetreiber", content: <BasicInformation formik={formik} /> },
-    { label: "Dienstleister", content: <></>},
+    {
+      label: "Immobilienbetreiber",
+      content: <BasicInformation formik={formik} />,
+    },
+    { label: "Dienstleister", content: <></> },
   ];
   const registertabs = [
     { label: "Gewerbeperson", content: <ComercialPerson formik={formik} /> },
-    { label: "Privatperson", content: <PrivatePerson formik={formik}/> },
+    { label: "Privatperson", content: <PrivatePerson formik={formik} /> },
   ];
 
   return (
@@ -109,7 +111,7 @@ const RegistrationForm = ({
           color="inherit"
           href="/"
         >
-          Schritt {activeStep+1}/ 4
+          Schritt {activeStep + 1}/ 4
         </Link>
 
         <GStepper activeStep={activeStep} steps={steps} />
@@ -117,11 +119,7 @@ const RegistrationForm = ({
 
       <Divider orientation="vertical" variant="middle" flexItem />
 
-      <Grid
-        item
-        xs={9}
-        sx={styles.mainContent}
-      >
+      <Grid item xs={9} sx={styles.mainContent}>
         <div style={{ flexGrow: 1 }}>
           <div className="flex flex-col">
             <SectionTitle text={steps[activeStep]} sx={styles.subTitle} />
@@ -130,10 +128,24 @@ const RegistrationForm = ({
               activeStep={activeStep}
             />
           </div>
-          {activeStep == 0 && <GTab tabs={basictabs} tabvalue={stakeholderTyp} handleChange={handleStakeholderTabChange}/>}
+          {activeStep == 0 && (
+            <GTab
+              tabs={basictabs}
+              tabvalue={stakeholderTyp}
+              handleChange={handleStakeholderTabChange}
+            />
+          )}
           {activeStep == 1 && <CompanyAddress formik={formik} />}
-          {activeStep == 2 && <GTab tabs={registertabs} tabvalue={personTypeTab} handleChange={handlePersonTabChange} />}
-          {activeStep == 3 && <SummaryRegistration setActiveStep={setActiveStep} />}
+          {activeStep == 2 && (
+            <GTab
+              tabs={registertabs}
+              tabvalue={personTypeTab}
+              handleChange={handlePersonTabChange}
+            />
+          )}
+          {activeStep == 3 && (
+            <SummaryRegistration setActiveStep={setActiveStep} />
+          )}
         </div>
         <Grid container justifyContent="flex-end" spacing={2}>
           <Grid item>
@@ -142,9 +154,14 @@ const RegistrationForm = ({
             </GButton>
             <GButton
               onClick={handleNext}
-              disabled={formik.isSubmitting }
-              endIcon={formik.isSubmitting && <CircularProgress color="gprimary" size={24} />}
-            >{activeStep <= 2 ? "Weiter" :"Einreichen"}
+              disabled={formik.isSubmitting}
+              endIcon={
+                formik.isSubmitting && (
+                  <CircularProgress color="gprimary" size={24} />
+                )
+              }
+            >
+              {activeStep <= 2 ? "Weiter" : "Einreichen"}
             </GButton>
           </Grid>
         </Grid>
@@ -181,5 +198,5 @@ const styles = {
     flexGrow: 1,
     marginLeft: "1rem",
     color: "gprimary",
-  }
+  },
 };

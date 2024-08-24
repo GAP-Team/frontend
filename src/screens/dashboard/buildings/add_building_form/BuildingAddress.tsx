@@ -1,69 +1,73 @@
-'use client';
-import  { useState, useEffect } from "react";
+"use client";
+import { useState, useEffect } from "react";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import LabelWithAsterisk from "@/components/label/LabelWithAsterisk";
 import GTextInput from "@/components/input/GTextInput";
 import GSelector from "@/components/input/GSelector";
 import { germanStates } from "@/utils/Constants";
-import { useFormikContext } from 'formik';
+import { useFormikContext } from "formik";
 import GoogleAutocomplete from "@/components/input/GoogleAutocomplete";
-import { geocodeByAddress } from 'react-places-autocomplete';
+import { geocodeByAddress } from "react-places-autocomplete";
 interface Item {
   label: string;
   value: string;
 }
 
-const BuildingAddress = ({formik}:{formik?:any}) => {
+const BuildingAddress = ({ formik }: { formik?: any }) => {
+  const [selectedState, setSelectedState] = useState<Item | null>(null);
+  const handleStateSelect = (selectedItem: Item | null): void => {
+    setSelectedState(selectedItem);
+    formik?.setFieldValue("state", selectedItem ? selectedItem.value : "");
+  };
 
-    const [selectedState, setSelectedState] = useState<Item | null>(null);
-    const handleStateSelect = (selectedItem: Item | null): void => {
-      setSelectedState(selectedItem);
-      formik?.setFieldValue('state', selectedItem ? selectedItem.value : '' );
-    };
-    
-    const handleAddressSelect = async (value: string) => {
-      try {
-        const results = await geocodeByAddress(value);
-        const addressComponents = results[0].address_components;
-        
-        let street = "";
-        let city = "";
-        let postalCode = "";
-        
-        addressComponents.forEach(component => {
-          if (component.types.includes("route")) {
-            street = component.long_name;
-          }
-          if (component.types.includes("locality") || component.types.includes("sublocality")) {
-            city = component.long_name;
-          }
-          if (component.types.includes("postal_code")) {
-            postalCode = component.long_name;
-          }
-        });
-        
-        formik.setFieldValue('city', city);
-        formik.setFieldValue('zip', postalCode);
-        formik.setFieldValue('street', street || value);
-        // Clear errors and touched status
-        formik.setFieldError('city', '');
-        formik.setFieldError('zip', '');
-        formik.setFieldError('street', '');
+  const handleAddressSelect = async (value: string) => {
+    try {
+      const results = await geocodeByAddress(value);
+      const addressComponents = results[0].address_components;
 
-        formik.setFieldTouched('city', false);
-        formik.setFieldTouched('zip', false);
-        formik.setFieldTouched('street', false);
-  
-      } catch (error) {
-        console.error("Error geocoding address: ", error);
-      }
-    };
+      let street = "";
+      let city = "";
+      let postalCode = "";
 
-    useEffect(() => {
-      setSelectedState({ label: formik?.values?.state || '', value: formik?.values?.state || '' });
-    }, [])
-    
+      addressComponents.forEach((component) => {
+        if (component.types.includes("route")) {
+          street = component.long_name;
+        }
+        if (
+          component.types.includes("locality") ||
+          component.types.includes("sublocality")
+        ) {
+          city = component.long_name;
+        }
+        if (component.types.includes("postal_code")) {
+          postalCode = component.long_name;
+        }
+      });
+
+      formik.setFieldValue("city", city);
+      formik.setFieldValue("zip", postalCode);
+      formik.setFieldValue("street", street || value);
+      // Clear errors and touched status
+      formik.setFieldError("city", "");
+      formik.setFieldError("zip", "");
+      formik.setFieldError("street", "");
+
+      formik.setFieldTouched("city", false);
+      formik.setFieldTouched("zip", false);
+      formik.setFieldTouched("street", false);
+    } catch (error) {
+      console.error("Error geocoding address: ", error);
+    }
+  };
+
+  useEffect(() => {
+    setSelectedState({
+      label: formik?.values?.state || "",
+      value: formik?.values?.state || "",
+    });
+  }, []);
+
   return (
     <Box
       component="form"
@@ -104,8 +108,13 @@ const BuildingAddress = ({formik}:{formik?:any}) => {
             value={formik?.values?.houseNumber}
             onChange={formik?.handleChange}
             onBlur={formik?.handleBlur}
-            error={formik?.touched?.houseNumber && Boolean(formik?.errors?.houseNumber)}
-            helperText={formik?.touched?.houseNumber && formik?.errors?.houseNumber}
+            error={
+              formik?.touched?.houseNumber &&
+              Boolean(formik?.errors?.houseNumber)
+            }
+            helperText={
+              formik?.touched?.houseNumber && formik?.errors?.houseNumber
+            }
           />
         </Grid>
         <Grid item xs={12} sm={3}>
@@ -136,15 +145,21 @@ const BuildingAddress = ({formik}:{formik?:any}) => {
         </Grid>
         <Grid item xs={12}>
           <LabelWithAsterisk>BUNDESLAND</LabelWithAsterisk>
-          <GSelector name="state" options={germanStates}  error={formik?.touched?.state && Boolean(formik?.errors?.state)}
-            helperText={formik?.touched?.state && formik?.errors?.state} onSelect={handleStateSelect} selectedState={selectedState} />
+          <GSelector
+            name="state"
+            options={germanStates}
+            error={formik?.touched?.state && Boolean(formik?.errors?.state)}
+            helperText={formik?.touched?.state && formik?.errors?.state}
+            onSelect={handleStateSelect}
+            selectedState={selectedState}
+          />
         </Grid>
       </Grid>
     </Box>
-  )
-}
+  );
+};
 
-export default BuildingAddress
+export default BuildingAddress;
 
 //Styles
 const formStyles = {

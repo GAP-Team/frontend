@@ -1,7 +1,7 @@
-import React from 'react';
-import Box from '@mui/material/Box';
-import SectionTitle from '@/components/label/SectionTitle'; // Ensure this import path is correct
-import DividerDecorator from '@/components/divider/DividerDecorator'; // Ensure this import path is correct
+import React from "react";
+import Box from "@mui/material/Box";
+import SectionTitle from "@/components/label/SectionTitle"; // Ensure this import path is correct
+import DividerDecorator from "@/components/divider/DividerDecorator"; // Ensure this import path is correct
 
 interface HeaderSectionProps {
   count?: number;
@@ -18,7 +18,9 @@ const HeaderSection: React.FC<HeaderSectionProps> = ({
     <>
       <Box sx={styles.headerSection}>
         <Box>
-          <SectionTitle text={count !== undefined ? `${titletext} (${count})` : titletext} />
+          <SectionTitle
+            text={count !== undefined ? `${titletext} (${count})` : titletext}
+          />
           <DividerDecorator sx={{ bgcolor: "#2356FF" }} />
         </Box>
         {overviewText && (
@@ -27,7 +29,7 @@ const HeaderSection: React.FC<HeaderSectionProps> = ({
       </Box>
     </>
   );
-}
+};
 
 export default HeaderSection;
 

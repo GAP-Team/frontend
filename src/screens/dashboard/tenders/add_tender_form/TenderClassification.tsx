@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import { useState, useEffect } from "react";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
@@ -8,8 +8,8 @@ import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import Checkbox from "@mui/material/Checkbox";
 import Typography from "@mui/material/Typography";
-import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import GTextInput from "@/components/input/GTextInput";
 import { useFormikContext } from "formik";
 import { AddTenderFormValues } from "./types";
@@ -25,7 +25,9 @@ const TenderClassification = () => {
     >
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <Typography variant="gsub" color="gray.500">DRINGLICHKEIT</Typography>
+          <Typography variant="gsub" color="gray.500">
+            DRINGLICHKEIT
+          </Typography>
           <FormControl sx={{ display: "block", mt: 1 }}>
             <RadioGroup
               row
@@ -41,7 +43,7 @@ const TenderClassification = () => {
                 label="Nicht Dringend"
                 sx={{ marginBottom: 0 }}
               />
-                <FormControlLabel
+              <FormControlLabel
                 value="Dringend"
                 control={<Radio />}
                 label="Dringend"
@@ -69,31 +71,35 @@ const TenderClassification = () => {
           </FormControl>
         </Grid>
         <Grid item xs={12} sm={6}>
-          <Typography variant="gsub" color="gray.500">ZEITFENSTER VON</Typography>
+          <Typography variant="gsub" color="gray.500">
+            ZEITFENSTER VON
+          </Typography>
           <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <Box mt={1}>
-            <DatePicker
-              name="fromDate"
-              label="Zeitfenster von"
-              format="DD.MM.YYYY"
-              value={formik?.values?.fromDate}
-              onChange={(value) => formik?.setFieldValue('fromDate', value)}
-            />
-          </Box>
+            <Box mt={1}>
+              <DatePicker
+                name="fromDate"
+                label="Zeitfenster von"
+                format="DD.MM.YYYY"
+                value={formik?.values?.fromDate}
+                onChange={(value) => formik?.setFieldValue("fromDate", value)}
+              />
+            </Box>
           </LocalizationProvider>
         </Grid>
         <Grid item xs={12} sm={6}>
-          <Typography variant="gsub" color="gray.500">ZEITFENSTER BIS</Typography>
+          <Typography variant="gsub" color="gray.500">
+            ZEITFENSTER BIS
+          </Typography>
           <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <Box mt={1}>
-            <DatePicker
-              name="toDate"
-              label="Zeitfenster bis"
-              format="DD.MM.YYYY"
-              value={formik?.values?.toDate}
-              onChange={(value) => formik?.setFieldValue('toDate', value)}
-            />
-          </Box>
+            <Box mt={1}>
+              <DatePicker
+                name="toDate"
+                label="Zeitfenster bis"
+                format="DD.MM.YYYY"
+                value={formik?.values?.toDate}
+                onChange={(value) => formik?.setFieldValue("toDate", value)}
+              />
+            </Box>
           </LocalizationProvider>
         </Grid>
       </Grid>

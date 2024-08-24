@@ -1,21 +1,25 @@
-import React from 'react'
-import SectionTitle from '@/components/label/SectionTitle'
+import React from "react";
+import SectionTitle from "@/components/label/SectionTitle";
 import Box from "@mui/material/Box";
-import DividerDecorator from '@/components/divider/DividerDecorator';
-import HeaderSection from '../HeaderSection';
-import ApplicationList from './ApplicationList';
-import { applications } from '@/utils/Constants';
-import ScrollableSection from '../../../../components/common/ScrollableSection';
+import DividerDecorator from "@/components/divider/DividerDecorator";
+import HeaderSection from "../HeaderSection";
+import ApplicationList from "./ApplicationList";
+import { applications } from "@/utils/Constants";
+import ScrollableSection from "../../../../components/common/ScrollableSection";
 
 const ApplicationsPanel = () => {
   return (
     <>
       <ScrollableSection>
-        <HeaderSection titletext='NEUE BEWERBUNGEN' count={7} overviewText='Alle anzeigen' />
-        <ApplicationList applications={applications}/>
+        <HeaderSection
+          titletext="NEUE BEWERBUNGEN"
+          count={7}
+          overviewText="Alle anzeigen"
+        />
+        <ApplicationList applications={applications} />
       </ScrollableSection>
     </>
   );
-}
+};
 
 export default ApplicationsPanel;

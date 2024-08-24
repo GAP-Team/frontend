@@ -63,7 +63,7 @@ export default function BuildingMenu() {
         onClose={handleCloseMenu}
         PaperProps={{
           elevation: 0,
-           sx: menuStyles
+          sx: menuStyles,
         }}
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
