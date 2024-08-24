@@ -38,6 +38,7 @@ const EmailVerification = ({ newUserId, newUserName, newUserEmail, resendVerific
   const [resendTimer, setResendTimer] = useState(30);
   const [resendDisabled, setResendDisabled] = useState(true);
   const [verificationSuccess, setVerificationSuccess] = useState(false);
+  const [verificationError, setVerificationError] = useState(false);
   const [verificationCode, setVerificationCode] = useState(["","","","","","",]);
 
   const inputRefs = useRef<Array<HTMLInputElement | null>>([]);
@@ -97,8 +98,7 @@ const EmailVerification = ({ newUserId, newUserName, newUserEmail, resendVerific
           // onSuccess();
         }
       }else{
-        console.log("Verification code cannot be blank...!!!");
-        
+        setVerificationError(true);
       }
         
     } catch (error: any) {
@@ -108,6 +108,7 @@ const EmailVerification = ({ newUserId, newUserName, newUserEmail, resendVerific
         error.message
       );
       setLoading(false);
+      setVerificationError(true);
     }
   };
 
@@ -162,6 +163,9 @@ const EmailVerification = ({ newUserId, newUserName, newUserEmail, resendVerific
               </Grid>
             ))}
           </Grid>
+          <Typography color="error" sx={{ marginTop: '0.5rem', textAlign: 'center' }}>
+            {verificationError ? "Code ist falsch" : ""}
+          </Typography>
           <GButton
             variant="contained"
             color="primary"
