@@ -1,22 +1,17 @@
 // BuildingItem.tsx
-import { useState } from "react";
 import Box from "@mui/material/Box";
-import List from "@mui/material/List";
 import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
 import { CgNotes } from "react-icons/cg";
 import { FaRegFlag } from "react-icons/fa6";
-import { FiFileText } from "react-icons/fi";
 import Divider from "@mui/material/Divider";
 import Typography from "@mui/material/Typography";
 import { IoExtensionPuzzleOutline } from "react-icons/io5";
-import CircularProgress from "@mui/material/CircularProgress";
 
-import s3APIs from "@/api/s3";
 import { Building } from "./types";
 import BuildingMenu from "./BuildingMenu";
 import DocumentList from "./DocumentList ";
-import { scrollBarStyles } from "@/components/scrollbar/Scrollbar";
+
 
 interface BuildingItemProps {
   building: Building;

@@ -1,5 +1,4 @@
 import { useState } from "react";
-import Grid from "@mui/material/Grid";
 import List from "@mui/material/List";
 import Stack from "@mui/material/Stack";
 import { FiFileText } from "react-icons/fi";
@@ -8,7 +7,6 @@ import { CircularProgress, Divider } from "@mui/material";
 
 import s3APIs from "@/api/s3";
 import { Document } from "./types";
-import building from "@/api/building";
 import { scrollBarStyles } from "@/components/scrollbar/Scrollbar";
 
 interface DocumentListProps{
@@ -21,7 +19,7 @@ const DocumentList: React.FC<DocumentListProps> = ({ title, documentType, docume
     const [ selectedIndex, setSelectedIndex ] = useState<number>();
     const [ isDownloading, setIsDownloading ] = useState<boolean>(false);
 
-    const handleDownloadFile = async (selectedIndex: number, fileKey: string) => {
+    const handleDownloadFile = async (selectedIndex: number, fileKey: string, fileName:string) => {
         setSelectedIndex(selectedIndex);
         setIsDownloading(true);
 
@@ -31,7 +29,7 @@ const DocumentList: React.FC<DocumentListProps> = ({ title, documentType, docume
 
         const link = document.createElement('a');
         link.href = url;
-        link.setAttribute('download', fileKey);
+        link.setAttribute('download', fileName);
 
         link.click();
 
@@ -60,7 +58,7 @@ const DocumentList: React.FC<DocumentListProps> = ({ title, documentType, docume
                             <Typography
                                 variant="bodymr"
                                 color="#22A7F1"
-                                onClick={() => handleDownloadFile(index, document.key)}
+                                onClick={() => handleDownloadFile(index, document.key, document.name)}
                                 style={{cursor: 'pointer'}}
                             >
                                 {`${document.name}`}
