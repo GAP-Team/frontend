@@ -73,7 +73,7 @@ export default function GAppBar() {
         component="div"
         sx={styles.title}
       >
-        {user?.company?.name}
+        {user?.company?.name || ""}
       </Typography>
 
       <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'center' }}>  
