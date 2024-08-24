@@ -8,81 +8,110 @@ import { CircularProgress, Divider } from "@mui/material";
 import s3APIs from "@/api/s3";
 import { Document } from "./types";
 import { scrollBarStyles } from "@/components/scrollbar/Scrollbar";
+import {Fragment} from "react";
 
-interface DocumentListProps{
-    title: string
-    documentType: string
-    documents: Document[];
+interface DocumentListProps {
+  title: string;
+  documentType: string;
+  documents: Document[];
 }
-const DocumentList: React.FC<DocumentListProps> = ({ title, documentType, documents }) => {
+const DocumentList: React.FC<DocumentListProps> = ({
+  title,
+  documentType,
+  documents,
+}) => {
+  const [selectedIndex, setSelectedIndex] = useState<number>();
+  const [isDownloading, setIsDownloading] = useState<boolean>(false);
 
-    const [ selectedIndex, setSelectedIndex ] = useState<number>();
-    const [ isDownloading, setIsDownloading ] = useState<boolean>(false);
+  const handleDownloadFile = async (selectedIndex: number, fileKey: string, fileName: string) => {
+    setSelectedIndex(selectedIndex);
+    setIsDownloading(true);
+
+
+    let fileDetails = await s3APIs.getFile(fileKey);
 
     const handleDownloadFile = async (selectedIndex: number, fileKey: string, fileName:string) => {
         setSelectedIndex(selectedIndex);
         setIsDownloading(true);
 
-        let fileDetails = await s3APIs.getFile(fileKey);
 
-        const url = window.URL.createObjectURL(new Blob([fileDetails.data], { type: 'application/pdf' }));
+    const url = window.URL.createObjectURL(
+      new Blob([fileDetails.data], { type: "application/pdf" })
+    );
 
         const link = document.createElement('a');
         link.href = url;
         link.setAttribute('download', fileName);
 
-        link.click();
 
-        setIsDownloading(false);
-    }
+    link.click();
 
-    return(
-        <List sx={styles.listContainer}>
-            <Typography
-                variant="bodymr"
-                color="black"
-            >
-                {title}
-            </Typography>
-            {documents?.filter(doc => doc.documentType === documentType).map((document, index) => 
-                {
-                    return (
-                        <Stack
-                            direction="row"
-                            alignItems="center"
-                            py="0.55rem"
-                            gap={2}
-                            key={index}
-                        >
-                            <FiFileText size="1.5rem" color="#22A7F1" />
-                            <Typography
-                                variant="bodymr"
-                                color="#22A7F1"
-                                onClick={() => handleDownloadFile(index, document.key, document.name)}
-                                style={{cursor: 'pointer'}}
-                            >
-                                {`${document.name}`}
-                                {index === selectedIndex && isDownloading && <CircularProgress color="gprimary" size={20} style={{marginTop: '5px', marginLeft: '5rem'}} /> }
-                            </Typography>
-                        </Stack>
-                    )
-                }
+    setIsDownloading(false);
+  };
+
+  return (
+<List sx={{ ...styles.listContainer}}>
+  {documents?.filter((doc) => doc.documentType === documentType).length > 0 && (
+    <Typography variant="bodymr" color="black">
+      {title}
+    </Typography>
+  )}
+  
+  {documents
+    ?.filter((doc) => doc.documentType === documentType)
+    .map((document, index) => (
+      <Fragment key={index}>
+        <Stack
+          direction="row"
+          alignItems="center"
+          py="0.55rem"
+          gap={2}
+        >
+          <FiFileText size="1.5rem" color="#22A7F1" />
+          <Typography
+            variant="bodymr"
+            color="#22A7F1"
+            onClick={() => handleDownloadFile(index, document.key, document.name)}
+            style={{ 
+              cursor: "pointer", 
+              overflow: 'hidden', 
+              whiteSpace: 'nowrap', 
+              textOverflow: 'ellipsis', 
+              maxWidth: '200px' // Adjust maxWidth as needed
+            }}
+            title={document.name} // Show full name on hover
+          >
+            {document.name}
+            {index === selectedIndex && isDownloading && (
+              <CircularProgress
+                color="gprimary"
+                size={20}
+                style={{ marginTop: "5px", marginLeft: "5rem" }}
+              />
+
             )}
-            <Divider />
-        </List>
-    );
-}
+          </Typography>
+        </Stack>
+      </Fragment>
+    ))}
+  
+  {documents?.filter((doc) => doc.documentType === documentType).length > 0 && <Divider />}
+</List>
+
+  
+  );
+};
 
 export default DocumentList;
 
 // Styles
 const styles = {
-    listContainer: {
-      flexGrow: 1,
-      paddingTop: "0.5rem",
-      overflow: "auto",
-      // maxHeight: "8rem",
-      paddingRight: "0.65rem", // Add padding to the bottom for the scrollbar
-      ...scrollBarStyles,
-    },
-  };
+  listContainer: {
+    flexGrow: 1,
+    paddingTop: "0.5rem",
+    overflow: "auto",
+    // maxHeight: "8rem",
+    paddingRight: "0.65rem", // Add padding to the bottom for the scrollbar
+    ...scrollBarStyles,
+  },
+};
