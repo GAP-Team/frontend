@@ -1,22 +1,17 @@
 "use client";
-import React, 
-  { 
-    useState, 
-    useEffect, 
-  } 
-from "react";
+import React, { useState } from "react";
 // import moment from 'moment';
-import moment from 'moment-timezone';
+import moment from "moment-timezone";
 import bcrypt from "bcryptjs";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import { Formik, Form } from "formik";
 import { useRouter } from "next/navigation";
 import Snackbar from "@mui/material/Snackbar";
-import ReactDOMServer from 'react-dom/server';
+import ReactDOMServer from "react-dom/server";
 import RegistrationForm from "./RegistrationForm";
 import Typography from "@mui/material/Typography";
-import { UseDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
 
 import {
@@ -38,12 +33,10 @@ import PageTitle from "@/components/label/PageTitle";
 import { handleUploadDoc } from "@/utils/uploadToS3";
 import BackButton from "@/components/button/BackButton";
 import InfoBanner from "@/components/common/InfoBanner";
-import SuccessPage from "@/components/common/SuccessPage";
 import { currentUserEmail } from "@/lib/features/userSlice";
 import EmailTemplate from "@/components/EmailTemplate/Template";
 
 import { registrationValidationSchema } from "@/utils/ValidationSchema";
-import { boolean } from "yup";
 
 function getSteps() {
   return [
@@ -54,15 +47,13 @@ function getSteps() {
   ];
 }
 
-const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
-  props,
-  ref,
-) {
-  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-});
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
+  function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+  }
+);
 
 const RegistrationRealState = () => {
-
   const steps = getSteps();
   const router = useRouter();
   const currentEmail = useSelector(currentUserEmail);
@@ -70,11 +61,10 @@ const RegistrationRealState = () => {
   const [newUserId, setNewUserId] = useState("");
   const [activeStep, setActiveStep] = useState(0);
   const [newUserName, setNewUserName] = useState("");
-  const [resendEmail, setResendEmail] = useState({});
   const [newUserEmail, setNewUserEmail] = useState("");
   const [openSnackbar, setOpenSnackbar] = useState(false);
-  const [isVerificationEmailSent, setIsVerificationEmailSent] = useState<boolean>(false);
-
+  const [isVerificationEmailSent, setIsVerificationEmailSent] =
+    useState<boolean>(false);
 
   const handleNext = async (
     validateForm: ValidateFormFunction,
@@ -82,9 +72,23 @@ const RegistrationRealState = () => {
     submitForm: SubmitFormFunction
   ): Promise<void> => {
     const fieldsPerStep: { [key: number]: string[] } = {
-      0: ["firstName", "lastName", "email", "password", "confirmPassword", "telephone", "company", "role"],
+      0: [
+        "firstName",
+        "lastName",
+        "email",
+        "password",
+        "confirmPassword",
+        "telephone",
+        "company",
+        "role",
+      ],
       1: ["state", "street", "houseNo", "zip", "city"],
-      2: ["registrationNumber", "business_registration_doc", "land_register_entry_document", "approval_document"],
+      2: [
+        "registrationNumber",
+        "business_registration_doc",
+        "land_register_entry_document",
+        "approval_document",
+      ],
     };
 
     const fieldsToValidate = fieldsPerStep[activeStep];
@@ -114,7 +118,6 @@ const RegistrationRealState = () => {
   };
 
   const handleBack = () => {
-
     if (activeStep > 3) {
       //If user has registered then redirect to new registration
       setActiveStep(0);
@@ -171,11 +174,14 @@ const RegistrationRealState = () => {
         },
       };
 
-      let currentDate = new Date().toLocaleString('de-DE', {
-        timeZone: 'Europe/Berlin',
+      let currentDate = new Date().toLocaleString("de-DE", {
+        timeZone: "Europe/Berlin",
         hour12: false,
       });
-      const formateDate = moment(currentDate).format('YYYY-MM-DDTHH:mm:ss.SSS[Z]');
+
+      const formateDate = moment(currentDate, "DD.MM.YYYY, HH:mm:ss").format(
+        "YYYY-MM-DDTHH:mm:ss.SSS[Z]"
+      );
 
       const hashedPassword = await bcrypt.hash(values.password, 10);
 
@@ -189,10 +195,10 @@ const RegistrationRealState = () => {
         manufacturer_experience: null,
         registeredAt: formateDate,
         updatedAt: null,
-      };    
+      };
 
       const res = await userAPIs.register(arrangedDataObj);
-      
+
       // If registration is successful, move to email verification step
       if (res.status === 201) {
         setActiveStep(steps.length);
@@ -201,9 +207,11 @@ const RegistrationRealState = () => {
         setNewUserName(res?.data?.firstName);
         sendVerificationEmail(values.firstName, values.email, res?.data?._id);
       }
-
     } catch (error: any) {
-      if (error.response && error.response?.data?.error == 'User already exists') {
+      if (
+        error.response &&
+        error.response?.data?.error == "User already exists"
+      ) {
         setOpenSnackbar(true);
         setActiveStep(0);
       } else {
@@ -215,63 +223,68 @@ const RegistrationRealState = () => {
       }
     }
   };
-  
-  const sendVerificationEmail = async (name: string, email: string, userId: string) => {
 
+  const sendVerificationEmail = async (
+    name: string,
+    email: string,
+    userId: string
+  ) => {
     let verificationCode = Math.floor(100000 + Math.random() * 900000);
     const emailTemplate = renderEmailTemplate(name, verificationCode);
 
-    let expiresAt = moment().tz('Europe/Berlin').add(15, 'minutes').format('YYYY-MM-DDTHH:mm:ss.SSS[Z]');
+    let expiresAt = moment()
+      .tz("Europe/Berlin")
+      .add(15, "minutes")
+      .format("YYYY-MM-DDTHH:mm:ss.SSS[Z]");
 
     const emailText = `Dear ${name}, ${emailTemplateGreetins} ${emailTemplateVerificationText} ${verificationCode} ${emailTemplateFoot}`;
-    
+
     let readyEmailStructure = {
       source: "rihab@gap-pruefen.de",
       destination: {
-        "toAddresses": [
-          email
-        ]
+        toAddresses: [email],
       },
       message: {
-        "subject": {
-          "data": emailTemplateSubject,
-          "charset": "UTF-8"
+        subject: {
+          data: emailTemplateSubject,
+          charset: "UTF-8",
         },
-        "body": {
-          "text": {
-            "data": emailText,
-            "charset": "UTF-8"
+        body: {
+          text: {
+            data: emailText,
+            charset: "UTF-8",
           },
-          "html": {
-            "data": emailTemplate,
-            "charset": "UTF-8"
-          }
-        }
-      }
-    }
+          html: {
+            data: emailTemplate,
+            charset: "UTF-8",
+          },
+        },
+      },
+    };
 
     let verificationTokenSaveQuery = {
       userId: userId,
       email: email,
       token: verificationCode,
-      expiresAt: expiresAt
-    }
+      expiresAt: expiresAt,
+    };
 
     let emailQurey = {
       emailStructure: readyEmailStructure,
       saveToken: verificationTokenSaveQuery,
-    }    
+    };
 
     let sendEmailStatus = await userAPIs.sendVerificationEmail(emailQurey);
 
     if (sendEmailStatus.status == 201) {
       setIsVerificationEmailSent(true);
     }
-
-  }
+  };
 
   const renderEmailTemplate = (name: string, verificationCode: number) => {
-    const element = <EmailTemplate name={name} verificationCode={verificationCode} />;
+    const element = (
+      <EmailTemplate name={name} verificationCode={verificationCode} />
+    );
     const htmlString = ReactDOMServer.renderToStaticMarkup(element);
     return htmlString;
   };
@@ -280,7 +293,11 @@ const RegistrationRealState = () => {
     const docObj: any[] = [];
     const allFiles: any[] = [];
 
-    if (values?.approval_document_file || values?.land_register_entry_document_file || values?.business_registration_doc_file) {
+    if (
+      values?.approval_document_file ||
+      values?.land_register_entry_document_file ||
+      values?.business_registration_doc_file
+    ) {
       if (type === "business") {
         const selectedBusinessRegFiles = values?.business_registration_doc_file;
 
@@ -288,10 +305,10 @@ const RegistrationRealState = () => {
         docObj.push(fdFileDocUpload);
 
         onSubmit(values, docObj);
-
       } else {
         const selectedApprovalDocsFiles = values?.approval_document_file;
-        const selectedLandRegDocsFiles = values?.land_register_entry_document_file;
+        const selectedLandRegDocsFiles =
+          values?.land_register_entry_document_file;
 
         allFiles.push(selectedApprovalDocsFiles, selectedLandRegDocsFiles);
 
@@ -307,11 +324,9 @@ const RegistrationRealState = () => {
           }
         });
       }
-
     } else {
       onSubmit(values, []);
     }
-
   };
 
   const handleSnackbarClose = (
@@ -336,7 +351,9 @@ const RegistrationRealState = () => {
       <Grid item xs={12} md={8} lg={8} sx={styles.formGrid}>
         <BackButton
           onBack={handleBack}
-          sx={{ visibility: activeStep <= steps.length - 1 ? "visible" : "hidden" }}
+          sx={{
+            visibility: activeStep <= steps.length - 1 ? "visible" : "hidden",
+          }}
         />
         <PageTitle title="Registrierung" />
         <Formik
@@ -361,19 +378,20 @@ const RegistrationRealState = () => {
                     setActiveStep={setActiveStep}
                   />
                 ) : (
-                  isVerificationEmailSent && 
-                    <EmailVerification 
+                  isVerificationEmailSent && (
+                    <EmailVerification
                       newUserId={newUserId}
                       newUserName={newUserName}
                       newUserEmail={newUserEmail}
                       resendVerificationEmail={sendVerificationEmail}
                     />
+                  )
                 )}
               </Grid>
             </Form>
           )}
         </Formik>
-        
+
         <Typography sx={styles.helpText}>
           Hilfe?{" "}
           <Link href="#" color="#1E3137" fontWeight="bold">
@@ -381,13 +399,18 @@ const RegistrationRealState = () => {
           </Link>
         </Typography>
         <Snackbar
-          anchorOrigin={{'vertical':'top','horizontal':'right'}}
+          anchorOrigin={{ vertical: "top", horizontal: "right" }}
           open={openSnackbar}
           autoHideDuration={6000}
           onClose={handleSnackbarClose}
         >
-          <Alert onClose={handleSnackbarClose} severity="error" sx={{ width: '100%' }}>
-            Die E-Mail-Adresse des Benutzers existiert bereits. Bitte loggen Sie sich ein.
+          <Alert
+            onClose={handleSnackbarClose}
+            severity="error"
+            sx={{ width: "100%" }}
+          >
+            Die E-Mail-Adresse des Benutzers existiert bereits. Bitte loggen Sie
+            sich ein.
           </Alert>
         </Snackbar>
       </Grid>

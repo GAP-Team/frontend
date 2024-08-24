@@ -3,7 +3,8 @@
 import React, 
   { 
     useState, 
-    useEffect 
+    useEffect,
+    useRef
   } 
 from "react";
 import pino from "pino";
@@ -12,7 +13,7 @@ import { Button } from "@mui/material";
 import { IoMailUnread } from "react-icons/io5";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import CircularProgress from "@mui/material/CircularProgress";
 
 import userAPIs from "@/api/user";
@@ -37,7 +38,10 @@ const EmailVerification = ({ newUserId, newUserName, newUserEmail, resendVerific
   const [resendTimer, setResendTimer] = useState(30);
   const [resendDisabled, setResendDisabled] = useState(true);
   const [verificationSuccess, setVerificationSuccess] = useState(false);
+  const [verificationError, setVerificationError] = useState(false);
   const [verificationCode, setVerificationCode] = useState(["","","","","","",]);
+
+  const inputRefs = useRef<Array<HTMLInputElement | null>>([]);
 
   useEffect(() => {
     let timer: NodeJS.Timeout;
@@ -58,6 +62,16 @@ const EmailVerification = ({ newUserId, newUserName, newUserEmail, resendVerific
 
   const handleChange = (index: number, value: string) => {
     if (/^\d?$/.test(value)) {
+      const newCode = [...verificationCode];
+      newCode[index] = value;
+      setVerificationCode(newCode);
+
+      // Move to the next input field if there is a next one
+      if (index < verificationCode.length - 1) {
+        inputRefs.current[index + 1]?.focus();
+      }
+    } else if (value === "") {
+      // Allow backspace to clear the current field
       const newCode = [...verificationCode];
       newCode[index] = value;
       setVerificationCode(newCode);
@@ -84,8 +98,7 @@ const EmailVerification = ({ newUserId, newUserName, newUserEmail, resendVerific
           // onSuccess();
         }
       }else{
-        console.log("Verification code cannot be blank...!!!");
-        
+        setVerificationError(true);
       }
         
     } catch (error: any) {
@@ -95,6 +108,16 @@ const EmailVerification = ({ newUserId, newUserName, newUserEmail, resendVerific
         error.message
       );
       setLoading(false);
+      setVerificationError(true);
+    }
+  };
+
+  const handlePaste = (e: React.ClipboardEvent) => {
+    const pastedData = e.clipboardData.getData('Text').slice(0, 6);
+    if (/^\d{6}$/.test(pastedData)) {
+      const newCode = pastedData.split("");
+      setVerificationCode(newCode);
+      inputRefs.current[5]?.focus(); // Focus the last input field
     }
   };
 
@@ -133,11 +156,16 @@ const EmailVerification = ({ newUserId, newUserName, newUserEmail, resendVerific
                   variant="outlined"
                   value={digit}
                   onChange={(e) => handleChange(index, e.target.value)}
-                  inputProps={{ sx: styles.digitBox }}
+                  inputProps={{ sx: styles.digitBox, maxLength: 1 }}
+                  inputRef={(el) => (inputRefs.current[index] = el)}
+                  onPaste={handlePaste}
                 />
               </Grid>
             ))}
           </Grid>
+          <Typography color="error" sx={{ marginTop: '0.5rem', textAlign: 'center' }}>
+            {verificationError ? "Code ist falsch" : ""}
+          </Typography>
           <GButton
             variant="contained"
             color="primary"

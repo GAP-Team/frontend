@@ -1,5 +1,4 @@
 import { useState } from "react";
-import Grid from "@mui/material/Grid";
 import List from "@mui/material/List";
 import Stack from "@mui/material/Stack";
 import { FiFileText } from "react-icons/fi";
@@ -8,7 +7,6 @@ import { CircularProgress, Divider } from "@mui/material";
 
 import s3APIs from "@/api/s3";
 import { Document } from "./types";
-import building from "@/api/building";
 import { scrollBarStyles } from "@/components/scrollbar/Scrollbar";
 import {Fragment} from "react";
 
@@ -29,15 +27,22 @@ const DocumentList: React.FC<DocumentListProps> = ({
     setSelectedIndex(selectedIndex);
     setIsDownloading(true);
 
+
     let fileDetails = await s3APIs.getFile(fileKey);
+
+    const handleDownloadFile = async (selectedIndex: number, fileKey: string, fileName:string) => {
+        setSelectedIndex(selectedIndex);
+        setIsDownloading(true);
+
 
     const url = window.URL.createObjectURL(
       new Blob([fileDetails.data], { type: "application/pdf" })
     );
 
-    const link = document.createElement("a");
-    link.href = url;
-    link.setAttribute("download", fileKey);
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', fileName);
+
 
     link.click();
 
@@ -83,6 +88,7 @@ const DocumentList: React.FC<DocumentListProps> = ({
                 size={20}
                 style={{ marginTop: "5px", marginLeft: "5rem" }}
               />
+
             )}
           </Typography>
         </Stack>
