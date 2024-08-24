@@ -1,5 +1,5 @@
 // Tenders.tsx
-'use client';
+"use client";
 import React, { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
 import PropertyFilterPanel from "@/components/filter/PropertyFilterPanel";
@@ -16,12 +16,26 @@ const Tenders: React.FC = () => {
     setTenders(jobCardsData); // This could be an API call
   }, []);
 
-  const tenderContent = tenders.length > 0 ? <TenderList tenders={tenders} /> : <NoContentPage alt="No Tenders" image={addTenderSrc} title="Erstelle eine neue Ausschreibung." buttonLabel="Ausschreibung erstellen"  buttonLink="/dashboard/tenders/add_tender"/>;
+  const tenderContent =
+    tenders.length > 0 ? (
+      <TenderList tenders={tenders} />
+    ) : (
+      <NoContentPage
+        alt="No Tenders"
+        image={addTenderSrc}
+        title="Erstelle eine neue Ausschreibung."
+        buttonLabel="Ausschreibung erstellen"
+        buttonLink="/dashboard/tenders/add_tender"
+      />
+    );
   return (
-      <Box sx={styles.mainContainer}>
-        <PropertyFilterPanel handleOnChange={() => {}} title="Alle Ausschreibungen"/>
-        {tenderContent}
-      </Box>
+    <Box sx={styles.mainContainer}>
+      <PropertyFilterPanel
+        handleOnChange={() => {}}
+        title="Alle Ausschreibungen"
+      />
+      {tenderContent}
+    </Box>
   );
 };
 

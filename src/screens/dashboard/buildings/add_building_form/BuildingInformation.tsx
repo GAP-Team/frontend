@@ -1,18 +1,18 @@
 "use client";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
-import Dialog from '@mui/material/Dialog';
+import Dialog from "@mui/material/Dialog";
 import Button from "@mui/material/Button";
 import { useState, useEffect } from "react";
 import Checkbox from "@mui/material/Checkbox";
-import AddIcon from '@mui/icons-material/Add';
+import AddIcon from "@mui/icons-material/Add";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import DialogTitle from '@mui/material/DialogTitle';
+import DialogTitle from "@mui/material/DialogTitle";
 import Autocomplete from "@mui/material/Autocomplete";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
-import DialogContent from '@mui/material/DialogContent';
-import DialogActions from '@mui/material/DialogActions';
+import DialogContent from "@mui/material/DialogContent";
+import DialogActions from "@mui/material/DialogActions";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 
 import userAPIs from "@/api/user";
@@ -27,13 +27,21 @@ const checkedIcon = <CheckBoxIcon fontSize="small" />;
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 
 const BuildingInformation = ({ formik }: { formik?: any }) => {
-  
   const [dialogOpen, setDialogOpen] = useState(false);
   const [options, setOptions] = useState<Item[]>(buildingTypesList);
-  const [contactPersons, setContactPersons] = useState<any[]>(contactPersonList);
-  const [newContact, setNewContact] = useState<ContactPersonItem>({firstName:'', lastName:'', email:'', phoneNumber: ''});
-  const [selectedBldngType, setSelectedBldngType] = useState<Item | null>(formik?.values?.buildingType ? { label: formik.values.buildingType, value: formik.values.buildingType } : null);
-
+  const [contactPersons, setContactPersons] =
+    useState<any[]>(contactPersonList);
+  const [newContact, setNewContact] = useState<ContactPersonItem>({
+    firstName: "",
+    lastName: "",
+    email: "",
+    phoneNumber: "",
+  });
+  const [selectedBldngType, setSelectedBldngType] = useState<Item | null>(
+    formik?.values?.buildingType
+      ? { label: formik.values.buildingType, value: formik.values.buildingType }
+      : null
+  );
 
   useEffect(() => {
     // getAllUsers();
@@ -42,25 +50,39 @@ const BuildingInformation = ({ formik }: { formik?: any }) => {
   const getAllUsers = async () => {
     let allUsers = await userAPIs.getAllUser();
     setContactPersons(allUsers.data);
-  }
-
-  const handleStateSelect = (selectedItem: Item | null):void => {
-    setSelectedBldngType(selectedItem);
-    formik?.setFieldValue('buildingType', selectedItem ? selectedItem.value : '' );
   };
-  
-  const handleContactPersonChange = (event: any, value: ContactPersonItem[]) => {
-    formik?.setFieldValue('contactPerson', value);
+
+  const handleStateSelect = (selectedItem: Item | null): void => {
+    setSelectedBldngType(selectedItem);
+    formik?.setFieldValue(
+      "buildingType",
+      selectedItem ? selectedItem.value : ""
+    );
+  };
+
+  const handleContactPersonChange = (
+    event: any,
+    value: ContactPersonItem[]
+  ) => {
+    formik?.setFieldValue("contactPerson", value);
   };
 
   const handleAddContactPerson = () => {
     if (newContact.firstName && newContact.lastName) {
-      formik?.setFieldValue('contactPerson', [...formik.values.contactPerson, newContact]);
+      formik?.setFieldValue("contactPerson", [
+        ...formik.values.contactPerson,
+        newContact,
+      ]);
       //API call here
       //for POST for adding the new contact Person
-      setNewContact({ firstName: '', lastName: '', email: '', phoneNumber: ''});
+      setNewContact({
+        firstName: "",
+        lastName: "",
+        email: "",
+        phoneNumber: "",
+      });
       setDialogOpen(false);
-    } 
+    }
   };
 
   return (
@@ -78,17 +100,14 @@ const BuildingInformation = ({ formik }: { formik?: any }) => {
             value={formik?.values?.name}
             onChange={formik?.handleChange}
             onBlur={formik?.handleBlur}
-            error={
-              formik?.touched?.name &&
-              Boolean(formik?.errors?.name)
-            }
-            helperText={
-              formik?.touched?.name && formik?.errors?.name
-            }
+            error={formik?.touched?.name && Boolean(formik?.errors?.name)}
+            helperText={formik?.touched?.name && formik?.errors?.name}
           />
         </Grid>
         <Grid item xs={12} sm={3}>
-          <Typography variant="gsub" color="gray.500">GESAMMTFLÄCHE (in qm)</Typography>
+          <Typography variant="gsub" color="gray.500">
+            GESAMMTFLÄCHE (in qm)
+          </Typography>
           <GTextInput
             id="totalArea"
             name="totalArea"
@@ -118,29 +137,43 @@ const BuildingInformation = ({ formik }: { formik?: any }) => {
           />
         </Grid>
         <Grid item xs={12} sm={3}>
-          <Typography variant="gsub" color="gray.500"> OBJEKTKÜRZEL / TAG ANLEGEN</Typography>
+          <Typography variant="gsub" color="gray.500">
+            {" "}
+            OBJEKTKÜRZEL / TAG ANLEGEN
+          </Typography>
           <GTextInput
-             id="buildingAbbreviation"
-             name="buildingAbbreviation"
-             value={formik?.values.buildingAbbreviation}
-             onChange={formik?.handleChange}
-             onBlur={formik?.handleBlur}
-             error={
-               formik?.touched?.buildingAbbreviation && Boolean(formik?.errors.buildingAbbreviation)
-             }
-            helperText={formik?.touched?.buildingAbbreviation && formik?.errors.buildingAbbreviation}
+            id="buildingAbbreviation"
+            name="buildingAbbreviation"
+            value={formik?.values.buildingAbbreviation}
+            onChange={formik?.handleChange}
+            onBlur={formik?.handleBlur}
+            error={
+              formik?.touched?.buildingAbbreviation &&
+              Boolean(formik?.errors.buildingAbbreviation)
+            }
+            helperText={
+              formik?.touched?.buildingAbbreviation &&
+              formik?.errors.buildingAbbreviation
+            }
           />
         </Grid>
         <Grid item xs={12} sm={11}>
-          <Typography variant="gsub" color="gray.500"> ANSPRECHPARTNER HINZUFÜGEN</Typography>
+          <Typography variant="gsub" color="gray.500">
+            {" "}
+            ANSPRECHPARTNER HINZUFÜGEN
+          </Typography>
           <Autocomplete
             multiple
             id="contactPerson"
             freeSolo
             // options={contactPersons}
             options={[]}
-            isOptionEqualToValue={(options, value) => options.firstName == value.lastName}
-            getOptionLabel={(option) => option.firstName + " " + option.lastName}
+            isOptionEqualToValue={(options, value) =>
+              options.firstName == value.lastName
+            }
+            getOptionLabel={(option) =>
+              option.firstName + " " + option.lastName
+            }
             value={formik?.values?.contactPerson || []}
             onChange={handleContactPersonChange}
             renderOption={(props, option, { selected }) => (
@@ -159,16 +192,31 @@ const BuildingInformation = ({ formik }: { formik?: any }) => {
                 {...params}
                 name="contactPerson"
                 onBlur={formik?.handleBlur}
-                error={formik?.touched?.contactPerson && Boolean(formik?.errors.contactPerson)}
-                helperText={formik?.touched?.contactPerson && formik?.errors.contactPerson}
+                error={
+                  formik?.touched?.contactPerson &&
+                  Boolean(formik?.errors.contactPerson)
+                }
+                helperText={
+                  formik?.touched?.contactPerson && formik?.errors.contactPerson
+                }
               />
             )}
           />
         </Grid>
         <Grid item xs={12} sm={1}>
-          <Box display="flex" height="100%" alignItems="flex-end" justifyContent="center">
-            <Button color="gprimary" variant="contained" sx={{height:'3.5rem',width:'100%',borderRadius:'0.5rem'}}  onClick={() => setDialogOpen(true)}>
-              <AddIcon sx={{fontSize:'1.5rem'}} />
+          <Box
+            display="flex"
+            height="100%"
+            alignItems="flex-end"
+            justifyContent="center"
+          >
+            <Button
+              color="gprimary"
+              variant="contained"
+              sx={{ height: "3.5rem", width: "100%", borderRadius: "0.5rem" }}
+              onClick={() => setDialogOpen(true)}
+            >
+              <AddIcon sx={{ fontSize: "1.5rem" }} />
             </Button>
           </Box>
         </Grid>
@@ -184,10 +232,12 @@ const BuildingInformation = ({ formik }: { formik?: any }) => {
             label="Vorname"
             fullWidth
             value={newContact.firstName}
-            onChange={(e) => setNewContact({ ...newContact, firstName: e.target.value })}
+            onChange={(e) =>
+              setNewContact({ ...newContact, firstName: e.target.value })
+            }
             error={!newContact.firstName && Boolean(formik?.errors.firstName)}
             helperText={!newContact.firstName && formik?.errors.firstName}
-            sx={{marginBottom:'1rem'}}
+            sx={{ marginBottom: "1rem" }}
           />
           {/* <TextField
             id="role"
@@ -206,7 +256,9 @@ const BuildingInformation = ({ formik }: { formik?: any }) => {
             label="Nachname"
             fullWidth
             value={newContact.lastName}
-            onChange={(e) => setNewContact({ ...newContact, lastName: e.target.value })}
+            onChange={(e) =>
+              setNewContact({ ...newContact, lastName: e.target.value })
+            }
             error={!newContact.lastName && Boolean(formik?.errors.lastName)}
             helperText={!newContact.lastName && formik?.errors.lastName}
           />
@@ -217,7 +269,9 @@ const BuildingInformation = ({ formik }: { formik?: any }) => {
             margin="dense"
             fullWidth
             value={newContact.email}
-            onChange={(e) => setNewContact({ ...newContact, email: e.target.value })}
+            onChange={(e) =>
+              setNewContact({ ...newContact, email: e.target.value })
+            }
             error={!newContact.email && Boolean(formik?.errors.email)}
             helperText={!newContact.email && formik?.errors.email}
           />
@@ -227,16 +281,29 @@ const BuildingInformation = ({ formik }: { formik?: any }) => {
             margin="dense"
             fullWidth
             value={newContact.phoneNumber}
-            onChange={(e) => setNewContact({ ...newContact, phoneNumber: e.target.value })}
-            error={!newContact.phoneNumber && Boolean(formik?.errors.phoneNumber)}
+            onChange={(e) =>
+              setNewContact({ ...newContact, phoneNumber: e.target.value })
+            }
+            error={
+              !newContact.phoneNumber && Boolean(formik?.errors.phoneNumber)
+            }
             helperText={!newContact.phoneNumber && formik?.errors.phoneNumber}
           />
         </DialogContent>
-        <DialogActions sx={{padding:'1rem'}}>
-          <Button onClick={() => setDialogOpen(false)} color="gprimary" variant="contained" sx={{marginRight:'1rem'}}  >
+        <DialogActions sx={{ padding: "1rem" }}>
+          <Button
+            onClick={() => setDialogOpen(false)}
+            color="gprimary"
+            variant="contained"
+            sx={{ marginRight: "1rem" }}
+          >
             Abbrechen
           </Button>
-          <Button onClick={handleAddContactPerson} color="gprimary" variant="contained">
+          <Button
+            onClick={handleAddContactPerson}
+            color="gprimary"
+            variant="contained"
+          >
             Hinzufügen
           </Button>
         </DialogActions>

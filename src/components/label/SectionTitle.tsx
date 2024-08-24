@@ -1,5 +1,5 @@
 import Typography from "@mui/material/Typography";
-import { SxProps, Theme } from '@mui/material/styles';
+import { SxProps, Theme } from "@mui/material/styles";
 interface SectionTitleProps {
   text: string;
   sx?: SxProps<Theme>;

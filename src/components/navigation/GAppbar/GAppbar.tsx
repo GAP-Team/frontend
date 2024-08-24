@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import * as React from "react";
 import Cookies from "js-cookie";
 import Box from "@mui/material/Box";
@@ -24,11 +24,10 @@ import { Business, CreditCard, Email, Lock } from "@mui/icons-material";
 import {
   currentUser,
   currentUserName,
-  currentUserCompany
+  currentUserCompany,
 } from "@/lib/features/userSlice";
 
 export default function GAppBar() {
-
   const router = useRouter();
   const user = useSelector(currentUser);
   const userName = useSelector(currentUserName);
@@ -37,7 +36,8 @@ export default function GAppBar() {
   const menuId = "primary-search-account-menu";
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const [activeMenuItem, setActiveMenuItem] = React.useState<string>("Mein Profil"); // Default active menu item
+  const [activeMenuItem, setActiveMenuItem] =
+    React.useState<string>("Mein Profil"); // Default active menu item
 
   const open = Boolean(anchorEl);
 
@@ -50,10 +50,10 @@ export default function GAppBar() {
   };
 
   const handleLogout = async () => {
-    let data = { userId: user?._id}
+    let data = { userId: user?._id };
     const logoutStatus = await authAPIs.logout(data);
     if (logoutStatus?.data?.status?.acknowledged) {
-      Cookies.remove('access_token');
+      Cookies.remove("access_token");
       localStorage.removeItem("access_token");
       handleClose();
       router.push("/login");
@@ -67,16 +67,11 @@ export default function GAppBar() {
 
   return (
     <Toolbar sx={styles.toolbar}>
-      <Typography
-        variant="h6"
-        noWrap
-        component="div"
-        sx={styles.title}
-      >
+      <Typography variant="h6" noWrap component="div" sx={styles.title}>
         {user?.company?.name || ""}
       </Typography>
 
-      <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'center' }}>  
+      <Box sx={{ flexGrow: 1, display: "flex", justifyContent: "center" }}>
         <GSearch />
       </Box>
 
@@ -114,14 +109,16 @@ export default function GAppBar() {
           onClick={() => handleMenuItemClick("Mein Profil")}
           sx={{
             ...menuItemStyles.menuItem,
-            ...(activeMenuItem === "Mein Profil" && menuItemStyles.activeMenuItem),
+            ...(activeMenuItem === "Mein Profil" &&
+              menuItemStyles.activeMenuItem),
           }}
         >
           <ListItemIcon>
             <AccountCircle
               sx={{
                 ...menuItemStyles.iconStyle,
-                ...(activeMenuItem === "Mein Profil" && menuItemStyles.activeIconStyle),
+                ...(activeMenuItem === "Mein Profil" &&
+                  menuItemStyles.activeIconStyle),
               }}
             />
           </ListItemIcon>
@@ -131,14 +128,16 @@ export default function GAppBar() {
           onClick={() => handleMenuItemClick("Unternehmens Profil")}
           sx={{
             ...menuItemStyles.menuItem,
-            ...(activeMenuItem === "Unternehmens Profil" && menuItemStyles.activeMenuItem),
+            ...(activeMenuItem === "Unternehmens Profil" &&
+              menuItemStyles.activeMenuItem),
           }}
         >
           <ListItemIcon>
             <Business
               sx={{
                 ...menuItemStyles.iconStyle,
-                ...(activeMenuItem === "Unternehmens Profil" && menuItemStyles.activeIconStyle),
+                ...(activeMenuItem === "Unternehmens Profil" &&
+                  menuItemStyles.activeIconStyle),
               }}
             />
           </ListItemIcon>
@@ -149,14 +148,16 @@ export default function GAppBar() {
           onClick={() => handleMenuItemClick("E-Mail ändern")}
           sx={{
             ...menuItemStyles.menuItem,
-            ...(activeMenuItem === "E-Mail ändern" && menuItemStyles.activeMenuItem),
+            ...(activeMenuItem === "E-Mail ändern" &&
+              menuItemStyles.activeMenuItem),
           }}
         >
           <ListItemIcon>
             <Email
               sx={{
                 ...menuItemStyles.iconStyle,
-                ...(activeMenuItem === "E-Mail ändern" && menuItemStyles.activeIconStyle),
+                ...(activeMenuItem === "E-Mail ändern" &&
+                  menuItemStyles.activeIconStyle),
               }}
             />
           </ListItemIcon>
@@ -166,14 +167,16 @@ export default function GAppBar() {
           onClick={() => handleMenuItemClick("Passwort ändern")}
           sx={{
             ...menuItemStyles.menuItem,
-            ...(activeMenuItem === "Passwort ändern" && menuItemStyles.activeMenuItem),
+            ...(activeMenuItem === "Passwort ändern" &&
+              menuItemStyles.activeMenuItem),
           }}
         >
           <ListItemIcon>
             <Lock
               sx={{
                 ...menuItemStyles.iconStyle,
-                ...(activeMenuItem === "Passwort ändern" && menuItemStyles.activeIconStyle),
+                ...(activeMenuItem === "Passwort ändern" &&
+                  menuItemStyles.activeIconStyle),
               }}
             />
           </ListItemIcon>
@@ -198,11 +201,11 @@ const styles = {
     justifyContent: "space-between", // Ensures the elements are spaced out as desired
   },
   title: {
-    flexGrow: 0,  // Prevents the title from growing
+    flexGrow: 0, // Prevents the title from growing
     display: { xs: "none", sm: "block" },
     fontSize: "1.5rem",
     fontWeight: "700",
-    lineHeight: "2rem"
+    lineHeight: "2rem",
   },
   userSection: {
     display: "flex",
@@ -244,11 +247,11 @@ const menuItemStyles = {
     color: "#6B7280",
     fontSize: "0.875rem",
     borderRadius: "0.5rem",
-    '&:hover': {
+    "&:hover": {
       backgroundColor: "#E5F5FA",
       color: "#22A7F1",
       fontWeight: 600,
-      '& .MuiSvgIcon-root': {
+      "& .MuiSvgIcon-root": {
         color: "#22A7F1",
       },
     },
@@ -271,7 +274,7 @@ const menuItemStyles = {
     color: "#eb4444",
     fontSize: "0.875rem",
     borderRadius: "0.5rem",
-    '&:hover': {
+    "&:hover": {
       backgroundColor: "#FFE1D7",
     },
   },

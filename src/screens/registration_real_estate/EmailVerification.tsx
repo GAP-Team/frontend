@@ -1,19 +1,13 @@
 // EmailVerification.tsx
 "use client";
-import React, 
-  { 
-    useState, 
-    useEffect,
-    useRef
-  } 
-from "react";
+import React, { useState, useEffect, useRef } from "react";
 import pino from "pino";
 import Grid from "@mui/material/Grid";
 import { Button } from "@mui/material";
 import { IoMailUnread } from "react-icons/io5";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import { useSelector } from 'react-redux'
+import { useSelector } from "react-redux";
 import CircularProgress from "@mui/material/CircularProgress";
 
 import userAPIs from "@/api/user";
@@ -23,15 +17,19 @@ import SuccessPage from "@/components/common/SuccessPage";
 
 const logger = pino();
 
-interface EmailVerificationProps{
+interface EmailVerificationProps {
   newUserId: string;
   newUserName: string;
   newUserEmail: string;
   resendVerificationEmail: (name: string, email: string, id: string) => void;
 }
 
-const EmailVerification = ({ newUserId, newUserName, newUserEmail, resendVerificationEmail }: EmailVerificationProps) => {
-
+const EmailVerification = ({
+  newUserId,
+  newUserName,
+  newUserEmail,
+  resendVerificationEmail,
+}: EmailVerificationProps) => {
   const user = useSelector(currentUser);
 
   const [loading, setLoading] = useState(false);
@@ -39,7 +37,14 @@ const EmailVerification = ({ newUserId, newUserName, newUserEmail, resendVerific
   const [resendDisabled, setResendDisabled] = useState(true);
   const [verificationSuccess, setVerificationSuccess] = useState(false);
   const [verificationError, setVerificationError] = useState(false);
-  const [verificationCode, setVerificationCode] = useState(["","","","","","",]);
+  const [verificationCode, setVerificationCode] = useState([
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+  ]);
 
   const inputRefs = useRef<Array<HTMLInputElement | null>>([]);
 
@@ -82,25 +87,24 @@ const EmailVerification = ({ newUserId, newUserName, newUserEmail, resendVerific
     setLoading(true);
     try {
       const code = verificationCode.join("");
-      
+
       if (code != "") {
         let verificationQuery = {
           userId: newUserId,
           email: newUserEmail,
-          token: code
-        }
-        
+          token: code,
+        };
+
         const res = await userAPIs.verifyEmail(verificationQuery);
-        
-        if(res?.data?.status){
+
+        if (res?.data?.status) {
           setLoading(false);
           setVerificationSuccess(true);
           // onSuccess();
         }
-      }else{
+      } else {
         setVerificationError(true);
       }
-        
     } catch (error: any) {
       logger.error(
         "Unable to verify email, post request failed",
@@ -113,7 +117,7 @@ const EmailVerification = ({ newUserId, newUserName, newUserEmail, resendVerific
   };
 
   const handlePaste = (e: React.ClipboardEvent) => {
-    const pastedData = e.clipboardData.getData('Text').slice(0, 6);
+    const pastedData = e.clipboardData.getData("Text").slice(0, 6);
     if (/^\d{6}$/.test(pastedData)) {
       const newCode = pastedData.split("");
       setVerificationCode(newCode);
@@ -163,7 +167,10 @@ const EmailVerification = ({ newUserId, newUserName, newUserEmail, resendVerific
               </Grid>
             ))}
           </Grid>
-          <Typography color="error" sx={{ marginTop: '0.5rem', textAlign: 'center' }}>
+          <Typography
+            color="error"
+            sx={{ marginTop: "0.5rem", textAlign: "center" }}
+          >
             {verificationError ? "Code ist falsch" : ""}
           </Typography>
           <GButton

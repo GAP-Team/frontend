@@ -3,7 +3,7 @@
 import React from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import { styled } from '@mui/material/styles';
+import { styled } from "@mui/material/styles";
 import { IconType } from "react-icons";
 
 interface LabeledTextWithIconProps {
@@ -23,18 +23,20 @@ const LabeledTextWithIcon: React.FC<LabeledTextWithIconProps> = ({
   iconSize = "1.5rem",
   fontSize = "1.2rem",
   textColor = "blue.main",
-  iconMarginLeft = "0.8rem"
+  iconMarginLeft = "0.8rem",
 }) => {
   const StyledIcon = styled(Icon)({
     fontSize: iconSize,
-    cursor: 'pointer',
+    cursor: "pointer",
     color: iconColor,
-    marginLeft: iconMarginLeft
+    marginLeft: iconMarginLeft,
   });
 
   return (
     <Box sx={styles.iconTextContainer}>
-      <Typography variant="bodylsb" fontSize={fontSize} color={textColor}>{text}</Typography>
+      <Typography variant="bodylsb" fontSize={fontSize} color={textColor}>
+        {text}
+      </Typography>
       <StyledIcon />
     </Box>
   );
@@ -44,7 +46,7 @@ export default LabeledTextWithIcon;
 
 const styles = {
   iconTextContainer: {
-    display: 'flex',
-    alignItems: 'center',
+    display: "flex",
+    alignItems: "center",
   },
 };

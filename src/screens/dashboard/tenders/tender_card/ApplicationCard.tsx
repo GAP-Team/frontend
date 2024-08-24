@@ -13,7 +13,9 @@ interface ApplicationCardProps {
   loading?: boolean;
 }
 
-const ApplicationCard: React.FC<ApplicationCardProps> = ({ loading = false }) => {
+const ApplicationCard: React.FC<ApplicationCardProps> = ({
+  loading = false,
+}) => {
   const avatarLetter = "M";
   const companyName = "Mayer Prüfungs GmbH";
   const location = "Sindelfingen";
@@ -31,7 +33,12 @@ const ApplicationCard: React.FC<ApplicationCardProps> = ({ loading = false }) =>
         <Box sx={styles.headerContainer}>
           <Box sx={{ width: "80%", ml: "0.5rem" }}>
             <Box sx={styles.avatarContainer}>
-              <Skeleton variant="circular" width={40} height={40} sx={{ mr: 2 }} />
+              <Skeleton
+                variant="circular"
+                width={40}
+                height={40}
+                sx={{ mr: 2 }}
+              />
               <Box sx={styles.companyInfo}>
                 <Skeleton variant="text" width={150} />
                 <Skeleton variant="text" width={100} />
@@ -67,7 +74,7 @@ const ApplicationCard: React.FC<ApplicationCardProps> = ({ loading = false }) =>
   return (
     <Paper sx={styles.paper}>
       <Box sx={styles.headerContainer}>
-        <Box sx={{width:"80%",ml:'0.5rem'}}>
+        <Box sx={{ width: "80%", ml: "0.5rem" }}>
           <Box sx={styles.avatarContainer}>
             <Avatar sx={styles.avatar}>{avatarLetter}</Avatar>
             <Box sx={styles.companyInfo}>
@@ -79,7 +86,12 @@ const ApplicationCard: React.FC<ApplicationCardProps> = ({ loading = false }) =>
           </Box>
           <Box sx={styles.tagsContainer}>
             {tags.map((tag, index) => (
-              <Typography key={index} variant="bodymr" color="blue.main" sx={styles.tag}>
+              <Typography
+                key={index}
+                variant="bodymr"
+                color="blue.main"
+                sx={styles.tag}
+              >
                 {tag}
               </Typography>
             ))}
@@ -102,12 +114,20 @@ const ApplicationCard: React.FC<ApplicationCardProps> = ({ loading = false }) =>
               sx={styles.circularProgress}
             />
             <Box sx={styles.progressTextContainer}>
-              <Typography variant="bodylsb" component="div" color="textSecondary">
+              <Typography
+                variant="bodylsb"
+                component="div"
+                color="textSecondary"
+              >
                 {`${discount}%`}
               </Typography>
             </Box>
           </Box>
-          <Typography variant="bodymsb" color="grey.500" sx={styles.discountText}>
+          <Typography
+            variant="bodymsb"
+            color="grey.500"
+            sx={styles.discountText}
+          >
             Günstiger
           </Typography>
         </Box>
@@ -134,7 +154,7 @@ const styles = {
     flexDirection: "column",
     maxWidth: "false",
     width: "100%",
-    borderRadius:'0.8rem',
+    borderRadius: "0.8rem",
     p: "1.25rem",
   },
   headerContainer: {
@@ -146,7 +166,7 @@ const styles = {
   avatarContainer: {
     display: "flex",
     alignItems: "center",
-    mb:2,
+    mb: 2,
   },
   avatar: {
     bgcolor: "#22A7F1",
@@ -193,7 +213,7 @@ const styles = {
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
-    width:'100%',
+    width: "100%",
     mb: 1,
   },
   buttonContainer: {

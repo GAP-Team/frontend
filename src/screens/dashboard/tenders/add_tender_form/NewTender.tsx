@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import React, { useEffect, useState } from "react";
 import Grid from "@mui/material/Grid";
 import { useRouter } from "next/navigation";
@@ -8,7 +8,7 @@ import PageTitle from "@/components/label/PageTitle";
 import { AddTenderFormValues, ActiveStepItem } from "./types";
 import SuccessPage from "@/components/common/SuccessPage";
 import SectionTitle from "@/components/label/SectionTitle";
-import AddTenderForm from "./AddTenderForm"; 
+import AddTenderForm from "./AddTenderForm";
 import TenderInformation from "./TenderInformation";
 import TenderBuilding from "./TenderBuilding";
 import TenderDescription from "./TenderDescription";
@@ -38,7 +38,8 @@ const NewTender = () => {
 
   const [activeStep, setActiveStep] = useState<ActiveStepItem>(steps[0]);
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const StepComponent = steps[activeStep.id]?.component as React.ComponentType<StepComponentProps>;
+  const StepComponent = steps[activeStep.id]
+    ?.component as React.ComponentType<StepComponentProps>;
 
   useEffect(() => {
     setActiveStep(steps[0]);
@@ -99,7 +100,6 @@ const NewTender = () => {
     />
   ) : (
     <>
-
       <Grid container alignItems="center">
         <Grid item xs>
           <SectionTitle text={activeStep.stepName} sx={styles.subTitle} />
@@ -116,14 +116,19 @@ const NewTender = () => {
           </Link>
         </Grid>
       </Grid>
-      {StepComponent && <StepComponent setActiveStep={setActiveStep} steps={steps} />}
+      {StepComponent && (
+        <StepComponent setActiveStep={setActiveStep} steps={steps} />
+      )}
     </>
   );
 
   return (
     <Grid container component="main">
       <Grid item xs={12} md={12} lg={12} sx={{ backgroundColor: "#F9FAFA" }}>
-        <PageTitle title="Neue Ausschreibung veröffentlichen" sx={{ ml: "1.5rem" }} />
+        <PageTitle
+          title="Neue Ausschreibung veröffentlichen"
+          sx={{ ml: "1.5rem" }}
+        />
         <Formik
           initialValues={initialValues}
           validationSchema={addTenderValidationSchema[activeStep?.id]}

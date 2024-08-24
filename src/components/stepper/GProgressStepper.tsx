@@ -1,13 +1,16 @@
-import * as React from 'react';
-import MobileStepper from '@mui/material/MobileStepper';
-import { SxProps } from '@mui/material'
+import * as React from "react";
+import MobileStepper from "@mui/material/MobileStepper";
+import { SxProps } from "@mui/material";
 
 interface GProgressStepperProps {
-    activeStep:number;
-    sx: SxProps;
+  activeStep: number;
+  sx: SxProps;
 }
-  
-export default function GProgressStepper({activeStep, sx}:GProgressStepperProps) {
+
+export default function GProgressStepper({
+  activeStep,
+  sx,
+}: GProgressStepperProps) {
   return (
     <MobileStepper
       variant="progress"

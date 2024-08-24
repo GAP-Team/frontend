@@ -91,7 +91,6 @@ interface Detail {
   value: string;
 }
 
-
 // Registration default dummy values
 export const grundinformation: Detail[] = [
   { label: "Vorname", value: "Maximillian" },
@@ -116,17 +115,16 @@ export const adresse: Detail[] = [
   { label: "Stadt", value: "Schwerin" },
 ];
 
-
 // Objekt/Building Values
 export const buildingInformation: Detail[] = [
   { label: "Name", value: "G302 - Mittelstraße 14" },
   { label: "Area", value: "24.58" },
   { label: "Gebäude Type", value: "Wohngebäude" },
-]
+];
 
 export const buildingContactPersonList: Detail[] = [
   { label: "Name", value: "Markus Richter" },
-]
+];
 
 export const buildingAddress: Detail[] = [
   { label: "Address", value: "Mittelstraße 14" },
@@ -134,11 +132,11 @@ export const buildingAddress: Detail[] = [
   { label: "Stadt", value: "Kamp-Lintfort" },
   { label: "State", value: "Mittelstraße 14" },
   { label: "Bundesland", value: "Nordrhein-Westfahlen" },
-]
+];
 
 export const buildingDocs: Detail[] = [
   { label: "File", value: "Objektplan A10-29 c.pdf" },
-]
+];
 
 export const jobCardsData = [
   {
@@ -203,61 +201,60 @@ export const jobCardsData = [
   },
 ];
 
-
 export const applications = [
   {
-    companyName: 'Mayer Prüfungs GmbH',
-    timeAgo: 'vor 30 Minuten',
-    location: 'G003 Mittelstraße 121',
-    projectID: 'A0382',
-    price: '4.036,00',
-    statusColor: '#3498db',
-    avatarLetter: 'M',
+    companyName: "Mayer Prüfungs GmbH",
+    timeAgo: "vor 30 Minuten",
+    location: "G003 Mittelstraße 121",
+    projectID: "A0382",
+    price: "4.036,00",
+    statusColor: "#3498db",
+    avatarLetter: "M",
   },
   {
-    companyName: 'Mayer Prüfungs GmbH',
-    timeAgo: 'vor 30 Minuten',
-    location: 'G003 Mittelstraße 121',
-    projectID: 'A0382',
-    price: '4.036,00',
-    statusColor: '#3498db',
-    avatarLetter: 'M',
+    companyName: "Mayer Prüfungs GmbH",
+    timeAgo: "vor 30 Minuten",
+    location: "G003 Mittelstraße 121",
+    projectID: "A0382",
+    price: "4.036,00",
+    statusColor: "#3498db",
+    avatarLetter: "M",
   },
   {
-    companyName: 'Mayer Prüfungs GmbH',
-    timeAgo: 'vor 30 Minuten',
-    location: 'G003 Mittelstraße 121',
-    projectID: 'A0382',
-    price: '4.036,00',
-    statusColor: '#3498db',
-    avatarLetter: 'M',
+    companyName: "Mayer Prüfungs GmbH",
+    timeAgo: "vor 30 Minuten",
+    location: "G003 Mittelstraße 121",
+    projectID: "A0382",
+    price: "4.036,00",
+    statusColor: "#3498db",
+    avatarLetter: "M",
   },
   {
-    companyName: 'Mayer Prüfungs GmbH',
-    timeAgo: 'vor 30 Minuten',
-    location: 'G003 Mittelstraße 121',
-    projectID: 'A0382',
-    price: '4.036,00',
-    statusColor: '#3498db',
-    avatarLetter: 'M',
+    companyName: "Mayer Prüfungs GmbH",
+    timeAgo: "vor 30 Minuten",
+    location: "G003 Mittelstraße 121",
+    projectID: "A0382",
+    price: "4.036,00",
+    statusColor: "#3498db",
+    avatarLetter: "M",
   },
   {
-    companyName: 'Mayer Prüfungs GmbH',
-    timeAgo: 'vor 30 Minuten',
-    location: 'G003 Mittelstraße 121',
-    projectID: 'A0382',
-    price: '4.036,00',
-    statusColor: '#3498db',
-    avatarLetter: 'M',
+    companyName: "Mayer Prüfungs GmbH",
+    timeAgo: "vor 30 Minuten",
+    location: "G003 Mittelstraße 121",
+    projectID: "A0382",
+    price: "4.036,00",
+    statusColor: "#3498db",
+    avatarLetter: "M",
   },
   {
-    companyName: 'Mayer Prüfungs GmbH',
-    timeAgo: 'vor 30 Minuten',
-    location: 'G003 Mittelstraße 121',
-    projectID: 'A0382',
-    price: '4.036,00',
-    statusColor: '#3498db',
-    avatarLetter: 'M',
+    companyName: "Mayer Prüfungs GmbH",
+    timeAgo: "vor 30 Minuten",
+    location: "G003 Mittelstraße 121",
+    projectID: "A0382",
+    price: "4.036,00",
+    statusColor: "#3498db",
+    avatarLetter: "M",
   },
   // ...other applications
 ];
@@ -351,27 +348,49 @@ export const news = [
     statusNew: true,
     avatarLetter: "SS",
   },
-]
+];
 
 export const contactPersonList = [
-  { firstName: "Markus", lastName: "Richter", email: "lrojektingenieur@abc.com" },
-  { firstName: "Alexander", lastName: "Schmidt", email: "lgeschäftsführer@abc.com" },
-  { firstName: "Alexande", lastName: "Schmidt", email: "lertriebsleiter@abc.com" },
-  { firstName: "Katharina", lastName: "Weber", email: "lundenbetreuer@abc.com" },
+  {
+    firstName: "Markus",
+    lastName: "Richter",
+    email: "lrojektingenieur@abc.com",
+  },
+  {
+    firstName: "Alexander",
+    lastName: "Schmidt",
+    email: "lgeschäftsführer@abc.com",
+  },
+  {
+    firstName: "Alexande",
+    lastName: "Schmidt",
+    email: "lertriebsleiter@abc.com",
+  },
+  {
+    firstName: "Katharina",
+    lastName: "Weber",
+    email: "lundenbetreuer@abc.com",
+  },
 ];
 
 export const buildingTypesList = [
-  { label: "Bürogebäude", value: "Bürogebäude" },  // Office building
-  { label: "Bahnhof", value: "Bahnhof" },  // Train station
-  { label: "Einkaufscenter/Verkaufsstätte", value: "Einkaufscenter/Verkaufsstätte" },  // Shopping center/retail
-  { label: "Flughafen", value: "Flughafen" },  // Airport
-  { label: "Garage", value: "Garage" },  // Garage
-  { label: "Pflegeheim", value: "Pflegeheim" },  // Nursing home
-  { label: "Logisitkhalle/Produktionshalle", value: "Logisitkhalle/Produktionshalle" },  // Logistics/production hall
-  { label: "Hochhaus", value: "Hochhaus" },  // Skyscraper
-  { label: "Hotel", value: "Hotel" },  // Hotel
-  { label: "Krankenhaus", value: "Krankenhaus" },  // Hospital
-  { label: "Wohnhaus", value: "Wohnhaus" }  // Residential building
+  { label: "Bürogebäude", value: "Bürogebäude" }, // Office building
+  { label: "Bahnhof", value: "Bahnhof" }, // Train station
+  {
+    label: "Einkaufscenter/Verkaufsstätte",
+    value: "Einkaufscenter/Verkaufsstätte",
+  }, // Shopping center/retail
+  { label: "Flughafen", value: "Flughafen" }, // Airport
+  { label: "Garage", value: "Garage" }, // Garage
+  { label: "Pflegeheim", value: "Pflegeheim" }, // Nursing home
+  {
+    label: "Logisitkhalle/Produktionshalle",
+    value: "Logisitkhalle/Produktionshalle",
+  }, // Logistics/production hall
+  { label: "Hochhaus", value: "Hochhaus" }, // Skyscraper
+  { label: "Hotel", value: "Hotel" }, // Hotel
+  { label: "Krankenhaus", value: "Krankenhaus" }, // Hospital
+  { label: "Wohnhaus", value: "Wohnhaus" }, // Residential building
 ];
 
 export const dummyBuildings = [
@@ -600,24 +619,51 @@ export const tenderTypesList = [
   { label: "SV Begleitung", value: "SV_Begleitung" },
   { label: "Beratung/Planprüfung", value: "Beratung_Planpruefung" },
   { label: "Konzepterstellung BSK", value: "Konzepterstellung_BSK" },
-  { label: "Konzepterstellung Löschanlage", value: "Konzepterstellung_Loeschanlage" },
+  {
+    label: "Konzepterstellung Löschanlage",
+    value: "Konzepterstellung_Loeschanlage",
+  },
   { label: "Brandwache", value: "Brandwache" },
 ];
 
 export const equipmentTypesList = [
-  { label: "Brandschutztüren/Brandschutztore", value: "Brandschutztüren/Brandschutztore" },
-  { label: "Brandmeldeanlage/Alarmierungsanlage", value: "Brandmeldeanlage/Alarmierungsanlage" },
+  {
+    label: "Brandschutztüren/Brandschutztore",
+    value: "Brandschutztüren/Brandschutztore",
+  },
+  {
+    label: "Brandmeldeanlage/Alarmierungsanlage",
+    value: "Brandmeldeanlage/Alarmierungsanlage",
+  },
   { label: "CO-Warnanlagen", value: "CO-Warnanlagen" },
   { label: "Dampf und Druckanlagen", value: "Dampf und Druckanlagen" },
-  { label: "DGUV V3 - ortsveränderliche elektrtechnische Prüfung", value: "DGUV V3 - ortsveränderliche elektrtechnische Prüfung" },
-  { label: "Explosionsschutzanlagen (EX-Schutz)", value: "Explosionsschutzanlagen (EX-Schutz)" },
+  {
+    label: "DGUV V3 - ortsveränderliche elektrtechnische Prüfung",
+    value: "DGUV V3 - ortsveränderliche elektrtechnische Prüfung",
+  },
+  {
+    label: "Explosionsschutzanlagen (EX-Schutz)",
+    value: "Explosionsschutzanlagen (EX-Schutz)",
+  },
   { label: "Feuerlöschanlagen", value: "Feuerlöschanlagen" },
-  { label: "Fördertechnik (Aufzüge, Rolltreppen, etc)", value: "Fördertechnik (Aufzüge, Rolltreppen, etc)" },
-  { label: "Lüftungsanlagen/Raumlufttechnischeanlagen (Brandschutzklappen)", value: "Lüftungsanlagen/Raumlufttechnischeanlagen (Brandschutzklappen)" },
-  { label: "Rauchabzugsanlagen/Druckbelüftungsanlagen", value: "Rauchabzugsanlagen/Druckbelüftungsanlagen" },
+  {
+    label: "Fördertechnik (Aufzüge, Rolltreppen, etc)",
+    value: "Fördertechnik (Aufzüge, Rolltreppen, etc)",
+  },
+  {
+    label: "Lüftungsanlagen/Raumlufttechnischeanlagen (Brandschutzklappen)",
+    value: "Lüftungsanlagen/Raumlufttechnischeanlagen (Brandschutzklappen)",
+  },
+  {
+    label: "Rauchabzugsanlagen/Druckbelüftungsanlagen",
+    value: "Rauchabzugsanlagen/Druckbelüftungsanlagen",
+  },
   { label: "Sicherheitsbeleuchtung", value: "Sicherheitsbeleuchtung" },
   { label: "Sicherheitsstrom", value: "Sicherheitsstrom" },
-  { label: "Tanks mit wassergefährdeten Stoffen - Heizöltanks, etc.", value: "Tanks mit wassergefährdeten Stoffen - Heizöltanks, etc." },
+  {
+    label: "Tanks mit wassergefährdeten Stoffen - Heizöltanks, etc.",
+    value: "Tanks mit wassergefährdeten Stoffen - Heizöltanks, etc.",
+  },
   { label: "Tragbare Feuerlöscher", value: "Tragbare Feuerlöscher" },
 ];
 
@@ -634,7 +680,7 @@ export const emailSignature3 = `info@gap.com`;
 export const emailSignature4 = `Düsseldorf, Germany `;
 
 export const DocumentTypies = {
-  "SONSTIGE": "SONSTIGE",
-  "GRUNDRISSE": "GRUNDRISSE",
-  "BAUUNTERLAGEN": "BAUUNTERLAGEN",
+  SONSTIGE: "SONSTIGE",
+  GRUNDRISSE: "GRUNDRISSE",
+  BAUUNTERLAGEN: "BAUUNTERLAGEN",
 };

@@ -30,18 +30,18 @@ const GButton: React.FC<GButtonProps> = ({
 }) => {
   return (
     <Button
-    component={href ? "a" : "button"}
-    href={href}
-    variant="contained"
-    color={color}
-    size="large"
-    type={type}
-    sx={{
-      ...buttonStyles,
-      ...sx,
-    }}
-    onClick={onClick}
-    {...otherProps}
+      component={href ? "a" : "button"}
+      href={href}
+      variant="contained"
+      color={color}
+      size="large"
+      type={type}
+      sx={{
+        ...buttonStyles,
+        ...sx,
+      }}
+      onClick={onClick}
+      {...otherProps}
     >
       {children}
     </Button>

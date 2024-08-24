@@ -1,6 +1,6 @@
-import React from 'react';
-import TextField from '@mui/material/TextField';
-import Autocomplete from '@mui/material/Autocomplete';
+import React from "react";
+import TextField from "@mui/material/TextField";
+import Autocomplete from "@mui/material/Autocomplete";
 
 export interface Item {
   label: string;
@@ -17,7 +17,15 @@ interface GTextSelectorProps<T extends Item> {
   helperText?: React.ReactNode | undefined;
 }
 
-const GTextSelector = <T extends Item>({ name, options, placeholder = 'Wählen Sie aus', onSelect, selectedState, error, helperText }: GTextSelectorProps<T>) => {
+const GTextSelector = <T extends Item>({
+  name,
+  options,
+  placeholder = "Wählen Sie aus",
+  onSelect,
+  selectedState,
+  error,
+  helperText,
+}: GTextSelectorProps<T>) => {
   return (
     <Autocomplete
       freeSolo
@@ -30,7 +38,7 @@ const GTextSelector = <T extends Item>({ name, options, placeholder = 'Wählen S
         onSelect(newValue);
       }}
       onChange={(e, value: any) => {
-        if (typeof value === 'string') {
+        if (typeof value === "string") {
           const newValue = { label: value, value: value };
           onSelect(newValue);
         } else if (value) {

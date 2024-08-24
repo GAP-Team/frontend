@@ -77,9 +77,15 @@ const MyDrawer = styled(Drawer)(
   })
 );
 
-const DrawerLogo = ({ src, open }:{src:string,open:boolean}) => (
-  <div style={{ width: open ? '100%' : '2rem', height: open ? '3rem' : '2rem', position: 'relative' }}>
-    <Image src={src} fill alt="GAP logo" style={{ objectFit: 'contain' }} />
+const DrawerLogo = ({ src, open }: { src: string; open: boolean }) => (
+  <div
+    style={{
+      width: open ? "100%" : "2rem",
+      height: open ? "3rem" : "2rem",
+      position: "relative",
+    }}
+  >
+    <Image src={src} fill alt="GAP logo" style={{ objectFit: "contain" }} />
   </div>
 );
 
@@ -97,7 +103,7 @@ const Sidebar: React.FC<SidebarProps> = ({ items, setSelected, selected }) => {
     >
       <List>
         <ListItem key={"gaplogo"} sx={{ minWidth: "auto", mb: "1rem" }}>
-        {open ? (
+          {open ? (
             <DrawerLogo src={gapLogoFull} open={open} />
           ) : (
             <DrawerLogo src={gapLogo} open={open} />
@@ -110,7 +116,10 @@ const Sidebar: React.FC<SidebarProps> = ({ items, setSelected, selected }) => {
                 key={item.id}
                 item={item}
                 open={open}
-                selected={selected.id === item.id || item.subItems.some(subItem => subItem.id === selected.id)}
+                selected={
+                  selected.id === item.id ||
+                  item.subItems.some((subItem) => subItem.id === selected.id)
+                }
                 setSelected={setSelected}
               />
             ) : (

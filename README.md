@@ -1,4 +1,4 @@
-## GAP Frontend 
+## GAP Frontend
 
 A Next.js 14 and App Router-ready featuring:
 
@@ -7,9 +7,8 @@ A Next.js 14 and App Router-ready featuring:
 - Styling Landingpage with Tailwind CSS + Daisy + Flowbite
 - Styling GAP dashboards with MUI Library
 
-
-
 ## Conventions to hold on:
+
 - name of folders always in **lower case** ot it has multiple words than **like_this**.
 - name of Typescript files in **CamelCase**.
 - structure component folder into categories **input**, **button**, etc.
@@ -19,23 +18,23 @@ A Next.js 14 and App Router-ready featuring:
 - fonts and colors for landingpage defined in **tailwind.config.ts**
 - fonts and colors for dashboards defined in **app/theme.ts**
 
-
 ## Getting Started
 
 - install npm packages
+
 ```
 npm install
 ```
 
-- copy the `.env.example` into `.env` and update the real variables in `.env` 
+- copy the `.env.example` into `.env` and update the real variables in `.env`
 
 - run the development server:
 
 ```
 npm run dev
 ```
-- Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
+- Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 ## or Run the App with Docker
 
@@ -51,8 +50,11 @@ goldfish-app-2ccci.ondigitalocean.app/
 ```
 
 ## Important:
+
 - `.env.example`should always be up-tp-date with Dummy variables
 
+## CI/CD
 
-
-
+if the CI/CD fails due to code formatting reason and it does not match the Prettier Format Rules, then run the following comands to reformat the code and check it:
+`npx prettier --write .`
+`npx prettier --check .`

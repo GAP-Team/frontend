@@ -8,10 +8,10 @@ import Icon from "@mui/material/Icon"; // or a specific icon component from @mui
 import { BsClockFill } from "react-icons/bs";
 import SectionTitle from "@/components/label/SectionTitle";
 import { VscDebugBreakpointLog } from "react-icons/vsc";
-import { useRouter } from "next/navigation"; 
+import { useRouter } from "next/navigation";
 
 interface JobCardProps {
-  id: string,
+  id: string;
   status: string;
   offers: number;
   title: string;
@@ -44,10 +44,15 @@ const JobCard: React.FC<JobCardProps> = ({
     router.push(`/dashboard/tenders/${id}`);
   };
 
-  const chipStyles = statusStyles[status] ||  statusStyles["offen"];
+  const chipStyles = statusStyles[status] || statusStyles["offen"];
 
   return (
-    <Paper sx={styles.card} elevation={4} onClick={handleClick} style={{cursor: 'pointer'}}>
+    <Paper
+      sx={styles.card}
+      elevation={4}
+      onClick={handleClick}
+      style={{ cursor: "pointer" }}
+    >
       <Box sx={styles.header}>
         <Chip label={status} sx={{ ...chipStyles }} />
         <Icon sx={{ color: "orange" }}>
@@ -58,10 +63,7 @@ const JobCard: React.FC<JobCardProps> = ({
         text={`Angebote: ${offers}`}
         sx={{ fontWeight: 400, py: "0.75rem" }}
       />
-      <Typography
-        variant="h6"
-        sx={styles.title}
-      >
+      <Typography variant="h6" sx={styles.title}>
         {title}
       </Typography>
       <Box sx={styles.tags}>
@@ -114,7 +116,7 @@ const styles = {
     bgcolor: "purple",
     color: "white",
   },
-  title:{
+  title: {
     fontWeight: "600",
     fontSize: "1rem",
     lineHeight: "1.5rem",

@@ -28,7 +28,7 @@ const summaryData = [
 const TenderSummarySection = () => {
   return (
     <>
-     <HeaderSection titletext='DATEN ÜBERPRÜFEN' />
+      <HeaderSection titletext="DATEN ÜBERPRÜFEN" />
       <Typography variant="bodymsb">Summary</Typography>
       <Box sx={styles.imageContainer}>
         <Image
@@ -51,20 +51,29 @@ const TenderSummarySection = () => {
               textColor="blue.main"
               iconMarginLeft="0.8rem"
             />
-            <Typography variant="bodylr" mt="0.2rem">{item.value}</Typography>
+            <Typography variant="bodylr" mt="0.2rem">
+              {item.value}
+            </Typography>
           </Grid>
         ))}
       </Grid>
       <Divider variant="middle" orientation="horizontal" flexItem />
-      <Grid container justifyContent="flex-end" spacing={2} marginTop={'0.4rem'} >
+      <Grid
+        container
+        justifyContent="flex-end"
+        spacing={2}
+        marginTop={"0.4rem"}
+      >
         <Grid item>
-          <GButton color="gprimary" variant="outlined" >Bearbeiten</GButton>
+          <GButton color="gprimary" variant="outlined">
+            Bearbeiten
+          </GButton>
           <GButton color="ggreen">Speichern</GButton>
         </Grid>
       </Grid>
     </>
   );
-}
+};
 
 export default TenderSummarySection;
 

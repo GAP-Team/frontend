@@ -9,9 +9,7 @@ const config: Config = {
     "./src/typings/**/*.{js,ts,jsx,tsx,mdx}",
     "node_modules/flowbite-react/lib/esm/**/*.js",
   ],
-  safelist: [
-    {pattern: /(bg|text|border)-./}
-  ],
+  safelist: [{ pattern: /(bg|text|border)-./ }],
   theme: {
     extend: {
       backgroundImage: {
@@ -50,7 +48,7 @@ const config: Config = {
           600: "#475A60",
           700: "#1E3137",
         },
-        'logo-color': '#0D1F4E',
+        "logo-color": "#0D1F4E",
       },
     },
   },

@@ -11,7 +11,9 @@ interface PhoneInputProps {
   id?: string;
   name?: string;
   prefix?: string; // Add prefix prop
-  onBlur?: FocusEventHandler<HTMLInputElement | HTMLTextAreaElement> | undefined;
+  onBlur?:
+    | FocusEventHandler<HTMLInputElement | HTMLTextAreaElement>
+    | undefined;
   helperText?: string;
 }
 

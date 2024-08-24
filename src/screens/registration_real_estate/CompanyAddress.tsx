@@ -7,54 +7,58 @@ import GTextInput from "@/components/input/GTextInput";
 import GSelector from "@/components/input/GSelector";
 import { germanStates } from "@/utils/Constants";
 import GoogleAutocomplete from "@/components/input/GoogleAutocomplete";
-import { geocodeByAddress } from 'react-places-autocomplete';
+import { geocodeByAddress } from "react-places-autocomplete";
 
 interface Item {
   label: string;
   value: string;
 }
 
-const CompanyAddress = ({formik}:any) => {
+const CompanyAddress = ({ formik }: any) => {
   const [selectedState, setSelectedState] = useState<Item | null>(null);
-  
+
   const handleStateSelect = (selectedItem: Item): void => {
     setSelectedState(selectedItem);
-    formik.setFieldValue('state', selectedItem?.value);
+    formik.setFieldValue("state", selectedItem?.value);
   };
-  
+
   const handleAddressSelect = async (value: string) => {
     try {
       const results = await geocodeByAddress(value);
       const addressComponents = results[0].address_components;
-      
+
       let street = "";
       let city = "";
       let postalCode = "";
-      
-      addressComponents.forEach(component => {
+
+      addressComponents.forEach((component) => {
         if (component.types.includes("route")) {
           street = component.long_name;
         }
-        if (component.types.includes("locality") || component.types.includes("sublocality")) {
+        if (
+          component.types.includes("locality") ||
+          component.types.includes("sublocality")
+        ) {
           city = component.long_name;
         }
         if (component.types.includes("postal_code")) {
           postalCode = component.long_name;
         }
       });
-      
-      formik.setFieldValue('city', city);
-      formik.setFieldValue('zip', postalCode);
-      formik.setFieldValue('street', street || value);
 
+      formik.setFieldValue("city", city);
+      formik.setFieldValue("zip", postalCode);
+      formik.setFieldValue("street", street || value);
     } catch (error) {
       console.error("Error geocoding address: ", error);
     }
   };
-  
+
   useEffect(() => {
-    const stateValue = formik.values?.state || '';
-    const matchedState = germanStates.find(state => state.value === stateValue) || { label: stateValue, value: stateValue };
+    const stateValue = formik.values?.state || "";
+    const matchedState = germanStates.find(
+      (state) => state.value === stateValue
+    ) || { label: stateValue, value: stateValue };
     setSelectedState(matchedState);
   }, []);
 
@@ -69,7 +73,7 @@ const CompanyAddress = ({formik}:any) => {
           <LabelWithAsterisk>Land</LabelWithAsterisk>
           <GTextInput value="Deutschland" />
         </Grid>
-       
+
         <Grid item xs={12} sm={9}>
           <LabelWithAsterisk>STRAßE</LabelWithAsterisk>
           <GoogleAutocomplete
@@ -125,8 +129,14 @@ const CompanyAddress = ({formik}:any) => {
         </Grid>
         <Grid item xs={12}>
           <LabelWithAsterisk>BUNDESLAND</LabelWithAsterisk>
-          <GSelector name="state" options={germanStates}  error={formik?.touched?.state && Boolean(formik?.errors?.state)}
-            helperText={formik?.touched?.state && formik?.errors?.state} onSelect={handleStateSelect} selectedState={selectedState} />
+          <GSelector
+            name="state"
+            options={germanStates}
+            error={formik?.touched?.state && Boolean(formik?.errors?.state)}
+            helperText={formik?.touched?.state && formik?.errors?.state}
+            onSelect={handleStateSelect}
+            selectedState={selectedState}
+          />
         </Grid>
       </Grid>
     </Box>

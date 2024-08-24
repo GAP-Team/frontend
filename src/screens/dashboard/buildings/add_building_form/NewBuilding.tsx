@@ -13,7 +13,11 @@ import { getLogger } from "@/utils/Logger";
 import { ActiveStepItem } from "../../types";
 import { AddBuildingFormValues } from "./types";
 import { SubmitFormFunction } from "@/typings/types";
-import { setUserBuildings, currentUser, currentUserBuildings } from '@/lib/features/userSlice';
+import {
+  setUserBuildings,
+  currentUser,
+  currentUserBuildings,
+} from "@/lib/features/userSlice";
 
 import PageTitle from "@/components/label/PageTitle";
 import AddBuildingForm from "./AddBuildingForm";
@@ -34,17 +38,20 @@ const NewBuilding = () => {
   const dispatch = useDispatch();
   const user = useSelector(currentUser);
   const userBuildings = useSelector(currentUserBuildings);
-  
+
   const steps: ActiveStepItem[] = [
     { id: 0, stepName: "Objektinformation", component: BuildingInformation },
     { id: 1, stepName: "Objektanschrift", component: BuildingAddress },
-    { id: 2, stepName: "Objektdokumentation", component: BuildingDocumentation },
+    {
+      id: 2,
+      stepName: "Objektdokumentation",
+      component: BuildingDocumentation,
+    },
     { id: 3, stepName: "Übersicht Objektdaten", component: BuildingSummary },
   ];
 
   const [loading, setLoading] = useState<boolean>(false);
   const [activeStep, setActiveStep] = useState<ActiveStepItem>(steps[0]);
-
 
   const initialValues: AddBuildingFormValues = {
     name: "",
@@ -66,7 +73,13 @@ const NewBuilding = () => {
   };
 
   const stepFieldsMap: { [key: number]: string[] } = {
-    0: ["name", "totalArea", "buildingType", "buildingAbbreviation", "contactPerson"],
+    0: [
+      "name",
+      "totalArea",
+      "buildingType",
+      "buildingAbbreviation",
+      "contactPerson",
+    ],
     1: ["zip", "street", "country", "houseNumber", "city", "state"],
     2: ["serverLink", "constructionDocs", "floorplanDocs", "otherDocs"],
   };
@@ -78,10 +91,14 @@ const NewBuilding = () => {
     values: AddBuildingFormValues
   ): Promise<void> => {
     const currentStepFields = stepFieldsMap[activeStep.id];
-    setTouched(currentStepFields?.reduce((acc, field) => ({ ...acc, [field]: true }), {}));
+    setTouched(
+      currentStepFields?.reduce((acc, field) => ({ ...acc, [field]: true }), {})
+    );
 
     const errors = await validateForm();
-    const hasErrors = currentStepFields?.some(field => (errors as any)[field]);
+    const hasErrors = currentStepFields?.some(
+      (field) => (errors as any)[field]
+    );
 
     if (!hasErrors) {
       const nextStepId = activeStep.id + 1;
@@ -102,7 +119,10 @@ const NewBuilding = () => {
     }
   };
 
-  const handleSubmit = async (values: AddBuildingFormValues, docObj: any[] = []) => {
+  const handleSubmit = async (
+    values: AddBuildingFormValues,
+    docObj: any[] = []
+  ) => {
     try {
       const addressObj = {
         zip: values.zip,
@@ -111,11 +131,11 @@ const NewBuilding = () => {
         street: values.street,
         country: values.country,
         houseNumber: values.houseNumber,
-      }
+      };
 
-      const formateDate = moment().format('YYYY-MM-DDTHH:mm:ss.SSS[Z]');
+      const formateDate = moment().format("YYYY-MM-DDTHH:mm:ss.SSS[Z]");
 
-      let arrangedDataObj= {
+      let arrangedDataObj = {
         userId: user?._id,
         documents: docObj,
         address: addressObj,
@@ -127,12 +147,14 @@ const NewBuilding = () => {
         contactPerson: values.contactPerson,
         documentUploadType: values.documentChoice,
         buildingAbbreviation: values.buildingAbbreviation,
-      }
-      
-      saveBuildingData(arrangedDataObj);
+      };
 
+      saveBuildingData(arrangedDataObj);
     } catch (error: any) {
-      logger.error("Unable to create a new building, post reqeust failed "+error.name, error.message);
+      logger.error(
+        "Unable to create a new building, post reqeust failed " + error.name,
+        error.message
+      );
     }
   };
 
@@ -150,7 +172,10 @@ const NewBuilding = () => {
 
     await uploadDocuments(values.otherDocs, DocumentTypies.SONSTIGE);
     await uploadDocuments(values.floorplanDocs, DocumentTypies.GRUNDRISSE);
-    await uploadDocuments(values.constructionDocs, DocumentTypies.BAUUNTERLAGEN);
+    await uploadDocuments(
+      values.constructionDocs,
+      DocumentTypies.BAUUNTERLAGEN
+    );
 
     handleSubmit(values, docObj);
     setLoading(false);
@@ -159,7 +184,10 @@ const NewBuilding = () => {
   const saveBuildingData = async (data: any) => {
     const createBuildingResponse = await buildingAPIs.create(data);
     if (createBuildingResponse?.data?.buildingId) {
-      const updatedBuildings = [...userBuildings, createBuildingResponse.data.buildingId];
+      const updatedBuildings = [
+        ...userBuildings,
+        createBuildingResponse.data.buildingId,
+      ];
       dispatch(setUserBuildings(updatedBuildings));
     }
   };
@@ -181,7 +209,9 @@ const NewBuilding = () => {
                   steps={steps}
                   activeStep={activeStep}
                   handleBack={handleBack}
-                  handleNext={() => handleNext(validateForm, setTouched, submitForm, values)}
+                  handleNext={() =>
+                    handleNext(validateForm, setTouched, submitForm, values)
+                  }
                   setActiveStep={setActiveStep}
                   loading={loading}
                 />
@@ -209,4 +239,4 @@ const styles = {
     borderRadius: "0.5rem",
     boxShadow: "0px 8px 24px 0px rgba(30, 49, 55, 0.08)",
   },
-}
+};

@@ -9,7 +9,7 @@ interface TenderHeaderProps {
 
 const TenderHeader: React.FC<TenderHeaderProps> = ({ code, address }) => {
   return (
-    <Box sx={{ display: "flex", pb:'0.5rem' }}>
+    <Box sx={{ display: "flex", pb: "0.5rem" }}>
       <Typography variant="bodylsb">{code} - &nbsp;</Typography>
       <Typography variant="bodylr">{address}</Typography>
     </Box>

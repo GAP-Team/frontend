@@ -11,15 +11,20 @@ interface LayoutProps {
   children: ReactNode;
 }
 
-const Layout: React.FC<LayoutProps> = ({ sidebarItems, selected, setSelected, children }) => {
+const Layout: React.FC<LayoutProps> = ({
+  sidebarItems,
+  selected,
+  setSelected,
+  children,
+}) => {
   return (
-    <Box sx={{ display: "flex", backgroundColor: '#F1F3F4' }}>
+    <Box sx={{ display: "flex", backgroundColor: "#F1F3F4" }}>
       <Sidebar
         items={sidebarItems}
         setSelected={setSelected}
         selected={selected}
       />
-      <Box sx={{ width: '100%', height: '100%', backgroundColor: '#F1F3F4' }}>
+      <Box sx={{ width: "100%", height: "100%", backgroundColor: "#F1F3F4" }}>
         <GAppbar />
         {children}
       </Box>

@@ -1,4 +1,3 @@
-
 import {
   Footer,
   FooterCopyright,
@@ -6,13 +5,13 @@ import {
   FooterLink,
   FooterLinkGroup,
   FooterTitle,
-} from 'flowbite-react';
-import {  BsFacebook, BsInstagram, BsTwitter } from 'react-icons/bs';
-import { GapLogo } from '@/components/logo/GapLogo';
+} from "flowbite-react";
+import { BsFacebook, BsInstagram, BsTwitter } from "react-icons/bs";
+import { GapLogo } from "@/components/logo/GapLogo";
 function GFooter() {
   return (
     <>
-      <Footer container className='bg-[#37383f] py-8'>
+      <Footer container className="bg-[#37383f] py-8">
         <div className="w-full">
           <div className="grid w-full justify-between sm:flex sm:justify-evenly md:flex md:grid-cols-1">
             <GapLogo />
@@ -54,7 +53,5 @@ function GFooter() {
     </>
   );
 }
-
-
 
 export default GFooter;

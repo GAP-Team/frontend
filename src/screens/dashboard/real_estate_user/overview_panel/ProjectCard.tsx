@@ -15,7 +15,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
   daysRemaining,
 }) => {
   return (
-    <Box sx={styles.card} >
+    <Box sx={styles.card}>
       <Box sx={styles.content}>
         <Typography variant="subtitle1" sx={styles.nameAndAddress}>
           {code}
@@ -45,7 +45,7 @@ const styles = {
     backgroundColor: "#1C45CC", // Adjust the color as needed
     borderRadius: "0.5rem",
     color: "white",
-    mt:'0.75rem',
+    mt: "0.75rem",
     padding: "0.75rem",
   },
   content: {
@@ -68,7 +68,7 @@ const styles = {
     minWidth: "64px",
   },
   daysNumber: {
-    fontSize: "1.5rem", 
+    fontSize: "1.5rem",
     lineHeight: "2rem",
     fontWeight: 700,
   },

@@ -1,6 +1,6 @@
 const logLevelData = {
-    "*": "silent",
-    "new-building": "info",
-}
+  "*": "silent",
+  "new-building": "info",
+};
 
 export default logLevelData;

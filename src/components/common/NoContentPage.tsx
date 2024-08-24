@@ -10,7 +10,7 @@ interface NoContentPageProps {
   title: string;
   buttonLabel: string;
   buttonLink?: string;
-  description?: string
+  description?: string;
 }
 
 const NoContentPage: React.FC<NoContentPageProps> = ({
@@ -19,7 +19,7 @@ const NoContentPage: React.FC<NoContentPageProps> = ({
   title,
   buttonLabel,
   buttonLink,
-  description
+  description,
 }) => {
   return (
     <Box sx={styles.container}>
@@ -27,15 +27,16 @@ const NoContentPage: React.FC<NoContentPageProps> = ({
         width={400}
         height={400}
         alt={alt}
-        style={{ marginBottom: '1.5rem' }}
+        style={{ marginBottom: "1.5rem" }}
         src={image}
       />
-      <Typography variant="h4sb">
-        {title}
-      </Typography>
-      <Typography variant="bodymr" style={{ maxWidth: "22rem", textAlign: "center", color: "#8D999C" }}>
+      <Typography variant="h4sb">{title}</Typography>
+      <Typography
+        variant="bodymr"
+        style={{ maxWidth: "22rem", textAlign: "center", color: "#8D999C" }}
+      >
         {description}
-        </Typography>
+      </Typography>
       <GButton style={{ marginTop: "1rem" }} href={buttonLink}>
         {buttonLabel}
       </GButton>

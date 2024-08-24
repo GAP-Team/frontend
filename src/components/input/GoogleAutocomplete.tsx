@@ -3,7 +3,7 @@ import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import { Typography, CircularProgress } from "@mui/material";
-import PlacesAutocomplete from 'react-places-autocomplete';
+import PlacesAutocomplete from "react-places-autocomplete";
 
 interface GoogleAutocompleteProps {
   name: string;
@@ -26,12 +26,14 @@ const GoogleAutocomplete: React.FC<GoogleAutocompleteProps> = ({
   onBlur,
   placeholder = "Straße",
   error,
-  helperText
+  helperText,
 }) => {
   return (
     <PlacesAutocomplete
       value={value}
-      onChange={(address) => onChange({ target: { name, value: address } } as React.ChangeEvent<any>)}
+      onChange={(address) =>
+        onChange({ target: { name, value: address } } as React.ChangeEvent<any>)
+      }
       onSelect={onSelect}
       searchOptions={{ componentRestrictions: { country: "de" } }}
     >
@@ -43,20 +45,32 @@ const GoogleAutocomplete: React.FC<GoogleAutocompleteProps> = ({
               fullWidth: true,
               onBlur,
               name,
-              id
+              id,
             })}
             error={error}
             helperText={helperText}
           />
-          {loading && <CircularProgress size={24} sx={{ position: 'absolute', top: '50%', right: '10px', marginTop: '-12px' }} />}
+          {loading && (
+            <CircularProgress
+              size={24}
+              sx={{
+                position: "absolute",
+                top: "50%",
+                right: "10px",
+                marginTop: "-12px",
+              }}
+            />
+          )}
           {suggestions?.length > 0 && (
-            <Box sx={{ position: "absolute", zIndex: 1000, width: "100%", mt: 1 }}>
+            <Box
+              sx={{ position: "absolute", zIndex: 1000, width: "100%", mt: 1 }}
+            >
               <Paper elevation={3}>
                 {suggestions.map((suggestion, index) => {
                   const style = {
                     backgroundColor: suggestion.active ? "#f0f0f0" : "#fff",
-                    cursor: 'pointer',
-                    padding: '10px'
+                    cursor: "pointer",
+                    padding: "10px",
                   };
                   return (
                     <Typography

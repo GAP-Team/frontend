@@ -79,7 +79,7 @@ export default function UploadMultiButton({
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
     accept: {
-      'application/pdf': ['.pdf']
+      "application/pdf": [".pdf"],
     },
   });
 
@@ -116,7 +116,9 @@ export default function UploadMultiButton({
             id={id}
             name={name}
             accept="application/pdf"
-            onChange={(event) => handleFileChange(Array.from(event.target.files || []))}
+            onChange={(event) =>
+              handleFileChange(Array.from(event.target.files || []))
+            }
             multiple
           />
         </Button>

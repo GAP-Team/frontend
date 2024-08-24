@@ -10,7 +10,8 @@
     "build:ci": "./node_modules/next/dist/bin/next build",
     "start:ci": "./node_modules/next/dist/bin/next start",
     "lint": "next lint",
-    "format": "prettier --write \"src/**/*.tsx\""
+    "format": "prettier --write \"src/**/*.tsx\"",
+    "prettier-check": "prettier --check ."
   },
   "dependencies": {
     "@emotion/cache": "^11.11.0",
