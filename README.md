@@ -52,3 +52,10 @@ goldfish-app-2ccci.ondigitalocean.app/
 ## Important:
 
 - `.env.example`should always be up-tp-date with Dummy variables
+
+## CI/CD
+if the CI/CD fails due to code formatting reason and it does not match the Prettier Format Rules, then run the following comands to reformat the code and check it:
+`npx prettier --write .`
+`npx prettier --check .`
+
+
