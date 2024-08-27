@@ -224,7 +224,8 @@ const BuildingInformation = ({ formik }: { formik?: any }) => {
       <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)}>
         <DialogTitle>Neuen Ansprechpartner hinzufügen</DialogTitle>
         <DialogContent>
-          <TextField
+          <LabelWithAsterisk>Vorname</LabelWithAsterisk>
+          {/*<TextField
             id="firstName"
             name="firstName"
             margin="dense"
@@ -238,56 +239,50 @@ const BuildingInformation = ({ formik }: { formik?: any }) => {
             error={!newContact.firstName && Boolean(formik?.errors.firstName)}
             helperText={!newContact.firstName && formik?.errors.firstName}
             sx={{ marginBottom: "1rem" }}
+          />*/}
+          <GTextInput
+            id="firstName"
+            name="firstName"
+            value={newContact.firstName}
+            onChange={(e) =>
+              setNewContact({ ...newContact, firstName: e.target.value })
+            }
+            onBlur={formik?.handleBlur}
+            error={formik?.touched?.firstName && Boolean(formik?.errors?.firstName)}
+            helperText={formik?.touched?.firstName && formik?.errors?.firstName}
           />
-          {/* <TextField
-            id="role"
-            margin="dense"
-            label="Rolle"
-            fullWidth
-            value={newContact.role}
-            onChange={(e) => setNewContact({ ...newContact, role: e.target.value })}
-            error={!newContact.role && Boolean(formik?.errors.contactPerson)}
-            helperText={!newContact.role && formik?.errors.contactPerson}
-          /> */}
-          <TextField
+          <LabelWithAsterisk>Nachname</LabelWithAsterisk>
+          <GTextInput
             id="lastName"
             name="lastName"
-            margin="dense"
-            label="Nachname"
-            fullWidth
             value={newContact.lastName}
             onChange={(e) =>
               setNewContact({ ...newContact, lastName: e.target.value })
             }
-            error={!newContact.lastName && Boolean(formik?.errors.lastName)}
-            helperText={!newContact.lastName && formik?.errors.lastName}
+            onBlur={formik?.handleBlur}
+            error={formik?.touched?.lastName && Boolean(formik?.errors?.lastName)}
+            helperText={formik?.touched?.lastName && formik?.errors?.lastName}
           />
-          <TextField
+          <LabelWithAsterisk>E-Mail</LabelWithAsterisk>
+          <GTextInput
             id="email"
             name="email"
-            label="Email"
-            margin="dense"
-            fullWidth
             value={newContact.email}
             onChange={(e) =>
               setNewContact({ ...newContact, email: e.target.value })
             }
-            error={!newContact.email && Boolean(formik?.errors.email)}
-            helperText={!newContact.email && formik?.errors.email}
+            onBlur={formik?.handleBlur}
+            error={formik?.touched?.email && Boolean(formik?.errors?.email)}
+            helperText={formik?.touched?.email && formik?.errors?.email}
           />
-          <TextField
+          <Typography variant="gsub" color="gray.500">Telefonnummer</Typography>
+          <GTextInput
             id="phoneNumber"
-            label="Telefonnummer"
-            margin="dense"
-            fullWidth
+            name="phoneNumber"
             value={newContact.phoneNumber}
             onChange={(e) =>
               setNewContact({ ...newContact, phoneNumber: e.target.value })
             }
-            error={
-              !newContact.phoneNumber && Boolean(formik?.errors.phoneNumber)
-            }
-            helperText={!newContact.phoneNumber && formik?.errors.phoneNumber}
           />
         </DialogContent>
         <DialogActions sx={{ padding: "1rem" }}>
