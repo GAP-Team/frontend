@@ -107,7 +107,11 @@ const TenderInformation = () => {
           <LabelWithAsterisk>AUSSCHREIBUNGSTYP</LabelWithAsterisk>
           <GTextSelector
             name="tenderType"
-            options={formik?.values?.tenderForm == "Handwerker" ? tenderTypesListHW : tenderTypesListSV}
+            options={
+              formik?.values?.tenderForm == "Handwerker"
+                ? tenderTypesListHW
+                : tenderTypesListSV
+            }
             error={
               formik?.touched?.tenderType && Boolean(formik?.errors?.tenderType)
             }
