@@ -1,7 +1,5 @@
 "use client";
 import React, { useState } from "react";
-import bcrypt from "bcryptjs";
-import Cookies from "js-cookie";
 import { useFormik } from "formik";
 import Box from "@mui/material/Box";
 import Link from "@mui/material/Link";
