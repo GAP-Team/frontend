@@ -611,7 +611,7 @@ export const dummyBuildings = [
   },
 ];
 
-export const tenderTypesList = [
+export const tenderTypesListHW = [
   { label: "Reperatur", value: "Reperatur" },
   { label: "Wartung", value: "Wartung" },
   { label: "Installation", value: "Installation" },
@@ -624,6 +624,19 @@ export const tenderTypesList = [
     value: "Konzepterstellung_Loeschanlage",
   },
   { label: "Brandwache", value: "Brandwache" },
+];
+
+export const tenderTypesListSV = [
+  { label: "Arbeitsstättenverordnung - Gesundheitsschutz der Beschäftigte", value: "Arbeitsstaettenverordnung_Gesundheitsschutz" },
+  { label: "Betriebssicherheitsverordnung (ZÜS) - Sicherheit Maschinen und Anlagen", value: "Betriebssicherheitsverordnung_ZUES" },
+  { label: "Baurechtliche Prüfung - Gesetzlicher Brandschutz", value: "Baurechtliche_Pruefung_Brandschutz" },
+  { label: "DGUV - Deutsche Gesetzliche Unfallversicherung", value: "DGUV_Unfallversicherung" },
+  { label: "Elektrische Anlagen - VDE 0105-100", value: "Elektrische_Anlagen_VDE_0105_100" },
+  { label: "Konzepterstellung - Brandschutzkonzept", value: "Konzepterstellung_Brandschutzkonzept" },
+  { label: "Hygiene Prüfung Lüftung - VDI 6022", value: "Hygiene_Pruefung_Lueftung_VDI_6022" },
+  { label: "Hygiene Prüfung Trinkwasser - VDI 6023", value: "Hygiene_Pruefung_Trinkwasser_VDI_6023" },
+  { label: "Versicherungsprüfung - VdS Prüfung", value: "Versicherungspruefung_VdS_Pruefung" },
+  { label: "Wassergefährdete Stoffe - AwsV Prüfung", value: "Wassergefaehrdete_Stoffe_AwsV_Pruefung" }
 ];
 
 export const equipmentTypesList = [
