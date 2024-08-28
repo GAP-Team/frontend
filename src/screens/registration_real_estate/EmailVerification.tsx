@@ -100,7 +100,6 @@ const EmailVerification = ({
         if (res?.data?.status) {
           setLoading(false);
           setVerificationSuccess(true);
-          // onSuccess();
         }
       } else {
         setVerificationError(true);
@@ -189,7 +188,7 @@ const EmailVerification = ({
             color="#8D999C"
             textAlign="center"
           >
-            {resendDisabled ? `Resend code in ${resendTimer}s` : ""}
+            {resendDisabled ? `Code erneut senden in ${resendTimer}s` : ""}
           </Typography>
           {!resendDisabled && (
             <Button
@@ -206,8 +205,8 @@ const EmailVerification = ({
         <SuccessPage
           title="Verifizierung erfolgreich!"
           description="Ihre E-Mail wurde erfolgreich verifiziert."
-          buttonLabel="Zum Dashboard gehen"
-          redirectUrl="/dashboard"
+          buttonLabel="Zum Einloggen gehen"
+          redirectUrl="/login"
         />
       )}
     </>
