@@ -1,13 +1,11 @@
 "use client";
 import { CgNotes } from "react-icons/cg";
-import { FaRegFlag } from "react-icons/fa";
 import { TbPigMoney } from "react-icons/tb";
 import { LuLayoutDashboard } from "react-icons/lu";
 import React, { useState, memo, useEffect } from "react";
 import {
   MdOutlineDoorSliding,
   MdOutlineAddHomeWork,
-  MdOutlineNoteAlt,
 } from "react-icons/md";
 
 import Layout from "./Layout";
@@ -17,6 +15,8 @@ import NewTender from "./tenders/add_tender_form/NewTender";
 import RealEstateUser from "./real_estate_user/RealEstateUser";
 import NewBuilding from "./buildings/add_building_form/NewBuilding";
 import { SidebarItem, SubItem } from "@/components/navigation/GSidebar/SideBar";
+import Facilities from "./facilities/facility_card/Facilities";
+import NewFacility from "./facilities/add_facility_form/NewFacility";
 
 interface DashboardProps {
   overrideComponent?: React.ReactElement;
@@ -36,10 +36,15 @@ const Dashboard: React.FC<DashboardProps> = ({ overrideComponent }) => {
       text: "Ausschreibungen",
       subItems: [
         { id: 10, text: "Alle Ausschreibungen", component: <Tenders /> },
-        { id: 11, text: "Neue Ausschreibung", component: <NewTender /> },
+        { id: 11, text: "Ausschreibung hinzufügen", component: <NewTender /> },
       ],
     },
-    { id: 2, icon: MdOutlineDoorSliding, text: "Anlagen" },
+    { id: 2, icon: MdOutlineDoorSliding, text: "Anlagen", 
+      subItems: [
+        { id: 20, text: "Alle Anlagen", component: <Facilities/> },
+        { id: 21, text: "Anlage hinzufügen", component: <NewFacility /> },
+      ],
+     },
     {
       id: 3,
       icon: MdOutlineAddHomeWork,
