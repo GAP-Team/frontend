@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import moment from "moment";
+import moment from "moment-timezone";
 import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { Formik, Form, FormikHelpers } from "formik";
@@ -133,7 +133,10 @@ const NewBuilding = () => {
         houseNumber: values.houseNumber,
       };
 
-      const formateDate = moment().format("YYYY-MM-DDTHH:mm:ss.SSS[Z]");
+      // const formateDate = moment().format("YYYY-MM-DDTHH:mm:ss.SSS[Z]");
+      const formateDate = moment()
+      .tz("Europe/Berlin")
+      .format("YYYY-MM-DDTHH:mm:ss.SSS[Z]");
 
       let arrangedDataObj = {
         userId: user?._id,
