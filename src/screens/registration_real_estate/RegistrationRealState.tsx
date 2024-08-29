@@ -1,17 +1,17 @@
 "use client";
-import React, { useState } from "react";
-// import moment from 'moment';
-import moment from "moment-timezone";
 import bcrypt from "bcryptjs";
+import Cookies from "js-cookie";
+import React, { useState } from "react";
+import moment from "moment-timezone";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import { Formik, Form } from "formik";
+import { useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 import Snackbar from "@mui/material/Snackbar";
 import ReactDOMServer from "react-dom/server";
 import RegistrationForm from "./RegistrationForm";
 import Typography from "@mui/material/Typography";
-import { useSelector } from "react-redux";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
 
 import {
@@ -28,13 +28,13 @@ import {
 import userAPIs from "@/api/user";
 import { RegistrationFormValues } from "./types";
 
-import EmailVerification from "./EmailVerification";
 import PageTitle from "@/components/label/PageTitle";
 import { handleUploadDoc } from "@/utils/uploadToS3";
 import BackButton from "@/components/button/BackButton";
 import InfoBanner from "@/components/common/InfoBanner";
 import { currentUserEmail } from "@/lib/features/userSlice";
 import EmailTemplate from "@/components/EmailTemplate/Template";
+import EmailVerification from "../../components/email/EmailVerification";
 
 import { registrationValidationSchema } from "@/utils/ValidationSchema";
 
@@ -63,8 +63,7 @@ const RegistrationRealState = () => {
   const [newUserName, setNewUserName] = useState("");
   const [newUserEmail, setNewUserEmail] = useState("");
   const [openSnackbar, setOpenSnackbar] = useState(false);
-  const [isVerificationEmailSent, setIsVerificationEmailSent] =
-    useState<boolean>(false);
+  const [isVerificationEmailSent, setIsVerificationEmailSent] = useState<boolean>(false);
 
   const handleNext = async (
     validateForm: ValidateFormFunction,
@@ -339,6 +338,10 @@ const RegistrationRealState = () => {
     setOpenSnackbar(false);
   };
 
+  const postVerificationAction = () => {
+    Cookies.set("isVerified", "true");
+  }
+
   return (
     <Grid container component="main" sx={styles.mainContainer}>
       <Grid item xs={false} md={4} lg={4} sx={styles.infoBannerGrid}>
@@ -380,10 +383,11 @@ const RegistrationRealState = () => {
                 ) : (
                   isVerificationEmailSent && (
                     <EmailVerification
+                      sendMail={false}
                       newUserId={newUserId}
                       newUserName={newUserName}
                       newUserEmail={newUserEmail}
-                      resendVerificationEmail={sendVerificationEmail}
+                      postVerificationAction={postVerificationAction}
                     />
                   )
                 )}
