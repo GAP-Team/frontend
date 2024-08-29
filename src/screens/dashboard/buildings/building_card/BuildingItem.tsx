@@ -1,5 +1,6 @@
 // BuildingItem.tsx
 import Box from "@mui/material/Box";
+import List from "@mui/material/List";
 import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
 import { CgNotes } from "react-icons/cg";
@@ -11,6 +12,7 @@ import { IoExtensionPuzzleOutline } from "react-icons/io5";
 import { Building } from "./types";
 import BuildingMenu from "./BuildingMenu";
 import DocumentList from "./DocumentList ";
+import { scrollBarStyles } from "@/components/scrollbar/Scrollbar";
 
 interface BuildingItemProps {
   building: Building;
@@ -59,25 +61,27 @@ const BuildingItem: React.FC<BuildingItemProps> = ({ building }) => {
           >{`${building.totalArea} qm`}</Typography>
         </Stack>
       </Stack>
-      {building?.documents?.length > 0 && (
-        <>
-          <DocumentList
-            title={"Bauunterlagen"}
-            documentType={"BAUUNTERLAGEN"}
-            documents={building?.documents}
-          />
-          <DocumentList
-            title={"Grundrisse"}
-            documentType={"GRUNDRISSE"}
-            documents={building?.documents}
-          />
-          <DocumentList
-            title={"Sonstige Dokumente"}
-            documentType={"SONSTIGE"}
-            documents={building?.documents}
-          />
-        </>
-      )}
+      <List sx={{ ...styles.listContainer }}>
+        {building?.documents?.length > 0 && (
+          <>
+            <DocumentList
+              title={"Bauunterlagen"}
+              documentType={"BAUUNTERLAGEN"}
+              documents={building?.documents}
+            />
+            <DocumentList
+              title={"Grundrisse"}
+              documentType={"GRUNDRISSE"}
+              documents={building?.documents}
+            />
+            <DocumentList
+              title={"Sonstige Dokumente"}
+              documentType={"SONSTIGE"}
+              documents={building?.documents}
+            />
+          </>
+        )}
+      </List>
     </Paper>
   );
 };
@@ -107,5 +111,12 @@ const styles = {
   content: {
     flexGrow: 1,
     overflow: "auto",
+  },
+  listContainer: {
+    flexGrow: 1,
+    paddingTop: "0.5rem",
+    overflow: "auto",
+    paddingRight: "0.65rem",
+    ...scrollBarStyles,
   },
 };

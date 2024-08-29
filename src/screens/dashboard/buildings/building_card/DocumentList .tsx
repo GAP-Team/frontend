@@ -1,5 +1,4 @@
-import { useState } from "react";
-import List from "@mui/material/List";
+import { useState, Fragment } from "react";
 import Stack from "@mui/material/Stack";
 import { FiFileText } from "react-icons/fi";
 import Typography from "@mui/material/Typography";
@@ -8,7 +7,6 @@ import { CircularProgress, Divider } from "@mui/material";
 import s3APIs from "@/api/s3";
 import { Document } from "./types";
 import { scrollBarStyles } from "@/components/scrollbar/Scrollbar";
-import { Fragment } from "react";
 
 interface DocumentListProps {
   title: string;
@@ -50,7 +48,7 @@ const DocumentList: React.FC<DocumentListProps> = ({
   };
 
   return (
-    <List sx={{ ...styles.listContainer }}>
+    <>
       {documents?.filter((doc) => doc.documentType === documentType).length >
         0 && (
         <Typography variant="body1" color="black">
@@ -94,7 +92,7 @@ const DocumentList: React.FC<DocumentListProps> = ({
 
       {documents?.filter((doc) => doc.documentType === documentType).length >
         0 && <Divider />}
-    </List>
+    </>
   );
 };
 
