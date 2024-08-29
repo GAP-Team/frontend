@@ -310,8 +310,8 @@ const EmailVerification = ({
         <SuccessPage
           title="Verifizierung erfolgreich!"
           description="Ihre E-Mail wurde erfolgreich verifiziert."
-          buttonLabel="Zum Dashboard gehen"
-          redirectUrl="/dashboard"
+          buttonLabel="Zum Einloggen gehen"
+          redirectUrl="/login"
         />
       )}
     </>

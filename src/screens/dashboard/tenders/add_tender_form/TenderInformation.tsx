@@ -12,7 +12,7 @@ import { useFormikContext } from "formik";
 import { AddTenderFormValues } from "./types";
 import { Item } from "../../types";
 import GTextSelector from "@/components/input/GTextSelector";
-import { tenderTypesList } from "@/utils/Constants";
+import { tenderTypesListHW, tenderTypesListSV } from "@/utils/Constants";
 
 const TenderInformation = () => {
   const formik = useFormikContext<AddTenderFormValues>();
@@ -107,7 +107,11 @@ const TenderInformation = () => {
           <LabelWithAsterisk>AUSSCHREIBUNGSTYP</LabelWithAsterisk>
           <GTextSelector
             name="tenderType"
-            options={tenderTypesList}
+            options={
+              formik?.values?.tenderForm == "Handwerker"
+                ? tenderTypesListHW
+                : tenderTypesListSV
+            }
             error={
               formik?.touched?.tenderType && Boolean(formik?.errors?.tenderType)
             }
