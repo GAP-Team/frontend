@@ -1,11 +1,6 @@
 // EmailVerification.tsx
 "use client";
-import React, 
-{ 
-  useRef,
-  useState,
-  useEffect, 
-} from "react";
+import React, { useRef, useState, useEffect } from "react";
 import pino from "pino";
 import Cookies from "js-cookie";
 import moment from "moment-timezone";
@@ -23,7 +18,12 @@ import GButton from "@/components/button/GButton";
 import { currentUser } from "@/lib/features/userSlice";
 import SuccessPage from "@/components/common/SuccessPage";
 import EmailTemplate from "@/components/EmailTemplate/Template";
-import { emailTemplateGreetins, emailTemplateVerificationText, emailTemplateFoot, emailTemplateSubject } from "@/utils/Constants";
+import {
+  emailTemplateGreetins,
+  emailTemplateVerificationText,
+  emailTemplateFoot,
+  emailTemplateSubject,
+} from "@/utils/Constants";
 
 const logger = pino();
 
@@ -40,9 +40,8 @@ const EmailVerification = ({
   newUserId,
   newUserName,
   newUserEmail,
-  postVerificationAction
+  postVerificationAction,
 }: EmailVerificationProps) => {
-
   const user = useSelector(currentUser);
 
   const [loading, setLoading] = useState(false);
@@ -58,7 +57,8 @@ const EmailVerification = ({
     "",
     "",
   ]);
-  const [isVerificationEmailSent, setIsVerificationEmailSent] = useState<boolean>(false);
+  const [isVerificationEmailSent, setIsVerificationEmailSent] =
+    useState<boolean>(false);
 
   const inputRefs = useRef<Array<HTMLInputElement | null>>([]);
 
@@ -122,8 +122,8 @@ const EmailVerification = ({
           Cookies.remove("isVerified");
 
           if (sendMail) {
-            postVerificationAction();            
-          }else{
+            postVerificationAction();
+          } else {
             setVerificationSuccess(true);
           }
           Cookies.set("isVerified", "true");
@@ -216,7 +216,7 @@ const EmailVerification = ({
     }
   };
 
-  const handleResendCode = async () => {    
+  const handleResendCode = async () => {
     setResendDisabled(true);
     sendVerificationEmail(newUserName, newUserEmail, newUserId);
   };
@@ -274,7 +274,7 @@ const EmailVerification = ({
           >
             Verifizieren
           </GButton>
-          {sendMail ? 
+          {sendMail ? (
             <Button
               onClick={handleResendCode}
               variant="text"
@@ -283,7 +283,7 @@ const EmailVerification = ({
             >
               Code erneut senden
             </Button>
-          :
+          ) : (
             <>
               <Typography
                 variant="bodymr"
@@ -304,7 +304,7 @@ const EmailVerification = ({
                 </Button>
               )}
             </>
-          }
+          )}
         </Grid>
       ) : (
         <SuccessPage

@@ -19,45 +19,44 @@ export default function DashboardPage() {
 
   const [isLoggedIn, setIsLoggedIn] = useState<Boolean>(false);
   const [isUserVerified, setIsUserVerified] = useState<Boolean>(false);
-  
-  useEffect(() => {    
+
+  useEffect(() => {
     if (!checkIsLoggedIn()) {
       router.push("/login");
     } else {
       setIsLoggedIn(true);
-      if (checkIsUserVerified() == 'false') {
+      if (checkIsUserVerified() == "false") {
         setIsUserVerified(false);
-      }else{
+      } else {
         setIsUserVerified(true);
       }
     }
   }, []);
-  
+
   const postVerificationAction = () => {
     setIsUserVerified(true);
     router.push("/dashboard");
     Cookies.set("isVerified", "true");
-  }
+  };
 
   return (
     <>
-      {isLoggedIn &&
-        isUserVerified ?
-          <Dashboard />
-        :
-          <>
-            <section style={{ display: "flex", backgroundColor: "#F1F3F4" }}>
-              <GNavbar />
-            </section>
-            <EmailVerification
-              sendMail={true}
-              newUserId={user?._id}
-              newUserEmail={user?.email}
-              newUserName={user?.firstName}
-              postVerificationAction={postVerificationAction}
-            />
-          </>
-      }
+      {isLoggedIn && isUserVerified ? (
+        <Dashboard />
+      ) : (
+        <>
+          <section style={{ display: "flex", backgroundColor: "#F1F3F4" }}>
+            <GNavbar />
+          </section>
+          <EmailVerification
+            sendMail={true}
+            newUserId={user?._id}
+            newUserEmail={user?.email}
+            newUserName={user?.firstName}
+            postVerificationAction={postVerificationAction}
+          />
+        </>
+      )}
     </>
   );
 }

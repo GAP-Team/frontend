@@ -63,7 +63,8 @@ const RegistrationRealState = () => {
   const [newUserName, setNewUserName] = useState("");
   const [newUserEmail, setNewUserEmail] = useState("");
   const [openSnackbar, setOpenSnackbar] = useState(false);
-  const [isVerificationEmailSent, setIsVerificationEmailSent] = useState<boolean>(false);
+  const [isVerificationEmailSent, setIsVerificationEmailSent] =
+    useState<boolean>(false);
 
   const handleNext = async (
     validateForm: ValidateFormFunction,
@@ -340,7 +341,7 @@ const RegistrationRealState = () => {
 
   const postVerificationAction = () => {
     Cookies.set("isVerified", "true");
-  }
+  };
 
   return (
     <Grid container component="main" sx={styles.mainContainer}>
