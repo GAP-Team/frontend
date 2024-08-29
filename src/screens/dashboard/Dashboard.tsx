@@ -3,10 +3,7 @@ import { CgNotes } from "react-icons/cg";
 import { TbPigMoney } from "react-icons/tb";
 import { LuLayoutDashboard } from "react-icons/lu";
 import React, { useState, memo, useEffect } from "react";
-import {
-  MdOutlineDoorSliding,
-  MdOutlineAddHomeWork,
-} from "react-icons/md";
+import { MdOutlineDoorSliding, MdOutlineAddHomeWork } from "react-icons/md";
 
 import Layout from "./Layout";
 import Tenders from "./tenders/Tenders";
@@ -39,12 +36,15 @@ const Dashboard: React.FC<DashboardProps> = ({ overrideComponent }) => {
         { id: 11, text: "Ausschreibung hinzufügen", component: <NewTender /> },
       ],
     },
-    { id: 2, icon: MdOutlineDoorSliding, text: "Anlagen", 
+    {
+      id: 2,
+      icon: MdOutlineDoorSliding,
+      text: "Anlagen",
       subItems: [
-        { id: 20, text: "Alle Anlagen", component: <Facilities/> },
+        { id: 20, text: "Alle Anlagen", component: <Facilities /> },
         { id: 21, text: "Anlage hinzufügen", component: <NewFacility /> },
       ],
-     },
+    },
     {
       id: 3,
       icon: MdOutlineAddHomeWork,

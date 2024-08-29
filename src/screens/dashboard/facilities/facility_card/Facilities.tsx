@@ -6,7 +6,7 @@ import { Facility } from "./types";
 import addObjSrc from "@/../public/icons/add_building.svg";
 import NoContentPage from "@/components/common/NoContentPage";
 import FacilityList from "./FacilityList";
-import  {dummyFacilities} from "@/utils/Constants";
+import { dummyFacilities } from "@/utils/Constants";
 
 const Facilities = () => {
   const [facilities, setFacilities] = useState<Facility[]>(dummyFacilities);

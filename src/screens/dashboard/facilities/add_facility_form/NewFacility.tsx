@@ -1,6 +1,5 @@
-
 const NewFacility = () => {
-    return (<> new facility</>);
-}
+  return <> new facility</>;
+};
 
 export default NewFacility;

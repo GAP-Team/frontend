@@ -826,4 +826,3 @@ export const dummyFacilities = [
     __v: 4,
   },
 ];
-

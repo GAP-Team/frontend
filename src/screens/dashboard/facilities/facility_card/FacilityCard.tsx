@@ -20,19 +20,14 @@ const statusStyles: { [key: string]: { bgcolor: string; color: string } } = {
   Nachprüfung: { bgcolor: "#FFE1D7", color: "#EB4444" },
 };
 
-const FacilityCard: React.FC<FacilityCardProps> = ({
-facility
-}) => {
+const FacilityCard: React.FC<FacilityCardProps> = ({ facility }) => {
   const router = useRouter();
 
-  const handleClick = () => {
-    
-  };
+  const handleClick = () => {};
 
   const chipStyles = statusStyles[status] || statusStyles["aktiv"];
 
   return (
-
     <Paper
       sx={styles.card}
       elevation={4}
@@ -52,18 +47,15 @@ facility
       <Typography variant="h6" sx={styles.title}>
         {facility.genericTerm}
       </Typography>
-      <Box sx={styles.tags}>
-    
-      </Box>
+      <Box sx={styles.tags}></Box>
       <Divider sx={styles.divider} orientation="horizontal" />
       <Typography variant="body2" sx={styles.subText}>
         Prüfung in: {facility.nextCheckIn} Monaten
       </Typography>
       <Typography variant="body2" sx={styles.subText}>
-       Wartung in: {facility.nextCheckIn} Tagen
+        Wartung in: {facility.nextCheckIn} Tagen
       </Typography>
     </Paper>
-
   );
 };
 
