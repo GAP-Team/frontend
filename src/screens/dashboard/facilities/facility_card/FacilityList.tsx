@@ -1,28 +1,39 @@
-import React, { useState } from "react";
-import { Facility } from "./types";
-import FacilityCard from "./FacilityCard";
-import Grid from "@mui/material/Grid";
-import Divider from "@mui/material/Divider";
+import { Box, Divider } from '@mui/material';
+import React from 'react';
+import FacilityHeader from './FacilityHeader';
+import FacilityItems from './FacilityItems';
+import { Facility } from './types';
 
-interface facilityListProps {
-  facilities: Facility[];
-  itemsPerPage?: number;
+
+interface FacilityListProps {
+    facilities: Facility[];
 }
 
-const FacilityList: React.FC<facilityListProps> = ({
-  facilities,
-  itemsPerPage,
-}) => {
-  return (
-    <Grid container spacing={"1.25rem"} sx={{ overflow: "auto", flexGrow: 1 }}>
-      {facilities.map((facility, index) => (
-        <Grid item key={index}>
-          <FacilityCard key={facility._id} facility={facility} />
-        </Grid>
-      ))}
+const FacilityList: React.FC<FacilityListProps> = ({facilities}) => {
+    return (
+        <Box sx={styles.listContainer}>
+      <FacilityHeader code="F004" address="Mittelstraße 401, 37292 Essen" />
+      <FacilityItems facilities={facilities} />
       <Divider variant="middle" orientation="horizontal" flexItem />
-    </Grid>
-  );
+
+      <FacilityHeader code="F003" address="Mittelstraße 401, 66125 Saarbrucken" />
+      <FacilityItems facilities={facilities} />
+      <Divider variant="middle" orientation="horizontal" flexItem />
+    </Box>
+    );
 };
 
 export default FacilityList;
+
+// Styles
+const styles = {
+    listContainer: {
+      display: "flex",
+      flexDirection: "column",
+      gap: "1.25rem",
+      paddingBottom: "0.65rem",
+      px: "1.5rem",
+      pt: "1.5rem",
+      overflowX: "auto",
+    },
+  };
