@@ -25,11 +25,14 @@ export default function DashboardPage() {
       router.push("/login");
     } else {
       setIsLoggedIn(true);
-      if (checkIsUserVerified() == "false") {
+      const isUserVerified = checkIsUserVerified() === "true";
+      setIsUserVerified(isUserVerified);
+
+      /*if (checkIsUserVerified() == "false") {
         setIsUserVerified(false);
       } else {
         setIsUserVerified(true);
-      }
+      }*/
     }
   }, []);
 

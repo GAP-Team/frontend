@@ -28,15 +28,18 @@ import {
 import userAPIs from "@/api/user";
 import { RegistrationFormValues } from "./types";
 
+import {
+  sendVerificationEmail,
+  getNewVerificationCode,
+ } from "@/utils/helperEmail";
 import PageTitle from "@/components/label/PageTitle";
 import { handleUploadDoc } from "@/utils/uploadToS3";
 import BackButton from "@/components/button/BackButton";
 import InfoBanner from "@/components/common/InfoBanner";
 import { currentUserEmail } from "@/lib/features/userSlice";
 import EmailTemplate from "@/components/EmailTemplate/Template";
-import EmailVerification from "../../components/email/EmailVerification";
-
 import { registrationValidationSchema } from "@/utils/ValidationSchema";
+import EmailVerification from "../../components/email/EmailVerification";
 
 function getSteps() {
   return [
@@ -63,8 +66,7 @@ const RegistrationRealState = () => {
   const [newUserName, setNewUserName] = useState("");
   const [newUserEmail, setNewUserEmail] = useState("");
   const [openSnackbar, setOpenSnackbar] = useState(false);
-  const [isVerificationEmailSent, setIsVerificationEmailSent] =
-    useState<boolean>(false);
+  const [isVerificationEmailSent, setIsVerificationEmailSent] = useState<boolean>(false);
 
   const handleNext = async (
     validateForm: ValidateFormFunction,
@@ -205,7 +207,15 @@ const RegistrationRealState = () => {
         setNewUserId(res?.data?._id);
         setNewUserEmail(values.email);
         setNewUserName(res?.data?.firstName);
-        sendVerificationEmail(values.firstName, values.email, res?.data?._id);
+        let code = getNewVerificationCode();
+        const element = (
+          <EmailTemplate name={newUserName} verificationCode={code} />
+        );
+        let sendStatus = await sendVerificationEmail(values.firstName, values.email, res?.data?._id, element, code);
+
+        if (sendStatus.status == 201) {
+          setIsVerificationEmailSent(true);
+        }
       }
     } catch (error: any) {
       if (
@@ -223,72 +233,7 @@ const RegistrationRealState = () => {
       }
     }
   };
-
-  const sendVerificationEmail = async (
-    name: string,
-    email: string,
-    userId: string
-  ) => {
-    let verificationCode = Math.floor(100000 + Math.random() * 900000);
-    const emailTemplate = renderEmailTemplate(name, verificationCode);
-
-    let expiresAt = moment()
-      .tz("Europe/Berlin")
-      .add(15, "minutes")
-      .format("YYYY-MM-DDTHH:mm:ss.SSS[Z]");
-
-    const emailText = `Dear ${name}, ${emailTemplateGreetins} ${emailTemplateVerificationText} ${verificationCode} ${emailTemplateFoot}`;
-
-    let readyEmailStructure = {
-      source: "rihab@gap-pruefen.de",
-      destination: {
-        toAddresses: [email],
-      },
-      message: {
-        subject: {
-          data: emailTemplateSubject,
-          charset: "UTF-8",
-        },
-        body: {
-          text: {
-            data: emailText,
-            charset: "UTF-8",
-          },
-          html: {
-            data: emailTemplate,
-            charset: "UTF-8",
-          },
-        },
-      },
-    };
-
-    let verificationTokenSaveQuery = {
-      userId: userId,
-      email: email,
-      token: verificationCode,
-      expiresAt: expiresAt,
-    };
-
-    let emailQurey = {
-      emailStructure: readyEmailStructure,
-      saveToken: verificationTokenSaveQuery,
-    };
-
-    let sendEmailStatus = await userAPIs.sendVerificationEmail(emailQurey);
-
-    if (sendEmailStatus.status == 201) {
-      setIsVerificationEmailSent(true);
-    }
-  };
-
-  const renderEmailTemplate = (name: string, verificationCode: number) => {
-    const element = (
-      <EmailTemplate name={name} verificationCode={verificationCode} />
-    );
-    const htmlString = ReactDOMServer.renderToStaticMarkup(element);
-    return htmlString;
-  };
-
+  
   const uploadAllDocuments = async (values: any, type: string) => {
     const docObj: any[] = [];
     const allFiles: any[] = [];
