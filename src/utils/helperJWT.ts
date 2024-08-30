@@ -36,3 +36,14 @@ export function checkIsLoggedIn() {
     return false;
   }
 }
+
+export function setIsUserVerified(verified: any) {
+  Cookies.set("isVerified", verified);
+}
+export function getIsUserVerified() {
+  return Cookies.get("isVerified") || "";
+}
+export function checkIsUserVerified() {
+  let isVerified = getIsUserVerified();
+  return isVerified;
+}

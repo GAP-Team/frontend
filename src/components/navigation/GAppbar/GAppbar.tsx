@@ -54,6 +54,7 @@ export default function GAppBar() {
     const logoutStatus = await authAPIs.logout(data);
     if (logoutStatus?.data?.status?.acknowledged) {
       Cookies.remove("access_token");
+      Cookies.remove("isVerified");
       localStorage.removeItem("access_token");
       handleClose();
       router.push("/login");

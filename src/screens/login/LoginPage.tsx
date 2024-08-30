@@ -16,11 +16,11 @@ import InputAdornment from "@mui/material/InputAdornment";
 import CircularProgress from "@mui/material/CircularProgress";
 
 import authAPIs from "@/api/auth";
-import { setAccessToken } from "@/utils/helperJWT";
+import { setUser } from "@/lib/features/userSlice";
 import { GapLogo } from "@/components/logo/GapLogo";
 import HeroBanner from "../../components/common/InfoBanner";
 import { loginValidationSchema } from "@/utils/ValidationSchema";
-import { setUser } from "@/lib/features/userSlice";
+import { setAccessToken, setIsUserVerified } from "@/utils/helperJWT";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -43,6 +43,7 @@ export default function LoginPage() {
         if (res?.data?.access_token) {
           dispatch(setUser(res.data));
           setAccessToken(res.data.access_token);
+          setIsUserVerified(res.data.user?.isVerified);
           router.push("/dashboard");
         }
       } catch (error: any) {

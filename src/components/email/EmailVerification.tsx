@@ -1,42 +1,50 @@
 // EmailVerification.tsx
 "use client";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import pino from "pino";
+import Cookies from "js-cookie";
 import Grid from "@mui/material/Grid";
 import { Button } from "@mui/material";
+import { useSelector } from "react-redux";
 import { IoMailUnread } from "react-icons/io5";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import { useSelector } from "react-redux";
 import CircularProgress from "@mui/material/CircularProgress";
 
+import {
+  sendVerificationEmail,
+  getNewVerificationCode,
+} from "@/utils/helperEmail";
 import userAPIs from "@/api/user";
 import GButton from "@/components/button/GButton";
 import { currentUser } from "@/lib/features/userSlice";
 import SuccessPage from "@/components/common/SuccessPage";
+import EmailTemplate from "@/components/EmailTemplate/Template";
 
 const logger = pino();
 
 interface EmailVerificationProps {
+  sendMail: boolean;
   newUserId: string;
   newUserName: string;
   newUserEmail: string;
-  resendVerificationEmail: (name: string, email: string, id: string) => void;
+  postVerificationAction: () => void;
 }
 
 const EmailVerification = ({
+  sendMail,
   newUserId,
   newUserName,
   newUserEmail,
-  resendVerificationEmail,
+  postVerificationAction,
 }: EmailVerificationProps) => {
   const user = useSelector(currentUser);
 
   const [loading, setLoading] = useState(false);
   const [resendTimer, setResendTimer] = useState(30);
   const [resendDisabled, setResendDisabled] = useState(true);
-  const [verificationSuccess, setVerificationSuccess] = useState(false);
   const [verificationError, setVerificationError] = useState(false);
+  const [verificationSuccess, setVerificationSuccess] = useState(false);
   const [verificationCode, setVerificationCode] = useState([
     "",
     "",
@@ -45,6 +53,8 @@ const EmailVerification = ({
     "",
     "",
   ]);
+  const [isVerificationEmailSent, setIsVerificationEmailSent] =
+    useState<boolean>(false);
 
   const inputRefs = useRef<Array<HTMLInputElement | null>>([]);
 
@@ -64,6 +74,12 @@ const EmailVerification = ({
     }
     return () => clearInterval(timer);
   }, [resendDisabled]);
+
+  /*useEffect(() => {
+    if (sendMail) {
+      sendVerificationEmail(user?.firstName, user?.email, user?._id);
+    }
+  }, [sendMail]);*/
 
   const handleChange = (index: number, value: string) => {
     if (/^\d?$/.test(value)) {
@@ -99,7 +115,14 @@ const EmailVerification = ({
 
         if (res?.data?.status) {
           setLoading(false);
-          setVerificationSuccess(true);
+          Cookies.remove("isVerified");
+
+          if (sendMail) {
+            postVerificationAction();
+          } else {
+            setVerificationSuccess(true);
+          }
+          Cookies.set("isVerified", "true");
         }
       } else {
         setVerificationError(true);
@@ -126,7 +149,21 @@ const EmailVerification = ({
 
   const handleResendCode = async () => {
     setResendDisabled(true);
-    resendVerificationEmail(newUserName, newUserEmail, newUserId);
+    let code = getNewVerificationCode();
+    const element = (
+      <EmailTemplate name={newUserName} verificationCode={code} />
+    );
+    let sendStatus = await sendVerificationEmail(
+      newUserName,
+      newUserEmail,
+      newUserId,
+      element,
+      code
+    );
+
+    if (sendStatus.status == 201) {
+      setIsVerificationEmailSent(true);
+    }
   };
 
   return (
@@ -182,15 +219,7 @@ const EmailVerification = ({
           >
             Verifizieren
           </GButton>
-          <Typography
-            variant="bodymr"
-            marginTop="1rem"
-            color="#8D999C"
-            textAlign="center"
-          >
-            {resendDisabled ? `Code erneut senden in ${resendTimer}s` : ""}
-          </Typography>
-          {!resendDisabled && (
+          {sendMail ? (
             <Button
               onClick={handleResendCode}
               variant="text"
@@ -199,6 +228,27 @@ const EmailVerification = ({
             >
               Code erneut senden
             </Button>
+          ) : (
+            <>
+              <Typography
+                variant="bodymr"
+                marginTop="1rem"
+                color="#8D999C"
+                textAlign="center"
+              >
+                {resendDisabled ? `Resend code in ${resendTimer}s` : ""}
+              </Typography>
+              {!resendDisabled && (
+                <Button
+                  onClick={handleResendCode}
+                  variant="text"
+                  size="large"
+                  sx={styles.resendBtn}
+                >
+                  Code erneut senden
+                </Button>
+              )}
+            </>
           )}
         </Grid>
       ) : (
