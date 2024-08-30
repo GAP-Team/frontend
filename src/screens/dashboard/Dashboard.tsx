@@ -17,6 +17,7 @@ import NewTender from "./tenders/add_tender_form/NewTender";
 import RealEstateUser from "./real_estate_user/RealEstateUser";
 import NewBuilding from "./buildings/add_building_form/NewBuilding";
 import { SidebarItem, SubItem } from "@/components/navigation/GSidebar/SideBar";
+import NewFacility from "./facilities/add_facility_form/NewFacility";
 
 interface DashboardProps {
   overrideComponent?: React.ReactElement;
@@ -39,7 +40,15 @@ const Dashboard: React.FC<DashboardProps> = ({ overrideComponent }) => {
         { id: 11, text: "Neue Ausschreibung", component: <NewTender /> },
       ],
     },
-    { id: 2, icon: MdOutlineDoorSliding, text: "Anlagen" },
+    {
+      id: 2,
+      icon: MdOutlineDoorSliding,
+      text: "Anlagen",
+      subItems: [
+        { id: 20, text: "Alle Anlagen", component: undefined },
+        { id: 21, text: "Anlage hinzufügen", component: <NewFacility /> },
+      ],
+    },
     {
       id: 3,
       icon: MdOutlineAddHomeWork,

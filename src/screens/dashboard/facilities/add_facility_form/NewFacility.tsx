@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import Grid from "@mui/material/Grid";
 import { useRouter } from "next/navigation";
 import { Formik, Form, FormikHelpers } from "formik";
-import { addTenderValidationSchema } from "@/utils/ValidationSchema";
+import { addFacilityValidationSchema } from "@/utils/ValidationSchema";
 import PageTitle from "@/components/label/PageTitle";
 import { AddFacilityFormValues, ActiveStepItem } from "./types";
 import SuccessPage from "@/components/common/SuccessPage";
@@ -13,14 +13,16 @@ import Link from "next/link";
 import { IconButton } from "@mui/material";
 import { CgClose } from "react-icons/cg";
 import { StepComponentProps } from "./types";
+import AddFacilityForm from "./AddFacilityForm";
+import FacilityInformation from "./FacilityInformation";
 
-const NewFacility= () => {
+const NewFacility = () => {
   const router = useRouter();
   const steps: ActiveStepItem[] = [
     {
       id: 0,
       stepName: "Anlageninformationen",
-      component: undefined,
+      component: FacilityInformation,
     },
     { id: 1, stepName: "Zusätzliche Information", component: undefined },
     { id: 2, stepName: "Übersicht Anlage", component: undefined },
@@ -71,7 +73,8 @@ const NewFacility= () => {
     isReminderEnabled: false,
     reminderInMonths: 0,
     isEmailNotificationEnabled: false,
-    emailNotificationList: []
+    emailNotificationList: [],
+    buildingName: "",
   };
 
   const formOrSuccessContent = isSubmitted ? (
@@ -109,13 +112,10 @@ const NewFacility= () => {
   return (
     <Grid container component="main">
       <Grid item xs={12} md={12} lg={12} sx={{ backgroundColor: "#F9FAFA" }}>
-        <PageTitle
-          title="Neue Anlage erstellen"
-          sx={{ ml: "1.5rem" }}
-        />
+        <PageTitle title="Neue Anlage erstellen" sx={{ ml: "1.5rem" }} />
         <Formik
           initialValues={initialValues}
-          validationSchema={addTenderValidationSchema[activeStep?.id]}
+          validationSchema={addFacilityValidationSchema[activeStep?.id]}
           onSubmit={handleNext}
         >
           {({ isSubmitting, handleSubmit }) => (
