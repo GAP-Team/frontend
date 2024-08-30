@@ -11,10 +11,10 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import CircularProgress from "@mui/material/CircularProgress";
 
-import { 
+import {
   sendVerificationEmail,
   getNewVerificationCode,
- } from "@/utils/helperEmail";
+} from "@/utils/helperEmail";
 import userAPIs from "@/api/user";
 import GButton from "@/components/button/GButton";
 import { currentUser } from "@/lib/features/userSlice";
@@ -53,7 +53,8 @@ const EmailVerification = ({
     "",
     "",
   ]);
-  const [isVerificationEmailSent, setIsVerificationEmailSent] = useState<boolean>(false);
+  const [isVerificationEmailSent, setIsVerificationEmailSent] =
+    useState<boolean>(false);
 
   const inputRefs = useRef<Array<HTMLInputElement | null>>([]);
 
@@ -136,7 +137,7 @@ const EmailVerification = ({
       setVerificationError(true);
     }
   };
-  
+
   const handlePaste = (e: React.ClipboardEvent) => {
     const pastedData = e.clipboardData.getData("Text").slice(0, 6);
     if (/^\d{6}$/.test(pastedData)) {
@@ -152,7 +153,13 @@ const EmailVerification = ({
     const element = (
       <EmailTemplate name={newUserName} verificationCode={code} />
     );
-    let sendStatus = await sendVerificationEmail(newUserName, newUserEmail, newUserId, element, code);
+    let sendStatus = await sendVerificationEmail(
+      newUserName,
+      newUserEmail,
+      newUserId,
+      element,
+      code
+    );
 
     if (sendStatus.status == 201) {
       setIsVerificationEmailSent(true);

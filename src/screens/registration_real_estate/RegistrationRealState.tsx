@@ -31,7 +31,7 @@ import { RegistrationFormValues } from "./types";
 import {
   sendVerificationEmail,
   getNewVerificationCode,
- } from "@/utils/helperEmail";
+} from "@/utils/helperEmail";
 import PageTitle from "@/components/label/PageTitle";
 import { handleUploadDoc } from "@/utils/uploadToS3";
 import BackButton from "@/components/button/BackButton";
@@ -66,7 +66,8 @@ const RegistrationRealState = () => {
   const [newUserName, setNewUserName] = useState("");
   const [newUserEmail, setNewUserEmail] = useState("");
   const [openSnackbar, setOpenSnackbar] = useState(false);
-  const [isVerificationEmailSent, setIsVerificationEmailSent] = useState<boolean>(false);
+  const [isVerificationEmailSent, setIsVerificationEmailSent] =
+    useState<boolean>(false);
 
   const handleNext = async (
     validateForm: ValidateFormFunction,
@@ -211,7 +212,13 @@ const RegistrationRealState = () => {
         const element = (
           <EmailTemplate name={newUserName} verificationCode={code} />
         );
-        let sendStatus = await sendVerificationEmail(values.firstName, values.email, res?.data?._id, element, code);
+        let sendStatus = await sendVerificationEmail(
+          values.firstName,
+          values.email,
+          res?.data?._id,
+          element,
+          code
+        );
 
         if (sendStatus.status == 201) {
           setIsVerificationEmailSent(true);
@@ -233,7 +240,7 @@ const RegistrationRealState = () => {
       }
     }
   };
-  
+
   const uploadAllDocuments = async (values: any, type: string) => {
     const docObj: any[] = [];
     const allFiles: any[] = [];
