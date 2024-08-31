@@ -11,20 +11,6 @@ import LabeledTextWithIcon from "@/components/label/LabelTextWithIcon";
 import Divider from "@mui/material/Divider";
 import GButton from "@/components/button/GButton";
 
-const summaryData = [
-  { label: "Name des Auftraggebers", value: "Fire Service GmbH" },
-  { label: "Name der Ausschreibung", value: "Fire Service GmbH" },
-  { label: "Ausschreibungsart", value: "Handwerker" },
-  { label: "Ausschreibungstyp", value: "SV-Begleitung" },
-  { label: "Objekt", value: "Handwerker" },
-  { label: "Anlage", value: "Handwerker" },
-  { label: "Anlagetyp", value: "Handwerker" },
-  { label: "Dringlichkeit", value: "Eröffnungstermin" },
-  { label: "Zeitfenster available", value: "14. Jan 2024 - 28 Mar. 2025" },
-  { label: "Detailbeschreibung", value: "Klicken Sie hier, um zu sehen" },
-  { label: "Dokumente", value: "Vor Ort zur Verfügung stellen" },
-];
-
 const TenderSummarySection = () => {
   return (
     <>
@@ -40,10 +26,11 @@ const TenderSummarySection = () => {
         />
       </Box>
       <Grid container spacing={2} marginLeft={1}>
-        {summaryData.map((item, index) => (
-          <Grid item xs={6} key={index} paddingBottom={2}>
+        <Grid container spacing={2}>
+          {/* Name des Auftraggebers */}
+          <Grid item xs={6} paddingBottom={2}>
             <LabeledTextWithIcon
-              text={item.label}
+              text="Name des Auftraggebers"
               Icon={MdOutlineEdit}
               iconColor="#22A7F1"
               iconSize="1.4rem"
@@ -51,11 +38,171 @@ const TenderSummarySection = () => {
               textColor="blue.main"
               iconMarginLeft="0.8rem"
             />
-            <Typography variant="bodylr" mt="0.2rem">
-              {item.value}
+            <Typography variant="body1" mt="0.2rem">
+              Fire Service GmbH
             </Typography>
           </Grid>
-        ))}
+
+          {/* Name der Ausschreibung */}
+          <Grid item xs={6} paddingBottom={2}>
+            <LabeledTextWithIcon
+              text="Name der Ausschreibung"
+              Icon={MdOutlineEdit}
+              iconColor="#22A7F1"
+              iconSize="1.4rem"
+              fontSize="1.2rem"
+              textColor="blue.main"
+              iconMarginLeft="0.8rem"
+            />
+            <Typography variant="body1" mt="0.2rem">
+              Fire Service
+            </Typography>
+          </Grid>
+
+          {/* Ausschreibungsart */}
+          <Grid item xs={6} paddingBottom={2}>
+            <LabeledTextWithIcon
+              text="Ausschreibungsart"
+              Icon={MdOutlineEdit}
+              iconColor="#22A7F1"
+              iconSize="1.4rem"
+              fontSize="1.2rem"
+              textColor="blue.main"
+              iconMarginLeft="0.8rem"
+            />
+            <Typography variant="body1" mt="0.2rem">
+              Handwerker
+            </Typography>
+          </Grid>
+
+          {/* Ausschreibungstyp */}
+          <Grid item xs={6} paddingBottom={2}>
+            <LabeledTextWithIcon
+              text="Ausschreibungstyp"
+              Icon={MdOutlineEdit}
+              iconColor="#22A7F1"
+              iconSize="1.4rem"
+              fontSize="1.2rem"
+              textColor="blue.main"
+              iconMarginLeft="0.8rem"
+            />
+            <Typography variant="body1" mt="0.2rem">
+              SV-Begleitung
+            </Typography>
+          </Grid>
+
+          {/* Objekt */}
+          <Grid item xs={6} paddingBottom={2}>
+            <LabeledTextWithIcon
+              text="Objekt"
+              Icon={MdOutlineEdit}
+              iconColor="#22A7F1"
+              iconSize="1.4rem"
+              fontSize="1.2rem"
+              textColor="blue.main"
+              iconMarginLeft="0.8rem"
+            />
+            <Typography variant="body1" mt="0.2rem">
+              Gebäude 1
+            </Typography>
+          </Grid>
+
+          {/* Anlage */}
+          <Grid item xs={6} paddingBottom={2}>
+            <LabeledTextWithIcon
+              text="Anlage"
+              Icon={MdOutlineEdit}
+              iconColor="#22A7F1"
+              iconSize="1.4rem"
+              fontSize="1.2rem"
+              textColor="blue.main"
+              iconMarginLeft="0.8rem"
+            />
+            <Typography variant="body1" mt="0.2rem">
+              Anlage A-B
+            </Typography>
+          </Grid>
+
+          {/* Anlagetyp */}
+          <Grid item xs={6} paddingBottom={2}>
+            <LabeledTextWithIcon
+              text="Anlagetyp"
+              Icon={MdOutlineEdit}
+              iconColor="#22A7F1"
+              iconSize="1.4rem"
+              fontSize="1.2rem"
+              textColor="blue.main"
+              iconMarginLeft="0.8rem"
+            />
+            <Typography variant="body1" mt="0.2rem">
+              CO-Warnanlagen
+            </Typography>
+          </Grid>
+
+          {/* Dringlichkeit */}
+          <Grid item xs={6} paddingBottom={2}>
+            <LabeledTextWithIcon
+              text="Dringlichkeit"
+              Icon={MdOutlineEdit}
+              iconColor="#22A7F1"
+              iconSize="1.4rem"
+              fontSize="1.2rem"
+              textColor="blue.main"
+              iconMarginLeft="0.8rem"
+            />
+            <Typography variant="body1" mt="0.2rem">
+              Eröffnungstermin
+            </Typography>
+          </Grid>
+
+          {/* Zeitfenster available */}
+          <Grid item xs={6} paddingBottom={2}>
+            <LabeledTextWithIcon
+              text="Verfügbares Zeitfenster"
+              Icon={MdOutlineEdit}
+              iconColor="#22A7F1"
+              iconSize="1.4rem"
+              fontSize="1.2rem"
+              textColor="blue.main"
+              iconMarginLeft="0.8rem"
+            />
+            <Typography variant="body1" mt="0.2rem">
+              14. Jan 2024 - 28 Mar. 2025
+            </Typography>
+          </Grid>
+
+          {/* Detailbeschreibung */}
+          <Grid item xs={6} paddingBottom={2}>
+            <LabeledTextWithIcon
+              text="Detailbeschreibung"
+              Icon={MdOutlineEdit}
+              iconColor="#22A7F1"
+              iconSize="1.4rem"
+              fontSize="1.2rem"
+              textColor="blue.main"
+              iconMarginLeft="0.8rem"
+            />
+            <Typography variant="body1" mt="0.2rem">
+              Klicken Sie hier, um zu sehen
+            </Typography>
+          </Grid>
+
+          {/* Dokumente */}
+          <Grid item xs={6} paddingBottom={2}>
+            <LabeledTextWithIcon
+              text="Dokumente"
+              Icon={MdOutlineEdit}
+              iconColor="#22A7F1"
+              iconSize="1.4rem"
+              fontSize="1.2rem"
+              textColor="blue.main"
+              iconMarginLeft="0.8rem"
+            />
+            <Typography variant="body1" mt="0.2rem">
+              Vor Ort zur Verfügung stellen
+            </Typography>
+          </Grid>
+        </Grid>
       </Grid>
       <Divider variant="middle" orientation="horizontal" flexItem />
       <Grid
