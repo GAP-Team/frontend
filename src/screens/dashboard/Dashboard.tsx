@@ -45,6 +45,7 @@ const Dashboard: React.FC<DashboardProps> = ({ overrideComponent }) => {
         { id: 21, text: "Anlage hinzufügen", component: <NewFacility /> },
       ],
     },
+
     {
       id: 3,
       icon: MdOutlineAddHomeWork,

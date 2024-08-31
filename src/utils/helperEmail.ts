@@ -8,7 +8,7 @@ import {
   emailTemplateSubject,
 } from "./Constants";
 
-export const getNewVerificationCode = () => {
+export const getNewVerificationCode = (): number => {
   let verificationCode = Math.floor(100000 + Math.random() * 900000);
   return verificationCode;
 };
@@ -69,7 +69,11 @@ export const sendVerificationEmail = async (
   return sendEmailStatus;
 };
 
-const renderEmailTemplate = (name: string, code: number, template: any) => {
+const renderEmailTemplate = (
+  name: string,
+  code: number,
+  template: any
+): string => {
   const htmlString = ReactDOMServer.renderToStaticMarkup(template);
   return htmlString;
 };

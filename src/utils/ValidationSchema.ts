@@ -202,3 +202,22 @@ export const addTenderValidationSchema = [
     freeParkingAvailable: yup.boolean(),
   }),
 ];
+
+export const addFacilityValidationSchema = [
+  yup.object({
+    name: yup.string().required("Anlagenname ist erforderlich"),
+    genericTerm: yup.string().required("Oberbegriff ist erforderlich"),
+    subcategory: yup.string().required("Unterkategorie ist erforderlich"),
+    contactPerson: yup.string().required("Kontaktperson ist erforderlich"),
+    servicingType: yup.string().required("Wartungstyp ist erforderlich"),
+    lastCheckOderMaintenanceDate: yup.date().nullable(),
+    nextCheckIn: yup.number().required("Nächste Überprüfung ist erforderlich"),
+    isPublishAutomatically: yup.boolean(),
+    publishAutomaticallyInMonths: yup.number(),
+    isReminderEnabled: yup.boolean(),
+    reminderInMonths: yup.number(),
+    isEmailNotificationEnabled: yup.boolean(),
+    emailNotificationList: yup.array().of(yup.string()),
+    buildingName: yup.string().required("Gebäude Zuordnung ist erforderlich"),
+  }),
+];

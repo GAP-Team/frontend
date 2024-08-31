@@ -1,5 +1,3 @@
-import EmailTemplate from "@/components/EmailTemplate/Template";
-
 export const listOfTrades = [
   {
     category: "Brandmeldeanlagen",
@@ -728,6 +726,34 @@ export const DocumentTypies = {
   GRUNDRISSE: "GRUNDRISSE",
   BAUUNTERLAGEN: "BAUUNTERLAGEN",
 };
+
+export const GenericTerms = [
+  {
+    label: "Allgemeine Geschäftsbedingungen",
+    value: "Allgemeine Geschäftsbedingungen",
+  },
+  { label: "Datenschutzerklärung", value: "Datenschutzerklärung" },
+  { label: "Impressum", value: "Impressum" },
+  { label: "Nutzungsbedingungen", value: "Nutzungsbedingungen" },
+];
+
+export const subcategories = [
+  { label: "Rauchmelder", value: "Rauchmelder" },
+  { label: "Optischemelder", value: "Optischemelder" },
+  { label: "Sprinkleranlagen", value: "Sprinkleranlagen" },
+  { label: "Gaslöschanlagen", value: "Gaslöschanlagen" },
+  { label: "Elektrische Schaltschränke", value: "Elektrische Schaltschränke" },
+  { label: "Leiter", value: "Leiter" },
+  { label: "Hebebühnen", value: "Hebebühnen" },
+  { label: "Steckdosen", value: "Steckdosen" },
+  { label: "RWA", value: "RWA" },
+  { label: "RDA", value: "RDA" },
+  { label: "CO-Warnanlagen", value: "CO-Warnanlagen" },
+  { label: "Druckluftwasserbehälter", value: "Druckluftwasserbehälter" },
+  { label: "Druckgeräte", value: "Druckgeräte" },
+  { label: "Druckbehälter", value: "Druckbehälter" },
+  { label: "Dampfkesselanlagen", value: "Dampfkesselanlagen" },
+];
 
 export const dummyFacilities = [
   {
