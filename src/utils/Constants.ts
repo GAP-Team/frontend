@@ -727,7 +727,6 @@ export const DocumentTypies = {
   BAUUNTERLAGEN: "BAUUNTERLAGEN",
 };
 
-
 export const GenericTerms = [
   {
     label: "Allgemeine Geschäftsbedingungen",
@@ -754,6 +753,7 @@ export const subcategories = [
   { label: "Druckgeräte", value: "Druckgeräte" },
   { label: "Druckbehälter", value: "Druckbehälter" },
   { label: "Dampfkesselanlagen", value: "Dampfkesselanlagen" },
+];
 
 export const dummyFacilities = [
   {
