@@ -852,17 +852,3 @@ export const dummyFacilities = [
     __v: 4,
   },
 ];
-
-export const dummySummaryData = [
-  { label: "Name des Auftraggebers", value: "Fire Service GmbH" },
-  { label: "Name der Ausschreibung", value: "Fire Service GmbH" },
-  { label: "Ausschreibungsart", value: "Handwerker" },
-  { label: "Ausschreibungstyp", value: "SV-Begleitung" },
-  { label: "Objekt", value: "Handwerker" },
-  { label: "Anlage", value: "Handwerker" },
-  { label: "Anlagetyp", value: "Handwerker" },
-  { label: "Dringlichkeit", value: "Eröffnungstermin" },
-  { label: "Verfügbares Zeitfesnster", value: "14. Jan 2024 - 28 Mar. 2025" },
-  { label: "Detailbeschreibung", value: "Klicken Sie hier, um zu sehen" },
-  { label: "Dokumente", value: "Vor Ort zur Verfügung stellen" },
-];
