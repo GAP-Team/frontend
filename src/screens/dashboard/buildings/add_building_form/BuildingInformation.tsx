@@ -304,7 +304,7 @@ const BuildingInformation = ({ formik }: { formik?: any }) => {
             color="gprimary"
             variant="contained"
           >
-            Hinzufügen
+            Einladung senden
           </Button>
         </DialogActions>
       </Dialog>
