@@ -29,7 +29,7 @@ const TenderSummarySection = () => {
   return (
     <>
       <HeaderSection titletext="DATEN ÜBERPRÜFEN" />
-      <Typography variant="bodymsb">Summary</Typography>
+      <Typography variant="bodymsb">Zusammenfassung</Typography>
       <Box sx={styles.imageContainer}>
         <Image
           priority
