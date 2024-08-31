@@ -10,6 +10,8 @@ import { MdOutlineEdit } from "react-icons/md";
 import LabeledTextWithIcon from "@/components/label/LabelTextWithIcon";
 import Divider from "@mui/material/Divider";
 import GButton from "@/components/button/GButton";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 const summaryData = [
   { label: "Name des Auftraggebers", value: "Fire Service GmbH" },
@@ -26,6 +28,15 @@ const summaryData = [
 ];
 
 const TenderSummarySection = () => {
+  const router = useRouter();
+
+  const backHandler = () => {
+    router.push("/dashboard/tenders");
+  };
+
+  const editHandler = () => {
+    router.push("/dashboard/tenders/add_tender_form");
+  };
   return (
     <>
       <HeaderSection titletext="DATEN ÜBERPRÜFEN" />
@@ -65,10 +76,12 @@ const TenderSummarySection = () => {
         marginTop={"0.4rem"}
       >
         <Grid item>
-          <GButton color="gprimary" variant="outlined">
+          <GButton color="gprimary" variant="outlined" onClick={backHandler}>
+            Abbrechen
+          </GButton>
+          <GButton color="ggreen" onClick={editHandler}>
             Bearbeiten
           </GButton>
-          <GButton color="ggreen">Speichern</GButton>
         </Grid>
       </Grid>
     </>
