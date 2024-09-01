@@ -15,6 +15,7 @@ import { CgClose } from "react-icons/cg";
 import { StepComponentProps } from "./types";
 import AddFacilityForm from "./AddFacilityForm";
 import FacilityInformation from "./FacilityInformation";
+import ExtraInformation from "./ExtraInformation";
 
 const NewFacility = () => {
   const router = useRouter();
@@ -22,9 +23,9 @@ const NewFacility = () => {
     {
       id: 0,
       stepName: "Anlageninformationen",
-      component: FacilityInformation,
+      component: ExtraInformation,
     },
-    { id: 1, stepName: "Zusätzliche Information", component: undefined },
+    { id: 1, stepName: "Zusätzliche Information", component: ExtraInformation },
     { id: 2, stepName: "Übersicht Anlage", component: undefined },
   ];
 

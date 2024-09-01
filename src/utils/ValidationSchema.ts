@@ -207,7 +207,7 @@ export const addFacilityValidationSchema = [
   yup.object({
     name: yup.string().required("Anlagenname ist erforderlich"),
     genericTerm: yup.string().required("Oberbegriff ist erforderlich"),
-    subcategory: yup.string().required("Unterkategorie ist erforderlich"),
+    subcategory: yup.string(),
     contactPerson: yup.string().required("Kontaktperson ist erforderlich"),
     servicingType: yup.string().required("Wartungstyp ist erforderlich"),
     lastCheckOderMaintenanceDate: yup.date().nullable(),
