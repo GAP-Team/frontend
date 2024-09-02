@@ -1,14 +1,16 @@
 import React from "react";
-import Paper from "@mui/material/Paper";
-import Chip from "@mui/material/Chip";
-import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import Divider from "@mui/material/Divider";
-import Icon from "@mui/material/Icon"; // or a specific icon component from @mui/icons-material
-import { BsClockFill } from "react-icons/bs";
-import SectionTitle from "@/components/label/SectionTitle";
-import { VscDebugBreakpointLog } from "react-icons/vsc";
+import Chip from "@mui/material/Chip";
+import Icon from "@mui/material/Icon";
+import Paper from "@mui/material/Paper";
 import { useRouter } from "next/navigation";
+import Divider from "@mui/material/Divider";
+import { BsClockFill } from "react-icons/bs";
+import Typography from "@mui/material/Typography";
+import { VscDebugBreakpointLog } from "react-icons/vsc";
+
+import JobMenu from "./JobMenu";
+import SectionTitle from "@/components/label/SectionTitle";
 
 interface JobCardProps {
   id: string;
@@ -80,15 +82,20 @@ const JobCard: React.FC<JobCardProps> = ({
         ))}
       </Box>
       <Divider sx={styles.divider} orientation="horizontal" />
-      <Typography variant="body2" sx={styles.subText}>
-        {location}
-      </Typography>
-      <Typography variant="body2" sx={{ pl: 2 }}>
-        {`--> ${projectId}`}
-      </Typography>
-      <Typography variant="body2" sx={{ pl: 4 }}>
-        {`--> ${sectionId}`}
-      </Typography>
+      <Box sx={styles.location}>
+        <Box>
+          <Typography variant="body2" sx={styles.subText}>
+            {location}
+          </Typography>
+          <Typography variant="body2" sx={{ pl: 2 }}>
+            {`--> ${projectId}`}
+          </Typography>
+          <Typography variant="body2" sx={{ pl: 4 }}>
+            {`--> ${sectionId}`}
+          </Typography>
+        </Box>
+        <JobMenu />
+      </Box>
     </Paper>
   );
 };
@@ -108,6 +115,11 @@ const styles = {
     cursor: "pointer",
   },
   header: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  location: {
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
