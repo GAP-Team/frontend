@@ -48,11 +48,10 @@ const JobCard: React.FC<JobCardProps> = ({
 
   const chipStyles = statusStyles[status] || statusStyles["offen"];
 
-  return (
+  return (    
     <Paper
       sx={styles.card}
       elevation={4}
-      onClick={handleClick}
       style={{ cursor: "pointer" }}
     >
       <Box sx={styles.header}>
@@ -61,40 +60,40 @@ const JobCard: React.FC<JobCardProps> = ({
           <BsClockFill />
         </Icon>
       </Box>
-      <SectionTitle
-        text={`Angebote: ${offers}`}
-        sx={{ fontWeight: 400, py: "0.75rem" }}
-      />
-      <Typography variant="h6" sx={styles.title}>
-        {title}
-      </Typography>
-      <Box sx={styles.tags}>
-        {tags.map((tag, index) => (
-          <React.Fragment key={index}>
-            <Chip
-              icon={<VscDebugBreakpointLog color="white" />}
-              color="gprimary"
-              label={tag}
-              size="small"
-              sx={styles.tagChip}
-            />
-          </React.Fragment>
-        ))}
-      </Box>
-      <Divider sx={styles.divider} orientation="horizontal" />
       <Box sx={styles.location}>
-        <Box>
-          <Typography variant="body2" sx={styles.subText}>
-            {location}
-          </Typography>
-          <Typography variant="body2" sx={{ pl: 2 }}>
-            {`--> ${projectId}`}
-          </Typography>
-          <Typography variant="body2" sx={{ pl: 4 }}>
-            {`--> ${sectionId}`}
-          </Typography>
-        </Box>
+        <SectionTitle
+          text={`Angebote: ${offers}`}
+          sx={{ fontWeight: 400, py: "0.75rem" }}
+        />
         <JobMenu />
+      </Box>
+      <Box onClick={handleClick}>
+        <Typography variant="h6" sx={styles.title}>
+          {title}
+        </Typography>
+        <Box sx={styles.tags}>
+          {tags.map((tag, index) => (
+            <React.Fragment key={index}>
+              <Chip
+                icon={<VscDebugBreakpointLog color="white" />}
+                color="gprimary"
+                label={tag}
+                size="small"
+                sx={styles.tagChip}
+              />
+            </React.Fragment>
+          ))}
+        </Box>
+        <Divider sx={styles.divider} orientation="horizontal" />
+        <Typography variant="body2" sx={styles.subText}>
+          {location}
+        </Typography>
+        <Typography variant="body2" sx={{ pl: 2 }}>
+          {`--> ${projectId}`}
+        </Typography>
+        <Typography variant="body2" sx={{ pl: 4 }}>
+          {`--> ${sectionId}`}
+        </Typography>
       </Box>
     </Paper>
   );

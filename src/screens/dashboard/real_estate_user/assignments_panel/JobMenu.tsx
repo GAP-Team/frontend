@@ -11,7 +11,7 @@ import IconButton from "@mui/material/IconButton";
 import GButton from "@/components/button/GButton";
 import DialogTitle from "@mui/material/DialogTitle";
 import ListItemIcon from "@mui/material/ListItemIcon";
-import { IoEllipsisHorizontal } from "react-icons/io5";
+import { IoEllipsisVerticalSharp } from "react-icons/io5";
 import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContentText from "@mui/material/DialogContentText";
@@ -56,7 +56,7 @@ export default function JobMenu() {
           aria-haspopup="true"
           aria-expanded={open ? "true" : undefined}
         >
-          <IoEllipsisHorizontal size="1rem" />
+          <IoEllipsisVerticalSharp size="1.2rem" />
         </IconButton>
       </Tooltip>
       <Menu
