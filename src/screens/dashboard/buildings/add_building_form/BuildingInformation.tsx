@@ -248,8 +248,8 @@ const BuildingInformation = ({ formik }: { formik?: any }) => {
               setNewContact({ ...newContact, firstName: e.target.value })
             }
             onBlur={formik?.handleBlur}
-            error={formik?.touched?.firstName && Boolean(formik?.errors?.firstName)}
-            helperText={formik?.touched?.firstName && formik?.errors?.firstName}
+            error={formik?.touched?.contactPerson?.firstName && Boolean(formik?.errors?.contactPerson?.firstName)}
+            helperText={formik?.touched?.contactPerson?.firstName && formik?.errors?.contactPerson?.firstName}
           />
           <LabelWithAsterisk>Nachname</LabelWithAsterisk>
           <GTextInput

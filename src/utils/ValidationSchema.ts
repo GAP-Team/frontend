@@ -113,10 +113,10 @@ export const addObjektFormSchema = yup
       .array()
       .of(
         yup.object({
-          lastName: yup.string().required("Hausnummer ist erforderlich."),
-          firstName: yup.string().required("Hausnummer ist erforderlich."),
-          phoneNumber: yup.string().required("Hausnummer ist erforderlich."),
-          email: yup.string().email("Eingabe einer gültigen E-Mail").required("Hausnummer ist erforderlich."),
+          lastName: yup.string().required("Nachname ist erforderlich."),
+          firstName: yup.string().required("Vorname ist erforderlich."),
+          phoneNumber: yup.string(),
+          email: yup.string().email("Eingabe einer gültigen E-Mail").required("E-mail ist erforderlich."),
         })
       )
       .min(0, "Mindestens eine Kontaktperson ist erforderlich."),
