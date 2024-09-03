@@ -48,12 +48,8 @@ const JobCard: React.FC<JobCardProps> = ({
 
   const chipStyles = statusStyles[status] || statusStyles["offen"];
 
-  return (    
-    <Paper
-      sx={styles.card}
-      elevation={4}
-      style={{ cursor: "pointer" }}
-    >
+  return (
+    <Paper sx={styles.card} elevation={4} style={{ cursor: "pointer" }}>
       <Box sx={styles.header}>
         <Chip label={status} sx={{ ...chipStyles }} />
         <Icon sx={{ color: "orange" }}>
