@@ -13,6 +13,7 @@ import { useEffect } from "react";
 import LabelText from "@/components/label/LabelText";
 
 
+//TODO: in the future this data will be fetched from the backend and dynamically updated the values
 const summaryData = [
   { label: "Name des Auftraggebers", value: "Fire Service GmbH" },
   { label: "Name der Ausschreibung", value: "Fire Service GmbH" },
@@ -22,9 +23,11 @@ const summaryData = [
   { label: "Anlage", value: "Handwerker" },
   { label: "Anlagetyp", value: "Handwerker" },
   { label: "Dringlichkeit", value: "Eröffnungstermin" },
-  { label: "Verfügbares Zeitfesnster", value: "14. Jan 2024 - 28 Mar. 2025" },
+  { label: "Verfügbares Zeitfenster", value: "14. Jan 2024 - 28 Mar. 2025" },
   { label: "Detailbeschreibung", value: "Klicken Sie hier, um zu sehen" },
   { label: "Dokumente", value: "Vor Ort zur Verfügung stellen" },
+  { label: "Sicherheit Arbeit erforderlich", value: "Ja" },
+  { label: "Kostenlose Parkplätze", value: "Ja" },
 ];
 
 const TenderSummarySection = () => {
