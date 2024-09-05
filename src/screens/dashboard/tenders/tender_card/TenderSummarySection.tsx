@@ -12,7 +12,6 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import LabelText from "@/components/label/LabelText";
 
-
 //TODO: in the future this data will be fetched from the backend and dynamically updated the values
 const summaryData = [
   { label: "Name des Auftraggebers", value: "Fire Service GmbH" },
