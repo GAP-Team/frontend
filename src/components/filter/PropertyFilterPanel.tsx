@@ -17,33 +17,57 @@ import { currentUser } from "@/lib/features/userSlice";
 import { PropertyFilterProps } from "@/screens/dashboard/buildings/building_card/types";
 import GButton from "../button/GButton";
 
-const PropertyFilterPanel = ({ handleOnChange, title }: PropertyFilterProps): JSX.Element => {
+const PropertyFilterPanel = ({
+  handleOnChange,
+  title,
+}: PropertyFilterProps): JSX.Element => {
   const user = useSelector(currentUser);
 
   const [filters, setFilters] = useState({
     city: "",
     facilityType: "",
-    federalState: ""
+    federalState: "",
   });
 
-  const [userCities, setUserCities] = useState<{ value: string; label?: string }[]>([]);
-  const [userStates, setUserStates] = useState<{ value: string; label?: string }[]>([]);
-  const [userFacilityType, setFacilityType] = useState<{ value: string; label?: string }[]>([]);
+  const [userCities, setUserCities] = useState<
+    { value: string; label?: string }[]
+  >([]);
+  const [userStates, setUserStates] = useState<
+    { value: string; label?: string }[]
+  >([]);
+  const [userFacilityType, setFacilityType] = useState<
+    { value: string; label?: string }[]
+  >([]);
 
   useEffect(() => {
     const fetchData = async () => {
-      const cs = await buildingAPIs?.getUserStatesCitiesFacilityTypes(user?._id);
-      if (cs?.data?.cities) setUserCities(cs.data.cities.map((city: any) => ({ value: city, label: city })));
-      if (cs?.data?.states) setUserStates(cs.data.states.map((state: any) => ({ value: state, label: state })));
-      if (cs?.data?.facilityTypes) setFacilityType(cs.data.facilityTypes.map((facilityType: any) => ({ value: facilityType, label: facilityType })));
+      const cs = await buildingAPIs?.getUserStatesCitiesFacilityTypes(
+        user?._id
+      );
+      if (cs?.data?.cities)
+        setUserCities(
+          cs.data.cities.map((city: any) => ({ value: city, label: city }))
+        );
+      if (cs?.data?.states)
+        setUserStates(
+          cs.data.states.map((state: any) => ({ value: state, label: state }))
+        );
+      if (cs?.data?.facilityTypes)
+        setFacilityType(
+          cs.data.facilityTypes.map((facilityType: any) => ({
+            value: facilityType,
+            label: facilityType,
+          }))
+        );
     };
 
     fetchData();
   }, [user]);
 
-  const handleChange = (field: string) => (event: SelectChangeEvent<string>) => {
-    setFilters({ ...filters, [field]: event.target.value as string });
-  };
+  const handleChange =
+    (field: string) => (event: SelectChangeEvent<string>) => {
+      setFilters({ ...filters, [field]: event.target.value as string });
+    };
 
   const handleReset = () => {
     setFilters({ city: "", facilityType: "", federalState: "" });
@@ -96,7 +120,7 @@ const FilterSelect = ({
   label,
   value,
   onChange,
-  options
+  options,
 }: {
   id: string;
   label: string;
@@ -113,14 +137,15 @@ const FilterSelect = ({
       label={label}
       onChange={onChange}
     >
-      {options.length > 0
-        ? options.map((option) => (
+      {options.length > 0 ? (
+        options.map((option) => (
           <MenuItem key={option.value} value={option.value}>
             {option.label || option.value}
           </MenuItem>
         ))
-        : <MenuItem value="">Keine {label}</MenuItem>
-      }
+      ) : (
+        <MenuItem value="">Keine {label}</MenuItem>
+      )}
     </Select>
   </FormControl>
 );

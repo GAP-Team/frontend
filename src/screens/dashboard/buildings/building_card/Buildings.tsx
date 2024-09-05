@@ -21,17 +21,25 @@ const Buildings: React.FC = () => {
     getUserBuildings("", "", "");
   }, []);
 
-  const getUserBuildings = async (city: string, federalState: string, facilityType: string) => {
+  const getUserBuildings = async (
+    city: string,
+    federalState: string,
+    facilityType: string
+  ) => {
     const allBuildings = await buildingAPIs.getBuildings(
       user?._id,
       city,
       federalState,
-      facilityType,
+      facilityType
     );
     setBuildings(allBuildings.data);
   };
 
-  const onStateCityFacilityTypeChange = (city: string, federalState: string, facilityType: string) => {
+  const onStateCityFacilityTypeChange = (
+    city: string,
+    federalState: string,
+    facilityType: string
+  ) => {
     getUserBuildings(city, federalState, facilityType);
   };
 
