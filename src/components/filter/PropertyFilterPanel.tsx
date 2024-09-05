@@ -8,6 +8,7 @@ import {
   InputLabel,
   Typography,
   FormControl,
+  SelectChangeEvent,
 } from "@mui/material";
 import { useSelector } from "react-redux";
 
@@ -16,38 +17,41 @@ import { currentUser } from "@/lib/features/userSlice";
 import { PropertyFilterProps } from "@/screens/dashboard/buildings/building_card/types";
 import GButton from "../button/GButton";
 
-const PropertyFilterPanel = ({
-  handleOnChange,
-  title,
-}: PropertyFilterProps): JSX.Element => {
+const PropertyFilterPanel = ({ handleOnChange, title }: PropertyFilterProps): JSX.Element => {
   const user = useSelector(currentUser);
 
-  const [city, setCity] = useState("");
-  const [propertyType, setPropertyType] = useState("");
-  const [federalState, setFederalState] = useState("");
-  const [userCities, setUserCities] = useState([]);
-  const [userStates, setUserStates] = useState([]);
+  const [filters, setFilters] = useState({
+    city: "",
+    facilityType: "",
+    federalState: ""
+  });
+
+  const [userCities, setUserCities] = useState<{ value: string; label?: string }[]>([]);
+  const [userStates, setUserStates] = useState<{ value: string; label?: string }[]>([]);
+  const [userFacilityType, setFacilityType] = useState<{ value: string; label?: string }[]>([]);
 
   useEffect(() => {
-    getUserStatesCities();
-  }, []);
+    const fetchData = async () => {
+      const cs = await buildingAPIs?.getUserStatesCitiesFacilityTypes(user?._id);
+      if (cs?.data?.cities) setUserCities(cs.data.cities.map((city: any) => ({ value: city, label: city })));
+      if (cs?.data?.states) setUserStates(cs.data.states.map((state: any) => ({ value: state, label: state })));
+      if (cs?.data?.facilityTypes) setFacilityType(cs.data.facilityTypes.map((facilityType: any) => ({ value: facilityType, label: facilityType })));
+    };
 
-  const getUserStatesCities = async () => {
-    let cs = await buildingAPIs.getUserStatesCities(user?._id);
+    fetchData();
+  }, [user]);
 
-    if (cs?.data?.cities?.length > 0) {
-      setUserCities(cs?.data?.cities);
-    }
-    if (cs?.data?.states?.length > 0) {
-      setUserStates(cs?.data?.states);
-    }
+  const handleChange = (field: string) => (event: SelectChangeEvent<string>) => {
+    setFilters({ ...filters, [field]: event.target.value as string });
   };
 
   const handleReset = () => {
-    setCity("");
-    setPropertyType("");
-    setFederalState("");
-    handleOnChange("", "");
+    setFilters({ city: "", facilityType: "", federalState: "" });
+    handleOnChange("", "", "");
+  };
+
+  const handleFilter = () => {
+    handleOnChange(filters.city, filters.federalState, filters.facilityType);
   };
 
   return (
@@ -56,79 +60,70 @@ const PropertyFilterPanel = ({
         {title}
       </Typography>
 
-      <Box
-        sx={{
-          flexGrow: 1,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "flex-end",
-        }}
-      >
-        <FormControl size="small" sx={styles.formControl}>
-          <InputLabel id="property-type-label">Anlagentyp</InputLabel>
-          <Select
-            labelId="property-type-label"
-            id="property-type-select"
-            value={propertyType}
-            label="Anlagentyp"
-            onChange={(e) => setPropertyType(e.target.value)}
-          >
-            <MenuItem value="type1">Type 1</MenuItem>
-            <MenuItem value="type2">Type 2</MenuItem>
-            {/* More types */}
-          </Select>
-        </FormControl>
-        <FormControl size="small" sx={styles.formControl}>
-          <InputLabel id="federal-state-label">Bundesland</InputLabel>
-          <Select
-            labelId="federal-state-label"
-            id="federal-state-select"
-            value={federalState}
-            label="Bundesland"
-            onChange={(e) => setFederalState(e.target.value)}
-          >
-            {userStates?.length > 0 ? (
-              userStates?.map((state) => (
-                <MenuItem key={state} value={state}>
-                  {state}
-                </MenuItem>
-              ))
-            ) : (
-              <MenuItem value="">Keine Staaten</MenuItem>
-            )}
-          </Select>
-        </FormControl>
-        <FormControl size="small" sx={styles.formControl}>
-          <InputLabel id="city-label">Stadt</InputLabel>
-          <Select
-            labelId="city-label"
-            id="city-select"
-            value={city}
-            label="Stadt"
-            onChange={(e) => setCity(e.target.value)}
-          >
-            {userCities?.length > 0 ? (
-              userCities?.map((city) => (
-                <MenuItem key={city} value={city}>
-                  {city}
-                </MenuItem>
-              ))
-            ) : (
-              <MenuItem value="">Keine Städte</MenuItem>
-            )}
-          </Select>
-        </FormControl>
+      <Box sx={styles.box}>
+        <FilterSelect
+          id="facilityType"
+          label="Anlagentyp"
+          value={filters.facilityType}
+          onChange={handleChange("facilityType")}
+          options={userFacilityType}
+        />
+        <FilterSelect
+          id="federalState"
+          label="Bundesland"
+          value={filters.federalState}
+          onChange={handleChange("federalState")}
+          options={userStates}
+        />
+        <FilterSelect
+          id="city"
+          label="Stadt"
+          value={filters.city}
+          onChange={handleChange("city")}
+          options={userCities}
+        />
         <Box sx={{ ml: 1, display: "flex" }}>
-          <GButton onClick={() => handleOnChange(city, federalState)}>
-            Filter
-          </GButton>
-
+          <GButton onClick={handleFilter}>Filter</GButton>
           <GButton onClick={handleReset}>Reset</GButton>
         </Box>
       </Box>
     </Container>
   );
 };
+
+const FilterSelect = ({
+  id,
+  label,
+  value,
+  onChange,
+  options
+}: {
+  id: string;
+  label: string;
+  value: string;
+  onChange: (event: SelectChangeEvent<string>) => void;
+  options: Array<{ value: string; label?: string }>;
+}) => (
+  <FormControl size="small" sx={styles.formControl}>
+    <InputLabel id={`${id}-label`}>{label}</InputLabel>
+    <Select
+      labelId={`${id}-label`}
+      id={`${id}-select`}
+      value={value}
+      label={label}
+      onChange={onChange}
+    >
+      {options.length > 0
+        ? options.map((option) => (
+          <MenuItem key={option.value} value={option.value}>
+            {option.label || option.value}
+          </MenuItem>
+        ))
+        : <MenuItem value="">Keine {label}</MenuItem>
+      }
+    </Select>
+  </FormControl>
+);
 
 export default PropertyFilterPanel;
 
@@ -145,6 +140,12 @@ const styles = {
   },
   typography: {
     flexGrow: 1,
+  },
+  box: {
+    flexGrow: 1,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "flex-end",
   },
   formControl: {
     m: 1,
