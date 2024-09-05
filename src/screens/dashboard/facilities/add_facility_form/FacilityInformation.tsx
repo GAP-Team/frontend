@@ -13,6 +13,7 @@ import {
   GenericTerms,
   subcategories,
 } from "@/utils/Constants";
+import Typography from "@mui/material/Typography";
 
 const FacilityInformation = () => {
   const formik = useFormikContext<AddFacilityFormValues>();
@@ -64,7 +65,9 @@ const FacilityInformation = () => {
     >
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <LabelWithAsterisk>ANLAGENNAME-/BEZEICHNUNG</LabelWithAsterisk>
+          <Typography variant="gsub" color="gray.500">
+            ANLAGENNAME-/BEZEICHNUNG
+          </Typography>
           <GTextInput
             id="name"
             name="name"
@@ -94,7 +97,9 @@ const FacilityInformation = () => {
         </Grid>
 
         <Grid item xs={6}>
-          <LabelWithAsterisk>ANLAGE UNTERKATEGORIE</LabelWithAsterisk>
+          <Typography variant="gsub" color="gray.500">
+            ANLAGE UNTERKATEGORIE
+          </Typography>
           <GTextSelector
             name="subCategory"
             options={subcategories}
