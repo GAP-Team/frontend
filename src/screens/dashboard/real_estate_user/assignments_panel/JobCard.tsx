@@ -55,13 +55,13 @@ const JobCard: React.FC<JobCardProps> = ({
         <Icon sx={{ color: "orange" }}>
           <BsClockFill />
         </Icon>
+        <JobMenu />
       </Box>
       <Box sx={styles.location}>
         <SectionTitle
           text={`Angebote: ${offers}`}
           sx={{ fontWeight: 400, py: "0.75rem" }}
         />
-        <JobMenu />
       </Box>
       <Box onClick={handleClick}>
         <Typography variant="h6" sx={styles.title}>
