@@ -7,6 +7,8 @@ const buildingAPIs = {
     api.get(`/buildings/${id}/get-user-state-city`),
   getBuildings: (userId: string, city: string, state: string) =>
     api.get(`/buildings/${userId}?city=${city}&state=${state}`),
+  update: (buildingId: string | undefined, data: any) =>
+    api.put(`/buildings/${buildingId}`, data),
 };
 
 export default buildingAPIs;

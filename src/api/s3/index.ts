@@ -7,6 +7,7 @@ const s3APIs = {
     api.get(`/files/download/${key}`, {
       responseType: "blob",
     }),
+  delete: (key: any) => api.delete(`/files/delete/${key}`),
 };
 
 export default s3APIs;

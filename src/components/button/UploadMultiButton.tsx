@@ -1,13 +1,15 @@
 import * as React from "react";
-import { styled } from "@mui/system";
-import Button from "@mui/material/Button";
-import { useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import { FiFileText } from "react-icons/fi";
-import FormHelperText from "@mui/material/FormHelperText";
+import { styled } from "@mui/system";
 import Chip from "@mui/material/Chip";
+import Button from "@mui/material/Button";
+import { FiFileText } from "react-icons/fi";
 import { useDropzone } from "react-dropzone";
+import { useTheme } from "@mui/material/styles";
+import Typography from "@mui/material/Typography";
+import FormHelperText from "@mui/material/FormHelperText";
+
+import s3APIs from "@/api/s3";
 
 interface UploadMultiButtonProps {
   value?: File[] | null | undefined;
@@ -70,6 +72,15 @@ export default function UploadMultiButton({
       },
     } as any;
     onChange && onChange(syntheticEvent);
+
+    const deletedFile = value?.filter((_, i) => i === index) || [];
+    deleteFileFromS3(deletedFile[0]);
+  };
+
+  const deleteFileFromS3 = async (file: any) => {
+    if (file.hasOwnProperty("documentType")) {
+      const deleteFileStatus = await s3APIs.delete(file?.key);
+    }
   };
 
   const onDrop = (acceptedFiles: File[]) => {

@@ -13,6 +13,7 @@ interface UserState {
     lastName: string;
     manufacturer_experience: string;
   };
+  buildings: [];
 }
 
 const initialState: UserState = {
@@ -26,6 +27,7 @@ const initialState: UserState = {
     buildings: [],
     manufacturer_experience: "",
   },
+  buildings: [],
 };
 
 const userSlice = createSlice({
@@ -46,14 +48,19 @@ const userSlice = createSlice({
     setUserBuildings: (state, action) => {
       state.user.buildings = action.payload;
     },
+    setAllBuildingDetails: (state, action) => {
+      state.buildings = action.payload;
+    },
   },
 });
 
-export const { setUser, setUserBuildings } = userSlice.actions;
+export const { setUser, setUserBuildings, setAllBuildingDetails } =
+  userSlice.actions;
 
 export const currentUser = (state: RootState) => state.user.user;
 export const currentUserId = (state: RootState) => state.user.user._id;
 export const currentUserEmail = (state: RootState) => state.user.user.email;
+export const allBuildingDetails = (state: RootState) => state.user.buildings;
 export const currentUserCompany = (state: RootState) => state.user.user.company;
 export const currentUserBuildings = (state: RootState) =>
   state.user.user.buildings;

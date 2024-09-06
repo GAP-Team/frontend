@@ -1,20 +1,20 @@
 export interface AddBuildingFormValues {
-  zip: string;
-  name: string;
-  city: string;
-  state: string;
-  street: string;
-  country: string;
-  totalArea: string;
-  documentChoice: string;
-  constructionDocs: File[];
-  floorplanDocs: File[];
-  otherDocs: File[];
-  serverLink: string;
-  houseNumber: string;
-  buildingType: string;
-  buildingAbbreviation: string;
-  contactPerson: ContactPersonItem[];
+  zip: string | undefined;
+  name: string | undefined;
+  city: string | undefined;
+  state: string | undefined;
+  street: string | undefined;
+  country: string | undefined;
+  totalArea: string | undefined;
+  documentChoice: string | undefined;
+  constructionDocs: File[] | undefined;
+  floorplanDocs: File[] | undefined;
+  otherDocs: File[] | undefined;
+  serverLink: string | undefined;
+  houseNumber: string | undefined;
+  buildingType: string | undefined;
+  buildingAbbreviation: string | undefined;
+  contactPerson: ContactPersonItem[] | undefined;
 }
 
 export interface ContactPersonItem {
