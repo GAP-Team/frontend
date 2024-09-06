@@ -6,11 +6,13 @@ import Typography from "@mui/material/Typography";
 import Image from "next/image";
 import stepperHorizontal from "../../../../../public/icons/stepper-horizontal.svg";
 import Grid from "@mui/material/Grid";
-import { MdOutlineEdit } from "react-icons/md";
-import LabeledTextWithIcon from "@/components/label/LabelTextWithIcon";
 import Divider from "@mui/material/Divider";
 import GButton from "@/components/button/GButton";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+import LabelText from "@/components/label/LabelText";
 
+//TODO: in the future this data will be fetched from the backend and dynamically updated the values
 const summaryData = [
   { label: "Name des Auftraggebers", value: "Fire Service GmbH" },
   { label: "Name der Ausschreibung", value: "Fire Service GmbH" },
@@ -20,12 +22,23 @@ const summaryData = [
   { label: "Anlage", value: "Handwerker" },
   { label: "Anlagetyp", value: "Handwerker" },
   { label: "Dringlichkeit", value: "Eröffnungstermin" },
-  { label: "Zeitfenster available", value: "14. Jan 2024 - 28 Mar. 2025" },
+  { label: "Verfügbares Zeitfenster", value: "14. Jan 2024 - 28 Mar. 2025" },
   { label: "Detailbeschreibung", value: "Klicken Sie hier, um zu sehen" },
   { label: "Dokumente", value: "Vor Ort zur Verfügung stellen" },
+  { label: "Sicherheit Arbeit erforderlich", value: "Ja" },
+  { label: "Kostenlose Parkplätze", value: "Ja" },
 ];
 
 const TenderSummarySection = () => {
+  const router = useRouter();
+
+  const backHandler = () => {
+    router.push("/dashboard/tenders");
+  };
+
+  const editHandler = () => {
+    router.push("/dashboard/tenders/add_tender_form");
+  };
   return (
     <>
       <HeaderSection titletext="DATEN ÜBERPRÜFEN" />
@@ -42,14 +55,10 @@ const TenderSummarySection = () => {
       <Grid container spacing={2} marginLeft={1}>
         {summaryData.map((item, index) => (
           <Grid item xs={6} key={index} paddingBottom={2}>
-            <LabeledTextWithIcon
+            <LabelText
               text={item.label}
-              Icon={MdOutlineEdit}
-              iconColor="#22A7F1"
-              iconSize="1.4rem"
               fontSize="1.2rem"
               textColor="blue.main"
-              iconMarginLeft="0.8rem"
             />
             <Typography variant="bodylr" mt="0.2rem">
               {item.value}
@@ -65,10 +74,12 @@ const TenderSummarySection = () => {
         marginTop={"0.4rem"}
       >
         <Grid item>
-          <GButton color="gprimary" variant="outlined">
+          <GButton color="gprimary" variant="outlined" onClick={backHandler}>
+            Abbrechen
+          </GButton>
+          <GButton color="ggreen" onClick={editHandler}>
             Bearbeiten
           </GButton>
-          <GButton color="ggreen">Speichern</GButton>
         </Grid>
       </Grid>
     </>

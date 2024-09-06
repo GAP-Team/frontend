@@ -1,17 +1,15 @@
 "use client";
 import Cookies from "js-cookie";
-import { Box } from "@mui/material";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-
 import Dashboard from "@/screens/dashboard/Dashboard";
 import { currentUser } from "@/lib/features/userSlice";
 import GNavbar from "@/components/navigation/GNavbar/GNavbar";
-import GAppbar from "@/components/navigation/GAppbar/GAppbar";
 import EmailVerification from "@/components/email/EmailVerification";
-import HeroSection from "@/components/common/GHeroSection/GHeroSection";
 import { checkIsLoggedIn, checkIsUserVerified } from "@/utils/helperJWT";
+import { CircularProgress } from "@mui/material";
+import Box from "@mui/material/Box";
 
 export default function DashboardPage() {
   const router = useRouter();
@@ -19,6 +17,7 @@ export default function DashboardPage() {
 
   const [isLoggedIn, setIsLoggedIn] = useState<Boolean>(false);
   const [isUserVerified, setIsUserVerified] = useState<Boolean>(false);
+  const [isLoading, setIsLoading] = useState<Boolean>(true);
 
   useEffect(() => {
     if (!checkIsLoggedIn()) {
@@ -27,12 +26,7 @@ export default function DashboardPage() {
       setIsLoggedIn(true);
       const isUserVerified = checkIsUserVerified() === "true";
       setIsUserVerified(isUserVerified);
-
-      /*if (checkIsUserVerified() == "false") {
-        setIsUserVerified(false);
-      } else {
-        setIsUserVerified(true);
-      }*/
+      setIsLoading(false);
     }
   }, []);
 
@@ -41,6 +35,21 @@ export default function DashboardPage() {
     router.push("/dashboard");
     Cookies.set("isVerified", "true");
   };
+
+  if (isLoading) {
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh", // This makes it take the full viewport height
+        }}
+      >
+        <CircularProgress />
+      </Box>
+    );
+  }
 
   return (
     <>

@@ -24,8 +24,10 @@ const NewFacility = () => {
       stepName: "Anlageninformationen",
       component: FacilityInformation,
     },
-    { id: 1, stepName: "Zusätzliche Information", component: undefined },
-    { id: 2, stepName: "Übersicht Anlage", component: undefined },
+    { id: 1, stepName: "Prüfung", component: undefined },
+    { id: 2, stepName: "Wartung", component: undefined },
+    { id: 3, stepName: "Dokumente", component: undefined },
+    { id: 4, stepName: "Zusammenfassung", component: undefined },
   ];
 
   const [activeStep, setActiveStep] = useState<ActiveStepItem>(steps[0]);
