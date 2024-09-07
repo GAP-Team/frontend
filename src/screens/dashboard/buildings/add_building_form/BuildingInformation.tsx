@@ -39,13 +39,24 @@ const BuildingInformation = ({ formik }: { formik?: any }) => {
   });
   const [selectedBldngType, setSelectedBldngType] = useState<Item | null>(
     formik?.values?.buildingType
-      ? { label: formik.values.buildingType, value: formik.values.buildingType }
+      ? {
+          label: formik?.values?.buildingType,
+          value: formik?.values?.buildingType,
+        }
       : null
   );
 
   useEffect(() => {
+    if (formik?.values?.buildingType !== undefined) {
+      setSelectedBldngType({
+        label: formik?.values?.buildingType,
+        value: formik?.values?.buildingType,
+      });
+    } else {
+      setSelectedBldngType({ label: "", value: "" });
+    }
     // getAllUsers();
-  }, []);
+  }, [formik?.values]);
 
   const getAllUsers = async () => {
     let allUsers = await userAPIs.getAllUser();

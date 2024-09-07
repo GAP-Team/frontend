@@ -1,27 +1,37 @@
+"use client";
 import * as React from "react";
 import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import Divider from "@mui/material/Divider";
-import IconButton from "@mui/material/IconButton";
-import Tooltip from "@mui/material/Tooltip";
 import Dialog from "@mui/material/Dialog";
-import DialogTitle from "@mui/material/DialogTitle";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogActions from "@mui/material/DialogActions";
 import Button from "@mui/material/Button";
-import { RiDeleteBin6Line } from "react-icons/ri";
 import { FaRegEdit } from "react-icons/fa";
+import { useRouter } from "next/navigation";
+import Divider from "@mui/material/Divider";
+import Tooltip from "@mui/material/Tooltip";
+import MenuItem from "@mui/material/MenuItem";
+import IconButton from "@mui/material/IconButton";
+import { RiDeleteBin6Line } from "react-icons/ri";
+import DialogTitle from "@mui/material/DialogTitle";
+import ListItemIcon from "@mui/material/ListItemIcon";
 import { IoEllipsisHorizontal } from "react-icons/io5";
+import DialogContent from "@mui/material/DialogContent";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContentText from "@mui/material/DialogContentText";
+
 import GButton from "@/components/button/GButton";
 
-export default function BuildingMenu() {
+interface BuildingMenuProps {
+  id: any;
+}
+
+const BuildingMenu: React.FC<BuildingMenuProps> = ({ id }) => {
+  const router = useRouter();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [openDialog, setOpenDialog] = React.useState(false);
   const open = Boolean(anchorEl);
+
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
+    router.push(`/dashboard/buildings/${id}`);
   };
 
   const handleCloseMenu = () => {
@@ -106,7 +116,9 @@ export default function BuildingMenu() {
       </Dialog>
     </>
   );
-}
+};
+
+export default BuildingMenu;
 
 // Styles placed at the bottom
 const menuStyles = {

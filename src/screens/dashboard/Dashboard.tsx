@@ -52,7 +52,11 @@ const Dashboard: React.FC<DashboardProps> = ({ overrideComponent }) => {
       text: "Gebäude",
       subItems: [
         { id: 30, text: "Alle Gebäude", component: <Buildings /> },
-        { id: 31, text: "Gebäude hinzufügen", component: <NewBuilding /> },
+        {
+          id: 31,
+          text: "Gebäude hinzufügen",
+          component: <NewBuilding id="" />,
+        },
       ],
     },
     // { id:4, icon: MdOutlineNoteAlt, text: "Aufträge"},

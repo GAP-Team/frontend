@@ -66,7 +66,7 @@ const BuildingAddress = ({ formik }: { formik?: any }) => {
       label: formik?.values?.state || "",
       value: formik?.values?.state || "",
     });
-  }, []);
+  }, [formik?.values]);
 
   return (
     <Box
@@ -77,16 +77,6 @@ const BuildingAddress = ({ formik }: { formik?: any }) => {
       <Grid container spacing={2}>
         <Grid item xs={6}>
           <LabelWithAsterisk>STRAßE</LabelWithAsterisk>
-          {/* <GTextInput
-            placeholder="STRAßE"
-            id="street"
-            name="street"
-            value={formik?.values?.street}
-            onChange={formik?.handleChange}
-            onBlur={formik?.handleBlur}
-            error={formik?.touched?.street && Boolean(formik?.errors?.street)}
-            helperText={formik?.touched?.street && formik?.errors?.street}
-          /> */}
           <GoogleAutocomplete
             placeholder="Straße"
             id="street"

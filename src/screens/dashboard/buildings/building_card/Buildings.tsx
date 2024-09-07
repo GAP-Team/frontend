@@ -11,9 +11,11 @@ import { dummyBuildings } from "@/utils/Constants";
 import { currentUser } from "@/lib/features/userSlice";
 import addObjSrc from "@/../public/icons/add_building.svg";
 import NoContentPage from "@/components/common/NoContentPage";
+import { setAllBuildingDetails } from "@/lib/features/userSlice";
 import PropertyFilterPanel from "@/components/filter/PropertyFilterPanel";
 
 const Buildings: React.FC = () => {
+  const dispatch = useDispatch();
   const user = useSelector(currentUser);
   const [buildings, setBuildings] = useState<Building[]>([]);
 
@@ -33,6 +35,8 @@ const Buildings: React.FC = () => {
       facilityType
     );
     setBuildings(allBuildings.data);
+
+    dispatch(setAllBuildingDetails(allBuildings.data));
   };
 
   const onStateCityFacilityTypeChange = (

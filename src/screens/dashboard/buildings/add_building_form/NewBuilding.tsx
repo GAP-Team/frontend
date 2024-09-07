@@ -14,29 +14,66 @@ import { ActiveStepItem } from "../../types";
 import { AddBuildingFormValues } from "./types";
 import { SubmitFormFunction } from "@/typings/types";
 import {
-  setUserBuildings,
   currentUser,
+  setUserBuildings,
   currentUserBuildings,
+  setAllBuildingDetails,
 } from "@/lib/features/userSlice";
 
-import PageTitle from "@/components/label/PageTitle";
 import AddBuildingForm from "./AddBuildingForm";
 import BuildingAddress from "./BuildingAddress";
 import BuildingSummary from "./BuildingSummary";
+import PageTitle from "@/components/label/PageTitle";
 import BuildingInformation from "./BuildingInformation";
 import BuildingDocumentation from "./BuildingDocumentation";
 
 import { DocumentTypies } from "@/utils/Constants";
-import { addObjektFormSchema } from "@/utils/ValidationSchema";
 import { handleUploadMultipleDoc } from "@/utils/uploadToS3";
+import { allBuildingDetails } from "@/lib/features/userSlice";
+import { addObjektFormSchema } from "@/utils/ValidationSchema";
 
 // Logger
 const logger = getLogger("new-building");
 
-const NewBuilding = () => {
+interface NewBuildingProps {
+  id: string;
+}
+interface ContactP {
+  firstName: string;
+  lastName: string;
+  phoneNumber: string;
+  // role: string;
+  email: string;
+}
+interface Address {
+  city: string;
+  country: string;
+  houseNumber: string;
+  state: string;
+  street: string;
+  zip: string;
+}
+interface SelectedBuildingData {
+  _id: string | undefined;
+  buildingName: string;
+  totalArea: string;
+  buildingType: string;
+  buildingAbbreviation: string;
+  contactPerson: ContactP[];
+  address: Address;
+  documentUploadType: string;
+  constructionDocs: File[] | undefined;
+  floorplanDocs: File[] | undefined;
+  otherDocs: File[] | undefined;
+  documents: File[] | undefined;
+  serverLink: string;
+}
+
+const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
   const router = useRouter();
   const dispatch = useDispatch();
   const user = useSelector(currentUser);
+  const allBuildings = useSelector(allBuildingDetails);
   const userBuildings = useSelector(currentUserBuildings);
 
   const steps: ActiveStepItem[] = [
@@ -50,26 +87,53 @@ const NewBuilding = () => {
     { id: 3, stepName: "Übersicht Objektdaten", component: BuildingSummary },
   ];
 
+  const [actionType, setActionType] = useState("add");
   const [loading, setLoading] = useState<boolean>(false);
   const [activeStep, setActiveStep] = useState<ActiveStepItem>(steps[0]);
+  const [buildingDetails, setBuildingDetails] =
+    useState<SelectedBuildingData | null>();
+
+  useEffect(() => {
+    if (id === "") {
+      setActionType("add");
+    } else {
+      setActionType("edit");
+      getCurrentBuildingDetails(id);
+    }
+  }, []);
+
+  const getCurrentBuildingDetails = (id: any) => {
+    const selectedBuildingDetails = allBuildings?.filter(
+      (building: any) => id == building?._id
+    );
+    setBuildingDetails(selectedBuildingDetails[0]);
+  };
 
   const initialValues: AddBuildingFormValues = {
-    name: "",
-    totalArea: "",
-    buildingType: "",
-    buildingAbbreviation: "",
-    contactPerson: [],
-    zip: "",
-    city: "",
-    state: "",
-    street: "",
-    houseNumber: "",
-    country: "Deutschland",
-    documentChoice: "Jetzt hochladen Empfohlen",
-    constructionDocs: [],
-    floorplanDocs: [],
-    otherDocs: [],
-    serverLink: "",
+    name: buildingDetails?.buildingName,
+    totalArea: buildingDetails?.totalArea,
+    buildingType: buildingDetails?.buildingType,
+    buildingAbbreviation: buildingDetails?.buildingAbbreviation,
+    contactPerson: buildingDetails?.contactPerson,
+    zip: buildingDetails?.address?.zip,
+    city: buildingDetails?.address?.city,
+    state: buildingDetails?.address?.state,
+    street: buildingDetails?.address?.street,
+    houseNumber: buildingDetails?.address?.houseNumber,
+    country: buildingDetails?.address?.country,
+    documentChoice: buildingDetails?.documentUploadType,
+
+    constructionDocs: buildingDetails?.documents?.filter(
+      (doc: any) => doc.documentType == "BAUUNTERLAGEN"
+    ),
+    floorplanDocs: buildingDetails?.documents?.filter(
+      (doc: any) => doc.documentType == "GRUNDRISSE"
+    ),
+    otherDocs: buildingDetails?.documents?.filter(
+      (doc: any) => doc.documentType == "SONSTIGE"
+    ),
+
+    serverLink: buildingDetails?.serverLink,
   };
 
   const stepFieldsMap: { [key: number]: string[] } = {
@@ -148,8 +212,11 @@ const NewBuilding = () => {
         documentUploadType: values.documentChoice,
         buildingAbbreviation: values.buildingAbbreviation,
       };
-
-      saveBuildingData(arrangedDataObj);
+      if (actionType == "edit") {
+        UpdateBuildingData(arrangedDataObj);
+      } else {
+        saveBuildingData(arrangedDataObj);
+      }
     } catch (error: any) {
       logger.error(
         "Unable to create a new building, post reqeust failed " + error.name,
@@ -162,11 +229,20 @@ const NewBuilding = () => {
     setLoading(true);
     const docObj: any[] = [];
 
-    const uploadDocuments = async (files: File[], docType: string) => {
-      for (const file of files) {
-        const uploadedDoc = await handleUploadMultipleDoc(file);
-        uploadedDoc.documentType = docType;
-        docObj.push(uploadedDoc);
+    const uploadDocuments = async (
+      files: File[] | undefined,
+      docType: string
+    ) => {
+      if (files !== undefined) {
+        for (const file of files) {
+          if (file.hasOwnProperty("documentType")) {
+            docObj.push(file);
+          } else {
+            const uploadedDoc = await handleUploadMultipleDoc(file);
+            uploadedDoc.documentType = docType;
+            docObj.push(uploadedDoc);
+          }
+        }
       }
     };
 
@@ -192,10 +268,39 @@ const NewBuilding = () => {
     }
   };
 
+  const UpdateBuildingData = async (data: any) => {
+    const createBuildingResponse = await buildingAPIs.update(
+      buildingDetails?._id,
+      data
+    );
+    if (createBuildingResponse?.data?.buildingId) {
+      const updatedBuildings = [
+        ...userBuildings,
+        createBuildingResponse.data.buildingId,
+      ];
+      dispatch(setUserBuildings(updatedBuildings));
+    }
+
+    const allUpdatedBuildings = await buildingAPIs.getBuildings(
+      user?._id,
+      "",
+      "",
+      ""
+    );
+    dispatch(setAllBuildingDetails(allUpdatedBuildings.data));
+  };
+
   return (
     <Grid container component="main">
       <Grid item xs={12} md={12} lg={12} sx={{ backgroundColor: "#F9FAFA" }}>
-        <PageTitle title="Neues Objekt erstellen" sx={{ ml: "1.5rem" }} />
+        <PageTitle
+          title={
+            actionType == "edit"
+              ? `Objekt Bearbeiten: ${initialValues?.name}`
+              : `Neues Objekt erstellen`
+          }
+          sx={{ ml: "1.5rem" }}
+        />
         <Formik
           initialValues={initialValues}
           validationSchema={addObjektFormSchema}

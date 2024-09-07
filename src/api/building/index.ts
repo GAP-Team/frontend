@@ -3,6 +3,10 @@ import api from "../axios";
 const buildingAPIs = {
   /* Building Routes */
   create: (data: any) => api.post("/buildings/create", data),
+  getUserStatesCities: (id: string) =>
+    api.get(`/buildings/${id}/get-user-state-city`),
+  update: (buildingId: string | undefined, data: any) =>
+    api.put(`/buildings/${buildingId}`, data),
   getUserStatesCitiesFacilityTypes: (id: string) =>
     api.get(`/buildings/${id}/get-user-state-city-facilitytype`),
   getBuildings: (
