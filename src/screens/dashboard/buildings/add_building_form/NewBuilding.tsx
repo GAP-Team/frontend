@@ -284,6 +284,7 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
     const allUpdatedBuildings = await buildingAPIs.getBuildings(
       user?._id,
       "",
+      "",
       ""
     );
     dispatch(setAllBuildingDetails(allUpdatedBuildings.data));
