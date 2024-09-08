@@ -13,15 +13,28 @@ import gapLogoFull from "../../../../public/icons/gapfull-logo.svg";
 import SidebarItemComponent from "./SidebarItemComponent";
 import { SubSidebarItem } from "./SubSidebarItem";
 import { LuLayoutDashboard } from "react-icons/lu";
+import NewBuilding from "@/screens/dashboard/buildings/add_building_form/NewBuilding";
+import Buildings from "@/screens/dashboard/buildings/building_card/Buildings";
+import NewFacility from "@/screens/dashboard/facilities/add_facility_form/NewFacility";
+import Facilities from "@/screens/dashboard/facilities/facility_card/Facilities";
+import RealEstateUser from "@/screens/dashboard/real_estate_user/RealEstateUser";
+import NewTender from "@/screens/dashboard/tenders/add_tender_form/NewTender";
+import Tenders from "@/screens/dashboard/tenders/Tenders";
+import { CgNotes } from "react-icons/cg";
+import { MdOutlineDoorSliding, MdOutlineAddHomeWork } from "react-icons/md";
+import { TbPigMoney } from "react-icons/tb";
+
 export interface SubItem {
   id: number;
   text: string;
+  url: string;
   component?: React.ReactElement;
 }
 export interface SidebarItem {
   id: number;
   icon: IconType;
   text: string;
+  url?: string;
   component?: React.ReactElement;
   subItems?: SubItem[];
 }
@@ -109,25 +122,25 @@ const Sidebar: React.FC<SidebarProps> = ({ items, setSelected, selected }) => {
             <DrawerLogo src={gapLogo} open={open} />
           )}
         </ListItem>
-        {items.map((item) => (
-          <React.Fragment key={item.id}>
+        {items?.map((item) => (
+          <React.Fragment key={item?.id}>
             {item.subItems ? (
               <SubSidebarItem
-                key={item.id}
+                key={item?.id}
                 item={item}
                 open={open}
                 selected={
-                  selected.id === item.id ||
-                  item.subItems.some((subItem) => subItem.id === selected.id)
+                  selected?.id === item?.id ||
+                  item.subItems.some((subItem) => subItem?.id === selected?.id)
                 }
                 setSelected={setSelected}
               />
             ) : (
               <SidebarItemComponent
-                key={item.id}
+                key={item?.id}
                 item={item}
                 open={open}
-                selected={selected.id === item.id}
+                selected={selected?.id === item?.id}
                 setSelected={setSelected}
               />
             )}

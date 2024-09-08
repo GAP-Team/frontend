@@ -1,9 +1,25 @@
 // store/index.js
+"use client";
 import storage from "redux-persist/lib/storage";
 import { persistStore, persistReducer } from "redux-persist";
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
+import createWebStorage from "redux-persist/lib/storage/createWebStorage";
 
 import userReducer from "./features/userSlice";
+
+const createNoopStorage = () => {
+  return {
+    getItem(_key: any) {
+      return Promise.resolve(null);
+    },
+    setItem(_key: any, value: any) {
+      return Promise.resolve(value);
+    },
+    removeItem(_key: any) {
+      return Promise.resolve();
+    },
+  };
+};
 
 const rootReducer = combineReducers({
   user: userReducer,
@@ -11,7 +27,7 @@ const rootReducer = combineReducers({
 
 const persistConfig = {
   key: "root",
-  storage,
+  storage: typeof window !== "undefined" ? storage : createNoopStorage(),
 };
 
 const makeConfiguredStore = () =>

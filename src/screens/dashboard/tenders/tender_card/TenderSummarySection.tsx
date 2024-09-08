@@ -33,11 +33,11 @@ const TenderSummarySection = () => {
   const router = useRouter();
 
   const backHandler = () => {
-    router.push("/dashboard/tenders");
+    router.push("/real-estate/tenders");
   };
 
   const editHandler = () => {
-    router.push("/dashboard/tenders/add_tender_form");
+    router.push("/real-estate/tenders/add_tender_form");
   };
   return (
     <>

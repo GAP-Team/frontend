@@ -31,7 +31,7 @@ const BuildingMenu: React.FC<BuildingMenuProps> = ({ id }) => {
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
-    router.push(`/dashboard/buildings/${id}`);
+    router.push(`/real-estate/buildings/${id}`);
   };
 
   const handleCloseMenu = () => {

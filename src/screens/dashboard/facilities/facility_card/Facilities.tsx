@@ -20,7 +20,7 @@ const Facilities = () => {
         alt="No Facility"
         buttonLabel="Anlage anlegen"
         title="Noch keine Anlagen angelegt"
-        buttonLink="/dashboard/facilities/add_facility"
+        buttonLink="/real-estate/facilities/add_facility"
         description="Du hast noch keine Anlagen angelegt, wenn Du Deine Anlagen erstellt hast findest Du sie hier."
       />
     );

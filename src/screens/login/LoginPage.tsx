@@ -44,7 +44,7 @@ export default function LoginPage() {
           dispatch(setUser(res.data));
           setAccessToken(res.data.access_token);
           setIsUserVerified(res.data.user?.isVerified);
-          router.push("/dashboard");
+          router.push("/real-estate/dashboard");
         }
       } catch (error: any) {
         if (error.response?.status === 401) {
