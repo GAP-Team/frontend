@@ -80,9 +80,7 @@ const sidebarItems: SidebarItem[] = [
   // { id:5, icon: FaRegFlag, text: "Favoriten" }, // NOT INCLUDED IN GP-V1
 ];
 
-const RealStateUserLayout: React.FC<any> = ({
-  children,
-}) => {
+const RealStateUserLayout: React.FC<any> = ({ children }) => {
   const router = useRouter();
 
   const handleRedirect = (item: any) => {
