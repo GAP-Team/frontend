@@ -11,7 +11,6 @@ import Tenders from "@/screens/dashboard/tenders/Tenders";
 import GAppbar from "@/components/navigation/GAppbar/GAppbar";
 import { SidebarItem } from "@/components/navigation/GSidebar/SideBar";
 import Sidebar, { SubItem } from "@/components/navigation/GSidebar/SideBar";
-
 import NewTender from "@/screens/dashboard/tenders/add_tender_form/NewTender";
 import Buildings from "@/screens/dashboard/buildings/building_card/Buildings";
 import Facilities from "@/screens/dashboard/facilities/facility_card/Facilities";
