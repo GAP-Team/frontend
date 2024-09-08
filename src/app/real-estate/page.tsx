@@ -7,23 +7,9 @@ import { useRouter } from "next/navigation";
 import { LuLayoutDashboard } from "react-icons/lu";
 import { MdOutlineDoorSliding, MdOutlineAddHomeWork } from "react-icons/md";
 
-import Tenders from "@/screens/dashboard/tenders/Tenders";
 import GAppbar from "@/components/navigation/GAppbar/GAppbar";
 import { SidebarItem } from "@/components/navigation/GSidebar/SideBar";
 import Sidebar, { SubItem } from "@/components/navigation/GSidebar/SideBar";
-
-import NewTender from "@/screens/dashboard/tenders/add_tender_form/NewTender";
-import Buildings from "@/screens/dashboard/buildings/building_card/Buildings";
-import Facilities from "@/screens/dashboard/facilities/facility_card/Facilities";
-import RealEstateUser from "@/screens/dashboard/real_estate_user/RealEstateUser";
-import NewBuilding from "@/screens/dashboard/buildings/add_building_form/NewBuilding";
-import NewFacility from "@/screens/dashboard/facilities/add_facility_form/NewFacility";
-
-interface RealStateUserPageProps {
-  /*selected: SidebarItem | SubItem;
-  setSelected: (item: SidebarItem | SubItem) => void;*/
-  children: ReactNode;
-}
 
 const sidebarItems: SidebarItem[] = [
   {
@@ -94,7 +80,7 @@ const sidebarItems: SidebarItem[] = [
   // { id:5, icon: FaRegFlag, text: "Favoriten" }, // NOT INCLUDED IN GP-V1
 ];
 
-const RealStateUserLayout: React.FC<RealStateUserPageProps> = ({
+const RealStateUserLayout: React.FC<any> = ({
   children,
 }) => {
   const router = useRouter();
