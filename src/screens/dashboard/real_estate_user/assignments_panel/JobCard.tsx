@@ -43,7 +43,7 @@ const JobCard: React.FC<JobCardProps> = ({
   const router = useRouter();
 
   const handleClick = () => {
-    router.push(`/real-estate/tenders/${id}`);
+    router.push(`/real_estate/tenders/${id}`);
   };
 
   const chipStyles = statusStyles[status] || statusStyles["offen"];

@@ -65,7 +65,7 @@ const NewTender = () => {
     if (activeStep.id > 0) {
       setActiveStep(steps[activeStep.id - 1]);
     } else {
-      router.push("/real-estate/dashboard");
+      router.push("/real_estate/dashboard");
     }
   };
 
@@ -96,7 +96,7 @@ const NewTender = () => {
       description2="Aussschreibung wurde erfolgreich angelegt"
       description="Du kannst Ihre Ausschreibung in der Ausschreibung-übersicht sehen und bearbeiten."
       buttonLabel="Schließen"
-      redirectUrl="/real-estate/tenders"
+      redirectUrl="/real_estate/tenders"
     />
   ) : (
     <>
@@ -109,7 +109,7 @@ const NewTender = () => {
           />
         </Grid>
         <Grid item>
-          <Link href="/real-estate/tenders" type="button">
+          <Link href="/real_estate/tenders" type="button">
             <IconButton sx={{ marginLeft: "auto" }} size="medium">
               <CgClose color="red" />
             </IconButton>

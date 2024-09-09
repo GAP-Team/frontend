@@ -3,7 +3,7 @@ import React, { ReactNode, useState } from "react";
 import Box from "@mui/material/Box";
 import { CgNotes } from "react-icons/cg";
 import { TbPigMoney } from "react-icons/tb";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { LuLayoutDashboard } from "react-icons/lu";
 import { MdOutlineDoorSliding, MdOutlineAddHomeWork } from "react-icons/md";
 
@@ -17,7 +17,6 @@ const sidebarItems: SidebarItem[] = [
     icon: LuLayoutDashboard,
     text: "Dashboard",
     url: "dashboard",
-    // component: <RealEstateUser />,
   },
   {
     id: 1,
@@ -27,12 +26,12 @@ const sidebarItems: SidebarItem[] = [
       {
         id: 10,
         text: "Alle Ausschreibungen",
-        url: "tenders" /*, component: <Tenders /> */,
+        url: "tenders",
       },
       {
         id: 11,
         text: "Ausschreibung hinzufügen",
-        url: "tenders/add" /*, component: <NewTender />*/,
+        url: "tenders/add",
       },
     ],
   },
@@ -44,12 +43,12 @@ const sidebarItems: SidebarItem[] = [
       {
         id: 20,
         text: "Alle Anlagen",
-        url: "facilities" /*, component: <Facilities />*/,
+        url: "facilities",
       },
       {
         id: 21,
         text: "Anlage hinzufügen",
-        url: "facilities/add" /*, component: <NewFacility />*/,
+        url: "facilities/add",
       },
     ],
   },
@@ -61,23 +60,21 @@ const sidebarItems: SidebarItem[] = [
       {
         id: 30,
         text: "Alle Gebäude",
-        url: "buildings" /*, component: <Buildings />*/,
+        url: "buildings",
       },
       {
         id: 31,
         text: "Gebäude hinzufügen",
-        url: "buildings/add_building" /*, component: <NewBuilding id="" />*/,
+        url: "buildings/add",
       },
     ],
   },
-  // { id:4, icon: MdOutlineNoteAlt, text: "Aufträge"},
   {
     id: 4,
     icon: TbPigMoney,
-    url: "kosteneinsparung",
+    url: "cost_savings",
     text: "Kosteneinsparung",
   },
-  // { id:5, icon: FaRegFlag, text: "Favoriten" }, // NOT INCLUDED IN GP-V1
 ];
 
 const RealStateUserLayout: React.FC<any> = ({ children }) => {
@@ -85,27 +82,39 @@ const RealStateUserLayout: React.FC<any> = ({ children }) => {
 
   const handleRedirect = (item: any) => {
     setSelected(item);
-    router.push(`/real-estate/${item?.url}`);
+    router.push(`/real_estate/${item?.url}`);
   };
 
   const [selected, setSelected] = useState<SidebarItem | SubItem>(
     sidebarItems[0]
   );
 
+  const redirectD = () => {
+    router.push(`/real_estate/dashboard`);
+  };
+
   return (
-    <Box sx={{ display: "flex", backgroundColor: "#F1F3F4" }}>
+    <Box sx={styles.main}>
       <Sidebar
         selected={selected}
         items={sidebarItems}
         setSelected={handleRedirect}
       />
-      <Box sx={{ width: "100%", height: "100%", backgroundColor: "#F1F3F4" }}>
+      <Box sx={styles.insideContainer}>
         <GAppbar />
-        {/* {selected?.component} */}
-        {children}
+        {children === undefined ? redirectD() : children}
       </Box>
     </Box>
   );
 };
 
 export default RealStateUserLayout;
+
+const styles = {
+  main: { display: "flex", backgroundColor: "#F1F3F4" },
+  insideContainer: {
+    width: "100%",
+    height: "100%",
+    backgroundColor: "#F1F3F4",
+  },
+};

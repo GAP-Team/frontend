@@ -1,11 +1,11 @@
-import ReactStateUserLayout from "../page";
+import RealStateUserLayout from "../page";
 
 export default function ServiceProviderDashboard() {
   return (
-    <ReactStateUserLayout>
+    <RealStateUserLayout>
       <div>
         <h1>Service Provider Page</h1>
       </div>
-    </ReactStateUserLayout>
+    </RealStateUserLayout>
   );
 }

@@ -16,13 +16,13 @@ export default function UserMailVerification() {
 
   useEffect(() => {
     if (checkIsUserVerified() === "true") {
-      router.push("/real-estate/dashboard");
+      router.push("/real_estate/dashboard");
     }
   }, []);
 
   const postVerificationAction = () => {
     setIsUserVerified(true);
-    router.push("/real-estate/dashboard");
+    router.push("/real_estate/dashboard");
     Cookies.set("isVerified", "true");
   };
 

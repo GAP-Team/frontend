@@ -58,7 +58,7 @@ const NewFacility = () => {
     if (activeStep.id > 0) {
       setActiveStep(steps[activeStep.id - 1]);
     } else {
-      router.push("/real-estate/dashboard");
+      router.push("/real_estate/dashboard");
     }
   };
 
@@ -85,7 +85,7 @@ const NewFacility = () => {
       description2="Anlage wurde erfolgreich angelegt"
       description="Du kannst Ihre Anlage in der Anlagen-übersicht sehen und bearbeiten."
       buttonLabel="Schließen"
-      redirectUrl="/real-estate/facilities"
+      redirectUrl="/real_estate/facilities"
     />
   ) : (
     <>
@@ -98,7 +98,7 @@ const NewFacility = () => {
           />
         </Grid>
         <Grid item>
-          <Link href="/real-estate/facilities" type="button">
+          <Link href="/real_estate/facilities" type="button">
             <IconButton sx={{ marginLeft: "auto" }} size="medium">
               <CgClose color="red" />
             </IconButton>

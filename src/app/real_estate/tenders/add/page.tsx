@@ -1,11 +1,11 @@
 import Dashboard from "@/screens/dashboard/Dashboard";
 import NewTender from "@/screens/dashboard/tenders/add_tender_form/NewTender";
-import ReactStateUserLayout from "../../page";
+import RealStateUserLayout from "../../page";
 
 export default function AddTenderFormPage() {
   return (
-    <ReactStateUserLayout>
+    <RealStateUserLayout>
       <NewTender />
-    </ReactStateUserLayout>
+    </RealStateUserLayout>
   );
 }

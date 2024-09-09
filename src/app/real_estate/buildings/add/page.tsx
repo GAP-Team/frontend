@@ -1,11 +1,10 @@
-import Dashboard from "@/screens/dashboard/Dashboard";
+import RealStateUserLayout from "../../page";
 import NewBuilding from "@/screens/dashboard/buildings/add_building_form/NewBuilding";
-import ReactStateUserLayout from "../../page";
 
 export default function AddBuildingFormPage() {
   return (
-    <ReactStateUserLayout>
+    <RealStateUserLayout>
       <NewBuilding id="" />
-    </ReactStateUserLayout>
+    </RealStateUserLayout>
   );
 }

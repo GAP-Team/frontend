@@ -179,7 +179,7 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
     if (activeStep.id > 0) {
       setActiveStep(steps[activeStep.id - 1]);
     } else {
-      router.push("/real-estate/dashboard");
+      router.push("/real_estate/dashboard");
     }
   };
 
