@@ -3,7 +3,7 @@ import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import { CgClose } from "react-icons/cg";
 import { useFormikContext } from "formik";
-import { IconButton } from "@mui/material";
+import { IconButton, Typography } from "@mui/material";
 import { useRouter } from "next/navigation";
 import Divider from "@mui/material/Divider";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -98,14 +98,13 @@ const AddBuildingForm = ({
   return (
     <>
       <Grid item xs={2}>
-        <Link
-          underline="hover"
-          sx={styles.stepIndicator}
+        <Typography
           color="inherit"
-          href="/"
+          variant="subtitle2"
+          sx={styles.stepIndicator}
         >
           Schritt {!isBeyondLastStep ? activeStep?.id + 1 : 4} / {steps.length}
-        </Link>
+        </Typography>
         <GStepper
           activeStep={activeStep.id}
           steps={steps.map((step) => step.stepName)}
