@@ -1,6 +1,6 @@
 import React from "react";
 import Grid from "@mui/material/Grid";
-import { Divider, Link } from "@mui/material";
+import { Divider, Link, Typography } from "@mui/material";
 import GStepper from "@/components/stepper/GStepper";
 import GButton from "@/components/button/GButton";
 import { ActiveStepItem } from "./types";
@@ -27,14 +27,13 @@ const AddFacilityForm: React.FC<AddFacilityFormProps> = ({
   return (
     <>
       <Grid item xs={2}>
-        <Link
-          underline="hover"
-          sx={styles.stepIndicator}
+        <Typography
           color="inherit"
-          href="/"
+          variant="subtitle2"
+          sx={styles.stepIndicator}
         >
           Schritt {activeStep?.id + 1} / {steps.length}
-        </Link>
+        </Typography>
         <GStepper
           activeStep={activeStep.id}
           steps={steps.map((step) => step.stepName)}
