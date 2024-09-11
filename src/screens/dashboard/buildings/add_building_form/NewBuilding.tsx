@@ -114,7 +114,7 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
     totalArea: buildingDetails?.totalArea,
     buildingType: buildingDetails?.buildingType,
     buildingAbbreviation: buildingDetails?.buildingAbbreviation,
-    contactPerson: buildingDetails?.contactPerson,
+    contactPerson: buildingDetails?.contactPerson || [],
     zip: buildingDetails?.address?.zip,
     city: buildingDetails?.address?.city,
     state: buildingDetails?.address?.state,

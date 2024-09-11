@@ -109,17 +109,7 @@ export const addObjektFormSchema = yup
       .min(1, "Gesamtfläche muss größer als 0 sein."),
     buildingType: yup.string().required("Gebäudetyp ist erforderlich."),
     // buildingAbbreviation: yup.string(),
-    contactPerson: yup
-      .array()
-      .of(
-        yup.object({
-          lastName: yup.string(),
-          firstName: yup.string(),
-          phoneNumber: yup.string(),
-          email: yup.string().email("Eingabe einer gültigen E-Mail"),
-        })
-      )
-      .min(0, "Mindestens eine Kontaktperson ist erforderlich."),
+    // .min(0, "Mindestens eine Kontaktperson ist erforderlich."),
     street: yup.string().required("STRAßE ist erforderlich."),
     houseNumber: yup
       .number()
@@ -172,6 +162,19 @@ export const addObjektFormSchema = yup
       return true;
     }
   );
+
+export const newContactSchema = yup.object().shape({
+  firstName: yup.string().required("Vorname ist erforderlich."),
+  lastName: yup.string().required("Nachname ist erforderlich."),
+  email: yup
+    .string()
+    .email("Ungültige Email")
+    .required("Email ist erforderlich."),
+  phoneNumber: yup
+    .string()
+    .required("Telefonnummer ist erforderlich.")
+    .matches(/^\d+$/, "Telefonnummer muss eine gültige Nummer sein."),
+});
 
 export const addTenderValidationSchema = [
   yup.object().shape({
