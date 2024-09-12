@@ -38,7 +38,7 @@ const logger = getLogger("new-building");
 interface NewBuildingProps {
   id: string;
 }
-interface ContactP {
+interface ContactPersonDataType {
   firstName: string;
   lastName: string;
   phoneNumber: string;
@@ -54,18 +54,18 @@ interface Address {
   zip: string;
 }
 interface SelectedBuildingData {
-  _id: string | undefined;
+  _id: string;
   buildingName: string;
   totalArea: string;
   buildingType: string;
   buildingAbbreviation: string;
-  contactPerson: ContactP[];
+  contactPerson: ContactPersonDataType[];
   address: Address;
   documentUploadType: string;
-  constructionDocs: File[] | undefined;
-  floorplanDocs: File[] | undefined;
-  otherDocs: File[] | undefined;
-  documents: File[] | undefined;
+  constructionDocs: File[];
+  floorplanDocs: File[];
+  otherDocs: File[];
+  documents: File[];
   serverLink: string;
 }
 
@@ -110,30 +110,35 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
   };
 
   const initialValues: AddBuildingFormValues = {
-    name: buildingDetails?.buildingName,
-    totalArea: buildingDetails?.totalArea,
-    buildingType: buildingDetails?.buildingType,
-    buildingAbbreviation: buildingDetails?.buildingAbbreviation,
-    contactPerson: buildingDetails?.contactPerson,
-    zip: buildingDetails?.address?.zip,
-    city: buildingDetails?.address?.city,
-    state: buildingDetails?.address?.state,
-    street: buildingDetails?.address?.street,
-    houseNumber: buildingDetails?.address?.houseNumber,
-    country: buildingDetails?.address?.country,
-    documentChoice: buildingDetails?.documentUploadType,
+    name: buildingDetails?.buildingName || "",
+    totalArea: buildingDetails?.totalArea || "",
+    buildingType: buildingDetails?.buildingType || "",
+    buildingAbbreviation: buildingDetails?.buildingAbbreviation || "",
+    contactPerson: buildingDetails?.contactPerson
+      ? buildingDetails?.contactPerson
+      : [],
+    zip: buildingDetails?.address?.zip || "",
+    city: buildingDetails?.address?.city || "",
+    state: buildingDetails?.address?.state || "",
+    street: buildingDetails?.address?.street || "",
+    houseNumber: buildingDetails?.address?.houseNumber || "",
+    country: buildingDetails?.address?.country || "Deutschland",
+    documentChoice:
+      buildingDetails?.documentUploadType || "Jetzt hochladen Empfohlen",
+    constructionDocs:
+      buildingDetails?.documents?.filter(
+        (doc: any) => doc.documentType == "BAUUNTERLAGEN"
+      ) || [],
+    floorplanDocs:
+      buildingDetails?.documents?.filter(
+        (doc: any) => doc.documentType == "GRUNDRISSE"
+      ) || [],
+    otherDocs:
+      buildingDetails?.documents?.filter(
+        (doc: any) => doc.documentType == "SONSTIGE"
+      ) || [],
 
-    constructionDocs: buildingDetails?.documents?.filter(
-      (doc: any) => doc.documentType == "BAUUNTERLAGEN"
-    ),
-    floorplanDocs: buildingDetails?.documents?.filter(
-      (doc: any) => doc.documentType == "GRUNDRISSE"
-    ),
-    otherDocs: buildingDetails?.documents?.filter(
-      (doc: any) => doc.documentType == "SONSTIGE"
-    ),
-
-    serverLink: buildingDetails?.serverLink,
+    serverLink: buildingDetails?.serverLink || "",
   };
 
   const stepFieldsMap: { [key: number]: string[] } = {
@@ -189,12 +194,12 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
   ) => {
     try {
       const addressObj = {
-        zip: values.zip,
         city: values.city,
         state: values.state,
         street: values.street,
         country: values.country,
-        houseNumber: values.houseNumber,
+        zip: Number(values.zip),
+        houseNumber: Number(values.houseNumber),
       };
 
       const formateDate = moment().format("YYYY-MM-DDTHH:mm:ss.SSS[Z]");
@@ -207,7 +212,7 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
         buildingName: values.name,
         serverLink: values.serverLink,
         buildingType: values.buildingType,
-        totalArea: Number(values.totalArea),
+        totalArea: values.totalArea != "" ? Number(values.totalArea) : null,
         contactPerson: values.contactPerson,
         documentUploadType: values.documentChoice,
         buildingAbbreviation: values.buildingAbbreviation,
@@ -229,19 +234,14 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
     setLoading(true);
     const docObj: any[] = [];
 
-    const uploadDocuments = async (
-      files: File[] | undefined,
-      docType: string
-    ) => {
-      if (files !== undefined) {
-        for (const file of files) {
-          if (file.hasOwnProperty("documentType")) {
-            docObj.push(file);
-          } else {
-            const uploadedDoc = await handleUploadMultipleDoc(file);
-            uploadedDoc.documentType = docType;
-            docObj.push(uploadedDoc);
-          }
+    const uploadDocuments = async (files: File[], docType: string) => {
+      for (const file of files) {
+        if (file.hasOwnProperty("documentType")) {
+          docObj.push(file);
+        } else {
+          const uploadedDoc = await handleUploadMultipleDoc(file);
+          uploadedDoc.documentType = docType;
+          docObj.push(uploadedDoc);
         }
       }
     };
