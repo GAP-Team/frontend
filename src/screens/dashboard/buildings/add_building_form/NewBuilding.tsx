@@ -235,7 +235,6 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
     const docObj: any[] = [];
 
     const uploadDocuments = async (files: File[], docType: string) => {
-      // if (files !== undefined) {
       for (const file of files) {
         if (file.hasOwnProperty("documentType")) {
           docObj.push(file);
@@ -245,7 +244,6 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
           docObj.push(uploadedDoc);
         }
       }
-      // }
     };
 
     await uploadDocuments(values.otherDocs, DocumentTypies.SONSTIGE);
