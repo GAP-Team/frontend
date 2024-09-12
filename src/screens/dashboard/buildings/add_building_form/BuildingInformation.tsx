@@ -37,13 +37,16 @@ const BuildingInformation = ({ formik }: { formik?: any }) => {
     email: "",
     phoneNumber: "",
   });
+
   const [newContactErrors, setNewContactErrors] = useState({
     firstName: "",
     lastName: "",
     email: "",
     phoneNumber: "",
   });
-  const [selectedBldngType, setSelectedBldngType] = useState<Item | null>(
+
+  const [selectedBuildingType, setSelectedBuildingType] = useState<Item | null>(
+
     formik?.values?.buildingType
       ? {
           label: formik?.values?.buildingType,
@@ -53,13 +56,13 @@ const BuildingInformation = ({ formik }: { formik?: any }) => {
   );
 
   useEffect(() => {
-    if (formik?.values?.buildingType !== undefined) {
-      setSelectedBldngType({
+    if (formik?.values?.buildingType !== "") {
+      setSelectedBuildingType({
         label: formik?.values?.buildingType,
         value: formik?.values?.buildingType,
       });
     } else {
-      setSelectedBldngType({ label: "", value: "" });
+      setSelectedBuildingType({ label: "", value: "" });
     }
   }, [formik?.values]);
 
@@ -84,7 +87,7 @@ const BuildingInformation = ({ formik }: { formik?: any }) => {
   };
 
   const handleStateSelect = (selectedItem: Item | null): void => {
-    setSelectedBldngType(selectedItem);
+    setSelectedBuildingType(selectedItem);
     formik?.setFieldValue(
       "buildingType",
       selectedItem ? selectedItem.value : ""
@@ -168,7 +171,7 @@ const BuildingInformation = ({ formik }: { formik?: any }) => {
               formik?.touched?.buildingType && formik?.errors?.buildingType
             }
             onSelect={handleStateSelect}
-            selectedState={selectedBldngType}
+            selectedState={selectedBuildingType}
           />
         </Grid>
         <Grid item xs={12} sm={3}>
