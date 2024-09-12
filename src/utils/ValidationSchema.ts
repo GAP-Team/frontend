@@ -96,82 +96,59 @@ export const registrationValidationSchema = yup
       }
     }
   );
-export const addObjektFormSchema = yup
-  .object()
-  .shape({
-    name: yup
-      .string()
-      .required("Gebäudename ist erforderlich.")
-      .min(3, "Gebäudename muss mindestens 3 Zeichen lang sein."),
-    totalArea: yup
-      .number()
-      .typeError("Gesamtfläche muss eine Zahl sein.")
-      .min(1, "Gesamtfläche muss größer als 0 sein."),
-    buildingType: yup.string().required("Gebäudetyp ist erforderlich."),
-    // buildingAbbreviation: yup.string(),
-    contactPerson: yup
-      .array()
-      .of(
-        yup.object({
-          lastName: yup.string(),
-          firstName: yup.string(),
-          phoneNumber: yup.string(),
-          email: yup.string().email("Eingabe einer gültigen E-Mail"),
-        })
-      )
-      .min(0, "Mindestens eine Kontaktperson ist erforderlich."),
-    street: yup.string().required("STRAßE ist erforderlich."),
-    houseNumber: yup
-      .number()
-      .typeError("Hausnummer muss eine Zahl sein.")
-      .required("Hausnummer ist erforderlich.")
-      .positive("Hausnummer muss größer als 0 sein.")
-      .integer("Hausnummer muss eine ganze Zahl sein."),
-    zip: yup
-      .string()
-      .required("Postleitzahl ist erforderlich")
-      .matches(
-        /^\d{4,5}$/,
-        "Postleitzahl muss zwischen 4 und 5 Ziffern lang sein"
-      ),
-    city: yup.string().required("Stadt ist erforderlich."),
-    state: yup.string().required("Bundesland ist erforderlich."),
-    documentChoice: yup.string(),
-    constructionDocs: yup.array().of(yup.mixed()),
-    floorplanDocs: yup.array().of(yup.mixed()),
-    otherDocs: yup.array().of(yup.mixed()),
-    serverLink: yup
-      .string()
-      .test("requiredLink", "Server link ist erforderlich.", function (value) {
-        const { documentChoice } = this.parent;
-        if (documentChoice === "Server verküpfung") {
-          return !!value;
-        }
-        return true;
+export const addObjektFormSchema = yup.object().shape({
+  name: yup
+    .string()
+    .required("Gebäudename ist erforderlich.")
+    .min(3, "Gebäudename muss mindestens 3 Zeichen lang sein."),
+  totalArea: yup
+    .number()
+    .typeError("Gesamtfläche muss eine Zahl sein.")
+    .min(1, "Gesamtfläche muss größer als 0 sein."),
+  buildingType: yup.string().required("Gebäudetyp ist erforderlich."),
+  // buildingAbbreviation: yup.string(),
+  contactPerson: yup
+    .array()
+    .of(
+      yup.object({
+        lastName: yup.string(),
+        firstName: yup.string(),
+        phoneNumber: yup.string(),
+        email: yup.string().email("Eingabe einer gültigen E-Mail"),
       })
-      .url("Server-Link muss eine gültige URL sein."),
-  })
-  .test(
-    "requiredDocs",
-    "Laden Sie mindestens ein Dokument hoch",
-    function (values) {
-      const { documentChoice, constructionDocs, floorplanDocs, otherDocs } =
-        values;
-      if (documentChoice == "Jetzt hochladen Empfohlen") {
-        if (
-          (!constructionDocs || constructionDocs.length == 0) &&
-          (!floorplanDocs || floorplanDocs.length == 0) &&
-          (!otherDocs || otherDocs.length == 0)
-        ) {
-          return this.createError({
-            path: "constructionDocs",
-            message: "Laden Sie mindestens ein Dokument hoch",
-          });
-        }
+    )
+    .min(0, "Mindestens eine Kontaktperson ist erforderlich."),
+  street: yup.string().required("STRAßE ist erforderlich."),
+  houseNumber: yup
+    .number()
+    .typeError("Hausnummer muss eine Zahl sein.")
+    .required("Hausnummer ist erforderlich.")
+    .positive("Hausnummer muss größer als 0 sein.")
+    .integer("Hausnummer muss eine ganze Zahl sein."),
+  zip: yup
+    .string()
+    .required("Postleitzahl ist erforderlich")
+    .matches(
+      /^\d{4,5}$/,
+      "Postleitzahl muss zwischen 4 und 5 Ziffern lang sein"
+    ),
+  city: yup.string().required("Stadt ist erforderlich."),
+  state: yup.string().required("Bundesland ist erforderlich."),
+  documentChoice: yup.string(),
+  constructionDocs: yup.array().of(yup.mixed()),
+  floorplanDocs: yup.array().of(yup.mixed()),
+  otherDocs: yup.array().of(yup.mixed()),
+  serverLink: yup
+    .string()
+    .test("requiredLink", "Server link ist erforderlich.", function (value) {
+      const { documentChoice } = this.parent;
+      if (documentChoice === "Server verküpfung") {
+        return !!value;
       }
       return true;
-    }
-  );
+    })
+    .url("Server-Link muss eine gültige URL sein."),
+});
 
 export const addTenderValidationSchema = [
   yup.object().shape({
