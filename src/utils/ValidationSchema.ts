@@ -99,14 +99,12 @@ export const registrationValidationSchema = yup
 export const addObjektFormSchema = yup.object().shape({
   name: yup
     .string()
-    .required("Gebäudename ist erforderlich.")
-    .min(3, "Gebäudename muss mindestens 3 Zeichen lang sein."),
+    .required("Gebäudename ist erforderlich."),
   totalArea: yup
     .number()
-    .typeError("Gesamtfläche muss eine Zahl sein.")
-    .min(1, "Gesamtfläche muss größer als 0 sein."),
+    .typeError("Gesamtfläche muss eine Zahl sein."),
   buildingType: yup.string().required("Gebäudetyp ist erforderlich."),
-  // buildingAbbreviation: yup.string(),
+  buildingAbbreviation: yup.string(),
   contactPerson: yup
     .array()
     .of(
@@ -116,8 +114,7 @@ export const addObjektFormSchema = yup.object().shape({
         phoneNumber: yup.string(),
         email: yup.string().email("Eingabe einer gültigen E-Mail"),
       })
-    )
-    .min(0, "Mindestens eine Kontaktperson ist erforderlich."),
+    ),
   street: yup.string().required("STRAßE ist erforderlich."),
   houseNumber: yup
     .number()
