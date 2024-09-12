@@ -135,19 +135,17 @@ const NewTender = () => {
           onSubmit={handleNext}
         >
           {({ isSubmitting, handleSubmit }) => (
-            <Form>
-              <Grid sx={styles.form}>
-                <AddTenderForm
-                  activeStep={activeStep}
-                  steps={steps}
-                  handleBack={handleBack}
-                  handleSubmit={handleSubmit}
-                  isSubmitting={isSubmitting}
-                  isBeyondLastStep={isSubmitted}
-                  formOrSuccessContent={formOrSuccessContent}
-                />
-              </Grid>
-            </Form>
+            <Grid sx={styles.form}>
+              <AddTenderForm
+                activeStep={activeStep}
+                steps={steps}
+                handleBack={handleBack}
+                handleSubmit={handleSubmit}
+                isSubmitting={isSubmitting}
+                isBeyondLastStep={isSubmitted}
+                formOrSuccessContent={formOrSuccessContent}
+              />
+            </Grid>
           )}
         </Formik>
       </Grid>
