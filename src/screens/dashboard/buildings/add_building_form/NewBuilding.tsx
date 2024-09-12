@@ -38,7 +38,7 @@ const logger = getLogger("new-building");
 interface NewBuildingProps {
   id: string;
 }
-interface ContactP {
+interface ContactPersonDataType {
   firstName: string;
   lastName: string;
   phoneNumber: string;
@@ -54,18 +54,18 @@ interface Address {
   zip: string;
 }
 interface SelectedBuildingData {
-  _id: string | undefined;
+  _id: string;
   buildingName: string;
   totalArea: string;
   buildingType: string;
   buildingAbbreviation: string;
-  contactPerson: ContactP[];
+  contactPerson: ContactPersonDataType[];
   address: Address;
   documentUploadType: string;
-  constructionDocs: File[] | undefined;
-  floorplanDocs: File[] | undefined;
-  otherDocs: File[] | undefined;
-  documents: File[] | undefined;
+  constructionDocs: File[];
+  floorplanDocs: File[];
+  otherDocs: File[];
+  documents: File[];
   serverLink: string;
 }
 
@@ -121,9 +121,7 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
     city: buildingDetails?.address?.city || "",
     state: buildingDetails?.address?.state || "",
     street: buildingDetails?.address?.street || "",
-    houseNumber: buildingDetails?.address?.houseNumber
-      ? Number(buildingDetails?.address?.houseNumber)
-      : 0,
+    houseNumber: buildingDetails?.address?.houseNumber || "",
     country: buildingDetails?.address?.country || "Deutschland",
     documentChoice: buildingDetails?.documentUploadType
       ? buildingDetails?.documentUploadType
@@ -219,10 +217,7 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
         totalArea: values.totalArea != "" ? Number(values.totalArea) : null,
         contactPerson: values.contactPerson,
         documentUploadType: values.documentChoice,
-        buildingAbbreviation:
-          values.buildingAbbreviation != ""
-            ? Number(values.buildingAbbreviation)
-            : null,
+        buildingAbbreviation: values.buildingAbbreviation,
       };
       if (actionType == "edit") {
         UpdateBuildingData(arrangedDataObj);
@@ -241,21 +236,18 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
     setLoading(true);
     const docObj: any[] = [];
 
-    const uploadDocuments = async (
-      files: File[] | undefined,
-      docType: string
-    ) => {
-      if (files !== undefined) {
-        for (const file of files) {
-          if (file.hasOwnProperty("documentType")) {
-            docObj.push(file);
-          } else {
-            const uploadedDoc = await handleUploadMultipleDoc(file);
-            uploadedDoc.documentType = docType;
-            docObj.push(uploadedDoc);
-          }
+    const uploadDocuments = async (files: File[], docType: string) => {
+      // if (files !== undefined) {
+      for (const file of files) {
+        if (file.hasOwnProperty("documentType")) {
+          docObj.push(file);
+        } else {
+          const uploadedDoc = await handleUploadMultipleDoc(file);
+          uploadedDoc.documentType = docType;
+          docObj.push(uploadedDoc);
         }
       }
+      // }
     };
 
     await uploadDocuments(values.otherDocs, DocumentTypies.SONSTIGE);

@@ -11,7 +11,7 @@ export interface AddBuildingFormValues {
   floorplanDocs: File[];
   otherDocs: File[];
   serverLink: string;
-  houseNumber: number;
+  houseNumber: string;
   buildingType: string;
   buildingAbbreviation: string;
   contactPerson: ContactPersonItem[];
