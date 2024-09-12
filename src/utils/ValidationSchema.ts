@@ -97,24 +97,18 @@ export const registrationValidationSchema = yup
     }
   );
 export const addObjektFormSchema = yup.object().shape({
-  name: yup
-    .string()
-    .required("Gebäudename ist erforderlich."),
-  totalArea: yup
-    .number()
-    .typeError("Gesamtfläche muss eine Zahl sein."),
+  name: yup.string().required("Gebäudename ist erforderlich."),
+  totalArea: yup.number().typeError("Gesamtfläche muss eine Zahl sein."),
   buildingType: yup.string().required("Gebäudetyp ist erforderlich."),
   buildingAbbreviation: yup.string(),
-  contactPerson: yup
-    .array()
-    .of(
-      yup.object({
-        lastName: yup.string(),
-        firstName: yup.string(),
-        phoneNumber: yup.string(),
-        email: yup.string().email("Eingabe einer gültigen E-Mail"),
-      })
-    ),
+  contactPerson: yup.array().of(
+    yup.object({
+      lastName: yup.string(),
+      firstName: yup.string(),
+      phoneNumber: yup.string(),
+      email: yup.string().email("Eingabe einer gültigen E-Mail"),
+    })
+  ),
   street: yup.string().required("STRAßE ist erforderlich."),
   houseNumber: yup
     .number()
