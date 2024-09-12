@@ -1,60 +1,101 @@
-## GAP Frontend
+# GAP Frontend
 
-A Next.js 14 and App Router-ready featuring:
+A Next.js 14 project with App Router, ready to power GAP with the latest features and best practices:
 
-- Next.js App Router
-- Optimized for SEO using Next.js's Metadata
-- Styling Landingpage with Tailwind CSS + Daisy + Flowbite
-- Styling GAP dashboards with MUI Library
+## Key Features:
 
-## Conventions to hold on:
+- **Next.js App Router** for efficient routing and server-side rendering.
+- **SEO Optimization** using Next.js's Metadata for better search engine visibility.
+- **Tailwind CSS + Daisy + Flowbite** for styling the landing page.
+- **MUI (Material-UI) Library** for building modern, responsive dashboards.
 
-- name of folders always in **lower case** ot it has multiple words than **like_this**.
-- name of Typescript files in **CamelCase**.
-- structure component folder into categories **input**, **button**, etc.
-- using **G** at the begining of the file name of the Components to refers that GAP Component and not from Framework.
-- **inline-style** with sx props from MUI should be extracted as an **ts object** and defined at the end of each component.
-- icons are mixed between from **Figma**, **Font awsome**, **react-icons** and **MUI icons**.
-- fonts and colors for landingpage defined in **tailwind.config.ts**
-- fonts and colors for dashboards defined in **app/theme.ts**
+## Project Conventions:
+
+- **Folder Naming:** Use **lower case** for folder names. If the name consists of multiple words, use **snake_case** (e.g., `like_this`).
+- **File Naming:** Use **CamelCase** for TypeScript file names (e.g., `MyComponent.tsx`).
+- **Component Structure:** Organize component folders into categories like **input**, **button**, etc.
+- **Component Naming:** Prefix the name of components with **G** (e.g., `GButton.tsx`) to indicate it's a GAP-specific component and not from a framework.
+- **Inline Styles:** Extract inline styles (from MUI's `sx` prop) into a TypeScript object and define them at the end of each component file.
+- **Icons:** Use a mix of icons from **Figma**, **Font Awesome**, **react-icons**, and **MUI icons**.
+- **Fonts & Colors:**
+  - Landing page styles are defined in **tailwind.config.ts**.
+  - Dashboard styles are defined in **app/theme.ts**.
 
 ## Getting Started
 
-- install npm packages
+1. Install npm packages:
 
-```
-npm install
-```
+   ```bash
+   npm install
+   ```
 
-- copy the `.env.example` into `.env` and update the real variables in `.env`
+2. Copy the `.env.example` file to `.env` and update it with real variables.
 
-- run the development server:
+3. Run the development server:
 
-```
-npm run dev
-```
+   ```bash
+   npm run dev
+   ```
 
-- Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+4. Open [http://localhost:3000](http://localhost:3000) in your browser to view the application.
 
-## or Run the App with Docker
+## Running the App with Docker
 
-The application is setup to run in docker with docker-compose `docker-compose up`
+The application is set up to run with Docker. You can start it with the following command:
 
-if you do not want log messages run `docker-compose up -d`
-
-## The App hosted on DigitalOcean
-
-```
-goldfish-app-2ccci.ondigitalocean.app/
-
+```bash
+docker-compose up
 ```
 
-## Important:
+To run the app in detached mode without log messages:
 
-- `.env.example`should always be up-tp-date with Dummy variables
+```bash
+docker-compose up -d
+```
 
-## CI/CD
+## Deployment
 
-if the CI/CD fails due to code formatting reason and it does not match the Prettier Format Rules, then run the following comands to reformat the code and check it:
-`npx prettier --write .`
-`npx prettier --check .`
+The app is hosted on AWS:
+
+```
+
+```
+
+## Environment Variables
+
+Always keep the `.env.example` file up to date with dummy variables to ensure a smooth setup for new team members.
+
+## CI/CD with Prettier and ESLint
+
+We have CI/CD integrated to ensure code quality and formatting are enforced consistently. If the CI/CD pipeline fails due to code formatting issues or linting errors, follow these steps:
+
+1. **To reformat the code with Prettier:**
+
+   Run the following command to automatically fix formatting issues:
+
+   ```bash
+   npx prettier --write .
+   ```
+
+   You can also check the formatting without applying changes:
+
+   ```bash
+   npx prettier --check .
+   ```
+
+   Or, use the predefined npm script for a faster process:
+
+   ```bash
+   npm run format
+   ```
+
+2. **To lint the code with ESLint:**
+
+   Ensure your code follows ESLint rules by running:
+
+   ```bash
+   npm run lint
+   ```
+
+This will help keep the codebase clean, enforce consistent styling, and make collaboration within the team easier.
+
