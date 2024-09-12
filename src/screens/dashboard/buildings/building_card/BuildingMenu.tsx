@@ -20,10 +20,10 @@ import DialogContentText from "@mui/material/DialogContentText";
 import GButton from "@/components/button/GButton";
 
 interface BuildingMenuProps {
-  buildindId: any;
+  buildingId: string;
 }
 
-const BuildingMenu: React.FC<BuildingMenuProps> = ({ buildindId }) => {
+const BuildingMenu: React.FC<BuildingMenuProps> = ({ buildingId }) => {
   const router = useRouter();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [openDialog, setOpenDialog] = React.useState(false);
@@ -31,7 +31,7 @@ const BuildingMenu: React.FC<BuildingMenuProps> = ({ buildindId }) => {
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
-    router.push(`/real_estate/buildings/edit/${buildindId}`);
+    router.push(`/real_estate/buildings/edit/${buildingId}`);
   };
 
   const handleCloseMenu = () => {

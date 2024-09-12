@@ -29,7 +29,7 @@ const BuildingItem: React.FC<BuildingItemProps> = ({ building }) => {
             {building.buildingType}
           </Typography>
         </Box>
-        <BuildingMenu buildindId={building?._id} />
+        <BuildingMenu buildingId={building?._id} />
       </Box>
       <Box sx={styles.header} marginTop="1rem">
         <Stack direction="row" alignItems="center" gap={2}>

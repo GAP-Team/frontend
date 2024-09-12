@@ -123,10 +123,8 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
     street: buildingDetails?.address?.street || "",
     houseNumber: buildingDetails?.address?.houseNumber || "",
     country: buildingDetails?.address?.country || "Deutschland",
-    documentChoice: buildingDetails?.documentUploadType
-      ? buildingDetails?.documentUploadType
-      : "Jetzt hochladen Empfohlen",
-
+    documentChoice:
+      buildingDetails?.documentUploadType || "Jetzt hochladen Empfohlen",
     constructionDocs:
       buildingDetails?.documents?.filter(
         (doc: any) => doc.documentType == "BAUUNTERLAGEN"
