@@ -110,30 +110,39 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
   };
 
   const initialValues: AddBuildingFormValues = {
-    name: buildingDetails?.buildingName,
-    totalArea: buildingDetails?.totalArea,
-    buildingType: buildingDetails?.buildingType,
-    buildingAbbreviation: buildingDetails?.buildingAbbreviation,
-    contactPerson: buildingDetails?.contactPerson,
-    zip: buildingDetails?.address?.zip,
-    city: buildingDetails?.address?.city,
-    state: buildingDetails?.address?.state,
-    street: buildingDetails?.address?.street,
-    houseNumber: buildingDetails?.address?.houseNumber,
-    country: buildingDetails?.address?.country,
-    documentChoice: buildingDetails?.documentUploadType,
+    name: buildingDetails?.buildingName || "",
+    totalArea: buildingDetails?.totalArea || "",
+    buildingType: buildingDetails?.buildingType || "",
+    buildingAbbreviation: buildingDetails?.buildingAbbreviation || "",
+    contactPerson: buildingDetails?.contactPerson
+      ? buildingDetails?.contactPerson
+      : [],
+    zip: buildingDetails?.address?.zip || "",
+    city: buildingDetails?.address?.city || "",
+    state: buildingDetails?.address?.state || "",
+    street: buildingDetails?.address?.street || "",
+    houseNumber: buildingDetails?.address?.houseNumber
+      ? Number(buildingDetails?.address?.houseNumber)
+      : 0,
+    country: buildingDetails?.address?.country || "Deutschland",
+    documentChoice: buildingDetails?.documentUploadType
+      ? buildingDetails?.documentUploadType
+      : "Jetzt hochladen Empfohlen",
 
-    constructionDocs: buildingDetails?.documents?.filter(
-      (doc: any) => doc.documentType == "BAUUNTERLAGEN"
-    ),
-    floorplanDocs: buildingDetails?.documents?.filter(
-      (doc: any) => doc.documentType == "GRUNDRISSE"
-    ),
-    otherDocs: buildingDetails?.documents?.filter(
-      (doc: any) => doc.documentType == "SONSTIGE"
-    ),
+    constructionDocs:
+      buildingDetails?.documents?.filter(
+        (doc: any) => doc.documentType == "BAUUNTERLAGEN"
+      ) || [],
+    floorplanDocs:
+      buildingDetails?.documents?.filter(
+        (doc: any) => doc.documentType == "GRUNDRISSE"
+      ) || [],
+    otherDocs:
+      buildingDetails?.documents?.filter(
+        (doc: any) => doc.documentType == "SONSTIGE"
+      ) || [],
 
-    serverLink: buildingDetails?.serverLink,
+    serverLink: buildingDetails?.serverLink || "",
   };
 
   const stepFieldsMap: { [key: number]: string[] } = {
@@ -189,12 +198,12 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
   ) => {
     try {
       const addressObj = {
-        zip: values.zip,
         city: values.city,
         state: values.state,
         street: values.street,
         country: values.country,
-        houseNumber: values.houseNumber,
+        zip: Number(values.zip),
+        houseNumber: Number(values.houseNumber),
       };
 
       const formateDate = moment().format("YYYY-MM-DDTHH:mm:ss.SSS[Z]");
@@ -207,10 +216,13 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
         buildingName: values.name,
         serverLink: values.serverLink,
         buildingType: values.buildingType,
-        totalArea: Number(values.totalArea),
+        totalArea: values.totalArea != "" ? Number(values.totalArea) : null,
         contactPerson: values.contactPerson,
         documentUploadType: values.documentChoice,
-        buildingAbbreviation: values.buildingAbbreviation,
+        buildingAbbreviation:
+          values.buildingAbbreviation != ""
+            ? Number(values.buildingAbbreviation)
+            : null,
       };
       if (actionType == "edit") {
         UpdateBuildingData(arrangedDataObj);
