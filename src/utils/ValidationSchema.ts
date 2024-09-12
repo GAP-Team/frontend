@@ -1,5 +1,8 @@
 import * as yup from "yup";
 
+const EMAIL_REGEX =
+  /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
 export const loginValidationSchema = yup.object({
   email: yup
     .string()
@@ -168,12 +171,16 @@ export const newContactSchema = yup.object().shape({
   lastName: yup.string().required("Nachname ist erforderlich."),
   email: yup
     .string()
-    .email("Ungültige Email")
+    .matches(EMAIL_REGEX, "Ungültige Email")
     .required("Email ist erforderlich."),
   phoneNumber: yup
     .string()
-    .required("Telefonnummer ist erforderlich.")
-    .matches(/^\d+$/, "Telefonnummer muss eine gültige Nummer sein."),
+    .nullable()
+    .test(
+      "is-valid-phone",
+      "Telefonnummer muss eine gültige Nummer sein.",
+      (value) => !value || /^\d+$/.test(value)
+    ),
 });
 
 export const addTenderValidationSchema = [

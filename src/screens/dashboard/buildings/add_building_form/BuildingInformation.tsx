@@ -299,6 +299,7 @@ const BuildingInformation = ({ formik }: { formik?: any }) => {
           <TextField
             id="phoneNumber"
             label="Telefonnummer"
+            name="phoneNumber"
             margin="dense"
             fullWidth
             value={newContact.phoneNumber}
@@ -321,7 +322,7 @@ const BuildingInformation = ({ formik }: { formik?: any }) => {
             color="gprimary"
             variant="contained"
           >
-            Hinzufügen
+            Einladung senden
           </Button>
         </DialogActions>
       </Dialog>
