@@ -46,7 +46,6 @@ const BuildingInformation = ({ formik }: { formik?: any }) => {
   });
 
   const [selectedBuildingType, setSelectedBuildingType] = useState<Item | null>(
-
     formik?.values?.buildingType
       ? {
           label: formik?.values?.buildingType,

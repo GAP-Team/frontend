@@ -139,7 +139,6 @@ export const addObjektFormSchema = yup.object().shape({
       const { documentChoice } = this.parent;
       if (documentChoice === "Server verküpfung") {
         return !!value;
-
       }
       return true;
     })
