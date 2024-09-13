@@ -18,7 +18,11 @@ const FacilityItems: React.FC<facilityListProps> = ({
     <Grid container spacing={"1.25rem"} sx={{ overflow: "auto", flexGrow: 1 }}>
       {facilities.map((facility, index) => (
         <Grid item key={index}>
-          <FacilityCard key={facility._id} facility={facility} />
+          <FacilityCard
+            key={facility._id}
+            facility={facility}
+            status="ausgeschrieben"
+          />
         </Grid>
       ))}
       <Divider variant="middle" orientation="horizontal" flexItem />
