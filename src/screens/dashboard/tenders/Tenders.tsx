@@ -1,4 +1,3 @@
-// Tenders.tsx
 "use client";
 import React, { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
@@ -13,7 +12,7 @@ const Tenders: React.FC = () => {
   const [tenders, setTenders] = useState<TenderProps[]>([]);
 
   useEffect(() => {
-    setTenders(jobCardsData); // This could be an API call
+    setTenders(jobCardsData);
   }, []);
 
   const tenderContent =
