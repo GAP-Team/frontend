@@ -70,6 +70,7 @@ Always keep the `.env.example` file up to date with dummy variables to ensure a 
 We have CI/CD integrated to ensure code quality and formatting are enforced consistently. If the CI/CD pipeline fails due to code formatting issues or linting errors, follow these steps:
 
 1. **To reformat the code with Prettier:**
+   what is Prettier about ? https://prettier.io/
 
    Run the following command to automatically fix formatting issues:
 
@@ -90,6 +91,9 @@ We have CI/CD integrated to ensure code quality and formatting are enforced cons
    ```
 
 2. **To lint the code with ESLint:**
+   what is ESLint about ?
+   ESLint is a configurable JavaScript linter. It helps you find and fix problems in your JavaScript code. Problems can be anything from potential runtime bugs, to not following best practices, to styling issues.
+   https://eslint.org/
 
    Ensure your code follows ESLint rules by running:
 

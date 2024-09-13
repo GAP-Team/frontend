@@ -8,7 +8,7 @@
     "project": "./tsconfig.json"
   },
   "rules": {
-    "unused-imports/no-unused-imports": "error", // Show an error if unused imports are found
+    "unused-imports/no-unused-imports": "warn", // Show an error if unused imports are found
     "unused-imports/no-unused-vars": [
       "warn", // Show a warning for unused variables
       {
@@ -19,14 +19,20 @@
       }
     ],
     "@typescript-eslint/no-explicit-any": "off", // Disable the rule globally
-    "@typescript-eslint/explicit-function-return-type": "warn", // Show a warning if a return type is missing
+    "@typescript-eslint/explicit-function-return-type": "error", // Show a warning if a return type is missing
     "@typescript-eslint/no-unused-vars": [
-      "warn",
+      "error",
       { "argsIgnorePattern": "^_" }
     ],
     "eqeqeq": ["error", "always"], // Show an error if == is used instead of ===
     "no-shadow": "warn", // Show a warning if a variable is shadowed
     "no-duplicate-imports": "error", // Show an error if a module is imported multiple times
-    "no-nested-ternary": "warn" // Show a warning if a nested ternary is found
+    "no-nested-ternary": "warn", // Show a warning if a nested ternary is found
+    "no-unsafe-optional-chaining": "warn", // Show a warning if an unsafe optional chaining is found
+    "camelcase": "warn", // Show a warning if a variable is not camelCase
+    "complexity": ["warn", 5], // Show a warning if a function has a cyclomatic complexity greater than 5
+    "max-lines-per-function": ["warn", 50], // Show a warning if a function has more than 50 lines
+    "no-console": "warn", // Show a warning if console.log is used
+    "no-undefined": "error" // Show a warning if undefined is used
   }
 }
