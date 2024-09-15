@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import { Facility } from "./types";
 import FacilityCard from "./FacilityCard";
 import Grid from "@mui/material/Grid";
 import Divider from "@mui/material/Divider";
-import { Typography } from "@mui/material";
 
 interface facilityListProps {
   facilities: Facility[];
@@ -12,7 +11,6 @@ interface facilityListProps {
 
 const FacilityItems: React.FC<facilityListProps> = ({
   facilities,
-  itemsPerPage,
 }) => {
   return (
     <Grid container spacing={"1.25rem"} sx={{ overflow: "auto", flexGrow: 1 }}>

@@ -11,7 +11,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { useFormikContext } from "formik";
 import { AddTenderFormValues } from "./types";
 
-const TenderClassification = () => {
+const TenderClassification = (): JSX.Element => {
   const formik = useFormikContext<AddTenderFormValues>();
 
   return (

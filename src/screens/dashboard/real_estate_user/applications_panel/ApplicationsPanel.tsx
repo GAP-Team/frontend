@@ -4,7 +4,7 @@ import ApplicationList from "./ApplicationList";
 import { applications } from "@/utils/Constants";
 import ScrollableSection from "../../../../components/common/ScrollableSection";
 
-const ApplicationsPanel = () => {
+const ApplicationsPanel = (): JSX.Element => {
   return (
     <>
       <ScrollableSection>

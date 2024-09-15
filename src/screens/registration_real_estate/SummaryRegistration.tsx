@@ -10,8 +10,8 @@ interface SummaryRegistrationProps {
   setActiveStep: (num: number) => void;
 }
 
-const SummaryRegistration = ({ setActiveStep }: SummaryRegistrationProps) => {
-  const getBusinessRegistrationData = (formik: any) => {
+const SummaryRegistration = ({ setActiveStep }: SummaryRegistrationProps): JSX.Element => {
+  const getBusinessRegistrationData = (formik: any): any => {
     const businessInfo = [];
     const documents = [
       {

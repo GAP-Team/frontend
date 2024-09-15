@@ -29,7 +29,7 @@ const GCountDown: React.FC<GCountDownProps> = ({
       });
     }, 5);
 
-    return () => clearInterval(intervalId);
+    return () : void => clearInterval(intervalId);
   }, [count, counter, incrementStep]); // Include incrementStep in the dependency array
 
   return (

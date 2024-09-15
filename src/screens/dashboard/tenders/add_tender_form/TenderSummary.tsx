@@ -2,11 +2,10 @@
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import { useFormikContext } from "formik";
-import SummarySection from "@/components/summary/SummarySection";
-import { Detail } from "@/components/summary/SummarySection";
+import SummarySection, { Detail } from "@/components/summary/SummarySection";
 import { StepComponentProps } from "./types";
 
-const TenderSummary = ({ setActiveStep, steps }: StepComponentProps) => {
+const TenderSummary = ({ setActiveStep, steps }: StepComponentProps): JSX.Element => {
   const { values } = useFormikContext<any>();
 
   const updatedTenderInformation: Detail[] = [

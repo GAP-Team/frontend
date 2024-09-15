@@ -1,14 +1,12 @@
 "use client";
-import Cookies from "js-cookie";
-import { useSelector } from "react-redux";
+
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-
 import RealStateUserLayout from "../page";
 import { checkIsLoggedIn, getIsUserVerified } from "@/utils/helperJWT";
 import RealEstateUser from "@/screens/dashboard/real_estate_user/RealEstateUser";
 
-export default function DashboardPage() {
+export default function DashboardPage(): JSX.Element {
   const router = useRouter();
   const [isLoggedIn, setIsLoggedIn] = useState<Boolean>(false);
   const [isUserVerified, setIsUserVerified] = useState<Boolean>(false);
@@ -17,7 +15,7 @@ export default function DashboardPage() {
     checkRendering();
   }, []);
 
-  const checkRendering = () => {
+  const checkRendering = () : void => {
     if (!checkIsLoggedIn()) {
       router.push("/login");
     }

@@ -1,4 +1,4 @@
-import React, { FocusEventHandler } from "react";
+import React from "react";
 import TextField, { TextFieldProps } from "@mui/material/TextField";
 
 const GTextInput: React.FC<TextFieldProps> = ({
@@ -9,7 +9,7 @@ const GTextInput: React.FC<TextFieldProps> = ({
     <TextField
       InputProps={{ sx: { borderRadius: "0.5rem" } }}
       fullWidth
-      variant="outlined"
+      variant={variant}
       {...otherProps}
     />
   );

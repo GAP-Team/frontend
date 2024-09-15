@@ -20,7 +20,7 @@ import { CgClose } from "react-icons/cg";
 import TenderSummary from "./TenderSummary";
 
 
-const NewTender = () => {
+const NewTender = (): JSX.Element => {
   const router = useRouter();
   const steps: ActiveStepItem[] = [
     {
@@ -31,7 +31,6 @@ const NewTender = () => {
     { id: 1, stepName: "Objekt / Anlage", component: TenderBuilding },
     { id: 2, stepName: "Beschreibung", component: TenderDescription },
     { id: 3, stepName: "Einstufung", component: TenderClassification },
-    // { id: 4, stepName: "Dokumente", component: TenderDocumentation },
     { id: 4, stepName: "Übersicht Ausschreibung", component: TenderSummary },
   ];
 
@@ -48,7 +47,7 @@ const NewTender = () => {
   const handleNext = (
     values: AddTenderFormValues,
     actions: FormikHelpers<AddTenderFormValues>
-  ) => {
+  ): void => {
     if (activeStep?.id === steps.length - 1) {
       console.log("Form values", values);
       setIsSubmitted(true);
@@ -60,7 +59,7 @@ const NewTender = () => {
     }
   };
 
-  const handleBack = () => {
+  const handleBack = (): void => {
     if (activeStep.id > 0) {
       setActiveStep(steps[activeStep.id - 1]);
     } else {

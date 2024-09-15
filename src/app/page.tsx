@@ -2,7 +2,7 @@
 import LandingPage from "@/screens/landing_page/LandingPage";
 import GFooter from "@/components/common/GFooter/GFooter";
 
-export default function Home() {
+export default function Home(): JSX.Element {
   return (
     <main className="flex min-h-screen flex-col items-center bg-white justify-between">
       <LandingPage />

@@ -6,7 +6,7 @@ import AssignmentsPanel from "./assignments_panel/AssignmentsPanel";
 import ApplicationsPanel from "./applications_panel/ApplicationsPanel";
 import NewsPanel from "./news_panel/NewsPanel";
 
-export default function RealEstateUser() {
+export default function RealEstateUser(): JSX.Element {
   return (
     <Grid container spacing={2} sx={styles.mainContainer} columns={16}>
       <Grid item xs={3}>

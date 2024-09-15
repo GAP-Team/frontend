@@ -11,7 +11,7 @@ import { dummyBuildings, equipmentTypesList } from "@/utils/Constants";
 import GTextSelector from "@/components/input/GTextSelector";
 import { Item } from "../../types";
 
-const TenderBuilding = () => {
+const TenderBuilding = (): JSX.Element => {
   const formik = useFormikContext<AddTenderFormValues>();
   const [selectedEquipmntType, setSelectedEquipmntType] = useState<Item | null>(
     formik?.values?.equipmentType
@@ -29,11 +29,11 @@ const TenderBuilding = () => {
     );
   };
 
-  const handleBuildingNameChange = (event: any, value: string | null) => {
+  const handleBuildingNameChange = (event: any, value: string | null): void => {
     formik?.setFieldValue("buildingName", value);
   };
 
-  const handleEquipmentNameChange = (event: any, value: string | null) => {
+  const handleEquipmentNameChange = (event: any, value: string | null): void => {
     formik?.setFieldValue("equipmentName", value);
   };
 

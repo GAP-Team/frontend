@@ -7,7 +7,7 @@ import ProjectCard from "./ProjectCard";
 import UserCard from "./UserCard";
 import DividerDecorator from "@/components/divider/DividerDecorator";
 
-const OverviewPanel = () => {
+const OverviewPanel = (): JSX.Element => {
   return (
     <>
       <SectionTitle

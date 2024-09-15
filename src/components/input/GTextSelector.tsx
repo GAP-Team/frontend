@@ -7,7 +7,7 @@ export interface Item {
   value: string;
 }
 
-interface GTextSelectorProps<T extends Item> {
+interface GTextSelectorProps<> {
   options: Item[];
   selectedState: Item | null;
   placeholder?: string;
@@ -17,7 +17,7 @@ interface GTextSelectorProps<T extends Item> {
   helperText?: React.ReactNode | undefined;
 }
 
-const GTextSelector = <T extends Item>({
+const GTextSelector = ({
   name,
   options,
   placeholder = "Wählen Sie aus",
@@ -25,7 +25,7 @@ const GTextSelector = <T extends Item>({
   selectedState,
   error,
   helperText,
-}: GTextSelectorProps<T>) => {
+}: GTextSelectorProps) : JSX.Element=> {
   return (
     <Autocomplete
       freeSolo

@@ -1,7 +1,7 @@
 import JobCardList from "./JobCardList";
 import HeaderSection from "../HeaderSection";
 
-const AssignmentsPanel = () => {
+const AssignmentsPanel = (): JSX.Element => {
   return (
     <>
       <HeaderSection

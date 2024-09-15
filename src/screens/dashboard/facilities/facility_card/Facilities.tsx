@@ -7,7 +7,7 @@ import NoContentPage from "@/components/common/NoContentPage";
 import FacilityList from "./FacilityList";
 import { dummyFacilities } from "@/utils/Constants";
 
-const Facilities = () => {
+const Facilities = (): JSX.Element => {
   const [facilities] = useState<Facility[]>(dummyFacilities);
 
   const facilityContent =

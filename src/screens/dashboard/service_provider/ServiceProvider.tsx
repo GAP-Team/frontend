@@ -1,4 +1,4 @@
-const ServiceProvider = () => {
+const ServiceProvider = (): JSX.Element => {
   return (
     <div>
       <h1>ServiceProvider</h1>

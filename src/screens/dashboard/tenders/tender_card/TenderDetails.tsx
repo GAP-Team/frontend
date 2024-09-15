@@ -23,7 +23,7 @@ const TenderDetails: React.FC<TenderDetailsProps> = ({ id }) => {
       setLoading(false);
     }, 8000);
 
-    return () => clearTimeout(timer);
+    return (): void => clearTimeout(timer);
   }, []);
 
   if (!jobCard) {

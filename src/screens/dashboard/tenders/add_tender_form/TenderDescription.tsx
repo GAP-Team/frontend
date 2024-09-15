@@ -8,7 +8,7 @@ import Typography from "@mui/material/Typography";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 
-const TenderDescription = () => {
+const TenderDescription = (): JSX.Element => {
   const formik = useFormikContext<AddTenderFormValues>();
 
   return (

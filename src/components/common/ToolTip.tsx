@@ -22,6 +22,6 @@ interface CustomizedTooltipsProps {
 export default function CustomizedTooltips({
   title,
   children,
-}: CustomizedTooltipsProps) {
+}: CustomizedTooltipsProps): JSX.Element {
   return <HtmlTooltip title={title}>{children}</HtmlTooltip>;
 }

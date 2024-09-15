@@ -7,7 +7,6 @@ import Divider from "@mui/material/Divider";
 import Icon from "@mui/material/Icon"; // or a specific icon component from @mui/icons-material
 import { BsClockFill } from "react-icons/bs";
 import SectionTitle from "@/components/label/SectionTitle";
-import { useRouter } from "next/navigation";
 import { Facility } from "./types";
 
 interface FacilityCardProps {
@@ -21,7 +20,7 @@ const statusStyles: { [key: string]: { bgcolor: string; color: string } } = {
 
 const FacilityCard: React.FC<FacilityCardProps> = ({ facility }) => {
 
-  const handleClick = () => {};
+  const handleClick = () : void => {};
 
   const chipStyles = statusStyles[status] || statusStyles["aktiv"];
 

@@ -18,7 +18,6 @@ interface PhoneInputProps {
 }
 
 const PhoneInput: React.FC<PhoneInputProps> = ({
-  label = "Telefonnummer",
   placeholder = "Geben Sie Ihre Telefonnummer ein",
   value,
   onChange,

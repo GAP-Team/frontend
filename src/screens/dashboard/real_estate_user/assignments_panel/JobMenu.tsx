@@ -15,30 +15,30 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContentText from "@mui/material/DialogContentText";
 
-export default function JobMenu() {
+export default function JobMenu(): JSX.Element {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
   const [openDialog, setOpenDialog] = React.useState(false);
 
-  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+  const handleClick = (event: React.MouseEvent<HTMLElement>): void => {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleCloseMenu = () => {
+  const handleCloseMenu = (): void => {
     setAnchorEl(null);
   };
 
-  const handleDeleteClick = () => {
+  const handleDeleteClick = (): void => {
     setOpenDialog(true);
     handleCloseMenu(); // Close the menu when dialog opens
   };
 
-  const handleCloseDialog = () => {
+  const handleCloseDialog = (): void => {
     setOpenDialog(false);
   };
 
-  const handleConfirmDelete = () => {
+  const handleConfirmDelete = (): void => {
     // Add delete logic here
     setOpenDialog(false);
   };

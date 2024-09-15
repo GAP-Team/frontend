@@ -5,9 +5,6 @@ import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { Formik, Form, FormikHelpers } from "formik";
 import Grid from "@mui/material/Grid";
-import CircularProgress from "@mui/material/CircularProgress";
-
-import userAPIs from "@/api/user";
 import buildingAPIs from "@/api/building";
 import { getLogger } from "@/utils/Logger";
 import { ActiveStepItem } from "../../types";
@@ -18,6 +15,7 @@ import {
   setUserBuildings,
   currentUserBuildings,
   setAllBuildingDetails,
+  allBuildingDetails
 } from "@/lib/features/userSlice";
 
 import AddBuildingForm from "./AddBuildingForm";
@@ -26,10 +24,8 @@ import BuildingSummary from "./BuildingSummary";
 import PageTitle from "@/components/label/PageTitle";
 import BuildingInformation from "./BuildingInformation";
 import BuildingDocumentation from "./BuildingDocumentation";
-
 import { DocumentTypies } from "@/utils/Constants";
 import { handleUploadMultipleDoc } from "@/utils/uploadToS3";
-import { allBuildingDetails } from "@/lib/features/userSlice";
 import { addObjektFormSchema } from "@/utils/ValidationSchema";
 
 // Logger
@@ -102,9 +98,9 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
     }
   }, []);
 
-  const getCurrentBuildingDetails = (id: any) => {
+  const getCurrentBuildingDetails = (id: any) : void => {
     const selectedBuildingDetails = allBuildings?.filter(
-      (building: any) => id == building?._id
+      (building: any) => id === building?._id
     );
     setBuildingDetails(selectedBuildingDetails[0]);
   };
@@ -127,15 +123,15 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
       buildingDetails?.documentUploadType || "Jetzt hochladen Empfohlen",
     constructionDocs:
       buildingDetails?.documents?.filter(
-        (doc: any) => doc.documentType == "BAUUNTERLAGEN"
+        (doc: any) => doc.documentType === "BAUUNTERLAGEN"
       ) || [],
     floorplanDocs:
       buildingDetails?.documents?.filter(
-        (doc: any) => doc.documentType == "GRUNDRISSE"
+        (doc: any) => doc.documentType === "GRUNDRISSE"
       ) || [],
     otherDocs:
       buildingDetails?.documents?.filter(
-        (doc: any) => doc.documentType == "SONSTIGE"
+        (doc: any) => doc.documentType === "SONSTIGE"
       ) || [],
 
     serverLink: buildingDetails?.serverLink || "",
@@ -180,7 +176,7 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
     }
   };
 
-  const handleBack = () => {
+  const handleBack = () : void => {
     if (activeStep.id > 0) {
       setActiveStep(steps[activeStep.id - 1]);
     } else {
@@ -191,7 +187,7 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
   const handleSubmit = async (
     values: AddBuildingFormValues,
     docObj: any[] = []
-  ) => {
+  ): Promise<void> => {
     try {
       const addressObj = {
         city: values.city,
@@ -212,12 +208,12 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
         buildingName: values.name,
         serverLink: values.serverLink,
         buildingType: values.buildingType,
-        totalArea: values.totalArea != "" ? Number(values.totalArea) : null,
+        totalArea: values.totalArea !== "" ? Number(values.totalArea) : null,
         contactPerson: values.contactPerson,
         documentUploadType: values.documentChoice,
         buildingAbbreviation: values.buildingAbbreviation,
       };
-      if (actionType == "edit") {
+      if (actionType === "edit") {
         UpdateBuildingData(arrangedDataObj);
       } else {
         saveBuildingData(arrangedDataObj);
@@ -230,11 +226,11 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
     }
   };
 
-  const uploadAllDocuments = async (values: AddBuildingFormValues) => {
+  const uploadAllDocuments = async (values: AddBuildingFormValues) : Promise<void> => {
     setLoading(true);
     const docObj: any[] = [];
 
-    const uploadDocuments = async (files: File[], docType: string) => {
+    const uploadDocuments = async (files: File[], docType: string): Promise<void> => {
       for (const file of files) {
         if (file.hasOwnProperty("documentType")) {
           docObj.push(file);
@@ -257,7 +253,7 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
     setLoading(false);
   };
 
-  const saveBuildingData = async (data: any) => {
+  const saveBuildingData = async (data: any): Promise<void> => {
     const createBuildingResponse = await buildingAPIs.create(data);
     if (createBuildingResponse?.data?.buildingId) {
       const updatedBuildings = [
@@ -268,7 +264,7 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
     }
   };
 
-  const UpdateBuildingData = async (data: any) => {
+  const UpdateBuildingData = async (data: any): Promise<void> => {
     const createBuildingResponse = await buildingAPIs.update(
       buildingDetails?._id,
       data
@@ -295,7 +291,7 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
       <Grid item xs={12} md={12} lg={12} sx={{ backgroundColor: "#F9FAFA" }}>
         <PageTitle
           title={
-            actionType == "edit"
+            actionType === "edit"
               ? `Objekt Bearbeiten: ${initialValues?.name}`
               : `Neues Objekt erstellen`
           }

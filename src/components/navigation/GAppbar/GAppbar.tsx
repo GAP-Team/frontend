@@ -11,29 +11,21 @@ import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import ListItemIcon from "@mui/material/ListItemIcon";
-import { UseDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-
 import authAPIs from "@/api/auth";
 import GSearch from "@/components/search/GSearch";
 import { MdOutlineLogout } from "react-icons/md";
-import { Business, CreditCard, Email, Lock } from "@mui/icons-material";
-
+import { Business, Email, Lock } from "@mui/icons-material";
 import {
-  currentUser,
-  currentUserName,
-  currentUserCompany,
+  currentUser
 } from "@/lib/features/userSlice";
 
-export default function GAppBar() {
+export default function GAppBar(): JSX.Element {
   const router = useRouter();
   const user = useSelector(currentUser);
-  const userName = useSelector(currentUserName);
-  const userCompany = useSelector(currentUserCompany);
-
-  const menuId = "primary-search-account-menu";
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [activeMenuItem, setActiveMenuItem] =
@@ -41,15 +33,15 @@ export default function GAppBar() {
 
   const open = Boolean(anchorEl);
 
-  const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
+  const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>): void => {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleClose = () => {
+  const handleClose = (): void => {
     setAnchorEl(null);
   };
 
-  const handleLogout = async () => {
+  const handleLogout = async (): Promise<void> => {
     let data = { userId: user?._id };
     const logoutStatus = await authAPIs.logout(data);
     if (logoutStatus?.data?.status?.acknowledged) {
@@ -61,7 +53,7 @@ export default function GAppBar() {
     }
   };
 
-  const handleMenuItemClick = (menuItem: string) => {
+  const handleMenuItemClick = (menuItem: string) : void => {
     setActiveMenuItem(menuItem);
     handleClose();
   };

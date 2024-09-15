@@ -3,19 +3,17 @@
 import storage from "redux-persist/lib/storage";
 import { persistStore, persistReducer } from "redux-persist";
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
-import createWebStorage from "redux-persist/lib/storage/createWebStorage";
-
 import userReducer from "./features/userSlice";
 
-const createNoopStorage = () => {
+const createNoopStorage = (): any => {
   return {
-    getItem(_key: any) {
+    getItem(_key: any): any {
       return Promise.resolve(null);
     },
-    setItem(_key: any, value: any) {
+    setItem(_key: any, value: any): any {
       return Promise.resolve(value);
     },
-    removeItem(_key: any) {
+    removeItem(_key: any): any {
       return Promise.resolve();
     },
   };
@@ -30,12 +28,12 @@ const persistConfig = {
   storage: typeof window !== "undefined" ? storage : createNoopStorage(),
 };
 
-const makeConfiguredStore = () =>
+const makeConfiguredStore = (): any =>
   configureStore({
     reducer: rootReducer,
   });
 
-export const makeStore = () => {
+export const makeStore = (): any => {
   const isServer = typeof window === "undefined";
   if (isServer) {
     return makeConfiguredStore();

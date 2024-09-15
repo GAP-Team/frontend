@@ -8,7 +8,7 @@ export interface Item {
   value: string;
 }
 
-interface SelectorProps<T extends Item> {
+interface SelectorProps<> {
   options: Item[];
   selectedState: Item | null;
   placeholder?: string;
@@ -18,7 +18,7 @@ interface SelectorProps<T extends Item> {
   helperText?: string;
 }
 
-const Selector = <T extends Item>({
+const Selector = ({
   name,
   options,
   placeholder = "Wählen Sie aus",
@@ -26,7 +26,7 @@ const Selector = <T extends Item>({
   selectedState,
   error,
   helperText,
-}: SelectorProps<T>) => {
+}: SelectorProps) : JSX.Element => {
   return (
     <Autocomplete
       value={selectedState}

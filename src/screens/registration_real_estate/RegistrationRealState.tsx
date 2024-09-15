@@ -40,13 +40,15 @@ function getSteps(): string[] {
   ];
 }
 
-const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
-  function Alert(props, ref) {
-    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-  }
-);
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>((props, ref) => {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
-const RegistrationRealState = () => {
+Alert.displayName = "Alert";
+
+
+
+const RegistrationRealState = (): JSX.Element => {
   const steps = getSteps();
   const router = useRouter();
 
@@ -143,7 +145,7 @@ const RegistrationRealState = () => {
     businessType: "",
   };
 
-  const onSubmit = async (values: any, docObj: any) => {
+  const onSubmit = async (values: any, docObj: any): Promise<void> => {
     try {
       const addressObj = {
         city: values.city,
@@ -307,7 +309,7 @@ const RegistrationRealState = () => {
         <Formik
           initialValues={initialValues}
           validationSchema={registrationValidationSchema}
-          onSubmit={async (values, { resetForm }) => {
+          onSubmit={async (values) => {
             await uploadAllDocuments(values, values?.businessType);
           }}
           enableReinitialize

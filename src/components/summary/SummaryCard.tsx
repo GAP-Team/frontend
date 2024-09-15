@@ -1,4 +1,3 @@
-import Grid, { GridProps } from "@mui/material/Grid";
 import Box, { BoxProps } from "@mui/material/Box";
 
 import { useTheme } from "@mui/material/styles";

@@ -5,18 +5,17 @@ import { useRouter } from "next/navigation";
 import { Formik, Form, FormikHelpers } from "formik";
 import { addFacilityValidationSchema } from "@/utils/ValidationSchema";
 import PageTitle from "@/components/label/PageTitle";
-import { AddFacilityFormValues, ActiveStepItem } from "./types";
+import { AddFacilityFormValues, ActiveStepItem, StepComponentProps } from "./types";
 import SuccessPage from "@/components/common/SuccessPage";
 import SectionTitle from "@/components/label/SectionTitle";
 import GProgressStepper from "@/components/stepper/GProgressStepper";
 import Link from "next/link";
 import { IconButton } from "@mui/material";
 import { CgClose } from "react-icons/cg";
-import { StepComponentProps } from "./types";
 import AddFacilityForm from "./AddFacilityForm";
 import FacilityInformation from "./FacilityInformation";
 
-const NewFacility = () => {
+const NewFacility = (): JSX.Element => {
   const router = useRouter();
   const steps: ActiveStepItem[] = [
     {
@@ -43,7 +42,7 @@ const NewFacility = () => {
   const handleNext = (
     values: AddFacilityFormValues,
     actions: FormikHelpers<AddFacilityFormValues>
-  ) => {
+  ): void => {
     if (activeStep?.id === steps.length - 1) {
       setIsSubmitted(true);
       actions.setSubmitting(false);
@@ -54,7 +53,7 @@ const NewFacility = () => {
     }
   };
 
-  const handleBack = () => {
+  const handleBack = (): void => {
     if (activeStep.id > 0) {
       setActiveStep(steps[activeStep.id - 1]);
     } else {

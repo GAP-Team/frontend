@@ -10,7 +10,7 @@ import {
 } from "../../svg/features-svg";
 import TitleSection from "../../label/title-section";
 
-const GFeatures = () => {
+const GFeatures = () : JSX.Element => {
   return (
     <div className="container mx-auto flex flex-col items-center justify-center">
       <TitleSection
@@ -40,7 +40,7 @@ const GFeatures = () => {
   );
 };
 
-const FeatureCard = ({ title, icon }: { title: string; icon: any }) => {
+const FeatureCard = ({ title, icon }: { title: string; icon: any }) : JSX.Element => {
   const [isHovered, setIsHovered] = useState(false);
   return (
     <a

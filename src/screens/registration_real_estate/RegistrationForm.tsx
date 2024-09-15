@@ -51,7 +51,7 @@ const RegistrationForm = ({
   const handlePersonTabChange = (
     event: React.SyntheticEvent,
     newValue: number
-  ) => {
+  ): void => {
     setPersonTyp(newValue);
 
     if (newValue === 0) {
@@ -74,9 +74,9 @@ const RegistrationForm = ({
   };
 
   const handleStakeholderTabChange = (
-    event: React.SyntheticEvent,
+    event: React.SyntheticEvent, 
     newValue: number
-  ) => {
+  ): void => {
     setStakeholderTyp(newValue);
 
     if (newValue === 0) {

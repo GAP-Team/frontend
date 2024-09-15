@@ -1,8 +1,7 @@
 import React, { ReactNode } from "react";
-import Sidebar, { SubItem } from "@/components/navigation/GSidebar/SideBar";
+import Sidebar, { SubItem, SidebarItem } from "@/components/navigation/GSidebar/SideBar";
 import GAppbar from "@/components/navigation/GAppbar/GAppbar";
 import Box from "@mui/material/Box";
-import { SidebarItem } from "@/components/navigation/GSidebar/SideBar";
 
 interface LayoutProps {
   sidebarItems: SidebarItem[];

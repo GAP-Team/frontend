@@ -14,23 +14,20 @@ import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
-
-import userAPIs from "@/api/user";
 import { ContactPersonItem } from "./types";
 import { Item } from "@/components/input/GSelector";
 import GTextInput from "@/components/input/GTextInput";
 import GTextSelector from "@/components/input/GTextSelector";
 import LabelWithAsterisk from "@/components/label/LabelWithAsterisk";
-import { contactPersonList, buildingTypesList } from "@/utils/Constants";
+import { buildingTypesList } from "@/utils/Constants";
 
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 
-const BuildingInformation = ({ formik }: { formik?: any }) => {
+const BuildingInformation = ({ formik }: { formik?: any }): JSX.Element => {
   const [dialogOpen, setDialogOpen] = useState(false);
-  const [options, setOptions] = useState<Item[]>(buildingTypesList);
-  const [contactPersons, setContactPersons] =
-    useState<any[]>(contactPersonList);
+  const options = buildingTypesList;
+
   const [newContact, setNewContact] = useState<ContactPersonItem>({
     firstName: "",
     lastName: "",
@@ -55,13 +52,7 @@ const BuildingInformation = ({ formik }: { formik?: any }) => {
     } else {
       setSelectedBuildingType({ label: "", value: "" });
     }
-    // getAllUsers();
   }, [formik?.values]);
-
-  const getAllUsers = async () => {
-    let allUsers = await userAPIs.getAllUser();
-    setContactPersons(allUsers.data);
-  };
 
   const handleStateSelect = (selectedItem: Item | null): void => {
     setSelectedBuildingType(selectedItem);
@@ -74,11 +65,11 @@ const BuildingInformation = ({ formik }: { formik?: any }) => {
   const handleContactPersonChange = (
     event: any,
     value: ContactPersonItem[]
-  ) => {
+  ): void => {
     formik?.setFieldValue("contactPerson", value);
   };
 
-  const handleAddContactPerson = () => {
+  const handleAddContactPerson = (): void => {
     if (newContact.firstName && newContact.lastName) {
       formik?.setFieldValue("contactPerson", [
         ...formik.values.contactPerson,
@@ -180,7 +171,7 @@ const BuildingInformation = ({ formik }: { formik?: any }) => {
             // options={contactPersons}
             options={[]}
             isOptionEqualToValue={(options, value) =>
-              options.firstName == value.lastName
+              options.firstName === value.lastName
             }
             getOptionLabel={(option) =>
               option.firstName + " " + option.lastName

@@ -1,6 +1,6 @@
 import RealStateUserLayout from "../page";
 
-export default function CostSavingsDashboard() {
+export default function CostSavingsDashboard(): JSX.Element {
   return (
     <RealStateUserLayout>
       <div>

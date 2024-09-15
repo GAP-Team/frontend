@@ -5,7 +5,7 @@ import GTextInput from "@/components/input/GTextInput";
 import UploadButton from "@/components/button/UploadButton";
 
 const ComercialPerson = ({ formik }: any): JSX.Element => {
-  const setUploadDoc = async (ev: any) => {
+  const setUploadDoc =  (ev: any): void => {
     const file = ev.target.files[0];
     console.log("file", file);
     console.log("ev", ev);

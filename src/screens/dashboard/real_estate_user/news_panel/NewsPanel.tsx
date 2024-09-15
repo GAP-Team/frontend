@@ -4,7 +4,7 @@ import NewsList from "./NewsList";
 import { news } from "@/utils/Constants";
 import ScrollableSection from "../../../../components/common/ScrollableSection";
 
-const NewsPanel = () => {
+const NewsPanel = (): JSX.Element => {
   return (
     <ScrollableSection>
       <HeaderSection
