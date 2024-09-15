@@ -269,6 +269,9 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
   };
 
   const UpdateBuildingData = async (data: any) => {
+    if (!buildingDetails?._id) {
+      return;
+    }
     const createBuildingResponse = await buildingAPIs.update(
       buildingDetails?._id,
       data
@@ -280,7 +283,7 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
       ];
       dispatch(setUserBuildings(updatedBuildings));
     }
-
+    if (user?._id) return;
     const allUpdatedBuildings = await buildingAPIs.getBuildings(
       user?._id,
       "",
