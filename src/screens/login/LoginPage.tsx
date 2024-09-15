@@ -67,7 +67,8 @@ export default function LoginPage(): JSX.Element {
   });
 
   const handleChange =
-    (field: string) => (e: React.ChangeEvent<HTMLInputElement>): void => {
+    (field: string) =>
+    (e: React.ChangeEvent<HTMLInputElement>): void => {
       setLoginError(null);
       formik.setFieldValue(field, e.target.value);
       formik.setFieldTouched(field, true);

@@ -7,7 +7,10 @@ import { useRouter } from "next/navigation";
 import { LuLayoutDashboard } from "react-icons/lu";
 import { MdOutlineDoorSliding, MdOutlineAddHomeWork } from "react-icons/md";
 import GAppbar from "@/components/navigation/GAppbar/GAppbar";
-import Sidebar, { SubItem, SidebarItem } from "@/components/navigation/GSidebar/SideBar";
+import Sidebar, {
+  SubItem,
+  SidebarItem,
+} from "@/components/navigation/GSidebar/SideBar";
 
 const sidebarItems: SidebarItem[] = [
   {
@@ -78,7 +81,7 @@ const sidebarItems: SidebarItem[] = [
 const RealStateUserLayout: React.FC<any> = ({ children }) => {
   const router = useRouter();
 
-  const handleRedirect = (item: any) : void => {
+  const handleRedirect = (item: any): void => {
     setSelected(item);
     router.push(`/real_estate/${item?.url}`);
   };
@@ -87,7 +90,7 @@ const RealStateUserLayout: React.FC<any> = ({ children }) => {
     sidebarItems[0]
   );
 
-  const redirectD = () : void => {
+  const redirectD = (): void => {
     router.push(`/real_estate/dashboard`);
   };
 

@@ -1,6 +1,6 @@
 import React from "react";
 
-const GOfferSection = () : JSX.Element=> {
+const GOfferSection = (): JSX.Element => {
   return (
     <div className="w-full mx-auto bg-[#37383f] flex flex-col md:flex-row justify-center items-center gap-4 py-6 text-white text-lg">
       <div className="flex items-center  ">
@@ -18,7 +18,7 @@ const GOfferSection = () : JSX.Element=> {
     </div>
   );
 };
-const TickSvg = () : JSX.Element=> {
+const TickSvg = (): JSX.Element => {
   return (
     <figure className="flex justify-center items-center mx-2 rounded-full bg-[#304e4e] p-1 w-7 h-6">
       <svg

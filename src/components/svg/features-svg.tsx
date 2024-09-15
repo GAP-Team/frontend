@@ -1,4 +1,8 @@
-export const AufzugSvgIcon = ({ className }: { className?: string }): JSX.Element => {
+export const AufzugSvgIcon = ({
+  className,
+}: {
+  className?: string;
+}): JSX.Element => {
   return (
     <svg
       className={`${className || "h-12 w-12"}`}
@@ -13,7 +17,11 @@ export const AufzugSvgIcon = ({ className }: { className?: string }): JSX.Elemen
     </svg>
   );
 };
-export const FireSvgIcon = ({ className }: { className?: string }): JSX.Element => {
+export const FireSvgIcon = ({
+  className,
+}: {
+  className?: string;
+}): JSX.Element => {
   return (
     <svg
       className={`${className || "h-12 w-12"}`}
@@ -26,7 +34,11 @@ export const FireSvgIcon = ({ className }: { className?: string }): JSX.Element 
     </svg>
   );
 };
-export const VentSvgIcon = ({ className }: { className?: string }): JSX.Element => {
+export const VentSvgIcon = ({
+  className,
+}: {
+  className?: string;
+}): JSX.Element => {
   return (
     <svg
       className={`${className || "h-12 w-12"}`}
@@ -76,7 +88,11 @@ export const VentSvgIcon = ({ className }: { className?: string }): JSX.Element 
     </svg>
   );
 };
-export const BulbSvgIcon = ({ className }: { className?: string }): JSX.Element => {
+export const BulbSvgIcon = ({
+  className,
+}: {
+  className?: string;
+}): JSX.Element => {
   return (
     <svg
       className={`${className || "h-12 w-12"}`}
@@ -94,7 +110,11 @@ export const BulbSvgIcon = ({ className }: { className?: string }): JSX.Element 
     </svg>
   );
 };
-export const HomeSvgIcon = ({ className }: { className?: string }): JSX.Element => {
+export const HomeSvgIcon = ({
+  className,
+}: {
+  className?: string;
+}): JSX.Element => {
   return (
     <svg
       className={`${className || "h-12 w-12"}`}

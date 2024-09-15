@@ -78,7 +78,13 @@ const MyDrawer = styled(Drawer)(
   })
 );
 
-const DrawerLogo = ({ src, open }: { src: string; open: boolean }): JSX.Element => (
+const DrawerLogo = ({
+  src,
+  open,
+}: {
+  src: string;
+  open: boolean;
+}): JSX.Element => (
   <div
     style={{
       width: open ? "100%" : "2rem",

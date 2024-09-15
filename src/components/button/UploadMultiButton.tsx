@@ -50,7 +50,7 @@ export default function UploadMultiButton({
     },
   };
 
-  const handleFileChange = (files: File[]) : void => {
+  const handleFileChange = (files: File[]): void => {
     if (onChange) {
       const newFiles = value ? [...value, ...files] : files;
       const syntheticEvent = {
@@ -63,7 +63,7 @@ export default function UploadMultiButton({
     }
   };
 
-  const handleDelete = (index: number) : void => {
+  const handleDelete = (index: number): void => {
     const newValue = value?.filter((_, i) => i !== index) || [];
     const syntheticEvent = {
       target: {
@@ -77,7 +77,7 @@ export default function UploadMultiButton({
     deleteFileFromS3(deletedFile[0]);
   };
 
-  const deleteFileFromS3 = async (file: any) : Promise<void> => {
+  const deleteFileFromS3 = async (file: any): Promise<void> => {
     if (file.hasOwnProperty("documentType")) {
       const deleteFileStatus = await s3APIs.delete(file?.key);
       if (deleteFileStatus) {
@@ -86,7 +86,7 @@ export default function UploadMultiButton({
     }
   };
 
-  const onDrop = (acceptedFiles: File[]) : void => {
+  const onDrop = (acceptedFiles: File[]): void => {
     handleFileChange(acceptedFiles);
   };
 

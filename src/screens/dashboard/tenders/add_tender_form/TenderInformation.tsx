@@ -14,7 +14,7 @@ import { Item } from "../../types";
 import GTextSelector from "@/components/input/GTextSelector";
 import { tenderTypesListHW, tenderTypesListSV } from "@/utils/Constants";
 
-const TenderInformation = () : JSX.Element => {
+const TenderInformation = (): JSX.Element => {
   const formik = useFormikContext<AddTenderFormValues>();
   const [selectedTenderType, setSelectedTenderType] = useState<Item | null>(
     formik?.values?.tenderType

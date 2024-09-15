@@ -19,11 +19,8 @@ const statusStyles: { [key: string]: { bgcolor: string; color: string } } = {
   Nachprüfung: { bgcolor: "#FFE1D7", color: "#EB4444" },
 };
 
-
 const FacilityCard: React.FC<FacilityCardProps> = ({ facility }) => {
-
-
-  const handleClick = () : void => {};
+  const handleClick = (): void => {};
 
   const chipStyles = statusStyles[status] || statusStyles["aktiv"];
 

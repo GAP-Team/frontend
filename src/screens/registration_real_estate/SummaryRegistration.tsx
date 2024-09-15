@@ -5,12 +5,13 @@ import { useFormikContext } from "formik";
 import SummarySection, { Detail } from "@/components/summary/SummarySection";
 import { grundinformation, adresse } from "../../utils/Constants";
 
-
 interface SummaryRegistrationProps {
   setActiveStep: (num: number) => void;
 }
 
-const SummaryRegistration = ({ setActiveStep }: SummaryRegistrationProps): JSX.Element => {
+const SummaryRegistration = ({
+  setActiveStep,
+}: SummaryRegistrationProps): JSX.Element => {
   const getBusinessRegistrationData = (formik: any): any => {
     const businessInfo = [];
     const documents = [

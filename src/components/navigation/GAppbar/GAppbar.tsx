@@ -19,9 +19,7 @@ import authAPIs from "@/api/auth";
 import GSearch from "@/components/search/GSearch";
 import { MdOutlineLogout } from "react-icons/md";
 import { Business, Email, Lock } from "@mui/icons-material";
-import {
-  currentUser
-} from "@/lib/features/userSlice";
+import { currentUser } from "@/lib/features/userSlice";
 
 export default function GAppBar(): JSX.Element {
   const router = useRouter();
@@ -33,7 +31,9 @@ export default function GAppBar(): JSX.Element {
 
   const open = Boolean(anchorEl);
 
-  const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>): void => {
+  const handleProfileMenuOpen = (
+    event: React.MouseEvent<HTMLElement>
+  ): void => {
     setAnchorEl(event.currentTarget);
   };
 
@@ -53,7 +53,7 @@ export default function GAppBar(): JSX.Element {
     }
   };
 
-  const handleMenuItemClick = (menuItem: string) : void => {
+  const handleMenuItemClick = (menuItem: string): void => {
     setActiveMenuItem(menuItem);
     handleClose();
   };

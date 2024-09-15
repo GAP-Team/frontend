@@ -34,8 +34,7 @@ const EmailVerification = ({
   newUserName,
   newUserEmail,
   postVerificationAction,
-}: EmailVerificationProps) : JSX.Element => {
-
+}: EmailVerificationProps): JSX.Element => {
   const [loading, setLoading] = useState(false);
   const [resendTimer, setResendTimer] = useState(30);
   const [resendDisabled, setResendDisabled] = useState(true);
@@ -49,8 +48,7 @@ const EmailVerification = ({
     "",
     "",
   ]);
-  const [, setIsVerificationEmailSent] =
-    useState<boolean>(false);
+  const [, setIsVerificationEmailSent] = useState<boolean>(false);
 
   const inputRefs = useRef<Array<HTMLInputElement | null>>([]);
 
@@ -68,11 +66,10 @@ const EmailVerification = ({
         });
       }, 1000);
     }
-    return () : void => clearInterval(timer);
+    return (): void => clearInterval(timer);
   }, [resendDisabled]);
 
-
-  const handleChange = (index: number, value: string): void  => {
+  const handleChange = (index: number, value: string): void => {
     if (/^\d?$/.test(value)) {
       const newCode = [...verificationCode];
       newCode[index] = value;
@@ -90,7 +87,7 @@ const EmailVerification = ({
     }
   };
 
-  const handleSubmit = async () : Promise<void> => {
+  const handleSubmit = async (): Promise<void> => {
     setLoading(true);
     try {
       const code = verificationCode.join("");
@@ -129,7 +126,7 @@ const EmailVerification = ({
     }
   };
 
-  const handlePaste = (e: React.ClipboardEvent) : void => {
+  const handlePaste = (e: React.ClipboardEvent): void => {
     const pastedData = e.clipboardData.getData("Text").slice(0, 6);
     if (/^\d{6}$/.test(pastedData)) {
       const newCode = pastedData.split("");
@@ -138,7 +135,7 @@ const EmailVerification = ({
     }
   };
 
-  const handleResendCode = async () : Promise<void> => {
+  const handleResendCode = async (): Promise<void> => {
     setResendDisabled(true);
     let code = getNewVerificationCode();
     const element = (

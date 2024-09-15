@@ -26,7 +26,7 @@ const Selector = ({
   selectedState,
   error,
   helperText,
-}: SelectorProps) : JSX.Element => {
+}: SelectorProps): JSX.Element => {
   return (
     <Autocomplete
       value={selectedState}

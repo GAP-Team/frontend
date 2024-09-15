@@ -1,5 +1,5 @@
 "use client";
-import React, { useState }  from "react";
+import React, { useState } from "react";
 import Badge from "../../badge/GBadge";
 import { FaCheck } from "react-icons/fa";
 import { Dropdown, DropdownItem, Button } from "flowbite-react";
@@ -13,12 +13,12 @@ import {
 import heroBackgroundPicture from "../../../../public/images/hero6.jpg";
 import Image from "next/image";
 
-const HeroSection = () : JSX.Element=> {
+const HeroSection = (): JSX.Element => {
   const [selectedTrade, setSelectedTrade] = useState("Gewerke");
   const [selectedOrderType, setSelectedAuftype] = useState("Auftragstypen");
   const [selectedState, setSelectedState] = useState("Bundesländer");
 
-  const truncateLabel = (label: string) : string => {
+  const truncateLabel = (label: string): string => {
     const maxLength = 20;
     if (label.length > maxLength) {
       return label.substring(0, maxLength) + "..."; // Truncate and append ellipsis

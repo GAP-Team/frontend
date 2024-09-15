@@ -5,7 +5,10 @@ import { useFormikContext } from "formik";
 import SummarySection, { Detail } from "@/components/summary/SummarySection";
 import { StepComponentProps } from "./types";
 
-const TenderSummary = ({ setActiveStep, steps }: StepComponentProps): JSX.Element => {
+const TenderSummary = ({
+  setActiveStep,
+  steps,
+}: StepComponentProps): JSX.Element => {
   const { values } = useFormikContext<any>();
 
   const updatedTenderInformation: Detail[] = [

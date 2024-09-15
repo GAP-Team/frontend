@@ -35,7 +35,7 @@ const TenderSummarySection = (): JSX.Element => {
     router.push("/real_estate/tenders");
   };
 
-  const editHandler = () : void => {
+  const editHandler = (): void => {
     router.push("/real_estate/tenders/add_tender_form");
   };
   return (

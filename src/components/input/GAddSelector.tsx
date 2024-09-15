@@ -17,7 +17,7 @@ interface AddSelectorProps {
   helperText?: string;
 }
 
-const AddSelector =({
+const AddSelector = ({
   name,
   options,
   placeholder = "Wählen Sie aus",
@@ -27,7 +27,7 @@ const AddSelector =({
   selectedState,
   error,
   helperText,
-}: AddSelectorProps) : JSX.Element => {
+}: AddSelectorProps): JSX.Element => {
   const [, setInputValue] = React.useState("");
   const filter = createFilterOptions<Item>();
 

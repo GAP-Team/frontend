@@ -6,7 +6,10 @@ interface GStepperProps {
   activeStep: number;
 }
 
-export default function GStepper({ steps, activeStep }: GStepperProps): JSX.Element {
+export default function GStepper({
+  steps,
+  activeStep,
+}: GStepperProps): JSX.Element {
   return (
     <Box sx={{ marginTop: "1.5rem" }}>
       <Stepper activeStep={activeStep} orientation="vertical">

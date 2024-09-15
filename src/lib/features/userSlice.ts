@@ -60,9 +60,12 @@ export const { setUser, setUserBuildings, setAllBuildingDetails } =
 
 export const currentUser = (state: RootState): any => state.user.user;
 export const currentUserId = (state: RootState): string => state.user.user._id;
-export const currentUserEmail = (state: RootState): string => state.user.user.email;
-export const allBuildingDetails = (state: RootState): any => state.user.buildings;
-export const currentUserCompany = (state: RootState): string => state.user.user.company;
+export const currentUserEmail = (state: RootState): string =>
+  state.user.user.email;
+export const allBuildingDetails = (state: RootState): any =>
+  state.user.buildings;
+export const currentUserCompany = (state: RootState): string =>
+  state.user.user.company;
 export const currentUserBuildings = (state: RootState): any =>
   state.user.user.buildings;
 export const currentUserName = (state: RootState): string =>

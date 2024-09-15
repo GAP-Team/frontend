@@ -3,12 +3,12 @@ import { Grid, Typography } from "@mui/material";
 import UploadButton from "@/components/button/UploadButton";
 
 const PrivatePerson = ({ formik }: any): JSX.Element => {
-  const setUploadApprvDoc =  (ev: any): void => {
+  const setUploadApprvDoc = (ev: any): void => {
     formik.setFieldValue("approval_document_file", ev);
     formik.setFieldValue("approval_document", ev?.target.value);
   };
 
-  const setUploadLandDoc =  (ev: any): void => {
+  const setUploadLandDoc = (ev: any): void => {
     formik.setFieldValue("land_register_entry_document_file", ev);
     formik.setFieldValue("land_register_entry_document", ev?.target.value);
   };

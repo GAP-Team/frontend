@@ -46,8 +46,6 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>((props, ref) => {
 
 Alert.displayName = "Alert";
 
-
-
 const RegistrationRealState = (): JSX.Element => {
   const steps = getSteps();
   const router = useRouter();

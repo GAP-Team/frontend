@@ -6,7 +6,7 @@ const TitleSection = ({
   badge?: any;
   title: string;
   subtitle: string;
-}) : JSX.Element=> {
+}): JSX.Element => {
   return (
     <div className="flex justify-center flex-col items-center text-center py-14 px-10">
       {badge ?? { badge }}

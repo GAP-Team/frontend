@@ -15,7 +15,7 @@ import {
   setUserBuildings,
   currentUserBuildings,
   setAllBuildingDetails,
-  allBuildingDetails
+  allBuildingDetails,
 } from "@/lib/features/userSlice";
 
 import AddBuildingForm from "./AddBuildingForm";
@@ -98,7 +98,7 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
     }
   }, []);
 
-  const getCurrentBuildingDetails = (id: any) : void => {
+  const getCurrentBuildingDetails = (id: any): void => {
     const selectedBuildingDetails = allBuildings?.filter(
       (building: any) => id === building?._id
     );
@@ -176,7 +176,7 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
     }
   };
 
-  const handleBack = () : void => {
+  const handleBack = (): void => {
     if (activeStep.id > 0) {
       setActiveStep(steps[activeStep.id - 1]);
     } else {
@@ -226,11 +226,16 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
     }
   };
 
-  const uploadAllDocuments = async (values: AddBuildingFormValues) : Promise<void> => {
+  const uploadAllDocuments = async (
+    values: AddBuildingFormValues
+  ): Promise<void> => {
     setLoading(true);
     const docObj: any[] = [];
 
-    const uploadDocuments = async (files: File[], docType: string): Promise<void> => {
+    const uploadDocuments = async (
+      files: File[],
+      docType: string
+    ): Promise<void> => {
       for (const file of files) {
         if (file.hasOwnProperty("documentType")) {
           docObj.push(file);
@@ -263,7 +268,6 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
       dispatch(setUserBuildings(updatedBuildings));
     }
   };
-
 
   const UpdateBuildingData = async (data: any) => {
     if (!buildingDetails?._id) {

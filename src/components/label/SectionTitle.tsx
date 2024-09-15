@@ -5,7 +5,7 @@ interface SectionTitleProps {
   sx?: SxProps<Theme>;
 }
 // Reusable component for styled subtitles
-const SectionTitle = ({ text, sx }: SectionTitleProps) : JSX.Element=> {
+const SectionTitle = ({ text, sx }: SectionTitleProps): JSX.Element => {
   const sectionStyles = { ...styles, ...sx };
   return (
     <Typography variant="subtitle2" sx={sectionStyles}>

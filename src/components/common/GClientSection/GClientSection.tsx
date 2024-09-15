@@ -2,7 +2,7 @@ import React from "react";
 import { IoLogoPython, IoLogoBitbucket, IoLogoApple } from "react-icons/io";
 import { IoLogoAmazon } from "react-icons/io5";
 
-const GClientSection = () : JSX.Element => {
+const GClientSection = (): JSX.Element => {
   return (
     <div className="bg-white py-16">
       <div className="container mx-auto px-4 text-center">

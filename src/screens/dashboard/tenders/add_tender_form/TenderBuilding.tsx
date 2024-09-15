@@ -33,7 +33,10 @@ const TenderBuilding = (): JSX.Element => {
     formik?.setFieldValue("buildingName", value);
   };
 
-  const handleEquipmentNameChange = (event: any, value: string | null): void => {
+  const handleEquipmentNameChange = (
+    event: any,
+    value: string | null
+  ): void => {
     formik?.setFieldValue("equipmentName", value);
   };
 

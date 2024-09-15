@@ -24,8 +24,7 @@ const Buildings: React.FC = () => {
     city: string,
     federalState: string,
     facilityType: string
-  ) : Promise<void> => {
-
+  ): Promise<void> => {
     if (!user?._id) return;
 
     const allBuildings = await buildingAPIs.getBuildings(
@@ -43,7 +42,7 @@ const Buildings: React.FC = () => {
     city: string,
     federalState: string,
     facilityType: string
-  ) : void => {
+  ): void => {
     getUserBuildings(city, federalState, facilityType);
   };
 

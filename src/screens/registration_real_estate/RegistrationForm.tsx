@@ -74,7 +74,7 @@ const RegistrationForm = ({
   };
 
   const handleStakeholderTabChange = (
-    event: React.SyntheticEvent, 
+    event: React.SyntheticEvent,
     newValue: number
   ): void => {
     setStakeholderTyp(newValue);

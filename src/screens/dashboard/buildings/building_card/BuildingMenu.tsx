@@ -28,7 +28,7 @@ const BuildingMenu: React.FC<BuildingMenuProps> = ({ buildingId }) => {
   const [openDialog, setOpenDialog] = React.useState(false);
   const open = Boolean(anchorEl);
 
-  const handleClick = (event: React.MouseEvent<HTMLElement>) : void => {
+  const handleClick = (event: React.MouseEvent<HTMLElement>): void => {
     setAnchorEl(event.currentTarget);
     router.push(`/real_estate/buildings/edit/${buildingId}`);
   };

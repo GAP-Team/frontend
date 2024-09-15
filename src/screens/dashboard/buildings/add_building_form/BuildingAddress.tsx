@@ -149,4 +149,3 @@ const BuildingAddress = ({ formik }: { formik?: any }): JSX.Element => {
 };
 
 export default BuildingAddress;
-

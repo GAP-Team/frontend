@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/legacy/image";
 
-const GCta = () : JSX.Element => {
+const GCta = (): JSX.Element => {
   return (
     <section className="diagonal-section-top bg-darker">
       <div className="container max-width-adaptive-lg padding-y-xxxl">

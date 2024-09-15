@@ -1,6 +1,12 @@
 import React from "react";
 
-const GBadge = ({ title, color }: { title: string; color?: string }) : JSX.Element => {
+const GBadge = ({
+  title,
+  color,
+}: {
+  title: string;
+  color?: string;
+}): JSX.Element => {
   return (
     <span
       style={{ backgroundColor: color }}

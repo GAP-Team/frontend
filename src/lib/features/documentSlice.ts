@@ -28,4 +28,5 @@ const documentSclice = createSlice({
 
 export const { setDocumentType } = documentSclice.actions;
 
-export const currentDocumentType = (state: RootState): string => state.documentType;
+export const currentDocumentType = (state: RootState): string =>
+  state.documentType;

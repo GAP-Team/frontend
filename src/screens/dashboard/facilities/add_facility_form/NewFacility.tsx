@@ -5,7 +5,11 @@ import { useRouter } from "next/navigation";
 import { Formik, Form, FormikHelpers } from "formik";
 import { addFacilityValidationSchema } from "@/utils/ValidationSchema";
 import PageTitle from "@/components/label/PageTitle";
-import { AddFacilityFormValues, ActiveStepItem, StepComponentProps } from "./types";
+import {
+  AddFacilityFormValues,
+  ActiveStepItem,
+  StepComponentProps,
+} from "./types";
 import SuccessPage from "@/components/common/SuccessPage";
 import SectionTitle from "@/components/label/SectionTitle";
 import GProgressStepper from "@/components/stepper/GProgressStepper";
@@ -15,13 +19,13 @@ import { CgClose } from "react-icons/cg";
 import AddFacilityForm from "./AddFacilityForm";
 import FacilityInformation from "./FacilityInformation";
 
-
 interface NewFacilityProps {
   facilityId: string;
 }
 
-const NewFacility: React.FC<NewFacilityProps> = ({ facilityId }) : JSX.Element => {
-
+const NewFacility: React.FC<NewFacilityProps> = ({
+  facilityId,
+}): JSX.Element => {
   const router = useRouter();
   const steps: ActiveStepItem[] = [
     {

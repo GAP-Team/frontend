@@ -9,9 +9,7 @@ interface facilityListProps {
   itemsPerPage?: number;
 }
 
-const FacilityItems: React.FC<facilityListProps> = ({
-  facilities,
-}) => {
+const FacilityItems: React.FC<facilityListProps> = ({ facilities }) => {
   return (
     <Grid container spacing={"1.25rem"} sx={{ overflow: "auto", flexGrow: 1 }}>
       {facilities.map((facility, index) => (

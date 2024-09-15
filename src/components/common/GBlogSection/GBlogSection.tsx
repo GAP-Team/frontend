@@ -2,7 +2,7 @@ import React from "react";
 import Badge from "../../badge/GBadge";
 import TitleSection from "../../label/title-section";
 
-const GBlogSection = () : JSX.Element => {
+const GBlogSection = (): JSX.Element => {
   return (
     <section className="pb-20">
       <TitleSection
@@ -36,7 +36,13 @@ const GBlogSection = () : JSX.Element => {
   );
 };
 
-function BlogCard({ title, source }: { title: string; source: string }): JSX.Element {
+function BlogCard({
+  title,
+  source,
+}: {
+  title: string;
+  source: string;
+}): JSX.Element {
   return (
     <>
       <div className="container overflow-hidden ">

@@ -25,7 +25,7 @@ const GTextSelector = ({
   selectedState,
   error,
   helperText,
-}: GTextSelectorProps) : JSX.Element=> {
+}: GTextSelectorProps): JSX.Element => {
   return (
     <Autocomplete
       freeSolo

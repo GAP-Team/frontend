@@ -40,7 +40,6 @@ const PropertyFilterPanel = ({
   >([]);
 
   useEffect(() => {
-
     const fetchData = async () => {
       if (!user?._id) return;
 
@@ -68,16 +67,17 @@ const PropertyFilterPanel = ({
   }, [user]);
 
   const handleChange =
-    (field: string) => (event: SelectChangeEvent<string>) : void => {
+    (field: string) =>
+    (event: SelectChangeEvent<string>): void => {
       setFilters({ ...filters, [field]: event.target.value as string });
     };
 
-  const handleReset = () : void=> {
+  const handleReset = (): void => {
     setFilters({ city: "", facilityType: "", federalState: "" });
     handleOnChange("", "", "");
   };
 
-  const handleFilter = () : void=> {
+  const handleFilter = (): void => {
     handleOnChange(filters.city, filters.federalState, filters.facilityType);
   };
 
@@ -130,7 +130,7 @@ const FilterSelect = ({
   value: string;
   onChange: (event: SelectChangeEvent<string>) => void;
   options: Array<{ value: string; label?: string }>;
-}) : JSX.Element=> (
+}): JSX.Element => (
   <FormControl size="small" sx={styles.formControl}>
     <InputLabel id={`${id}-label`}>{label}</InputLabel>
     <Select

@@ -15,7 +15,7 @@ export default function DashboardPage(): JSX.Element {
     checkRendering();
   }, []);
 
-  const checkRendering = () : void => {
+  const checkRendering = (): void => {
     if (!checkIsLoggedIn()) {
       router.push("/login");
     }

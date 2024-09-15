@@ -19,7 +19,7 @@ export default function UserMailVerification(): JSX.Element {
     }
   }, []);
 
-  const postVerificationAction = () : void => {
+  const postVerificationAction = (): void => {
     setIsUserVerified(true);
     router.push("/real_estate/dashboard");
     Cookies.set("isVerified", "true");
