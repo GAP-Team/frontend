@@ -13,24 +13,20 @@ import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
-
-import userAPIs from "@/api/user";
 import { ContactPersonItem } from "./types";
 import { Item } from "@/components/input/GSelector";
 import GTextInput from "@/components/input/GTextInput";
 import GTextSelector from "@/components/input/GTextSelector";
 import LabelWithAsterisk from "@/components/label/LabelWithAsterisk";
-import { contactPersonList, buildingTypesList } from "@/utils/Constants";
-import { newContactSchema } from "@/utils/ValidationSchema";
+import { buildingTypesList } from "@/utils/Constants";
 
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 
-const BuildingInformation = ({ formik }: { formik?: any }) => {
+const BuildingInformation = ({ formik }: { formik?: any }): JSX.Element => {
   const [dialogOpen, setDialogOpen] = useState(false);
-  const [options, setOptions] = useState<Item[]>(buildingTypesList);
-  const [contactPersons, setContactPersons] =
-    useState<any[]>(contactPersonList);
+  const [options] = useState(buildingTypesList);
+
   const [newContact, setNewContact] = useState<ContactPersonItem>({
     firstName: "",
     lastName: "",
@@ -65,26 +61,6 @@ const BuildingInformation = ({ formik }: { formik?: any }) => {
     }
   }, [formik?.values]);
 
-  const validateNewContact = async () => {
-    try {
-      await newContactSchema.validate(newContact, { abortEarly: false });
-      setNewContactErrors({
-        firstName: "",
-        lastName: "",
-        email: "",
-        phoneNumber: "",
-      });
-      return true;
-    } catch (err: any) {
-      const errors: any = {};
-      err.inner.forEach((validationError: any) => {
-        errors[validationError.path] = validationError.message;
-      });
-      setNewContactErrors(errors);
-      return false;
-    }
-  };
-
   const handleStateSelect = (selectedItem: Item | null): void => {
     setSelectedBuildingType(selectedItem);
     formik?.setFieldValue(
@@ -96,14 +72,13 @@ const BuildingInformation = ({ formik }: { formik?: any }) => {
   const handleContactPersonChange = (
     event: any,
     value: ContactPersonItem[]
-  ) => {
+  ): void => {
     formik?.setFieldValue("contactPerson", value);
   };
 
-  const handleAddContactPerson = async () => {
-    const isValid = await validateNewContact();
-    if (isValid) {
-      formik.setFieldValue("contactPerson", [
+  const handleAddContactPerson = (): void => {
+    if (newContact.firstName && newContact.lastName) {
+      formik?.setFieldValue("contactPerson", [
         ...formik.values.contactPerson,
         newContact,
       ]);
@@ -117,7 +92,10 @@ const BuildingInformation = ({ formik }: { formik?: any }) => {
     }
   };
 
-  const handleInputChange = (field: keyof ContactPersonItem, value: string) => {
+  const handleInputChange = (
+    field: keyof ContactPersonItem,
+    value: string
+  ): void => {
     setNewContact({ ...newContact, [field]: value });
     setNewContactErrors({ ...newContactErrors, [field]: "" }); // Clear error when typing
   };
@@ -206,7 +184,7 @@ const BuildingInformation = ({ formik }: { formik?: any }) => {
             // options={contactPersons}
             options={[]}
             isOptionEqualToValue={(options, value) =>
-              options.firstName == value.lastName
+              options.firstName === value.lastName
             }
             getOptionLabel={(option) =>
               option.firstName + " " + option.lastName

@@ -4,7 +4,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 import IconButton from "@mui/material/IconButton";
 import { IoSearch } from "react-icons/io5";
 
-export default function CustomizedSearchBar() {
+export default function CustomizedSearchBar(): JSX.Element {
   return (
     <div style={styles.searchBarStyle}>
       <TextField

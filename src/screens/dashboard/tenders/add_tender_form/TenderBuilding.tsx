@@ -1,9 +1,8 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import LabelWithAsterisk from "@/components/label/LabelWithAsterisk";
-import GTextInput from "@/components/input/GTextInput";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import { useFormikContext } from "formik";
@@ -12,7 +11,7 @@ import { dummyBuildings, equipmentTypesList } from "@/utils/Constants";
 import GTextSelector from "@/components/input/GTextSelector";
 import { Item } from "../../types";
 
-const TenderBuilding = () => {
+const TenderBuilding = (): JSX.Element => {
   const formik = useFormikContext<AddTenderFormValues>();
   const [selectedEquipmntType, setSelectedEquipmntType] = useState<Item | null>(
     formik?.values?.equipmentType
@@ -30,11 +29,14 @@ const TenderBuilding = () => {
     );
   };
 
-  const handleBuildingNameChange = (event: any, value: string | null) => {
+  const handleBuildingNameChange = (event: any, value: string | null): void => {
     formik?.setFieldValue("buildingName", value);
   };
 
-  const handleEquipmentNameChange = (event: any, value: string | null) => {
+  const handleEquipmentNameChange = (
+    event: any,
+    value: string | null
+  ): void => {
     formik?.setFieldValue("equipmentName", value);
   };
 

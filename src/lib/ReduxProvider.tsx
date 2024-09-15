@@ -7,7 +7,7 @@ export default function ReduxProvider({
   children,
 }: {
   children: React.ReactNode;
-}) {
+}): JSX.Element {
   const storeRef = useRef<AppStore>();
   if (!storeRef.current) {
     // Create the store instance the first time this renders

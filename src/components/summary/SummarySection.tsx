@@ -1,7 +1,7 @@
 import React from "react";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import { styled, useTheme } from "@mui/material/styles";
+import { styled } from "@mui/material/styles";
 import SummaryCard from "@/components/summary/SummaryCard";
 import { FaRegEdit } from "react-icons/fa";
 import DetailItem from "../common/DetailItem";

@@ -1,8 +1,7 @@
 import React from "react";
 import gapLogo from "../../../public/icons/gap-logo.svg";
 import Image from "next/image";
-import { Roboto, Lalezar } from "next/font/google";
-const roboto = Roboto({ subsets: ["latin"], weight: ["500"] });
+import { Lalezar } from "next/font/google";
 const lalezar = Lalezar({ subsets: ["latin"], weight: ["400"] });
 
 interface GapLogoProps {

@@ -1,6 +1,6 @@
 import React from "react";
 
-const Clients = () => {
+const Clients = (): JSX.Element => {
   return (
     <section className="position-relative z-index-1 padding-y-md">
       <div className="container max-width-lg">

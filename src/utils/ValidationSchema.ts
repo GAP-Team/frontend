@@ -29,10 +29,7 @@ export const registrationValidationSchema = yup
       ),
     confirmPassword: yup
       .string()
-      .oneOf(
-        [yup.ref("password"), undefined],
-        "Passwörter müssen übereinstimmen"
-      )
+      .oneOf([yup.ref("password")], "Passwörter müssen übereinstimmen")
       .required("Passwort bestätigen ist erforderlich"),
     telephone: yup
       .string()
@@ -59,37 +56,37 @@ export const registrationValidationSchema = yup
       ),
     city: yup.string().required("Stadt ist erforderlich"),
     registrationNumber: yup.string(),
-    business_registration_doc: yup.string(),
-    approval_document: yup.string(),
-    land_register_entry_document: yup.string(),
+    businessRegistrationDocument: yup.string(),
+    approvalDocument: yup.string(),
+    landRegisterEntryDocument: yup.string(),
   })
   .test(
     "documentRequirement",
     "Entweder business registration doc, registrationNumber, approval document oder land register entry document ist erforderlich",
     function (values) {
       const {
-        business_registration_doc,
+        businessRegistrationDocument: businessregistrationDocument,
         registrationNumber,
-        approval_document,
-        land_register_entry_document,
+        approvalDocument: approvalDocument,
+        landRegisterEntryDocument: landRegisterEntryDocument,
       } = values;
 
       // If any of the four fields is nonempty, return true
       if (
-        business_registration_doc ||
+        businessregistrationDocument ||
         registrationNumber ||
-        approval_document ||
-        land_register_entry_document
+        approvalDocument ||
+        landRegisterEntryDocument
       ) {
         return true;
       }
 
       // Otherwise, create an error for each relevant field
       if (
-        !business_registration_doc &&
+        !businessregistrationDocument &&
         !registrationNumber &&
-        !approval_document &&
-        !land_register_entry_document
+        !approvalDocument &&
+        !landRegisterEntryDocument
       ) {
         return this.createError({
           path: "registrationNumber",

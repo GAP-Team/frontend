@@ -26,7 +26,7 @@ export default function UploadButton({
   name,
   error,
   helperText,
-}: UploadButtonProps) {
+}: UploadButtonProps): JSX.Element {
   const theme = useTheme();
 
   const styles = {

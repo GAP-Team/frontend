@@ -6,14 +6,10 @@ import Typography from "@mui/material/Typography";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControl from "@mui/material/FormControl";
 import FormControlLabel from "@mui/material/FormControlLabel";
-
-import { handleUploadDoc } from "@/utils/uploadToS3";
 import GTextInput from "@/components/input/GTextInput";
-import UploadButton from "@/components/button/UploadButton";
-import LabelWithAsterisk from "@/components/label/LabelWithAsterisk";
 import UploadMultiButton from "@/components/button/UploadMultiButton";
 
-const BuildingDocumentation = ({ formik }: { formik?: any }) => {
+const BuildingDocumentation = ({ formik }: { formik?: any }): JSX.Element => {
   return (
     <Box
       noValidate

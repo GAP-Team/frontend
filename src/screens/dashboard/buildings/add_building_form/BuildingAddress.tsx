@@ -6,7 +6,6 @@ import LabelWithAsterisk from "@/components/label/LabelWithAsterisk";
 import GTextInput from "@/components/input/GTextInput";
 import GSelector from "@/components/input/GSelector";
 import { germanStates } from "@/utils/Constants";
-import { useFormikContext } from "formik";
 import GoogleAutocomplete from "@/components/input/GoogleAutocomplete";
 import { geocodeByAddress } from "react-places-autocomplete";
 interface Item {
@@ -14,14 +13,14 @@ interface Item {
   value: string;
 }
 
-const BuildingAddress = ({ formik }: { formik?: any }) => {
+const BuildingAddress = ({ formik }: { formik?: any }): JSX.Element => {
   const [selectedState, setSelectedState] = useState<Item | null>(null);
   const handleStateSelect = (selectedItem: Item | null): void => {
     setSelectedState(selectedItem);
     formik?.setFieldValue("state", selectedItem ? selectedItem.value : "");
   };
 
-  const handleAddressSelect = async (value: string) => {
+  const handleAddressSelect = async (value: string): Promise<void> => {
     try {
       const results = await geocodeByAddress(value);
       const addressComponents = results[0].address_components;
@@ -150,16 +149,3 @@ const BuildingAddress = ({ formik }: { formik?: any }) => {
 };
 
 export default BuildingAddress;
-
-//Styles
-const formStyles = {
-  marginLeft: "3.75rem",
-  marginRight: "3.5rem",
-  display: "flex",
-  flexDirection: "row",
-  backgroundColor: "white",
-  height: "41.75rem",
-  padding: "1.5rem",
-  borderRadius: "0.5rem",
-  boxShadow: "0px 8px 24px 0px rgba(30, 49, 55, 0.08)",
-};

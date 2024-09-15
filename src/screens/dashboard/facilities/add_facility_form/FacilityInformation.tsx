@@ -15,7 +15,7 @@ import {
 } from "@/utils/Constants";
 import Typography from "@mui/material/Typography";
 
-const FacilityInformation = () => {
+const FacilityInformation = (): JSX.Element => {
   const formik = useFormikContext<AddFacilityFormValues>();
   const [selectedGnericTerm, setSelectedGenericTerm] = useState<Item | null>(
     formik?.values?.genericTerm

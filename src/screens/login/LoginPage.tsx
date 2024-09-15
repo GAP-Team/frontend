@@ -14,7 +14,6 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import InputAdornment from "@mui/material/InputAdornment";
 import CircularProgress from "@mui/material/CircularProgress";
-
 import authAPIs from "@/api/auth";
 import { setUser } from "@/lib/features/userSlice";
 import { GapLogo } from "@/components/logo/GapLogo";
@@ -22,7 +21,7 @@ import HeroBanner from "../../components/common/InfoBanner";
 import { loginValidationSchema } from "@/utils/ValidationSchema";
 import { setAccessToken, setIsUserVerified } from "@/utils/helperJWT";
 
-export default function LoginPage() {
+export default function LoginPage(): JSX.Element {
   const router = useRouter();
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
@@ -34,7 +33,7 @@ export default function LoginPage() {
       password: "",
     },
     validationSchema: loginValidationSchema,
-    onSubmit: async (values, { setSubmitting, resetForm }) => {
+    onSubmit: async (values, { setSubmitting }) => {
       try {
         setLoading(true);
         const formValues = { ...values, password: values.password };
@@ -68,7 +67,8 @@ export default function LoginPage() {
   });
 
   const handleChange =
-    (field: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
+    (field: string) =>
+    (e: React.ChangeEvent<HTMLInputElement>): void => {
       setLoginError(null);
       formik.setFieldValue(field, e.target.value);
       formik.setFieldTouched(field, true);

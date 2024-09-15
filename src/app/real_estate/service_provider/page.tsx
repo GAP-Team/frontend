@@ -1,6 +1,6 @@
 import RealStateUserLayout from "../page";
 
-export default function ServiceProviderDashboard() {
+export default function ServiceProviderDashboard(): JSX.Element {
   return (
     <RealStateUserLayout>
       <div>

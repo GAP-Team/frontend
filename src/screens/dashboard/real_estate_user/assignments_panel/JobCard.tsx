@@ -42,7 +42,7 @@ const JobCard: React.FC<JobCardProps> = ({
 }) => {
   const router = useRouter();
 
-  const handleClick = () => {
+  const handleClick = (): void => {
     router.push(`/real_estate/tenders/${id}`);
   };
 

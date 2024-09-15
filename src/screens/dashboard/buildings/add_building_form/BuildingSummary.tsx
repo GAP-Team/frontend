@@ -2,15 +2,17 @@
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import { useFormikContext } from "formik";
-import SummarySection from "@/components/summary/SummarySection";
-import { Detail } from "@/components/summary/SummarySection";
+import SummarySection, { Detail } from "@/components/summary/SummarySection";
 import { ActiveStepItem } from "../../types";
 
 interface BuildingSummaryProps {
   setActiveStep: React.Dispatch<React.SetStateAction<ActiveStepItem>>;
   steps: ActiveStepItem[];
 }
-const BuildingSummary = ({ setActiveStep, steps }: BuildingSummaryProps) => {
+const BuildingSummary = ({
+  setActiveStep,
+  steps,
+}: BuildingSummaryProps): JSX.Element => {
   const { values } = useFormikContext<any>();
 
   const updatedBuildingInformation: Detail[] = [

@@ -10,7 +10,13 @@ import {
   emailTemplateVerificationText,
 } from "@/utils/Constants";
 
-const EmailTemplate = ({ name, verificationCode }) => (
+const EmailTemplate = ({
+  name,
+  verificationCode,
+}: {
+  name: string;
+  verificationCode: number;
+}): any => (
   <html>
     <body>
       <p>Dear {name},</p>

@@ -1,9 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { SidebarItem, SubItem } from "@/components/navigation/GSidebar/SideBar";
-import Accordion from "@mui/material/Accordion";
-import AccordionSummary from "@mui/material/AccordionSummary";
-import AccordionDetails from "@mui/material/AccordionDetails";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
@@ -11,7 +7,6 @@ import ExpandMore from "@mui/icons-material/ExpandMore";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import List from "@mui/material/List";
 import Collapse from "@mui/material/Collapse";
-import Typography from "@mui/material/Typography";
 
 interface SubSidebarItemProps {
   item: SidebarItem;
@@ -34,7 +29,7 @@ export const SubSidebarItem: React.FC<SubSidebarItemProps> = ({
     }
   }, [open]);
 
-  const handleToggle = () => {
+  const handleToggle = (): void => {
     if (open) {
       setIsOpen(!isOpen);
     }

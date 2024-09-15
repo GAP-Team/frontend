@@ -1,4 +1,8 @@
-export const AuftrafSvg = ({ className }: { className?: string }) => {
+export const AuftrafSvg = ({
+  className,
+}: {
+  className?: string;
+}): JSX.Element => {
   return (
     <div className="bg-[#ffeecc] md:mr-auto rounded-full p-2">
       <svg
@@ -18,7 +22,11 @@ export const AuftrafSvg = ({ className }: { className?: string }) => {
     </div>
   );
 };
-export const AngebotSvg = ({ className }: { className?: string }) => {
+export const AngebotSvg = ({
+  className,
+}: {
+  className?: string;
+}): JSX.Element => {
   return (
     <div className="bg-[#ffeecc] md:mr-auto rounded-full p-2">
       <svg
@@ -38,7 +46,11 @@ export const AngebotSvg = ({ className }: { className?: string }) => {
     </div>
   );
 };
-export const SolutionSvg = ({ className }: { className?: string }) => {
+export const SolutionSvg = ({
+  className,
+}: {
+  className?: string;
+}): JSX.Element => {
   return (
     <div className="bg-[#ffeecc] md:mr-auto rounded-full p-2">
       <svg

@@ -5,19 +5,16 @@ import pino from "pino";
 import Cookies from "js-cookie";
 import Grid from "@mui/material/Grid";
 import { Button } from "@mui/material";
-import { useSelector } from "react-redux";
 import { IoMailUnread } from "react-icons/io5";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import CircularProgress from "@mui/material/CircularProgress";
-
 import {
   sendVerificationEmail,
   getNewVerificationCode,
 } from "@/utils/helperEmail";
 import userAPIs from "@/api/user";
 import GButton from "@/components/button/GButton";
-import { currentUser } from "@/lib/features/userSlice";
 import SuccessPage from "@/components/common/SuccessPage";
 import EmailTemplate from "@/components/EmailTemplate/Template";
 
@@ -37,9 +34,7 @@ const EmailVerification = ({
   newUserName,
   newUserEmail,
   postVerificationAction,
-}: EmailVerificationProps) => {
-  const user = useSelector(currentUser);
-
+}: EmailVerificationProps): JSX.Element => {
   const [loading, setLoading] = useState(false);
   const [resendTimer, setResendTimer] = useState(30);
   const [resendDisabled, setResendDisabled] = useState(true);
@@ -53,8 +48,7 @@ const EmailVerification = ({
     "",
     "",
   ]);
-  const [isVerificationEmailSent, setIsVerificationEmailSent] =
-    useState<boolean>(false);
+  const [, setIsVerificationEmailSent] = useState<boolean>(false);
 
   const inputRefs = useRef<Array<HTMLInputElement | null>>([]);
 
@@ -72,16 +66,10 @@ const EmailVerification = ({
         });
       }, 1000);
     }
-    return () => clearInterval(timer);
+    return (): void => clearInterval(timer);
   }, [resendDisabled]);
 
-  /*useEffect(() => {
-    if (sendMail) {
-      sendVerificationEmail(user?.firstName, user?.email, user?._id);
-    }
-  }, [sendMail]);*/
-
-  const handleChange = (index: number, value: string) => {
+  const handleChange = (index: number, value: string): void => {
     if (/^\d?$/.test(value)) {
       const newCode = [...verificationCode];
       newCode[index] = value;
@@ -99,12 +87,12 @@ const EmailVerification = ({
     }
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (): Promise<void> => {
     setLoading(true);
     try {
       const code = verificationCode.join("");
 
-      if (code != "") {
+      if (code !== "") {
         let verificationQuery = {
           userId: newUserId,
           email: newUserEmail,
@@ -138,7 +126,7 @@ const EmailVerification = ({
     }
   };
 
-  const handlePaste = (e: React.ClipboardEvent) => {
+  const handlePaste = (e: React.ClipboardEvent): void => {
     const pastedData = e.clipboardData.getData("Text").slice(0, 6);
     if (/^\d{6}$/.test(pastedData)) {
       const newCode = pastedData.split("");
@@ -147,7 +135,7 @@ const EmailVerification = ({
     }
   };
 
-  const handleResendCode = async () => {
+  const handleResendCode = async (): Promise<void> => {
     setResendDisabled(true);
     let code = getNewVerificationCode();
     const element = (
@@ -161,7 +149,7 @@ const EmailVerification = ({
       code
     );
 
-    if (sendStatus.status == 201) {
+    if (sendStatus.status === 201) {
       setIsVerificationEmailSent(true);
     }
   };

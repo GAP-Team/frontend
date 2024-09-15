@@ -5,7 +5,7 @@ import IconButton from "@mui/material/IconButton";
 import { Item } from "./GSelector";
 import { CgClose } from "react-icons/cg";
 
-interface AddSelectorProps<T extends Item> {
+interface AddSelectorProps {
   options: Item[];
   selectedState: Item | null;
   placeholder?: string;
@@ -17,7 +17,7 @@ interface AddSelectorProps<T extends Item> {
   helperText?: string;
 }
 
-const AddSelector = <T extends Item>({
+const AddSelector = ({
   name,
   options,
   placeholder = "Wählen Sie aus",
@@ -27,8 +27,8 @@ const AddSelector = <T extends Item>({
   selectedState,
   error,
   helperText,
-}: AddSelectorProps<T>) => {
-  const [inputValue, setInputValue] = React.useState("");
+}: AddSelectorProps): JSX.Element => {
+  const [, setInputValue] = React.useState("");
   const filter = createFilterOptions<Item>();
 
   return (

@@ -8,7 +8,7 @@ import {
 } from "flowbite-react";
 import { BsFacebook, BsInstagram, BsTwitter } from "react-icons/bs";
 import { GapLogo } from "@/components/logo/GapLogo";
-function GFooter() {
+function GFooter(): JSX.Element {
   return (
     <>
       <Footer container className="bg-[#37383f] py-8">

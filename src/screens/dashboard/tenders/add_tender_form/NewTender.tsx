@@ -2,10 +2,14 @@
 import React, { useEffect, useState } from "react";
 import Grid from "@mui/material/Grid";
 import { useRouter } from "next/navigation";
-import { Formik, Form, FormikHelpers } from "formik";
+import { Formik, FormikHelpers } from "formik";
 import { addTenderValidationSchema } from "@/utils/ValidationSchema";
 import PageTitle from "@/components/label/PageTitle";
-import { AddTenderFormValues, ActiveStepItem } from "./types";
+import {
+  AddTenderFormValues,
+  ActiveStepItem,
+  StepComponentProps,
+} from "./types";
 import SuccessPage from "@/components/common/SuccessPage";
 import SectionTitle from "@/components/label/SectionTitle";
 import AddTenderForm from "./AddTenderForm";
@@ -17,11 +21,9 @@ import GProgressStepper from "@/components/stepper/GProgressStepper";
 import Link from "next/link";
 import { IconButton } from "@mui/material";
 import { CgClose } from "react-icons/cg";
-import TenderDocumentation from "./TenderDocumentation";
 import TenderSummary from "./TenderSummary";
-import { StepComponentProps } from "./types";
 
-const NewTender = () => {
+const NewTender = (): JSX.Element => {
   const router = useRouter();
   const steps: ActiveStepItem[] = [
     {
@@ -32,7 +34,6 @@ const NewTender = () => {
     { id: 1, stepName: "Objekt / Anlage", component: TenderBuilding },
     { id: 2, stepName: "Beschreibung", component: TenderDescription },
     { id: 3, stepName: "Einstufung", component: TenderClassification },
-    // { id: 4, stepName: "Dokumente", component: TenderDocumentation },
     { id: 4, stepName: "Übersicht Ausschreibung", component: TenderSummary },
   ];
 
@@ -49,7 +50,7 @@ const NewTender = () => {
   const handleNext = (
     values: AddTenderFormValues,
     actions: FormikHelpers<AddTenderFormValues>
-  ) => {
+  ): void => {
     if (activeStep?.id === steps.length - 1) {
       console.log("Form values", values);
       setIsSubmitted(true);
@@ -61,7 +62,7 @@ const NewTender = () => {
     }
   };
 
-  const handleBack = () => {
+  const handleBack = (): void => {
     if (activeStep.id > 0) {
       setActiveStep(steps[activeStep.id - 1]);
     } else {

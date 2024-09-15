@@ -3,10 +3,8 @@ import Stack from "@mui/material/Stack";
 import { FiFileText } from "react-icons/fi";
 import Typography from "@mui/material/Typography";
 import { CircularProgress, Divider } from "@mui/material";
-
 import s3APIs from "@/api/s3";
 import { Document } from "./types";
-import { scrollBarStyles } from "@/components/scrollbar/Scrollbar";
 
 interface DocumentListProps {
   title: string;
@@ -28,7 +26,7 @@ const DocumentList: React.FC<DocumentListProps> = ({
     selectedIndex: number,
     fileKey: string,
     fileName: string
-  ) => {
+  ): Promise<void> => {
     setSelectedIndex(selectedIndex);
     setIsDownloading(true);
 
@@ -97,14 +95,3 @@ const DocumentList: React.FC<DocumentListProps> = ({
 };
 
 export default DocumentList;
-
-// Styles
-const styles = {
-  listContainer: {
-    flexGrow: 1,
-    paddingTop: "0.5rem",
-    overflow: "auto",
-    paddingRight: "0.65rem",
-    ...scrollBarStyles,
-  },
-};
