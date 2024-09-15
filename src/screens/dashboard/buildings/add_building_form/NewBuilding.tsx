@@ -269,7 +269,7 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
     }
   };
 
-  const UpdateBuildingData = async (data: any) => {
+  const UpdateBuildingData = async (data: any) : Promise<void> => {
     if (!buildingDetails?._id) {
       return;
     }

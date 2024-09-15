@@ -2,14 +2,12 @@
 import { Box } from "@mui/system";
 import PropertyFilterPanel from "@/components/filter/PropertyFilterPanel";
 import React, { useState } from "react";
-import React from "react";
-import { Box } from "@mui/system";
 import { Facility } from "./types";
 import FacilityList from "./FacilityList";
 import { dummyFacilities } from "@/utils/Constants";
 import addObjSrc from "@/../public/icons/add_building.svg";
 import NoContentPage from "@/components/common/NoContentPage";
-import PropertyFilterPanel from "@/components/filter/PropertyFilterPanel";
+
 
 const Facilities = (): JSX.Element => {
   const [facilities] = useState<Facility[]>(dummyFacilities);
