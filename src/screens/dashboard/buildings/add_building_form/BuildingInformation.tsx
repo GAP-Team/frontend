@@ -1,4 +1,3 @@
-"use client";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Dialog from "@mui/material/Dialog";
@@ -22,6 +21,7 @@ import GTextInput from "@/components/input/GTextInput";
 import GTextSelector from "@/components/input/GTextSelector";
 import LabelWithAsterisk from "@/components/label/LabelWithAsterisk";
 import { contactPersonList, buildingTypesList } from "@/utils/Constants";
+import { newContactSchema } from "@/utils/ValidationSchema";
 
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
@@ -37,6 +37,14 @@ const BuildingInformation = ({ formik }: { formik?: any }) => {
     email: "",
     phoneNumber: "",
   });
+
+  const [newContactErrors, setNewContactErrors] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    phoneNumber: "",
+  });
+
   const [selectedBuildingType, setSelectedBuildingType] = useState<Item | null>(
     formik?.values?.buildingType
       ? {
@@ -55,12 +63,26 @@ const BuildingInformation = ({ formik }: { formik?: any }) => {
     } else {
       setSelectedBuildingType({ label: "", value: "" });
     }
-    // getAllUsers();
   }, [formik?.values]);
 
-  const getAllUsers = async () => {
-    let allUsers = await userAPIs.getAllUser();
-    setContactPersons(allUsers.data);
+  const validateNewContact = async () => {
+    try {
+      await newContactSchema.validate(newContact, { abortEarly: false });
+      setNewContactErrors({
+        firstName: "",
+        lastName: "",
+        email: "",
+        phoneNumber: "",
+      });
+      return true;
+    } catch (err: any) {
+      const errors: any = {};
+      err.inner.forEach((validationError: any) => {
+        errors[validationError.path] = validationError.message;
+      });
+      setNewContactErrors(errors);
+      return false;
+    }
   };
 
   const handleStateSelect = (selectedItem: Item | null): void => {
@@ -78,14 +100,13 @@ const BuildingInformation = ({ formik }: { formik?: any }) => {
     formik?.setFieldValue("contactPerson", value);
   };
 
-  const handleAddContactPerson = () => {
-    if (newContact.firstName && newContact.lastName) {
-      formik?.setFieldValue("contactPerson", [
+  const handleAddContactPerson = async () => {
+    const isValid = await validateNewContact();
+    if (isValid) {
+      formik.setFieldValue("contactPerson", [
         ...formik.values.contactPerson,
         newContact,
       ]);
-      //API call here
-      //for POST for adding the new contact Person
       setNewContact({
         firstName: "",
         lastName: "",
@@ -94,6 +115,11 @@ const BuildingInformation = ({ formik }: { formik?: any }) => {
       });
       setDialogOpen(false);
     }
+  };
+
+  const handleInputChange = (field: keyof ContactPersonItem, value: string) => {
+    setNewContact({ ...newContact, [field]: value });
+    setNewContactErrors({ ...newContactErrors, [field]: "" }); // Clear error when typing
   };
 
   return (
@@ -243,23 +269,11 @@ const BuildingInformation = ({ formik }: { formik?: any }) => {
             label="Vorname"
             fullWidth
             value={newContact.firstName}
-            onChange={(e) =>
-              setNewContact({ ...newContact, firstName: e.target.value })
-            }
-            error={!newContact.firstName && Boolean(formik?.errors.firstName)}
-            helperText={!newContact.firstName && formik?.errors.firstName}
+            onChange={(e) => handleInputChange("firstName", e.target.value)}
+            error={Boolean(newContactErrors.firstName)}
+            helperText={newContactErrors.firstName}
             sx={{ marginBottom: "1rem" }}
           />
-          {/* <TextField
-            id="role"
-            margin="dense"
-            label="Rolle"
-            fullWidth
-            value={newContact.role}
-            onChange={(e) => setNewContact({ ...newContact, role: e.target.value })}
-            error={!newContact.role && Boolean(formik?.errors.contactPerson)}
-            helperText={!newContact.role && formik?.errors.contactPerson}
-          /> */}
           <TextField
             id="lastName"
             name="lastName"
@@ -267,11 +281,10 @@ const BuildingInformation = ({ formik }: { formik?: any }) => {
             label="Nachname"
             fullWidth
             value={newContact.lastName}
-            onChange={(e) =>
-              setNewContact({ ...newContact, lastName: e.target.value })
-            }
-            error={!newContact.lastName && Boolean(formik?.errors.lastName)}
-            helperText={!newContact.lastName && formik?.errors.lastName}
+            onChange={(e) => handleInputChange("lastName", e.target.value)}
+            error={Boolean(newContactErrors.lastName)}
+            helperText={newContactErrors.lastName}
+            sx={{ marginBottom: "1rem" }}
           />
           <TextField
             id="email"
@@ -280,25 +293,21 @@ const BuildingInformation = ({ formik }: { formik?: any }) => {
             margin="dense"
             fullWidth
             value={newContact.email}
-            onChange={(e) =>
-              setNewContact({ ...newContact, email: e.target.value })
-            }
-            error={!newContact.email && Boolean(formik?.errors.email)}
-            helperText={!newContact.email && formik?.errors.email}
+            onChange={(e) => handleInputChange("email", e.target.value)}
+            error={Boolean(newContactErrors.email)}
+            helperText={newContactErrors.email}
+            sx={{ marginBottom: "1rem" }}
           />
           <TextField
             id="phoneNumber"
             label="Telefonnummer"
+            name="phoneNumber"
             margin="dense"
             fullWidth
             value={newContact.phoneNumber}
-            onChange={(e) =>
-              setNewContact({ ...newContact, phoneNumber: e.target.value })
-            }
-            error={
-              !newContact.phoneNumber && Boolean(formik?.errors.phoneNumber)
-            }
-            helperText={!newContact.phoneNumber && formik?.errors.phoneNumber}
+            onChange={(e) => handleInputChange("phoneNumber", e.target.value)}
+            error={Boolean(newContactErrors.phoneNumber)}
+            helperText={newContactErrors.phoneNumber}
           />
         </DialogContent>
         <DialogActions sx={{ padding: "1rem" }}>

@@ -1,5 +1,8 @@
 import * as yup from "yup";
 
+const EMAIL_REGEX =
+  /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
 export const loginValidationSchema = yup.object({
   email: yup
     .string()
@@ -96,6 +99,7 @@ export const registrationValidationSchema = yup
       }
     }
   );
+
 export const addObjektFormSchema = yup.object().shape({
   name: yup.string().required("Gebäudename ist erforderlich."),
   totalArea: yup.number().typeError("Gesamtfläche muss eine Zahl sein."),
@@ -139,6 +143,23 @@ export const addObjektFormSchema = yup.object().shape({
       return true;
     })
     .url("Server-Link muss eine gültige URL sein."),
+});
+
+export const newContactSchema = yup.object().shape({
+  firstName: yup.string().required("Vorname ist erforderlich."),
+  lastName: yup.string().required("Nachname ist erforderlich."),
+  email: yup
+    .string()
+    .matches(EMAIL_REGEX, "Ungültige Email")
+    .required("Email ist erforderlich."),
+  phoneNumber: yup
+    .string()
+    .nullable()
+    .test(
+      "is-valid-phone",
+      "Telefonnummer muss eine gültige Nummer sein.",
+      (value) => !value || /^\d+$/.test(value)
+    ),
 });
 
 export const addTenderValidationSchema = [
