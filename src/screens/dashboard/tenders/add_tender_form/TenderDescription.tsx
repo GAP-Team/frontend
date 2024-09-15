@@ -5,7 +5,6 @@ import GTextInput from "@/components/input/GTextInput";
 import { useFormikContext } from "formik";
 import { AddTenderFormValues } from "./types";
 import Typography from "@mui/material/Typography";
-import FormControl from "@mui/material/FormControl";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 

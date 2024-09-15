@@ -9,7 +9,6 @@ import Grid from "@mui/material/Grid";
 import Divider from "@mui/material/Divider";
 import GButton from "@/components/button/GButton";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
 import LabelText from "@/components/label/LabelText";
 
 //TODO: in the future this data will be fetched from the backend and dynamically updated the values

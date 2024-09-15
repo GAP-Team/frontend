@@ -1,7 +1,6 @@
 import * as React from "react";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
-import Box from "@mui/material/Box";
 import OverviewPanel from "./overview_panel/OverviewPanel";
 import AssignmentsPanel from "./assignments_panel/AssignmentsPanel";
 import ApplicationsPanel from "./applications_panel/ApplicationsPanel";

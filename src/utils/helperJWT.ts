@@ -1,7 +1,7 @@
 import Cookies from "js-cookie";
 import * as jwt from "jsonwebtoken";
 
-export const verifyJWT = (accessToken: string) => {
+export const verifyJWT = (accessToken: string): any => {
   try {
     let token = null;
     if (!accessToken) token = getAccessToken();

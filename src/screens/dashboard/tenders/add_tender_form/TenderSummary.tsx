@@ -4,8 +4,6 @@ import Box from "@mui/material/Box";
 import { useFormikContext } from "formik";
 import SummarySection from "@/components/summary/SummarySection";
 import { Detail } from "@/components/summary/SummarySection";
-import { ActiveStepItem } from "../../types";
-import { Dispatch, SetStateAction } from "react";
 import { StepComponentProps } from "./types";
 
 const TenderSummary = ({ setActiveStep, steps }: StepComponentProps) => {

@@ -1,5 +1,4 @@
 import React from "react";
-import JobCard from "../../real_estate_user/assignments_panel/JobCard";
 import Box from "@mui/material/Box";
 import { TenderProps } from "./types";
 import Divider from "@mui/material/Divider";

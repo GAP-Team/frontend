@@ -6,20 +6,11 @@ import moment from "moment-timezone";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import { Formik, Form } from "formik";
-import { useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 import Snackbar from "@mui/material/Snackbar";
-import ReactDOMServer from "react-dom/server";
 import RegistrationForm from "./RegistrationForm";
 import Typography from "@mui/material/Typography";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
-
-import {
-  emailTemplateFoot,
-  emailTemplateSubject,
-  emailTemplateGreetins,
-  emailTemplateVerificationText,
-} from "@/utils/Constants";
 import {
   SetTouchedFunction,
   SubmitFormFunction,
@@ -36,12 +27,11 @@ import PageTitle from "@/components/label/PageTitle";
 import { handleUploadDoc } from "@/utils/uploadToS3";
 import BackButton from "@/components/button/BackButton";
 import InfoBanner from "@/components/common/InfoBanner";
-import { currentUserEmail } from "@/lib/features/userSlice";
 import EmailTemplate from "@/components/EmailTemplate/Template";
 import { registrationValidationSchema } from "@/utils/ValidationSchema";
 import EmailVerification from "../../components/email/EmailVerification";
 
-function getSteps() {
+function getSteps(): string[] {
   return [
     "Grundinformation",
     "Adresse der Firma",
@@ -59,7 +49,6 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
 const RegistrationRealState = () => {
   const steps = getSteps();
   const router = useRouter();
-  const currentEmail = useSelector(currentUserEmail);
 
   const [newUserId, setNewUserId] = useState("");
   const [activeStep, setActiveStep] = useState(0);
@@ -120,7 +109,7 @@ const RegistrationRealState = () => {
     }
   };
 
-  const handleBack = () => {
+  const handleBack = (): void => {
     if (activeStep > 3) {
       //If user has registered then redirect to new registration
       setActiveStep(0);
@@ -147,10 +136,10 @@ const RegistrationRealState = () => {
     password: "",
     telephone: "",
     confirmPassword: "",
-    approval_document: "",
+    approvalDocument: "",
     registrationNumber: "",
-    business_registration_doc: "",
-    land_register_entry_document: "",
+    businessRegistrationDocument: "",
+    landRegisterEntryDocument: "",
     businessType: "",
   };
 
@@ -177,7 +166,7 @@ const RegistrationRealState = () => {
         },
       };
 
-      let currentDate = new Date().toLocaleString("de-DE", {
+      const currentDate = new Date().toLocaleString("de-DE", {
         timeZone: "Europe/Berlin",
         hour12: false,
       });
@@ -195,7 +184,7 @@ const RegistrationRealState = () => {
         email: values.email,
         role: values.role,
         company: companyObj,
-        manufacturer_experience: null,
+        manufacturerExperience: null,
         registeredAt: formateDate,
         updatedAt: null,
       };
@@ -208,11 +197,11 @@ const RegistrationRealState = () => {
         setNewUserId(res?.data?._id);
         setNewUserEmail(values.email);
         setNewUserName(res?.data?.firstName);
-        let code = getNewVerificationCode();
+        const code = getNewVerificationCode();
         const element = (
           <EmailTemplate name={newUserName} verificationCode={code} />
         );
-        let sendStatus = await sendVerificationEmail(
+        const sendStatus = await sendVerificationEmail(
           values.firstName,
           values.email,
           res?.data?._id,
@@ -220,14 +209,14 @@ const RegistrationRealState = () => {
           code
         );
 
-        if (sendStatus.status == 201) {
+        if (sendStatus.status === 201) {
           setIsVerificationEmailSent(true);
         }
       }
     } catch (error: any) {
       if (
         error.response &&
-        error.response?.data?.error == "User already exists"
+        error.response?.data?.error === "User already exists"
       ) {
         setOpenSnackbar(true);
         setActiveStep(0);
@@ -241,7 +230,10 @@ const RegistrationRealState = () => {
     }
   };
 
-  const uploadAllDocuments = async (values: any, type: string) => {
+  const uploadAllDocuments = async (
+    values: any,
+    type: string
+  ): Promise<void> => {
     const docObj: any[] = [];
     const allFiles: any[] = [];
 
@@ -284,14 +276,14 @@ const RegistrationRealState = () => {
   const handleSnackbarClose = (
     event?: React.SyntheticEvent | Event,
     reason?: string
-  ) => {
+  ): void => {
     if (reason === "clickaway") {
       return;
     }
     setOpenSnackbar(false);
   };
 
-  const postVerificationAction = () => {
+  const postVerificationAction = (): void => {
     Cookies.set("isVerified", "true");
   };
 

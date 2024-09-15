@@ -9,7 +9,7 @@
   },
   "rules": {
     "@typescript-eslint/no-explicit-any": "off", // Disable the rule globally
-    "@typescript-eslint/explicit-function-return-type": "warn", // Show a warning if a return type is missing
+    "@typescript-eslint/explicit-function-return-type": "error", // Show a warning if a return type is missing
     "@typescript-eslint/no-unused-vars": [
       "error",
       { "argsIgnorePattern": "^_" }
@@ -23,7 +23,8 @@
     "complexity": ["warn", 5], // Show a warning if a function has a cyclomatic complexity greater than 5
     "max-lines-per-function": ["warn", 50], // Show a warning if a function has more than 50 lines
     "no-console": "warn", // Show a warning if console.log is used
-    "no-undefined": "error", // Show a warning if undefined is used
-    "prefer-arrow-callback": "error" // Show a warning if a function is not an arrow function
+    "no-undefined": "warn", // Show a warning if undefined is used
+    "prefer-arrow-callback": "error", // Show a warning if a function is not an arrow function
+    "@typescript-eslint/no-empty-interface": "off" // Show an error if an empty interface is found
   }
 }

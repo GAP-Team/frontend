@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import FormControl from "@mui/material/FormControl";
@@ -108,7 +108,7 @@ const TenderInformation = () => {
           <GTextSelector
             name="tenderType"
             options={
-              formik?.values?.tenderForm == "Handwerker"
+              formik?.values?.tenderForm === "Handwerker"
                 ? tenderTypesListHW
                 : tenderTypesListSV
             }

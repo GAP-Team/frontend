@@ -4,8 +4,6 @@ import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import { useFormikContext } from "formik";
 import Divider from "@mui/material/Divider";
-import Typography from "@mui/material/Typography";
-
 import PrivatePerson from "./PrivatePerson";
 import GTab from "@/components/filter/GTab";
 import CompanyAddress from "./CompanyAddress";
@@ -14,7 +12,6 @@ import GButton from "@/components/button/GButton";
 import BasicInformation from "./BasicInformation";
 import GStepper from "@/components/stepper/GStepper";
 import SummaryRegistration from "./SummaryRegistration";
-import BusinessRegistration from "./BusinessRegistration";
 import SectionTitle from "@/components/label/SectionTitle";
 import { realStateUsers, serviceProvider } from "@/utils/Constants";
 import GProgressStepper from "@/components/stepper/GProgressStepper";
@@ -40,11 +37,11 @@ const RegistrationForm = ({
   const [stakeholderTyp, setStakeholderTyp] = React.useState(0);
 
   useEffect(() => {
-    if (personTypeTab == 0) {
+    if (personTypeTab === 0) {
       formik.setFieldValue("businessType", "business");
     }
 
-    if (stakeholderTyp == 0) {
+    if (stakeholderTyp === 0) {
       formik.setFieldValue("role", realStateUsers);
     } else {
       formik.setFieldValue("role", serviceProvider);
@@ -57,7 +54,7 @@ const RegistrationForm = ({
   ) => {
     setPersonTyp(newValue);
 
-    if (newValue == 0) {
+    if (newValue === 0) {
       formik.setFieldValue("businessType", "business");
     } else {
       formik.setFieldValue("businessType", "private");
@@ -82,7 +79,7 @@ const RegistrationForm = ({
   ) => {
     setStakeholderTyp(newValue);
 
-    if (newValue == 0) {
+    if (newValue === 0) {
       formik.setFieldValue("role", realStateUsers);
     } else {
       formik.setFieldValue("role", serviceProvider);
@@ -128,22 +125,22 @@ const RegistrationForm = ({
               activeStep={activeStep}
             />
           </div>
-          {activeStep == 0 && (
+          {activeStep === 0 && (
             <GTab
               tabs={basictabs}
               tabvalue={stakeholderTyp}
               handleChange={handleStakeholderTabChange}
             />
           )}
-          {activeStep == 1 && <CompanyAddress formik={formik} />}
-          {activeStep == 2 && (
+          {activeStep === 1 && <CompanyAddress formik={formik} />}
+          {activeStep === 2 && (
             <GTab
               tabs={registertabs}
               tabvalue={personTypeTab}
               handleChange={handlePersonTabChange}
             />
           )}
-          {activeStep == 3 && (
+          {activeStep === 3 && (
             <SummaryRegistration setActiveStep={setActiveStep} />
           )}
         </div>

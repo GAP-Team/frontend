@@ -9,7 +9,7 @@ import {
 } from "./Constants";
 
 export const getNewVerificationCode = (): number => {
-  let verificationCode = Math.floor(100000 + Math.random() * 900000);
+  const verificationCode = Math.floor(100000 + Math.random() * 900000);
   return verificationCode;
 };
 
@@ -19,7 +19,7 @@ export const sendVerificationEmail = async (
   userId: string,
   template: any,
   code: number
-) => {
+): Promise<any> => {
   const emailTemplate = renderEmailTemplate(name, code, template);
 
   const expiresAt = moment()

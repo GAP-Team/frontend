@@ -1,7 +1,6 @@
 import { Box } from "@mui/system";
-import React from "react";
 import PropertyFilterPanel from "@/components/filter/PropertyFilterPanel";
-import { useState } from "react";
+import React, { useState } from "react";
 import { Facility } from "./types";
 import addObjSrc from "@/../public/icons/add_building.svg";
 import NoContentPage from "@/components/common/NoContentPage";
@@ -9,7 +8,7 @@ import FacilityList from "./FacilityList";
 import { dummyFacilities } from "@/utils/Constants";
 
 const Facilities = () => {
-  const [facilities, setFacilities] = useState<Facility[]>(dummyFacilities);
+  const [facilities] = useState<Facility[]>(dummyFacilities);
 
   const facilityContent =
     facilities?.length > 0 ? (

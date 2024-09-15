@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { Formik, Form, FormikHelpers } from "formik";
 import { addTenderValidationSchema } from "@/utils/ValidationSchema";
 import PageTitle from "@/components/label/PageTitle";
-import { AddTenderFormValues, ActiveStepItem } from "./types";
+import { AddTenderFormValues, ActiveStepItem, StepComponentProps } from "./types";
 import SuccessPage from "@/components/common/SuccessPage";
 import SectionTitle from "@/components/label/SectionTitle";
 import AddTenderForm from "./AddTenderForm";
@@ -17,9 +17,8 @@ import GProgressStepper from "@/components/stepper/GProgressStepper";
 import Link from "next/link";
 import { IconButton } from "@mui/material";
 import { CgClose } from "react-icons/cg";
-import TenderDocumentation from "./TenderDocumentation";
 import TenderSummary from "./TenderSummary";
-import { StepComponentProps } from "./types";
+
 
 const NewTender = () => {
   const router = useRouter();
