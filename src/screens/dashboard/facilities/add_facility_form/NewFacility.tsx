@@ -125,19 +125,17 @@ const NewFacility: React.FC<NewFacilityProps> = ({ facilityId }) => {
           onSubmit={handleNext}
         >
           {({ isSubmitting, handleSubmit }) => (
-            <Form>
-              <Grid sx={styles.form}>
-                <AddFacilityForm
-                  activeStep={activeStep}
-                  steps={steps}
-                  handleBack={handleBack}
-                  handleSubmit={handleSubmit}
-                  isSubmitting={isSubmitting}
-                  isBeyondLastStep={isSubmitted}
-                  formOrSuccessContent={formOrSuccessContent}
-                />
-              </Grid>
-            </Form>
+            <Grid sx={styles.form}>
+              <AddFacilityForm
+                activeStep={activeStep}
+                steps={steps}
+                handleBack={handleBack}
+                handleSubmit={handleSubmit}
+                isSubmitting={isSubmitting}
+                isBeyondLastStep={isSubmitted}
+                formOrSuccessContent={formOrSuccessContent}
+              />
+            </Grid>
           )}
         </Formik>
       </Grid>
