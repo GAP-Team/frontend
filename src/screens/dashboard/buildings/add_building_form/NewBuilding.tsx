@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import moment from "moment";
 import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
-import { Formik, Form, FormikHelpers } from "formik";
+import { Formik, FormikHelpers } from "formik";
 import Grid from "@mui/material/Grid";
 import buildingAPIs from "@/api/building";
 import { getLogger } from "@/utils/Logger";
@@ -269,7 +269,7 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
     }
   };
 
-  const UpdateBuildingData = async (data: any) : Promise<void> => {
+  const UpdateBuildingData = async (data: any): Promise<void> => {
     if (!buildingDetails?._id) {
       return;
     }

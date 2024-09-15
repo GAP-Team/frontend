@@ -8,7 +8,6 @@ import { dummyFacilities } from "@/utils/Constants";
 import addObjSrc from "@/../public/icons/add_building.svg";
 import NoContentPage from "@/components/common/NoContentPage";
 
-
 const Facilities = (): JSX.Element => {
   const [facilities] = useState<Facility[]>(dummyFacilities);
 
