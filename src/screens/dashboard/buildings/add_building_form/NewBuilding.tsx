@@ -264,7 +264,12 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
     }
   };
 
-  const UpdateBuildingData = async (data: any): Promise<void> => {
+
+  const UpdateBuildingData = async (data: any) => {
+    if (!buildingDetails?._id) {
+      return;
+    }
+
     const createBuildingResponse = await buildingAPIs.update(
       buildingDetails?._id,
       data
@@ -276,7 +281,7 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
       ];
       dispatch(setUserBuildings(updatedBuildings));
     }
-
+    if (user?._id) return;
     const allUpdatedBuildings = await buildingAPIs.getBuildings(
       user?._id,
       "",
@@ -304,20 +309,18 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
           enableReinitialize
         >
           {({ validateForm, setTouched, submitForm, values }) => (
-            <Form>
-              <Grid sx={styles.form}>
-                <AddBuildingForm
-                  steps={steps}
-                  activeStep={activeStep}
-                  handleBack={handleBack}
-                  handleNext={() =>
-                    handleNext(validateForm, setTouched, submitForm, values)
-                  }
-                  setActiveStep={setActiveStep}
-                  loading={loading}
-                />
-              </Grid>
-            </Form>
+            <Grid sx={styles.form}>
+              <AddBuildingForm
+                steps={steps}
+                activeStep={activeStep}
+                handleBack={handleBack}
+                handleNext={() =>
+                  handleNext(validateForm, setTouched, submitForm, values)
+                }
+                setActiveStep={setActiveStep}
+                loading={loading}
+              />
+            </Grid>
           )}
         </Formik>
       </Grid>

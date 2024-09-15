@@ -1,11 +1,15 @@
+"use client";
 import { Box } from "@mui/system";
 import PropertyFilterPanel from "@/components/filter/PropertyFilterPanel";
 import React, { useState } from "react";
+import React from "react";
+import { Box } from "@mui/system";
 import { Facility } from "./types";
-import addObjSrc from "@/../public/icons/add_building.svg";
-import NoContentPage from "@/components/common/NoContentPage";
 import FacilityList from "./FacilityList";
 import { dummyFacilities } from "@/utils/Constants";
+import addObjSrc from "@/../public/icons/add_building.svg";
+import NoContentPage from "@/components/common/NoContentPage";
+import PropertyFilterPanel from "@/components/filter/PropertyFilterPanel";
 
 const Facilities = (): JSX.Element => {
   const [facilities] = useState<Facility[]>(dummyFacilities);
@@ -19,7 +23,7 @@ const Facilities = (): JSX.Element => {
         alt="No Facility"
         buttonLabel="Anlage anlegen"
         title="Noch keine Anlagen angelegt"
-        buttonLink="/real_estate/facilities/add_facility"
+        buttonLink="/real_estate/facilities/add"
         description="Du hast noch keine Anlagen angelegt, wenn Du Deine Anlagen erstellt hast findest Du sie hier."
       />
     );

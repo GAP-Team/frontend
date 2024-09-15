@@ -18,13 +18,16 @@ const Buildings: React.FC = () => {
 
   useEffect(() => {
     getUserBuildings("", "", "");
-  }, []);
+  }, [user?._id]);
 
   const getUserBuildings = async (
     city: string,
     federalState: string,
     facilityType: string
   ) : Promise<void> => {
+
+    if (!user?._id) return;
+
     const allBuildings = await buildingAPIs.getBuildings(
       user?._id,
       city,

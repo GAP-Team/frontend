@@ -40,7 +40,10 @@ const PropertyFilterPanel = ({
   >([]);
 
   useEffect(() => {
-    const fetchData = async (): Promise<void> => {
+
+    const fetchData = async () => {
+      if (!user?._id) return;
+
       const cs = await buildingAPIs?.getUserStatesCitiesFacilityTypes(
         user?._id
       );

@@ -11,6 +11,7 @@ import { Facility } from "./types";
 
 interface FacilityCardProps {
   facility: Facility;
+  status: string;
 }
 const statusStyles: { [key: string]: { bgcolor: string; color: string } } = {
   aktiv: { bgcolor: "#96E9CB", color: "#056643" },
@@ -18,7 +19,9 @@ const statusStyles: { [key: string]: { bgcolor: string; color: string } } = {
   Nachprüfung: { bgcolor: "#FFE1D7", color: "#EB4444" },
 };
 
+
 const FacilityCard: React.FC<FacilityCardProps> = ({ facility }) => {
+
 
   const handleClick = () : void => {};
 
