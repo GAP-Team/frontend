@@ -16,7 +16,11 @@ import { StepComponentProps } from "./types";
 import AddFacilityForm from "./AddFacilityForm";
 import FacilityInformation from "./FacilityInformation";
 
-const NewFacility = () => {
+interface NewFacilityProps {
+  facilityId: string;
+}
+
+const NewFacility: React.FC<NewFacilityProps> = ({ facilityId }) => {
   const router = useRouter();
   const steps: ActiveStepItem[] = [
     {
