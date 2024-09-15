@@ -1,14 +1,15 @@
 "use client";
-import { useParams } from "next/navigation";
-import RealStateUserLayout from "../../../page";
-import NewTender from "@/screens/dashboard/tenders/add_tender_form/NewTender";
 
-export default function UpdatedTender() {
+import { useParams } from "next/navigation";
+import RealStateUserLayout from "@/app/real_estate/page";
+import TenderDetails from "@/screens/dashboard/tenders/tender_card/TenderDetails";
+
+export default function TenderOverview() {
   const params = useParams();
   const id = Array.isArray(params.id) ? params.id[0] : params.id;
   return (
     <RealStateUserLayout>
-      <NewTender />
+      <TenderDetails id={id} />
     </RealStateUserLayout>
   );
 }
