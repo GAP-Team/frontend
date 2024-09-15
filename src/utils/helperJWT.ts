@@ -1,12 +1,12 @@
 import Cookies from "js-cookie";
 import * as jwt from "jsonwebtoken";
 
-export const verifyJWT = (access_token: string) => {
+export const verifyJWT = (accessToken: string) => {
   try {
     let token = null;
-    if (!access_token) token = getAccessToken();
+    if (!accessToken) token = getAccessToken();
 
-    token = access_token;
+    token = accessToken;
     if (!token) return null;
 
     const payload = jwt.verify(token, getAccessToken());
@@ -16,34 +16,24 @@ export const verifyJWT = (access_token: string) => {
     return null;
   }
 };
-export function setAccessToken(token: string) {
+export const setAccessToken = (token: string): void => {
   Cookies.set("access_token", token);
   localStorage.setItem("access_token", token);
 }
-export function getAccessToken() {
+export const getAccessToken = (): string => {
   return Cookies.get("access_token") || "";
 }
-export function getAccessTokenSecret() {
-  return "gap_access";
+
+
+export const checkIsLoggedIn = (): boolean => {
+  const accessToken = getAccessToken();
+
+  return !!accessToken;
 }
 
-export function checkIsLoggedIn() {
-  let access_token = getAccessToken();
-
-  if (access_token) {
-    return true;
-  } else {
-    return false;
-  }
-}
-
-export function setIsUserVerified(verified: any) {
+export const setIsUserVerified = (verified: string): void => {
   Cookies.set("isVerified", verified);
 }
-export function getIsUserVerified() {
+export const getIsUserVerified = (): string  => {
   return Cookies.get("isVerified") || "";
-}
-export function checkIsUserVerified() {
-  let isVerified = getIsUserVerified();
-  return isVerified;
 }

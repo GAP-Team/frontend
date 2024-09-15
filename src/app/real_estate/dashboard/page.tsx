@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 import RealStateUserLayout from "../page";
-import { checkIsLoggedIn, checkIsUserVerified } from "@/utils/helperJWT";
+import { checkIsLoggedIn, getIsUserVerified } from "@/utils/helperJWT";
 import RealEstateUser from "@/screens/dashboard/real_estate_user/RealEstateUser";
 
 export default function DashboardPage() {
@@ -21,11 +21,11 @@ export default function DashboardPage() {
     if (!checkIsLoggedIn()) {
       router.push("/login");
     }
-    if (checkIsLoggedIn() && checkIsUserVerified() === "true") {
+    if (checkIsLoggedIn() && getIsUserVerified() === "true") {
       setIsLoggedIn(true);
       setIsUserVerified(true);
     }
-    if (checkIsLoggedIn() && checkIsUserVerified() !== "true") {
+    if (checkIsLoggedIn() && getIsUserVerified() !== "true") {
       router.push("/real_estate/user_verify");
     }
   };

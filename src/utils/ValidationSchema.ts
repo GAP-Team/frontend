@@ -27,7 +27,7 @@ export const registrationValidationSchema = yup
     confirmPassword: yup
       .string()
       .oneOf(
-        [yup.ref("password"), undefined],
+        [yup.ref("password")],
         "Passwörter müssen übereinstimmen"
       )
       .required("Passwort bestätigen ist erforderlich"),

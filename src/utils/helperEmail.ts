@@ -22,14 +22,14 @@ export const sendVerificationEmail = async (
 ) => {
   const emailTemplate = renderEmailTemplate(name, code, template);
 
-  let expiresAt = moment()
+  const expiresAt = moment()
     .tz("Europe/Berlin")
     .add(15, "minutes")
     .format("YYYY-MM-DDTHH:mm:ss.SSS[Z]");
 
   const emailText = `Dear ${name}, ${emailTemplateGreetins} ${emailTemplateVerificationText} ${code} ${emailTemplateFoot}`;
 
-  let readyEmailStructure = {
+  const readyEmailStructure = {
     source: "rihab@gap-pruefen.de",
     destination: {
       toAddresses: [email],
@@ -52,19 +52,19 @@ export const sendVerificationEmail = async (
     },
   };
 
-  let verificationTokenSaveQuery = {
+  const verificationTokenSaveQuery = {
     userId: userId,
     email: email,
     token: code,
     expiresAt: expiresAt,
   };
 
-  let emailQurey = {
+  const emailQurey = {
     emailStructure: readyEmailStructure,
     saveToken: verificationTokenSaveQuery,
   };
 
-  let sendEmailStatus = await userAPIs.sendVerificationEmail(emailQurey);
+  const sendEmailStatus = await userAPIs.sendVerificationEmail(emailQurey);
 
   return sendEmailStatus;
 };
