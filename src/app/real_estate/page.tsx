@@ -96,12 +96,8 @@ const RealStateUserLayout: React.FC<any> = ({ children }) => {
 
   return (
     <Box sx={styles.main}>
-      <Sidebar
-        selected={selected}
-        items={sidebarItems}
-        setSelected={handleRedirect}
-      />
-      <Box sx={styles.insideContainer}>
+      <Sidebar selected={selected} items={sidebarItems} setSelected={handleRedirect} />
+      <Box sx={styles.contentContainer}>
         <GAppbar />
         {children === undefined ? redirectD() : children}
       </Box>
@@ -112,10 +108,17 @@ const RealStateUserLayout: React.FC<any> = ({ children }) => {
 export default RealStateUserLayout;
 
 const styles = {
-  main: { display: "flex", backgroundColor: "#F1F3F4" },
-  insideContainer: {
-    width: "100%",
-    height: "100%",
+  main: {
+    display: "flex",
+    minHeight: "100vh", // Set minimum height to full viewport
     backgroundColor: "#F1F3F4",
   },
+  contentContainer: {
+    display: "flex",
+    flexDirection: "column",
+    flex: 1, // Allows it to take up remaining width of the viewport
+    minHeight: "100vh", // Ensure it fills the vertical height of the screen
+    // width: "100%",
+    // height: "100%"
+  }
 };
