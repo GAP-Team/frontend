@@ -1,51 +1,72 @@
-import * as React from "react";
+import React from "react";
 import Grid from "@mui/material/Grid";
-import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import TotalSavingSection from "./TotalSavingSection";
 import PageTitle from "@/components/label/PageTitle";
+import CounselorCard from "./CounselorCard";
+import JobList from "./JobList";
+import { jobItemListInCostPage } from "@/utils/Constants";
 
 export default function CostSavingPage(): JSX.Element {
   return (
     <Box sx={styles.pageContainer}>
-      <PageTitle title="Kosteneinsparung" sx={{ ml: "1.5rem",my:'1rem' }} />
-      <Grid container spacing={2} sx={{ flex: 1, padding:'1rem', }}>
+      <PageTitle title="Kosteneinsparung" sx={{ ml: "1.5rem", my: "1rem" }} />
+      <Grid
+        container
+        spacing={2}
+        sx={{ flex: 1, padding: "1rem", paddingTop: 0 }}
+      >
         {/* Left Column */}
-        <Grid item xs={12} md={3} sx={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-          <Paper sx={styles.coloredPaper}>
+        <Grid
+          item
+          xs={12}
+          md={3}
+          sx={{ display: "flex", flexDirection: "column", gap: "1rem" }}
+        >
+          <Box sx={{ ...styles.coloredPaper1, flexGrow: 2 }}>
             <TotalSavingSection />
-          </Paper>
-          <Paper sx={styles.coloredPaper}>
-            <TotalSavingSection />
-          </Paper>
+          </Box>
+          <Box sx={{ ...styles.coloredPaper2, flexGrow: 1 }}>
+            <CounselorCard />
+          </Box>
         </Grid>
 
         {/* Right Column */}
-        <Grid item xs={12} md={9} sx={{ display: "flex" }}>
-          <Paper sx={styles.rightPaper}>
-            {/* Right Panel Content */}
-          </Paper>
+        <Grid item xs={12} md={9} sx={styles.rightColumn}>
+          <JobList jobs={jobItemListInCostPage} />
         </Grid>
       </Grid>
     </Box>
   );
 }
 
-const styles = {
+const sharedColoredPaperStyles: React.CSSProperties = {
+  flex: 1,
+  padding: "1.5rem",
+  boxSizing: "border-box",
+  borderRadius: "1rem",
+};
+
+const styles: { [key: string]: React.CSSProperties } = {
   pageContainer: {
     display: "flex",
     flexDirection: "column",
     height: "100%", // Takes full height of the parent container
   },
-  coloredPaper: {
-    flex: 1, // Equal height for both sections
-    backgroundColor: "#2356FF",
-    padding: "1rem",
-    boxSizing: "border-box",
+  coloredPaper1: {
+    ...sharedColoredPaperStyles,
+    backgroundColor: "#22BC7E",
   },
-  rightPaper: {
-    flex: 1,
-    padding: "1.25rem",
+  coloredPaper2: {
+    ...sharedColoredPaperStyles,
+    backgroundColor: "#22A7F1",
+  },
+  rightColumn: {
+    display: "flex",
+    flexDirection: "column",
+    height: "100%", // Fill height of the parent
+    flex: 1, // Ensure the column grows to fill the available space
+    padding: "1",
     boxSizing: "border-box",
   },
 };

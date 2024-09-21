@@ -8,7 +8,7 @@ import Divider from "@mui/material/Divider";
 import { BsClockFill } from "react-icons/bs";
 import Typography from "@mui/material/Typography";
 import { VscDebugBreakpointLog } from "react-icons/vsc";
-
+import { statusStyles } from "@/utils/Constants";
 import JobMenu from "./JobMenu";
 import SectionTitle from "@/components/label/SectionTitle";
 
@@ -22,13 +22,6 @@ interface JobCardProps {
   projectId: string;
   sectionId: string;
 }
-const statusStyles: { [key: string]: { bgcolor: string; color: string } } = {
-  offen: { bgcolor: "#E7E0FF", color: "#582EFF" },
-  abgeschlossen: { bgcolor: "#96E9CB", color: "#056643" },
-  "in Bearbeitung": { bgcolor: "#FDFCE0", color: "#EB9700" },
-  "Freigabe ausstehend": { bgcolor: "#E5F5FA", color: "#22A7F1" },
-  Nachprüfung: { bgcolor: "#FFE1D7", color: "#EB4444" },
-};
 
 const JobCard: React.FC<JobCardProps> = ({
   id,
