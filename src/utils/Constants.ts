@@ -1,38 +1,120 @@
 export const listOfTrades = [
   {
-    category: "Brandmeldeanlagen",
-    items: ["Rauchmelder", "Optischemelder"],
+    category: "Brandwache",
+    items: [
+      "Brandwache",
+      "Beratung/Planprüfung",
+      "Brandschutzkonzept",
+      "Löschanlagenkonzept",
+      "Gefährdungsbeurteilung",
+      "Anlagen (Lüftung, Feuerlösch, etc.)",
+    ],
   },
   {
-    category: "Fördertechnik",
-    items: ["Aufzüge", "Rolltreppen"],
+    category: "Brandmelde- und Alarmierungsanlagen",
+    items: [
+      "Brandmeldeanlage (BMA)",
+      "Elektroakustische Anlage (ELA)",
+      "Gebäudefunkanlage (BOS)",
+      "Einbruchmeldeanlage",
+    ],
   },
   {
-    category: "Feuerlöschanlagen:",
-    items: ["Sprinkleranlagen", "Gaslöschanlagen"],
+    category: "Druckbehälter/Tankanlagen",
+    items: [
+      "Anlagen in explosionsgefährdeten Bereichen",
+      "Druckanlagen",
+      "Dampfkessel",
+      "Füllanlagen",
+      "Rohrleitungsprüfung",
+    ],
   },
   {
     category: "Elektrotechnik",
-    items: ["Elektrische Schaltschränke"],
+    items: [
+      "Ortsfeste elektrische Anlagen",
+      "Netzersatzanlage (Notstromdiesel)",
+      "Sicherheitsbeleuchtung",
+      "Sicherheitsstromversorgung",
+      "Blitzschutz",
+    ],
   },
   {
-    category: "Elektrische Arbeits - und Betriebsmittel:",
-    items: ["Leiter", "Hebebühnen", "Steckdosen"],
+    category: "Feuerlöschanlage",
+    items: [
+      "Gaslöschanlagen",
+      "Sprinkleranlage",
+      "Hydrantenanlage",
+    ],
+  },
+  {
+    category: "Fördertechnik",
+    items: [
+      "Aufzugsanlage – Personen und Lastaufzüge",
+      "Aufzugsanlage – Gütertransport",
+      "Aufzugsanlage – Fassadenaufzüge",
+      "Aufzugsanlage – Feuerwehraufzug",
+      "Bauaufzug",
+      "Fahrtreppen/Rolltreppe",
+      "Fahrsteige",
+    ],
+  },
+  {
+    category: "Hygieneprüfung",
+    items: [
+      "Hygieneprüfung an Lüftungsanlagen",
+      "Hygieneprüfung an Rückkühlwerken",
+      "Hygieneprüfung am Trinkwasser",
+    ],
+  },
+  {
+    category: "Hebezeuge und Förderanlagen",
+    items: [
+      "Bagger",
+      "Flurförderfahrzeuge",
+      "Fassadenbefahranlagen/Dachbefahranlagen",
+      "Krane",
+      "Güteraufzüge",
+      "Hebebühnen",
+      "Hebebühnen für Autos",
+      "Winden, Hub- und Zuggeräte",
+    ],
   },
   {
     category: "Lüftungsanlagen",
-    items: ["RWA", "RDA", "CO-Warnanlagen"],
+    items: [
+      "Raumlufttechnische Anlagen RLT",
+      "CO-Warnanlage",
+      "Rauch und Wärmeabzugsanlage",
+      "Druckbelüftungsanlage",
+    ],
   },
   {
-    category: "Druckanlagen",
+    category: "Rauchmelder in Mietwohnungen/Wohnungen",
+    items: ["Rauchmelder in Mietwohnungen/Wohnungen"],
+  },
+  {
+    category: "Tore, Türen",
     items: [
-      "Druckluftwasserbehälter",
-      "Druckgeräte",
-      "Druckbehälter",
-      "Dampfkesselanlagen",
+      "Automatische Schiebetüren",
+      "Brandschutztüren und -tore (Kraftbetätigte Fenster, Türen und Tore)",
+    ],
+  },
+  {
+    category: "Tragbare Feuerlöscher",
+    items: ["Feuerlöscher"],
+  },
+  {
+    category: "Wassergefährdende Stoffe",
+    items: [
+      "Anlagen zum Lagern, Abfüllen und Umschlagen (LAU)",
+      "Anlagen zum Herstellen, Behandeln und Verwenden (HBV)",
+      "Lagerbehälter (Diesel, Altöl, Heizöltanks, etc.)",
+      "Leichtflüssigkeitsabscheider",
     ],
   },
 ];
+
 export const listOfOrderTypes = [
   {
     category: "Unterteilung Auftragstypen (Nur für SV)",
