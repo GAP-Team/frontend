@@ -30,7 +30,6 @@ const BuildingMenu: React.FC<BuildingMenuProps> = ({ buildingId }) => {
 
   const handleClick = (event: React.MouseEvent<HTMLElement>): void => {
     setAnchorEl(event.currentTarget);
-    router.push(`/real_estate/buildings/edit/${buildingId}`);
   };
 
   const handleCloseMenu = (): void => {
@@ -49,6 +48,11 @@ const BuildingMenu: React.FC<BuildingMenuProps> = ({ buildingId }) => {
   const handleConfirmDelete = (): void => {
     // Add delete logic here
     setOpenDialog(false);
+  };
+
+  const handleEditClick = (): void => {
+    router.push(`/real_estate/buildings/edit/${buildingId}`);
+    handleCloseMenu();
   };
 
   return (
@@ -77,7 +81,7 @@ const BuildingMenu: React.FC<BuildingMenuProps> = ({ buildingId }) => {
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
-        <MenuItem onClick={handleCloseMenu}>
+        <MenuItem onClick={handleEditClick}>
           <ListItemIcon>
             <FaRegEdit color="#A0ADB1" size={"1.25rem"} />
           </ListItemIcon>
