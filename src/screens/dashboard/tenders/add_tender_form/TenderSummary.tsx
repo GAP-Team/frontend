@@ -33,10 +33,6 @@ const TenderSummary = ({
   const objektInformation: Detail[] = [
     values.buildingName && { label: "Objekt", value: values.buildingName },
     values.equipmentName && { label: "Anlage", value: values.equipmentName },
-    values.equipmentType && {
-      label: "Anlagetype",
-      value: values.equipmentType,
-    },
   ].filter(Boolean); // Filter out undefined values
 
   const updatedDetails: Detail[] = [

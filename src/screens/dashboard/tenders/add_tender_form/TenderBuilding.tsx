@@ -13,22 +13,6 @@ import { Item } from "../../types";
 
 const TenderBuilding = (): JSX.Element => {
   const formik = useFormikContext<AddTenderFormValues>();
-  const [selectedEquipmntType, setSelectedEquipmntType] = useState<Item | null>(
-    formik?.values?.equipmentType
-      ? {
-          label: formik.values.equipmentType,
-          value: formik.values.equipmentType,
-        }
-      : null
-  );
-  const handleEquipmntTypeSelect = (selectedItem: Item | null): void => {
-    setSelectedEquipmntType(selectedItem);
-    formik?.setFieldValue(
-      "equipmentType",
-      selectedItem ? selectedItem.value : ""
-    );
-  };
-
   const handleBuildingNameChange = (event: any, value: string | null): void => {
     formik?.setFieldValue("buildingName", value);
   };
@@ -106,22 +90,6 @@ const TenderBuilding = (): JSX.Element => {
                 }}
               />
             )}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <LabelWithAsterisk>ANLAGENTYP</LabelWithAsterisk>
-          <GTextSelector
-            name="equipmentType"
-            options={equipmentTypesList}
-            error={
-              formik?.touched?.equipmentType &&
-              Boolean(formik?.errors?.equipmentType)
-            }
-            helperText={
-              formik?.touched?.equipmentType && formik?.errors?.equipmentType
-            }
-            onSelect={handleEquipmntTypeSelect}
-            selectedState={selectedEquipmntType}
           />
         </Grid>
       </Grid>

@@ -171,11 +171,6 @@ export const addTenderValidationSchema = [
   yup.object({
     name: yup.string(),
     equipmentName: yup.string(),
-    equipmentType: yup
-      .string()
-      .required(
-        "Beschreiben Sie bitte den gewünschten Anlagentypenbeschreibung"
-      ),
   }),
   yup.object({
     detailDescription: yup.string(),

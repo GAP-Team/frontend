@@ -9,7 +9,6 @@ export interface AddTenderFormValues {
   //Tender Building feilds = Form 2
   buildingName: string;
   equipmentName: string;
-  equipmentType: string;
   //Description feild = Form 3
   detailDescription: string;
   //Classification = Form 4
