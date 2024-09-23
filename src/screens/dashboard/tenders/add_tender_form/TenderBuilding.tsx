@@ -1,5 +1,4 @@
 "use client";
-import { useState } from "react";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import LabelWithAsterisk from "@/components/label/LabelWithAsterisk";
@@ -7,9 +6,7 @@ import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import { useFormikContext } from "formik";
 import { AddTenderFormValues } from "./types";
-import { dummyBuildings, equipmentTypesList } from "@/utils/Constants";
-import GTextSelector from "@/components/input/GTextSelector";
-import { Item } from "../../types";
+import { dummyBuildings } from "@/utils/Constants";
 
 const TenderBuilding = (): JSX.Element => {
   const formik = useFormikContext<AddTenderFormValues>();
