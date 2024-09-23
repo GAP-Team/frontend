@@ -34,7 +34,6 @@ export default function GProgressLinearBar({
   value,
   maxValue = 1000,
 }: CustomLinearProgressBarProps) {
-  // Calculate the percentage filled based on value and maxValue
   const normalizedValue = (value / maxValue) * 100;
 
   return (

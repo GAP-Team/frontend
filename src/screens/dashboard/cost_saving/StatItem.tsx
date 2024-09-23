@@ -1,5 +1,5 @@
 import { Stack, Typography } from "@mui/material";
-import { ReactNode, FC } from "react";
+import { FC } from "react";
 import { StatItemProps } from "./types";
 
 const StatItem: FC<StatItemProps> = ({ icon, label, value }) => (
