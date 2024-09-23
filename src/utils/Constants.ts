@@ -113,27 +113,25 @@ export const listOfTrades = [
 
 export const listOfOrderTypes = [
   {
-    category: "Unterteilung Auftragstypen (Nur für SV)",
+    category: "Unterteilung Auftragstypen (Ingenieurdienstleistungen)",
     items: [
-      "Arbeitsstättenverordnung - Gesundheitsschutz der Beschäftigte",
-      "Betriebssicherheitsverordnung (ZÜS) - Sicherheit Maschinen und Anlagen",
-      "Bauordnungsrechtliche Prüfung - Gesetzlicher Brandschutz",
-      "DGUV - Deutsche Gesetzliche Unfallversicherung",
-      "Elektrische Anlagen – VDE 0105-100",
-      "Konzepterstellung - Brandschutzkonzept",
-      "Hygiene Prüfung Lüftung – VDI 6022",
-      "Hygiene Prüfung Trinkwasser – VDI 6023",
-      "Versicherungsprüfung – VdS Prüfung",
-      "Wassergefährdete Stoffe – AwsV Prüfung",
+      "Beratung/Planprüfung",
+      "Brandschutzkonzept - Konzepterstellung",
+      "Gefährdungsbeurteilung - Konzepterstellung",
+      "Löschanlagenkonzept - Konzepterstellung",
+      "Hygieneprüfung",
+      "Sachverständigen-Prüfung",
     ],
   },
   {
-    category: "Unterteilung Auftragstypen (Nur für HW)",
+    category:
+      "Unterteilung Auftragstypen (Handwerks- und Sachkundigenleistung)",
     items: [
-      "Wartung/Instandhaltung",
+      "Brandwache",
+      "Sachverständigen-Begleitung",
+      "Sachkundigenprüfung",
       "Instandsetzung/Reparatur",
-      "SV-Begleitung Abnahme",
-      "SV-Begleitung Wiederkehrende-Prüfung",
+      "Wartung",
     ],
   },
 ];
