@@ -1,4 +1,4 @@
-import { ListItem, Box, Typography, Chip, LinearProgress } from "@mui/material";
+import { ListItem, Box, Typography, Chip } from "@mui/material";
 import { JobItemProps } from "./types";
 import { PiArrowBendDownRightBold } from "react-icons/pi";
 import { statusStyles } from "@/utils/Constants";

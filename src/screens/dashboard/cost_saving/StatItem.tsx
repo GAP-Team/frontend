@@ -1,17 +1,8 @@
-// StatItem.tsx
-import React from "react";
 import { Stack, Typography } from "@mui/material";
-import { ReactNode } from "react";
+import { ReactNode, FC } from "react";
+import { StatItemProps } from "./types";
 
-const StatItem = ({
-  icon,
-  label,
-  value,
-}: {
-  icon: ReactNode;
-  label: string;
-  value: string | number;
-}) => (
+const StatItem: FC<StatItemProps> = ({ icon, label, value }) => (
   <Stack
     direction="row"
     alignItems="center"
@@ -27,10 +18,12 @@ const StatItem = ({
       flexGrow={1}
     >
       {icon}
-      <Typography variant="bodylsb">{label}</Typography>
+      <Typography variant="body1" fontWeight="bold">
+        {label}
+      </Typography>
     </Stack>
     <Typography
-      variant="h4b"
+      variant="h4"
       fontSize="2.4rem"
       textAlign="right"
       color="#FECB00"

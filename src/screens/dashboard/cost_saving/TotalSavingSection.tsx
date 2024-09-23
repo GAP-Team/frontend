@@ -4,10 +4,9 @@ import Box from "@mui/material/Box";
 import SectionTitle from "@/components/label/SectionTitle";
 import DividerDecorator from "@/components/divider/DividerDecorator";
 import Typography from "@mui/material/Typography";
-import { TbPigMoney } from "react-icons/tb";
 import CircularProgress from "@mui/material/CircularProgress";
 import StatItem from "./StatItem";
-import { TbProgressCheck } from "react-icons/tb";
+import { TbProgressCheck, TbPigMoney } from "react-icons/tb";
 import { Divider } from "@mui/material";
 import { LuClipboardCheck } from "react-icons/lu";
 

@@ -96,7 +96,11 @@ const RealStateUserLayout: React.FC<any> = ({ children }) => {
 
   return (
     <Box sx={styles.main}>
-      <Sidebar selected={selected} items={sidebarItems} setSelected={handleRedirect} />
+      <Sidebar
+        selected={selected}
+        items={sidebarItems}
+        setSelected={handleRedirect}
+      />
       <Box sx={styles.contentContainer}>
         <GAppbar />
         {children === undefined ? redirectD() : children}
@@ -120,5 +124,5 @@ const styles = {
     minHeight: "100vh", // Ensure it fills the vertical height of the screen
     // width: "100%",
     // height: "100%"
-  }
+  },
 };
