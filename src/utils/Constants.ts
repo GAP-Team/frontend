@@ -41,11 +41,7 @@ export const listOfTrades = [
   },
   {
     category: "Feuerlöschanlage",
-    items: [
-      "Gaslöschanlagen",
-      "Sprinkleranlage",
-      "Hydrantenanlage",
-    ],
+    items: ["Gaslöschanlagen", "Sprinkleranlage", "Hydrantenanlage"],
   },
   {
     category: "Fördertechnik",
