@@ -33,7 +33,7 @@ const CustomLinearProgressBar = styled(
 export default function GProgressLinearBar({
   value,
   maxValue = 1000,
-}: CustomLinearProgressBarProps) {
+}: CustomLinearProgressBarProps): JSX.Element {
   const normalizedValue = (value / maxValue) * 100;
 
   return (
