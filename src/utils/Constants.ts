@@ -1,13 +1,18 @@
 export const listOfTrades = [
   {
     category: "Brandwache",
+    items: ["Brandwache"],
+  },
+  {
+    category: "Beratung/Planprüfung",
     items: [
-      "Brandwache",
-      "Beratung/Planprüfung",
-      "Brandschutzkonzept",
-      "Löschanlagenkonzept",
-      "Gefährdungsbeurteilung",
-      "Anlagen (Lüftung, Feuerlösch, etc.)",
+      "Brandmeldeanlage - und Alarmierungsanlage",
+      "Druckbehälter/Tankanlagen",
+      "Elektrotechnik",
+      "Feuerlöschtechnik",
+      "Fördertechnik",
+      "Lüftungsanlage",
+      "Wassergefährdende Stoffe",
     ],
   },
   {
@@ -33,6 +38,7 @@ export const listOfTrades = [
     category: "Elektrotechnik",
     items: [
       "Ortsfeste elektrische Anlagen",
+      "Ortsbewegliche elektrische Anlagen",
       "Netzersatzanlage (Notstromdiesel)",
       "Sicherheitsbeleuchtung",
       "Sicherheitsstromversorgung",
@@ -56,14 +62,6 @@ export const listOfTrades = [
     ],
   },
   {
-    category: "Hygieneprüfung",
-    items: [
-      "Hygieneprüfung an Lüftungsanlagen",
-      "Hygieneprüfung an Rückkühlwerken",
-      "Hygieneprüfung am Trinkwasser",
-    ],
-  },
-  {
     category: "Hebezeuge und Förderanlagen",
     items: [
       "Bagger",
@@ -74,6 +72,22 @@ export const listOfTrades = [
       "Hebebühnen",
       "Hebebühnen für Autos",
       "Winden, Hub- und Zuggeräte",
+    ],
+  },
+  {
+    category: "Hygieneprüfung",
+    items: [
+      "Hygieneprüfung an Lüftungsanlagen",
+      "Hygieneprüfung an Rückkühlwerken",
+      "Hygieneprüfung am Trinkwasser",
+    ],
+  },
+  {
+    category: "Konzepterstellung",
+    items: [
+      "Brandschutzkonzept",
+      "Gefährdungsbeurteilung",
+      "Löschanlagenkonzept",
     ],
   },
   {
@@ -93,7 +107,7 @@ export const listOfTrades = [
     category: "Tore, Türen",
     items: [
       "Automatische Schiebetüren",
-      "Brandschutztüren und -tore (Kraftbetätigte Fenster, Türen und Tore)",
+      "Brandschutztüren und -tore (Kraftbetätige Fenster, Türen und Tore)",
     ],
   },
   {
