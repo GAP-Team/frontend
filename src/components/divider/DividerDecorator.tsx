@@ -1,4 +1,5 @@
 import { Divider, SxProps, Theme } from "@mui/material";
+import  { useEffect } from "react";
 
 interface DividerDecoratorProps {
   sx?: SxProps<Theme>;

@@ -49,7 +49,7 @@ jobs:
         continue-on-error: false
 
   lint-check:
-    needs: setup
+    needs: [setup, format-check]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -65,7 +65,7 @@ jobs:
         run: npm run lint
 
   build:
-    needs: setup
+    needs: [setup, format-check, lint-check]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -84,7 +84,7 @@ jobs:
         run: npm run build:ci
 
   test:
-    needs: setup
+    needs: [setup, lint-check, format-check, build]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
