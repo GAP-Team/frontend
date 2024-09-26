@@ -75,7 +75,7 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
   const user = useSelector(currentUser);
   const allBuildings = useSelector(allBuildingDetails);
   const userBuildings = useSelector(currentUserBuildings);
-  
+
   const steps: ActiveStepItem[] = [
     { id: 0, stepName: "Objektinformation", component: BuildingInformation },
     { id: 1, stepName: "Objektanschrift", component: BuildingAddress },
@@ -103,7 +103,6 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
   }, []);
 
   const getCurrentBuildingDetails = (id: any) => {
-    
     const selectedBuildingDetails = allBuildings?.filter(
       (building: any) => id == building?._id
     );

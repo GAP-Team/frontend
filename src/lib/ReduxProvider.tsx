@@ -1,15 +1,19 @@
 "use client";
 import { useRef } from "react";
-import dynamic from 'next/dynamic';
+import dynamic from "next/dynamic";
 import { Provider } from "react-redux";
-import { useStore } from 'react-redux';
-import { PersistGate } from 'redux-persist/integration/react';
+import { useStore } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
 
 import { makeStore, AppStore, persistor } from "./store";
 
-const DynamicPersistGate = dynamic(() => import('redux-persist/integration/react').then(mod => mod.PersistGate), {
-  ssr: false, // Prevent server-side rendering
-});
+const DynamicPersistGate = dynamic(
+  () =>
+    import("redux-persist/integration/react").then((mod) => mod.PersistGate),
+  {
+    ssr: false, // Prevent server-side rendering
+  }
+);
 
 export default function ReduxProvider({
   children,

@@ -1,7 +1,7 @@
 // store/index.js
 "use client";
 import storage from "redux-persist/lib/storage";
-import { createWrapper } from 'next-redux-wrapper';
+import { createWrapper } from "next-redux-wrapper";
 import { persistStore, persistReducer } from "redux-persist";
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 
@@ -22,8 +22,7 @@ const persistedReducer = persistReducer(persistConfig, rootReducer);
 const makeConfiguredStore = () =>
   configureStore({
     reducer: rootReducer,
-  }
-);
+  });
 
 export const makeStore = () => {
   const isServer = typeof window === "undefined";
@@ -35,10 +34,9 @@ export const makeStore = () => {
       middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({
           serializableCheck: {
-            ignoredActions: ['persist/PERSIST'],
+            ignoredActions: ["persist/PERSIST"],
           },
-        }
-      ),
+        }),
     });
     store.__persistor = persistStore(store);
     return store;
