@@ -1,5 +1,5 @@
 "use client";
-import Snackbar, { SnackbarCloseReason } from "@mui/material/Snackbar";
+import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import React, { ReactElement } from "react";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
