@@ -2,8 +2,6 @@
 import { useRef } from "react";
 import dynamic from "next/dynamic";
 import { Provider } from "react-redux";
-import { useStore } from "react-redux";
-import { PersistGate } from "redux-persist/integration/react";
 
 import { makeStore, AppStore, persistor } from "./store";
 

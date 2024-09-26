@@ -19,7 +19,7 @@ const persistConfig = {
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-const makeConfiguredStore = () =>
+const makeConfiguredStore = (): any =>
   configureStore({
     reducer: rootReducer,
   });
