@@ -3,10 +3,8 @@ import TitleSection from "../../label/title-section";
 import Badge from "../../badge/GBadge";
 import { AuftrafSvg, AngebotSvg, SolutionSvg } from "../../svg/function-svg";
 import Link from "next/link";
-import { Button } from "flowbite-react";
-import { FaArrowRightLong } from "react-icons/fa6";
 
-const GFunctionSection = () => {
+const GFunctionSection = (): JSX.Element => {
   return (
     <div className="mx-auto p-5 flex flex-col justify-center items-center">
       <TitleSection
@@ -44,7 +42,7 @@ const GFunctionSection = () => {
     </div>
   );
 };
-const IconSeparator = () => {
+const IconSeparator = (): JSX.Element => {
   return (
     // Adjust width or padding as needed to fit the icons between the cards
     <div className="md:flex justify-center items-center w-auto mx-2">
@@ -82,7 +80,7 @@ const ServiceStep = ({
   icon: any;
   subtitle: string;
   title: string;
-}) => {
+}): JSX.Element => {
   return (
     <div className="w-full md:w-auto md:flex-1 p-4 max-w-screen-xl">
       <div className="card bg-base-100 border border-black shadow-xl hover:shadow-2xl transition-shadow duration-300">

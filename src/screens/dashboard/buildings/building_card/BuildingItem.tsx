@@ -6,7 +6,6 @@ import Stack from "@mui/material/Stack";
 import { CgNotes } from "react-icons/cg";
 import { FaRegFlag } from "react-icons/fa6";
 import Divider from "@mui/material/Divider";
-import { useRouter } from "next/navigation";
 import Typography from "@mui/material/Typography";
 import { IoExtensionPuzzleOutline } from "react-icons/io5";
 
@@ -29,7 +28,7 @@ const BuildingItem: React.FC<BuildingItemProps> = ({ building }) => {
             {building.buildingType}
           </Typography>
         </Box>
-        <BuildingMenu id={building?._id} />
+        <BuildingMenu buildingId={building?._id} />
       </Box>
       <Box sx={styles.header} marginTop="1rem">
         <Stack direction="row" alignItems="center" gap={2}>
@@ -56,10 +55,12 @@ const BuildingItem: React.FC<BuildingItemProps> = ({ building }) => {
           <Typography variant="bodymr" color="black">
             {`${building.address.street} ${building.address.houseNumber} ${building.address.zip} ${building.address.city}`}
           </Typography>
-          <Typography
-            variant="bodymr"
-            color="black"
-          >{`${building.totalArea} qm`}</Typography>
+          {building.totalArea !== null && (
+            <Typography
+              variant="bodymr"
+              color="black"
+            >{`${building.totalArea} qm`}</Typography>
+          )}
         </Stack>
       </Stack>
       <List sx={{ ...styles.listContainer }}>

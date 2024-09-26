@@ -10,10 +10,7 @@ interface BusinessRegistrationProps {
   type?: string;
 }
 
-const BusinessRegistration = ({
-  value,
-  type,
-}: BusinessRegistrationProps): JSX.Element => {
+const BusinessRegistration = ({}: BusinessRegistrationProps): JSX.Element => {
   return (
     <Box sx={{ p: 1, width: "auto", marginLeft: "1.5rem" }}>
       <Grid container spacing={2}>

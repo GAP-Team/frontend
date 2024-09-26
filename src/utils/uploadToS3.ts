@@ -1,6 +1,6 @@
 import s3APIs from "@/api/s3";
 
-export const handleUploadDoc = async (ev: any) => {
+export const handleUploadDoc = async (ev: any): Promise<any> => {
   try {
     const file = ev?.target?.files[0];
 
@@ -19,7 +19,7 @@ export const handleUploadDoc = async (ev: any) => {
   }
 };
 
-export const handleUploadMultipleDoc = async (ev: any) => {
+export const handleUploadMultipleDoc = async (ev: any): Promise<any> => {
   try {
     const formData = new FormData();
     formData.append("file", ev);

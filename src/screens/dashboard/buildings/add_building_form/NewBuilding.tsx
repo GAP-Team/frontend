@@ -3,11 +3,8 @@ import React, { useEffect, useState } from "react";
 import moment from "moment";
 import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
-import { Formik, Form, FormikHelpers } from "formik";
+import { Formik, FormikHelpers } from "formik";
 import Grid from "@mui/material/Grid";
-import CircularProgress from "@mui/material/CircularProgress";
-
-import userAPIs from "@/api/user";
 import buildingAPIs from "@/api/building";
 import { getLogger } from "@/utils/Logger";
 import { ActiveStepItem } from "../../types";
@@ -18,6 +15,7 @@ import {
   setUserBuildings,
   currentUserBuildings,
   setAllBuildingDetails,
+  allBuildingDetails,
 } from "@/lib/features/userSlice";
 
 import AddBuildingForm from "./AddBuildingForm";
@@ -26,10 +24,8 @@ import BuildingSummary from "./BuildingSummary";
 import PageTitle from "@/components/label/PageTitle";
 import BuildingInformation from "./BuildingInformation";
 import BuildingDocumentation from "./BuildingDocumentation";
-
 import { DocumentTypies } from "@/utils/Constants";
 import { handleUploadMultipleDoc } from "@/utils/uploadToS3";
-import { allBuildingDetails } from "@/lib/features/userSlice";
 import { addObjektFormSchema } from "@/utils/ValidationSchema";
 
 // Logger
@@ -38,7 +34,7 @@ const logger = getLogger("new-building");
 interface NewBuildingProps {
   id: string;
 }
-interface ContactP {
+interface ContactPersonDataType {
   firstName: string;
   lastName: string;
   phoneNumber: string;
@@ -54,18 +50,18 @@ interface Address {
   zip: string;
 }
 interface SelectedBuildingData {
-  _id: string | undefined;
+  _id: string;
   buildingName: string;
   totalArea: string;
   buildingType: string;
   buildingAbbreviation: string;
-  contactPerson: ContactP[];
+  contactPerson: ContactPersonDataType[];
   address: Address;
   documentUploadType: string;
-  constructionDocs: File[] | undefined;
-  floorplanDocs: File[] | undefined;
-  otherDocs: File[] | undefined;
-  documents: File[] | undefined;
+  constructionDocs: File[];
+  floorplanDocs: File[];
+  otherDocs: File[];
+  documents: File[];
   serverLink: string;
 }
 
@@ -102,38 +98,43 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
     }
   }, []);
 
-  const getCurrentBuildingDetails = (id: any) => {
+  const getCurrentBuildingDetails = (id: any): void => {
     const selectedBuildingDetails = allBuildings?.filter(
-      (building: any) => id == building?._id
+      (building: any) => id === building?._id
     );
     setBuildingDetails(selectedBuildingDetails[0]);
   };
 
   const initialValues: AddBuildingFormValues = {
-    name: buildingDetails?.buildingName,
-    totalArea: buildingDetails?.totalArea,
-    buildingType: buildingDetails?.buildingType,
-    buildingAbbreviation: buildingDetails?.buildingAbbreviation,
-    contactPerson: buildingDetails?.contactPerson,
-    zip: buildingDetails?.address?.zip,
-    city: buildingDetails?.address?.city,
-    state: buildingDetails?.address?.state,
-    street: buildingDetails?.address?.street,
-    houseNumber: buildingDetails?.address?.houseNumber,
-    country: buildingDetails?.address?.country,
-    documentChoice: buildingDetails?.documentUploadType,
+    name: buildingDetails?.buildingName || "",
+    totalArea: buildingDetails?.totalArea || "",
+    buildingType: buildingDetails?.buildingType || "",
+    buildingAbbreviation: buildingDetails?.buildingAbbreviation || "",
+    contactPerson: buildingDetails?.contactPerson
+      ? buildingDetails?.contactPerson
+      : [],
+    zip: buildingDetails?.address?.zip || "",
+    city: buildingDetails?.address?.city || "",
+    state: buildingDetails?.address?.state || "",
+    street: buildingDetails?.address?.street || "",
+    houseNumber: buildingDetails?.address?.houseNumber || "",
+    country: buildingDetails?.address?.country || "Deutschland",
+    documentChoice:
+      buildingDetails?.documentUploadType || "Jetzt hochladen Empfohlen",
+    constructionDocs:
+      buildingDetails?.documents?.filter(
+        (doc: any) => doc.documentType === "BAUUNTERLAGEN"
+      ) || [],
+    floorplanDocs:
+      buildingDetails?.documents?.filter(
+        (doc: any) => doc.documentType === "GRUNDRISSE"
+      ) || [],
+    otherDocs:
+      buildingDetails?.documents?.filter(
+        (doc: any) => doc.documentType === "SONSTIGE"
+      ) || [],
 
-    constructionDocs: buildingDetails?.documents?.filter(
-      (doc: any) => doc.documentType == "BAUUNTERLAGEN"
-    ),
-    floorplanDocs: buildingDetails?.documents?.filter(
-      (doc: any) => doc.documentType == "GRUNDRISSE"
-    ),
-    otherDocs: buildingDetails?.documents?.filter(
-      (doc: any) => doc.documentType == "SONSTIGE"
-    ),
-
-    serverLink: buildingDetails?.serverLink,
+    serverLink: buildingDetails?.serverLink || "",
   };
 
   const stepFieldsMap: { [key: number]: string[] } = {
@@ -175,7 +176,7 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
     }
   };
 
-  const handleBack = () => {
+  const handleBack = (): void => {
     if (activeStep.id > 0) {
       setActiveStep(steps[activeStep.id - 1]);
     } else {
@@ -186,15 +187,15 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
   const handleSubmit = async (
     values: AddBuildingFormValues,
     docObj: any[] = []
-  ) => {
+  ): Promise<void> => {
     try {
       const addressObj = {
-        zip: values.zip,
         city: values.city,
         state: values.state,
         street: values.street,
         country: values.country,
-        houseNumber: values.houseNumber,
+        zip: Number(values.zip),
+        houseNumber: Number(values.houseNumber),
       };
 
       const formateDate = moment().format("YYYY-MM-DDTHH:mm:ss.SSS[Z]");
@@ -207,12 +208,12 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
         buildingName: values.name,
         serverLink: values.serverLink,
         buildingType: values.buildingType,
-        totalArea: Number(values.totalArea),
+        totalArea: values.totalArea !== "" ? Number(values.totalArea) : null,
         contactPerson: values.contactPerson,
         documentUploadType: values.documentChoice,
         buildingAbbreviation: values.buildingAbbreviation,
       };
-      if (actionType == "edit") {
+      if (actionType === "edit") {
         UpdateBuildingData(arrangedDataObj);
       } else {
         saveBuildingData(arrangedDataObj);
@@ -225,23 +226,23 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
     }
   };
 
-  const uploadAllDocuments = async (values: AddBuildingFormValues) => {
+  const uploadAllDocuments = async (
+    values: AddBuildingFormValues
+  ): Promise<void> => {
     setLoading(true);
     const docObj: any[] = [];
 
     const uploadDocuments = async (
-      files: File[] | undefined,
+      files: File[],
       docType: string
-    ) => {
-      if (files !== undefined) {
-        for (const file of files) {
-          if (file.hasOwnProperty("documentType")) {
-            docObj.push(file);
-          } else {
-            const uploadedDoc = await handleUploadMultipleDoc(file);
-            uploadedDoc.documentType = docType;
-            docObj.push(uploadedDoc);
-          }
+    ): Promise<void> => {
+      for (const file of files) {
+        if (file.hasOwnProperty("documentType")) {
+          docObj.push(file);
+        } else {
+          const uploadedDoc = await handleUploadMultipleDoc(file);
+          uploadedDoc.documentType = docType;
+          docObj.push(uploadedDoc);
         }
       }
     };
@@ -257,7 +258,7 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
     setLoading(false);
   };
 
-  const saveBuildingData = async (data: any) => {
+  const saveBuildingData = async (data: any): Promise<void> => {
     const createBuildingResponse = await buildingAPIs.create(data);
     if (createBuildingResponse?.data?.buildingId) {
       const updatedBuildings = [
@@ -268,7 +269,11 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
     }
   };
 
-  const UpdateBuildingData = async (data: any) => {
+  const UpdateBuildingData = async (data: any): Promise<void> => {
+    if (!buildingDetails?._id) {
+      return;
+    }
+
     const createBuildingResponse = await buildingAPIs.update(
       buildingDetails?._id,
       data
@@ -280,7 +285,7 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
       ];
       dispatch(setUserBuildings(updatedBuildings));
     }
-
+    if (user?._id) return;
     const allUpdatedBuildings = await buildingAPIs.getBuildings(
       user?._id,
       "",
@@ -295,7 +300,7 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
       <Grid item xs={12} md={12} lg={12} sx={{ backgroundColor: "#F9FAFA" }}>
         <PageTitle
           title={
-            actionType == "edit"
+            actionType === "edit"
               ? `Objekt Bearbeiten: ${initialValues?.name}`
               : `Neues Objekt erstellen`
           }

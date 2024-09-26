@@ -10,7 +10,7 @@ import GClientSection from "@/components/common/GClientSection/GClientSection";
 import GStatSection from "@/components/common/GStatSection/GStatSection";
 import HeroSection from "@/components/common/GHeroSection/GHeroSection";
 
-export default function LandingPage() {
+export default function LandingPage(): JSX.Element {
   return (
     <div className={`${styles.loginPageContainer} gap-20`}>
       <HeroSection />

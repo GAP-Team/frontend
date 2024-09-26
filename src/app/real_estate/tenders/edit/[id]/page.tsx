@@ -1,15 +1,12 @@
 "use client";
 
-import { useParams } from "next/navigation";
 import RealStateUserLayout from "../../../page";
-import TenderDetails from "@/screens/dashboard/tenders/tender_card/TenderDetails";
+import NewTender from "@/screens/dashboard/tenders/add_tender_form/NewTender";
 
-export default function TenderOverview() {
-  const params = useParams();
-  const id = Array.isArray(params.id) ? params.id[0] : params.id;
+export default function TenderOverview(): JSX.Element {
   return (
     <RealStateUserLayout>
-      <TenderDetails id={id} />
+      <NewTender />
     </RealStateUserLayout>
   );
 }

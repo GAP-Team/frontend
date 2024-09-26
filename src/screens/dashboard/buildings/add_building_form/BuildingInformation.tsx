@@ -1,4 +1,3 @@
-"use client";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Dialog from "@mui/material/Dialog";
@@ -14,30 +13,35 @@ import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
-
-import userAPIs from "@/api/user";
 import { ContactPersonItem } from "./types";
 import { Item } from "@/components/input/GSelector";
 import GTextInput from "@/components/input/GTextInput";
 import GTextSelector from "@/components/input/GTextSelector";
 import LabelWithAsterisk from "@/components/label/LabelWithAsterisk";
-import { contactPersonList, buildingTypesList } from "@/utils/Constants";
+import { buildingTypesList } from "@/utils/Constants";
 
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 
-const BuildingInformation = ({ formik }: { formik?: any }) => {
+const BuildingInformation = ({ formik }: { formik?: any }): JSX.Element => {
   const [dialogOpen, setDialogOpen] = useState(false);
-  const [options, setOptions] = useState<Item[]>(buildingTypesList);
-  const [contactPersons, setContactPersons] =
-    useState<any[]>(contactPersonList);
+  const [options] = useState(buildingTypesList);
+
   const [newContact, setNewContact] = useState<ContactPersonItem>({
     firstName: "",
     lastName: "",
     email: "",
     phoneNumber: "",
   });
-  const [selectedBldngType, setSelectedBldngType] = useState<Item | null>(
+
+  const [newContactErrors, setNewContactErrors] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    phoneNumber: "",
+  });
+
+  const [selectedBuildingType, setSelectedBuildingType] = useState<Item | null>(
     formik?.values?.buildingType
       ? {
           label: formik?.values?.buildingType,
@@ -47,24 +51,18 @@ const BuildingInformation = ({ formik }: { formik?: any }) => {
   );
 
   useEffect(() => {
-    if (formik?.values?.buildingType !== undefined) {
-      setSelectedBldngType({
+    if (formik?.values?.buildingType !== "") {
+      setSelectedBuildingType({
         label: formik?.values?.buildingType,
         value: formik?.values?.buildingType,
       });
     } else {
-      setSelectedBldngType({ label: "", value: "" });
+      setSelectedBuildingType({ label: "", value: "" });
     }
-    // getAllUsers();
   }, [formik?.values]);
 
-  const getAllUsers = async () => {
-    let allUsers = await userAPIs.getAllUser();
-    setContactPersons(allUsers.data);
-  };
-
   const handleStateSelect = (selectedItem: Item | null): void => {
-    setSelectedBldngType(selectedItem);
+    setSelectedBuildingType(selectedItem);
     formik?.setFieldValue(
       "buildingType",
       selectedItem ? selectedItem.value : ""
@@ -74,18 +72,16 @@ const BuildingInformation = ({ formik }: { formik?: any }) => {
   const handleContactPersonChange = (
     event: any,
     value: ContactPersonItem[]
-  ) => {
+  ): void => {
     formik?.setFieldValue("contactPerson", value);
   };
 
-  const handleAddContactPerson = () => {
+  const handleAddContactPerson = (): void => {
     if (newContact.firstName && newContact.lastName) {
       formik?.setFieldValue("contactPerson", [
         ...formik.values.contactPerson,
         newContact,
       ]);
-      //API call here
-      //for POST for adding the new contact Person
       setNewContact({
         firstName: "",
         lastName: "",
@@ -94,6 +90,14 @@ const BuildingInformation = ({ formik }: { formik?: any }) => {
       });
       setDialogOpen(false);
     }
+  };
+
+  const handleInputChange = (
+    field: keyof ContactPersonItem,
+    value: string
+  ): void => {
+    setNewContact({ ...newContact, [field]: value });
+    setNewContactErrors({ ...newContactErrors, [field]: "" }); // Clear error when typing
   };
 
   return (
@@ -144,7 +148,7 @@ const BuildingInformation = ({ formik }: { formik?: any }) => {
               formik?.touched?.buildingType && formik?.errors?.buildingType
             }
             onSelect={handleStateSelect}
-            selectedState={selectedBldngType}
+            selectedState={selectedBuildingType}
           />
         </Grid>
         <Grid item xs={12} sm={3}>
@@ -180,7 +184,7 @@ const BuildingInformation = ({ formik }: { formik?: any }) => {
             // options={contactPersons}
             options={[]}
             isOptionEqualToValue={(options, value) =>
-              options.firstName == value.lastName
+              options.firstName === value.lastName
             }
             getOptionLabel={(option) =>
               option.firstName + " " + option.lastName
@@ -243,23 +247,11 @@ const BuildingInformation = ({ formik }: { formik?: any }) => {
             label="Vorname"
             fullWidth
             value={newContact.firstName}
-            onChange={(e) =>
-              setNewContact({ ...newContact, firstName: e.target.value })
-            }
-            error={!newContact.firstName && Boolean(formik?.errors.firstName)}
-            helperText={!newContact.firstName && formik?.errors.firstName}
+            onChange={(e) => handleInputChange("firstName", e.target.value)}
+            error={Boolean(newContactErrors.firstName)}
+            helperText={newContactErrors.firstName}
             sx={{ marginBottom: "1rem" }}
           />
-          {/* <TextField
-            id="role"
-            margin="dense"
-            label="Rolle"
-            fullWidth
-            value={newContact.role}
-            onChange={(e) => setNewContact({ ...newContact, role: e.target.value })}
-            error={!newContact.role && Boolean(formik?.errors.contactPerson)}
-            helperText={!newContact.role && formik?.errors.contactPerson}
-          /> */}
           <TextField
             id="lastName"
             name="lastName"
@@ -267,11 +259,10 @@ const BuildingInformation = ({ formik }: { formik?: any }) => {
             label="Nachname"
             fullWidth
             value={newContact.lastName}
-            onChange={(e) =>
-              setNewContact({ ...newContact, lastName: e.target.value })
-            }
-            error={!newContact.lastName && Boolean(formik?.errors.lastName)}
-            helperText={!newContact.lastName && formik?.errors.lastName}
+            onChange={(e) => handleInputChange("lastName", e.target.value)}
+            error={Boolean(newContactErrors.lastName)}
+            helperText={newContactErrors.lastName}
+            sx={{ marginBottom: "1rem" }}
           />
           <TextField
             id="email"
@@ -280,25 +271,21 @@ const BuildingInformation = ({ formik }: { formik?: any }) => {
             margin="dense"
             fullWidth
             value={newContact.email}
-            onChange={(e) =>
-              setNewContact({ ...newContact, email: e.target.value })
-            }
-            error={!newContact.email && Boolean(formik?.errors.email)}
-            helperText={!newContact.email && formik?.errors.email}
+            onChange={(e) => handleInputChange("email", e.target.value)}
+            error={Boolean(newContactErrors.email)}
+            helperText={newContactErrors.email}
+            sx={{ marginBottom: "1rem" }}
           />
           <TextField
             id="phoneNumber"
             label="Telefonnummer"
+            name="phoneNumber"
             margin="dense"
             fullWidth
             value={newContact.phoneNumber}
-            onChange={(e) =>
-              setNewContact({ ...newContact, phoneNumber: e.target.value })
-            }
-            error={
-              !newContact.phoneNumber && Boolean(formik?.errors.phoneNumber)
-            }
-            helperText={!newContact.phoneNumber && formik?.errors.phoneNumber}
+            onChange={(e) => handleInputChange("phoneNumber", e.target.value)}
+            error={Boolean(newContactErrors.phoneNumber)}
+            helperText={newContactErrors.phoneNumber}
           />
         </DialogContent>
         <DialogActions sx={{ padding: "1rem" }}>

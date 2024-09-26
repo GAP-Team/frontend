@@ -17,7 +17,7 @@ interface GTabProps {
   handleChange?: (event: React.SyntheticEvent, newValue: number) => void;
 }
 
-function TabPanel(props: TabPanelProps) {
+function TabPanel(props: TabPanelProps): JSX.Element {
   const { children, value, index, ...other } = props;
 
   return (
@@ -35,7 +35,6 @@ function TabPanel(props: TabPanelProps) {
 
 const GTab: React.FC<GTabProps> = ({
   tabs,
-  tabProps,
   panelProps,
   tabvalue,
   handleChange,

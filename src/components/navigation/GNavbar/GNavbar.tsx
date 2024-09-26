@@ -8,7 +8,7 @@ import { FaArrowRightToBracket } from "react-icons/fa6";
 const lalezar = Lalezar({ subsets: ["latin"], weight: ["400"] });
 import { FiMenu } from "react-icons/fi";
 
-const GNavbar = () => {
+const GNavbar = (): JSX.Element => {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <nav className="container p-4 mx-auto lg:flex lg:justify-between lg:items-center bg-opacity-70">

@@ -1,20 +1,17 @@
 "use client";
-import { useState, useEffect } from "react";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import FormControl from "@mui/material/FormControl";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
-import Checkbox from "@mui/material/Checkbox";
 import Typography from "@mui/material/Typography";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import GTextInput from "@/components/input/GTextInput";
 import { useFormikContext } from "formik";
 import { AddTenderFormValues } from "./types";
 
-const TenderClassification = () => {
+const TenderClassification = (): JSX.Element => {
   const formik = useFormikContext<AddTenderFormValues>();
 
   return (

@@ -31,7 +31,7 @@ export default function UploadMultiButton({
   name,
   error,
   helperText,
-}: UploadMultiButtonProps) {
+}: UploadMultiButtonProps): JSX.Element {
   const theme = useTheme();
 
   const styles = {
@@ -50,7 +50,7 @@ export default function UploadMultiButton({
     },
   };
 
-  const handleFileChange = (files: File[]) => {
+  const handleFileChange = (files: File[]): void => {
     if (onChange) {
       const newFiles = value ? [...value, ...files] : files;
       const syntheticEvent = {
@@ -63,7 +63,7 @@ export default function UploadMultiButton({
     }
   };
 
-  const handleDelete = (index: number) => {
+  const handleDelete = (index: number): void => {
     const newValue = value?.filter((_, i) => i !== index) || [];
     const syntheticEvent = {
       target: {
@@ -77,17 +77,20 @@ export default function UploadMultiButton({
     deleteFileFromS3(deletedFile[0]);
   };
 
-  const deleteFileFromS3 = async (file: any) => {
+  const deleteFileFromS3 = async (file: any): Promise<void> => {
     if (file.hasOwnProperty("documentType")) {
       const deleteFileStatus = await s3APIs.delete(file?.key);
+      if (deleteFileStatus) {
+        console.log("File deleted successfully");
+      }
     }
   };
 
-  const onDrop = (acceptedFiles: File[]) => {
+  const onDrop = (acceptedFiles: File[]): void => {
     handleFileChange(acceptedFiles);
   };
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+  const { getRootProps, getInputProps } = useDropzone({
     onDrop,
     accept: {
       "application/pdf": [".pdf"],

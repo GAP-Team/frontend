@@ -11,7 +11,7 @@ import { AddTenderFormValues } from "./types";
 import UploadMultiButton from "@/components/button/UploadMultiButton";
 import GTextInput from "@/components/input/GTextInput";
 
-const TenderDocumentation = () => {
+const TenderDocumentation = (): JSX.Element => {
   const formik = useFormikContext<AddTenderFormValues>();
   return (
     <Box

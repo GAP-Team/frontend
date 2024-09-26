@@ -3,9 +3,8 @@ import Image from "next/image";
 import { NextPage } from "next";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
-import { useRouter } from "next/navigation";
 import GButton from "@/components/button/GButton";
-import sucess_svg from "../../../public/icons/success.svg";
+import sucessSvg from "../../../public/icons/success.svg";
 
 interface SuccessPageProps {
   title: string;
@@ -21,7 +20,7 @@ const SuccessPage: NextPage<SuccessPageProps> = ({
   description,
   description2,
   buttonLabel,
-  imageUrl = sucess_svg,
+  imageUrl = sucessSvg,
   redirectUrl = "/",
 }) => {
   return (

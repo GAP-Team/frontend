@@ -3,9 +3,9 @@ import React from "react";
 import TitleSection from "../label/title-section";
 import Badge from "../badge/GBadge";
 import { Carousel } from "flowbite-react";
-import { Button, Card, ButtonGroup } from "flowbite-react";
 import Image from "next/image";
-const Testimonials = () => {
+
+const Testimonials = (): JSX.Element => {
   return (
     <div className="container mx-auto px-4 sm:px-2 lg:px-4  flex flex-col justify-center items-center">
       <TitleSection
@@ -18,7 +18,7 @@ const Testimonials = () => {
   );
 };
 
-export const CarousalSlider = () => {
+export const CarousalSlider = (): JSX.Element => {
   return (
     <div className="flex justify-center items-center w-3/4 md:h-[30rem] sm:h-[20rem] rounded-lg shadow-xl overflow-hidden mx-auto">
       <Carousel>
@@ -30,7 +30,7 @@ export const CarousalSlider = () => {
   );
 };
 
-const CarouselItem = () => {
+const CarouselItem = (): JSX.Element => {
   return (
     <div className="flex flex-col items-center text-center justify-center p-6 bg-slate-800 text-white h-full">
       <div className="avatar">
@@ -45,8 +45,8 @@ const CarouselItem = () => {
         </div>
       </div>
       <p className="md:text-xl sm:text-md lg:text-2xl mx-auto py-8 max-w-2xl">
-        "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque,
-        ducimus velit culpa ex blanditiis maxime minus quas."
+        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque,
+        ducimus velit culpa ex blanditiis maxime minus quas.
       </p>
       <p className="text-md font-bold">James Powell</p>
       <p className="">Developer at CompanyY</p>

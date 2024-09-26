@@ -2,7 +2,6 @@
 import * as React from "react";
 import Menu from "@mui/material/Menu";
 import Dialog from "@mui/material/Dialog";
-import Button from "@mui/material/Button";
 import { FaRegEdit } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import Divider from "@mui/material/Divider";
@@ -20,34 +19,34 @@ import DialogContentText from "@mui/material/DialogContentText";
 import GButton from "@/components/button/GButton";
 
 interface BuildingMenuProps {
-  id: any;
+  buildingId: string;
 }
 
-const BuildingMenu: React.FC<BuildingMenuProps> = ({ id }) => {
+const BuildingMenu: React.FC<BuildingMenuProps> = ({ buildingId }) => {
   const router = useRouter();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [openDialog, setOpenDialog] = React.useState(false);
   const open = Boolean(anchorEl);
 
-  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+  const handleClick = (event: React.MouseEvent<HTMLElement>): void => {
     setAnchorEl(event.currentTarget);
-    router.push(`/real_estate/buildings/edit/${id}`);
+    router.push(`/real_estate/buildings/edit/${buildingId}`);
   };
 
-  const handleCloseMenu = () => {
+  const handleCloseMenu = (): void => {
     setAnchorEl(null);
   };
 
-  const handleDeleteClick = () => {
+  const handleDeleteClick = (): void => {
     setOpenDialog(true);
     handleCloseMenu(); // Close the menu when dialog opens
   };
 
-  const handleCloseDialog = () => {
+  const handleCloseDialog = (): void => {
     setOpenDialog(false);
   };
 
-  const handleConfirmDelete = () => {
+  const handleConfirmDelete = (): void => {
     // Add delete logic here
     setOpenDialog(false);
   };

@@ -10,7 +10,7 @@ interface GProgressStepperProps {
 export default function GProgressStepper({
   activeStep,
   sx,
-}: GProgressStepperProps) {
+}: GProgressStepperProps): JSX.Element {
   return (
     <MobileStepper
       variant="progress"

@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import FormControl from "@mui/material/FormControl";
@@ -14,7 +14,7 @@ import { Item } from "../../types";
 import GTextSelector from "@/components/input/GTextSelector";
 import { tenderTypesListHW, tenderTypesListSV } from "@/utils/Constants";
 
-const TenderInformation = () => {
+const TenderInformation = (): JSX.Element => {
   const formik = useFormikContext<AddTenderFormValues>();
   const [selectedTenderType, setSelectedTenderType] = useState<Item | null>(
     formik?.values?.tenderType
@@ -108,7 +108,7 @@ const TenderInformation = () => {
           <GTextSelector
             name="tenderType"
             options={
-              formik?.values?.tenderForm == "Handwerker"
+              formik?.values?.tenderForm === "Handwerker"
                 ? tenderTypesListHW
                 : tenderTypesListSV
             }

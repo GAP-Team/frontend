@@ -1,13 +1,12 @@
 import * as React from "react";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
-import Box from "@mui/material/Box";
 import OverviewPanel from "./overview_panel/OverviewPanel";
 import AssignmentsPanel from "./assignments_panel/AssignmentsPanel";
 import ApplicationsPanel from "./applications_panel/ApplicationsPanel";
 import NewsPanel from "./news_panel/NewsPanel";
 
-export default function RealEstateUser() {
+export default function RealEstateUser(): JSX.Element {
   return (
     <Grid container spacing={2} sx={styles.mainContainer} columns={16}>
       <Grid item xs={3}>

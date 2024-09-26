@@ -21,10 +21,8 @@ api.interceptors.request.use(
   (err) => Promise.reject(err)
 );
 api.interceptors.response.use(
-  (response: any) => {
-    return response;
-  },
-  async function (error: any) {
+  (response: any) => response,
+  async (error: any) => {
     const originalRequest = error.config;
     if (
       error.response &&

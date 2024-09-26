@@ -9,7 +9,6 @@ import Grid from "@mui/material/Grid";
 import Divider from "@mui/material/Divider";
 import GButton from "@/components/button/GButton";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
 import LabelText from "@/components/label/LabelText";
 
 //TODO: in the future this data will be fetched from the backend and dynamically updated the values
@@ -29,14 +28,14 @@ const summaryData = [
   { label: "Kostenlose Parkplätze", value: "Ja" },
 ];
 
-const TenderSummarySection = () => {
+const TenderSummarySection = (): JSX.Element => {
   const router = useRouter();
 
-  const backHandler = () => {
+  const backHandler = (): void => {
     router.push("/real_estate/tenders");
   };
 
-  const editHandler = () => {
+  const editHandler = (): void => {
     router.push("/real_estate/tenders/add_tender_form");
   };
   return (

@@ -31,7 +31,7 @@ const AddBuildingForm = ({
   const isBeyondLastStep = activeStep.id >= steps.length;
   const typeOfBtn = activeStep.id + 1 >= steps.length ? "submit" : "button";
 
-  const handleRoute = () => {
+  const handleRoute = (): void => {
     router.push("/real_estate/buildings");
   };
 

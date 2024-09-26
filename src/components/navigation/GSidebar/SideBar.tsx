@@ -1,6 +1,5 @@
 "use client";
 import * as React from "react";
-import { ElementType } from "react";
 import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -12,17 +11,6 @@ import gapLogo from "../../../../public/icons/gap-logo.svg";
 import gapLogoFull from "../../../../public/icons/gapfull-logo.svg";
 import SidebarItemComponent from "./SidebarItemComponent";
 import { SubSidebarItem } from "./SubSidebarItem";
-import { LuLayoutDashboard } from "react-icons/lu";
-import NewBuilding from "@/screens/dashboard/buildings/add_building_form/NewBuilding";
-import Buildings from "@/screens/dashboard/buildings/building_card/Buildings";
-import NewFacility from "@/screens/dashboard/facilities/add_facility_form/NewFacility";
-import Facilities from "@/screens/dashboard/facilities/facility_card/Facilities";
-import RealEstateUser from "@/screens/dashboard/real_estate_user/RealEstateUser";
-import NewTender from "@/screens/dashboard/tenders/add_tender_form/NewTender";
-import Tenders from "@/screens/dashboard/tenders/Tenders";
-import { CgNotes } from "react-icons/cg";
-import { MdOutlineDoorSliding, MdOutlineAddHomeWork } from "react-icons/md";
-import { TbPigMoney } from "react-icons/tb";
 
 export interface SubItem {
   id: number;
@@ -90,7 +78,13 @@ const MyDrawer = styled(Drawer)(
   })
 );
 
-const DrawerLogo = ({ src, open }: { src: string; open: boolean }) => (
+const DrawerLogo = ({
+  src,
+  open,
+}: {
+  src: string;
+  open: boolean;
+}): JSX.Element => (
   <div
     style={{
       width: open ? "100%" : "2rem",

@@ -1,10 +1,8 @@
 import React from "react";
-import { MdStars } from "react-icons/md";
-import { IoLogoPython } from "react-icons/io";
-import { IoLogoApple } from "react-icons/io";
-import { IoLogoBitbucket } from "react-icons/io";
+import { IoLogoPython, IoLogoBitbucket, IoLogoApple } from "react-icons/io";
 import { IoLogoAmazon } from "react-icons/io5";
-const GClientSection = () => {
+
+const GClientSection = (): JSX.Element => {
   return (
     <div className="bg-white py-16">
       <div className="container mx-auto px-4 text-center">

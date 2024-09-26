@@ -14,7 +14,7 @@ interface Item {
   value: string;
 }
 
-const CompanyAddress = ({ formik }: any) => {
+const CompanyAddress = ({ formik }: any): JSX.Element => {
   const [selectedState, setSelectedState] = useState<Item | null>(null);
 
   const handleStateSelect = (selectedItem: Item): void => {
@@ -22,7 +22,7 @@ const CompanyAddress = ({ formik }: any) => {
     formik.setFieldValue("state", selectedItem?.value);
   };
 
-  const handleAddressSelect = async (value: string) => {
+  const handleAddressSelect = async (value: string): Promise<void> => {
     try {
       const results = await geocodeByAddress(value);
       const addressComponents = results[0].address_components;

@@ -12,7 +12,7 @@ interface UserState {
     buildings: [];
     firstName: string;
     lastName: string;
-    manufacturer_experience: string;
+    manufacturerExperience: string;
   };
   buildings: [];
 }
@@ -26,7 +26,7 @@ const initialState: UserState = {
     lastName: "",
     firstName: "",
     buildings: [],
-    manufacturer_experience: "",
+    manufacturerExperience: "",
   },
   buildings: [],
 };
@@ -43,8 +43,8 @@ const userSlice = createSlice({
       state.user.lastName = action.payload?.user?.lastName;
       state.user.firstName = action.payload?.user?.firstName;
       state.user.buildings = action.payload?.user?.buildings;
-      state.user.manufacturer_experience =
-        action.payload?.user?.manufacturer_experience;
+      state.user.manufacturerExperience =
+        action.payload?.user?.manufacturerExperience;
     },
     setUserBuildings: (state, action) => {
       state.user.buildings = action.payload;
@@ -58,14 +58,17 @@ const userSlice = createSlice({
 export const { setUser, setUserBuildings, setAllBuildingDetails } =
   userSlice.actions;
 
-export const currentUser = (state: RootState) => state.user.user;
-export const currentUserId = (state: RootState) => state.user.user._id;
-export const currentUserEmail = (state: RootState) => state.user.user.email;
-export const allBuildingDetails = (state: RootState) => state.user.buildings;
-export const currentUserCompany = (state: RootState) => state.user.user.company;
-export const currentUserBuildings = (state: RootState) =>
+export const currentUser = (state: RootState): any => state.user.user;
+export const currentUserId = (state: RootState): string => state.user.user._id;
+export const currentUserEmail = (state: RootState): string =>
+  state.user.user.email;
+export const allBuildingDetails = (state: RootState): any =>
+  state.user.buildings;
+export const currentUserCompany = (state: RootState): string =>
+  state.user.user.company;
+export const currentUserBuildings = (state: RootState): any =>
   state.user.user.buildings;
-export const currentUserName = (state: RootState) =>
+export const currentUserName = (state: RootState): string =>
   `${state.user.user.firstName} ${state.user.user.lastName}`;
 
 export default userSlice.reducer;
