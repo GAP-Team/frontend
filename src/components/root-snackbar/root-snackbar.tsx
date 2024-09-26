@@ -1,11 +1,10 @@
 "use client";
-import Snackbar, { SnackbarCloseReason } from '@mui/material/Snackbar';
-import Alert from '@mui/material/Alert';
-import React, { ReactElement } from 'react';
-import { useAppDispatch, useAppSelector } from '@/lib/hooks';
+import Snackbar, { SnackbarCloseReason } from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert";
+import React, { ReactElement } from "react";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 
-import { hidesnackbar } from '@/lib/features/snackbarSlice';
-
+import { hidesnackbar } from "@/lib/features/snackbarSlice";
 
 export const RootSnackbar = (): ReactElement => {
   const dispatch = useAppDispatch();
@@ -23,8 +22,14 @@ export const RootSnackbar = (): ReactElement => {
       open={open}
       autoHideDuration={6000}
       onClose={handleOnClose}
-      anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}>
-      <Alert onClose={handleOnClose} elevation={6} variant="filled" severity={type}>
+      anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+    >
+      <Alert
+        onClose={handleOnClose}
+        elevation={6}
+        variant="filled"
+        severity={type}
+      >
         {message}
       </Alert>
     </Snackbar>
