@@ -27,6 +27,8 @@ import BuildingDocumentation from "./BuildingDocumentation";
 import { DocumentTypies } from "@/utils/Constants";
 import { handleUploadMultipleDoc } from "@/utils/uploadToS3";
 import { addObjektFormSchema } from "@/utils/ValidationSchema";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
+import { showSnackbar } from "@/components/root-snackbar";
 
 // Logger
 const logger = getLogger("new-building");
@@ -71,6 +73,8 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
   const user = useSelector(currentUser);
   const allBuildings = useSelector(allBuildingDetails);
   const userBuildings = useSelector(currentUserBuildings);
+
+  const appdispatch = useAppDispatch();
 
   const steps: ActiveStepItem[] = [
     { id: 0, stepName: "Objektinformation", component: BuildingInformation },
@@ -215,13 +219,32 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
       };
       if (actionType === "edit") {
         UpdateBuildingData(arrangedDataObj);
+        appdispatch(
+          showSnackbar({
+            type: "success",
+            message: "Gebäude erfolgreich aktualisiert!",
+          })
+        );
       } else {
         saveBuildingData(arrangedDataObj);
+        appdispatch(
+          showSnackbar({
+            type: "success",
+            message: "Gebäude erfolgreich hinzugefügt!",
+          })
+        );
       }
     } catch (error: any) {
       logger.error(
         "Unable to create a new building, post reqeust failed " + error.name,
         error.message
+      );
+      appdispatch(
+        showSnackbar({
+          type: "error",
+          message:
+            "Gebäude konnte nicht hinzugefügt werden. Bitte versuchen Sie es erneut!",
+        })
       );
     }
   };
