@@ -27,7 +27,7 @@ import BuildingDocumentation from "./BuildingDocumentation";
 import { DocumentTypies } from "@/utils/Constants";
 import { handleUploadMultipleDoc } from "@/utils/uploadToS3";
 import { addObjektFormSchema } from "@/utils/ValidationSchema";
-import { useAppDispatch, useAppSelector } from "@/lib/hooks";
+import { useAppDispatch } from "@/lib/hooks";
 import { showSnackbar } from "@/components/root-snackbar";
 
 // Logger
