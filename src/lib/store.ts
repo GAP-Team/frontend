@@ -1,25 +1,11 @@
 // store/index.js
 "use client";
 import storage from "redux-persist/lib/storage";
+import { createWrapper } from 'next-redux-wrapper';
 import { persistStore, persistReducer } from "redux-persist";
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
-import createWebStorage from "redux-persist/lib/storage/createWebStorage";
 
 import userReducer from "./features/userSlice";
-
-const createNoopStorage = () => {
-  return {
-    getItem(_key: any) {
-      return Promise.resolve(null);
-    },
-    setItem(_key: any, value: any) {
-      return Promise.resolve(value);
-    },
-    removeItem(_key: any) {
-      return Promise.resolve();
-    },
-  };
-};
 
 const rootReducer = combineReducers({
   user: userReducer,
@@ -27,31 +13,42 @@ const rootReducer = combineReducers({
 
 const persistConfig = {
   key: "root",
-  storage: typeof window !== "undefined" ? storage : createNoopStorage(),
+  storage,
+  timeout: 1000,
 };
+
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 const makeConfiguredStore = () =>
   configureStore({
     reducer: rootReducer,
-  });
+  }
+);
 
 export const makeStore = () => {
   const isServer = typeof window === "undefined";
   if (isServer) {
     return makeConfiguredStore();
   } else {
-    const persistedReducer = persistReducer(persistConfig, rootReducer);
     let store: any = configureStore({
       reducer: persistedReducer,
+      middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware({
+          serializableCheck: {
+            ignoredActions: ['persist/PERSIST'],
+          },
+        }
+      ),
     });
     store.__persistor = persistStore(store);
     return store;
   }
 };
 
-// Infer the type of makeStore
+export const wrapper = createWrapper(makeStore);
+export const persistor = persistStore(makeStore());
+
 export type AppStore = ReturnType<typeof makeStore>;
-// Infer the `RootState` and `AppDispatch` types from the store itself
 export type RootState = ReturnType<AppStore["getState"]>;
 export type AppDispatch = AppStore["dispatch"];
 
