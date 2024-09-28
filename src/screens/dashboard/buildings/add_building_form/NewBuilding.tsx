@@ -34,9 +34,6 @@ import { addObjektFormSchema } from "@/utils/ValidationSchema";
 import { useAppDispatch } from "@/lib/hooks";
 import { showSnackbar } from "@/components/root-snackbar";
 
-// Logger
-const logger = getLogger("new-building");
-
 const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
   const router = useRouter();
   const dispatch = useDispatch();
