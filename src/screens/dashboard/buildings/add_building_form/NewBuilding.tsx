@@ -222,7 +222,7 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
     try {
       await handleSubmit(values, docObj);
       return true;
-    } catch (_error) {
+    } catch {
       appdispatch(
         showSnackbar({
           type: "error",
