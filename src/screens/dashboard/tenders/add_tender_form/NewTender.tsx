@@ -76,7 +76,7 @@ const NewTender = (): JSX.Element => {
     tenderForm: "Handwerker",
     tenderType: "",
     buildingName: "",
-    equipmentName: "",
+    facilityName: "",
     detailDescription: "",
     urgency: "Nicht Dringend",
     fromDate: null,

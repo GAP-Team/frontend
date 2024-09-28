@@ -170,7 +170,7 @@ export const addTenderValidationSchema = [
   }),
   yup.object({
     name: yup.string(),
-    equipmentName: yup.string(),
+    facilityName: yup.string(),
   }),
   yup.object({
     detailDescription: yup.string(),

@@ -14,11 +14,11 @@ const TenderBuilding = (): JSX.Element => {
     formik?.setFieldValue("buildingName", value);
   };
 
-  const handleEquipmentNameChange = (
+  const handleFacilityNameChange = (
     event: any,
     value: string | null
   ): void => {
-    formik?.setFieldValue("equipmentName", value);
+    formik?.setFieldValue("facilityName", value);
   };
 
   return (
@@ -63,22 +63,22 @@ const TenderBuilding = (): JSX.Element => {
           <Autocomplete
             freeSolo
             id="free-solo-2-demo"
-            value={formik.values.equipmentName}
+            value={formik.values.facilityName}
             disableClearable
             options={dummyBuildings.map((option) => option.buildingName)}
-            onChange={handleEquipmentNameChange}
-            onInputChange={handleEquipmentNameChange}
+            onChange={handleFacilityNameChange}
+            onInputChange={handleFacilityNameChange}
             renderInput={(params) => (
               <TextField
                 {...params}
-                name="equipmentName"
+                name="facilityName"
                 error={
-                  formik?.touched?.equipmentName &&
-                  Boolean(formik?.errors?.equipmentName)
+                  formik?.touched?.facilityName &&
+                  Boolean(formik?.errors?.facilityName)
                 }
                 helperText={
-                  formik?.touched?.equipmentName &&
-                  formik?.errors?.equipmentName
+                  formik?.touched?.facilityName &&
+                  formik?.errors?.facilityName
                 }
                 label="Anlagen suchen"
                 InputProps={{
