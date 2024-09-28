@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { Formik, FormikHelpers } from "formik";
 import Grid from "@mui/material/Grid";
 import buildingAPIs from "@/api/building";
-import { getLogger } from "@/utils/Logger";
 import { ActiveStepItem } from "../../types";
 import {
   AddBuildingFormValues,
@@ -223,7 +222,7 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
     try {
       await handleSubmit(values, docObj);
       return true;
-    } catch (error) {
+    } catch (_error) {
       appdispatch(
         showSnackbar({
           type: "error",
