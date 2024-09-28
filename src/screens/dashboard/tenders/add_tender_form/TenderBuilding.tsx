@@ -14,10 +14,7 @@ const TenderBuilding = (): JSX.Element => {
     formik?.setFieldValue("buildingName", value);
   };
 
-  const handleFacilityNameChange = (
-    event: any,
-    value: string | null
-  ): void => {
+  const handleFacilityNameChange = (event: any, value: string | null): void => {
     formik?.setFieldValue("facilityName", value);
   };
 
@@ -77,8 +74,7 @@ const TenderBuilding = (): JSX.Element => {
                   Boolean(formik?.errors?.facilityName)
                 }
                 helperText={
-                  formik?.touched?.facilityName &&
-                  formik?.errors?.facilityName
+                  formik?.touched?.facilityName && formik?.errors?.facilityName
                 }
                 label="Anlagen suchen"
                 InputProps={{
