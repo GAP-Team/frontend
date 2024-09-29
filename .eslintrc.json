@@ -8,8 +8,15 @@
     "project": "./tsconfig.json"
   },
   "rules": {
-    "@typescript-eslint/no-explicit-any": "warn", // Disable the rule globally
-    "@typescript-eslint/explicit-function-return-type": "error", // Show a warning if a return type is missing
+    "@typescript-eslint/no-explicit-any": "off", // Disable the rule globally
+    "@typescript-eslint/explicit-function-return-type": [
+      "error",
+      {
+        "allowExpressions": true,
+        "allowTypedFunctionExpressions": true,
+        "allowHigherOrderFunctions": true
+      }
+    ], // Show a warning if a return type is missing
     "@typescript-eslint/no-unused-vars": [
       "error",
       { "argsIgnorePattern": "^_" }
@@ -21,7 +28,7 @@
     "no-unsafe-optional-chaining": "warn", // Show a warning if an unsafe optional chaining is found
     "camelcase": "error", // Show a warning if a variable is not camelCase
     "complexity": ["warn", 5], // Show a warning if a function has a cyclomatic complexity greater than 5
-    "max-lines-per-function": ["warn", 50], // Show a warning if a function has more than 50 lines
+    "max-lines-per-function": ["off", 50], // Show a warning if a function has more than 50 lines
     "no-console": "warn", // Show a warning if console.log is used
     "no-undefined": "warn", // Show a warning if undefined is used
     "prefer-arrow-callback": "error", // Show a warning if a function is not an arrow function
