@@ -89,7 +89,7 @@ const NewFacility: React.FC<NewFacilityProps> = ({}): JSX.Element => {
     constructionDocs: [],
     floorplanDocs: [],
     otherDocs: [],
-    serverLink:"",
+    serverLink: "",
   };
 
   const formOrSuccessContent = isSubmitted ? (
