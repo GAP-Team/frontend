@@ -1,4 +1,3 @@
-"use client";
 import * as React from "react";
 import Cookies from "js-cookie";
 import Box from "@mui/material/Box";
@@ -60,8 +59,14 @@ export default function GAppBar(): JSX.Element {
 
   return (
     <Toolbar sx={styles.toolbar}>
-      <Typography variant="h6" noWrap component="div" sx={styles.title}>
-        {user?.company?.name || ""}
+      <Typography
+        variant="h6"
+        noWrap
+        component="div"
+        sx={styles.title}
+        suppressHydrationWarning
+      >
+        {user?.company?.name}
       </Typography>
 
       <Box sx={{ flexGrow: 1, display: "flex", justifyContent: "center" }}>
@@ -80,7 +85,7 @@ export default function GAppBar(): JSX.Element {
         </IconButton>
         <Box sx={styles.userControls} onClick={handleProfileMenuOpen}>
           <AccountCircle sx={styles.accountIcon} />
-          <Typography sx={styles.userName}>
+          <Typography sx={styles.userName} suppressHydrationWarning>
             {`${user?.firstName} ${user?.lastName}`}
           </Typography>
           <ArrowDropDownIcon sx={styles.dropDownIcon} />

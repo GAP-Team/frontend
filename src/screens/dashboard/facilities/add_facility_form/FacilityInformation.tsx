@@ -99,7 +99,7 @@ const FacilityInformation = (): JSX.Element => {
         </Grid>
 
         <Grid item xs={6}>
-          <LabelWithAsterisk>ANLAGE OBERBEGRIFF</LabelWithAsterisk>
+          <LabelWithAsterisk>ANLAGENART</LabelWithAsterisk>
           <GTextSelector
             name="genericTerm"
             options={genericTermOptions}
@@ -117,7 +117,7 @@ const FacilityInformation = (): JSX.Element => {
 
         <Grid item xs={6}>
           <Typography variant="gsub" color="gray.500">
-            ANLAGE UNTERKATEGORIE
+            ANLAGENTYP
           </Typography>
           <GTextSelector
             name="subCategory"

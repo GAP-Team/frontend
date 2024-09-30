@@ -1,5 +1,4 @@
 "use client";
-import { useState } from "react";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import LabelWithAsterisk from "@/components/label/LabelWithAsterisk";
@@ -7,37 +6,16 @@ import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import { useFormikContext } from "formik";
 import { AddTenderFormValues } from "./types";
-import { dummyBuildings, equipmentTypesList } from "@/utils/Constants";
-import GTextSelector from "@/components/input/GTextSelector";
-import { Item } from "../../types";
+import { dummyBuildings } from "@/utils/Constants";
 
 const TenderBuilding = (): JSX.Element => {
   const formik = useFormikContext<AddTenderFormValues>();
-  const [selectedEquipmntType, setSelectedEquipmntType] = useState<Item | null>(
-    formik?.values?.equipmentType
-      ? {
-          label: formik.values.equipmentType,
-          value: formik.values.equipmentType,
-        }
-      : null
-  );
-  const handleEquipmntTypeSelect = (selectedItem: Item | null): void => {
-    setSelectedEquipmntType(selectedItem);
-    formik?.setFieldValue(
-      "equipmentType",
-      selectedItem ? selectedItem.value : ""
-    );
-  };
-
   const handleBuildingNameChange = (event: any, value: string | null): void => {
     formik?.setFieldValue("buildingName", value);
   };
 
-  const handleEquipmentNameChange = (
-    event: any,
-    value: string | null
-  ): void => {
-    formik?.setFieldValue("equipmentName", value);
+  const handleFacilityNameChange = (event: any, value: string | null): void => {
+    formik?.setFieldValue("facilityName", value);
   };
 
   return (
@@ -82,22 +60,21 @@ const TenderBuilding = (): JSX.Element => {
           <Autocomplete
             freeSolo
             id="free-solo-2-demo"
-            value={formik.values.equipmentName}
+            value={formik.values.facilityName}
             disableClearable
             options={dummyBuildings.map((option) => option.buildingName)}
-            onChange={handleEquipmentNameChange}
-            onInputChange={handleEquipmentNameChange}
+            onChange={handleFacilityNameChange}
+            onInputChange={handleFacilityNameChange}
             renderInput={(params) => (
               <TextField
                 {...params}
-                name="equipmentName"
+                name="facilityName"
                 error={
-                  formik?.touched?.equipmentName &&
-                  Boolean(formik?.errors?.equipmentName)
+                  formik?.touched?.facilityName &&
+                  Boolean(formik?.errors?.facilityName)
                 }
                 helperText={
-                  formik?.touched?.equipmentName &&
-                  formik?.errors?.equipmentName
+                  formik?.touched?.facilityName && formik?.errors?.facilityName
                 }
                 label="Anlagen suchen"
                 InputProps={{
@@ -106,22 +83,6 @@ const TenderBuilding = (): JSX.Element => {
                 }}
               />
             )}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <LabelWithAsterisk>ANLAGENTYP</LabelWithAsterisk>
-          <GTextSelector
-            name="equipmentType"
-            options={equipmentTypesList}
-            error={
-              formik?.touched?.equipmentType &&
-              Boolean(formik?.errors?.equipmentType)
-            }
-            helperText={
-              formik?.touched?.equipmentType && formik?.errors?.equipmentType
-            }
-            onSelect={handleEquipmntTypeSelect}
-            selectedState={selectedEquipmntType}
           />
         </Grid>
       </Grid>
