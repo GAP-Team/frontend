@@ -14,8 +14,8 @@ import heroBackgroundPicture from "../../../../public/images/hero6.jpg";
 import Image from "next/image";
 
 const HeroSection = (): JSX.Element => {
-  const [selectedTrade, setSelectedTrade] = useState("Anlagentyp");
-  const [selectedOrderType, setSelectedAuftype] = useState("Auftragstypen");
+  const [selectedFacility, setSelectedFacility] = useState("Anlagentyp");
+  const [selectedOrderType, setSelectedOrderType] = useState("Auftragstypen");
   const [selectedState, setSelectedState] = useState("Bundesländer");
 
   const truncateLabel = (label: string): string => {
@@ -76,7 +76,7 @@ const HeroSection = (): JSX.Element => {
                           Wählen Sie ein Anlagentyp aus:
                         </label>
                         <Dropdown
-                          label={truncateLabel(selectedTrade)}
+                          label={truncateLabel(selectedFacility)}
                           size="lg"
                           color="gray"
                           style={{
@@ -99,7 +99,7 @@ const HeroSection = (): JSX.Element => {
                                     {category.items.map((item, itemIndex) => (
                                       <DropdownItem
                                         onClick={() =>
-                                          setSelectedTrade(category.category)
+                                          setSelectedFacility(category.category)
                                         }
                                         key={itemIndex}
                                       >
@@ -111,7 +111,7 @@ const HeroSection = (): JSX.Element => {
                                   category.items.map((item, itemIndex) => (
                                     <DropdownItem
                                       onClick={() =>
-                                        setSelectedTrade(category.category)
+                                        setSelectedFacility(category.category)
                                       }
                                       key={itemIndex}
                                     >
@@ -158,7 +158,7 @@ const HeroSection = (): JSX.Element => {
                                 >
                                   {category.items.map((item, itemIndex) => (
                                     <DropdownItem
-                                      onClick={() => setSelectedAuftype(item)}
+                                      onClick={() => setSelectedOrderType(item)}
                                       key={itemIndex}
                                     >
                                       {item}
@@ -168,7 +168,7 @@ const HeroSection = (): JSX.Element => {
                               ) : (
                                 category.items.map((item, itemIndex) => (
                                   <DropdownItem
-                                    onClick={() => setSelectedAuftype(item)}
+                                    onClick={() => setSelectedOrderType(item)}
                                     key={itemIndex}
                                   >
                                     {item}
