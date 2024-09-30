@@ -85,37 +85,39 @@ const HeroSection = (): JSX.Element => {
                             margin: 2,
                           }}
                         >
-                          {listOfTrades.map((category, index) => (
-                            <React.Fragment key={index}>
-                              {category.category ? (
-                                <Dropdown
-                                  label={category.category}
-                                  size="md"
-                                  placement="right"
-                                  style={{ width: "300px" }}
-                                  color="gray"
-                                >
-                                  {category.items.map((item, itemIndex) => (
+                          <div className="max-h-60 overflow-y-auto">
+                            {listOfTrades.map((category, index) => (
+                              <React.Fragment key={index}>
+                                {category.category ? (
+                                  <Dropdown
+                                    label={category.category}
+                                    size="md"
+                                    placement="right"
+                                    style={{ width: "300px" }}
+                                    color="gray"
+                                  >
+                                    {category.items.map((item, itemIndex) => (
+                                      <DropdownItem
+                                        onClick={() => setSelectedTrade(item)}
+                                        key={itemIndex}
+                                      >
+                                        {item}
+                                      </DropdownItem>
+                                    ))}
+                                  </Dropdown>
+                                ) : (
+                                  category.items.map((item, itemIndex) => (
                                     <DropdownItem
                                       onClick={() => setSelectedTrade(item)}
                                       key={itemIndex}
                                     >
                                       {item}
                                     </DropdownItem>
-                                  ))}
-                                </Dropdown>
-                              ) : (
-                                category.items.map((item, itemIndex) => (
-                                  <DropdownItem
-                                    onClick={() => setSelectedTrade(item)}
-                                    key={itemIndex}
-                                  >
-                                    {item}
-                                  </DropdownItem>
-                                ))
-                              )}
-                            </React.Fragment>
-                          ))}
+                                  ))
+                                )}
+                              </React.Fragment>
+                            ))}
+                          </div>
                         </Dropdown>
                       </div>
 
