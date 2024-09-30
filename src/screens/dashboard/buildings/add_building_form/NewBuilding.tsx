@@ -27,7 +27,7 @@ import BuildingSummary from "./BuildingSummary";
 import PageTitle from "@/components/label/PageTitle";
 import BuildingInformation from "./BuildingInformation";
 import BuildingDocumentation from "./BuildingDocumentation";
-import { DocumentTypies } from "@/utils/Constants";
+import { DocumentTypes } from "@/utils/Constants";
 import { handleUploadMultipleDoc } from "@/utils/uploadToS3";
 import { addObjektFormSchema } from "@/utils/ValidationSchema";
 import { useAppDispatch } from "@/lib/hooks";
@@ -158,7 +158,7 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
 
   const handleSubmit = async (
     values: AddBuildingFormValues,
-    docObj: any[] = []
+    docObjList: any[] = []
   ): Promise<void> => {
     const addressObj = {
       city: values.city,
@@ -171,9 +171,9 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
 
     const formateDate = moment().format("YYYY-MM-DDTHH:mm:ss.SSS[Z]");
 
-    let arrangedDataObj = {
+    let buildingData = {
       userId: user?._id,
-      documents: docObj,
+      documents: docObjList,
       address: addressObj,
       createdAt: formateDate,
       buildingName: values.name,
@@ -185,9 +185,9 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
       buildingAbbreviation: values.buildingAbbreviation,
     };
     if (actionType === "edit") {
-      return await UpdateBuildingData(arrangedDataObj);
+      return await UpdateBuildingData(buildingData);
     } else if (actionType === "add") {
-      return await saveBuildingData(arrangedDataObj);
+      return await saveBuildingData(buildingData);
     }
   };
 
@@ -195,7 +195,7 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
     values: AddBuildingFormValues
   ): Promise<boolean> => {
     setLoading(true);
-    const docObj: any[] = [];
+    const docObjList: any[] = [];
 
     const uploadDocuments = async (
       files: File[],
@@ -203,24 +203,21 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
     ): Promise<void> => {
       for (const file of files) {
         if (file.hasOwnProperty("documentType")) {
-          docObj.push(file);
+          docObjList.push(file);
         } else {
           const uploadedDoc = await handleUploadMultipleDoc(file);
           uploadedDoc.documentType = docType;
-          docObj.push(uploadedDoc);
+          docObjList.push(uploadedDoc);
         }
       }
     };
 
-    await uploadDocuments(values.otherDocs, DocumentTypies.SONSTIGE);
-    await uploadDocuments(values.floorplanDocs, DocumentTypies.GRUNDRISSE);
-    await uploadDocuments(
-      values.constructionDocs,
-      DocumentTypies.BAUUNTERLAGEN
-    );
+    await uploadDocuments(values.otherDocs, DocumentTypes.SONSTIGE);
+    await uploadDocuments(values.floorplanDocs, DocumentTypes.GRUNDRISSE);
+    await uploadDocuments(values.constructionDocs, DocumentTypes.BAUUNTERLAGEN);
 
     try {
-      await handleSubmit(values, docObj);
+      await handleSubmit(values, docObjList);
       return true;
     } catch {
       appdispatch(
@@ -270,6 +267,12 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
         createBuildingResponse.data.buildingId,
       ];
       dispatch(setUserBuildings(updatedBuildings));
+      appdispatch(
+        showSnackbar({
+          type: "success",
+          message: "Gebäude erfolgreich aktualisiert!",
+        })
+      );
     }
     if (user?._id) return;
     const allUpdatedBuildings = await buildingAPIs.getBuildings(
@@ -279,12 +282,6 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
       ""
     );
     dispatch(setAllBuildingDetails(allUpdatedBuildings.data));
-    appdispatch(
-      showSnackbar({
-        type: "success",
-        message: "Gebäude erfolgreich aktualisiert!",
-      })
-    );
   };
 
   return (
