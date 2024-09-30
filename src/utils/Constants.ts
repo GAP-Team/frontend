@@ -1,13 +1,28 @@
+export const statusStyles: {
+  [key: string]: { bgcolor: string; color: string };
+} = {
+  offen: { bgcolor: "#E7E0FF", color: "#582EFF" },
+  abgeschlossen: { bgcolor: "#96E9CB", color: "#056643" },
+  "in Bearbeitung": { bgcolor: "#FDFCE0", color: "#EB9700" },
+  "Freigabe ausstehend": { bgcolor: "#E5F5FA", color: "#22A7F1" },
+  Nachprüfung: { bgcolor: "#FFE1D7", color: "#EB4444" },
+};
+
 export const listOfTrades = [
   {
     category: "Brandwache",
+    items: ["Brandwache"],
+  },
+  {
+    category: "Beratung/Planprüfung",
     items: [
-      "Brandwache",
-      "Beratung/Planprüfung",
-      "Brandschutzkonzept",
-      "Löschanlagenkonzept",
-      "Gefährdungsbeurteilung",
-      "Anlagen (Lüftung, Feuerlösch, etc.)",
+      "Brandmeldeanlage - und Alarmierungsanlage",
+      "Druckbehälter/Tankanlagen",
+      "Elektrotechnik",
+      "Feuerlöschtechnik",
+      "Fördertechnik",
+      "Lüftungsanlage",
+      "Wassergefährdende Stoffe",
     ],
   },
   {
@@ -33,6 +48,7 @@ export const listOfTrades = [
     category: "Elektrotechnik",
     items: [
       "Ortsfeste elektrische Anlagen",
+      "Ortsbewegliche elektrische Anlagen",
       "Netzersatzanlage (Notstromdiesel)",
       "Sicherheitsbeleuchtung",
       "Sicherheitsstromversorgung",
@@ -56,14 +72,6 @@ export const listOfTrades = [
     ],
   },
   {
-    category: "Hygieneprüfung",
-    items: [
-      "Hygieneprüfung an Lüftungsanlagen",
-      "Hygieneprüfung an Rückkühlwerken",
-      "Hygieneprüfung am Trinkwasser",
-    ],
-  },
-  {
     category: "Hebezeuge und Förderanlagen",
     items: [
       "Bagger",
@@ -74,6 +82,22 @@ export const listOfTrades = [
       "Hebebühnen",
       "Hebebühnen für Autos",
       "Winden, Hub- und Zuggeräte",
+    ],
+  },
+  {
+    category: "Hygieneprüfung",
+    items: [
+      "Hygieneprüfung an Lüftungsanlagen",
+      "Hygieneprüfung an Rückkühlwerken",
+      "Hygieneprüfung am Trinkwasser",
+    ],
+  },
+  {
+    category: "Konzepterstellung",
+    items: [
+      "Brandschutzkonzept",
+      "Gefährdungsbeurteilung",
+      "Löschanlagenkonzept",
     ],
   },
   {
@@ -93,7 +117,7 @@ export const listOfTrades = [
     category: "Tore, Türen",
     items: [
       "Automatische Schiebetüren",
-      "Brandschutztüren und -tore (Kraftbetätigte Fenster, Türen und Tore)",
+      "Brandschutztüren und -tore (Kraftbetätige Fenster, Türen und Tore)",
     ],
   },
   {
@@ -926,5 +950,88 @@ export const dummyFacilities = [
     createdAt: "2023-12-01T09:30:00Z",
     updatedAt: "2024-08-08T09:30:00Z",
     __v: 4,
+  },
+];
+
+export const jobItemListInCostPage = [
+  {
+    facilityType: "Brandschutzprüfung inkl. Reparatur",
+    tags: ["Brandschutz", "Wasserschutz", "Inserlation"],
+    location: "G001 Mittelstraße 121",
+    projectID: "A1001",
+    savingAmount: 50,
+    status: "offen",
+  },
+  {
+    facilityType: "Brandschutzprüfung inkl. Reparatur",
+    tags: ["Brandschutz", "Wasserschutz", "Inserlation"],
+    location: "G002 Mittelstraße 121",
+    projectID: "A1002",
+    savingAmount: 800,
+    status: "abgeschlossen",
+  },
+  {
+    facilityType: "Brandschutzprüfung inkl. Reparatur",
+    tags: ["Brandschutz", "Wasserschutz", "Inserlation"],
+    location: "G003 Mittelstraße 121",
+    projectID: "A1003",
+    savingAmount: 420,
+    status: "in Bearbeitung",
+  },
+  {
+    facilityType: "Brandschutzprüfung inkl. Reparatur",
+    tags: ["Brandschutz", "Wasserschutz", "Inserlation"],
+    location: "G004 Mittelstraße 121",
+    projectID: "A1004",
+    savingAmount: 275,
+    status: "Freigabe ausstehend",
+  },
+  {
+    facilityType: "Brandschutzprüfung inkl. Reparatur",
+    tags: ["Brandschutz", "Wasserschutz", "Inserlation"],
+    location: "G005 Mittelstraße 121",
+    projectID: "A1005",
+    savingAmount: 530,
+    status: "Nachprüfung",
+  },
+  {
+    facilityType: "Brandschutzprüfung inkl. Reparatur",
+    tags: ["Brandschutz", "Wasserschutz", "Inserlation"],
+    location: "G006 Mittelstraße 121",
+    projectID: "A1006",
+    savingAmount: 610,
+    status: "offen",
+  },
+  {
+    facilityType: "Brandschutzprüfung inkl. Reparatur",
+    tags: ["Brandschutz", "Wasserschutz", "Inserlation"],
+    location: "G007 Mittelstraße 121",
+    projectID: "A1007",
+    savingAmount: 710,
+    status: "abgeschlossen",
+  },
+  {
+    facilityType: "Brandschutzprüfung inkl. Reparatur",
+    tags: ["Brandschutz", "Wasserschutz", "Inserlation"],
+    location: "G008 Mittelstraße 121",
+    projectID: "A1008",
+    savingAmount: 290,
+    status: "in Bearbeitung",
+  },
+  {
+    facilityType: "Brandschutzprüfung inkl. Reparatur",
+    tags: ["Brandschutz", "Wasserschutz", "Inserlation"],
+    location: "G009 Mittelstraße 121",
+    projectID: "A1009",
+    savingAmount: 750,
+    status: "Freigabe ausstehend",
+  },
+  {
+    facilityType: "Brandschutzprüfung inkl. Reparatur",
+    tags: ["Brandschutz", "Wasserschutz", "Inserlation"],
+    location: "G010 Mittelstraße 121",
+    projectID: "A1010",
+    savingAmount: 880,
+    status: "Nachprüfung",
   },
 ];
