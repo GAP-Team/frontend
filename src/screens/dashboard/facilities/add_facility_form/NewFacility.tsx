@@ -1,23 +1,24 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import Link from "next/link";
 import Grid from "@mui/material/Grid";
+import { CgClose } from "react-icons/cg";
 import { useRouter } from "next/navigation";
 import { Formik, FormikHelpers } from "formik";
+import React, { useEffect, useState } from "react";
 import { addFacilityValidationSchema } from "@/utils/ValidationSchema";
-import PageTitle from "@/components/label/PageTitle";
 import {
-  AddFacilityFormValues,
   ActiveStepItem,
   StepComponentProps,
+  AddFacilityFormValues,
 } from "./types";
+import { IconButton } from "@mui/material";
+import AddFacilityForm from "./AddFacilityForm";
+import PageTitle from "@/components/label/PageTitle";
+import FacilityInformation from "./FacilityInformation";
 import SuccessPage from "@/components/common/SuccessPage";
 import SectionTitle from "@/components/label/SectionTitle";
+import FacilityDocumentation from "./FacilityDocumentation";
 import GProgressStepper from "@/components/stepper/GProgressStepper";
-import Link from "next/link";
-import { IconButton } from "@mui/material";
-import { CgClose } from "react-icons/cg";
-import AddFacilityForm from "./AddFacilityForm";
-import FacilityInformation from "./FacilityInformation";
 
 interface NewFacilityProps {
   facilityId: string;
@@ -33,7 +34,7 @@ const NewFacility: React.FC<NewFacilityProps> = ({}): JSX.Element => {
     },
     { id: 1, stepName: "Prüfung", component: undefined },
     { id: 2, stepName: "Wartung", component: undefined },
-    { id: 3, stepName: "Dokumente", component: undefined },
+    { id: 3, stepName: "Dokumente", component: FacilityDocumentation },
     { id: 4, stepName: "Zusammenfassung", component: undefined },
   ];
 
@@ -84,6 +85,11 @@ const NewFacility: React.FC<NewFacilityProps> = ({}): JSX.Element => {
     isEmailNotificationEnabled: false,
     emailNotificationList: [],
     buildingName: "",
+    documentChoice: "Jetzt hochladen Empfohlen",
+    constructionDocs: [],
+    floorplanDocs: [],
+    otherDocs: [],
+    serverLink:"",
   };
 
   const formOrSuccessContent = isSubmitted ? (
@@ -126,6 +132,7 @@ const NewFacility: React.FC<NewFacilityProps> = ({}): JSX.Element => {
           initialValues={initialValues}
           validationSchema={addFacilityValidationSchema[activeStep?.id]}
           onSubmit={handleNext}
+          enableReinitialize
         >
           {({ isSubmitting, handleSubmit }) => (
             <Grid sx={styles.form}>

@@ -16,12 +16,21 @@ export interface AddFacilityFormValues {
   isEmailNotificationEnabled: boolean;
   emailNotificationList: string[];
   buildingName: string;
+  documentChoice: string;
+  constructionDocs: File[];
+  floorplanDocs: File[];
+  otherDocs: File[];
+  serverLink: string;
 }
 
 export interface ActiveStepItem {
   id: number;
   stepName: string;
-  component?: React.ComponentType<StepComponentProps>;
+  component?: React.ComponentType<{
+    formik?: any;
+    setActiveStep: React.Dispatch<React.SetStateAction<ActiveStepItem>>;
+    steps: ActiveStepItem[];
+  }>;
 }
 
 export interface StepComponentProps {
