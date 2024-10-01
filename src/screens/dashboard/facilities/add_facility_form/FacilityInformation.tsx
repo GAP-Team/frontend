@@ -8,16 +8,12 @@ import { useFormikContext } from "formik";
 import { AddFacilityFormValues } from "./types";
 import { Item } from "../../types";
 import GTextSelector from "@/components/input/GTextSelector";
-import {
-  buildingTypesList,
-  GenericTerms,
-  subcategories,
-} from "@/utils/Constants";
 import Typography from "@mui/material/Typography";
+import { buildingTypesList, listOfTrades } from "@/utils/Constants";
 
 const FacilityInformation = (): JSX.Element => {
   const formik = useFormikContext<AddFacilityFormValues>();
-  const [selectedGnericTerm, setSelectedGenericTerm] = useState<Item | null>(
+  const [selectedGenericTerm, setSelectedGenericTerm] = useState<Item | null>(
     formik?.values?.genericTerm
       ? { label: formik.values.genericTerm, value: formik.values.genericTerm }
       : null
@@ -33,12 +29,35 @@ const FacilityInformation = (): JSX.Element => {
       : null
   );
 
+  const [subCategoryOptions, setSubCategoryOptions] = useState<Item[]>([]);
+
+  const genericTermOptions = listOfTrades.map((trade) => ({
+    label: trade.category,
+    value: trade.category,
+  }));
+
   const handleGenericTermSelect = (selectedItem: Item | null): void => {
     setSelectedGenericTerm(selectedItem);
     formik?.setFieldValue(
       "genericTerm",
       selectedItem ? selectedItem.value : ""
     );
+
+    if (selectedItem) {
+      const selectedTrade = listOfTrades.find(
+        (trade) => trade.category === selectedItem.value
+      );
+      if (selectedTrade) {
+        setSubCategoryOptions(
+          selectedTrade.items.map((item) => ({ label: item, value: item }))
+        );
+      }
+    } else {
+      setSubCategoryOptions([]);
+    }
+
+    setSelectedSubCategory(null);
+    formik?.setFieldValue("subCategory", "");
   };
 
   const handleSubCategorySelect = (selectedItem: Item | null): void => {
@@ -83,7 +102,7 @@ const FacilityInformation = (): JSX.Element => {
           <LabelWithAsterisk>ANLAGENART</LabelWithAsterisk>
           <GTextSelector
             name="genericTerm"
-            options={GenericTerms}
+            options={genericTermOptions}
             error={
               formik?.touched?.genericTerm &&
               Boolean(formik?.errors?.genericTerm)
@@ -92,7 +111,7 @@ const FacilityInformation = (): JSX.Element => {
               formik?.touched?.genericTerm && formik?.errors?.genericTerm
             }
             onSelect={handleGenericTermSelect}
-            selectedState={selectedGnericTerm}
+            selectedState={selectedGenericTerm}
           />
         </Grid>
 
@@ -102,7 +121,7 @@ const FacilityInformation = (): JSX.Element => {
           </Typography>
           <GTextSelector
             name="subCategory"
-            options={subcategories}
+            options={subCategoryOptions}
             error={
               formik?.touched?.subcategory &&
               Boolean(formik?.errors?.subcategory)
