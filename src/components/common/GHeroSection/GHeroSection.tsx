@@ -14,13 +14,13 @@ import heroBackgroundPicture from "../../../../public/images/hero6.jpg";
 import Image from "next/image";
 
 const HeroSection = (): JSX.Element => {
-  const [selectedTrade, setSelectedTrade] = useState("Gewerke");
-  const [selectedOrderType, setSelectedAuftype] = useState("Auftragstypen");
+  const [selectedFacility, setSelectedFacility] = useState("Anlagentyp");
+  const [selectedOrderType, setSelectedOrderType] = useState("Auftragstypen");
   const [selectedState, setSelectedState] = useState("Bundesländer");
 
   const truncateLabel = (label: string): string => {
     const maxLength = 20;
-    if (label.length > maxLength) {
+    if (label?.length > maxLength) {
       return label.substring(0, maxLength) + "..."; // Truncate and append ellipsis
     }
     return label;
@@ -73,10 +73,10 @@ const HeroSection = (): JSX.Element => {
                           htmlFor="craft"
                           className="text-sm font-medium text-gray-700"
                         >
-                          Wählen Sie ein Gewerk aus:
+                          Wählen Sie ein Anlagentyp aus:
                         </label>
                         <Dropdown
-                          label={selectedTrade}
+                          label={truncateLabel(selectedFacility)}
                           size="lg"
                           color="gray"
                           style={{
@@ -98,7 +98,9 @@ const HeroSection = (): JSX.Element => {
                                   >
                                     {category.items.map((item, itemIndex) => (
                                       <DropdownItem
-                                        onClick={() => setSelectedTrade(item)}
+                                        onClick={() =>
+                                          setSelectedFacility(category.category)
+                                        }
                                         key={itemIndex}
                                       >
                                         {item}
@@ -108,7 +110,9 @@ const HeroSection = (): JSX.Element => {
                                 ) : (
                                   category.items.map((item, itemIndex) => (
                                     <DropdownItem
-                                      onClick={() => setSelectedTrade(item)}
+                                      onClick={() =>
+                                        setSelectedFacility(category.category)
+                                      }
                                       key={itemIndex}
                                     >
                                       {item}
@@ -154,7 +158,7 @@ const HeroSection = (): JSX.Element => {
                                 >
                                   {category.items.map((item, itemIndex) => (
                                     <DropdownItem
-                                      onClick={() => setSelectedAuftype(item)}
+                                      onClick={() => setSelectedOrderType(item)}
                                       key={itemIndex}
                                     >
                                       {item}
@@ -164,7 +168,7 @@ const HeroSection = (): JSX.Element => {
                               ) : (
                                 category.items.map((item, itemIndex) => (
                                   <DropdownItem
-                                    onClick={() => setSelectedAuftype(item)}
+                                    onClick={() => setSelectedOrderType(item)}
                                     key={itemIndex}
                                   >
                                     {item}
