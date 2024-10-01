@@ -821,7 +821,7 @@ export const emailSignature2 = `The GAP Team `;
 export const emailSignature3 = `info@gap.com`;
 export const emailSignature4 = `Düsseldorf, Germany `;
 
-export const DocumentTypies = {
+export const DocumentTypes = {
   SONSTIGE: "SONSTIGE",
   GRUNDRISSE: "GRUNDRISSE",
   BAUUNTERLAGEN: "BAUUNTERLAGEN",

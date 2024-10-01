@@ -4,11 +4,12 @@ import storage from "redux-persist/lib/storage";
 import { createWrapper } from "next-redux-wrapper";
 import { persistStore, persistReducer } from "redux-persist";
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
-
 import userReducer from "./features/userSlice";
+import snackbarReducer from "./features/snackbarSlice";
 
 const rootReducer = combineReducers({
   user: userReducer,
+  snackbar: snackbarReducer,
 });
 
 const persistConfig = {

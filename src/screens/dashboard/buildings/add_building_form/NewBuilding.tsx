@@ -6,9 +6,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { Formik, FormikHelpers } from "formik";
 import Grid from "@mui/material/Grid";
 import buildingAPIs from "@/api/building";
-import { getLogger } from "@/utils/Logger";
 import { ActiveStepItem } from "../../types";
-import { AddBuildingFormValues } from "./types";
+import {
+  AddBuildingFormValues,
+  NewBuildingProps,
+  SelectedBuildingData,
+} from "./types";
 import { SubmitFormFunction } from "@/typings/types";
 import {
   currentUser,
@@ -24,46 +27,11 @@ import BuildingSummary from "./BuildingSummary";
 import PageTitle from "@/components/label/PageTitle";
 import BuildingInformation from "./BuildingInformation";
 import BuildingDocumentation from "./BuildingDocumentation";
-import { DocumentTypies } from "@/utils/Constants";
+import { DocumentTypes } from "@/utils/Constants";
 import { handleUploadMultipleDoc } from "@/utils/uploadToS3";
 import { addObjektFormSchema } from "@/utils/ValidationSchema";
-
-// Logger
-const logger = getLogger("new-building");
-
-interface NewBuildingProps {
-  id: string;
-}
-interface ContactPersonDataType {
-  firstName: string;
-  lastName: string;
-  phoneNumber: string;
-  // role: string;
-  email: string;
-}
-interface Address {
-  city: string;
-  country: string;
-  houseNumber: string;
-  state: string;
-  street: string;
-  zip: string;
-}
-interface SelectedBuildingData {
-  _id: string;
-  buildingName: string;
-  totalArea: string;
-  buildingType: string;
-  buildingAbbreviation: string;
-  contactPerson: ContactPersonDataType[];
-  address: Address;
-  documentUploadType: string;
-  constructionDocs: File[];
-  floorplanDocs: File[];
-  otherDocs: File[];
-  documents: File[];
-  serverLink: string;
-}
+import { useAppDispatch } from "@/lib/hooks";
+import { showSnackbar } from "@/components/root-snackbar";
 
 const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
   const router = useRouter();
@@ -71,6 +39,8 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
   const user = useSelector(currentUser);
   const allBuildings = useSelector(allBuildingDetails);
   const userBuildings = useSelector(currentUserBuildings);
+
+  const appdispatch = useAppDispatch();
 
   const steps: ActiveStepItem[] = [
     { id: 0, stepName: "Objektinformation", component: BuildingInformation },
@@ -170,8 +140,10 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
       if (nextStepId < steps.length) {
         setActiveStep(steps[nextStepId]);
       } else {
-        await uploadAllDocuments(values);
-        setActiveStep({ ...activeStep, id: steps.length });
+        const uploadSuccess = await uploadAllDocuments(values);
+        if (uploadSuccess) {
+          setActiveStep({ ...activeStep, id: nextStepId });
+        }
       }
     }
   };
@@ -186,51 +158,44 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
 
   const handleSubmit = async (
     values: AddBuildingFormValues,
-    docObj: any[] = []
+    docObjList: any[] = []
   ): Promise<void> => {
-    try {
-      const addressObj = {
-        city: values.city,
-        state: values.state,
-        street: values.street,
-        country: values.country,
-        zip: Number(values.zip),
-        houseNumber: Number(values.houseNumber),
-      };
+    const addressObj = {
+      city: values.city,
+      state: values.state,
+      street: values.street,
+      country: values.country,
+      zip: Number(values.zip),
+      houseNumber: Number(values.houseNumber),
+    };
 
-      const formateDate = moment().format("YYYY-MM-DDTHH:mm:ss.SSS[Z]");
+    const formateDate = moment().format("YYYY-MM-DDTHH:mm:ss.SSS[Z]");
 
-      let arrangedDataObj = {
-        userId: user?._id,
-        documents: docObj,
-        address: addressObj,
-        createdAt: formateDate,
-        buildingName: values.name,
-        serverLink: values.serverLink,
-        buildingType: values.buildingType,
-        totalArea: values.totalArea !== "" ? Number(values.totalArea) : null,
-        contactPerson: values.contactPerson,
-        documentUploadType: values.documentChoice,
-        buildingAbbreviation: values.buildingAbbreviation,
-      };
-      if (actionType === "edit") {
-        UpdateBuildingData(arrangedDataObj);
-      } else {
-        saveBuildingData(arrangedDataObj);
-      }
-    } catch (error: any) {
-      logger.error(
-        "Unable to create a new building, post reqeust failed " + error.name,
-        error.message
-      );
+    let buildingData = {
+      userId: user?._id,
+      documents: docObjList,
+      address: addressObj,
+      createdAt: formateDate,
+      buildingName: values.name,
+      serverLink: values.serverLink,
+      buildingType: values.buildingType,
+      totalArea: values.totalArea !== "" ? Number(values.totalArea) : null,
+      contactPerson: values.contactPerson,
+      documentUploadType: values.documentChoice,
+      buildingAbbreviation: values.buildingAbbreviation,
+    };
+    if (actionType === "edit") {
+      return await UpdateBuildingData(buildingData);
+    } else if (actionType === "add") {
+      return await saveBuildingData(buildingData);
     }
   };
 
   const uploadAllDocuments = async (
     values: AddBuildingFormValues
-  ): Promise<void> => {
+  ): Promise<boolean> => {
     setLoading(true);
-    const docObj: any[] = [];
+    const docObjList: any[] = [];
 
     const uploadDocuments = async (
       files: File[],
@@ -238,24 +203,34 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
     ): Promise<void> => {
       for (const file of files) {
         if (file.hasOwnProperty("documentType")) {
-          docObj.push(file);
+          docObjList.push(file);
         } else {
           const uploadedDoc = await handleUploadMultipleDoc(file);
           uploadedDoc.documentType = docType;
-          docObj.push(uploadedDoc);
+          docObjList.push(uploadedDoc);
         }
       }
     };
 
-    await uploadDocuments(values.otherDocs, DocumentTypies.SONSTIGE);
-    await uploadDocuments(values.floorplanDocs, DocumentTypies.GRUNDRISSE);
-    await uploadDocuments(
-      values.constructionDocs,
-      DocumentTypies.BAUUNTERLAGEN
-    );
+    await uploadDocuments(values.otherDocs, DocumentTypes.SONSTIGE);
+    await uploadDocuments(values.floorplanDocs, DocumentTypes.GRUNDRISSE);
+    await uploadDocuments(values.constructionDocs, DocumentTypes.BAUUNTERLAGEN);
 
-    handleSubmit(values, docObj);
-    setLoading(false);
+    try {
+      await handleSubmit(values, docObjList);
+      return true;
+    } catch {
+      appdispatch(
+        showSnackbar({
+          type: "error",
+          message:
+            "Gebäude konnte nicht hinzugefügt oder bearbeitet werden. Bitte versuchen Sie es erneut!",
+        })
+      );
+      return false;
+    } finally {
+      setLoading(false);
+    }
   };
 
   const saveBuildingData = async (data: any): Promise<void> => {
@@ -266,12 +241,20 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
         createBuildingResponse.data.buildingId,
       ];
       dispatch(setUserBuildings(updatedBuildings));
+      appdispatch(
+        showSnackbar({
+          type: "success",
+          message: "Gebäude erfolgreich hinzugefügt!",
+        })
+      );
+    } else {
+      throw new Error("Building creation failed.");
     }
   };
 
   const UpdateBuildingData = async (data: any): Promise<void> => {
     if (!buildingDetails?._id) {
-      return;
+      throw new Error("Building edit failed");
     }
 
     const createBuildingResponse = await buildingAPIs.update(
@@ -284,6 +267,12 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
         createBuildingResponse.data.buildingId,
       ];
       dispatch(setUserBuildings(updatedBuildings));
+      appdispatch(
+        showSnackbar({
+          type: "success",
+          message: "Gebäude erfolgreich aktualisiert!",
+        })
+      );
     }
     if (user?._id) return;
     const allUpdatedBuildings = await buildingAPIs.getBuildings(
