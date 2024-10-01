@@ -13,6 +13,7 @@ import {
 } from "./types";
 import { IconButton } from "@mui/material";
 import AddFacilityForm from "./AddFacilityForm";
+import FacilitySummary from "./FacilitySummary";
 import PageTitle from "@/components/label/PageTitle";
 import FacilityInformation from "./FacilityInformation";
 import SuccessPage from "@/components/common/SuccessPage";
@@ -35,7 +36,7 @@ const NewFacility: React.FC<NewFacilityProps> = ({}): JSX.Element => {
     { id: 1, stepName: "Prüfung", component: undefined },
     { id: 2, stepName: "Wartung", component: undefined },
     { id: 3, stepName: "Dokumente", component: FacilityDocumentation },
-    { id: 4, stepName: "Zusammenfassung", component: undefined },
+    { id: 4, stepName: "Zusammenfassung", component: FacilitySummary },
   ];
 
   const [activeStep, setActiveStep] = useState<ActiveStepItem>(steps[0]);
