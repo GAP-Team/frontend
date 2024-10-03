@@ -50,22 +50,6 @@ const TenderInformation = (): JSX.Element => {
           />
         </Grid>
         <Grid item xs={12}>
-          <LabelWithAsterisk>NAME DER AUSSCHREIBUNG</LabelWithAsterisk>
-          <GTextInput
-            id="tenderName"
-            name="tenderName"
-            value={formik?.values?.tenderName}
-            onChange={formik?.handleChange}
-            onBlur={formik?.handleBlur}
-            error={
-              formik?.touched?.tenderName && Boolean(formik?.errors?.tenderName)
-            }
-            helperText={
-              formik?.touched?.tenderName && formik?.errors?.tenderName
-            }
-          />
-        </Grid>
-        <Grid item xs={12}>
           <LabelWithAsterisk>AUSSCHREIBUNGSART</LabelWithAsterisk>
           <FormControl sx={{ display: "block", mt: 1 }}>
             <RadioGroup
