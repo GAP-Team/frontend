@@ -709,6 +709,49 @@ export const dummyBuildings = [
   },
 ];
 
+export const dummyBuildingsExp = [
+  {
+    value: "1",
+    label: "Building A",
+  },
+  {
+    value: "2",
+    label: "Building B",
+  },
+  {
+    value: "3",
+    label: "Building C",
+  },
+  {
+    value: "4",
+    label: "Building D",
+  },
+  {
+    value: "5",
+    label: "Building E",
+  },
+  {
+    value: "6",
+    label: "Building F",
+  },
+  {
+    value: "7",
+    label: "Building G",
+  },
+  {
+    value: "8",
+    label: "Building I",
+  },
+  {
+    value: "9",
+    label: "Building J",
+  },
+  {
+    value: "10",
+    label: "Building K",
+  },
+];
+
 export const tenderTypesListHW = [
   { label: "Reperatur", value: "Reperatur" },
   { label: "Wartung", value: "Wartung" },

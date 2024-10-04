@@ -23,6 +23,8 @@ export interface AddTenderFormValues {
   floorplanDocs: File[];
   equipmentDocs: File[];
   serverLink: string;
+  buildingId: string;
+  facilityId: string;
 }
 export interface ActiveStepItem {
   id: number;
