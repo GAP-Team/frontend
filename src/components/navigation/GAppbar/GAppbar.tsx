@@ -43,7 +43,7 @@ export default function GAppBar(): JSX.Element {
   const handleLogout = async (): Promise<void> => {
     let data = { userId: user?._id };
     const logoutStatus = await authAPIs.logout(data);
-    if (logoutStatus?.data?.status?.acknowledged) {
+    if (logoutStatus?.status === 201) {
       Cookies.remove("access_token");
       Cookies.remove("isVerified");
       localStorage.removeItem("access_token");
