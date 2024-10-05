@@ -3,6 +3,7 @@ import Cookies from "js-cookie";
 import Box from "@mui/material/Box";
 import Menu from "@mui/material/Menu";
 import Badge from "@mui/material/Badge";
+import Popover from "@mui/material/Popover";
 import { useRouter } from "next/navigation";
 import Divider from "@mui/material/Divider";
 import MenuItem from "@mui/material/MenuItem";
@@ -10,6 +11,7 @@ import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import ListItemIcon from "@mui/material/ListItemIcon";
+import List from "@mui/material/List";
 import { useSelector } from "react-redux";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import NotificationsIcon from "@mui/icons-material/Notifications";
@@ -17,18 +19,24 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import authAPIs from "@/api/auth";
 import GSearch from "@/components/search/GSearch";
 import { MdOutlineLogout } from "react-icons/md";
-import { Business, Email, Lock } from "@mui/icons-material";
+import { Business, Email, Lock, Padding } from "@mui/icons-material";
 import { currentUser } from "@/lib/features/userSlice";
+import SettingsIcon from "@mui/icons-material/Settings";
+import NotificationItem from "./NotficationItem";
+import { notifications } from "@/utils/Constants";
 
 export default function GAppBar(): JSX.Element {
   const router = useRouter();
   const user = useSelector(currentUser);
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [notificationAnchorEl, setNotificationAnchorEl] =
+    React.useState<null | HTMLElement>(null);
   const [activeMenuItem, setActiveMenuItem] =
     React.useState<string>("Mein Profil"); // Default active menu item
 
   const open = Boolean(anchorEl);
+  const notificationOpen = Boolean(notificationAnchorEl);
 
   const handleProfileMenuOpen = (
     event: React.MouseEvent<HTMLElement>
@@ -36,8 +44,15 @@ export default function GAppBar(): JSX.Element {
     setAnchorEl(event.currentTarget);
   };
 
+  const handleNotificationClick = (
+    event: React.MouseEvent<HTMLElement>
+  ): void => {
+    setNotificationAnchorEl(event.currentTarget);
+  };
+
   const handleClose = (): void => {
     setAnchorEl(null);
+    setNotificationAnchorEl(null);
   };
 
   const handleLogout = async (): Promise<void> => {
@@ -76,13 +91,43 @@ export default function GAppBar(): JSX.Element {
       <Box sx={styles.userSection}>
         <IconButton
           size="large"
-          aria-label="show 0 new notifications"
+          aria-label="show new notifications"
           color="inherit"
+          onClick={handleNotificationClick}
         >
-          <Badge badgeContent={0} color="error">
+          <Badge badgeContent={notifications.length} color="error">
             <NotificationsIcon sx={styles.notificationIcon} />
           </Badge>
         </IconButton>
+        <Popover
+          open={notificationOpen}
+          anchorEl={notificationAnchorEl}
+          onClose={handleClose}
+          anchorOrigin={{
+            vertical: "bottom",
+            horizontal: "right",
+          }}
+          transformOrigin={{
+            vertical: "top",
+            horizontal: "right",
+          }}
+          PaperProps={{ sx: { borderRadius: "0.5rem", maxWidth: 350 } }}
+        >
+          {/* Sticky Header */}
+          <Box sx={styles.notificationHeader}>
+            <Typography variant="bodylsb">Notifications</Typography>
+            <IconButton>
+              <SettingsIcon />
+            </IconButton>
+          </Box>
+          {/* Notification List */}
+          <List sx={{ maxHeight: 600, overflow: "auto" }}>
+            {notifications.map((notification, index) => (
+              <NotificationItem key={index} notification={notification} />
+            ))}
+          </List>
+        </Popover>
+
         <Box sx={styles.userControls} onClick={handleProfileMenuOpen}>
           <AccountCircle sx={styles.accountIcon} />
           <Typography sx={styles.userName} suppressHydrationWarning>
@@ -227,6 +272,16 @@ const styles = {
   },
   dropDownIcon: {
     marginLeft: "0.5rem",
+  },
+  notificationHeader: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    padding: "1rem",
+    position: "sticky",
+    top: 0,
+    backgroundColor: "white",
+    zIndex: 1,
   },
 };
 
