@@ -19,7 +19,7 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import authAPIs from "@/api/auth";
 import GSearch from "@/components/search/GSearch";
 import { MdOutlineLogout } from "react-icons/md";
-import { Business, Email, Lock, Padding } from "@mui/icons-material";
+import { Business, Email, Lock } from "@mui/icons-material";
 import { currentUser } from "@/lib/features/userSlice";
 import SettingsIcon from "@mui/icons-material/Settings";
 import NotificationItem from "./NotficationItem";
