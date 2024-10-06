@@ -129,7 +129,20 @@ export const addObjektFormSchema = yup.object().shape({
   documentChoice: yup.string(),
   constructionDocs: yup.array().of(yup.mixed()),
   floorplanDocs: yup.array().of(yup.mixed()),
-  otherDocs: yup.array().of(yup.mixed()),
+  otherDocs: yup
+    .array()
+    .of(yup.mixed())
+    .test(
+      "requiredDoc",
+      "Mindestens ein Dokument ist erforderlich.",
+      function (value) {
+        const { documentChoice } = this.parent;
+        if (documentChoice === "Jetzt hochladen Empfohlen") {
+          return value && value.length > 0;
+        }
+        return true;
+      }
+    ),
   serverLink: yup
     .string()
     .test("requiredLink", "Server link ist erforderlich.", function (value) {
@@ -207,5 +220,34 @@ export const addFacilityValidationSchema = [
     reminderInMonth: yup.number(),
     isEmailNotificationEnable: yup.boolean(),
     emailNotificationList: yup.array().of(yup.string()),
+  }),
+  yup.object({
+    documentChoice: yup.string(),
+    constructionDocs: yup.array().of(yup.mixed()),
+    floorplanDocs: yup.array().of(yup.mixed()),
+    otherDocs: yup
+      .array()
+      .of(yup.mixed())
+      .test(
+        "requiredDoc",
+        "Mindestens ein Dokument ist erforderlich.",
+        function (value) {
+          const { documentChoice } = this.parent;
+          if (documentChoice === "Jetzt hochladen Empfohlen") {
+            return value && value.length > 0;
+          }
+          return true;
+        }
+      ),
+    serverLink: yup
+      .string()
+      .test("requiredLink", "Server link ist erforderlich.", function (value) {
+        const { documentChoice } = this.parent;
+        if (documentChoice === "Server verküpfung") {
+          return !!value;
+        }
+        return true;
+      })
+      .url("Server-Link muss eine gültige URL sein."),
   }),
 ];
