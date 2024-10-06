@@ -39,6 +39,24 @@ A Next.js 14 project with App Router, ready to power GAP with the latest feature
 
 4. Open [http://localhost:3000](http://localhost:3000) in your browser to view the application.
 
+## Running the Application in Debugger Mode
+
+This project is set up to enable simultaneous debugging of both the **server-side** and **client-side** of the Next.js application. Follow the steps below to run the application in debugger mode using Visual Studio Code:
+
+### Debugger Setup
+
+In the project, the `launch.json` configuration is already set up to allow simultaneous debugging of the server and client sides.
+
+### Steps to Run the Debugger:
+
+1. set **breakpoints** in the project where to debug.
+2. Open Run and Debug in VSC.
+3. From the list of configurations, select **"Run Full Stack (Client + Server)"**.
+   - This will launch:
+     - The server-side in development mode using `npm run dev`.
+     - The client-side debugger in Chrome (or Edge) and attach it to the running instance.
+4. The application will open in the browser at `http://localhost:3000`.
+
 ## Running the App with Docker
 
 The application is set up to run with Docker. You can start it with the following command:
@@ -47,19 +65,9 @@ The application is set up to run with Docker. You can start it with the followin
 docker-compose up
 ```
 
-To run the app in detached mode without log messages:
-
-```bash
-docker-compose up -d
-```
-
 ## Deployment
 
 The app is hosted on AWS:
-
-```
-
-```
 
 ## Environment Variables
 
