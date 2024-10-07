@@ -87,7 +87,6 @@ const NewTender = (): JSX.Element => {
       urgency: values?.urgency,
       fromDate: values?.fromDate,
       clientName: values?.clientName,
-      tenderName: values?.tenderName,
       tenderForm: values?.tenderForm,
       tenderType: values?.tenderType,
       detailDescription: values?.detailDescription,
@@ -110,7 +109,7 @@ const NewTender = (): JSX.Element => {
       appdispatch(
         showSnackbar({
           type: "error",
-          message: "Das Hinzufügen des Zahlungsmittels ist fehlgeschlagen!",
+          message: "Ausschreibung konnte nicht hinzugefügt werden. Bitte überprüfen Sie die Eingabedaten und versuchen Sie es erneut",
         })
       );
       return false;
