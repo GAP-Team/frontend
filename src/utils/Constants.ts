@@ -1,3 +1,5 @@
+import { Notification } from "@/components/navigation/GAppbar/types";
+
 export const statusStyles: {
   [key: string]: { bgcolor: string; color: string };
 } = {
@@ -1076,5 +1078,83 @@ export const jobItemListInCostPage = [
     projectID: "A1010",
     savingAmount: 880,
     status: "Nachprüfung",
+  },
+];
+
+export const notifications: Notification[] = [
+  {
+    message: "You were chosen as a main provider for object G-302.",
+    time: "25m ago",
+    status: "warning",
+  },
+  {
+    message: "You are in stop list as provider for object G-302.",
+    time: "45m ago",
+    status: "success",
+  },
+  {
+    message: "You were not chosen as a main provider for object G-302.",
+    time: "58m ago",
+    status: "danger",
+  },
+  {
+    message: "You were chosen as a main provider for object G-302.",
+    time: "25m ago",
+    status: "warning",
+  },
+  {
+    message: "You are in stop list as provider for object G-302.",
+    time: "45m ago",
+    status: "success",
+  },
+  {
+    message: "You were not chosen as a main provider for object G-302.",
+    time: "58m ago",
+    status: "danger",
+  },
+  {
+    message: "You were chosen as a main provider for object G-302.",
+    time: "25m ago",
+    status: "warning",
+  },
+  {
+    message: "You are in stop list as provider for object G-302.",
+    time: "45m ago",
+    status: "success",
+  },
+  {
+    message: "You were not chosen as a main provider for object G-302.",
+    time: "58m ago",
+    status: "danger",
+  },
+  {
+    message: "You were chosen as a main provider for object G-302.",
+    time: "25m ago",
+    status: "warning",
+  },
+  {
+    message: "You are in stop list as provider for object G-302.",
+    time: "45m ago",
+    status: "success",
+  },
+  {
+    message: "You were not chosen as a main provider for object G-302.",
+    time: "58m ago",
+    status: "danger",
+  },
+  {
+    message: "You were chosen as a main provider for object G-302.",
+    time: "25m ago",
+    status: "warning",
+  },
+  {
+    message: "You are in stop list as provider for object G-302.",
+    time: "45m ago",
+    status: "success",
+  },
+  {
+    message: "You were not chosen as a main provider for object G-302.",
+    time: "58m ago",
+    status: "danger",
   },
 ];
