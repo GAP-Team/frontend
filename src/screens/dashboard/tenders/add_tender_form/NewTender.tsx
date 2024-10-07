@@ -127,7 +127,6 @@ const NewTender = (): JSX.Element => {
 
   const initialValues: AddTenderFormValues = {
     clientName: "",
-    tenderName: "",
     tenderForm: "Handwerker",
     tenderType: "",
     buildingName: "",
