@@ -109,7 +109,8 @@ const NewTender = (): JSX.Element => {
       appdispatch(
         showSnackbar({
           type: "error",
-          message: "Ausschreibung konnte nicht hinzugefügt werden. Bitte überprüfen Sie die Eingabedaten und versuchen Sie es erneut",
+          message:
+            "Ausschreibung konnte nicht hinzugefügt werden. Bitte überprüfen Sie die Eingabedaten und versuchen Sie es erneut",
         })
       );
       return false;
