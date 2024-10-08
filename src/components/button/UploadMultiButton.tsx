@@ -6,7 +6,6 @@ import Button from "@mui/material/Button";
 import { FiFileText } from "react-icons/fi";
 import { useDropzone } from "react-dropzone";
 import { useTheme } from "@mui/material/styles";
-import customLogger from "@/utils/Logger/logger";
 import Typography from "@mui/material/Typography";
 import FormHelperText from "@mui/material/FormHelperText";
 
@@ -81,9 +80,6 @@ export default function UploadMultiButton({
   const deleteFileFromS3 = async (file: any): Promise<void> => {
     if (file.hasOwnProperty("documentType")) {
       const deleteFileStatus = await s3APIs.delete(file?.key);
-      if (deleteFileStatus) {
-        customLogger.info("File deleted successfully");
-      }
     }
   };
 
