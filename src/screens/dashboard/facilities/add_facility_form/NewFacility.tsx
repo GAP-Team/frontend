@@ -14,6 +14,7 @@ import {
 import FacilityTest from "./FacilityTest";
 import { IconButton } from "@mui/material";
 import AddFacilityForm from "./AddFacilityForm";
+import ExtraInformation from "./ExtraInformation";
 import PageTitle from "@/components/label/PageTitle";
 import FacilityInformation from "./FacilityInformation";
 import SuccessPage from "@/components/common/SuccessPage";
@@ -31,7 +32,7 @@ const NewFacility: React.FC<NewFacilityProps> = ({}): JSX.Element => {
     {
       id: 0,
       stepName: "Anlageninformationen",
-      component: FacilityInformation,
+      component: ExtraInformation,
     },
     { id: 1, stepName: "Prüfung", component: FacilityTest },
     { id: 2, stepName: "Wartung", component: undefined },
