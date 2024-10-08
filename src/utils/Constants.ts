@@ -1035,3 +1035,44 @@ export const jobItemListInCostPage = [
     status: "Nachprüfung",
   },
 ];
+
+export const NextTestOptions = [
+  {
+    label: "1 Year",
+    value: "1 Year",
+  },
+  {
+    label: "2 Year",
+    value: "2 Year",
+  },
+  {
+    label: "3 Year",
+    value: "3 Year",
+  },
+  {
+    label: "4 Year",
+    value: "4 Year",
+  },
+  {
+    label: "5 Year",
+    value: "5 Year",
+  },
+];
+export const reminderOptions = [
+  {
+    label: "Vor 3 Monate",
+    value: "Vor 3 Monate",
+  },
+  {
+    label: "Vor 6 Monate",
+    value: "Vor 6 Monate",
+  },
+  {
+    label: "Vor 9 Monate",
+    value: "Vor 9 Monate",
+  },
+  {
+    label: "Vor 12 Monate",
+    value: "Vor 12 Monate",
+  },
+];
