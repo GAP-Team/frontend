@@ -1,21 +1,43 @@
 "use client";
-import Grid from "@mui/material/Grid";
+import { useState } from "react";
 import Box from "@mui/material/Box";
-import LabelWithAsterisk from "@/components/label/LabelWithAsterisk";
-import TextField from "@mui/material/TextField";
-import Autocomplete from "@mui/material/Autocomplete";
+import Grid from "@mui/material/Grid";
 import { useFormikContext } from "formik";
 import { AddTenderFormValues } from "./types";
-import { dummyBuildings } from "@/utils/Constants";
+import { Item } from "@/components/input/GSelector";
+import { dummyBuildingsExp } from "@/utils/Constants";
+import GTextSelector from "@/components/input/GTextSelector";
+import LabelWithAsterisk from "@/components/label/LabelWithAsterisk";
 
 const TenderBuilding = (): JSX.Element => {
   const formik = useFormikContext<AddTenderFormValues>();
-  const handleBuildingNameChange = (event: any, value: string | null): void => {
-    formik?.setFieldValue("buildingName", value);
+  const [selectedBuilding, setSelectedBuilding] = useState<Item | null>(
+    formik?.values?.buildingName
+      ? {
+          label: formik?.values?.buildingName,
+          value: formik?.values?.buildingId,
+        }
+      : null
+  );
+  const [selecteFacility, setSelecteFacility] = useState<Item | null>(
+    formik?.values?.facilityName
+      ? {
+          label: formik?.values?.facilityName,
+          value: formik?.values?.facilityId,
+        }
+      : null
+  );
+
+  const handleBuildingSelect = (selectedItem: Item | null): void => {
+    setSelectedBuilding(selectedItem);
+    formik?.setFieldValue("buildingName", selectedItem?.label);
+    formik?.setFieldValue("buildingId", selectedItem?.value);
   };
 
-  const handleFacilityNameChange = (event: any, value: string | null): void => {
-    formik?.setFieldValue("facilityName", value);
+  const handleFacilitySelect = (selectedItem: Item | null): void => {
+    setSelecteFacility(selectedItem);
+    formik?.setFieldValue("facilityName", selectedItem?.label);
+    formik?.setFieldValue("facilityId", selectedItem?.value);
   };
 
   return (
@@ -27,62 +49,34 @@ const TenderBuilding = (): JSX.Element => {
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <LabelWithAsterisk>OBJEKT AUSWÄHLEN</LabelWithAsterisk>
-          <Autocomplete
-            freeSolo
-            id="free-solo-1-demo"
-            value={formik.values.buildingName}
-            disableClearable
-            options={dummyBuildings.map((option) => option.buildingName)}
-            onChange={handleBuildingNameChange}
-            onInputChange={handleBuildingNameChange}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                name="buildingName"
-                error={
-                  formik?.touched?.buildingName &&
-                  Boolean(formik?.errors?.buildingName)
-                }
-                helperText={
-                  formik?.touched?.buildingName && formik?.errors?.buildingName
-                }
-                label="Objekt suchen"
-                InputProps={{
-                  ...params.InputProps,
-                  type: "search",
-                }}
-              />
-            )}
+          <GTextSelector
+            name="building"
+            options={dummyBuildingsExp}
+            error={
+              formik?.touched?.buildingName &&
+              Boolean(formik?.errors?.buildingName)
+            }
+            helperText={
+              formik?.touched?.buildingName && formik?.errors?.buildingName
+            }
+            onSelect={handleBuildingSelect}
+            selectedState={selectedBuilding}
           />
         </Grid>
         <Grid item xs={12}>
           <LabelWithAsterisk>ANLAGE AUSWÄHLEN</LabelWithAsterisk>
-          <Autocomplete
-            freeSolo
-            id="free-solo-2-demo"
-            value={formik.values.facilityName}
-            disableClearable
-            options={dummyBuildings.map((option) => option.buildingName)}
-            onChange={handleFacilityNameChange}
-            onInputChange={handleFacilityNameChange}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                name="facilityName"
-                error={
-                  formik?.touched?.facilityName &&
-                  Boolean(formik?.errors?.facilityName)
-                }
-                helperText={
-                  formik?.touched?.facilityName && formik?.errors?.facilityName
-                }
-                label="Anlagen suchen"
-                InputProps={{
-                  ...params.InputProps,
-                  type: "search",
-                }}
-              />
-            )}
+          <GTextSelector
+            name="facility"
+            options={dummyBuildingsExp}
+            error={
+              formik?.touched?.facilityName &&
+              Boolean(formik?.errors?.facilityName)
+            }
+            helperText={
+              formik?.touched?.facilityName && formik?.errors?.facilityName
+            }
+            onSelect={handleFacilitySelect}
+            selectedState={selecteFacility}
           />
         </Grid>
       </Grid>
