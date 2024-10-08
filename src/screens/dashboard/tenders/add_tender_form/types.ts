@@ -3,7 +3,6 @@ import { Dayjs } from "dayjs";
 export interface AddTenderFormValues {
   //Tender Info feilds = Form 1
   clientName: string;
-  tenderName: string;
   tenderForm: string;
   tenderType: string;
   //Tender Building feilds = Form 2
@@ -23,6 +22,8 @@ export interface AddTenderFormValues {
   floorplanDocs: File[];
   equipmentDocs: File[];
   serverLink: string;
+  buildingId: string;
+  facilityId: string;
 }
 export interface ActiveStepItem {
   id: number;

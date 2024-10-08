@@ -1,3 +1,5 @@
+import { Notification } from "@/components/navigation/GAppbar/types";
+
 export const statusStyles: {
   [key: string]: { bgcolor: string; color: string };
 } = {
@@ -709,6 +711,49 @@ export const dummyBuildings = [
   },
 ];
 
+export const dummyBuildingsExp = [
+  {
+    value: "1",
+    label: "Building A",
+  },
+  {
+    value: "2",
+    label: "Building B",
+  },
+  {
+    value: "3",
+    label: "Building C",
+  },
+  {
+    value: "4",
+    label: "Building D",
+  },
+  {
+    value: "5",
+    label: "Building E",
+  },
+  {
+    value: "6",
+    label: "Building F",
+  },
+  {
+    value: "7",
+    label: "Building G",
+  },
+  {
+    value: "8",
+    label: "Building I",
+  },
+  {
+    value: "9",
+    label: "Building J",
+  },
+  {
+    value: "10",
+    label: "Building K",
+  },
+];
+
 export const tenderTypesListHW = [
   { label: "Reperatur", value: "Reperatur" },
   { label: "Wartung", value: "Wartung" },
@@ -1033,5 +1078,83 @@ export const jobItemListInCostPage = [
     projectID: "A1010",
     savingAmount: 880,
     status: "Nachprüfung",
+  },
+];
+
+export const notifications: Notification[] = [
+  {
+    message: "You were chosen as a main provider for object G-302.",
+    time: "25m ago",
+    status: "warning",
+  },
+  {
+    message: "You are in stop list as provider for object G-302.",
+    time: "45m ago",
+    status: "success",
+  },
+  {
+    message: "You were not chosen as a main provider for object G-302.",
+    time: "58m ago",
+    status: "danger",
+  },
+  {
+    message: "You were chosen as a main provider for object G-302.",
+    time: "25m ago",
+    status: "warning",
+  },
+  {
+    message: "You are in stop list as provider for object G-302.",
+    time: "45m ago",
+    status: "success",
+  },
+  {
+    message: "You were not chosen as a main provider for object G-302.",
+    time: "58m ago",
+    status: "danger",
+  },
+  {
+    message: "You were chosen as a main provider for object G-302.",
+    time: "25m ago",
+    status: "warning",
+  },
+  {
+    message: "You are in stop list as provider for object G-302.",
+    time: "45m ago",
+    status: "success",
+  },
+  {
+    message: "You were not chosen as a main provider for object G-302.",
+    time: "58m ago",
+    status: "danger",
+  },
+  {
+    message: "You were chosen as a main provider for object G-302.",
+    time: "25m ago",
+    status: "warning",
+  },
+  {
+    message: "You are in stop list as provider for object G-302.",
+    time: "45m ago",
+    status: "success",
+  },
+  {
+    message: "You were not chosen as a main provider for object G-302.",
+    time: "58m ago",
+    status: "danger",
+  },
+  {
+    message: "You were chosen as a main provider for object G-302.",
+    time: "25m ago",
+    status: "warning",
+  },
+  {
+    message: "You are in stop list as provider for object G-302.",
+    time: "45m ago",
+    status: "success",
+  },
+  {
+    message: "You were not chosen as a main provider for object G-302.",
+    time: "58m ago",
+    status: "danger",
   },
 ];
