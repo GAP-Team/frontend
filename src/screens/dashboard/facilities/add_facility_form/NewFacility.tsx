@@ -16,7 +16,6 @@ import { IconButton } from "@mui/material";
 import AddFacilityForm from "./AddFacilityForm";
 import ExtraInformation from "./ExtraInformation";
 import PageTitle from "@/components/label/PageTitle";
-import FacilityInformation from "./FacilityInformation";
 import SuccessPage from "@/components/common/SuccessPage";
 import SectionTitle from "@/components/label/SectionTitle";
 import FacilityDocumentation from "./FacilityDocumentation";

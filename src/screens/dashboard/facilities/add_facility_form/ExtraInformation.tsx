@@ -7,13 +7,13 @@ const maintenanceProcessTab = [
   { label: "Wartung", content: undefined },
 ];
 
-const ExtraInformation = () => {
+const ExtraInformation = (): JSX.Element => {
   const [maintenanceProcess, setMaintenanceProcess] = React.useState(0);
 
   const handleMaintenanceProcessTabChange = (
     event: React.SyntheticEvent,
     newValue: number
-  ) => {
+  ): void => {
     setMaintenanceProcess(newValue);
   };
   return (
