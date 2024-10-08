@@ -1,7 +1,0 @@
-[2024-10-03T11:26:18.053Z] [32minfo[39m: Logging from the API route (server-side only).
-[2024-10-03T11:29:57.587Z] [32minfo[39m: Logging from the API route (server-side only).
-[2024-10-03T11:52:00.452Z] [31merror[39m: Logging from the cost saving(server-side only).
-[2024-10-03T11:53:31.406Z] [32minfo[39m: Info: Logging from the cost saving(server-side only).
-[2024-10-03T11:53:31.408Z] [31merror[39m: Error: Logging from the cost saving(server-side only).
-[2024-10-03T11:54:00.069Z] [32minfo[39m: Info: Logging from the cost saving(server-side only).
-[2024-10-03T11:54:00.073Z] [31merror[39m: Error: Logging from the cost saving(server-side only).

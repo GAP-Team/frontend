@@ -52,7 +52,6 @@ const NewTender = (): JSX.Element => {
     actions: FormikHelpers<AddTenderFormValues>
   ): void => {
     if (activeStep?.id === steps.length - 1) {
-      console.log("Form values", values);
       setIsSubmitted(true);
       actions.setSubmitting(false);
     } else {

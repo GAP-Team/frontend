@@ -1,4 +1,5 @@
 import s3APIs from "@/api/s3";
+import customLogger from "./Logger/logger";
 
 export const handleUploadDoc = async (ev: any): Promise<any> => {
   try {
@@ -15,7 +16,7 @@ export const handleUploadDoc = async (ev: any): Promise<any> => {
       return false;
     }
   } catch (error) {
-    console.log("Uploaded file erroe: ", error);
+    customLogger.error("Uploaded file erroe: ", error);
   }
 };
 
@@ -32,6 +33,6 @@ export const handleUploadMultipleDoc = async (ev: any): Promise<any> => {
       return false;
     }
   } catch (error) {
-    console.log("Multiple upload file erroe: ", error);
+    customLogger.error("Multiple upload file erroe: ", error);
   }
 };

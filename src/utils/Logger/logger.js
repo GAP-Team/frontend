@@ -14,7 +14,6 @@ if (isServer) {
     ),
     transports: [
       new transports.Console(), // Logs to the server console
-      new transports.File({ filename: "app.log" }),
     ],
   });
 

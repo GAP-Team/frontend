@@ -53,12 +53,6 @@ export default function LoginPage(): JSX.Element {
             "Ein Benutzer mit diesem Email konnte nicht gefunden werden"
           );
         }
-
-        console.log(
-          "Unable to login user, post request failed",
-          error.name,
-          error.message
-        );
       } finally {
         setSubmitting(false);
         setLoading(false);
