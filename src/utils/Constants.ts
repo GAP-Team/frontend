@@ -119,7 +119,7 @@ export const listOfTrades = [
     category: "Tore, Türen",
     items: [
       "Automatische Schiebetüren",
-      "Brandschutztüren und -tore (Kraftbetätige Fenster, Türen und Tore)",
+      "Brandschutztüren und -tore (Kraftbetätige Fenster)",
     ],
   },
   {

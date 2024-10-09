@@ -1,4 +1,3 @@
-"use client";
 import React, { useState } from "react";
 import Badge from "../../badge/GBadge";
 import { FaCheck } from "react-icons/fa";
@@ -102,6 +101,7 @@ const HeroSection = (): JSX.Element => {
                                           setSelectedFacility(category.category)
                                         }
                                         key={itemIndex}
+                                        style={{ width: "max-content" }}
                                       >
                                         {item}
                                       </DropdownItem>
@@ -160,6 +160,7 @@ const HeroSection = (): JSX.Element => {
                                     <DropdownItem
                                       onClick={() => setSelectedOrderType(item)}
                                       key={itemIndex}
+                                      style={{ width: "max-content" }}
                                     >
                                       {item}
                                     </DropdownItem>
@@ -202,6 +203,7 @@ const HeroSection = (): JSX.Element => {
                               <DropdownItem
                                 onClick={() => setSelectedState(item.label)}
                                 key={ind}
+                                style={{ width: "max-content" }}
                               >
                                 {item.label}
                               </DropdownItem>
