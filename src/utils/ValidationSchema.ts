@@ -174,7 +174,7 @@ export const newContactSchema = yup.object().shape({
 
 export const addTenderValidationSchema = [
   yup.object().shape({
-    clientName: yup.string().required("Auftraggebers ist erforderlich"),
+    clientName: yup.string().required("Name des Auftraggeber ist erforderlich"),
     tenderForm: yup.string().required("Ausschreibungsart ist erforderlich"),
     tenderType: yup
       .string()
