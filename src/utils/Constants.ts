@@ -1035,3 +1035,44 @@ export const jobItemListInCostPage = [
     status: "Nachprüfung",
   },
 ];
+
+export const NextMaintenanceOptions = [
+  {
+    label: "1 Month",
+    value: "1 Month",
+  },
+  {
+    label: "2 Month",
+    value: "2 Month",
+  },
+  {
+    label: "3 Month",
+    value: "3 Month",
+  },
+  {
+    label: "4 Month",
+    value: "4 Month",
+  },
+  {
+    label: "5 Month",
+    value: "5 Month",
+  },
+];
+export const maintenanceReminderOptions = [
+  {
+    label: "Vor 3 Monate",
+    value: "Vor 3 Monate",
+  },
+  {
+    label: "Vor 6 Monate",
+    value: "Vor 6 Monate",
+  },
+  {
+    label: "Vor 9 Monate",
+    value: "Vor 9 Monate",
+  },
+  {
+    label: "Vor 12 Monate",
+    value: "Vor 12 Monate",
+  },
+];

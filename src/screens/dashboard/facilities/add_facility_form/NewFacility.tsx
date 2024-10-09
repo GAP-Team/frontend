@@ -14,6 +14,7 @@ import {
 import { IconButton } from "@mui/material";
 import AddFacilityForm from "./AddFacilityForm";
 import PageTitle from "@/components/label/PageTitle";
+import FacilityMaintenance from "./FacilityMaintenance";
 import FacilityInformation from "./FacilityInformation";
 import SuccessPage from "@/components/common/SuccessPage";
 import SectionTitle from "@/components/label/SectionTitle";
@@ -33,7 +34,7 @@ const NewFacility: React.FC<NewFacilityProps> = ({}): JSX.Element => {
       component: FacilityInformation,
     },
     { id: 1, stepName: "Prüfung", component: undefined },
-    { id: 2, stepName: "Wartung", component: undefined },
+    { id: 2, stepName: "Wartung", component: FacilityMaintenance },
     { id: 3, stepName: "Dokumente", component: FacilityDocumentation },
     { id: 4, stepName: "Zusammenfassung", component: undefined },
   ];
@@ -90,6 +91,13 @@ const NewFacility: React.FC<NewFacilityProps> = ({}): JSX.Element => {
     floorplanDocs: [],
     otherDocs: [],
     serverLink: "",
+    maintenanceFinalDate: null,
+    nextMaintenance: "",
+    maintenanceAutoPublish: false,
+    maintenanceReminder: "",
+    maintenanceAutoEmail: false,
+    maintenanceEmailOne: "",
+    maintenanceEmailTwo: "",
   };
 
   const formOrSuccessContent = isSubmitted ? (
@@ -162,7 +170,7 @@ const styles = {
     display: "flex",
     flexDirection: "row",
     backgroundColor: "white",
-    height: "37.375rem",
+    height: "40.375rem",
     padding: "1.5rem",
     borderRadius: "0.5rem",
     boxShadow: "0px 8px 24px 0px rgba(30, 49, 55, 0.08)",
