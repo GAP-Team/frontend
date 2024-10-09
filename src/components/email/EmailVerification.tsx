@@ -112,7 +112,7 @@ const EmailVerification = ({
       } else {
         setVerificationError(true);
       }
-    } catch (error: any) {
+    } catch {
       setLoading(false);
       setVerificationError(true);
     }

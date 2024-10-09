@@ -3,10 +3,9 @@ import { SxProps, Theme } from "@mui/material/styles";
 interface SectionTitleProps {
   text: string;
   sx?: SxProps<Theme>;
-  href?: string;
 }
 // Reusable component for styled subtitles
-const SectionTitle = ({ text, sx, href }: SectionTitleProps): JSX.Element => {
+const SectionTitle = ({ text, sx, }: SectionTitleProps): JSX.Element => {
   const sectionStyles = { ...styles, ...sx };
   return (
     <Typography variant="subtitle2" sx={sectionStyles}>
