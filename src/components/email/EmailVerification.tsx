@@ -1,7 +1,6 @@
 // EmailVerification.tsx
 "use client";
 import React, { useRef, useState, useEffect } from "react";
-import pino from "pino";
 import Cookies from "js-cookie";
 import Grid from "@mui/material/Grid";
 import { Button } from "@mui/material";
@@ -17,8 +16,6 @@ import userAPIs from "@/api/user";
 import GButton from "@/components/button/GButton";
 import SuccessPage from "@/components/common/SuccessPage";
 import EmailTemplate from "@/components/EmailTemplate/Template";
-
-const logger = pino();
 
 interface EmailVerificationProps {
   sendMail: boolean;
@@ -116,11 +113,6 @@ const EmailVerification = ({
         setVerificationError(true);
       }
     } catch (error: any) {
-      logger.error(
-        "Unable to verify email, post request failed",
-        error.name,
-        error.message
-      );
       setLoading(false);
       setVerificationError(true);
     }
