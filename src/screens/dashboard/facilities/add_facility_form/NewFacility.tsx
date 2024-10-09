@@ -93,11 +93,12 @@ const NewFacility: React.FC<NewFacilityProps> = ({}): JSX.Element => {
     serverLink: "",
     maintenanceFinalDate: null,
     nextMaintenance: "",
-    maintenanceAutoPublish: false,
+    maintenanceAutoPublish: true,
     maintenanceReminder: "",
     maintenanceAutoEmail: false,
     maintenanceEmailOne: "",
     maintenanceEmailTwo: "",
+    maintenanceAutoPublishDuration: "",
   };
 
   const formOrSuccessContent = isSubmitted ? (
@@ -170,7 +171,7 @@ const styles = {
     display: "flex",
     flexDirection: "row",
     backgroundColor: "white",
-    height: "40.375rem",
+    height: "41.375rem",
     padding: "1.5rem",
     borderRadius: "0.5rem",
     boxShadow: "0px 8px 24px 0px rgba(30, 49, 55, 0.08)",

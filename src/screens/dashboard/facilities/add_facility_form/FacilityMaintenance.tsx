@@ -9,13 +9,13 @@ import Divider from "@mui/material/Divider";
 import { AddFacilityFormValues } from "./types";
 import Typography from "@mui/material/Typography";
 import GTextInput from "@/components/input/GTextInput";
-import { Checkbox, FormControlLabel } from "@mui/material";
 import GTextSelector from "@/components/input/GTextSelector";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 // import questionMarkYellow from "@/../public/icons/questionMark.svg";
 // import questionMarkGray from "@/../public/icons/questionMarkGray.svg";
 import { NextMaintenanceOptions, maintenanceReminderOptions } from "@/utils/Constants";
+import { Checkbox, FormControl, FormControlLabel, Radio, RadioGroup } from "@mui/material";
 
 const FacilityMaintenance = (): JSX.Element => {
   const formik = useFormikContext<AddFacilityFormValues>();
@@ -96,30 +96,74 @@ const FacilityMaintenance = (): JSX.Element => {
           />
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="gsub" color="gray.500" sx={style.helpIconLable}>
+            <Typography variant="gsub" color="gray.500" sx={style.helpIconLable}>
             AUTOMATISCH VERÖFFENTLICHEN
             {/* <span>
-              <Image
+                <Image
                 width={16}
                 height={16}
                 alt={"Help"}
                 style={style.helpIcon}
                 src={questionMarkGray}
-              />
+                />
             </span> */}
-          </Typography>
-          <FormControlLabel
-            control={
-              <Checkbox
-                id="maintenanceAutoPublish"
-                name="maintenanceAutoPublish"
-                onBlur={formik?.handleBlur}
-                onChange={formik?.handleChange}
-                checked={formik?.values?.maintenanceAutoPublish}
-              />
-            }
-            label="aktivieren"
-          />
+            </Typography>
+            <Grid sx={style.helpIconLable}>
+                <FormControlLabel
+                    control={
+                        <Checkbox
+                        id="maintenanceAutoPublish"
+                        name="maintenanceAutoPublish"
+                        onBlur={formik?.handleBlur}
+                        onChange={formik?.handleChange}
+                        checked={formik?.values?.maintenanceAutoPublish}
+                        />
+                    }
+                    label="aktivieren"
+                />
+                {formik?.values?.maintenanceAutoPublish && 
+                    <FormControl sx={style.conditionalBorder}>
+                        <RadioGroup
+                            id="maintenanceAutoPublishDuration"
+                            name="maintenanceAutoPublishDuration"
+                            value={formik.values.maintenanceAutoPublishDuration}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                        >
+                            <Grid container spacing={1} >
+                                <Grid item xs={3}>
+                                    <FormControlLabel
+                                        value="alle 12 Monate"
+                                        control={<Radio />}
+                                        label="alle 12 Monate"
+                                    />
+                                </Grid>
+                                <Grid item xs={3}>
+                                    <FormControlLabel
+                                        value="alle 9 Monate"
+                                        control={<Radio />}
+                                        label="alle 9 Monate"
+                                    />
+                                </Grid>
+                                <Grid item xs={3}>
+                                    <FormControlLabel
+                                        value="alle 6 Monate"
+                                        control={<Radio />}
+                                        label="alle 6 Monate"
+                                    />
+                                </Grid>
+                                <Grid item xs={3}>
+                                    <FormControlLabel
+                                        value="alle 3 Monate"
+                                        control={<Radio />}
+                                        label="alle 3 Monate"
+                                    />
+                                </Grid>
+                            </Grid>
+                        </RadioGroup>
+                    </FormControl>
+                }
+            </Grid>
         </Grid>
         <Grid item xs={6}>
           <Typography variant="gsub" color="gray.500">
@@ -204,4 +248,16 @@ const style = {
     marginBottom: "0.3rem",
     cursor: "pointer",
   },
+  dividerStats: {
+    mx: 2,
+    height: "auto",
+    bgcolor: "#d2d7d9",
+  },
+  conditionalBorder: {
+    display: "flex",
+    flexDirection: "row",
+    paddingLeft: "0.7rem",
+    justiContent: "space-between",
+    borderLeft: "#d3d3d3 2px solid",
+  }
 };

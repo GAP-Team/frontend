@@ -28,6 +28,7 @@ export interface AddFacilityFormValues {
   maintenanceAutoEmail: boolean;
   maintenanceEmailOne: string;
   maintenanceEmailTwo: string;
+  maintenanceAutoPublishDuration: string;
 }
 
 export interface ActiveStepItem {

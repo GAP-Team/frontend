@@ -1038,24 +1038,24 @@ export const jobItemListInCostPage = [
 
 export const NextMaintenanceOptions = [
   {
-    label: "1 Month",
-    value: "1 Month",
+    label: "1 Monat",
+    value: "1 Monat",
   },
   {
-    label: "2 Month",
-    value: "2 Month",
+    label: "2 Monat",
+    value: "2 Monat",
   },
   {
-    label: "3 Month",
-    value: "3 Month",
+    label: "3 Monat",
+    value: "3 Monat",
   },
   {
-    label: "4 Month",
-    value: "4 Month",
+    label: "4 Monat",
+    value: "4 Monat",
   },
   {
-    label: "5 Month",
-    value: "5 Month",
+    label: "5 Monat",
+    value: "5 Monat",
   },
 ];
 export const maintenanceReminderOptions = [
