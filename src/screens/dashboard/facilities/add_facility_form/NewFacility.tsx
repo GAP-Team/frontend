@@ -14,7 +14,7 @@ import {
 import FacilityTest from "./FacilityTest";
 import { IconButton } from "@mui/material";
 import AddFacilityForm from "./AddFacilityForm";
-import ExtraInformation from "./ExtraInformation";
+import FacilityInformation from "./FacilityInformation";
 import PageTitle from "@/components/label/PageTitle";
 import SuccessPage from "@/components/common/SuccessPage";
 import SectionTitle from "@/components/label/SectionTitle";
@@ -31,7 +31,7 @@ const NewFacility: React.FC<NewFacilityProps> = ({}): JSX.Element => {
     {
       id: 0,
       stepName: "Anlageninformationen",
-      component: ExtraInformation,
+      component: FacilityInformation,
     },
     { id: 1, stepName: "Prüfung", component: FacilityTest },
     { id: 2, stepName: "Wartung", component: undefined },
@@ -170,7 +170,7 @@ const styles = {
     display: "flex",
     flexDirection: "row",
     backgroundColor: "white",
-    height: "37.375rem",
+    height: "42.375rem",
     padding: "1.5rem",
     borderRadius: "0.5rem",
     boxShadow: "0px 8px 24px 0px rgba(30, 49, 55, 0.08)",

@@ -1,5 +1,4 @@
 "use client";
-import Image from "next/image";
 import { useState } from "react";
 import { Item } from "../../types";
 import Box from "@mui/material/Box";
@@ -8,14 +7,13 @@ import { useFormikContext } from "formik";
 import Divider from "@mui/material/Divider";
 import { AddFacilityFormValues } from "./types";
 import Typography from "@mui/material/Typography";
+import GTextInput from "@/components/input/GTextInput";
 import { Checkbox, FormControlLabel } from "@mui/material";
 import GTextSelector from "@/components/input/GTextSelector";
+import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import questionMarkYellow from "@/../public/icons/questionMark.svg";
 import { NextTestOptions, reminderOptions } from "@/utils/Constants";
-import questionMarkGray from "@/../public/icons/questionMarkGray.svg";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
-import GTextInput from "@/components/input/GTextInput";
 
 const FacilityTest = (): JSX.Element => {
   const formik = useFormikContext<AddFacilityFormValues>();
@@ -73,15 +71,7 @@ const FacilityTest = (): JSX.Element => {
         <Grid item xs={6}>
           <Typography variant="gsub" color="gray.500" sx={style.helpIconLable}>
             NÄCHSTE PRÜFUNG
-            <span>
-              <Image
-                width={16}
-                height={16}
-                alt={"Help"}
-                style={style.helpIcon}
-                src={questionMarkYellow}
-              />
-            </span>
+            <HelpOutlineIcon style={style.helpIconYellow} fontSize="small" />
           </Typography>
           <GTextSelector
             name="nextTest"
@@ -98,15 +88,7 @@ const FacilityTest = (): JSX.Element => {
         <Grid item xs={12}>
           <Typography variant="gsub" color="gray.500" sx={style.helpIconLable}>
             AUTOMATISCH VERÖFFENTLICHEN
-            <span>
-              <Image
-                width={16}
-                height={16}
-                alt={"Help"}
-                style={style.helpIcon}
-                src={questionMarkGray}
-              />
-            </span>
+            <HelpOutlineIcon style={style.helpIconGray} fontSize="small" />
           </Typography>
           <FormControlLabel
             control={
@@ -199,9 +181,18 @@ const style = {
     display: "flex",
     flexDirection: "row",
   },
-  helpIcon: {
+  helpIconYellow: {
+    color: "#FF9209",
     marginLeft: "0.5rem",
-    marginBottom: "0.3rem",
+    marginBottom: "0.5rem",
     cursor: "pointer",
+    paddingBotton: "2px",
+  },
+  helpIconGray: {
+    color: "#A0ADB1",
+    marginLeft: "0.5rem",
+    marginBottom: "0.5rem",
+    cursor: "pointer",
+    paddingBotton: "2px",
   },
 };
