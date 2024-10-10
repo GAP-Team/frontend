@@ -11,7 +11,12 @@ const SectionTitle = ({ text, sx, href }: SectionTitleProps): JSX.Element => {
   if (href) {
     return (
       <Link href={href} passHref>
-        <Typography variant="subtitle2" sx={sectionStyles} component="a" style={{ textDecoration: 'none' }}>
+        <Typography
+          variant="subtitle2"
+          sx={sectionStyles}
+          component="a"
+          style={{ textDecoration: "none" }}
+        >
           {text}
         </Typography>
       </Link>
