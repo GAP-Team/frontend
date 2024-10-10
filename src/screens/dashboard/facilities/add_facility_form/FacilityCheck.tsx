@@ -25,9 +25,6 @@ import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 
 const FacilityCheck = (): JSX.Element => {
   const formik = useFormikContext<AddFacilityFormValues>();
-
-  const [emailOne, setEmailOne] = useState<string>();
-  const [emailTwo, setEmailTwo] = useState<string>();
   const [selectedNextCheck, setSelectedNextCheck] = useState<Item | null>(
     formik?.values?.nextCheckInYearNumber
       ? {
@@ -58,19 +55,6 @@ const FacilityCheck = (): JSX.Element => {
       "reminderInMonth",
       selectedItem?.target?.value ? selectedItem?.target?.value : ""
     );
-  };  
-  const NotificationEmailChange = (email: string): void => {
-    const emailList = formik.values.emailNotificationList;
-    emailList.push(email);
-    formik?.setFieldValue("emailNotificationList", emailList);
-  };
-  const NotificationEmailOneChange = (text: any): void => {
-    setEmailOne(text?.target?.value);
-    NotificationEmailChange(text?.target?.value);
-  };
-  const NotificationEmailTwoChange = (text: any): void => {
-    setEmailTwo(text?.target?.value);
-    NotificationEmailChange(text?.target?.value);
   };
 
   return (
@@ -225,7 +209,7 @@ const FacilityCheck = (): JSX.Element => {
           />
         </Grid>
         {formik?.values?.emailNotificationList.map((email, index) => (
-          <Grid item xs={6}>
+          <Grid key={index} item xs={6}>
             <GTextInput
               placeholder="E-Mail"
               onBlur={formik?.handleBlur}
@@ -234,7 +218,11 @@ const FacilityCheck = (): JSX.Element => {
               name={`emailNotificationList[${index}]`}
               value={formik?.values?.emailNotificationList[index]}
             />
-            <ErrorMessage name={`emailNotificationList[${index}]`} component="div" className="text-red-500 text-sm" />
+            <ErrorMessage
+              name={`emailNotificationList[${index}]`}
+              component="div"
+              className="text-red-500 text-sm"
+            />
           </Grid>
         ))}
         <Divider />
