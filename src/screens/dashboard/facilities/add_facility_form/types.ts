@@ -21,13 +21,13 @@ export interface AddFacilityFormValues {
   floorplanDocs: File[];
   otherDocs: File[];
   serverLink: string;
-  finalDate: Dayjs | null;
-  nextTest: string;
-  autoPublish: boolean;
-  reminder: string;
-  autoEmail: boolean;
+  lastCheckDate: Dayjs | null;
+  nextCheckInYearNumber: string;
+  reminderInMonth: string;
+  isEmailNotificationEnable: boolean;
   emailOne: string;
   emailTwo: string;
+  autoPublishDuration: string;
 }
 
 export interface ActiveStepItem {

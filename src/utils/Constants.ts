@@ -1081,44 +1081,44 @@ export const jobItemListInCostPage = [
   },
 ];
 
-export const NextTestOptions = [
+export const NextCheckOptions = [
   {
-    label: "1 Year",
-    value: "1 Year",
+    label: "1 Jahr",
+    value: "1",
   },
   {
-    label: "2 Year",
-    value: "2 Year",
+    label: "2 Jahr",
+    value: "2",
   },
   {
-    label: "3 Year",
-    value: "3 Year",
+    label: "3 Jahr",
+    value: "3",
   },
   {
-    label: "4 Year",
-    value: "4 Year",
+    label: "4 Jahr",
+    value: "4",
   },
   {
-    label: "5 Year",
-    value: "5 Year",
+    label: "5 Jahr",
+    value: "5",
   },
 ];
 export const reminderOptions = [
   {
     label: "Vor 3 Monate",
-    value: "Vor 3 Monate",
+    value: "3",
   },
   {
     label: "Vor 6 Monate",
-    value: "Vor 6 Monate",
+    value: "6",
   },
   {
     label: "Vor 9 Monate",
-    value: "Vor 9 Monate",
+    value: "9",
   },
   {
     label: "Vor 12 Monate",
-    value: "Vor 12 Monate",
+    value: "V2",
   },
 ];
 export const notifications: Notification[] = [

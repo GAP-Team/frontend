@@ -11,7 +11,7 @@ import {
   StepComponentProps,
   AddFacilityFormValues,
 } from "./types";
-import FacilityTest from "./FacilityTest";
+import FacilityCheck from "./FacilityCheck";
 import { IconButton } from "@mui/material";
 import AddFacilityForm from "./AddFacilityForm";
 import FacilityInformation from "./FacilityInformation";
@@ -33,7 +33,7 @@ const NewFacility: React.FC<NewFacilityProps> = ({}): JSX.Element => {
       stepName: "Anlageninformationen",
       component: FacilityInformation,
     },
-    { id: 1, stepName: "Prüfung", component: FacilityTest },
+    { id: 1, stepName: "Prüfung", component: FacilityCheck },
     { id: 2, stepName: "Wartung", component: undefined },
     { id: 3, stepName: "Dokumente", component: FacilityDocumentation },
     { id: 4, stepName: "Zusammenfassung", component: undefined },
@@ -91,13 +91,13 @@ const NewFacility: React.FC<NewFacilityProps> = ({}): JSX.Element => {
     floorplanDocs: [],
     otherDocs: [],
     serverLink: "",
-    finalDate: null,
-    nextTest: "",
-    autoPublish: true,
-    reminder: "",
-    autoEmail: false,
+    lastCheckDate: null,
+    nextCheckInYearNumber: "",
+    reminderInMonth: "",
+    isEmailNotificationEnable: false,
     emailOne: "",
     emailTwo: "",
+    autoPublishDuration: "",
   };
 
   const formOrSuccessContent = isSubmitted ? (
