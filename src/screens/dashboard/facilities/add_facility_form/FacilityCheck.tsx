@@ -13,7 +13,7 @@ import { Item } from "../../types";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Select from "@mui/material/Select";
-import { useFormikContext } from "formik";
+import { ErrorMessage, useFormikContext } from "formik";
 import Divider from "@mui/material/Divider";
 import { AddFacilityFormValues } from "./types";
 import Typography from "@mui/material/Typography";
@@ -58,8 +58,7 @@ const FacilityCheck = (): JSX.Element => {
       "reminderInMonth",
       selectedItem?.target?.value ? selectedItem?.target?.value : ""
     );
-  };
-
+  };  
   const NotificationEmailChange = (email: string): void => {
     const emailList = formik.values.emailNotificationList;
     emailList.push(email);
@@ -225,38 +224,19 @@ const FacilityCheck = (): JSX.Element => {
             label="aktivieren"
           />
         </Grid>
-        <Grid item xs={6}>
-          <GTextInput
-            id="emailOne"
-            name="emailOne"
-            value={emailOne}
-            placeholder="E-Mail"
-            onBlur={formik?.handleBlur}
-            onChange={NotificationEmailOneChange}
-            // onChange={formik?.handleChange}
-            // value={formik?.values?.emailOne}
-            error={
-              formik?.touched?.emailOne && Boolean(formik?.errors?.emailOne)
-            }
-            helperText={formik?.touched?.emailOne && formik?.errors?.emailOne}
-          />
-        </Grid>
-        <Grid item xs={6}>
-          <GTextInput
-            id="emailTwo"
-            name="emailTwo"
-            value={emailTwo}
-            placeholder="E-Mail"
-            onBlur={formik?.handleBlur}
-            onChange={NotificationEmailTwoChange}
-            // onChange={formik?.handleChange}
-            // value={formik?.values?.emailTwo}
-            error={
-              formik?.touched?.emailTwo && Boolean(formik?.errors?.emailTwo)
-            }
-            helperText={formik?.touched?.emailTwo && formik?.errors?.emailTwo}
-          />
-        </Grid>
+        {formik?.values?.emailNotificationList.map((email, index) => (
+          <Grid item xs={6}>
+            <GTextInput
+              placeholder="E-Mail"
+              onBlur={formik?.handleBlur}
+              onChange={formik?.handleChange}
+              id={`emailNotificationList[${index}]`}
+              name={`emailNotificationList[${index}]`}
+              value={formik?.values?.emailNotificationList[index]}
+            />
+            <ErrorMessage name={`emailNotificationList[${index}]`} component="div" className="text-red-500 text-sm" />
+          </Grid>
+        ))}
         <Divider />
       </Grid>
     </Box>

@@ -84,7 +84,7 @@ const NewFacility: React.FC<NewFacilityProps> = ({}): JSX.Element => {
     isReminderEnabled: false,
     reminderInMonths: 0,
     isEmailNotificationEnabled: false,
-    emailNotificationList: [],
+    emailNotificationList: ["", ""],
     buildingName: "",
     documentChoice: "Jetzt hochladen Empfohlen",
     constructionDocs: [],
