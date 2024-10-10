@@ -1084,41 +1084,41 @@ export const jobItemListInCostPage = [
 export const NextCheckOptions = [
   {
     label: "1 Jahr",
-    value: "1",
+    value: 1,
   },
   {
     label: "2 Jahr",
-    value: "2",
+    value: 2,
   },
   {
     label: "3 Jahr",
-    value: "3",
+    value: 3,
   },
   {
     label: "4 Jahr",
-    value: "4",
+    value: 4,
   },
   {
     label: "5 Jahr",
-    value: "5",
+    value: 5,
   },
 ];
 export const reminderOptions = [
   {
     label: "Vor 3 Monate",
-    value: "3",
+    value: 3,
   },
   {
     label: "Vor 6 Monate",
-    value: "6",
+    value: 6,
   },
   {
     label: "Vor 9 Monate",
-    value: "9",
+    value: 9,
   },
   {
     label: "Vor 12 Monate",
-    value: "V2",
+    value: 12,
   },
 ];
 export const notifications: Notification[] = [
