@@ -1,17 +1,17 @@
 import React from "react";
 import Button, { ButtonProps } from "@mui/material/Button";
-import { SxProps, Theme } from "@mui/system";
+import { SxProps } from "@mui/system";
 import "../button/GButton.module.css";
 
 interface GButtonProps extends ButtonProps {
   children?: React.ReactNode;
   href?: string;
   type?: "button" | "reset" | "submit" | undefined;
-  sx?: SxProps<Theme>;
+  sx?: SxProps;
   onClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 }
 
-const buttonStyles: SxProps<Theme> = {
+const buttonStyles: SxProps = {
   borderRadius: "0.5rem",
   margin: "0.5rem",
   py: "0.5rem",
