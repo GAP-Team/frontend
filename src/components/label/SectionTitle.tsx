@@ -1,12 +1,23 @@
 import Typography from "@mui/material/Typography";
 import { SxProps, Theme } from "@mui/material/styles";
+import Link from "next/link";
 interface SectionTitleProps {
   text: string;
   sx?: SxProps<Theme>;
+  href?: string;
 }
-// Reusable component for styled subtitles
-const SectionTitle = ({ text, sx }: SectionTitleProps): JSX.Element => {
+const SectionTitle = ({ text, sx, href }: SectionTitleProps): JSX.Element => {
   const sectionStyles = { ...styles, ...sx };
+  if (href) {
+    return (
+      <Link href={href} passHref>
+        <Typography variant="subtitle2" sx={sectionStyles} component="a" style={{ textDecoration: 'none' }}>
+          {text}
+        </Typography>
+      </Link>
+    );
+  }
+
   return (
     <Typography variant="subtitle2" sx={sectionStyles}>
       {text}

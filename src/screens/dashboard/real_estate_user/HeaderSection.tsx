@@ -24,7 +24,7 @@ const HeaderSection: React.FC<HeaderSectionProps> = ({
           <DividerDecorator sx={{ bgcolor: "#2356FF" }} />
         </Box>
         {overviewText && (
-          <SectionTitle text={overviewText} sx={styles.overviewSection} />
+          <SectionTitle text={overviewText} sx={styles.overviewSection} href="/real_estate/tenders" />
         )}
       </Box>
     </>
