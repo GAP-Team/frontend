@@ -1,30 +1,33 @@
 "use client";
+import {
+  Radio,
+  MenuItem,
+  Checkbox,
+  RadioGroup,
+  FormControl,
+  FormControlLabel,
+} from "@mui/material";
 import "dayjs/locale/de";
 import { useState } from "react";
 import { Item } from "../../types";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
+import Select from "@mui/material/Select";
 import { useFormikContext } from "formik";
 import Divider from "@mui/material/Divider";
 import { AddFacilityFormValues } from "./types";
 import Typography from "@mui/material/Typography";
 import GTextInput from "@/components/input/GTextInput";
-import GTextSelector from "@/components/input/GTextSelector";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { NextCheckOptions, reminderOptions } from "@/utils/Constants";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
-import {
-  Checkbox,
-  FormControl,
-  FormControlLabel,
-  Radio,
-  RadioGroup,
-} from "@mui/material";
 
 const FacilityCheck = (): JSX.Element => {
   const formik = useFormikContext<AddFacilityFormValues>();
 
+  const [emailOne, setEmailOne] = useState<string>();
+  const [emailTwo, setEmailTwo] = useState<string>();
   const [selectedNextCheck, setSelectedNextCheck] = useState<Item | null>(
     formik?.values?.nextCheckInYearNumber
       ? {
@@ -42,19 +45,33 @@ const FacilityCheck = (): JSX.Element => {
       : null
   );
 
-  const handleNextCheckSelect = (selectedItem: Item | null): void => {
-    setSelectedNextCheck(selectedItem);
+  const handleNextCheckSelect = (selectedItem: any): void => {
+    setSelectedNextCheck(selectedItem?.target?.value);
     formik?.setFieldValue(
       "nextCheckInYearNumber",
-      selectedItem ? selectedItem.value : ""
+      selectedItem?.target?.value ? selectedItem?.target?.value : ""
     );
   };
-  const handleReminderSelect = (selectedItem: Item | null): void => {
-    setSelectedReminder(selectedItem);
+  const handleReminderSelect = (selectedItem: any): void => {
+    setSelectedReminder(selectedItem?.target?.value);
     formik?.setFieldValue(
       "reminderInMonth",
-      selectedItem ? selectedItem.value : ""
+      selectedItem?.target?.value ? selectedItem?.target?.value : ""
     );
+  };
+
+  const NotificationEmailChange = (email: string): void => {
+    const emailList = formik.values.emailNotificationList;
+    emailList.push(email);
+    formik?.setFieldValue("emailNotificationList", emailList);
+  };
+  const NotificationEmailOneChange = (text: any): void => {
+    setEmailOne(text?.target?.value);
+    NotificationEmailChange(text?.target?.value);
+  };
+  const NotificationEmailTwoChange = (text: any): void => {
+    setEmailTwo(text?.target?.value);
+    NotificationEmailChange(text?.target?.value);
   };
 
   return (
@@ -91,21 +108,22 @@ const FacilityCheck = (): JSX.Element => {
             NÄCHSTE PRÜFUNG
             <HelpOutlineIcon style={style.helpIconYellow} fontSize="small" />
           </Typography>
-          <GTextSelector
-            name="nextCheckInYearNumber"
-            options={NextCheckOptions}
-            placeholder="Nächste Prüfung auswählen"
-            error={
-              formik?.touched?.nextCheckInYearNumber &&
-              Boolean(formik?.errors?.nextCheckInYearNumber)
-            }
-            helperText={
-              formik?.touched?.nextCheckInYearNumber &&
-              formik?.errors?.nextCheckInYearNumber
-            }
-            onSelect={handleNextCheckSelect}
-            selectedState={selectedNextCheck}
-          />
+          <FormControl fullWidth>
+            <Select
+              name="nextCheckInYearNumber"
+              value={selectedNextCheck}
+              label="Nächste Prüfung auswählen"
+              onChange={handleNextCheckSelect}
+            >
+              {NextCheckOptions?.map((check, checkIndex) => {
+                return (
+                  <MenuItem key={checkIndex} value={check?.value}>
+                    {check?.label}
+                  </MenuItem>
+                );
+              })}
+            </Select>
+          </FormControl>
         </Grid>
         <Grid item xs={12}>
           <Typography variant="gsub" color="gray.500" sx={style.helpIconLable}>
@@ -128,9 +146,9 @@ const FacilityCheck = (): JSX.Element => {
             {formik?.values?.isPublishAutomatically && (
               <FormControl sx={style.conditionalBorder}>
                 <RadioGroup
-                  id="autoPublishDuration"
-                  name="autoPublishDuration"
-                  value={formik.values.autoPublishDuration}
+                  id="publishAutomaticallyInMonths"
+                  name="publishAutomaticallyInMonths"
+                  value={formik.values.publishAutomaticallyInMonths}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                 >
@@ -173,21 +191,22 @@ const FacilityCheck = (): JSX.Element => {
           <Typography variant="gsub" color="gray.500">
             REMINDER EINSTELLEN
           </Typography>
-          <GTextSelector
-            name="reminderInMonth"
-            options={reminderOptions}
-            placeholder="Reminder auswählen"
-            error={
-              formik?.touched?.reminderInMonth &&
-              Boolean(formik?.errors?.reminderInMonth)
-            }
-            helperText={
-              formik?.touched?.reminderInMonth &&
-              formik?.errors?.reminderInMonth
-            }
-            onSelect={handleReminderSelect}
-            selectedState={selectedReminder}
-          />
+          <FormControl fullWidth>
+            <Select
+              name="nextCheckInYearNumber"
+              value={selectedReminder}
+              label="Nächste Prüfung auswählen"
+              onChange={handleReminderSelect}
+            >
+              {reminderOptions?.map((remind, remindIndex) => {
+                return (
+                  <MenuItem key={remindIndex} value={remind?.value}>
+                    {remind?.label}
+                  </MenuItem>
+                );
+              })}
+            </Select>
+          </FormControl>
         </Grid>
         <Grid item xs={12} sx={style.lable}>
           <Typography variant="gsub" color="gray.500">
@@ -210,10 +229,12 @@ const FacilityCheck = (): JSX.Element => {
           <GTextInput
             id="emailOne"
             name="emailOne"
+            value={emailOne}
             placeholder="E-Mail"
             onBlur={formik?.handleBlur}
-            onChange={formik?.handleChange}
-            value={formik?.values?.emailOne}
+            onChange={NotificationEmailOneChange}
+            // onChange={formik?.handleChange}
+            // value={formik?.values?.emailOne}
             error={
               formik?.touched?.emailOne && Boolean(formik?.errors?.emailOne)
             }
@@ -224,10 +245,12 @@ const FacilityCheck = (): JSX.Element => {
           <GTextInput
             id="emailTwo"
             name="emailTwo"
+            value={emailTwo}
             placeholder="E-Mail"
             onBlur={formik?.handleBlur}
-            onChange={formik?.handleChange}
-            value={formik?.values?.emailTwo}
+            onChange={NotificationEmailTwoChange}
+            // onChange={formik?.handleChange}
+            // value={formik?.values?.emailTwo}
             error={
               formik?.touched?.emailTwo && Boolean(formik?.errors?.emailTwo)
             }
