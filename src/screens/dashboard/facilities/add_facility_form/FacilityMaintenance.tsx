@@ -47,9 +47,10 @@ const FacilityMaintenance = (): JSX.Element => {
           <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="de">
             <Box mt={1} sx={{ width: "auto" }}>
               <DatePicker
-                name="lastMaintenanceDate"
+                disableFuture
                 label="Enddatum"
                 format="DD.MM.YYYY"
+                name="lastMaintenanceDate"
                 value={formik?.values?.lastMaintenanceDate}
                 slotProps={{ textField: { fullWidth: true } }}
                 onChange={(value) =>

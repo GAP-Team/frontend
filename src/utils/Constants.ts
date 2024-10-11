@@ -1060,6 +1060,10 @@ export const NextMaintenanceOptions = [
 ];
 export const maintenanceReminderOptions = [
   {
+    label: "Keine",
+    value: 0,
+  },
+  {
     label: "Vor 3 Monate",
     value: 3,
   },
