@@ -212,7 +212,12 @@ export const addFacilityValidationSchema = [
     isEmailNotificationEnable: yup.boolean(),
     emailNotificationList: yup
       .array()
-      .of(yup.string().email("Eingabe einer gültigen E-Mail")),
+      .of(
+        yup
+          .string()
+          .email("Eingabe einer gültigen E-Mail")
+          .matches(EMAIL_REGEX, "Ungültige Email")
+      ),
   }),
   yup.object({
     lastMaintenanceDate: yup.date().nullable(),

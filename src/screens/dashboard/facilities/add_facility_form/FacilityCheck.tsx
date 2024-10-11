@@ -46,9 +46,10 @@ const FacilityCheck = (): JSX.Element => {
           </Typography>
           <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="de">
             <DatePicker
-              name="lastCheckDate"
+              disableFuture
               label="Enddatum"
               format="DD.MM.YYYY"
+              name="lastCheckDate"
               value={formik?.values?.lastCheckDate}
               slotProps={{ textField: { fullWidth: true } }}
               onChange={(value) =>

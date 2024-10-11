@@ -1105,6 +1105,10 @@ export const NextCheckOptions = [
 ];
 export const reminderOptions = [
   {
+    label: "Keine",
+    value: 0,
+  },
+  {
     label: "Vor 3 Monate",
     value: 3,
   },
