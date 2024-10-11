@@ -8,8 +8,6 @@ import {
   FormControlLabel,
 } from "@mui/material";
 import "dayjs/locale/de";
-import { useState } from "react";
-import { Item } from "../../types";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Select from "@mui/material/Select";
@@ -20,42 +18,15 @@ import Typography from "@mui/material/Typography";
 import GTextInput from "@/components/input/GTextInput";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { NextCheckOptions, reminderOptions } from "@/utils/Constants";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import {
+  NextCheckOptions,
+  reminderOptions,
+  autoPublishMonthsOptions,
+} from "@/utils/Constants";
 
 const FacilityCheck = (): JSX.Element => {
   const formik = useFormikContext<AddFacilityFormValues>();
-  const [selectedNextCheck, setSelectedNextCheck] = useState<Item | null>(
-    formik?.values?.nextCheckInYearNumber
-      ? {
-          label: formik.values.nextCheckInYearNumber,
-          value: formik.values.nextCheckInYearNumber,
-        }
-      : null
-  );
-  const [selectedReminder, setSelectedReminder] = useState<Item | null>(
-    formik?.values?.reminderInMonth
-      ? {
-          label: formik.values.reminderInMonth,
-          value: formik.values.reminderInMonth,
-        }
-      : null
-  );
-
-  const handleNextCheckSelect = (selectedItem: any): void => {
-    setSelectedNextCheck(selectedItem?.target?.value);
-    formik?.setFieldValue(
-      "nextCheckInYearNumber",
-      selectedItem?.target?.value ? selectedItem?.target?.value : ""
-    );
-  };
-  const handleReminderSelect = (selectedItem: any): void => {
-    setSelectedReminder(selectedItem?.target?.value);
-    formik?.setFieldValue(
-      "reminderInMonth",
-      selectedItem?.target?.value ? selectedItem?.target?.value : ""
-    );
-  };
 
   return (
     <Box
@@ -77,7 +48,7 @@ const FacilityCheck = (): JSX.Element => {
             <DatePicker
               name="lastCheckDate"
               label="Enddatum"
-              format="DD.MMM.YYYY"
+              format="DD.MM.YYYY"
               value={formik?.values?.lastCheckDate}
               slotProps={{ textField: { fullWidth: true } }}
               onChange={(value) =>
@@ -94,9 +65,9 @@ const FacilityCheck = (): JSX.Element => {
           <FormControl fullWidth>
             <Select
               name="nextCheckInYearNumber"
-              value={selectedNextCheck}
+              value={formik?.values?.nextCheckInYearNumber}
               label="Nächste Prüfung auswählen"
-              onChange={handleNextCheckSelect}
+              onChange={formik.handleChange}
             >
               {NextCheckOptions?.map((check, checkIndex) => {
                 return (
@@ -131,39 +102,20 @@ const FacilityCheck = (): JSX.Element => {
                 <RadioGroup
                   id="publishAutomaticallyInMonths"
                   name="publishAutomaticallyInMonths"
-                  value={formik.values.publishAutomaticallyInMonths}
+                  value={formik?.values?.publishAutomaticallyInMonths}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                 >
                   <Grid container spacing={1}>
-                    <Grid item xs={3}>
-                      <FormControlLabel
-                        value="alle 12 Monate"
-                        control={<Radio />}
-                        label="alle 12 Monate"
-                      />
-                    </Grid>
-                    <Grid item xs={3}>
-                      <FormControlLabel
-                        value="alle 9 Monate"
-                        control={<Radio />}
-                        label="alle 9 Monate"
-                      />
-                    </Grid>
-                    <Grid item xs={3}>
-                      <FormControlLabel
-                        value="alle 6 Monate"
-                        control={<Radio />}
-                        label="alle 6 Monate"
-                      />
-                    </Grid>
-                    <Grid item xs={3}>
-                      <FormControlLabel
-                        value="alle 3 Monate"
-                        control={<Radio />}
-                        label="alle 3 Monate"
-                      />
-                    </Grid>
+                    {autoPublishMonthsOptions?.map((option, index) => (
+                      <Grid key={index} item xs={3}>
+                        <FormControlLabel
+                          value={option?.value}
+                          control={<Radio />}
+                          label={option?.label}
+                        />
+                      </Grid>
+                    ))}
                   </Grid>
                 </RadioGroup>
               </FormControl>
@@ -177,9 +129,9 @@ const FacilityCheck = (): JSX.Element => {
           <FormControl fullWidth>
             <Select
               name="nextCheckInYearNumber"
-              value={selectedReminder}
+              value={formik?.values?.nextCheckInYearNumber}
               label="Nächste Prüfung auswählen"
-              onChange={handleReminderSelect}
+              onChange={formik.handleChange}
             >
               {reminderOptions?.map((remind, remindIndex) => {
                 return (
@@ -219,9 +171,9 @@ const FacilityCheck = (): JSX.Element => {
               value={formik?.values?.emailNotificationList[index]}
             />
             <ErrorMessage
-              name={`emailNotificationList[${index}]`}
               component="div"
               className="text-red-500 text-sm"
+              name={`emailNotificationList[${index}]`}
             />
           </Grid>
         ))}

@@ -80,7 +80,7 @@ const NewFacility: React.FC<NewFacilityProps> = ({}): JSX.Element => {
     lastCheckOderMaintenanceDate: null,
     nextCheckIn: 0,
     isPublishAutomatically: false,
-    publishAutomaticallyInMonths: 0,
+    publishAutomaticallyInMonths: null,
     isReminderEnabled: false,
     reminderInMonths: 0,
     isEmailNotificationEnabled: false,
@@ -92,11 +92,9 @@ const NewFacility: React.FC<NewFacilityProps> = ({}): JSX.Element => {
     otherDocs: [],
     serverLink: "",
     lastCheckDate: null,
-    nextCheckInYearNumber: "",
-    reminderInMonth: "",
+    nextCheckInYearNumber: null,
+    reminderInMonth: null,
     isEmailNotificationEnable: false,
-    emailOne: "",
-    emailTwo: "",
     autoPublishDuration: "",
   };
 

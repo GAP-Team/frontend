@@ -1121,6 +1121,24 @@ export const reminderOptions = [
     value: 12,
   },
 ];
+export const autoPublishMonthsOptions = [
+  {
+    label: "alle 12 Monate",
+    value: 12,
+  },
+  {
+    label: "alle 9 Monate",
+    value: 9,
+  },
+  {
+    label: "alle 6 Monate",
+    value: 6,
+  },
+  {
+    label: "alle 3 Monate",
+    value: 3,
+  },
+];
 export const notifications: Notification[] = [
   {
     message: "You were chosen as a main provider for object G-302.",
