@@ -129,10 +129,10 @@ const FacilityCheck = (): JSX.Element => {
           </Typography>
           <FormControl fullWidth>
             <Select
-              name="nextCheckInYearNumber"
-              value={formik?.values?.nextCheckInYearNumber}
-              label="Nächste Prüfung auswählen"
+              name="reminderInMonth"
+              label="Reminder auswählen"
               onChange={formik.handleChange}
+              value={formik?.values?.reminderInMonth}
             >
               {reminderOptions?.map((remind, remindIndex) => {
                 return (
