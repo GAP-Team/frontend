@@ -1039,40 +1039,58 @@ export const jobItemListInCostPage = [
 export const NextMaintenanceOptions = [
   {
     label: "1 Monat",
-    value: "1 Monat",
+    value: 1,
   },
   {
     label: "2 Monat",
-    value: "2 Monat",
+    value: 2,
   },
   {
     label: "3 Monat",
-    value: "3 Monat",
+    value: 3,
   },
   {
     label: "4 Monat",
-    value: "4 Monat",
+    value: 4,
   },
   {
     label: "5 Monat",
-    value: "5 Monat",
+    value: 5,
   },
 ];
 export const maintenanceReminderOptions = [
   {
     label: "Vor 3 Monate",
-    value: "Vor 3 Monate",
+    value: 3,
   },
   {
     label: "Vor 6 Monate",
-    value: "Vor 6 Monate",
+    value: 6,
   },
   {
     label: "Vor 9 Monate",
-    value: "Vor 9 Monate",
+    value: 9,
   },
   {
     label: "Vor 12 Monate",
-    value: "Vor 12 Monate",
+    value: 12,
+  },
+];
+export const autoPublishMonthsOptions = [
+  {
+    label: "alle 12 Monate",
+    value: 12,
+  },
+  {
+    label: "alle 9 Monate",
+    value: 9,
+  },
+  {
+    label: "alle 6 Monate",
+    value: 6,
+  },
+  {
+    label: "alle 3 Monate",
+    value: 3,
   },
 ];

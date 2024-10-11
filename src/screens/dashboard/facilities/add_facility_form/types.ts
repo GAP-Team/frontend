@@ -21,14 +21,13 @@ export interface AddFacilityFormValues {
   floorplanDocs: File[];
   otherDocs: File[];
   serverLink: string;
-  maintenanceFinalDate: Dayjs | null;
-  nextMaintenance: string;
-  maintenanceAutoPublish: boolean;
-  maintenanceReminder: string;
-  maintenanceAutoEmail: boolean;
-  maintenanceEmailOne: string;
-  maintenanceEmailTwo: string;
-  maintenanceAutoPublishDuration: string;
+  lastMaintenanceDate: Dayjs | null;
+  nextMaintenanceInMonth: number;
+  isPublishMaintenanceAutomatically: boolean;
+  publishMaintenanceAutomaticallyInMonth: number;
+  maintenanceReminderInMonth: number;
+  maintenanceEmailNotificationList: string[];
+  isMaintenanceEmailNotificationEnable: boolean;
 }
 
 export interface ActiveStepItem {
