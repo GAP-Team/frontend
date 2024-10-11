@@ -10,7 +10,7 @@ export interface AddFacilityFormValues {
   lastCheckOderMaintenanceDate: Dayjs | null;
   nextCheckIn: number;
   isPublishAutomatically: boolean;
-  publishAutomaticallyInMonths: number | null;
+  publishAutomaticallyInMonths: number;
   isReminderEnabled: boolean;
   reminderInMonths: number;
   isEmailNotificationEnabled: boolean;
@@ -22,8 +22,8 @@ export interface AddFacilityFormValues {
   otherDocs: File[];
   serverLink: string;
   lastCheckDate: Dayjs | null;
-  nextCheckInYearNumber: number | null;
-  reminderInMonth: number | null;
+  nextCheckInYearNumber: number;
+  reminderInMonth: number;
   isEmailNotificationEnable: boolean;
   autoPublishDuration: string;
 }
