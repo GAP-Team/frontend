@@ -1081,6 +1081,68 @@ export const jobItemListInCostPage = [
   },
 ];
 
+export const NextCheckOptions = [
+  {
+    label: "1 Jahr",
+    value: 1,
+  },
+  {
+    label: "2 Jahr",
+    value: 2,
+  },
+  {
+    label: "3 Jahr",
+    value: 3,
+  },
+  {
+    label: "4 Jahr",
+    value: 4,
+  },
+  {
+    label: "5 Jahr",
+    value: 5,
+  },
+];
+export const reminderOptions = [
+  {
+    label: "Keine",
+    value: 0,
+  },
+  {
+    label: "Vor 3 Monate",
+    value: 3,
+  },
+  {
+    label: "Vor 6 Monate",
+    value: 6,
+  },
+  {
+    label: "Vor 9 Monate",
+    value: 9,
+  },
+  {
+    label: "Vor 12 Monate",
+    value: 12,
+  },
+];
+export const autoPublishMonthsOptions = [
+  {
+    label: "alle 12 Monate",
+    value: 12,
+  },
+  {
+    label: "alle 9 Monate",
+    value: 9,
+  },
+  {
+    label: "alle 6 Monate",
+    value: 6,
+  },
+  {
+    label: "alle 3 Monate",
+    value: 3,
+  },
+];
 export const notifications: Notification[] = [
   {
     message: "You were chosen as a main provider for object G-302.",

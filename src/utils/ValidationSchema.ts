@@ -210,7 +210,14 @@ export const addFacilityValidationSchema = [
     publishAutomaticallyInMonth: yup.number(),
     reminderInMonth: yup.number(),
     isEmailNotificationEnable: yup.boolean(),
-    emailNotificationList: yup.array().of(yup.string()),
+    emailNotificationList: yup
+      .array()
+      .of(
+        yup
+          .string()
+          .email("Eingabe einer gültigen E-Mail")
+          .matches(EMAIL_REGEX, "Ungültige Email")
+      ),
   }),
   yup.object({
     lastMaintenanceDate: yup.date().nullable(),
@@ -219,7 +226,9 @@ export const addFacilityValidationSchema = [
     publishAutomaticallyInMonth: yup.number(),
     reminderInMonth: yup.number(),
     isEmailNotificationEnable: yup.boolean(),
-    emailNotificationList: yup.array().of(yup.string()),
+    emailNotificationList: yup
+      .array()
+      .of(yup.string().email("Eingabe einer gültigen E-Mail")),
   }),
   yup.object({
     documentChoice: yup.string(),

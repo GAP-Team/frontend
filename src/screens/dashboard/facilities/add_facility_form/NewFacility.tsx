@@ -11,10 +11,11 @@ import {
   StepComponentProps,
   AddFacilityFormValues,
 } from "./types";
+import FacilityCheck from "./FacilityCheck";
 import { IconButton } from "@mui/material";
 import AddFacilityForm from "./AddFacilityForm";
-import PageTitle from "@/components/label/PageTitle";
 import FacilityInformation from "./FacilityInformation";
+import PageTitle from "@/components/label/PageTitle";
 import SuccessPage from "@/components/common/SuccessPage";
 import SectionTitle from "@/components/label/SectionTitle";
 import FacilityDocumentation from "./FacilityDocumentation";
@@ -32,7 +33,7 @@ const NewFacility: React.FC<NewFacilityProps> = ({}): JSX.Element => {
       stepName: "Anlageninformationen",
       component: FacilityInformation,
     },
-    { id: 1, stepName: "Prüfung", component: undefined },
+    { id: 1, stepName: "Prüfung", component: FacilityCheck },
     { id: 2, stepName: "Wartung", component: undefined },
     { id: 3, stepName: "Dokumente", component: FacilityDocumentation },
     { id: 4, stepName: "Zusammenfassung", component: undefined },
@@ -83,13 +84,18 @@ const NewFacility: React.FC<NewFacilityProps> = ({}): JSX.Element => {
     isReminderEnabled: false,
     reminderInMonths: 0,
     isEmailNotificationEnabled: false,
-    emailNotificationList: [],
+    emailNotificationList: ["", ""],
     buildingName: "",
     documentChoice: "Jetzt hochladen Empfohlen",
     constructionDocs: [],
     floorplanDocs: [],
     otherDocs: [],
     serverLink: "",
+    lastCheckDate: null,
+    nextCheckInYearNumber: 0,
+    reminderInMonth: 0,
+    isEmailNotificationEnable: false,
+    autoPublishDuration: "",
   };
 
   const formOrSuccessContent = isSubmitted ? (
@@ -162,7 +168,7 @@ const styles = {
     display: "flex",
     flexDirection: "row",
     backgroundColor: "white",
-    height: "37.375rem",
+    height: "42.375rem",
     padding: "1.5rem",
     borderRadius: "0.5rem",
     boxShadow: "0px 8px 24px 0px rgba(30, 49, 55, 0.08)",
