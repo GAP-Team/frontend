@@ -174,7 +174,7 @@ export const newContactSchema = yup.object().shape({
 
 export const addTenderValidationSchema = [
   yup.object().shape({
-    clientName: yup.string().required("Auftraggebers ist erforderlich"),
+    clientName: yup.string().required("Name des Auftraggeber ist erforderlich"),
     tenderForm: yup.string().required("Ausschreibungsart ist erforderlich"),
     tenderType: yup
       .string()
@@ -210,7 +210,14 @@ export const addFacilityValidationSchema = [
     publishAutomaticallyInMonth: yup.number(),
     reminderInMonth: yup.number(),
     isEmailNotificationEnable: yup.boolean(),
-    emailNotificationList: yup.array().of(yup.string()),
+    emailNotificationList: yup
+      .array()
+      .of(
+        yup
+          .string()
+          .email("Eingabe einer gültigen E-Mail")
+          .matches(EMAIL_REGEX, "Ungültige Email")
+      ),
   }),
   yup.object({
     lastMaintenanceDate: yup.date().nullable(),
@@ -220,6 +227,18 @@ export const addFacilityValidationSchema = [
     maintenanceReminderInMonth: yup.number(),
     isMaintenanceEmailNotificationEnable: yup.boolean(),
     maintenanceEmailNotificationList: yup
+      .array()
+      .of(
+        yup
+          .string()
+          .email("Eingabe einer gültigen E-Mail")
+          .matches(EMAIL_REGEX, "Ungültige Email")
+      ),
+    isPublishAutomatically: yup.boolean(),
+    publishAutomaticallyInMonth: yup.number(),
+    reminderInMonth: yup.number(),
+    isEmailNotificationEnable: yup.boolean(),
+    emailNotificationList: yup
       .array()
       .of(
         yup

@@ -79,10 +79,7 @@ export default function UploadMultiButton({
 
   const deleteFileFromS3 = async (file: any): Promise<void> => {
     if (file.hasOwnProperty("documentType")) {
-      const deleteFileStatus = await s3APIs.delete(file?.key);
-      if (deleteFileStatus) {
-        console.log("File deleted successfully");
-      }
+      await s3APIs.delete(file?.key);
     }
   };
 

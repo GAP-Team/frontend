@@ -220,12 +220,6 @@ const RegistrationRealState = (): JSX.Element => {
       ) {
         setOpenSnackbar(true);
         setActiveStep(0);
-      } else {
-        console.log(
-          "Unable to register user, post request failed",
-          error.name,
-          error.message
-        );
       }
     }
   };

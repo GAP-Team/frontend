@@ -1,31 +1,31 @@
 "use client";
+import {
+  Radio,
+  MenuItem,
+  Checkbox,
+  RadioGroup,
+  FormControl,
+  FormControlLabel,
+} from "@mui/material";
 import "dayjs/locale/de";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
+import Select from "@mui/material/Select";
+import { ErrorMessage, useFormikContext } from "formik";
 import Divider from "@mui/material/Divider";
 import { AddFacilityFormValues } from "./types";
 import Typography from "@mui/material/Typography";
 import GTextInput from "@/components/input/GTextInput";
-import { ErrorMessage, useFormikContext } from "formik";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import {
-  Checkbox,
-  FormControl,
-  FormControlLabel,
-  MenuItem,
-  Radio,
-  RadioGroup,
-  Select,
-} from "@mui/material";
-import {
-  NextMaintenanceOptions,
+  NextCheckOptions,
   reminderOptions,
   autoPublishMonthsOptions,
 } from "@/utils/Constants";
 
-const FacilityMaintenance = (): JSX.Element => {
+const FacilityCheck = (): JSX.Element => {
   const formik = useFormikContext<AddFacilityFormValues>();
 
   return (
@@ -34,48 +34,46 @@ const FacilityMaintenance = (): JSX.Element => {
       component="form"
       sx={{
         p: 1,
+        paddingBottom: "1.5rem",
         width: "auto",
         marginLeft: "1.5rem",
-        paddingBottom: "1.5rem",
       }}
     >
       <Grid container spacing={2}>
         <Grid item xs={6}>
           <Typography variant="gsub" color="gray.500">
-            LETZTE WARTUNG
+            LETZTE PRÜFUNG
           </Typography>
           <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="de">
-            <Box mt={1} sx={{ width: "auto" }}>
-              <DatePicker
-                disableFuture
-                label="Enddatum"
-                format="DD.MM.YYYY"
-                name="lastMaintenanceDate"
-                value={formik?.values?.lastMaintenanceDate}
-                slotProps={{ textField: { fullWidth: true } }}
-                onChange={(value) =>
-                  formik?.setFieldValue("lastMaintenanceDate", value)
-                }
-              />
-            </Box>
+            <DatePicker
+              disableFuture
+              label="Enddatum"
+              format="DD.MM.YYYY"
+              name="lastCheckDate"
+              value={formik?.values?.lastCheckDate}
+              slotProps={{ textField: { fullWidth: true } }}
+              onChange={(value) =>
+                formik?.setFieldValue("lastCheckDate", value)
+              }
+            />
           </LocalizationProvider>
         </Grid>
         <Grid item xs={6}>
           <Typography variant="gsub" color="gray.500" sx={style.helpIconLable}>
-            NÄCHSTE WARTUNG
+            NÄCHSTE PRÜFUNG
             <HelpOutlineIcon style={style.helpIconYellow} fontSize="small" />
           </Typography>
           <FormControl fullWidth>
             <Select
-              name="nextMaintenanceInMonth"
-              value={formik?.values?.nextMaintenanceInMonth}
+              name="nextCheckInYearNumber"
+              value={formik?.values?.nextCheckInYearNumber}
               label="Nächste Prüfung auswählen"
               onChange={formik.handleChange}
             >
-              {NextMaintenanceOptions?.map((maintenance, maintenanceIndex) => {
+              {NextCheckOptions?.map((check, checkIndex) => {
                 return (
-                  <MenuItem key={maintenanceIndex} value={maintenance?.value}>
-                    {maintenance?.label}
+                  <MenuItem key={checkIndex} value={check?.value}>
+                    {check?.label}
                   </MenuItem>
                 );
               })}
@@ -91,21 +89,21 @@ const FacilityMaintenance = (): JSX.Element => {
             <FormControlLabel
               control={
                 <Checkbox
-                  id="isPublishMaintenanceAutomatically"
-                  name="isPublishMaintenanceAutomatically"
+                  id="isPublishAutomatically"
+                  name="isPublishAutomatically"
                   onBlur={formik?.handleBlur}
                   onChange={formik?.handleChange}
-                  checked={formik?.values?.isPublishMaintenanceAutomatically}
+                  checked={formik?.values?.isPublishAutomatically}
                 />
               }
               label="aktivieren"
             />
-            {formik?.values?.isPublishMaintenanceAutomatically && (
+            {formik?.values?.isPublishAutomatically && (
               <FormControl sx={style.conditionalBorder}>
                 <RadioGroup
-                  id="publishMaintenanceAutomaticallyInMonth"
-                  name="publishMaintenanceAutomaticallyInMonth"
-                  value={formik.values.publishMaintenanceAutomaticallyInMonth}
+                  id="publishAutomaticallyInMonths"
+                  name="publishAutomaticallyInMonths"
+                  value={formik?.values?.publishAutomaticallyInMonths}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                 >
@@ -131,10 +129,10 @@ const FacilityMaintenance = (): JSX.Element => {
           </Typography>
           <FormControl fullWidth>
             <Select
-              name="maintenanceReminderInMonth"
-              value={formik?.values?.maintenanceReminderInMonth}
-              label="Nächste Prüfung auswählen"
+              name="reminderInMonth"
+              label="Reminder auswählen"
               onChange={formik.handleChange}
+              value={formik?.values?.reminderInMonth}
             >
               {reminderOptions?.map((remind, remindIndex) => {
                 return (
@@ -153,42 +151,40 @@ const FacilityMaintenance = (): JSX.Element => {
           <FormControlLabel
             control={
               <Checkbox
-                id="isMaintenanceEmailNotificationEnable"
-                name="isMaintenanceEmailNotificationEnable"
+                id="isEmailNotificationEnable"
+                name="isEmailNotificationEnable"
                 onBlur={formik?.handleBlur}
                 onChange={formik?.handleChange}
-                checked={formik?.values?.isMaintenanceEmailNotificationEnable}
+                checked={formik?.values?.isEmailNotificationEnable}
               />
             }
             label="aktivieren"
           />
         </Grid>
-        {formik?.values?.maintenanceEmailNotificationList.map(
-          (email, index) => (
-            <Grid key={index} item xs={6}>
-              <GTextInput
-                placeholder="E-Mail"
-                onBlur={formik?.handleBlur}
-                onChange={formik?.handleChange}
-                id={`maintenanceEmailNotificationList[${index}]`}
-                name={`maintenanceEmailNotificationList[${index}]`}
-                value={formik?.values?.maintenanceEmailNotificationList[index]}
-              />
-              <ErrorMessage
-                component="div"
-                className="text-red-500 text-sm"
-                name={`maintenanceEmailNotificationList[${index}]`}
-              />
-            </Grid>
-          )
-        )}
+        {formik?.values?.emailNotificationList.map((email, index) => (
+          <Grid key={index} item xs={6}>
+            <GTextInput
+              placeholder="E-Mail"
+              onBlur={formik?.handleBlur}
+              onChange={formik?.handleChange}
+              id={`emailNotificationList[${index}]`}
+              name={`emailNotificationList[${index}]`}
+              value={formik?.values?.emailNotificationList[index]}
+            />
+            <ErrorMessage
+              component="div"
+              className="text-red-500 text-sm"
+              name={`emailNotificationList[${index}]`}
+            />
+          </Grid>
+        ))}
         <Divider />
       </Grid>
     </Box>
   );
 };
 
-export default FacilityMaintenance;
+export default FacilityCheck;
 
 const style = {
   lable: {
@@ -198,16 +194,6 @@ const style = {
   helpIconLable: {
     display: "flex",
     flexDirection: "row",
-  },
-  helpIcon: {
-    marginLeft: "0.5rem",
-    marginBottom: "0.3rem",
-    cursor: "pointer",
-  },
-  dividerStats: {
-    mx: 2,
-    height: "auto",
-    bgcolor: "#d2d7d9",
   },
   helpIconYellow: {
     color: "#FF9209",

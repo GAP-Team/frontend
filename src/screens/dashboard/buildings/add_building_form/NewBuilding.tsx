@@ -235,10 +235,10 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
 
   const saveBuildingData = async (data: any): Promise<void> => {
     const createBuildingResponse = await buildingAPIs.create(data);
-    if (createBuildingResponse?.data?.buildingId) {
+    if (createBuildingResponse?.data?.id) {
       const updatedBuildings = [
         ...userBuildings,
-        createBuildingResponse.data.buildingId,
+        createBuildingResponse.data.id,
       ];
       dispatch(setUserBuildings(updatedBuildings));
       appdispatch(
@@ -261,10 +261,10 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
       buildingDetails?._id,
       data
     );
-    if (createBuildingResponse?.data?.buildingId) {
+    if (createBuildingResponse?.data?.id) {
       const updatedBuildings = [
         ...userBuildings,
-        createBuildingResponse.data.buildingId,
+        createBuildingResponse.data.id,
       ];
       dispatch(setUserBuildings(updatedBuildings));
       appdispatch(

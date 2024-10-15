@@ -28,6 +28,11 @@ export interface AddFacilityFormValues {
   maintenanceReminderInMonth: number;
   maintenanceEmailNotificationList: string[];
   isMaintenanceEmailNotificationEnable: boolean;
+  lastCheckDate: Dayjs | null;
+  nextCheckInYearNumber: number;
+  reminderInMonth: number;
+  isEmailNotificationEnable: boolean;
+  autoPublishDuration: string;
 }
 
 export interface ActiveStepItem {
