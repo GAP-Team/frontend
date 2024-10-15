@@ -16,7 +16,7 @@ A Next.js 14 project with App Router, ready to power GAP with the latest feature
 - **Component Structure:** Organize component folders into categories like **input**, **button**, etc.
 - **Component Naming:** Prefix the name of components with **G** (e.g., `GButton.tsx`) to indicate it's a GAP-specific component and not from a framework.
 - **Inline Styles:** Extract inline styles (from MUI's `sx` prop) into a TypeScript object and define them at the end of each component file.
-- **Icons:** Use **MUI icons**.
+- **Icons:** Use **MUI icons** and **react-icons**.
 - **Fonts & Colors:**
   - Landing page styles are defined in **tailwind.config.ts**.
   - Dashboard styles are defined in **app/theme.ts**.
