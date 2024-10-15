@@ -5,7 +5,6 @@ import Grid from "@mui/material/Grid";
 import { useFormikContext } from "formik";
 import { AddTenderFormValues } from "./types";
 import { Item } from "@/components/input/GSelector";
-import { dummyBuildingsExp } from "@/utils/Constants";
 import GTextSelector from "@/components/input/GTextSelector";
 import LabelWithAsterisk from "@/components/label/LabelWithAsterisk";
 
@@ -51,7 +50,7 @@ const TenderBuilding = (): JSX.Element => {
           <LabelWithAsterisk>OBJEKT AUSWÄHLEN</LabelWithAsterisk>
           <GTextSelector
             name="building"
-            options={dummyBuildingsExp}
+            options={[]}
             error={
               formik?.touched?.buildingName &&
               Boolean(formik?.errors?.buildingName)
@@ -67,7 +66,7 @@ const TenderBuilding = (): JSX.Element => {
           <LabelWithAsterisk>ANLAGE AUSWÄHLEN</LabelWithAsterisk>
           <GTextSelector
             name="facility"
-            options={dummyBuildingsExp}
+            options={[]}
             error={
               formik?.touched?.facilityName &&
               Boolean(formik?.errors?.facilityName)
