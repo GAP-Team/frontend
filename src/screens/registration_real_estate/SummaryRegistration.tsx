@@ -3,8 +3,6 @@ import Grid from "@mui/material/Grid";
 import { useFormikContext } from "formik";
 
 import SummarySection, { Detail } from "@/components/summary/SummarySection";
-import { grundinformation, adresse } from "../../utils/Constants";
-
 interface SummaryRegistrationProps {
   setActiveStep: (num: number) => void;
 }
@@ -12,55 +10,53 @@ interface SummaryRegistrationProps {
 const SummaryRegistration = ({
   setActiveStep,
 }: SummaryRegistrationProps): JSX.Element => {
-  const getBusinessRegistrationData = (formik: any): any => {
-    const businessInfo = [];
-    const documents = [
-      {
-        label: "Gewerbeanmeldung",
-        value: formik?.values?.business_registration_doc,
-      },
-      {
-        label: "Grundbucheintrag",
-        value: formik?.values?.land_register_entry_document,
-      },
-      {
-        label: "Genehmigungsunterlagen",
-        value: formik?.values?.approval_document,
-      },
-    ];
+  const { values } = useFormikContext<any>();
+  const updatedBasicInformation: Detail[] = [
+    values.firstName && {
+      label: "Vorname",
+      value: values.firstName,
+    },
+    values.lastName && {
+      label: "Nachname",
+      value: values.lastName,
+    },
+    values.email && {
+      label: "E-mail-Adresse",
+      value: values.email,
+    },
+    values.company && {
+      label: "Unternehmen",
+      value: values.company,
+    },
+  ].filter(Boolean);
 
-    documents.forEach((doc) => {
-      if (doc.value) {
-        businessInfo.push(doc);
-      }
-    });
+  const updatedAddress: Detail[] = [
+    values.country && { label: "Land", value: values.country },
+    values.state && { label: "Bundesland", value: values.state },
+    values.street && { label: "Straße", value: values.street },
+    values.houseNo && { label: "Hausnummer", value: values.houseNo },
+    values.zip && { label: "Postleitzahl", value: values.zip },
+    values.city && { label: "Stadt", value: values.city },
+  ].filter(Boolean);
 
-    if (formik?.values?.registrationNumber) {
-      businessInfo.unshift({
-        label: "Handelregister Nummer",
-        value: formik.values.registrationNumber,
-      });
-    }
-    return businessInfo;
-  };
-
-  const formik: any = useFormikContext();
-  const formikValuesArray: string[] = Object.values(formik?.values || {});
-  const updatedBasicInformation: Detail[] = grundinformation.map(
-    (info, index) => ({
-      ...info,
-      value: formikValuesArray[index] || info.value, // Update or keep original if no value is provided
-    })
-  );
-  const updatedAdresse: Detail[] = adresse.map((info, index) => ({
-    ...info,
-    value:
-      formikValuesArray[index + updatedBasicInformation.length + 1] ||
-      info.value, // Update or keep original if no value is provided
-  }));
-
-  const updatedBusinessRegistration: Detail[] =
-    getBusinessRegistrationData(formik);
+  const updatedBusinessRegistration: Detail[] = [
+    values.business_registration_doc && {
+      label: "Gewerbeanmeldung",
+      value: values.business_registration_doc,
+    },
+    values.land_register_entry_document && {
+      label: "Grundbucheintrag",
+      value: values.land_register_entry_document,
+    },
+    values.approval_document && {
+      label: "Genehmigungsunterlagen",
+      value: values.approval_document,
+    },
+    values.registrationNumber && {
+      label: "Handelregister Nummer",
+      value: values.registrationNumber,
+    },
+  ].filter(Boolean);
 
   return (
     <Box
@@ -77,7 +73,7 @@ const SummaryRegistration = ({
         <Grid item xs={12}>
           <SummarySection
             title="ADRESSE DER FIRMA"
-            details={updatedAdresse}
+            details={updatedAddress}
             setActiveStep={() => setActiveStep(1)}
           />
         </Grid>
