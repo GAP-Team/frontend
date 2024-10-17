@@ -17,7 +17,7 @@ export interface AddFacilityFormValues {
   emailNotificationList: string[];
   buildingName: string;
   documentChoice: string;
-  constructionDocs: File[];
+  checkReports: File[];
   floorplanDocs: File[];
   otherDocs: File[];
   serverLink: string;

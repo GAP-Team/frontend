@@ -86,7 +86,7 @@ const NewFacility: React.FC<NewFacilityProps> = ({}): JSX.Element => {
     emailNotificationList: [],
     buildingName: "",
     documentChoice: "Jetzt hochladen Empfohlen",
-    constructionDocs: [],
+    checkReports: [],
     floorplanDocs: [],
     otherDocs: [],
     serverLink: "",

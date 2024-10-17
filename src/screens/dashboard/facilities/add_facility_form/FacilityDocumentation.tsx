@@ -79,26 +79,26 @@ const FacilityDocumentation = (): JSX.Element => {
         <>
           <Grid item xs={12}>
             <Typography variant="gsub" color="gray.500">
-              BAUUNTERLAGEN
+            Berichte (Prüf- und Wartungsberichte)
             </Typography>
             <UploadMultiButton
-              id="constructionDocs"
-              name="constructionDocs"
-              value={formik.values.constructionDocs}
+              id="checkReports"
+              name="checkReports"
+              value={formik.values.checkReports}
               onChange={formik.handleChange}
               error={
-                formik.touched.constructionDocs &&
-                Boolean(formik.errors.constructionDocs)
+                formik.touched.checkReports &&
+                Boolean(formik.errors.checkReports)
               }
               helperText={
-                formik.touched.constructionDocs &&
-                formik.errors.constructionDocs?.toString()
+                formik.touched.checkReports &&
+                formik.errors.checkReports?.toString()
               }
             />
           </Grid>
           <Grid item xs={12}>
             <Typography variant="gsub" color="gray.500">
-              GRUNDRISSE
+            Grundrisse & Schema
             </Typography>
             <UploadMultiButton
               id="floorplanDocs"
@@ -117,7 +117,7 @@ const FacilityDocumentation = (): JSX.Element => {
           </Grid>
           <Grid item xs={12}>
             <Typography variant="gsub" color="gray.500">
-              SONSTIGE DOKUMENTE
+            Sonstiges (Berechnungen, Bescheinigungen)
             </Typography>
             <UploadMultiButton
               id="otherDocs"
