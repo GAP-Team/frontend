@@ -1,2 +1,2 @@
-export { default } from "./root-snackbar";
+export { default } from "./RootSnackbar";
 export * from "@/lib/features/snackbarSlice";

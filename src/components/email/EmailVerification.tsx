@@ -15,7 +15,7 @@ import {
 import userAPIs from "@/api/user";
 import GButton from "@/components/button/GButton";
 import SuccessPage from "@/components/common/SuccessPage";
-import EmailTemplate from "@/components/EmailTemplate/Template";
+import EmailTemplate from "@/components/email_template/EmailTemplate";
 
 interface EmailVerificationProps {
   sendMail: boolean;
