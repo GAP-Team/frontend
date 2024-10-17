@@ -81,7 +81,9 @@ const sidebarItems: SidebarItem[] = [
 const RealStateUserLayout: React.FC<any> = ({ children }) => {
   const router = useRouter();
   const pathname = usePathname();
-  const [selected, setSelected] = useState<SidebarItem | SubItem>(sidebarItems[0]);
+  const [selected, setSelected] = useState<SidebarItem | SubItem>(
+    sidebarItems[0]
+  );
 
   useEffect(() => {
     const matchSidebarItem = () => {
