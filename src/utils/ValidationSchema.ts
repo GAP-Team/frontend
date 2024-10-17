@@ -222,13 +222,30 @@ export const addFacilityValidationSchema = [
   yup.object({
     lastMaintenanceDate: yup.date().nullable(),
     nextMaintenanceInMonth: yup.number(),
+    isPublishMaintenanceAutomatically: yup.boolean(),
+    publishMaintenanceAutomaticallyInMonth: yup.number(),
+    maintenanceReminderInMonth: yup.number(),
+    isMaintenanceEmailNotificationEnable: yup.boolean(),
+    maintenanceEmailNotificationList: yup
+      .array()
+      .of(
+        yup
+          .string()
+          .email("Eingabe einer gültigen E-Mail")
+          .matches(EMAIL_REGEX, "Ungültige Email")
+      ),
     isPublishAutomatically: yup.boolean(),
     publishAutomaticallyInMonth: yup.number(),
     reminderInMonth: yup.number(),
     isEmailNotificationEnable: yup.boolean(),
     emailNotificationList: yup
       .array()
-      .of(yup.string().email("Eingabe einer gültigen E-Mail")),
+      .of(
+        yup
+          .string()
+          .email("Eingabe einer gültigen E-Mail")
+          .matches(EMAIL_REGEX, "Ungültige Email")
+      ),
   }),
   yup.object({
     documentChoice: yup.string(),

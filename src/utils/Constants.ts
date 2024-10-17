@@ -676,6 +676,28 @@ export const jobItemListInCostPage = [
   },
 ];
 
+export const NextMaintenanceOptions = [
+  {
+    label: "1 Monat",
+    value: 1,
+  },
+  {
+    label: "2 Monat",
+    value: 2,
+  },
+  {
+    label: "3 Monat",
+    value: 3,
+  },
+  {
+    label: "4 Monat",
+    value: 4,
+  },
+  {
+    label: "5 Monat",
+    value: 5,
+  },
+];
 export const NextCheckOptions = [
   {
     label: "1 Jahr",

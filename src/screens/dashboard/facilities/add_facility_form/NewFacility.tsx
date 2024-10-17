@@ -14,6 +14,7 @@ import {
 import FacilityCheck from "./FacilityCheck";
 import { IconButton } from "@mui/material";
 import AddFacilityForm from "./AddFacilityForm";
+import FacilityMaintenance from "./FacilityMaintenance";
 import FacilityInformation from "./FacilityInformation";
 import PageTitle from "@/components/label/PageTitle";
 import SuccessPage from "@/components/common/SuccessPage";
@@ -34,7 +35,7 @@ const NewFacility: React.FC<NewFacilityProps> = ({}): JSX.Element => {
       component: FacilityInformation,
     },
     { id: 1, stepName: "Prüfung", component: FacilityCheck },
-    { id: 2, stepName: "Wartung", component: undefined },
+    { id: 2, stepName: "Wartung", component: FacilityMaintenance },
     { id: 3, stepName: "Dokumente", component: FacilityDocumentation },
     { id: 4, stepName: "Zusammenfassung", component: undefined },
   ];
@@ -91,6 +92,13 @@ const NewFacility: React.FC<NewFacilityProps> = ({}): JSX.Element => {
     floorplanDocs: [],
     otherDocs: [],
     serverLink: "",
+    lastMaintenanceDate: null,
+    nextMaintenanceInMonth: 0,
+    isPublishMaintenanceAutomatically: false,
+    publishMaintenanceAutomaticallyInMonth: 0,
+    maintenanceReminderInMonth: 0,
+    maintenanceEmailNotificationList: ["", ""],
+    isMaintenanceEmailNotificationEnable: false,
     lastCheckDate: null,
     nextCheckInYearNumber: 0,
     reminderInMonth: 0,
