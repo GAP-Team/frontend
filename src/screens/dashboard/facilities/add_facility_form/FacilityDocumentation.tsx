@@ -79,7 +79,7 @@ const FacilityDocumentation = (): JSX.Element => {
         <>
           <Grid item xs={12}>
             <Typography variant="gsub" color="gray.500">
-            Berichte (Prüf- und Wartungsberichte)
+              Berichte (Prüf- und Wartungsberichte)
             </Typography>
             <UploadMultiButton
               id="checkReports"
@@ -98,7 +98,7 @@ const FacilityDocumentation = (): JSX.Element => {
           </Grid>
           <Grid item xs={12}>
             <Typography variant="gsub" color="gray.500">
-            Grundrisse & Schema
+              Grundrisse & Schema
             </Typography>
             <UploadMultiButton
               id="floorplanDocs"
@@ -117,7 +117,7 @@ const FacilityDocumentation = (): JSX.Element => {
           </Grid>
           <Grid item xs={12}>
             <Typography variant="gsub" color="gray.500">
-            Sonstiges (Berechnungen, Bescheinigungen)
+              Sonstiges (Berechnungen, Bescheinigungen)
             </Typography>
             <UploadMultiButton
               id="otherDocs"

@@ -256,33 +256,53 @@ export const addFacilityValidationSchema = [
           .matches(EMAIL_REGEX, "Ungültige Email")
       ),
   }),
-  yup.object({
-    documentChoice: yup.string(),
-    constructionDocs: yup.array().of(yup.mixed()),
-    floorplanDocs: yup.array().of(yup.mixed()),
-    otherDocs: yup
-      .array()
-      .of(yup.mixed())
-      .test(
-        "requiredDoc",
-        "Mindestens ein Dokument ist erforderlich.",
-        function (value) {
-          const { documentChoice } = this.parent;
-          if (documentChoice === "Jetzt hochladen Empfohlen") {
-            return value && value.length > 0;
+  yup
+    .object({
+      documentChoice: yup.string(),
+      checkReports: yup.array().of(yup.mixed()),
+      floorplanDocs: yup.array().of(yup.mixed()),
+      otherDocs: yup.array().of(yup.mixed()),
+      serverLink: yup
+        .string()
+        .test(
+          "requiredLink",
+          "Server link ist erforderlich.",
+          function (value) {
+            const { documentChoice } = this.parent;
+            if (documentChoice === "Server verküpfung") {
+              return !!value;
+            }
+            return true;
           }
-          return true;
+        )
+        .url("Server-Link muss eine gültige URL sein."),
+    })
+    .test(
+      "documentRequirement",
+      "At least one document is required.",
+      function (values) {
+        const {
+          checkReports: checkReports,
+          floorplanDocs: floorplanDocs,
+          otherDocs: otherDocs,
+          documentChoice,
+        } = values;
+
+        if (documentChoice === "Jetzt hochladen Empfohlen") {
+          if (
+            (checkReports && checkReports.length > 0) ||
+            (floorplanDocs && floorplanDocs.length > 0) ||
+            (otherDocs && otherDocs.length > 0)
+          ) {
+            return true;
+          }
+
+          // If none of the arrays contain documents, return an error
+          return this.createError({
+            path: "otherDocs",
+            message: "Mindestens ein Dokument ist erforderlich.",
+          });
         }
-      ),
-    serverLink: yup
-      .string()
-      .test("requiredLink", "Server link ist erforderlich.", function (value) {
-        const { documentChoice } = this.parent;
-        if (documentChoice === "Server verküpfung") {
-          return !!value;
-        }
-        return true;
-      })
-      .url("Server-Link muss eine gültige URL sein."),
-  }),
+      }
+    ),
 ];
