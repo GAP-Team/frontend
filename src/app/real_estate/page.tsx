@@ -86,7 +86,7 @@ const RealStateUserLayout: React.FC<any> = ({ children }) => {
   );
 
   useEffect(() => {
-    const matchSidebarItem = () => {
+    const matchSidebarItem = (): SidebarItem | SubItem => {
       for (const item of sidebarItems) {
         if (item.url === pathname) {
           return item;
