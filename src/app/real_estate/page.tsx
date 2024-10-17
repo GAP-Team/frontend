@@ -1,9 +1,9 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import { CgNotes } from "react-icons/cg";
 import { TbPigMoney } from "react-icons/tb";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { LuLayoutDashboard } from "react-icons/lu";
 import { MdOutlineDoorSliding, MdOutlineAddHomeWork } from "react-icons/md";
 import GAppbar from "@/components/navigation/GAppbar/GAppbar";
@@ -17,7 +17,7 @@ const sidebarItems: SidebarItem[] = [
     id: 0,
     icon: LuLayoutDashboard,
     text: "Dashboard",
-    url: "dashboard",
+    url: "/real_estate/dashboard",
   },
   {
     id: 1,
@@ -27,12 +27,12 @@ const sidebarItems: SidebarItem[] = [
       {
         id: 10,
         text: "Alle Ausschreibungen",
-        url: "tenders",
+        url: "/real_estate/tenders",
       },
       {
         id: 11,
         text: "Ausschreibung hinzufügen",
-        url: "tenders/add",
+        url: "/real_estate/tenders/add",
       },
     ],
   },
@@ -44,12 +44,12 @@ const sidebarItems: SidebarItem[] = [
       {
         id: 20,
         text: "Alle Anlagen",
-        url: "facilities",
+        url: "/real_estate/facilities",
       },
       {
         id: 21,
         text: "Anlage hinzufügen",
-        url: "facilities/add",
+        url: "/real_estate/facilities/add",
       },
     ],
   },
@@ -61,37 +61,52 @@ const sidebarItems: SidebarItem[] = [
       {
         id: 30,
         text: "Alle Gebäude",
-        url: "buildings",
+        url: "/real_estate/buildings",
       },
       {
         id: 31,
         text: "Gebäude hinzufügen",
-        url: "buildings/add",
+        url: "/real_estate/buildings/add",
       },
     ],
   },
   {
     id: 4,
     icon: TbPigMoney,
-    url: "cost_savings",
+    url: "/real_estate/cost_savings",
     text: "Kosteneinsparung",
   },
 ];
 
 const RealStateUserLayout: React.FC<any> = ({ children }) => {
   const router = useRouter();
+  const pathname = usePathname();
+  const [selected, setSelected] = useState<SidebarItem | SubItem>(sidebarItems[0]);
 
-  const handleRedirect = (item: any): void => {
-    setSelected(item);
-    router.push(`/real_estate/${item?.url}`);
-  };
+  useEffect(() => {
+    const matchSidebarItem = () => {
+      for (const item of sidebarItems) {
+        if (item.url === pathname) {
+          return item;
+        }
+        if (item.subItems) {
+          for (const subItem of item.subItems) {
+            if (subItem.url === pathname) {
+              return subItem;
+            }
+          }
+        }
+      }
+      return sidebarItems[0];
+    };
+    setSelected(matchSidebarItem());
+  }, [pathname]);
 
-  const [selected, setSelected] = useState<SidebarItem | SubItem>(
-    sidebarItems[0]
-  );
-
-  const redirectD = (): void => {
-    router.push(`/real_estate/dashboard`);
+  const handleRedirect = (item: SidebarItem | SubItem): void => {
+    if (item.url) {
+      setSelected(item);
+      router.push(item.url);
+    }
   };
 
   return (
@@ -103,7 +118,7 @@ const RealStateUserLayout: React.FC<any> = ({ children }) => {
       />
       <Box sx={styles.contentContainer}>
         <GAppbar />
-        {children === undefined ? redirectD() : children}
+        {children}
       </Box>
     </Box>
   );
@@ -114,15 +129,13 @@ export default RealStateUserLayout;
 const styles = {
   main: {
     display: "flex",
-    minHeight: "100vh", // Set minimum height to full viewport
+    minHeight: "100vh",
     backgroundColor: "#F1F3F4",
   },
   contentContainer: {
     display: "flex",
     flexDirection: "column",
-    flex: 1, // Allows it to take up remaining width of the viewport
-    minHeight: "100vh", // Ensure it fills the vertical height of the screen
-    // width: "100%",
-    // height: "100%"
+    flex: 1,
+    minHeight: "100vh",
   },
 };
