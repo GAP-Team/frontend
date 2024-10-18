@@ -10,9 +10,14 @@ import { Item } from "../../types";
 import GTextSelector from "@/components/input/GTextSelector";
 import Typography from "@mui/material/Typography";
 import { buildingTypesList, listOfTrades } from "@/utils/Constants";
+import { useSelector } from "react-redux";
+import { allBuildingDetails } from "@/lib/features/userSlice";
+import { FormControl, MenuItem, Select } from "@mui/material";
 
 const FacilityInformation = (): JSX.Element => {
+  const allBuildings = useSelector(allBuildingDetails);
   const formik = useFormikContext<AddFacilityFormValues>();
+
   const [selectedGenericTerm, setSelectedGenericTerm] = useState<Item | null>(
     formik?.values?.genericTerm
       ? { label: formik.values.genericTerm, value: formik.values.genericTerm }
@@ -23,11 +28,11 @@ const FacilityInformation = (): JSX.Element => {
       ? { label: formik.values.subcategory, value: formik.values.subcategory }
       : null
   );
-  const [selectedBuilding, setSelectedBuilding] = useState<Item | null>(
+  /*const [selectedBuilding, setSelectedBuilding] = useState<Item | null>(
     formik?.values?.buildingName
       ? { label: formik.values.buildingName, value: formik.values.buildingName }
       : null
-  );
+  );*/
 
   const [subCategoryOptions, setSubCategoryOptions] = useState<Item[]>([]);
 
@@ -57,24 +62,24 @@ const FacilityInformation = (): JSX.Element => {
     }
 
     setSelectedSubCategory(null);
-    formik?.setFieldValue("subCategory", "");
+    formik?.setFieldValue("subcategory", "");
   };
 
   const handleSubCategorySelect = (selectedItem: Item | null): void => {
     setSelectedSubCategory(selectedItem);
     formik?.setFieldValue(
-      "subCategory",
+      "subcategory",
       selectedItem ? selectedItem.value : ""
     );
   };
 
-  const handleBuildingTypeSelect = (selectedItem: Item | null): void => {
+  /*const handleBuildingTypeSelect = (selectedItem: Item | null): void => {
     setSelectedBuilding(selectedItem);
     formik?.setFieldValue(
       "buildingName",
       selectedItem ? selectedItem.value : ""
     );
-  };
+  };*/
 
   return (
     <Box
@@ -120,7 +125,7 @@ const FacilityInformation = (): JSX.Element => {
             ANLAGENTYP
           </Typography>
           <GTextSelector
-            name="subCategory"
+            name="subcategory"
             options={subCategoryOptions}
             error={
               formik?.touched?.subcategory &&
@@ -136,9 +141,9 @@ const FacilityInformation = (): JSX.Element => {
 
         <Grid item xs={12}>
           <LabelWithAsterisk>OBJEKT ZUORDNEN</LabelWithAsterisk>
-          <GTextSelector
+          {/* <GTextSelector
             name="buildingName"
-            options={buildingTypesList}
+            options={arrangedBuildingOptions}
             error={
               formik?.touched?.buildingName &&
               Boolean(formik?.errors?.buildingName)
@@ -148,7 +153,23 @@ const FacilityInformation = (): JSX.Element => {
             }
             onSelect={handleBuildingTypeSelect}
             selectedState={selectedBuilding}
-          />
+          /> */}
+          <FormControl fullWidth>
+            <Select
+              name="buildingName"
+              value={formik?.values?.buildingName}
+              label="Objekt Zuordnen"
+              onChange={formik.handleChange}
+            >
+              {allBuildings?.map((building: any, buildingIndex: number) => {
+                return (
+                  <MenuItem key={buildingIndex} value={building?._id}>
+                    {building?.buildingName}
+                  </MenuItem>
+                );
+              })}
+            </Select>
+          </FormControl>
         </Grid>
       </Grid>
     </Box>

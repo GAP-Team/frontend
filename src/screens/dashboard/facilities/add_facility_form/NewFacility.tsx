@@ -32,7 +32,6 @@ interface NewFacilityProps {
 const NewFacility: React.FC<NewFacilityProps> = ({}): JSX.Element => {
 
   const router = useRouter();
-  const allBuildings = useSelector(allBuildingDetails);
   const steps: ActiveStepItem[] = [
     
     {
@@ -46,14 +45,15 @@ const NewFacility: React.FC<NewFacilityProps> = ({}): JSX.Element => {
     { id: 4, stepName: "Zusammenfassung", component: FacilitySummary },
   ];
 
-  const [activeStep, setActiveStep] = useState<ActiveStepItem>(steps[0]);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [activeStep, setActiveStep] = useState<ActiveStepItem>(steps[0]);
+
   const StepComponent = steps[activeStep.id]
     ?.component as React.ComponentType<StepComponentProps>;
 
   useEffect(() => {
     setActiveStep(steps[0]);
-    setIsSubmitted(false);
+    setIsSubmitted(false);    
   }, []);
 
   const handleNext = (

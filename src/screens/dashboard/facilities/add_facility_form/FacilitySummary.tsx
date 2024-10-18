@@ -1,9 +1,13 @@
 "use client";
-import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
 import { useFormikContext } from "formik";
+import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 import { ActiveStepItem } from "../../types";
+import { allBuildingDetails } from "@/lib/features/userSlice";
 import SummarySection, { Detail } from "@/components/summary/SummarySection";
+import { SelectedBuildingData } from "../../buildings/add_building_form/types";
 
 interface FacilitySummaryProps {
   setActiveStep: React.Dispatch<React.SetStateAction<ActiveStepItem>>;
@@ -14,27 +18,34 @@ const FacilitySummary = ({
   steps,
 }: FacilitySummaryProps): JSX.Element => {
   const { values } = useFormikContext<any>();
-  console.log("Facility Data: ===---> ", values);
+  const allBuildings = useSelector(allBuildingDetails);
+
+  const [selectedBuildingDetails, setSelectedBuildingDetails] = useState<SelectedBuildingData>();
+
+  useEffect(() => {
+    const building = allBuildings.filter((building: any) => building._id == values.buildingName);
+    setSelectedBuildingDetails(building[0]);
+  }, []);
   
   const updatedFacilityInformation: Detail[] = [
-    values.name != "" && { label: "Name des Gebäudes", value: values.buildingName },
-    values.totalArea && {
+    values.buildingName != "" && { label: "Name des Gebäudes", value: selectedBuildingDetails?.buildingName },
+    selectedBuildingDetails?.buildingAbbreviation && {
       label: "Gesamtfläche (in qm) ",
-      value: values.totalArea,
+      value: selectedBuildingDetails?.buildingAbbreviation ? selectedBuildingDetails?.buildingAbbreviation : 1000, //1000 is dummy data, afetr get real data will updated it
     },
-    values.buildingType && { label: "Gebäudetyp", value: values.buildingType },
-    values.buildingAbbreviation && {
+    values.genericTerm && { label: "Gebäudetyp", value: values.genericTerm },
+    values.subcategory && {
       label: "Objektkürzel",
-      value: values.buildingAbbreviation,
+      value: values.subcategory,
     },
   ].filter(Boolean); // Filter out undefined values
 
-  const updatedAddress: Detail[] = [
-    values.street && { label: "Straße", value: values.street },
-    values.houseNumber && { label: "Hausnummer", value: values.houseNumber },
-    values.zip && { label: "Postleitzahl", value: values.zip },
-    values.city && { label: "Stadt", value: values.city },
-    values.state && { label: "Bundesland", value: values.state },
+  const updatedAddress: any[] = [
+    selectedBuildingDetails?.address?.street && { label: "Straße", value: selectedBuildingDetails?.address?.street },
+    selectedBuildingDetails?.address?.houseNumber && { label: "Hausnummer", value: selectedBuildingDetails?.address?.houseNumber },
+    selectedBuildingDetails?.address?.zip && { label: "Postleitzahl", value: selectedBuildingDetails?.address?.zip },
+    selectedBuildingDetails?.address?.city && { label: "Stadt", value: selectedBuildingDetails?.address?.city },
+    selectedBuildingDetails?.address?.state && { label: "Bundesland", value: selectedBuildingDetails?.address?.state },
   ].filter(Boolean); // Filter out undefined values
 
   const updatedContactPersonList: Detail[] = values?.contactPerson?.length
