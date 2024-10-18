@@ -11,14 +11,18 @@ import {
   StepComponentProps,
   AddFacilityFormValues,
 } from "./types";
+import { useSelector } from "react-redux";
 import { IconButton } from "@mui/material";
+import FacilityCheck from "./FacilityCheck";
 import AddFacilityForm from "./AddFacilityForm";
 import FacilitySummary from "./FacilitySummary";
 import PageTitle from "@/components/label/PageTitle";
+import FacilityMaintenance from "./FacilityMaintenance";
 import FacilityInformation from "./FacilityInformation";
 import SuccessPage from "@/components/common/SuccessPage";
 import SectionTitle from "@/components/label/SectionTitle";
 import FacilityDocumentation from "./FacilityDocumentation";
+import { allBuildingDetails } from "@/lib/features/userSlice";
 import GProgressStepper from "@/components/stepper/GProgressStepper";
 
 interface NewFacilityProps {
@@ -26,15 +30,18 @@ interface NewFacilityProps {
 }
 
 const NewFacility: React.FC<NewFacilityProps> = ({}): JSX.Element => {
+
   const router = useRouter();
+  const allBuildings = useSelector(allBuildingDetails);
   const steps: ActiveStepItem[] = [
+    
     {
       id: 0,
       stepName: "Anlageninformationen",
       component: FacilityInformation,
     },
-    { id: 1, stepName: "Prüfung", component: undefined },
-    { id: 2, stepName: "Wartung", component: undefined },
+    { id: 1, stepName: "Prüfung", component: FacilityCheck },
+    { id: 2, stepName: "Wartung", component: FacilityMaintenance },
     { id: 3, stepName: "Dokumente", component: FacilityDocumentation },
     { id: 4, stepName: "Zusammenfassung", component: FacilitySummary },
   ];
@@ -84,13 +91,25 @@ const NewFacility: React.FC<NewFacilityProps> = ({}): JSX.Element => {
     isReminderEnabled: false,
     reminderInMonths: 0,
     isEmailNotificationEnabled: false,
-    emailNotificationList: [],
+    emailNotificationList: ["", ""],
     buildingName: "",
     documentChoice: "Jetzt hochladen Empfohlen",
     constructionDocs: [],
     floorplanDocs: [],
     otherDocs: [],
     serverLink: "",
+    lastMaintenanceDate: null,
+    nextMaintenanceInMonth: 0,
+    isPublishMaintenanceAutomatically: false,
+    publishMaintenanceAutomaticallyInMonth: 0,
+    maintenanceReminderInMonth: 0,
+    maintenanceEmailNotificationList: ["", ""],
+    isMaintenanceEmailNotificationEnable: false,
+    lastCheckDate: null,
+    nextCheckInYearNumber: 0,
+    reminderInMonth: 0,
+    isEmailNotificationEnable: false,
+    autoPublishDuration: "",
   };
 
   const formOrSuccessContent = isSubmitted ? (
@@ -163,7 +182,7 @@ const styles = {
     display: "flex",
     flexDirection: "row",
     backgroundColor: "white",
-    height: "37.375rem",
+    height: "42.375rem",
     padding: "1.5rem",
     borderRadius: "0.5rem",
     boxShadow: "0px 8px 24px 0px rgba(30, 49, 55, 0.08)",

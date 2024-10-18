@@ -2,8 +2,8 @@
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import { useFormikContext } from "formik";
-import SummarySection, { Detail } from "@/components/summary/SummarySection";
 import { ActiveStepItem } from "../../types";
+import SummarySection, { Detail } from "@/components/summary/SummarySection";
 
 interface FacilitySummaryProps {
   setActiveStep: React.Dispatch<React.SetStateAction<ActiveStepItem>>;
@@ -14,9 +14,10 @@ const FacilitySummary = ({
   steps,
 }: FacilitySummaryProps): JSX.Element => {
   const { values } = useFormikContext<any>();
-
+  console.log("Facility Data: ===---> ", values);
+  
   const updatedFacilityInformation: Detail[] = [
-    values.name && { label: "Name des Gebäudes", value: values.name },
+    values.name != "" && { label: "Name des Gebäudes", value: values.buildingName },
     values.totalArea && {
       label: "Gesamtfläche (in qm) ",
       value: values.totalArea,

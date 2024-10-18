@@ -40,3 +40,6 @@ next-env.d.ts
 
 #docker volume
 /fe
+
+#Log file
+app.log

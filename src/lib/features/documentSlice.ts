@@ -19,8 +19,6 @@ const documentSclice = createSlice({
   initialState,
   reducers: {
     setDocumentType: (state, action: PayloadAction<any>) => {
-      console.log("action.payload: ----> ", action.payload);
-
       state.documentType = action.payload?.documentType;
     },
   },

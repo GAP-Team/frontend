@@ -22,9 +22,13 @@ import Link from "next/link";
 import { IconButton } from "@mui/material";
 import { CgClose } from "react-icons/cg";
 import TenderSummary from "./TenderSummary";
+import tenderAPIs from "@/api/tender";
+import { useAppDispatch } from "@/lib/hooks";
+import { showSnackbar } from "@/components/root-snackbar";
 
 const NewTender = (): JSX.Element => {
   const router = useRouter();
+  const appdispatch = useAppDispatch();
   const steps: ActiveStepItem[] = [
     {
       id: 0,
@@ -47,18 +51,69 @@ const NewTender = (): JSX.Element => {
     setIsSubmitted(false);
   }, []);
 
-  const handleNext = (
+  const handleNext = async (
     values: AddTenderFormValues,
     actions: FormikHelpers<AddTenderFormValues>
-  ): void => {
+  ): Promise<void> => {
     if (activeStep?.id === steps.length - 1) {
-      console.log("Form values", values);
-      setIsSubmitted(true);
-      actions.setSubmitting(false);
+      const saveData = await saveTenderData(values);
+      if (saveData) {
+        setIsSubmitted(true);
+        actions.setSubmitting(false);
+      }
     } else {
       setActiveStep(steps[activeStep.id + 1]);
       actions.setTouched({});
       actions.setSubmitting(false);
+    }
+  };
+
+  const saveTenderData = async (
+    values: AddTenderFormValues
+  ): Promise<boolean> => {
+    let buildingObj = {
+      id: values?.buildingId,
+      name: values?.buildingName,
+    };
+    let facilityObj = {
+      id: values?.facilityId,
+      name: values?.facilityName,
+    };
+
+    let tenderData = {
+      building: buildingObj,
+      facility: facilityObj,
+      toDate: values?.toDate,
+      urgency: values?.urgency,
+      fromDate: values?.fromDate,
+      clientName: values?.clientName,
+      tenderForm: values?.tenderForm,
+      tenderType: values?.tenderType,
+      detailDescription: values?.detailDescription,
+      safetyWorkRequired: values?.safetyWorkRequired,
+      freeParkingAvailable: values?.freeParkingAvailable,
+    };
+
+    const createTenderResponse = await tenderAPIs.create(tenderData);
+
+    if (createTenderResponse?.data?.id) {
+      appdispatch(
+        showSnackbar({
+          type: "success",
+          message: "Ausschreibung erfolgreich hinzugefügt!",
+        })
+      );
+
+      return true;
+    } else {
+      appdispatch(
+        showSnackbar({
+          type: "error",
+          message:
+            "Ausschreibung konnte nicht hinzugefügt werden. Bitte überprüfen Sie die Eingabedaten und versuchen Sie es erneut",
+        })
+      );
+      return false;
     }
   };
 
@@ -72,7 +127,6 @@ const NewTender = (): JSX.Element => {
 
   const initialValues: AddTenderFormValues = {
     clientName: "",
-    tenderName: "",
     tenderForm: "Handwerker",
     tenderType: "",
     buildingName: "",
@@ -88,6 +142,8 @@ const NewTender = (): JSX.Element => {
     floorplanDocs: [],
     equipmentDocs: [],
     serverLink: "",
+    buildingId: "",
+    facilityId: "",
   };
 
   const formOrSuccessContent = isSubmitted ? (

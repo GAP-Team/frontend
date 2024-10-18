@@ -23,7 +23,7 @@ const FacilityInformation = (): JSX.Element => {
       ? { label: formik.values.subcategory, value: formik.values.subcategory }
       : null
   );
-  const [selectedBuildingType, setSelectedBuildingType] = useState<Item | null>(
+  const [selectedBuilding, setSelectedBuilding] = useState<Item | null>(
     formik?.values?.buildingName
       ? { label: formik.values.buildingName, value: formik.values.buildingName }
       : null
@@ -69,7 +69,7 @@ const FacilityInformation = (): JSX.Element => {
   };
 
   const handleBuildingTypeSelect = (selectedItem: Item | null): void => {
-    setSelectedBuildingType(selectedItem);
+    setSelectedBuilding(selectedItem);
     formik?.setFieldValue(
       "buildingName",
       selectedItem ? selectedItem.value : ""
@@ -147,7 +147,7 @@ const FacilityInformation = (): JSX.Element => {
               formik?.touched?.buildingName && formik?.errors?.buildingName
             }
             onSelect={handleBuildingTypeSelect}
-            selectedState={selectedBuildingType}
+            selectedState={selectedBuilding}
           />
         </Grid>
       </Grid>

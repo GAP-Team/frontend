@@ -6,7 +6,7 @@ A Next.js 14 project with App Router, ready to power GAP with the latest feature
 
 - **Next.js App Router** for efficient routing and server-side rendering.
 - **SEO Optimization** using Next.js's Metadata for better search engine visibility.
-- **Tailwind CSS + Daisy + Flowbite** for styling the landing page.
+- **Tailwind CSS + Daisy + Flowbite** for styling the **landing page**.
 - **MUI (Material-UI) Library** for building modern, responsive dashboards.
 
 ## Project Conventions:
@@ -16,7 +16,7 @@ A Next.js 14 project with App Router, ready to power GAP with the latest feature
 - **Component Structure:** Organize component folders into categories like **input**, **button**, etc.
 - **Component Naming:** Prefix the name of components with **G** (e.g., `GButton.tsx`) to indicate it's a GAP-specific component and not from a framework.
 - **Inline Styles:** Extract inline styles (from MUI's `sx` prop) into a TypeScript object and define them at the end of each component file.
-- **Icons:** Use a mix of icons from **Figma**, **Font Awesome**, **react-icons**, and **MUI icons**.
+- **Icons:** Use **MUI icons** and **react-icons**.
 - **Fonts & Colors:**
   - Landing page styles are defined in **tailwind.config.ts**.
   - Dashboard styles are defined in **app/theme.ts**.
@@ -31,6 +31,9 @@ A Next.js 14 project with App Router, ready to power GAP with the latest feature
 
 2. Copy the `.env.example` file to `.env` and update it with real variables.
 
+   - Credential of Google MAP API Key should be provided
+     `NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=ask_for_api_key`
+
 3. Run the development server:
 
    ```bash
@@ -38,6 +41,24 @@ A Next.js 14 project with App Router, ready to power GAP with the latest feature
    ```
 
 4. Open [http://localhost:3000](http://localhost:3000) in your browser to view the application.
+
+## Running the Application in Debugger Mode
+
+This project is set up to enable simultaneous debugging of both the **server-side** and **client-side** of the Next.js application. Follow the steps below to run the application in debugger mode using Visual Studio Code:
+
+### Debugger Setup
+
+In the project, the `launch.json` configuration is already set up to allow simultaneous debugging of the server and client sides.
+
+### Steps to Run the Debugger:
+
+1. set **breakpoints** in the project where to debug.
+2. Open Run and Debug in VSC.
+3. From the list of configurations, select **"Run Full Stack (Client + Server)"**.
+   - This will launch:
+     - The server-side in development mode using `npm run dev`.
+     - The client-side debugger in Chrome (or Edge) and attach it to the running instance.
+4. The application will open in the browser at `http://localhost:3000`.
 
 ## Running the App with Docker
 
@@ -47,23 +68,10 @@ The application is set up to run with Docker. You can start it with the followin
 docker-compose up
 ```
 
-To run the app in detached mode without log messages:
-
-```bash
-docker-compose up -d
-```
-
 ## Deployment
 
-The app is hosted on AWS:
-
-```
-
-```
-
-## Environment Variables
-
-Always keep the `.env.example` file up to date with dummy variables to ensure a smooth setup for new team members.
+Frontend is deployed as a Docker Container in AWS EC2.
+Documentation on Confluence [AWS Deployment](https://offerapp.atlassian.net/wiki/spaces/GAP/pages/75857921/Deploy+Containerized+App+on+AWS)
 
 ## CI/CD with Prettier and ESLint
 
@@ -74,21 +82,7 @@ We have CI/CD integrated to ensure code quality and formatting are enforced cons
 
    Run the following command to automatically fix formatting issues:
 
-   ```bash
-   npx prettier --write .
-   ```
-
-   You can also check the formatting without applying changes:
-
-   ```bash
-   npx prettier --check .
-   ```
-
-   Or, use the predefined npm script for a faster process:
-
-   ```bash
-   npm run format
-   ```
+   `npm run format`
 
 2. **To lint the code with ESLint:**
    what is ESLint about ?
@@ -97,8 +91,6 @@ We have CI/CD integrated to ensure code quality and formatting are enforced cons
 
    Ensure your code follows ESLint rules by running:
 
-   ```bash
-   npm run lint
-   ```
+   `npm run lint`
 
 This will help keep the codebase clean, enforce consistent styling, and make collaboration within the team easier.

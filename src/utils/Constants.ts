@@ -1,3 +1,5 @@
+import { Notification } from "@/components/navigation/GAppbar/types";
+
 export const statusStyles: {
   [key: string]: { bgcolor: string; color: string };
 } = {
@@ -117,7 +119,7 @@ export const listOfTrades = [
     category: "Tore, Türen",
     items: [
       "Automatische Schiebetüren",
-      "Brandschutztüren und -tore (Kraftbetätige Fenster, Türen und Tore)",
+      "Brandschutztüren und -tore (Kraftbetätige Fenster)",
     ],
   },
   {
@@ -182,58 +184,6 @@ export const germanStates: Item[] = [
   { label: "Sachsen-Anhalt", value: "Sachsen-Anhalt" }, // Saxony-Anhalt
   { label: "Schleswig-Holstein", value: "Schleswig-Holstein" },
   { label: "Thüringen", value: "Thüringen" }, // Thuringia
-];
-
-interface Detail {
-  label: string;
-  value: string;
-}
-
-// Registration default dummy values
-export const grundinformation: Detail[] = [
-  { label: "Vorname", value: "Maximillian" },
-  { label: "Nachname", value: "Müller-Maier" },
-  { label: "E-mail-Adresse", value: "müller-maire@gmail.com" },
-  { label: "Unternehmen", value: "Fire Protection GmbH" },
-];
-
-export const ansprechpartner: Detail[] = [
-  { label: "Vorname", value: "Maximillian" },
-  { label: "Nachname", value: "Müller-Maier" },
-  { label: "E-Mail-Adresse", value: "müller-maire@gmail.com" },
-  { label: "Tel. Nummer", value: "+4916090010020" },
-];
-
-export const adresse: Detail[] = [
-  { label: "Land", value: "Germany" },
-  { label: "Bundesland", value: "Mecklenburg-Vorpom..." },
-  { label: "Straße", value: "Heinrich-Baumann Str. 49" },
-  { label: "Hausnummer", value: "123" },
-  { label: "Postleitzahl", value: "19061" },
-  { label: "Stadt", value: "Schwerin" },
-];
-
-// Objekt/Building Values
-export const buildingInformation: Detail[] = [
-  { label: "Name", value: "G302 - Mittelstraße 14" },
-  { label: "Area", value: "24.58" },
-  { label: "Gebäude Type", value: "Wohngebäude" },
-];
-
-export const buildingContactPersonList: Detail[] = [
-  { label: "Name", value: "Markus Richter" },
-];
-
-export const buildingAddress: Detail[] = [
-  { label: "Address", value: "Mittelstraße 14" },
-  { label: "Postleitzahl", value: "47475" },
-  { label: "Stadt", value: "Kamp-Lintfort" },
-  { label: "State", value: "Mittelstraße 14" },
-  { label: "Bundesland", value: "Nordrhein-Westfahlen" },
-];
-
-export const buildingDocs: Detail[] = [
-  { label: "File", value: "Objektplan A10-29 c.pdf" },
 ];
 
 export const jobCardsData = [
@@ -448,29 +398,6 @@ export const news = [
   },
 ];
 
-export const contactPersonList = [
-  {
-    firstName: "Markus",
-    lastName: "Richter",
-    email: "lrojektingenieur@abc.com",
-  },
-  {
-    firstName: "Alexander",
-    lastName: "Schmidt",
-    email: "lgeschäftsführer@abc.com",
-  },
-  {
-    firstName: "Alexande",
-    lastName: "Schmidt",
-    email: "lertriebsleiter@abc.com",
-  },
-  {
-    firstName: "Katharina",
-    lastName: "Weber",
-    email: "lundenbetreuer@abc.com",
-  },
-];
-
 export const buildingTypesList = [
   { label: "Bürogebäude", value: "Bürogebäude" }, // Office building
   { label: "Bahnhof", value: "Bahnhof" }, // Train station
@@ -489,224 +416,6 @@ export const buildingTypesList = [
   { label: "Hotel", value: "Hotel" }, // Hotel
   { label: "Krankenhaus", value: "Krankenhaus" }, // Hospital
   { label: "Wohnhaus", value: "Wohnhaus" }, // Residential building
-];
-
-export const dummyBuildings = [
-  {
-    _id: 1,
-    buildingName: "Building A",
-    buildingType: "Residential",
-    noOfInvestment: 2,
-    noOfTenders: 5,
-    totalArea: 43938,
-    address: {
-      country: "Germany",
-      state: "North Rhine-Westphalia",
-      street: "Mittelstraße",
-      city: "Kamp-Lintfort",
-      houseNumber: "401",
-      zip: "47475",
-    },
-    area: 43938,
-    documents: [
-      { name: "ac.pdf", key: "ac" },
-      { name: "abczd.pdf", key: "abczd1" },
-      { name: "abczd.pdf", key: "abczd2" },
-      { name: "abczd.pdf", key: "abczd3" },
-    ],
-  },
-  {
-    _id: 2,
-    buildingName: "Building B",
-    buildingType: "Commercial",
-    noOfInvestment: 2,
-    noOfTenders: 5,
-    totalArea: 43938,
-    address: {
-      country: "Germany",
-      state: "North Rhine-Westphalia",
-      street: "Mittelstraße",
-      city: "Kamp-Lintfort",
-      houseNumber: "402",
-      zip: "47475",
-    },
-    area: 43938,
-    documents: [
-      { name: "ac.pdf", key: "ac" },
-      { name: "abczd.pdf", key: "abczd1" },
-      { name: "abczd.pdf", key: "abczd2" },
-      { name: "abczd.pdf", key: "abczd3" },
-    ],
-  },
-  {
-    _id: 3,
-    buildingName: "Building C",
-    buildingType: "Industrial",
-    noOfInvestment: 2,
-    noOfTenders: 5,
-    totalArea: 43938,
-    address: {
-      country: "Germany",
-      state: "North Rhine-Westphalia",
-      street: "Mittelstraße",
-      city: "Kamp-Lintfort",
-      houseNumber: "403",
-      zip: "47475",
-    },
-    area: 43938,
-    documents: [
-      { name: "ac.pdf", key: "ac" },
-      { name: "abczd.pdf", key: "abczd1" },
-      { name: "abczd.pdf", key: "abczd2" },
-      { name: "abczd.pdf", key: "abczd3" },
-    ],
-  },
-  {
-    _id: 4,
-    buildingName: "Building D",
-    buildingType: "Educational",
-    noOfInvestment: 2,
-    noOfTenders: 5,
-    totalArea: 43938,
-    address: {
-      country: "Germany",
-      state: "North Rhine-Westphalia",
-      street: "Mittelstraße",
-      city: "Kamp-Lintfort",
-      houseNumber: "404",
-      zip: "47475",
-    },
-    area: 43938,
-    documents: [
-      { name: "ac.pdf", key: "ac" },
-      { name: "abczd.pdf", key: "abczd1" },
-      { name: "abczd.pdf", key: "abczd2" },
-      { name: "abczd.pdf", key: "abczd3" },
-    ],
-  },
-  {
-    _id: 5,
-    buildingName: "Building E",
-    buildingType: "Hospitality",
-    noOfInvestment: 2,
-    noOfTenders: 5,
-    totalArea: 43938,
-    address: {
-      country: "Germany",
-      state: "North Rhine-Westphalia",
-      street: "Mittelstraße",
-      city: "Kamp-Lintfort",
-      houseNumber: "405",
-      zip: "47475",
-    },
-    area: 43938,
-    documents: [
-      { name: "ac.pdf", key: "ac" },
-      { name: "abczd.pdf", key: "abczd1" },
-      { name: "abczd.pdf", key: "abczd2" },
-      { name: "abczd.pdf", key: "abczd3" },
-    ],
-  },
-  {
-    _id: 6,
-    buildingName: "Building F",
-    buildingType: "Office",
-    noOfInvestment: 2,
-    noOfTenders: 5,
-    totalArea: 43938,
-    address: {
-      country: "Germany",
-      state: "North Rhine-Westphalia",
-      street: "Mittelstraße",
-      city: "Kamp-Lintfort",
-      houseNumber: "406",
-      zip: "47475",
-    },
-    area: 43938,
-    documents: [
-      { name: "ac.pdf", key: "ac" },
-      { name: "abczd.pdf", key: "abczd1" },
-      { name: "abczd.pdf", key: "abczd2" },
-      { name: "abczd.pdf", key: "abczd3" },
-    ],
-  },
-  {
-    _id: 7,
-    buildingName: "Building G",
-    buildingType: "Retail",
-    noOfInvestment: 2,
-    noOfTenders: 5,
-    totalArea: 43938,
-    address: {
-      country: "Germany",
-      state: "North Rhine-Westphalia",
-      street: "Mittelstraße",
-      city: "Kamp-Lintfort",
-      houseNumber: "407",
-      zip: "47475",
-    },
-    area: 43938,
-    documents: [
-      { name: "ac.pdf", key: "ac" },
-      { name: "abczd.pdf", key: "abczd1" },
-      { name: "abczd.pdf", key: "abczd2" },
-      { name: "abczd.pdf", key: "abczd3" },
-    ],
-  },
-  {
-    _id: 8,
-    buildingName: "Building I",
-    buildingType: "Residential",
-    noOfInvestment: 2,
-    noOfTenders: 5,
-    totalArea: 43938,
-    address: {
-      country: "Germany",
-      state: "North Rhine-Westphalia",
-      street: "Mittelstraße",
-      city: "Kamp-Lintfort",
-      houseNumber: "408",
-      zip: "47475",
-    },
-    area: 43938,
-    documents: null,
-  },
-  {
-    _id: 9,
-    buildingName: "Building J",
-    buildingType: "Commercial",
-    noOfInvestment: 2,
-    noOfTenders: 5,
-    totalArea: 43938,
-    address: {
-      country: "Germany",
-      state: "North Rhine-Westphalia",
-      street: "Mittelstraße",
-      city: "Kamp-Lintfort",
-      houseNumber: "409",
-      zip: "47475",
-    },
-    area: 43938,
-    documents: [],
-  },
-  {
-    _id: 10,
-    buildingName: "Building K",
-    buildingType: "Industrial",
-    noOfInvestment: 2,
-    noOfTenders: 5,
-    totalArea: 43938,
-    address: {
-      country: "Germany",
-      state: "North Rhine-Westphalia",
-      street: "Mittelstraße",
-      city: "Kamp-Lintfort",
-      houseNumber: "410",
-      zip: "47475",
-    },
-    area: 43938,
-    documents: [],
-  },
 ];
 
 export const tenderTypesListHW = [
@@ -768,47 +477,6 @@ export const tenderTypesListSV = [
   },
 ];
 
-export const equipmentTypesList = [
-  {
-    label: "Brandschutztüren/Brandschutztore",
-    value: "Brandschutztüren/Brandschutztore",
-  },
-  {
-    label: "Brandmeldeanlage/Alarmierungsanlage",
-    value: "Brandmeldeanlage/Alarmierungsanlage",
-  },
-  { label: "CO-Warnanlagen", value: "CO-Warnanlagen" },
-  { label: "Dampf und Druckanlagen", value: "Dampf und Druckanlagen" },
-  {
-    label: "DGUV V3 - ortsveränderliche elektrtechnische Prüfung",
-    value: "DGUV V3 - ortsveränderliche elektrtechnische Prüfung",
-  },
-  {
-    label: "Explosionsschutzanlagen (EX-Schutz)",
-    value: "Explosionsschutzanlagen (EX-Schutz)",
-  },
-  { label: "Feuerlöschanlagen", value: "Feuerlöschanlagen" },
-  {
-    label: "Fördertechnik (Aufzüge, Rolltreppen, etc)",
-    value: "Fördertechnik (Aufzüge, Rolltreppen, etc)",
-  },
-  {
-    label: "Lüftungsanlagen/Raumlufttechnischeanlagen (Brandschutzklappen)",
-    value: "Lüftungsanlagen/Raumlufttechnischeanlagen (Brandschutzklappen)",
-  },
-  {
-    label: "Rauchabzugsanlagen/Druckbelüftungsanlagen",
-    value: "Rauchabzugsanlagen/Druckbelüftungsanlagen",
-  },
-  { label: "Sicherheitsbeleuchtung", value: "Sicherheitsbeleuchtung" },
-  { label: "Sicherheitsstrom", value: "Sicherheitsstrom" },
-  {
-    label: "Tanks mit wassergefährdeten Stoffen - Heizöltanks, etc.",
-    value: "Tanks mit wassergefährdeten Stoffen - Heizöltanks, etc.",
-  },
-  { label: "Tragbare Feuerlöscher", value: "Tragbare Feuerlöscher" },
-];
-
 export const realStateUsers = "REAL_ESTATE_USER";
 export const serviceProvider = "SERVICE_PROVIDER";
 
@@ -826,34 +494,6 @@ export const DocumentTypes = {
   GRUNDRISSE: "GRUNDRISSE",
   BAUUNTERLAGEN: "BAUUNTERLAGEN",
 };
-
-export const GenericTerms = [
-  {
-    label: "Allgemeine Geschäftsbedingungen",
-    value: "Allgemeine Geschäftsbedingungen",
-  },
-  { label: "Datenschutzerklärung", value: "Datenschutzerklärung" },
-  { label: "Impressum", value: "Impressum" },
-  { label: "Nutzungsbedingungen", value: "Nutzungsbedingungen" },
-];
-
-export const subcategories = [
-  { label: "Rauchmelder", value: "Rauchmelder" },
-  { label: "Optischemelder", value: "Optischemelder" },
-  { label: "Sprinkleranlagen", value: "Sprinkleranlagen" },
-  { label: "Gaslöschanlagen", value: "Gaslöschanlagen" },
-  { label: "Elektrische Schaltschränke", value: "Elektrische Schaltschränke" },
-  { label: "Leiter", value: "Leiter" },
-  { label: "Hebebühnen", value: "Hebebühnen" },
-  { label: "Steckdosen", value: "Steckdosen" },
-  { label: "RWA", value: "RWA" },
-  { label: "RDA", value: "RDA" },
-  { label: "CO-Warnanlagen", value: "CO-Warnanlagen" },
-  { label: "Druckluftwasserbehälter", value: "Druckluftwasserbehälter" },
-  { label: "Druckgeräte", value: "Druckgeräte" },
-  { label: "Druckbehälter", value: "Druckbehälter" },
-  { label: "Dampfkesselanlagen", value: "Dampfkesselanlagen" },
-];
 
 export const dummyFacilities = [
   {
@@ -1033,5 +673,167 @@ export const jobItemListInCostPage = [
     projectID: "A1010",
     savingAmount: 880,
     status: "Nachprüfung",
+  },
+];
+
+export const NextMaintenanceOptions = [
+  {
+    label: "1 Monat",
+    value: 1,
+  },
+  {
+    label: "2 Monat",
+    value: 2,
+  },
+  {
+    label: "3 Monat",
+    value: 3,
+  },
+  {
+    label: "4 Monat",
+    value: 4,
+  },
+  {
+    label: "5 Monat",
+    value: 5,
+  },
+];
+export const NextCheckOptions = [
+  {
+    label: "1 Jahr",
+    value: 1,
+  },
+  {
+    label: "2 Jahr",
+    value: 2,
+  },
+  {
+    label: "3 Jahr",
+    value: 3,
+  },
+  {
+    label: "4 Jahr",
+    value: 4,
+  },
+  {
+    label: "5 Jahr",
+    value: 5,
+  },
+];
+export const reminderOptions = [
+  {
+    label: "Keine",
+    value: 0,
+  },
+  {
+    label: "Vor 3 Monate",
+    value: 3,
+  },
+  {
+    label: "Vor 6 Monate",
+    value: 6,
+  },
+  {
+    label: "Vor 9 Monate",
+    value: 9,
+  },
+  {
+    label: "Vor 12 Monate",
+    value: 12,
+  },
+];
+export const autoPublishMonthsOptions = [
+  {
+    label: "alle 12 Monate",
+    value: 12,
+  },
+  {
+    label: "alle 9 Monate",
+    value: 9,
+  },
+  {
+    label: "alle 6 Monate",
+    value: 6,
+  },
+  {
+    label: "alle 3 Monate",
+    value: 3,
+  },
+];
+export const notifications: Notification[] = [
+  {
+    message: "You were chosen as a main provider for object G-302.",
+    time: "25m ago",
+    status: "warning",
+  },
+  {
+    message: "You are in stop list as provider for object G-302.",
+    time: "45m ago",
+    status: "success",
+  },
+  {
+    message: "You were not chosen as a main provider for object G-302.",
+    time: "58m ago",
+    status: "danger",
+  },
+  {
+    message: "You were chosen as a main provider for object G-302.",
+    time: "25m ago",
+    status: "warning",
+  },
+  {
+    message: "You are in stop list as provider for object G-302.",
+    time: "45m ago",
+    status: "success",
+  },
+  {
+    message: "You were not chosen as a main provider for object G-302.",
+    time: "58m ago",
+    status: "danger",
+  },
+  {
+    message: "You were chosen as a main provider for object G-302.",
+    time: "25m ago",
+    status: "warning",
+  },
+  {
+    message: "You are in stop list as provider for object G-302.",
+    time: "45m ago",
+    status: "success",
+  },
+  {
+    message: "You were not chosen as a main provider for object G-302.",
+    time: "58m ago",
+    status: "danger",
+  },
+  {
+    message: "You were chosen as a main provider for object G-302.",
+    time: "25m ago",
+    status: "warning",
+  },
+  {
+    message: "You are in stop list as provider for object G-302.",
+    time: "45m ago",
+    status: "success",
+  },
+  {
+    message: "You were not chosen as a main provider for object G-302.",
+    time: "58m ago",
+    status: "danger",
+  },
+  {
+    message: "You were chosen as a main provider for object G-302.",
+    time: "25m ago",
+    status: "warning",
+  },
+  {
+    message: "You are in stop list as provider for object G-302.",
+    time: "45m ago",
+    status: "success",
+  },
+  {
+    message: "You were not chosen as a main provider for object G-302.",
+    time: "58m ago",
+    status: "danger",
   },
 ];
