@@ -3,7 +3,7 @@ import { Dayjs } from "dayjs";
 
 export interface AddFacilityFormValues {
   name: string;
-  genericTerm: string;
+  facilityType: string;
   subcategory: string;
   contactPerson: string;
   servicingType: string;
@@ -15,9 +15,9 @@ export interface AddFacilityFormValues {
   reminderInMonths: number;
   isEmailNotificationEnabled: boolean;
   emailNotificationList: string[];
-  buildingName: string;
+  selectedBuilding: string;
   documentChoice: string;
-  constructionDocs: File[];
+  checkReports: File[];
   floorplanDocs: File[];
   otherDocs: File[];
   serverLink: string;

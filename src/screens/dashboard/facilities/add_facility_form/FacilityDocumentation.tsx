@@ -82,17 +82,17 @@ const FacilityDocumentation = (): JSX.Element => {
               BAUUNTERLAGEN
             </Typography>
             <UploadMultiButton
-              id="constructionDocs"
-              name="constructionDocs"
-              value={formik.values.constructionDocs}
+              id="checkReports"
+              name="checkReports"
+              value={formik.values.checkReports}
               onChange={formik.handleChange}
               error={
-                formik.touched.constructionDocs &&
-                Boolean(formik.errors.constructionDocs)
+                formik.touched.checkReports &&
+                Boolean(formik.errors.checkReports)
               }
               helperText={
-                formik.touched.constructionDocs &&
-                formik.errors.constructionDocs?.toString()
+                formik.touched.checkReports &&
+                formik.errors.checkReports?.toString()
               }
             />
           </Grid>

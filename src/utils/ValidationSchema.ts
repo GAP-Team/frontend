@@ -208,9 +208,11 @@ export const addTenderValidationSchema = [
 export const addFacilityValidationSchema = [
   yup.object({
     name: yup.string(),
-    genericTerm: yup.string().required("Oberbegriff ist erforderlich"),
+    facilityType: yup.string().required("Oberbegriff ist erforderlich"),
     subcategory: yup.string(),
-    buildingName: yup.string().required("Gebäude Zuordnung ist erforderlich"),
+    selectedBuilding: yup
+      .string()
+      .required("Gebäude Zuordnung ist erforderlich"),
   }),
   yup.object({
     lastCheckDate: yup.date().nullable(),
@@ -258,7 +260,7 @@ export const addFacilityValidationSchema = [
   }),
   yup.object({
     documentChoice: yup.string(),
-    constructionDocs: yup.array().of(yup.mixed()),
+    checkReports: yup.array().of(yup.mixed()),
     floorplanDocs: yup.array().of(yup.mixed()),
     otherDocs: yup
       .array()

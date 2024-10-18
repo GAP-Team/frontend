@@ -25,14 +25,14 @@ const FacilitySummary = ({
 
   useEffect(() => {
     const building = allBuildings.filter(
-      (building: any) => building._id === values.buildingName
+      (building: any) => building._id === values.selectedBuilding
     );
     setSelectedBuildingDetails(building[0]);
   }, []);
 
   const facilityInformation: Detail[] = [
     values.name && {
-      label: "Name des Anlagenname-/Bezeichnung",
+      label: "Name der Anlage/Bezeichnung",
       value: values.name,
     },
     values.genericTerm && {
@@ -40,7 +40,7 @@ const FacilitySummary = ({
       value: values.genericTerm,
     },
     values.subcategory && { label: "Anlagentyp", value: values.subcategory },
-    values.buildingName && {
+    values.selectedBuilding && {
       label: "Objekt Zuordnen",
       value: selectedBuildingDetails?.buildingName,
     },
@@ -52,31 +52,29 @@ const FacilitySummary = ({
       value: dayjs(values.lastCheckDate).format("DD.MM.YYYY"),
     },
     values.nextCheckInYearNumber && {
-      label: "Nächste Prüfung",
-      value: values.nextCheckInYearNumber,
+      label: "Nächste Prüfung in",
+      value: `${values.nextCheckInYearNumber} Jahr(e)`,
     },
     values.isPublishAutomatically && {
       label: "Automatisch Veröffentlichen",
-      value: values.isPublishAutomatically,
+      value: values.isPublishAutomatically ? "Ja" : "Nein",
     },
     values.publishAutomaticallyInMonths && {
-      label: "Automatisch in monaten veröffentlichen",
-      value: values.publishAutomaticallyInMonths,
+      label: "Automatisch veröffentlichen in",
+      value: `${values.publishAutomaticallyInMonths} Monat(e)`,
     },
     values.reminderInMonth && {
-      label: "Reminder Einstellen",
-      value: values.reminderInMonth,
+      label: "Reminder Einstellen in",
+      value: `${values.reminderInMonth} Monat(e)`,
     },
     values.isEmailNotificationEnable && {
       label: "Automatische E-Mail Erhalten",
-      value: values.isEmailNotificationEnable ? "true" : "false",
+      value: values.isEmailNotificationEnable ? "Ja" : "Nein",
     },
-    ...(values.emailNotificationList?.length
-      ? values.emailNotificationList.map((email: any) => ({
-          label: "Automatische Erinnerungs-E-Mails",
-          value: email,
-        }))
-      : []),
+    values.emailNotificationList?.length > 0 && {
+      label: "Automatische Erinnerungs-E-Mails",
+      value: values.emailNotificationList.map((email: any) => `${email}, `),
+    },
   ].filter(Boolean);
 
   const facilityMaintenanceInformation: Detail[] = [
@@ -85,49 +83,51 @@ const FacilitySummary = ({
       value: dayjs(values.lastMaintenanceDate).format("DD.MM.YYYY"),
     },
     values.nextMaintenanceInMonth && {
-      label: "Nächste Wartung auswählen",
-      value: values.nextMaintenanceInMonth,
+      label: "Nächste Wartung in",
+      value: `${values.nextMaintenanceInMonth} Monat(e)`,
     },
     values.isPublishMaintenanceAutomatically && {
       label: "Automatisch Veröffentlichen",
-      value: values.isPublishMaintenanceAutomatically,
+      value: values.isPublishMaintenanceAutomatically ? "Ja" : "Nein",
     },
     values.publishMaintenanceAutomaticallyInMonth && {
-      label: "Automatisch in monaten veröffentlichen",
-      value: values.publishMaintenanceAutomaticallyInMonth,
+      label: "Automatisch veröffentlichen in",
+      value: `${values.publishMaintenanceAutomaticallyInMonth} Monat(e)`,
     },
     values.maintenanceReminderInMonth && {
-      label: "Reminder Einstellen",
-      value: values.maintenanceReminderInMonth,
+      label: "Reminder Einstellen in",
+      value: `${values.maintenanceReminderInMonth} Monat(e)`,
     },
     values.isMaintenanceEmailNotificationEnable && {
       label: "Automatische E-Mail Erhalten",
-      value: values.isMaintenanceEmailNotificationEnable ? "true" : "false",
+      value: values.isMaintenanceEmailNotificationEnable ? "Ja" : "Nein",
     },
     ...(values.maintenanceEmailNotificationList?.length
-      ? values.maintenanceEmailNotificationList.map((email: any) => ({
-          label: "Automatische Erinnerungs-E-Mails",
-          value: email,
-        }))
+      ? values.maintenanceEmailNotificationList.map(
+          (email: any, index: number) => ({
+            label: `Automatische Erinnerungs-E-Mails ${index + 1}`,
+            value: email,
+          })
+        )
       : []),
   ].filter(Boolean);
 
   const updatedDocList: Detail[] = [
     ...(values.constructionDocs?.length
       ? values.constructionDocs.map((doc: any) => ({
-          label: "Baudokument",
+          label: "Berichte (Prüf- und Wartungsberichte)",
           value: doc.name,
         }))
       : []),
     ...(values.floorplanDocs?.length
       ? values.floorplanDocs.map((doc: any) => ({
-          label: "Grundrissdokument",
+          label: "Grundrisse & Schema",
           value: doc.name,
         }))
       : []),
     ...(values.otherDocs?.length
       ? values.otherDocs.map((doc: any) => ({
-          label: "Weiteres Dokument",
+          label: "Sonstige Dokumente",
           value: doc.name,
         }))
       : []),
@@ -141,21 +141,21 @@ const FacilitySummary = ({
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <SummarySection
-            title="Anlagen Informationen"
+            title="Anlageninformationen"
             details={facilityInformation}
             setActiveStep={() => setActiveStep(steps[0])}
           />
         </Grid>
         <Grid item xs={6}>
           <SummarySection
-            title="Prüfung Informationen"
+            title="Prüfungsinformationen"
             details={facilityCheckInformation}
             setActiveStep={() => setActiveStep(steps[1])}
           />
         </Grid>
         <Grid item xs={6}>
           <SummarySection
-            title="Prüfung Informationen"
+            title="Wartungsinformationen"
             details={facilityMaintenanceInformation}
             setActiveStep={() => setActiveStep(steps[2])}
           />

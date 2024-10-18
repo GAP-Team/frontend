@@ -76,7 +76,7 @@ const NewFacility: React.FC<NewFacilityProps> = ({}): JSX.Element => {
 
   const initialValues: AddFacilityFormValues = {
     name: "",
-    genericTerm: "",
+    facilityType: "",
     subcategory: "",
     contactPerson: "",
     servicingType: "",
@@ -88,9 +88,9 @@ const NewFacility: React.FC<NewFacilityProps> = ({}): JSX.Element => {
     reminderInMonths: 0,
     isEmailNotificationEnabled: false,
     emailNotificationList: ["", ""],
-    buildingName: "",
+    selectedBuilding: "",
     documentChoice: "Jetzt hochladen Empfohlen",
-    constructionDocs: [],
+    checkReports: [],
     floorplanDocs: [],
     otherDocs: [],
     serverLink: "",
