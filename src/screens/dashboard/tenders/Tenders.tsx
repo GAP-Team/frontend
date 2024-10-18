@@ -1,19 +1,32 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, 
+{ 
+  useState, 
+  useEffect
+} from "react";
 import Box from "@mui/material/Box";
-import PropertyFilterPanel from "@/components/filter/PropertyFilterPanel";
-import NoContentPage from "@/components/common/NoContentPage";
-import addTenderSrc from "@/../public/icons/add_tender.svg";
+import { useSelector } from "react-redux";
 import { jobCardsData } from "@/utils/Constants";
 import TenderList from "./tender_card/TenderList";
 import { TenderProps } from "./tender_card/types";
+import addTenderSrc from "@/../public/icons/add_tender.svg";
+import NoContentPage from "@/components/common/NoContentPage";
+import { currentUserBuildings } from "@/lib/features/userSlice";
+import PropertyFilterPanel from "@/components/filter/PropertyFilterPanel";
 
 const Tenders: React.FC = () => {
+
+  const userBuildings = useSelector(currentUserBuildings);
   const [tenders, setTenders] = useState<TenderProps[]>([]);
 
   useEffect(() => {
+    getAllTendersBasedOnBuildings();
     setTenders(jobCardsData);
   }, []);
+  
+  const getAllTendersBasedOnBuildings = () => {
+    console.log("User Buildings: => ", userBuildings);
+  }
 
   const tenderContent =
     tenders.length > 0 ? (
