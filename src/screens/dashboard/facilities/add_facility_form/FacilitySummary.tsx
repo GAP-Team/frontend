@@ -1,8 +1,9 @@
 "use client";
+import dayjs from "dayjs";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
-import { useFormikContext } from "formik";
 import { useSelector } from "react-redux";
+import { useFormikContext } from "formik";
 import { useEffect, useState } from "react";
 import { ActiveStepItem } from "../../types";
 import { allBuildingDetails } from "@/lib/features/userSlice";
@@ -19,7 +20,6 @@ const FacilitySummary = ({
 }: FacilitySummaryProps): JSX.Element => {
   const { values } = useFormikContext<any>();
   const allBuildings = useSelector(allBuildingDetails);
-
   const [selectedBuildingDetails, setSelectedBuildingDetails] =
     useState<SelectedBuildingData>();
 
@@ -30,53 +30,87 @@ const FacilitySummary = ({
     setSelectedBuildingDetails(building[0]);
   }, []);
 
-  const updatedFacilityInformation: Detail[] = [
-    values.buildingName !== "" && {
-      label: "Name des Gebäudes",
+  const facilityInformation: Detail[] = [
+    values.name && {
+      label: "Name des Anlagenname-/Bezeichnung",
+      value: values.name,
+    },
+    values.genericTerm && {
+      label: "Anlagenart",
+      value: values.genericTerm,
+    },
+    values.subcategory && { label: "Anlagentyp", value: values.subcategory },
+    values.buildingName && {
+      label: "Objekt Zuordnen",
       value: selectedBuildingDetails?.buildingName,
     },
-    selectedBuildingDetails?.buildingAbbreviation && {
-      label: "Gesamtfläche (in qm) ",
-      value: selectedBuildingDetails?.buildingAbbreviation
-        ? selectedBuildingDetails?.buildingAbbreviation
-        : 1000, //1000 is dummy data, afetr get real data will updated it
-    },
-    values.genericTerm && { label: "Gebäudetyp", value: values.genericTerm },
-    values.subcategory && {
-      label: "Objektkürzel",
-      value: values.subcategory,
-    },
-  ].filter(Boolean); // Filter out undefined values
+  ].filter(Boolean);
 
-  const updatedAddress: any[] = [
-    selectedBuildingDetails?.address?.street && {
-      label: "Straße",
-      value: selectedBuildingDetails?.address?.street,
+  const facilityCheckInformation: Detail[] = [
+    values.lastCheckDate && {
+      label: "Letzte Prüfung",
+      value: dayjs(values.lastCheckDate).format("DD.MM.YYYY"),
     },
-    selectedBuildingDetails?.address?.houseNumber && {
-      label: "Hausnummer",
-      value: selectedBuildingDetails?.address?.houseNumber,
+    values.nextCheckInYearNumber && {
+      label: "Nächste Prüfung",
+      value: values.nextCheckInYearNumber,
     },
-    selectedBuildingDetails?.address?.zip && {
-      label: "Postleitzahl",
-      value: selectedBuildingDetails?.address?.zip,
+    values.isPublishAutomatically && {
+      label: "Automatisch Veröffentlichen",
+      value: values.isPublishAutomatically,
     },
-    selectedBuildingDetails?.address?.city && {
-      label: "Stadt",
-      value: selectedBuildingDetails?.address?.city,
+    values.publishAutomaticallyInMonths && {
+      label: "Automatisch in monaten veröffentlichen",
+      value: values.publishAutomaticallyInMonths,
     },
-    selectedBuildingDetails?.address?.state && {
-      label: "Bundesland",
-      value: selectedBuildingDetails?.address?.state,
+    values.reminderInMonth && {
+      label: "Reminder Einstellen",
+      value: values.reminderInMonth,
     },
-  ].filter(Boolean); // Filter out undefined values
+    values.isEmailNotificationEnable && {
+      label: "Automatische E-Mail Erhalten",
+      value: values.isEmailNotificationEnable ? "true" : "false",
+    },
+    ...(values.emailNotificationList?.length
+      ? values.emailNotificationList.map((email: any) => ({
+          label: "Automatische Erinnerungs-E-Mails",
+          value: email,
+        }))
+      : []),
+  ].filter(Boolean);
 
-  const updatedContactPersonList: Detail[] = values?.contactPerson?.length
-    ? values.contactPerson.map((person: any) => ({
-        label: "Name",
-        value: `${person.firstName} ${person.lastName}`,
-      }))
-    : [];
+  const facilityMaintenanceInformation: Detail[] = [
+    values.lastMaintenanceDate && {
+      label: "Letzte Prüfung",
+      value: dayjs(values.lastMaintenanceDate).format("DD.MM.YYYY"),
+    },
+    values.nextMaintenanceInMonth && {
+      label: "Nächste Wartung auswählen",
+      value: values.nextMaintenanceInMonth,
+    },
+    values.isPublishMaintenanceAutomatically && {
+      label: "Automatisch Veröffentlichen",
+      value: values.isPublishMaintenanceAutomatically,
+    },
+    values.publishMaintenanceAutomaticallyInMonth && {
+      label: "Automatisch in monaten veröffentlichen",
+      value: values.publishMaintenanceAutomaticallyInMonth,
+    },
+    values.maintenanceReminderInMonth && {
+      label: "Reminder Einstellen",
+      value: values.maintenanceReminderInMonth,
+    },
+    values.isMaintenanceEmailNotificationEnable && {
+      label: "Automatische E-Mail Erhalten",
+      value: values.isMaintenanceEmailNotificationEnable ? "true" : "false",
+    },
+    ...(values.maintenanceEmailNotificationList?.length
+      ? values.maintenanceEmailNotificationList.map((email: any) => ({
+          label: "Automatische Erinnerungs-E-Mails",
+          value: email,
+        }))
+      : []),
+  ].filter(Boolean);
 
   const updatedDocList: Detail[] = [
     ...(values.constructionDocs?.length
@@ -107,33 +141,31 @@ const FacilitySummary = ({
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <SummarySection
-            title="Objektinformationen"
-            details={updatedFacilityInformation}
+            title="Anlagen Informationen"
+            details={facilityInformation}
             setActiveStep={() => setActiveStep(steps[0])}
           />
         </Grid>
-        <Grid item xs={12}>
+        <Grid item xs={6}>
           <SummarySection
-            title="Objektanschrift"
-            details={updatedAddress}
+            title="Prüfung Informationen"
+            details={facilityCheckInformation}
             setActiveStep={() => setActiveStep(steps[1])}
           />
         </Grid>
-        {updatedContactPersonList.length > 0 && (
-          <Grid item xs={6}>
-            <SummarySection
-              title="Ansprechpartner"
-              details={updatedContactPersonList}
-              setActiveStep={() => setActiveStep(steps[0])}
-            />
-          </Grid>
-        )}
+        <Grid item xs={6}>
+          <SummarySection
+            title="Prüfung Informationen"
+            details={facilityMaintenanceInformation}
+            setActiveStep={() => setActiveStep(steps[2])}
+          />
+        </Grid>
         {updatedDocList.length > 0 && (
-          <Grid item xs={6}>
+          <Grid item xs={12}>
             <SummarySection
               title="Bauunterlagen"
               details={updatedDocList}
-              setActiveStep={() => setActiveStep(steps[2])}
+              setActiveStep={() => setActiveStep(steps[3])}
             />
           </Grid>
         )}
