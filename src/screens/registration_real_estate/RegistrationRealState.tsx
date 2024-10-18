@@ -27,7 +27,7 @@ import PageTitle from "@/components/label/PageTitle";
 import { handleUploadDoc } from "@/utils/uploadToS3";
 import BackButton from "@/components/button/BackButton";
 import InfoBanner from "@/components/common/InfoBanner";
-import EmailTemplate from "@/components/EmailTemplate/Template";
+import EmailTemplate from "@/components/email_template/EmailTemplate";
 import { registrationValidationSchema } from "@/utils/ValidationSchema";
 import EmailVerification from "../../components/email/EmailVerification";
 
