@@ -477,9 +477,6 @@ export const tenderTypesListSV = [
   },
 ];
 
-export const realStateUsers = "REAL_ESTATE_USER";
-export const serviceProvider = "SERVICE_PROVIDER";
-
 export const emailTemplateSubject = `Subject: Verify Your Email for GAP (Gesetzliche Anlagen Prüfen)`;
 export const emailTemplateGreetins = `Thank you for registering with GAP (Gesetzliche Anlagen Prüfen)! To complete your registration and activate your account, please verify your email address by entering the verification code provided below.`;
 export const emailTemplateVerificationText = `Your Verification Code: `;
