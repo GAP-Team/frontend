@@ -20,18 +20,26 @@ const FacilitySummary = ({
   const { values } = useFormikContext<any>();
   const allBuildings = useSelector(allBuildingDetails);
 
-  const [selectedBuildingDetails, setSelectedBuildingDetails] = useState<SelectedBuildingData>();
+  const [selectedBuildingDetails, setSelectedBuildingDetails] =
+    useState<SelectedBuildingData>();
 
   useEffect(() => {
-    const building = allBuildings.filter((building: any) => building._id == values.buildingName);
+    const building = allBuildings.filter(
+      (building: any) => building._id === values.buildingName
+    );
     setSelectedBuildingDetails(building[0]);
   }, []);
-  
+
   const updatedFacilityInformation: Detail[] = [
-    values.buildingName != "" && { label: "Name des Gebäudes", value: selectedBuildingDetails?.buildingName },
+    values.buildingName !== "" && {
+      label: "Name des Gebäudes",
+      value: selectedBuildingDetails?.buildingName,
+    },
     selectedBuildingDetails?.buildingAbbreviation && {
       label: "Gesamtfläche (in qm) ",
-      value: selectedBuildingDetails?.buildingAbbreviation ? selectedBuildingDetails?.buildingAbbreviation : 1000, //1000 is dummy data, afetr get real data will updated it
+      value: selectedBuildingDetails?.buildingAbbreviation
+        ? selectedBuildingDetails?.buildingAbbreviation
+        : 1000, //1000 is dummy data, afetr get real data will updated it
     },
     values.genericTerm && { label: "Gebäudetyp", value: values.genericTerm },
     values.subcategory && {
@@ -41,11 +49,26 @@ const FacilitySummary = ({
   ].filter(Boolean); // Filter out undefined values
 
   const updatedAddress: any[] = [
-    selectedBuildingDetails?.address?.street && { label: "Straße", value: selectedBuildingDetails?.address?.street },
-    selectedBuildingDetails?.address?.houseNumber && { label: "Hausnummer", value: selectedBuildingDetails?.address?.houseNumber },
-    selectedBuildingDetails?.address?.zip && { label: "Postleitzahl", value: selectedBuildingDetails?.address?.zip },
-    selectedBuildingDetails?.address?.city && { label: "Stadt", value: selectedBuildingDetails?.address?.city },
-    selectedBuildingDetails?.address?.state && { label: "Bundesland", value: selectedBuildingDetails?.address?.state },
+    selectedBuildingDetails?.address?.street && {
+      label: "Straße",
+      value: selectedBuildingDetails?.address?.street,
+    },
+    selectedBuildingDetails?.address?.houseNumber && {
+      label: "Hausnummer",
+      value: selectedBuildingDetails?.address?.houseNumber,
+    },
+    selectedBuildingDetails?.address?.zip && {
+      label: "Postleitzahl",
+      value: selectedBuildingDetails?.address?.zip,
+    },
+    selectedBuildingDetails?.address?.city && {
+      label: "Stadt",
+      value: selectedBuildingDetails?.address?.city,
+    },
+    selectedBuildingDetails?.address?.state && {
+      label: "Bundesland",
+      value: selectedBuildingDetails?.address?.state,
+    },
   ].filter(Boolean); // Filter out undefined values
 
   const updatedContactPersonList: Detail[] = values?.contactPerson?.length

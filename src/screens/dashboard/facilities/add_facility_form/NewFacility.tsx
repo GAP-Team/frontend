@@ -11,7 +11,6 @@ import {
   StepComponentProps,
   AddFacilityFormValues,
 } from "./types";
-import { useSelector } from "react-redux";
 import { IconButton } from "@mui/material";
 import FacilityCheck from "./FacilityCheck";
 import AddFacilityForm from "./AddFacilityForm";
@@ -22,7 +21,6 @@ import FacilityInformation from "./FacilityInformation";
 import SuccessPage from "@/components/common/SuccessPage";
 import SectionTitle from "@/components/label/SectionTitle";
 import FacilityDocumentation from "./FacilityDocumentation";
-import { allBuildingDetails } from "@/lib/features/userSlice";
 import GProgressStepper from "@/components/stepper/GProgressStepper";
 
 interface NewFacilityProps {
@@ -30,10 +28,8 @@ interface NewFacilityProps {
 }
 
 const NewFacility: React.FC<NewFacilityProps> = ({}): JSX.Element => {
-
   const router = useRouter();
   const steps: ActiveStepItem[] = [
-    
     {
       id: 0,
       stepName: "Anlageninformationen",
@@ -53,7 +49,7 @@ const NewFacility: React.FC<NewFacilityProps> = ({}): JSX.Element => {
 
   useEffect(() => {
     setActiveStep(steps[0]);
-    setIsSubmitted(false);    
+    setIsSubmitted(false);
   }, []);
 
   const handleNext = (
