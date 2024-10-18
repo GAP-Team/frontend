@@ -93,7 +93,7 @@ const EmailVerification = ({
         let verificationQuery = {
           userId: newUserId,
           email: newUserEmail,
-          token: code,
+          token: Number(code),
         };
 
         const res = await userAPIs.verifyEmail(verificationQuery);
