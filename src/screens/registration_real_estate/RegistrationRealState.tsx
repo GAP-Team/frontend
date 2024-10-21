@@ -77,9 +77,9 @@ const RegistrationRealState = (): JSX.Element => {
       1: ["state", "street", "houseNo", "zip", "city"],
       2: [
         "registrationNumber",
-        "business_registration_doc",
-        "land_register_entry_document",
-        "approval_document",
+        "businessRegistrationDocument",
+        "landRegisterEntryDocument",
+        "approvalDocument",
       ],
     };
 
@@ -111,10 +111,8 @@ const RegistrationRealState = (): JSX.Element => {
 
   const handleBack = (): void => {
     if (activeStep > 3) {
-      //If user has registered then redirect to new registration
       setActiveStep(0);
-    } // Check if the active step is already 0 before updating the state
-    else if (activeStep > 0) {
+    } else if (activeStep > 0) {
       setActiveStep((prevActiveStep) => prevActiveStep - 1);
     } else {
       router.push("/login");
@@ -191,7 +189,6 @@ const RegistrationRealState = (): JSX.Element => {
 
       const res = await userAPIs.register(arrangedDataObj);
 
-      // If registration is successful, move to email verification step
       if (res.status === 201) {
         setActiveStep(steps.length);
         setNewUserId(res?.data?._id);
@@ -232,21 +229,20 @@ const RegistrationRealState = (): JSX.Element => {
     const allFiles: any[] = [];
 
     if (
-      values?.approval_document_file ||
-      values?.land_register_entry_document_file ||
-      values?.business_registration_doc_file
+      values?.approvalDocumentFile ||
+      values?.landRegisterEntryDocumentFile ||
+      values?.businessRegistrationDocumentFile
     ) {
       if (type === "business") {
-        const selectedBusinessRegFiles = values?.business_registration_doc_file;
+        const selectedBusinessRegFiles = values?.businessRegistrationDocumentFile;
 
         const fdFileDocUpload = await handleUploadDoc(selectedBusinessRegFiles);
         docObj.push(fdFileDocUpload);
 
         onSubmit(values, docObj);
       } else {
-        const selectedApprovalDocsFiles = values?.approval_document_file;
-        const selectedLandRegDocsFiles =
-          values?.land_register_entry_document_file;
+        const selectedApprovalDocsFiles = values?.approvalDocumentFile;
+        const selectedLandRegDocsFiles = values?.landRegisterEntryDocumentFile;
 
         allFiles.push(selectedApprovalDocsFiles, selectedLandRegDocsFiles);
 

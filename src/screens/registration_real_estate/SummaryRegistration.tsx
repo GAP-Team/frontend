@@ -40,17 +40,17 @@ const SummaryRegistration = ({
   ].filter(Boolean);
 
   const updatedBusinessRegistration: Detail[] = [
-    values.business_registration_doc && {
+    values.businessRegistrationDocument && {
       label: "Gewerbeanmeldung",
-      value: values.business_registration_doc,
+      value: values.businessRegistrationDocument,
     },
-    values.land_register_entry_document && {
+    values.landRegisterEntryDocument && {
       label: "Grundbucheintrag",
-      value: values.land_register_entry_document,
+      value: values.landRegisterEntryDocument,
     },
-    values.approval_document && {
+    values.approvalDocument && {
       label: "Genehmigungsunterlagen",
-      value: values.approval_document,
+      value: values.approvalDocument,
     },
     values.registrationNumber && {
       label: "Handelregister Nummer",
