@@ -1,4 +1,5 @@
 "use client";
+import { useEffect } from "react";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Radio from "@mui/material/Radio";
@@ -10,6 +11,18 @@ import GTextInput from "@/components/input/GTextInput";
 import UploadMultiButton from "@/components/button/UploadMultiButton";
 
 const BuildingDocumentation = ({ formik }: { formik?: any }): JSX.Element => {
+  useEffect(() => {
+    if (formik.values.documentChoice !== "Jetzt hochladen Empfohlen") {
+      formik.setFieldValue("constructionDocs", []);
+      formik.setFieldValue("floorplanDocs", []);
+      formik.setFieldValue("otherDocs", []);
+    }
+
+    if (formik.values.documentChoice !== "Server verküpfung") {
+      formik.setFieldValue("serverLink", "");
+    }
+  }, [formik.values.documentChoice]);
+
   return (
     <Box
       noValidate
