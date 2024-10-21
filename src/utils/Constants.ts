@@ -719,6 +719,10 @@ export const NextCheckOptions = [
     label: "5 Jahr",
     value: 5,
   },
+  {
+    label: "6 Jahr",
+    value: 6,
+  },
 ];
 export const reminderOptions = [
   {
