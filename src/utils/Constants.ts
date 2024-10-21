@@ -496,7 +496,7 @@ export const dummyFacilities = [
   {
     _id: 1,
     name: "Facility A",
-    genericTerm: "Feuerlöschanlage",
+    facilityType: "Feuerlöschanlage",
     subcategory: "Gaslöschanlage",
     contactPerson: "John Doe",
     servicingType: "Type A",
@@ -515,7 +515,7 @@ export const dummyFacilities = [
   {
     _id: 2,
     name: "Facility B",
-    genericTerm: "Brandmeldanlage",
+    facilityType: "Brandmeldanlage",
     subcategory: "Warehouse",
     contactPerson: "Jane Smith",
     servicingType: "Type B",
@@ -534,7 +534,7 @@ export const dummyFacilities = [
   {
     _id: 3,
     name: "Facility C",
-    genericTerm: "Structure",
+    facilityType: "Structure",
     subcategory: "Bridge",
     contactPerson: "Mark Johnson",
     servicingType: "Type C",
@@ -553,7 +553,7 @@ export const dummyFacilities = [
   {
     _id: 4,
     name: "Facility D",
-    genericTerm: "Building",
+    facilityType: "Building",
     subcategory: "School",
     contactPerson: "Emily Davis",
     servicingType: "Type D",
@@ -572,7 +572,7 @@ export const dummyFacilities = [
   {
     _id: 5,
     name: "Facility E",
-    genericTerm: "Infrastructure",
+    facilityType: "Infrastructure",
     subcategory: "Dam",
     contactPerson: "Michael Brown",
     servicingType: "Type E",

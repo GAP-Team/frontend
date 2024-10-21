@@ -42,7 +42,7 @@ const FacilityCard: React.FC<FacilityCardProps> = ({ facility, status }) => {
         sx={{ fontWeight: 400, py: "0.75rem" }}
       />
       <Typography variant="h6" sx={styles.title}>
-        {facility.genericTerm}
+        {facility.facilityType}
       </Typography>
       <Box sx={styles.tags}></Box>
       <Divider sx={styles.divider} orientation="horizontal" />

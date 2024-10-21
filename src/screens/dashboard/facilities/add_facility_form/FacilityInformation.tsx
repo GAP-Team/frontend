@@ -9,13 +9,18 @@ import { AddFacilityFormValues } from "./types";
 import { Item } from "../../types";
 import GTextSelector from "@/components/input/GTextSelector";
 import Typography from "@mui/material/Typography";
-import { buildingTypesList, listOfTrades } from "@/utils/Constants";
+import { listOfTrades } from "@/utils/Constants";
+import { useSelector } from "react-redux";
+import { allBuildingDetails } from "@/lib/features/userSlice";
+import { FormControl, MenuItem, Select } from "@mui/material";
 
 const FacilityInformation = (): JSX.Element => {
+  const allBuildings = useSelector(allBuildingDetails);
   const formik = useFormikContext<AddFacilityFormValues>();
-  const [selectedGenericTerm, setSelectedGenericTerm] = useState<Item | null>(
-    formik?.values?.genericTerm
-      ? { label: formik.values.genericTerm, value: formik.values.genericTerm }
+
+  const [selectedFacilityType, setSelectedFacilityType] = useState<Item | null>(
+    formik?.values?.facilityType
+      ? { label: formik.values.facilityType, value: formik.values.facilityType }
       : null
   );
   const [selectedSubCategory, setSelectedSubCategory] = useState<Item | null>(
@@ -23,23 +28,17 @@ const FacilityInformation = (): JSX.Element => {
       ? { label: formik.values.subcategory, value: formik.values.subcategory }
       : null
   );
-  const [selectedBuildingType, setSelectedBuildingType] = useState<Item | null>(
-    formik?.values?.buildingName
-      ? { label: formik.values.buildingName, value: formik.values.buildingName }
-      : null
-  );
-
   const [subCategoryOptions, setSubCategoryOptions] = useState<Item[]>([]);
 
-  const genericTermOptions = listOfTrades.map((trade) => ({
+  const facilityTypeOptions = listOfTrades.map((trade) => ({
     label: trade.category,
     value: trade.category,
   }));
 
-  const handleGenericTermSelect = (selectedItem: Item | null): void => {
-    setSelectedGenericTerm(selectedItem);
+  const handleFacilityTypeSelect = (selectedItem: Item | null): void => {
+    setSelectedFacilityType(selectedItem);
     formik?.setFieldValue(
-      "genericTerm",
+      "facilityType",
       selectedItem ? selectedItem.value : ""
     );
 
@@ -57,21 +56,13 @@ const FacilityInformation = (): JSX.Element => {
     }
 
     setSelectedSubCategory(null);
-    formik?.setFieldValue("subCategory", "");
+    formik?.setFieldValue("subcategory", "");
   };
 
   const handleSubCategorySelect = (selectedItem: Item | null): void => {
     setSelectedSubCategory(selectedItem);
     formik?.setFieldValue(
-      "subCategory",
-      selectedItem ? selectedItem.value : ""
-    );
-  };
-
-  const handleBuildingTypeSelect = (selectedItem: Item | null): void => {
-    setSelectedBuildingType(selectedItem);
-    formik?.setFieldValue(
-      "buildingName",
+      "subcategory",
       selectedItem ? selectedItem.value : ""
     );
   };
@@ -101,17 +92,17 @@ const FacilityInformation = (): JSX.Element => {
         <Grid item xs={6}>
           <LabelWithAsterisk>ANLAGENART</LabelWithAsterisk>
           <GTextSelector
-            name="genericTerm"
-            options={genericTermOptions}
+            name="facilityType"
+            options={facilityTypeOptions}
             error={
-              formik?.touched?.genericTerm &&
-              Boolean(formik?.errors?.genericTerm)
+              formik?.touched?.facilityType &&
+              Boolean(formik?.errors?.facilityType)
             }
             helperText={
-              formik?.touched?.genericTerm && formik?.errors?.genericTerm
+              formik?.touched?.facilityType && formik?.errors?.facilityType
             }
-            onSelect={handleGenericTermSelect}
-            selectedState={selectedGenericTerm}
+            onSelect={handleFacilityTypeSelect}
+            selectedState={selectedFacilityType}
           />
         </Grid>
 
@@ -120,7 +111,7 @@ const FacilityInformation = (): JSX.Element => {
             ANLAGENTYP
           </Typography>
           <GTextSelector
-            name="subCategory"
+            name="subcategory"
             options={subCategoryOptions}
             error={
               formik?.touched?.subcategory &&
@@ -136,19 +127,22 @@ const FacilityInformation = (): JSX.Element => {
 
         <Grid item xs={12}>
           <LabelWithAsterisk>OBJEKT ZUORDNEN</LabelWithAsterisk>
-          <GTextSelector
-            name="buildingName"
-            options={buildingTypesList}
-            error={
-              formik?.touched?.buildingName &&
-              Boolean(formik?.errors?.buildingName)
-            }
-            helperText={
-              formik?.touched?.buildingName && formik?.errors?.buildingName
-            }
-            onSelect={handleBuildingTypeSelect}
-            selectedState={selectedBuildingType}
-          />
+          <FormControl fullWidth>
+            <Select
+              name="selectedBuilding"
+              value={formik?.values?.selectedBuilding}
+              label="Objekt Zuordnen"
+              onChange={formik.handleChange}
+            >
+              {allBuildings?.map((building: any, buildingIndex: number) => {
+                return (
+                  <MenuItem key={buildingIndex} value={building?._id}>
+                    {building?.buildingName}
+                  </MenuItem>
+                );
+              })}
+            </Select>
+          </FormControl>
         </Grid>
       </Grid>
     </Box>
