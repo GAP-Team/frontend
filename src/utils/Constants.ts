@@ -477,9 +477,6 @@ export const tenderTypesListSV = [
   },
 ];
 
-export const realStateUsers = "REAL_ESTATE_OWNER";
-export const serviceProvider = "SERVICE_PROVIDER";
-
 export const emailTemplateSubject = `Subject: Verify Your Email for GAP (Gesetzliche Anlagen Prüfen)`;
 export const emailTemplateGreetins = `Thank you for registering with GAP (Gesetzliche Anlagen Prüfen)! To complete your registration and activate your account, please verify your email address by entering the verification code provided below.`;
 export const emailTemplateVerificationText = `Your Verification Code: `;
@@ -676,28 +673,11 @@ export const jobItemListInCostPage = [
   },
 ];
 
-export const NextMaintenanceOptions = [
-  {
-    label: "1 Monat",
-    value: 1,
-  },
-  {
-    label: "2 Monat",
-    value: 2,
-  },
-  {
-    label: "3 Monat",
-    value: 3,
-  },
-  {
-    label: "4 Monat",
-    value: 4,
-  },
-  {
-    label: "5 Monat",
-    value: 5,
-  },
-];
+export const NextMaintenanceOptions = Array.from({ length: 12 }, (_, i) => ({
+  label: `${i + 1} Monat${i + 1 > 1 ? "e" : ""}`,
+  value: i + 1,
+}));
+
 export const NextCheckOptions = [
   {
     label: "1 Jahr",
@@ -718,6 +698,10 @@ export const NextCheckOptions = [
   {
     label: "5 Jahr",
     value: 5,
+  },
+  {
+    label: "6 Jahr",
+    value: 6,
   },
 ];
 export const reminderOptions = [

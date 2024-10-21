@@ -10,8 +10,6 @@ const userAPIs = {
   updateUser: (id: string, data: any): any => api.patch(`/users/${id}`, data),
   sendVerificationEmail: (data: any): any =>
     api.post("/emails/send-email", data),
-  reSendVerificationEmail: (data: any): any =>
-    api.post("/emails/resend-email", data),
 };
 
 export default userAPIs;

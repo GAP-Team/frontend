@@ -2,7 +2,6 @@
 import bcrypt from "bcryptjs";
 import Cookies from "js-cookie";
 import React, { useState } from "react";
-import moment from "moment-timezone";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import { Formik, Form } from "formik";
@@ -164,15 +163,6 @@ const RegistrationRealState = (): JSX.Element => {
         },
       };
 
-      const currentDate = new Date().toLocaleString("de-DE", {
-        timeZone: "Europe/Berlin",
-        hour12: false,
-      });
-
-      const formateDate = moment(currentDate, "DD.MM.YYYY, HH:mm:ss").format(
-        "YYYY-MM-DDTHH:mm:ss.SSS[Z]"
-      );
-
       const hashedPassword = await bcrypt.hash(values.password, 10);
 
       const arrangedDataObj = {
@@ -182,9 +172,7 @@ const RegistrationRealState = (): JSX.Element => {
         email: values.email,
         role: values.role,
         company: companyObj,
-        manufacturerExperience: null,
-        registeredAt: formateDate,
-        updatedAt: null,
+        manufacturerExperience: values.manufacturerExperience,
       };
 
       const res = await userAPIs.register(arrangedDataObj);
