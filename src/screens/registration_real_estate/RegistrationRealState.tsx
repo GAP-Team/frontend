@@ -234,7 +234,8 @@ const RegistrationRealState = (): JSX.Element => {
       values?.businessRegistrationDocumentFile
     ) {
       if (type === "business") {
-        const selectedBusinessRegFiles = values?.businessRegistrationDocumentFile;
+        const selectedBusinessRegFiles =
+          values?.businessRegistrationDocumentFile;
 
         const fdFileDocUpload = await handleUploadDoc(selectedBusinessRegFiles);
         docObj.push(fdFileDocUpload);
