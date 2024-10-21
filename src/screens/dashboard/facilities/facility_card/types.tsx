@@ -1,7 +1,7 @@
 export interface Facility {
   _id: number;
   name: string;
-  genericTerm: string;
+  facilityType: string;
   subcategory: string;
   contactPerson: string;
   servicingType: string;

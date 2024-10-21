@@ -3,7 +3,7 @@ import { Dayjs } from "dayjs";
 
 export interface AddFacilityFormValues {
   name: string;
-  genericTerm: string;
+  facilityType: string;
   subcategory: string;
   contactPerson: string;
   servicingType: string;
