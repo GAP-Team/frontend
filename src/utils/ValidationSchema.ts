@@ -6,8 +6,8 @@ const EMAIL_REGEX =
 export const loginValidationSchema = yup.object({
   email: yup
     .string()
-    .email("Eingabe einer gültigen E-Mail")
-    .required("E-Mail ist erforderlich"),
+    .matches(EMAIL_REGEX, "Ungültige Email")
+    .required("Email ist erforderlich."),
   password: yup.string().required("Passwort ist erforderlich"),
 });
 
@@ -17,7 +17,7 @@ export const registrationValidationSchema = yup
     lastName: yup.string().required("Nachname ist erforderlich"),
     email: yup
       .string()
-      .email("Eingabe einer gültigen E-Mail")
+      .matches(EMAIL_REGEX, "Eingabe einer gültigen E-Mail")
       .required("E-Mail ist erforderlich"),
     password: yup
       .string()
