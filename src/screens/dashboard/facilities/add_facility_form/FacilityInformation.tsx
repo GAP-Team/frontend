@@ -18,9 +18,9 @@ const FacilityInformation = (): JSX.Element => {
   const allBuildings = useSelector(allBuildingDetails);
   const formik = useFormikContext<AddFacilityFormValues>();
 
-  const [selectedFacilityType, setSelectedFacilityType] = useState<Item | null>(
-    formik?.values?.facilityType
-      ? { label: formik.values.facilityType, value: formik.values.facilityType }
+  const [selectedGenericTerm, setSelectedGenericTerm] = useState<Item | null>(
+    formik?.values?.genericTerm
+      ? { label: formik.values.genericTerm, value: formik.values.genericTerm }
       : null
   );
   const [selectedSubCategory, setSelectedSubCategory] = useState<Item | null>(
@@ -30,15 +30,15 @@ const FacilityInformation = (): JSX.Element => {
   );
   const [subCategoryOptions, setSubCategoryOptions] = useState<Item[]>([]);
 
-  const facilityTypeOptions = listOfTrades.map((trade) => ({
+  const genericTermOptions = listOfTrades.map((trade) => ({
     label: trade.category,
     value: trade.category,
   }));
 
-  const handleFacilityTypeSelect = (selectedItem: Item | null): void => {
-    setSelectedFacilityType(selectedItem);
+  const handleGenericTermSelect = (selectedItem: Item | null): void => {
+    setSelectedGenericTerm(selectedItem);
     formik?.setFieldValue(
-      "facilityType",
+      "genericTerm",
       selectedItem ? selectedItem.value : ""
     );
 
@@ -92,17 +92,17 @@ const FacilityInformation = (): JSX.Element => {
         <Grid item xs={6}>
           <LabelWithAsterisk>ANLAGENART</LabelWithAsterisk>
           <GTextSelector
-            name="facilityType"
-            options={facilityTypeOptions}
+            name="genericTerm"
+            options={genericTermOptions}
             error={
-              formik?.touched?.facilityType &&
-              Boolean(formik?.errors?.facilityType)
+              formik?.touched?.genericTerm &&
+              Boolean(formik?.errors?.genericTerm)
             }
             helperText={
-              formik?.touched?.facilityType && formik?.errors?.facilityType
+              formik?.touched?.genericTerm && formik?.errors?.genericTerm
             }
-            onSelect={handleFacilityTypeSelect}
-            selectedState={selectedFacilityType}
+            onSelect={handleGenericTermSelect}
+            selectedState={selectedGenericTerm}
           />
         </Grid>
 

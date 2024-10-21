@@ -59,22 +59,32 @@ const FacilitySummary = ({
       label: "Automatisch Veröffentlichen",
       value: values.isPublishAutomatically ? "Ja" : "Nein",
     },
-    values.publishAutomaticallyInMonths && {
-      label: "Automatisch veröffentlichen in",
-      value: `${values.publishAutomaticallyInMonths} Monat(e)`,
-    },
-    values.reminderInMonth && {
-      label: "Reminder Einstellen in",
-      value: `${values.reminderInMonth} Monat(e)`,
-    },
+    values.isPublishAutomatically &&
+      values.publishAutomaticallyInMonths && {
+        label: "Automatisch veröffentlichen in",
+        value: `${values.publishAutomaticallyInMonths} Monat(e)`,
+      },
+    values.reminderInMonth !== 0
+      ? {
+          label: "Reminder Einstellen in",
+          value: `${values.reminderInMonth} Monat(e)`,
+        }
+      : {
+          label: "Reminder Einstellen in",
+          value: `Keine`,
+        },
     values.isEmailNotificationEnable && {
       label: "Automatische E-Mail Erhalten",
       value: values.isEmailNotificationEnable ? "Ja" : "Nein",
     },
-    values.emailNotificationList?.length > 0 && {
-      label: "Automatische Erinnerungs-E-Mails",
-      value: values.emailNotificationList.map((email: any) => `${email}, `),
-    },
+    values.isEmailNotificationEnable &&
+      values.emailNotificationList?.length > 0 && {
+        label: "Automatische Erinnerungs-E-Mails",
+        value: values.emailNotificationList.map(
+          (email: any, index: number) =>
+            `${email}${values.emailNotificationList.length !== index + 1 ? `, ` : ""}`
+        ),
+      },
   ].filter(Boolean);
 
   const facilityMaintenanceInformation: Detail[] = [
@@ -90,31 +100,37 @@ const FacilitySummary = ({
       label: "Automatisch Veröffentlichen",
       value: values.isPublishMaintenanceAutomatically ? "Ja" : "Nein",
     },
-    values.publishMaintenanceAutomaticallyInMonth && {
-      label: "Automatisch veröffentlichen in",
-      value: `${values.publishMaintenanceAutomaticallyInMonth} Monat(e)`,
-    },
-    values.maintenanceReminderInMonth && {
-      label: "Reminder Einstellen in",
-      value: `${values.maintenanceReminderInMonth} Monat(e)`,
-    },
+    values.isPublishMaintenanceAutomatically &&
+      values.publishMaintenanceAutomaticallyInMonth && {
+        label: "Automatisch veröffentlichen in",
+        value: `${values.publishMaintenanceAutomaticallyInMonth} Monat(e)`,
+      },
+    values.maintenanceReminderInMonth !== 0
+      ? {
+          label: "Reminder Einstellen in",
+          value: `${values.maintenanceReminderInMonth} Monat(e)`,
+        }
+      : {
+          label: "Reminder Einstellen in",
+          value: `Keine`,
+        },
     values.isMaintenanceEmailNotificationEnable && {
       label: "Automatische E-Mail Erhalten",
       value: values.isMaintenanceEmailNotificationEnable ? "Ja" : "Nein",
     },
-    ...(values.maintenanceEmailNotificationList?.length
-      ? values.maintenanceEmailNotificationList.map(
-          (email: any, index: number) => ({
-            label: `Automatische Erinnerungs-E-Mails ${index + 1}`,
-            value: email,
-          })
-        )
-      : []),
+    values.isMaintenanceEmailNotificationEnable &&
+      values.maintenanceEmailNotificationList?.length > 0 && {
+        label: "Automatische Erinnerungs-E-Mails",
+        value: values.maintenanceEmailNotificationList.map(
+          (email: any, index: number) =>
+            `${email}${values.maintenanceEmailNotificationList.length !== index + 1 ? `, ` : ""}`
+        ),
+      },
   ].filter(Boolean);
 
   const updatedDocList: Detail[] = [
-    ...(values.constructionDocs?.length
-      ? values.constructionDocs.map((doc: any) => ({
+    ...(values.checkReports?.length
+      ? values.checkReports.map((doc: any) => ({
           label: "Berichte (Prüf- und Wartungsberichte)",
           value: doc.name,
         }))

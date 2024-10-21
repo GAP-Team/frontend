@@ -76,7 +76,7 @@ const NewFacility: React.FC<NewFacilityProps> = ({}): JSX.Element => {
 
   const initialValues: AddFacilityFormValues = {
     name: "",
-    facilityType: "",
+    genericTerm: "",
     subcategory: "",
     contactPerson: "",
     servicingType: "",
