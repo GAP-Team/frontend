@@ -33,11 +33,10 @@ export default function LoginPage(): JSX.Element {
       password: "",
     },
     validationSchema: loginValidationSchema,
-    onSubmit: async (values, { setSubmitting }) => {
+    onSubmit: async (values, { setSubmitting, setTouched }) => {
       try {
         setLoading(true);
-        const formValues = { ...values, password: values.password };
-        const res = await authAPIs.login(formValues);
+        const res = await authAPIs.login(values);
 
         if (res?.data?.access_token) {
           dispatch(setUser(res.data));
@@ -46,27 +45,25 @@ export default function LoginPage(): JSX.Element {
           router.push("/real_estate/dashboard");
         }
       } catch (error: any) {
-        if (error.response?.status === 401) {
-          setLoginError("E-Mail oder Passwort ist falsch");
-        } else {
-          setLoginError(
-            "Ein Benutzer mit diesem Email konnte nicht gefunden werden"
-          );
-        }
+        setLoginError(
+          error.response?.status === 401
+            ? "E-Mail oder Passwort ist falsch"
+            : "Ein Benutzer mit diesem Email konnte nicht gefunden werden"
+        );
       } finally {
         setSubmitting(false);
         setLoading(false);
+        setTouched({ email: true, password: true });
       }
     },
   });
 
   const handleChange =
     (field: string) =>
-    (e: React.ChangeEvent<HTMLInputElement>): void => {
-      setLoginError(null);
-      formik.setFieldValue(field, e.target.value);
-      formik.setFieldTouched(field, true);
-    };
+      (e: React.ChangeEvent<HTMLInputElement>): void => {
+        setLoginError(null);
+        formik.setFieldValue(field, e.target.value);
+      };
 
   return (
     <Grid container component="main" sx={styles.mainContainer}>
