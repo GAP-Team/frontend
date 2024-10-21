@@ -676,28 +676,11 @@ export const jobItemListInCostPage = [
   },
 ];
 
-export const NextMaintenanceOptions = [
-  {
-    label: "1 Monat",
-    value: 1,
-  },
-  {
-    label: "2 Monat",
-    value: 2,
-  },
-  {
-    label: "3 Monat",
-    value: 3,
-  },
-  {
-    label: "4 Monat",
-    value: 4,
-  },
-  {
-    label: "5 Monat",
-    value: 5,
-  },
-];
+export const NextMaintenanceOptions = Array.from({ length: 12 }, (_, i) => ({
+  label: `${i + 1} Monat${i + 1 > 1 ? "e" : ""}`,
+  value: i + 1,
+}));
+
 export const NextCheckOptions = [
   {
     label: "1 Jahr",
