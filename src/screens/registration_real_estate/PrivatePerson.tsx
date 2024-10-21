@@ -4,13 +4,13 @@ import UploadButton from "@/components/button/UploadButton";
 
 const PrivatePerson = ({ formik }: any): JSX.Element => {
   const setUploadApprvDoc = (ev: any): void => {
-    formik.setFieldValue("approval_document_file", ev);
-    formik.setFieldValue("approval_document", ev?.target.value);
+    formik.setFieldValue("approvalDocumentFile", ev);
+    formik.setFieldValue("approvalDocument", ev?.target.files[0].name);
   };
 
   const setUploadLandDoc = (ev: any): void => {
-    formik.setFieldValue("land_register_entry_document_file", ev);
-    formik.setFieldValue("land_register_entry_document", ev?.target.value);
+    formik.setFieldValue("landRegisterEntryDocumentFile", ev);
+    formik.setFieldValue("landRegisterEntryDocument", ev?.target.files[0].name);
   };
 
   return (
@@ -24,12 +24,12 @@ const PrivatePerson = ({ formik }: any): JSX.Element => {
           GRUNDBUCHEINTRAG
         </Typography>
         <UploadButton
-          id="land_register_entry_document"
-          name="land_register_entry_document"
+          id="landRegisterEntryDocument"
+          name="landRegisterEntryDocument"
           onChange={(ev: any) => {
             setUploadLandDoc(ev);
           }}
-          value={formik.values.land_register_entry_document}
+          value={formik.values.landRegisterEntryDocument}
         />
       </Grid>
       <Grid item xs={12} sm={12}>
@@ -42,13 +42,12 @@ const PrivatePerson = ({ formik }: any): JSX.Element => {
           GENEHMIGUNGSUNTERLAGEN
         </Typography>
         <UploadButton
-          id="approval_document"
-          name="approval_document"
-          value={formik.values.approval_document}
+          id="approvalDocument"
+          name="approvalDocument"
+          value={formik.values.approvalDocument}
           onChange={(ev: any) => {
             setUploadApprvDoc(ev);
           }}
-          //make error message appear on private form too based on registration form
           error={
             formik.touched.registrationNumber &&
             Boolean(formik.errors.registrationNumber)
