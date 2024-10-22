@@ -191,7 +191,7 @@ export const addTenderValidationSchema = [
   }),
   yup.object({
     buildingId: yup.string().required("Bitte wählen Sie ein Gebäude aus"),
-    facilityId: yup.string().required("Bitte wählen Sie eine Einrichtung aus"),
+    facilityId: yup.string().required("Bitte wählen Sie eine Anlage aus"),
   }),
   yup.object({
     detailDescription: yup.string(),

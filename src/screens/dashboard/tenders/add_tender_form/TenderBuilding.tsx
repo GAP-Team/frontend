@@ -9,7 +9,7 @@ import { AddTenderFormValues } from "./types";
 import { allBuildingDetails } from "@/lib/features/userSlice";
 import { FormControl, MenuItem, Select } from "@mui/material";
 import LabelWithAsterisk from "@/components/label/LabelWithAsterisk";
-import { SelectedFacilityData } from "../../facilities/add_facility_form/types";
+import { AddFacilityFormValues } from "../../facilities/add_facility_form/types";
 
 const TenderBuilding = (): JSX.Element => {
   const allBuildings = useSelector(allBuildingDetails);
@@ -34,13 +34,13 @@ const TenderBuilding = (): JSX.Element => {
     const selectedFacilityId = selectedItem.target.value;
     formik?.setFieldValue("facilityId", selectedFacilityId);
 
-    const selectedFacility = await getBuildingName(selectedFacilityId);
+    const selectedFacility = await getSelectedFacility(selectedFacilityId);
     formik?.setFieldValue("facilityName", selectedFacility?.name);
   };
 
-  const getBuildingName = (
+  const getSelectedFacility = (
     facilityId: string
-  ): Promise<SelectedFacilityData> => {
+  ): Promise<AddFacilityFormValues> => {
     const facility = buildingFacilities.filter(
       (facility: any) => facility._id === facilityId
     );
