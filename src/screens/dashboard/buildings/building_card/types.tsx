@@ -15,7 +15,6 @@ export interface Building {
     zip: string;
   };
   area: number; // Area in square meters
-  filesNames: string[] | null | undefined;
   documents: [
     {
       name: string;
