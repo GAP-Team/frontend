@@ -14,12 +14,10 @@ import SectionTitle from "@/components/label/SectionTitle";
 import { Tender } from "./types";
 
 interface TenderCardProps {
-  tender: Tender
+  tender: Tender;
 }
 
-const TenderCard: React.FC<TenderCardProps> = ({
-  tender
-}) => {
+const TenderCard: React.FC<TenderCardProps> = ({ tender }) => {
   const router = useRouter();
 
   const handleClick = (): void => {
@@ -48,15 +46,13 @@ const TenderCard: React.FC<TenderCardProps> = ({
           {tender.tenderType}
         </Typography>
         <Box sx={styles.tags}>
-        
-              <Chip
-                icon={<VscDebugBreakpointLog color="white" />}
-                color="gprimary"
-                label={tender.tenderForm}
-                size="small"
-                sx={styles.tagChip}
-              />
-           
+          <Chip
+            icon={<VscDebugBreakpointLog color="white" />}
+            color="gprimary"
+            label={tender.tenderForm}
+            size="small"
+            sx={styles.tagChip}
+          />
         </Box>
         <Divider sx={styles.divider} orientation="horizontal" />
         <Typography variant="body2" sx={styles.subText}>

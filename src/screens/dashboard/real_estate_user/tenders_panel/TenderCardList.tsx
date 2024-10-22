@@ -7,8 +7,7 @@ import { Tender } from "./types";
 import { useSelector } from "react-redux";
 import { currentUser } from "@/lib/features/userSlice";
 import { useDispatch } from "react-redux";
-import  TenderCard from './TenderCard';
-
+import TenderCard from "./TenderCard";
 
 const TenderCardList: React.FC = () => {
   const dispatch = useDispatch();
@@ -24,7 +23,6 @@ const TenderCardList: React.FC = () => {
     console.log(tenders);
     setTenders(tenders.data.tenders);
   };
-
 
   return (
     <Box sx={styles.listContainer}>
