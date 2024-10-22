@@ -49,3 +49,38 @@ export interface StepComponentProps {
   setActiveStep: Dispatch<SetStateAction<ActiveStepItem>>;
   steps: ActiveStepItem[];
 }
+
+export interface SelectedFacilityData {
+  _id: string;
+  name: string;
+  facilityType: string;
+  subcategory: string;
+  contactPerson: string;
+  servicingType: string;
+  lastCheckOderMaintenanceDate: Dayjs | null;
+  nextCheckIn: number;
+  isPublishAutomatically: boolean;
+  publishAutomaticallyInMonths: number;
+  isReminderEnabled: boolean;
+  reminderInMonths: number;
+  isEmailNotificationEnabled: boolean;
+  emailNotificationList: string[];
+  selectedBuilding: string;
+  documentChoice: string;
+  checkReports: File[];
+  floorplanDocs: File[];
+  otherDocs: File[];
+  serverLink: string;
+  lastMaintenanceDate: Dayjs | null;
+  nextMaintenanceInMonth: number;
+  isPublishMaintenanceAutomatically: boolean;
+  publishMaintenanceAutomaticallyInMonth: number;
+  maintenanceReminderInMonth: number;
+  maintenanceEmailNotificationList: string[];
+  isMaintenanceEmailNotificationEnable: boolean;
+  lastCheckDate: Dayjs | null;
+  nextCheckInYearNumber: number;
+  reminderInMonth: number;
+  isEmailNotificationEnable: boolean;
+  autoPublishDuration: string;
+}
