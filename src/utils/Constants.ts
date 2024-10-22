@@ -1,13 +1,12 @@
 import { Notification } from "@/components/navigation/GAppbar/types";
 
-export const statusStyles: {
-  [key: string]: { bgcolor: string; color: string };
+export const tenderStatusStyles: {
+  [key: string]: { bgcolor: string; color: string, title: string };
 } = {
-  offen: { bgcolor: "#E7E0FF", color: "#582EFF" },
-  abgeschlossen: { bgcolor: "#96E9CB", color: "#056643" },
-  "in Bearbeitung": { bgcolor: "#FDFCE0", color: "#EB9700" },
-  "Freigabe ausstehend": { bgcolor: "#E5F5FA", color: "#22A7F1" },
-  Nachprüfung: { bgcolor: "#FFE1D7", color: "#EB4444" },
+  OPEN: { bgcolor: "#E7E0FF", color: "#582EFF", title: 'öffen' },
+  DONE: { bgcolor: "#96E9CB", color: "#056643", title: 'abgeschlossen' },
+  ACTIVE : { bgcolor: "#E5F5FA", color: "#22A7F1", title: 'Aktiv' },
+  REVIEW_REQUIRED: { bgcolor: "#FFE1D7", color: "#EB4444", title: 'Nachprüfung' },
 };
 
 export const listOfTrades = [

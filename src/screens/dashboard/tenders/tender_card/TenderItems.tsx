@@ -1,5 +1,5 @@
 import React from "react";
-import JobCard from "../../real_estate_user/assignments_panel/JobCard";
+import JobCard from "../../real_estate_user/tenders_panel/TenderCard";
 import Grid from "@mui/material/Grid";
 import { TenderProps } from "./types";
 

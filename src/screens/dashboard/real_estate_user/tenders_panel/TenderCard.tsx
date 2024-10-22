@@ -1,0 +1,133 @@
+import React from "react";
+import Box from "@mui/material/Box";
+import Chip from "@mui/material/Chip";
+import Icon from "@mui/material/Icon";
+import Paper from "@mui/material/Paper";
+import { useRouter } from "next/navigation";
+import Divider from "@mui/material/Divider";
+import { BsClockFill } from "react-icons/bs";
+import Typography from "@mui/material/Typography";
+import { VscDebugBreakpointLog } from "react-icons/vsc";
+import { tenderStatusStyles } from "@/utils/Constants";
+import JobMenu from "./JobMenu";
+import SectionTitle from "@/components/label/SectionTitle";
+import { Tender } from "./types";
+
+interface TenderCardProps {
+  tender: Tender
+}
+
+const TenderCard: React.FC<TenderCardProps> = ({
+  tender
+}) => {
+  const router = useRouter();
+
+  const handleClick = (): void => {
+    router.push(`/real_estate/tenders/${tender.id}`);
+  };
+
+  const chipStyles = tenderStatusStyles[tender.status];
+
+  return (
+    <Paper sx={styles.card} elevation={4} style={{ cursor: "pointer" }}>
+      <Box sx={styles.header}>
+        <Chip label={status} sx={{ ...chipStyles }} />
+        <Icon sx={{ color: "orange" }}>
+          <BsClockFill />
+        </Icon>
+        <JobMenu />
+      </Box>
+      <Box sx={styles.location}>
+        <SectionTitle
+          text={`Angebote: 0`}
+          sx={{ fontWeight: 400, py: "0.75rem" }}
+        />
+      </Box>
+      <Box onClick={handleClick}>
+        <Typography variant="h6" sx={styles.title}>
+          {tender.tenderType}
+        </Typography>
+        <Box sx={styles.tags}>
+        
+              <Chip
+                icon={<VscDebugBreakpointLog color="white" />}
+                color="gprimary"
+                label={tender.tenderForm}
+                size="small"
+                sx={styles.tagChip}
+              />
+           
+        </Box>
+        <Divider sx={styles.divider} orientation="horizontal" />
+        <Typography variant="body2" sx={styles.subText}>
+          {tender.tenderType}
+        </Typography>
+        <Typography variant="body2" sx={{ pl: 2 }}>
+          {`--> ${tender.tenderType}`}
+        </Typography>
+        <Typography variant="body2" sx={{ pl: 4 }}>
+          {`--> ${tender.tenderType}`}
+        </Typography>
+      </Box>
+    </Paper>
+  );
+};
+
+export default TenderCard;
+
+// Styles
+const styles = {
+  card: {
+    p: "1.25rem",
+    borderRadius: "0.5rem",
+    maxWidth: "15rem", // Adjust the width as needed
+    height: "21rem",
+    flexShrink: 0,
+    overflow: "auto",
+    mb: "0.35rem",
+    cursor: "pointer",
+  },
+  header: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  location: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  chip: {
+    bgcolor: "purple",
+    color: "white",
+  },
+  title: {
+    fontWeight: "600",
+    fontSize: "1rem",
+    lineHeight: "1.5rem",
+    pb: "0.5rem",
+  },
+  tags: {
+    display: "flex",
+    alignItems: "center",
+    flexWrap: "wrap",
+  },
+  tagChip: {
+    mr: 0.5,
+    mb: 0.5,
+  },
+  divider: {
+    my: "0.75rem",
+  },
+  subText: {
+    display: "flex",
+    alignItems: "center",
+    fontSize: "0.75rem",
+    fontWeight: "600",
+    lineHeight: "1rem",
+    mt: 0.5,
+    "& > svg": {
+      mr: 0.5,
+    },
+  },
+};
