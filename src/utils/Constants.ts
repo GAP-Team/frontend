@@ -477,9 +477,6 @@ export const tenderTypesListSV = [
   },
 ];
 
-export const realStateUsers = "REAL_ESTATE_USER";
-export const serviceProvider = "SERVICE_PROVIDER";
-
 export const emailTemplateSubject = `Subject: Verify Your Email for GAP (Gesetzliche Anlagen Prüfen)`;
 export const emailTemplateGreetins = `Thank you for registering with GAP (Gesetzliche Anlagen Prüfen)! To complete your registration and activate your account, please verify your email address by entering the verification code provided below.`;
 export const emailTemplateVerificationText = `Your Verification Code: `;
@@ -499,7 +496,7 @@ export const dummyFacilities = [
   {
     _id: 1,
     name: "Facility A",
-    genericTerm: "Feuerlöschanlage",
+    facilityType: "Feuerlöschanlage",
     subcategory: "Gaslöschanlage",
     contactPerson: "John Doe",
     servicingType: "Type A",
@@ -518,7 +515,7 @@ export const dummyFacilities = [
   {
     _id: 2,
     name: "Facility B",
-    genericTerm: "Brandmeldanlage",
+    facilityType: "Brandmeldanlage",
     subcategory: "Warehouse",
     contactPerson: "Jane Smith",
     servicingType: "Type B",
@@ -537,7 +534,7 @@ export const dummyFacilities = [
   {
     _id: 3,
     name: "Facility C",
-    genericTerm: "Structure",
+    facilityType: "Structure",
     subcategory: "Bridge",
     contactPerson: "Mark Johnson",
     servicingType: "Type C",
@@ -556,7 +553,7 @@ export const dummyFacilities = [
   {
     _id: 4,
     name: "Facility D",
-    genericTerm: "Building",
+    facilityType: "Building",
     subcategory: "School",
     contactPerson: "Emily Davis",
     servicingType: "Type D",
@@ -575,7 +572,7 @@ export const dummyFacilities = [
   {
     _id: 5,
     name: "Facility E",
-    genericTerm: "Infrastructure",
+    facilityType: "Infrastructure",
     subcategory: "Dam",
     contactPerson: "Michael Brown",
     servicingType: "Type E",
@@ -676,28 +673,11 @@ export const jobItemListInCostPage = [
   },
 ];
 
-export const NextMaintenanceOptions = [
-  {
-    label: "1 Monat",
-    value: 1,
-  },
-  {
-    label: "2 Monat",
-    value: 2,
-  },
-  {
-    label: "3 Monat",
-    value: 3,
-  },
-  {
-    label: "4 Monat",
-    value: 4,
-  },
-  {
-    label: "5 Monat",
-    value: 5,
-  },
-];
+export const NextMaintenanceOptions = Array.from({ length: 12 }, (_, i) => ({
+  label: `${i + 1} Monat${i + 1 > 1 ? "e" : ""}`,
+  value: i + 1,
+}));
+
 export const NextCheckOptions = [
   {
     label: "1 Jahr",
@@ -718,6 +698,10 @@ export const NextCheckOptions = [
   {
     label: "5 Jahr",
     value: 5,
+  },
+  {
+    label: "6 Jahr",
+    value: 6,
   },
 ];
 export const reminderOptions = [

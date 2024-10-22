@@ -6,8 +6,8 @@ const EMAIL_REGEX =
 export const loginValidationSchema = yup.object({
   email: yup
     .string()
-    .email("Eingabe einer gültigen E-Mail")
-    .required("E-Mail ist erforderlich"),
+    .matches(EMAIL_REGEX, "Ungültige Email")
+    .required("Email ist erforderlich."),
   password: yup.string().required("Passwort ist erforderlich"),
 });
 
@@ -17,7 +17,7 @@ export const registrationValidationSchema = yup
     lastName: yup.string().required("Nachname ist erforderlich"),
     email: yup
       .string()
-      .email("Eingabe einer gültigen E-Mail")
+      .matches(EMAIL_REGEX, "Eingabe einer gültigen E-Mail")
       .required("E-Mail ist erforderlich"),
     password: yup
       .string()
@@ -208,9 +208,11 @@ export const addTenderValidationSchema = [
 export const addFacilityValidationSchema = [
   yup.object({
     name: yup.string(),
-    genericTerm: yup.string().required("Oberbegriff ist erforderlich"),
+    facilityType: yup.string().required("Oberbegriff ist erforderlich"),
     subcategory: yup.string(),
-    buildingName: yup.string().required("Gebäude Zuordnung ist erforderlich"),
+    selectedBuilding: yup
+      .string()
+      .required("Gebäude Zuordnung ist erforderlich"),
   }),
   yup.object({
     lastCheckDate: yup.date().nullable(),
