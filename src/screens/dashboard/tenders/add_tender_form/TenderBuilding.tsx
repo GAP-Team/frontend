@@ -42,7 +42,7 @@ const TenderBuilding = (): JSX.Element => {
     facilityId: string
   ): Promise<AddFacilityFormValues> => {
     const facility = buildingFacilities.filter(
-      (facility: any) => facility._id === facilityId
+      (facility: any) => facility.id === facilityId
     );
     return facility[0];
   };
@@ -87,7 +87,7 @@ const TenderBuilding = (): JSX.Element => {
                 buildingFacilities?.map(
                   (facility: any, facilityIndex: number) => {
                     return (
-                      <MenuItem key={facilityIndex} value={facility?._id}>
+                      <MenuItem key={facilityIndex} value={facility?.id}>
                         {facility?.name}
                       </MenuItem>
                     );
