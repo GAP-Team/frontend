@@ -1,4 +1,3 @@
-import React from "react";
 import Box from "@mui/material/Box";
 import { scrollBarStyles } from "@/components/scrollbar/Scrollbar";
 import { useState, useEffect } from "react";
@@ -6,11 +5,9 @@ import tenderAPIs from "@/api/tender";
 import { Tender } from "./types";
 import { useSelector } from "react-redux";
 import { currentUser } from "@/lib/features/userSlice";
-import { useDispatch } from "react-redux";
 import TenderCard from "./TenderCard";
 
 const TenderCardList: React.FC = () => {
-  const dispatch = useDispatch();
   const [tenders, setTenders] = useState<Tender[]>([]);
   const user = useSelector(currentUser);
 

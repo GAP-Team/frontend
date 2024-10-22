@@ -1,5 +1,3 @@
-import { boolean } from "yup";
-
 export interface Tender {
   id: string;
   clientName: string;
