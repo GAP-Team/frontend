@@ -16,22 +16,6 @@ const TenderBuilding = (): JSX.Element => {
   const allBuildings = useSelector(allBuildingDetails);
   const formik = useFormikContext<AddTenderFormValues>();
   const[buildingFacilities, setBuildingFacilities] = useState([]);
-  const [selectedBuilding, setSelectedBuilding] = useState<Item | null>(
-    formik?.values?.buildingName
-      ? {
-          label: formik?.values?.buildingName,
-          value: formik?.values?.buildingId,
-        }
-      : null
-  );
-  const [selecteFacility, setSelecteFacility] = useState<Item | null>(
-    formik?.values?.facilityName
-      ? {
-          label: formik?.values?.facilityName,
-          value: formik?.values?.facilityId,
-        }
-      : null
-  );
   
   const handleBuildingSelect = async (selectedItem: any): Promise<void> => {
     const selectedBuildingId = selectedItem.target.value;
@@ -39,12 +23,6 @@ const TenderBuilding = (): JSX.Element => {
     const allFacilities = await buildingAPIs.getBuildingFacilities(selectedBuildingId);
     
     setBuildingFacilities(allFacilities?.data);
-  };
-
-  const handleFacilitySelect = (selectedItem: Item | null): void => {
-    setSelecteFacility(selectedItem);
-    formik?.setFieldValue("facilityName", selectedItem?.label);
-    formik?.setFieldValue("facilityId", selectedItem?.value);
   };
 
   return (
@@ -70,23 +48,11 @@ const TenderBuilding = (): JSX.Element => {
                 );
               })}
             </Select>
+            {formik?.touched?.buildingId && <p style={styles.errorTexts}>{formik?.errors?.buildingId}</p>}
           </FormControl>
         </Grid>
         <Grid item xs={12}>
           <LabelWithAsterisk>ANLAGE AUSWÄHLEN</LabelWithAsterisk>
-          {/* <GTextSelector
-            name="facility"
-            options={[]}
-            error={
-              formik?.touched?.facilityName &&
-              Boolean(formik?.errors?.facilityName)
-            }
-            helperText={
-              formik?.touched?.facilityName && formik?.errors?.facilityName
-            }
-            onSelect={handleFacilitySelect}
-            selectedState={selecteFacility}
-          /> */}
           <FormControl fullWidth>
             <Select
               name="facilityId"
@@ -103,6 +69,7 @@ const TenderBuilding = (): JSX.Element => {
                 })
               }
             </Select>
+            {formik?.touched?.facilityId && <p style={styles.errorTexts}>{formik?.errors?.facilityId}</p>}
           </FormControl>
         </Grid>
       </Grid>
@@ -111,3 +78,11 @@ const TenderBuilding = (): JSX.Element => {
 };
 
 export default TenderBuilding;
+
+const styles = {
+  errorTexts: {
+    color: "#d32f2f",
+    fontWeight: 400,
+    fontSize: "0.75rem"
+  }
+}
