@@ -1,10 +1,35 @@
-export interface TenderProps {
+export interface Buildings {
+  buidingName: string;
+  buildingAdress: builingAdress;
+  tenders: Tender[]
+}
+
+export interface builingAdress {
+  city: string;
+  country: string;
+  houseNumber: number;
+  street: string;
+  zip: number
+}
+
+export interface Tender {
   id: string;
+  clientName: string;
+  tenderForm: string;
+  tenderType: string;
+  building: {
+    id: string;
+    name: string;
+  };
+  facility: {
+    id: string;
+    name: string;
+  };
+  detailDescription: string;
+  safetyWorkRequired: boolean;
+  freeParkingAvailable: boolean;
+  urgency: string;
+  fromDate: Date;
+  toDate: Date;
   status: string;
-  offers: number;
-  title: string;
-  tags: string[];
-  location: string;
-  projectId: string;
-  sectionId: string;
 }

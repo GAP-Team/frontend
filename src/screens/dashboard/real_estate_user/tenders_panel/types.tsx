@@ -1,3 +1,17 @@
+export interface Buildings {
+  buidingName: string;
+  buildingAdress: builingAdress;
+  tenders: Tender[]
+}
+
+export interface builingAdress {
+  city: string;
+  country: string;
+  houseNumber: number;
+  street: string;
+  zip: number
+}
+
 export interface Tender {
   id: string;
   clientName: string;

@@ -9,6 +9,7 @@ import TenderCard from "./TenderCard";
 
 const TenderCardList: React.FC = () => {
   const [tenders, setTenders] = useState<Tender[]>([]);
+
   const user = useSelector(currentUser);
 
   useEffect(() => {
@@ -16,9 +17,12 @@ const TenderCardList: React.FC = () => {
   }, [user?._id]);
 
   const getTenders = async (): Promise<void> => {
-    const tenders = await tenderAPIs.getTenders(user?._id);
-    console.log(tenders);
-    setTenders(tenders.data.tenders);
+    const buildings = await tenderAPIs.getTenders(user?._id);
+    console.log(buildings);
+    const allTenders = buildings.data.reduce((acc: any, building: any) => {
+      return acc.concat(building.tenders);
+    }, []);
+    setTenders(allTenders);
   };
 
   return (

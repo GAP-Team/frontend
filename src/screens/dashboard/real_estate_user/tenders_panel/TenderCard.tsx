@@ -24,12 +24,12 @@ const TenderCard: React.FC<TenderCardProps> = ({ tender }) => {
     router.push(`/real_estate/tenders/${tender.id}`);
   };
 
-  const chipStyles = tenderStatusStyles[tender.status];
+  const chipStyles = tenderStatusStyles[tender?.status];
 
   return (
     <Paper sx={styles.card} elevation={4} style={{ cursor: "pointer" }}>
       <Box sx={styles.header}>
-        <Chip label={status} sx={{ ...chipStyles }} />
+        <Chip label={chipStyles?.title} sx={{ ...chipStyles }} />
         <Icon sx={{ color: "orange" }}>
           <BsClockFill />
         </Icon>
@@ -43,26 +43,26 @@ const TenderCard: React.FC<TenderCardProps> = ({ tender }) => {
       </Box>
       <Box onClick={handleClick}>
         <Typography variant="h6" sx={styles.title}>
-          {tender.tenderType}
+          {tender?.tenderType}
         </Typography>
         <Box sx={styles.tags}>
           <Chip
             icon={<VscDebugBreakpointLog color="white" />}
             color="gprimary"
-            label={tender.tenderForm}
+            label={tender?.tenderForm}
             size="small"
             sx={styles.tagChip}
           />
         </Box>
         <Divider sx={styles.divider} orientation="horizontal" />
         <Typography variant="body2" sx={styles.subText}>
-          {tender.tenderType}
+          {tender?.tenderType}
         </Typography>
         <Typography variant="body2" sx={{ pl: 2 }}>
-          {`--> ${tender.tenderType}`}
+          {`--> ${tender?.tenderType}`}
         </Typography>
         <Typography variant="body2" sx={{ pl: 4 }}>
-          {`--> ${tender.tenderType}`}
+          {`--> ${tender?.tenderType}`}
         </Typography>
       </Box>
     </Paper>

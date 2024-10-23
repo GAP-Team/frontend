@@ -6,7 +6,7 @@ const TendersPanel = (): JSX.Element => {
     <>
       <HeaderSection
         titletext="Aufträge"
-        count={20}
+        count={0}
         overviewText="zur Übersicht"
       />
       <JobCardList />
