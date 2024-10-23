@@ -29,6 +29,7 @@ import InfoBanner from "@/components/common/InfoBanner";
 import EmailTemplate from "@/components/email_template/EmailTemplate";
 import { registrationValidationSchema } from "@/utils/ValidationSchema";
 import EmailVerification from "../../components/email/EmailVerification";
+import { BUSINESS_TYPE } from "@/utils/enums";
 
 function getSteps(): string[] {
   return [
@@ -221,7 +222,7 @@ const RegistrationRealState = (): JSX.Element => {
       values?.landRegisterEntryDocumentFile ||
       values?.businessRegistrationDocumentFile
     ) {
-      if (type === "business") {
+      if (type === BUSINESS_TYPE.BUSINESS) {
         const selectedBusinessRegFiles =
           values?.businessRegistrationDocumentFile;
 
