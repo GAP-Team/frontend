@@ -78,8 +78,6 @@ const NewFacility: React.FC<NewFacilityProps> = ({}): JSX.Element => {
     name: "",
     facilityType: "",
     subcategory: "",
-    contactPerson: "",
-    servicingType: "",
     lastCheckOderMaintenanceDate: null,
     nextCheckIn: 0,
     isPublishAutomatically: false,
