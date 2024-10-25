@@ -35,3 +35,8 @@ export interface StepComponentProps {
   setActiveStep: Dispatch<SetStateAction<ActiveStepItem>>;
   steps: ActiveStepItem[];
 }
+
+export interface Item {
+  label: string;
+  value: string;
+}

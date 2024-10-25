@@ -1,11 +1,12 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import { useSelector } from "react-redux";
 import { useFormikContext } from "formik";
 import buildingAPIs from "@/api/building";
-import { AddTenderFormValues } from "./types";
+import DropDown from "@/components/DropDown";
+import { Item, AddTenderFormValues } from "./types";
 import { allBuildingDetails } from "@/lib/features/userSlice";
 import { FormControl, MenuItem, Select } from "@mui/material";
 import LabelWithAsterisk from "@/components/label/LabelWithAsterisk";
@@ -15,6 +16,21 @@ const TenderBuilding = (): JSX.Element => {
   const allBuildings = useSelector(allBuildingDetails);
   const formik = useFormikContext<AddTenderFormValues>();
   const [buildingFacilities, setBuildingFacilities] = useState([]);
+  const [buildingDropDownOptions, setBuildingDropDownOptions] = useState<Item[]>([]);
+  const [facilityDropDownOptions, setFacilityDropDownOptions] = useState<Item[]>([]);
+
+  useEffect(() => {
+    const buildingOptions: Item[] = [];
+    allBuildings?.map((building: any) => {
+      const temp = {
+        label: building?.buildingName,
+        value: building?._id
+      }
+      buildingOptions.push(temp);
+    });
+
+    setBuildingDropDownOptions(buildingOptions);
+  }, []);
 
   const handleBuildingSelect = async (selectedItem: any): Promise<void> => {
     const selectedBuildingId = selectedItem.target.value;
@@ -27,6 +43,16 @@ const TenderBuilding = (): JSX.Element => {
 
     const allFacilities =
       await buildingAPIs.getBuildingFacilities(selectedBuildingId);
+
+    const facilityOptions: Item[] = [];
+    allFacilities?.data?.map((facility: any) => {
+      const temp = {
+        label: facility?.name,
+        value: facility?.id
+      }
+      facilityOptions.push(temp);
+    });
+    setFacilityDropDownOptions(facilityOptions);
     setBuildingFacilities(allFacilities?.data);
   };
 
@@ -57,47 +83,30 @@ const TenderBuilding = (): JSX.Element => {
         <Grid item xs={12}>
           <LabelWithAsterisk>OBJEKT AUSWÄHLEN</LabelWithAsterisk>
           <FormControl fullWidth>
-            <Select
-              name="buildingId"
+            <DropDown 
+              name={"buildingId"}
+              onChange={handleBuildingSelect} 
+              options={buildingDropDownOptions} 
               value={formik?.values?.buildingId}
-              onChange={handleBuildingSelect}
-            >
-              {allBuildings?.map((building: any, buildingIndex: number) => {
-                return (
-                  <MenuItem key={buildingIndex} value={building?._id}>
-                    {building?.buildingName}
-                  </MenuItem>
-                );
-              })}
-            </Select>
+            />
             {formik?.touched?.buildingId && (
-              <p style={styles.errorTexts}>{formik?.errors?.buildingId}</p>
-            )}
+                <p style={styles.errorTexts}>{formik?.errors?.buildingId}</p>
+              )}
           </FormControl>
         </Grid>
         <Grid item xs={12}>
           <LabelWithAsterisk>ANLAGE AUSWÄHLEN</LabelWithAsterisk>
           <FormControl fullWidth>
-            <Select
-              name="facilityId"
+            <DropDown 
+              name={"facilityId"} 
+              onChange={handleFacilitySelect} 
+              options={facilityDropDownOptions}
               value={formik?.values?.facilityId}
-              onChange={handleFacilitySelect}
-            >
-              {buildingFacilities?.length > 0 &&
-                buildingFacilities?.map(
-                  (facility: any, facilityIndex: number) => {
-                    return (
-                      <MenuItem key={facilityIndex} value={facility?.id}>
-                        {facility?.name}
-                      </MenuItem>
-                    );
-                  }
-                )}
-            </Select>
+            />
             {formik?.touched?.facilityId && (
               <p style={styles.errorTexts}>{formik?.errors?.facilityId}</p>
             )}
-          </FormControl>
+        </FormControl>
         </Grid>
       </Grid>
     </Box>
