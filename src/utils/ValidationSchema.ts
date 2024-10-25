@@ -190,8 +190,8 @@ export const addTenderValidationSchema = [
       .required("Beschreiben Sie bitte den gewünschten Ausschreibungstyp"),
   }),
   yup.object({
-    name: yup.string(),
-    facilityName: yup.string(),
+    buildingId: yup.string().required("Bitte wählen Sie ein Gebäude aus"),
+    facilityId: yup.string().required("Bitte wählen Sie eine Anlage aus"),
   }),
   yup.object({
     detailDescription: yup.string(),

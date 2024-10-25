@@ -1,9 +1,9 @@
 "use client";
-import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
 import { useFormikContext } from "formik";
-import SummarySection, { Detail } from "@/components/summary/SummarySection";
 import { StepComponentProps } from "./types";
+import SummarySection, { Detail } from "@/components/summary/SummarySection";
 
 const TenderSummary = ({
   setActiveStep,
@@ -32,7 +32,7 @@ const TenderSummary = ({
 
   const objektInformation: Detail[] = [
     values.buildingName && { label: "Objekt", value: values.buildingName },
-    values.facilityName && { label: "Anlage", value: values.facilityName },
+    values.facilityId && { label: "Anlage", value: values.facilityName },
   ].filter(Boolean); // Filter out undefined values
 
   const updatedDetails: Detail[] = [

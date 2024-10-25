@@ -5,8 +5,6 @@ export interface AddFacilityFormValues {
   name: string;
   facilityType: string;
   subcategory: string;
-  contactPerson: string;
-  servicingType: string;
   lastCheckOderMaintenanceDate: Dayjs | null;
   nextCheckIn: number;
   isPublishAutomatically: boolean;

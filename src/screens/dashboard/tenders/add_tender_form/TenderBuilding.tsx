@@ -2,41 +2,49 @@
 import { useState } from "react";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
+import { useSelector } from "react-redux";
 import { useFormikContext } from "formik";
+import buildingAPIs from "@/api/building";
 import { AddTenderFormValues } from "./types";
-import { Item } from "@/components/input/GSelector";
-import GTextSelector from "@/components/input/GTextSelector";
+import { allBuildingDetails } from "@/lib/features/userSlice";
+import { FormControl, MenuItem, Select } from "@mui/material";
 import LabelWithAsterisk from "@/components/label/LabelWithAsterisk";
+import { AddFacilityFormValues } from "../../facilities/add_facility_form/types";
 
 const TenderBuilding = (): JSX.Element => {
+  const allBuildings = useSelector(allBuildingDetails);
   const formik = useFormikContext<AddTenderFormValues>();
-  const [selectedBuilding, setSelectedBuilding] = useState<Item | null>(
-    formik?.values?.buildingName
-      ? {
-          label: formik?.values?.buildingName,
-          value: formik?.values?.buildingId,
-        }
-      : null
-  );
-  const [selecteFacility, setSelecteFacility] = useState<Item | null>(
-    formik?.values?.facilityName
-      ? {
-          label: formik?.values?.facilityName,
-          value: formik?.values?.facilityId,
-        }
-      : null
-  );
+  const [buildingFacilities, setBuildingFacilities] = useState([]);
 
-  const handleBuildingSelect = (selectedItem: Item | null): void => {
-    setSelectedBuilding(selectedItem);
-    formik?.setFieldValue("buildingName", selectedItem?.label);
-    formik?.setFieldValue("buildingId", selectedItem?.value);
+  const handleBuildingSelect = async (selectedItem: any): Promise<void> => {
+    const selectedBuildingId = selectedItem.target.value;
+    formik?.setFieldValue("buildingId", selectedBuildingId);
+
+    const building = allBuildings.filter(
+      (building: any) => building._id === selectedBuildingId
+    );
+    formik?.setFieldValue("buildingName", building[0]?.buildingName);
+
+    const allFacilities =
+      await buildingAPIs.getBuildingFacilities(selectedBuildingId);
+    setBuildingFacilities(allFacilities?.data);
   };
 
-  const handleFacilitySelect = (selectedItem: Item | null): void => {
-    setSelecteFacility(selectedItem);
-    formik?.setFieldValue("facilityName", selectedItem?.label);
-    formik?.setFieldValue("facilityId", selectedItem?.value);
+  const handleFacilitySelect = async (selectedItem: any): Promise<void> => {
+    const selectedFacilityId = selectedItem.target.value;
+    formik?.setFieldValue("facilityId", selectedFacilityId);
+
+    const selectedFacility = await getSelectedFacility(selectedFacilityId);
+    formik?.setFieldValue("facilityName", selectedFacility?.name);
+  };
+
+  const getSelectedFacility = (
+    facilityId: string
+  ): Promise<AddFacilityFormValues> => {
+    const facility = buildingFacilities.filter(
+      (facility: any) => facility.id === facilityId
+    );
+    return facility[0];
   };
 
   return (
@@ -48,35 +56,48 @@ const TenderBuilding = (): JSX.Element => {
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <LabelWithAsterisk>OBJEKT AUSWÄHLEN</LabelWithAsterisk>
-          <GTextSelector
-            name="building"
-            options={[]}
-            error={
-              formik?.touched?.buildingName &&
-              Boolean(formik?.errors?.buildingName)
-            }
-            helperText={
-              formik?.touched?.buildingName && formik?.errors?.buildingName
-            }
-            onSelect={handleBuildingSelect}
-            selectedState={selectedBuilding}
-          />
+          <FormControl fullWidth>
+            <Select
+              name="buildingId"
+              value={formik?.values?.buildingId}
+              onChange={handleBuildingSelect}
+            >
+              {allBuildings?.map((building: any, buildingIndex: number) => {
+                return (
+                  <MenuItem key={buildingIndex} value={building?._id}>
+                    {building?.buildingName}
+                  </MenuItem>
+                );
+              })}
+            </Select>
+            {formik?.touched?.buildingId && (
+              <p style={styles.errorTexts}>{formik?.errors?.buildingId}</p>
+            )}
+          </FormControl>
         </Grid>
         <Grid item xs={12}>
           <LabelWithAsterisk>ANLAGE AUSWÄHLEN</LabelWithAsterisk>
-          <GTextSelector
-            name="facility"
-            options={[]}
-            error={
-              formik?.touched?.facilityName &&
-              Boolean(formik?.errors?.facilityName)
-            }
-            helperText={
-              formik?.touched?.facilityName && formik?.errors?.facilityName
-            }
-            onSelect={handleFacilitySelect}
-            selectedState={selecteFacility}
-          />
+          <FormControl fullWidth>
+            <Select
+              name="facilityId"
+              value={formik?.values?.facilityId}
+              onChange={handleFacilitySelect}
+            >
+              {buildingFacilities?.length > 0 &&
+                buildingFacilities?.map(
+                  (facility: any, facilityIndex: number) => {
+                    return (
+                      <MenuItem key={facilityIndex} value={facility?.id}>
+                        {facility?.name}
+                      </MenuItem>
+                    );
+                  }
+                )}
+            </Select>
+            {formik?.touched?.facilityId && (
+              <p style={styles.errorTexts}>{formik?.errors?.facilityId}</p>
+            )}
+          </FormControl>
         </Grid>
       </Grid>
     </Box>
@@ -84,3 +105,11 @@ const TenderBuilding = (): JSX.Element => {
 };
 
 export default TenderBuilding;
+
+const styles = {
+  errorTexts: {
+    color: "#d32f2f",
+    fontWeight: 400,
+    fontSize: "0.75rem",
+  },
+};
