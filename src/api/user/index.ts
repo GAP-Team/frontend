@@ -8,8 +8,7 @@ const userAPIs = {
   getUserData: (data: any): any => api.post("/users/by-email", data),
   verifyEmail: (data: any): any => api.post("/users/verify-user-token", data),
   updateUser: (id: string, data: any): any => api.patch(`/users/${id}`, data),
-  sendVerificationEmail: (data: any): any =>
-    api.post("/emails/send", data),
+  sendVerificationEmail: (data: any): any => api.post("/emails/send", data),
 };
 
 export default userAPIs;
