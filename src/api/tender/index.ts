@@ -2,7 +2,7 @@ import api from "../axios";
 
 const tenderAPIs = {
   /* Tender Routes */
-  create: (data: any): any => api.post("/tenders/create", data),
+  create: (data: any): any => api.post("/tenders", data),
 };
 
 export default tenderAPIs;
