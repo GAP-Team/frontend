@@ -5,10 +5,10 @@ import Grid from "@mui/material/Grid";
 import { useSelector } from "react-redux";
 import { useFormikContext } from "formik";
 import buildingAPIs from "@/api/building";
+import { FormControl } from "@mui/material";
 import DropDown from "@/components/DropDown";
 import { Item, AddTenderFormValues } from "./types";
 import { allBuildingDetails } from "@/lib/features/userSlice";
-import { FormControl, MenuItem, Select } from "@mui/material";
 import LabelWithAsterisk from "@/components/label/LabelWithAsterisk";
 import { AddFacilityFormValues } from "../../facilities/add_facility_form/types";
 
@@ -16,16 +16,20 @@ const TenderBuilding = (): JSX.Element => {
   const allBuildings = useSelector(allBuildingDetails);
   const formik = useFormikContext<AddTenderFormValues>();
   const [buildingFacilities, setBuildingFacilities] = useState([]);
-  const [buildingDropDownOptions, setBuildingDropDownOptions] = useState<Item[]>([]);
-  const [facilityDropDownOptions, setFacilityDropDownOptions] = useState<Item[]>([]);
+  const [buildingDropDownOptions, setBuildingDropDownOptions] = useState<
+    Item[]
+  >([]);
+  const [facilityDropDownOptions, setFacilityDropDownOptions] = useState<
+    Item[]
+  >([]);
 
   useEffect(() => {
     const buildingOptions: Item[] = [];
     allBuildings?.map((building: any) => {
       const temp = {
         label: building?.buildingName,
-        value: building?._id
-      }
+        value: building?._id,
+      };
       buildingOptions.push(temp);
     });
 
@@ -48,8 +52,8 @@ const TenderBuilding = (): JSX.Element => {
     allFacilities?.data?.map((facility: any) => {
       const temp = {
         label: facility?.name,
-        value: facility?.id
-      }
+        value: facility?.id,
+      };
       facilityOptions.push(temp);
     });
     setFacilityDropDownOptions(facilityOptions);
@@ -83,30 +87,30 @@ const TenderBuilding = (): JSX.Element => {
         <Grid item xs={12}>
           <LabelWithAsterisk>OBJEKT AUSWÄHLEN</LabelWithAsterisk>
           <FormControl fullWidth>
-            <DropDown 
+            <DropDown
               name={"buildingId"}
-              onChange={handleBuildingSelect} 
-              options={buildingDropDownOptions} 
+              onChange={handleBuildingSelect}
+              options={buildingDropDownOptions}
               value={formik?.values?.buildingId}
             />
             {formik?.touched?.buildingId && (
-                <p style={styles.errorTexts}>{formik?.errors?.buildingId}</p>
-              )}
+              <p style={styles.errorTexts}>{formik?.errors?.buildingId}</p>
+            )}
           </FormControl>
         </Grid>
         <Grid item xs={12}>
           <LabelWithAsterisk>ANLAGE AUSWÄHLEN</LabelWithAsterisk>
           <FormControl fullWidth>
-            <DropDown 
-              name={"facilityId"} 
-              onChange={handleFacilitySelect} 
+            <DropDown
+              name={"facilityId"}
+              onChange={handleFacilitySelect}
               options={facilityDropDownOptions}
               value={formik?.values?.facilityId}
             />
             {formik?.touched?.facilityId && (
               <p style={styles.errorTexts}>{formik?.errors?.facilityId}</p>
             )}
-        </FormControl>
+          </FormControl>
         </Grid>
       </Grid>
     </Box>
