@@ -2,35 +2,38 @@ import Box from "@mui/material/Box";
 import { scrollBarStyles } from "@/components/scrollbar/Scrollbar";
 import { useState, useEffect } from "react";
 import tenderAPIs from "@/api/tender";
-import { Tender } from "./types";
 import { useSelector } from "react-redux";
 import { currentUser } from "@/lib/features/userSlice";
 import TenderCard from "./TenderCard";
+import { Building } from "../../tenders/tender_card/types";
+import { setTenderNumbers } from "@/lib/features/tenderSlice";
 
 const TenderCardList: React.FC = () => {
-  const [tenders, setTenders] = useState<Tender[]>([]);
+  const [buildings, setBuildings] = useState<Building[]>([]);
 
   const user = useSelector(currentUser);
 
   useEffect(() => {
-    getTenders();
+    getBuildings();
   }, [user?._id]);
 
-  const getTenders = async (): Promise<void> => {
+  const getBuildings = async (): Promise<void> => {
     const buildings = await tenderAPIs.getTenders(user?._id);
-    console.log(buildings);
-    const allTenders = buildings.data.reduce((acc: any, building: any) => {
-      return acc.concat(building.tenders);
-    }, []);
-    setTenders(allTenders);
+    setBuildings(buildings.data);
+    console.log(buildings.data.length)
+    setTenderNumbers(buildings.data.length)
   };
 
   return (
-    <Box sx={styles.listContainer}>
-      {tenders.map((tender, index) => (
-        <TenderCard key={index} tender={tender} />
-      ))}
-    </Box>
+<Box sx={styles.listContainer}>
+  {buildings.map((building, buildingIndex) => 
+    building.tenders.map((tender, tenderIndex) => (
+      <TenderCard key={`${buildingIndex}-${tenderIndex}`} tender={tender} buildingName={building.buildingName} buildingAdress={building.buildingAdress}/>
+
+    ))
+  )}
+</Box>
+
   );
 };
 

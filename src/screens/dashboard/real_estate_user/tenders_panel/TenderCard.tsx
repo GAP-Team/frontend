@@ -11,13 +11,16 @@ import { VscDebugBreakpointLog } from "react-icons/vsc";
 import { tenderStatusStyles } from "@/utils/Constants";
 import JobMenu from "./JobMenu";
 import SectionTitle from "@/components/label/SectionTitle";
-import { Tender } from "./types";
+import { buildingAdress, Tender } from "./types";
+import { Urgency } from "@/utils/enums";
 
 interface TenderCardProps {
   tender: Tender;
+  buildingName: string;
+  buildingAdress: buildingAdress
 }
 
-const TenderCard: React.FC<TenderCardProps> = ({ tender }) => {
+const TenderCard: React.FC<TenderCardProps> = ({ tender, buildingName, buildingAdress }) => {
   const router = useRouter();
 
   const handleClick = (): void => {
@@ -26,13 +29,20 @@ const TenderCard: React.FC<TenderCardProps> = ({ tender }) => {
 
   const chipStyles = tenderStatusStyles[tender?.status];
 
+  const checkUrgency = (urgency: string): React.JSX.Element | null => {
+      if (urgency === Urgency.URGENT) {
+        return ( <Icon sx={styles.urgentIcon}>
+          <BsClockFill />
+        </Icon>)
+      }
+      return null;
+  }
+
   return (
     <Paper sx={styles.card} elevation={4} style={{ cursor: "pointer" }}>
       <Box sx={styles.header}>
         <Chip label={chipStyles?.title} sx={{ ...chipStyles }} />
-        <Icon sx={{ color: "orange" }}>
-          <BsClockFill />
-        </Icon>
+        {checkUrgency(tender?.urgency)}
         <JobMenu />
       </Box>
       <Box sx={styles.location}>
@@ -56,13 +66,13 @@ const TenderCard: React.FC<TenderCardProps> = ({ tender }) => {
         </Box>
         <Divider sx={styles.divider} orientation="horizontal" />
         <Typography variant="body2" sx={styles.subText}>
-          {tender?.tenderType}
+          {buildingName} - {buildingAdress.street} {buildingAdress.houseNumber}, {buildingAdress.zip} {buildingAdress.city}
         </Typography>
         <Typography variant="body2" sx={{ pl: 2 }}>
-          {`--> ${tender?.tenderType}`}
+          {`--> ${tender?.facility?.name}`}
         </Typography>
         <Typography variant="body2" sx={{ pl: 4 }}>
-          {`--> ${tender?.tenderType}`}
+          {`--> ${tender?.tenderForm}`}
         </Typography>
       </Box>
     </Paper>
@@ -77,6 +87,7 @@ const styles = {
     p: "1.25rem",
     borderRadius: "0.5rem",
     maxWidth: "15rem", // Adjust the width as needed
+    minWidth:'13rem',
     height: "21rem",
     flexShrink: 0,
     overflow: "auto",
@@ -92,6 +103,10 @@ const styles = {
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
+  },
+  urgentIcon: {
+    marginLeft: '5rem',
+    color: 'orange'
   },
   chip: {
     bgcolor: "purple",

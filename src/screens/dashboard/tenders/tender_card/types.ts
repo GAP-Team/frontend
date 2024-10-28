@@ -1,5 +1,5 @@
 export interface Building {
-  buidingName: string;
+  buildingName: string;
   buildingAdress: builingAdress;
   tenders: Tender[]
 }

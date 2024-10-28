@@ -4,7 +4,7 @@ import SectionTitle from "@/components/label/SectionTitle"; // Ensure this impor
 import DividerDecorator from "@/components/divider/DividerDecorator"; // Ensure this import path is correct
 
 interface HeaderSectionProps {
-  count?: number;
+  count: number;
   titletext: string;
   overviewText?: string;
 }
