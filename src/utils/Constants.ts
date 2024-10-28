@@ -477,14 +477,14 @@ export const tenderTypesListSV = [
   },
 ];
 
-export const emailTemplateSubject = `Subject: Verify Your Email for GAP (Gesetzliche Anlagen Prüfen)`;
-export const emailTemplateGreetins = `Thank you for registering with GAP (Gesetzliche Anlagen Prüfen)! To complete your registration and activate your account, please verify your email address by entering the verification code provided below.`;
-export const emailTemplateVerificationText = `Your Verification Code: `;
-export const emailTemplateFoot = `This verification helps us ensure the security of your account and provides you with a seamless experience on our platform. If you did not create an account with GAP, please disregard this email. Should you encounter any issues during the verification process, feel free to contact our support team at support@gap.com for assistance. Thank you for choosing GAP to manage and maintain your real estate facilities efficiently.`;
-export const emailSignature1 = `Best regards`;
-export const emailSignature2 = `The GAP Team `;
+export const emailTemplateSubject = `Betreff: Bestätigen Sie Ihre E-Mail für GAP (Gesetzliche Anlagen Prüfen)`;
+export const emailTemplateGreetins = `Vielen Dank für Ihre Registrierung bei GAP (Gesetzliche Anlagen Prüfen)! Um Ihre Registrierung abzuschließen und Ihr Konto zu aktivieren, bestätigen Sie bitte Ihre E-Mail-Adresse, indem Sie den unten angegebenen Bestätigungscode eingeben.`;
+export const emailTemplateVerificationText = `Ihr Bestätigungscode: `;
+export const emailTemplateFoot = `Diese Bestätigung hilft uns, die Sicherheit Ihres Kontos zu gewährleisten und Ihnen eine reibungslose Erfahrung auf unserer Plattform zu bieten. Sollten Sie kein Konto bei GAP erstellt haben, ignorieren Sie bitte diese E-Mail. Bei Problemen während des Bestätigungsprozesses können Sie sich gerne an unser Support-Team unter support@gap.com wenden. Vielen Dank, dass Sie sich für GAP entschieden haben, um Ihre Immobilienanlagen effizient zu verwalten und zu pflegen.`;
+export const emailSignature1 = `Mit freundlichen Grüßen`;
+export const emailSignature2 = `Das GAP-Team`;
 export const emailSignature3 = `info@gap.com`;
-export const emailSignature4 = `Düsseldorf, Germany `;
+export const emailSignature4 = `Düsseldorf, Deutschland`;
 
 export const DocumentTypes = {
   SONSTIGE: "SONSTIGE",
