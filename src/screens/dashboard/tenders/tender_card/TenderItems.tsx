@@ -1,7 +1,7 @@
 import React from "react";
 import TenderCard from "../../real_estate_user/tenders_panel/TenderCard";
 import Grid from "@mui/material/Grid";
-import { Building, Tender } from "./types";
+import { Building } from "./types";
 
 interface TenderItemsProps {
   building: Building;
@@ -12,7 +12,12 @@ const TenderItems: React.FC<TenderItemsProps> = ({ building }) => {
     <Grid container spacing={"1.25rem"} sx={{ overflow: "auto", flexGrow: 1 }}>
       {building.tenders.map((tender, index) => (
         <Grid item key={index}>
-          <TenderCard key={index} tender={tender} buildingName={building.buildingName} buildingAdress={building.buildingAdress} />
+          <TenderCard
+            key={index}
+            tender={tender}
+            buildingName={building.buildingName}
+            buildingAdress={building.buildingAdress}
+          />
         </Grid>
       ))}
     </Grid>

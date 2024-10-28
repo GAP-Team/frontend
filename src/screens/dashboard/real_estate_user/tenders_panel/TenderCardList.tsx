@@ -8,7 +8,6 @@ import TenderCard from "./TenderCard";
 import { Building } from "../../tenders/tender_card/types";
 import { setTenderNumbers } from "@/lib/features/tenderSlice";
 
-
 const TenderCardList: React.FC = () => {
   const [buildings, setBuildings] = useState<Building[]>([]);
   const dispatch = useDispatch();
@@ -22,20 +21,26 @@ const TenderCardList: React.FC = () => {
   const getBuildings = async (): Promise<void> => {
     const buildings = await tenderAPIs.getTenders(user?._id);
     setBuildings(buildings.data);
-    const totalTenders = buildings.data.reduce((total: any, building: any) => total + (building.tenders?.length || 0), 0);
-    dispatch(setTenderNumbers(totalTenders))
+    const totalTenders = buildings.data.reduce(
+      (total: any, building: any) => total + (building.tenders?.length || 0),
+      0
+    );
+    dispatch(setTenderNumbers(totalTenders));
   };
 
   return (
-<Box sx={styles.listContainer}>
-  {buildings.map((building, buildingIndex) => 
-    building.tenders.map((tender, tenderIndex) => (
-      <TenderCard key={`${buildingIndex}-${tenderIndex}`} tender={tender} buildingName={building.buildingName} buildingAdress={building.buildingAdress}/>
-
-    ))
-  )}
-</Box>
-
+    <Box sx={styles.listContainer}>
+      {buildings.map((building, buildingIndex) =>
+        building.tenders.map((tender, tenderIndex) => (
+          <TenderCard
+            key={`${buildingIndex}-${tenderIndex}`}
+            tender={tender}
+            buildingName={building.buildingName}
+            buildingAdress={building.buildingAdress}
+          />
+        ))
+      )}
+    </Box>
   );
 };
 

@@ -17,10 +17,14 @@ import { Urgency } from "@/utils/enums";
 interface TenderCardProps {
   tender: Tender;
   buildingName: string;
-  buildingAdress: buildingAdress
+  buildingAdress: buildingAdress;
 }
 
-const TenderCard: React.FC<TenderCardProps> = ({ tender, buildingName, buildingAdress }) => {
+const TenderCard: React.FC<TenderCardProps> = ({
+  tender,
+  buildingName,
+  buildingAdress,
+}) => {
   const router = useRouter();
 
   const handleClick = (): void => {
@@ -30,13 +34,15 @@ const TenderCard: React.FC<TenderCardProps> = ({ tender, buildingName, buildingA
   const chipStyles = tenderStatusStyles[tender?.status];
 
   const checkUrgency = (urgency: string): React.JSX.Element | null => {
-      if (urgency === Urgency.URGENT) {
-        return ( <Icon sx={styles.urgentIcon}>
+    if (urgency === Urgency.URGENT) {
+      return (
+        <Icon sx={styles.urgentIcon}>
           <BsClockFill />
-        </Icon>)
-      }
-      return null;
-  }
+        </Icon>
+      );
+    }
+    return null;
+  };
 
   return (
     <Paper sx={styles.card} elevation={4} style={{ cursor: "pointer" }}>
@@ -66,7 +72,9 @@ const TenderCard: React.FC<TenderCardProps> = ({ tender, buildingName, buildingA
         </Box>
         <Divider sx={styles.divider} orientation="horizontal" />
         <Typography variant="body2" sx={styles.subText}>
-          {buildingName} - {buildingAdress?.street} {buildingAdress?.houseNumber}, {buildingAdress?.zip} {buildingAdress?.city}
+          {buildingName} - {buildingAdress?.street}{" "}
+          {buildingAdress?.houseNumber}, {buildingAdress?.zip}{" "}
+          {buildingAdress?.city}
         </Typography>
         <Typography variant="body2" sx={{ pl: 2 }}>
           {`--> ${tender?.facility?.name}`}
@@ -87,7 +95,7 @@ const styles = {
     p: "1.25rem",
     borderRadius: "0.5rem",
     maxWidth: "20rem", // Adjust the width as needed
-    minWidth:'13rem',
+    minWidth: "13rem",
     height: "21rem",
     flexShrink: 0,
     overflow: "auto",
@@ -105,8 +113,8 @@ const styles = {
     alignItems: "center",
   },
   urgentIcon: {
-    marginLeft: '5rem',
-    color: 'orange'
+    marginLeft: "5rem",
+    color: "orange",
   },
   chip: {
     bgcolor: "purple",

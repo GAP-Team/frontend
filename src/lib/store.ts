@@ -6,12 +6,12 @@ import { persistStore, persistReducer } from "redux-persist";
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import userReducer from "./features/userSlice";
 import snackbarReducer from "./features/snackbarSlice";
-import tenderReducer from './features/tenderSlice';
+import tenderReducer from "./features/tenderSlice";
 
 const rootReducer = combineReducers({
   user: userReducer,
   snackbar: snackbarReducer,
-  tender: tenderReducer
+  tender: tenderReducer,
 });
 
 const persistConfig = {

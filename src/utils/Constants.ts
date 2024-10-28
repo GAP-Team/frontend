@@ -1,6 +1,5 @@
 import { Notification } from "@/components/navigation/GAppbar/types";
 
-
 export const listOfTrades = [
   {
     category: "Brandwache",
@@ -176,7 +175,6 @@ export const germanStates: Item[] = [
   { label: "Schleswig-Holstein", value: "Schleswig-Holstein" },
   { label: "Thüringen", value: "Thüringen" }, // Thuringia
 ];
-
 
 export const applications = [
   {

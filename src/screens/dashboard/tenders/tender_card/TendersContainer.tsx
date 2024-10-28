@@ -5,20 +5,22 @@ import TenderHeader from "./TenderHeader";
 import { Building } from "./types";
 import TenderItems from "./TenderItems";
 
-
 interface TendersContainerProps {
-  buildings: Building[]
+  buildings: Building[];
 }
 
 const TendersContainer: React.FC<TendersContainerProps> = ({ buildings }) => {
   return (
     <Box sx={styles.listContainer}>
-      {buildings.map((building, index) => (
+      {buildings.map((building) => (
         <>
-    <TenderHeader buildingName={building.buildingName} buildingAdress={building.buildingAdress} />
-    <TenderItems building={building}/>
-    <Divider variant="middle" orientation="horizontal" flexItem />
-    </>
+          <TenderHeader
+            buildingName={building.buildingName}
+            buildingAdress={building.buildingAdress}
+          />
+          <TenderItems building={building} />
+          <Divider variant="middle" orientation="horizontal" flexItem />
+        </>
       ))}
     </Box>
   );

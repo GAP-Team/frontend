@@ -1,7 +1,7 @@
 export interface Buildings {
   buildingName: string;
   buildingAdress: buildingAdress;
-  tenders: Tender[]
+  tenders: Tender[];
 }
 
 export interface buildingAdress {
@@ -9,7 +9,7 @@ export interface buildingAdress {
   country: string;
   houseNumber: number;
   street: string;
-  zip: number
+  zip: number;
 }
 
 export interface Tender {

@@ -8,11 +8,17 @@ interface TenderHeaderProps {
   buildingAdress: builingAdress;
 }
 
-const TenderHeader: React.FC<TenderHeaderProps> = ({ buildingName, buildingAdress }) => {
+const TenderHeader: React.FC<TenderHeaderProps> = ({
+  buildingName,
+  buildingAdress,
+}) => {
   return (
     <Box sx={{ display: "flex", pb: "0.5rem" }}>
       <Typography variant="bodylsb">{buildingName} - &nbsp;</Typography>
-      <Typography variant="bodylr">{buildingAdress?.street} {buildingAdress?.houseNumber}, {buildingAdress?.zip} {buildingAdress?.city}</Typography>
+      <Typography variant="bodylr">
+        {buildingAdress?.street} {buildingAdress?.houseNumber},{" "}
+        {buildingAdress?.zip} {buildingAdress?.city}
+      </Typography>
     </Box>
   );
 };

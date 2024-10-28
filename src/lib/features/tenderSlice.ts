@@ -3,11 +3,11 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../store";
 
 interface TenderState {
-  tenderNumbers: number
+  tenderNumbers: number;
 }
 
 const initialState: TenderState = {
-  tenderNumbers: 0
+  tenderNumbers: 0,
 };
 
 const tenderSlice = createSlice({
@@ -23,6 +23,6 @@ const tenderSlice = createSlice({
 export const { setTenderNumbers } = tenderSlice.actions;
 
 export const currentTenderNumbers = (state: RootState): number =>
-    state.tender.tenderNumbers;
-  
+  state.tender.tenderNumbers;
+
 export default tenderSlice.reducer;

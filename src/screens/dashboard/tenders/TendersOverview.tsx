@@ -10,8 +10,6 @@ import { currentUser } from "@/lib/features/userSlice";
 import { useSelector } from "react-redux";
 import tenderAPIs from "@/api/tender";
 
-
-
 const TendersOverview: React.FC = () => {
   const [buildings, setBuildings] = useState<Building[]>([]);
 
@@ -23,7 +21,7 @@ const TendersOverview: React.FC = () => {
 
   const getTenders = async (): Promise<void> => {
     const buildings = await tenderAPIs.getTenders(user?._id);
-    console.log(buildings)
+    console.log(buildings);
     setBuildings(buildings.data);
   };
 
