@@ -66,7 +66,7 @@ const TenderCard: React.FC<TenderCardProps> = ({ tender, buildingName, buildingA
         </Box>
         <Divider sx={styles.divider} orientation="horizontal" />
         <Typography variant="body2" sx={styles.subText}>
-          {buildingName} - {buildingAdress.street} {buildingAdress.houseNumber}, {buildingAdress.zip} {buildingAdress.city}
+          {buildingName} - {buildingAdress?.street} {buildingAdress?.houseNumber}, {buildingAdress?.zip} {buildingAdress?.city}
         </Typography>
         <Typography variant="body2" sx={{ pl: 2 }}>
           {`--> ${tender?.facility?.name}`}

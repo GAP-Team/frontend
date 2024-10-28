@@ -12,7 +12,7 @@ const TenderHeader: React.FC<TenderHeaderProps> = ({ buildingName, buildingAdres
   return (
     <Box sx={{ display: "flex", pb: "0.5rem" }}>
       <Typography variant="bodylsb">{buildingName} - &nbsp;</Typography>
-      <Typography variant="bodylr">{buildingAdress.street} {buildingAdress.houseNumber}, {buildingAdress.city}</Typography>
+      <Typography variant="bodylr">{buildingAdress?.street} {buildingAdress?.houseNumber}, {buildingAdress?.zip} {buildingAdress?.city}</Typography>
     </Box>
   );
 };

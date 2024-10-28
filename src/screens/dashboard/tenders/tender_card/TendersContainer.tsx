@@ -1,9 +1,9 @@
 import React from "react";
 import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
-import TenderItems from "./TenderItems";
 import TenderHeader from "./TenderHeader";
 import { Building } from "./types";
+import TenderItems from "./TenderItems";
 
 
 interface TendersContainerProps {
@@ -15,8 +15,8 @@ const TendersContainer: React.FC<TendersContainerProps> = ({ buildings }) => {
     <Box sx={styles.listContainer}>
       {buildings.map((building, index) => (
         <>
-    <TenderHeader buildingName={building.buidingName} buildingAdress={building.buildingAdress} />
-    <TenderItems tenders={building.tenders} />
+    <TenderHeader buildingName={building.buildingName} buildingAdress={building.buildingAdress} />
+    <TenderItems building={building}/>
     <Divider variant="middle" orientation="horizontal" flexItem />
     </>
       ))}
