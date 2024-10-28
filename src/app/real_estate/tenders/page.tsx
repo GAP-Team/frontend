@@ -1,10 +1,10 @@
-import Tenders from "@/screens/dashboard/tenders/Tenders";
+import TendersOverview from "@/screens/dashboard/tenders/TendersOverview";
 import RealStateUserLayout from "../page";
 
 export default function TendersPage(): JSX.Element {
   return (
     <RealStateUserLayout>
-      <Tenders />
+      <TendersOverview />
     </RealStateUserLayout>
   );
 }

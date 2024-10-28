@@ -189,68 +189,6 @@ export const germanStates: Item[] = [
   { label: "Thüringen", value: "Thüringen" }, // Thuringia
 ];
 
-export const jobCardsData = [
-  {
-    id: "1",
-    status: "offen",
-    offers: 2,
-    title: "Brandschutzprüfung inkl. Reparatur",
-    tags: ["Brandschutz", "Wasserschutz", "Insulation"],
-    location: "G003 Mittelstraße 121",
-    projectId: "A0382",
-    sectionId: "BM 02 Sued",
-  },
-  {
-    id: "2",
-    status: "abgeschlossen",
-    offers: 5,
-    title: "Wartung der Klimaanlage",
-    tags: ["Klimaanlage", "Wartung", "Reparatur"],
-    location: "G005 Hauptstraße 45",
-    projectId: "B0451",
-    sectionId: "CL 01 Nord",
-  },
-  {
-    id: "3",
-    status: "in Bearbeitung",
-    offers: 3,
-    title: "Inspektion der Heizung",
-    tags: ["Heizung", "Inspektion", "Reparatur"],
-    location: "G012 Bergstraße 89",
-    projectId: "C0784",
-    sectionId: "HT 03 Ost",
-  },
-  {
-    id: "4",
-    status: "Freigabe ausstehend",
-    offers: 1,
-    title: "Überprüfung der Wasserversorgung",
-    tags: ["Wasserversorgung", "Überprüfung", "Reparatur"],
-    location: "G021 Uferstraße 10",
-    projectId: "D0321",
-    sectionId: "WS 04 West",
-  },
-  {
-    id: "5",
-    status: "Nachprüfung",
-    offers: 4,
-    title: "Elektrische Installation",
-    tags: ["Elektrik", "Installation", "Wartung"],
-    location: "G033 Sonnenweg 78",
-    projectId: "E0145",
-    sectionId: "EL 02 Süd",
-  },
-  {
-    id: "6",
-    status: "offen",
-    offers: 2,
-    title: "Fensterreparatur",
-    tags: ["Fenster", "Reparatur", "Glas"],
-    location: "G003 Mittelstraße 121",
-    projectId: "A0382",
-    sectionId: "BM 02 Sued",
-  },
-];
 
 export const applications = [
   {

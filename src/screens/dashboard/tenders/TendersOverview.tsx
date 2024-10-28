@@ -4,27 +4,39 @@ import Box from "@mui/material/Box";
 import PropertyFilterPanel from "@/components/filter/PropertyFilterPanel";
 import NoContentPage from "@/components/common/NoContentPage";
 import addTenderSrc from "@/../public/icons/add_tender.svg";
-import { jobCardsData } from "@/utils/Constants";
-import TenderList from "./tender_card/TenderList";
-import { TenderProps } from "./tender_card/types";
+import TendersContainer from "./tender_card/TendersContainer";
+import { Building } from "./tender_card/types";
+import { currentUser } from "@/lib/features/userSlice";
+import { useSelector } from "react-redux";
+import tenderAPIs from "@/api/tender";
 
-const Tenders: React.FC = () => {
-  const [tenders, setTenders] = useState<TenderProps[]>([]);
+
+
+const TendersOverview: React.FC = () => {
+  const [buildings, setBuildings] = useState<Building[]>([]);
+
+  const user = useSelector(currentUser);
 
   useEffect(() => {
-    setTenders(jobCardsData);
-  }, []);
+    getTenders();
+  }, [user?._id]);
+
+  const getTenders = async (): Promise<void> => {
+    const buildings = await tenderAPIs.getTenders(user?._id);
+    console.log(buildings)
+    setBuildings(buildings.data);
+  };
 
   const tenderContent =
-    tenders.length > 0 ? (
-      <TenderList tenders={tenders} />
+    buildings.length > 0 ? (
+      <TendersContainer buildings={buildings} />
     ) : (
       <NoContentPage
         alt="No Tenders"
         image={addTenderSrc}
         title="Erstelle eine neue Ausschreibung."
         buttonLabel="Ausschreibung erstellen"
-        buttonLink="/dashboard/tenders/add_tender"
+        buttonLink="/real_estate/tenders/add"
       />
     );
   return (
@@ -38,7 +50,7 @@ const Tenders: React.FC = () => {
   );
 };
 
-export default Tenders;
+export default TendersOverview;
 
 // Styles
 const styles = {

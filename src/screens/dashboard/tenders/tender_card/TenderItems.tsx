@@ -1,18 +1,18 @@
 import React from "react";
 import TenderCard from "../../real_estate_user/tenders_panel/TenderCard";
 import Grid from "@mui/material/Grid";
-import { Buildings } from "./types";
+import { Tender } from "./types";
 
 interface TenderItemsProps {
-  buildings: Buildings[];
+  tenders: Tender[];
 }
 
 const TenderItems: React.FC<TenderItemsProps> = ({ tenders }) => {
   return (
     <Grid container spacing={"1.25rem"} sx={{ overflow: "auto", flexGrow: 1 }}>
-      {tenders.map((data, index) => (
+      {tenders.map((tender, index) => (
         <Grid item key={index}>
-          <TenderCard key={index} {...data} />
+          <TenderCard key={index} tender={tender} />
         </Grid>
       ))}
     </Grid>

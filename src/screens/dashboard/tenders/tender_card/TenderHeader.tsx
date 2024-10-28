@@ -1,17 +1,18 @@
 import React from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
+import { builingAdress } from "./types";
 
 interface TenderHeaderProps {
-  code: string;
-  address: string;
+  buildingName: string;
+  buildingAdress: builingAdress;
 }
 
-const TenderHeader: React.FC<TenderHeaderProps> = ({ code, address }) => {
+const TenderHeader: React.FC<TenderHeaderProps> = ({ buildingName, buildingAdress }) => {
   return (
     <Box sx={{ display: "flex", pb: "0.5rem" }}>
-      <Typography variant="bodylsb">{code} - &nbsp;</Typography>
-      <Typography variant="bodylr">{address}</Typography>
+      <Typography variant="bodylsb">{buildingName} - &nbsp;</Typography>
+      <Typography variant="bodylr">{buildingAdress.street} {buildingAdress.houseNumber}, {buildingAdress.city}</Typography>
     </Box>
   );
 };
