@@ -1,7 +1,7 @@
 import { ListItem, Box, Typography, Chip } from "@mui/material";
 import { JobItemProps } from "./types";
 import { PiArrowBendDownRightBold } from "react-icons/pi";
-import { statusStyles } from "@/utils/Constants";
+import { getTenderStatusStyle } from "@/utils/utils";
 import { VscDebugBreakpointLog } from "react-icons/vsc";
 import React from "react";
 import GProgressLinearBar from "@/components/stepper/GProgressLinearBar";
@@ -15,7 +15,7 @@ const JobItem: React.FC<JobItemProps> = ({
   status,
   savingAmount,
 }) => {
-  const chipStyles = statusStyles[status] || statusStyles["offen"];
+  const chipStyles = getTenderStatusStyle[status];
 
   return (
     <ListItem

@@ -1,4 +1,4 @@
-export const tenderStatusStyles: {
+export const getTenderStatusStyle: {
   [key: string]: { bgcolor: string; color: string; title: string };
 } = {
   OPEN: { bgcolor: "#E7E0FF", color: "#582EFF", title: "öffen" },

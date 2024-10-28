@@ -8,7 +8,7 @@ import Divider from "@mui/material/Divider";
 import { BsClockFill } from "react-icons/bs";
 import Typography from "@mui/material/Typography";
 import { VscDebugBreakpointLog } from "react-icons/vsc";
-import { tenderStatusStyles } from "@/utils/utils";
+import { getTenderStatusStyle } from "@/utils/utils";
 import JobMenu from "./JobMenu";
 import SectionTitle from "@/components/label/SectionTitle";
 import { buildingAdress, Tender } from "./types";
@@ -31,7 +31,7 @@ const TenderCard: React.FC<TenderCardProps> = ({
     router.push(`/real_estate/tenders/${tender.id}`);
   };
 
-  const chipStyles = tenderStatusStyles[tender?.status];
+  const chipStyles = getTenderStatusStyle[tender?.status];
 
   const checkUrgency = (urgency: string): React.JSX.Element | null => {
     if (urgency === Urgency.URGENT) {
