@@ -1,11 +1,11 @@
 import React from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import { builingAdress } from "./types";
+import { buildingAdress } from "./types";
 
 interface TenderHeaderProps {
   buildingName: string;
-  buildingAdress: builingAdress;
+  buildingAdress: buildingAdress;
 }
 
 const TenderHeader: React.FC<TenderHeaderProps> = ({

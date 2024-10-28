@@ -1,10 +1,10 @@
 export interface Building {
   buildingName: string;
-  buildingAdress: builingAdress;
+  buildingAdress: buildingAdress;
   tenders: Tender[];
 }
 
-export interface builingAdress {
+export interface buildingAdress {
   city: string;
   country: string;
   houseNumber: number;
