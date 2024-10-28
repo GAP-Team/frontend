@@ -1,24 +1,20 @@
 "use client";
+import { Item } from "@/utils/Constants";
 import { MenuItem, Select } from "@mui/material";
 
-export interface Item {
-  label: string;
-  value: string;
-}
-
-interface DropDownProps {
+interface CustomSelectProps {
   name: string;
   value: string;
   options: Item[];
   onChange: (selectedItem: any) => void;
 }
 
-const DropDown = ({
+const CustomSelect = ({
   name,
   value,
   options,
   onChange,
-}: DropDownProps): JSX.Element => {
+}: CustomSelectProps): JSX.Element => {
   return (
     <Select name={name} value={value} onChange={onChange}>
       {options?.length > 0 &&
@@ -33,4 +29,4 @@ const DropDown = ({
   );
 };
 
-export default DropDown;
+export default CustomSelect;

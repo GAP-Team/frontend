@@ -1,14 +1,15 @@
 "use client";
-import { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
+import { Item } from "@/utils/Constants";
 import { useSelector } from "react-redux";
 import { useFormikContext } from "formik";
 import buildingAPIs from "@/api/building";
+import { useEffect, useState } from "react";
 import { FormControl } from "@mui/material";
-import DropDown from "@/components/DropDown";
-import { Item, AddTenderFormValues } from "./types";
+import { AddTenderFormValues } from "./types";
 import { allBuildingDetails } from "@/lib/features/userSlice";
+import CustomSelect from "@/components/drop_down/CustomSelect";
 import LabelWithAsterisk from "@/components/label/LabelWithAsterisk";
 import { AddFacilityFormValues } from "../../facilities/add_facility_form/types";
 
@@ -56,6 +57,7 @@ const TenderBuilding = (): JSX.Element => {
       };
       facilityOptions.push(temp);
     });
+
     setFacilityDropDownOptions(facilityOptions);
     setBuildingFacilities(allFacilities?.data);
   };
@@ -87,7 +89,7 @@ const TenderBuilding = (): JSX.Element => {
         <Grid item xs={12}>
           <LabelWithAsterisk>OBJEKT AUSWÄHLEN</LabelWithAsterisk>
           <FormControl fullWidth>
-            <DropDown
+            <CustomSelect
               name={"buildingId"}
               onChange={handleBuildingSelect}
               options={buildingDropDownOptions}
@@ -101,7 +103,7 @@ const TenderBuilding = (): JSX.Element => {
         <Grid item xs={12}>
           <LabelWithAsterisk>ANLAGE AUSWÄHLEN</LabelWithAsterisk>
           <FormControl fullWidth>
-            <DropDown
+            <CustomSelect
               name={"facilityId"}
               onChange={handleFacilitySelect}
               options={facilityDropDownOptions}
