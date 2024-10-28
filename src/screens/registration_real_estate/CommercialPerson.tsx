@@ -7,8 +7,8 @@ import UploadButton from "@/components/button/UploadButton";
 const ComercialPerson = ({ formik }: any): JSX.Element => {
   const setUploadDoc = (ev: any): void => {
     const file = ev.target.files[0];
-    formik.setFieldValue("business_registration_doc_file", ev);
-    formik.setFieldValue("business_registration_doc", file.name);
+    formik.setFieldValue("businessRegistrationDocumentFile", ev);
+    formik.setFieldValue("businessRegistrationDocument", file.name);
   };
 
   return (
@@ -22,12 +22,12 @@ const ComercialPerson = ({ formik }: any): JSX.Element => {
           GEWERBEANMELDUNG
         </Typography>
         <UploadButton
-          id="business_registration_doc"
-          name="business_registration_doc"
+          id="businessRegistrationDocument"
+          name="businessRegistrationDocument"
           onChange={(ev: any) => {
             setUploadDoc(ev);
           }}
-          value={formik.values.business_registration_doc}
+          value={formik.values.businessRegistrationDocument}
         />
       </Grid>
       <Grid item xs={12} sm={12}>

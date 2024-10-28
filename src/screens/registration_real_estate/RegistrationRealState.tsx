@@ -2,7 +2,6 @@
 import bcrypt from "bcryptjs";
 import Cookies from "js-cookie";
 import React, { useState } from "react";
-import moment from "moment-timezone";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import { Formik, Form } from "formik";
@@ -30,6 +29,7 @@ import InfoBanner from "@/components/common/InfoBanner";
 import EmailTemplate from "@/components/email_template/EmailTemplate";
 import { registrationValidationSchema } from "@/utils/ValidationSchema";
 import EmailVerification from "../../components/email/EmailVerification";
+import { BUSINESS_TYPE } from "@/utils/enums";
 
 function getSteps(): string[] {
   return [
@@ -77,9 +77,9 @@ const RegistrationRealState = (): JSX.Element => {
       1: ["state", "street", "houseNo", "zip", "city"],
       2: [
         "registrationNumber",
-        "business_registration_doc",
-        "land_register_entry_document",
-        "approval_document",
+        "businessRegistrationDocument",
+        "landRegisterEntryDocument",
+        "approvalDocument",
       ],
     };
 
@@ -111,10 +111,8 @@ const RegistrationRealState = (): JSX.Element => {
 
   const handleBack = (): void => {
     if (activeStep > 3) {
-      //If user has registered then redirect to new registration
       setActiveStep(0);
-    } // Check if the active step is already 0 before updating the state
-    else if (activeStep > 0) {
+    } else if (activeStep > 0) {
       setActiveStep((prevActiveStep) => prevActiveStep - 1);
     } else {
       router.push("/login");
@@ -166,15 +164,6 @@ const RegistrationRealState = (): JSX.Element => {
         },
       };
 
-      const currentDate = new Date().toLocaleString("de-DE", {
-        timeZone: "Europe/Berlin",
-        hour12: false,
-      });
-
-      const formateDate = moment(currentDate, "DD.MM.YYYY, HH:mm:ss").format(
-        "YYYY-MM-DDTHH:mm:ss.SSS[Z]"
-      );
-
       const hashedPassword = await bcrypt.hash(values.password, 10);
 
       const arrangedDataObj = {
@@ -184,14 +173,11 @@ const RegistrationRealState = (): JSX.Element => {
         email: values.email,
         role: values.role,
         company: companyObj,
-        manufacturerExperience: null,
-        registeredAt: formateDate,
-        updatedAt: null,
+        manufacturerExperience: values.manufacturerExperience,
       };
 
       const res = await userAPIs.register(arrangedDataObj);
 
-      // If registration is successful, move to email verification step
       if (res.status === 201) {
         setActiveStep(steps.length);
         setNewUserId(res?.data?._id);
@@ -232,21 +218,21 @@ const RegistrationRealState = (): JSX.Element => {
     const allFiles: any[] = [];
 
     if (
-      values?.approval_document_file ||
-      values?.land_register_entry_document_file ||
-      values?.business_registration_doc_file
+      values?.approvalDocumentFile ||
+      values?.landRegisterEntryDocumentFile ||
+      values?.businessRegistrationDocumentFile
     ) {
-      if (type === "business") {
-        const selectedBusinessRegFiles = values?.business_registration_doc_file;
+      if (type === BUSINESS_TYPE.BUSINESS) {
+        const selectedBusinessRegFiles =
+          values?.businessRegistrationDocumentFile;
 
         const fdFileDocUpload = await handleUploadDoc(selectedBusinessRegFiles);
         docObj.push(fdFileDocUpload);
 
         onSubmit(values, docObj);
       } else {
-        const selectedApprovalDocsFiles = values?.approval_document_file;
-        const selectedLandRegDocsFiles =
-          values?.land_register_entry_document_file;
+        const selectedApprovalDocsFiles = values?.approvalDocumentFile;
+        const selectedLandRegDocsFiles = values?.landRegisterEntryDocumentFile;
 
         allFiles.push(selectedApprovalDocsFiles, selectedLandRegDocsFiles);
 

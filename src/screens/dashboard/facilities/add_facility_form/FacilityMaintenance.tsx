@@ -69,7 +69,7 @@ const FacilityMaintenance = (): JSX.Element => {
             <Select
               name="nextMaintenanceInMonth"
               value={formik?.values?.nextMaintenanceInMonth}
-              label="Nächste Prüfung auswählen"
+              label="Nächste Wartung auswählen"
               onChange={formik.handleChange}
             >
               {NextMaintenanceOptions?.map((maintenance, maintenanceIndex) => {

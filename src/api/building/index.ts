@@ -2,11 +2,11 @@ import api from "../axios";
 
 const buildingAPIs = {
   /* Building Routes */
-  create: (data: any): any => api.post("/buildings/create", data),
+  create: (data: any): any => api.post("/buildings", data),
   update: (buildingId: any, data: any): any =>
     api.put(`/buildings/${buildingId}`, data),
   getUserStatesCitiesFacilityTypes: (id: string): any =>
-    api.get(`/buildings/${id}/get-user-state-city-facilitytype`),
+    api.get(`/users/${id}/filter-criteria`),
   getBuildings: (
     userId: string,
     city: string,
@@ -14,8 +14,10 @@ const buildingAPIs = {
     facilityType: string
   ): any =>
     api.get(
-      `/buildings/${userId}?city=${city}&state=${state}&facilityType=${facilityType}`
+      `/users/${userId}/buildings?city=${city}&state=${state}&facilityType=${facilityType}`
     ),
+  getBuildingFacilities: (id: string): any =>
+    api.get(`facilities/building/${id}`),
 };
 
 export default buildingAPIs;

@@ -13,7 +13,7 @@ import BasicInformation from "./BasicInformation";
 import GStepper from "@/components/stepper/GStepper";
 import SummaryRegistration from "./SummaryRegistration";
 import SectionTitle from "@/components/label/SectionTitle";
-import { realStateUsers, serviceProvider } from "@/utils/Constants";
+import { USER_ROLE, BUSINESS_TYPE } from "@/utils/enums";
 import GProgressStepper from "@/components/stepper/GProgressStepper";
 import CircularProgress from "@mui/material/CircularProgress";
 
@@ -38,13 +38,13 @@ const RegistrationForm = ({
 
   useEffect(() => {
     if (personTypeTab === 0) {
-      formik.setFieldValue("businessType", "business");
+      formik.setFieldValue("businessType", BUSINESS_TYPE.BUSINESS);
     }
 
     if (stakeholderTyp === 0) {
-      formik.setFieldValue("role", realStateUsers);
+      formik.setFieldValue("role", USER_ROLE.REAL_ESTATE_OWNER);
     } else {
-      formik.setFieldValue("role", serviceProvider);
+      formik.setFieldValue("role", USER_ROLE.SERVICE_PROVIDER);
     }
   }, []);
 
@@ -55,21 +55,21 @@ const RegistrationForm = ({
     setPersonTyp(newValue);
 
     if (newValue === 0) {
-      formik.setFieldValue("businessType", "business");
+      formik.setFieldValue("businessType", BUSINESS_TYPE.BUSINESS);
     } else {
-      formik.setFieldValue("businessType", "private");
+      formik.setFieldValue("businessType", BUSINESS_TYPE.PRIVATE);
     }
 
     //Make user to only be private or commercial person, also their formik values null on selection change
     //Commercial person, make land and approv doc undefined
     if (!newValue) {
-      formik.setFieldValue("approval_document", "");
-      formik.setFieldValue("land_register_entry_document", "");
+      formik.setFieldValue("approvalDocument", "");
+      formik.setFieldValue("landRegisterEntryDocument", "");
     }
     //Private person, make registrationNumber and  bsndoc null
     else {
       formik.setFieldValue("registrationNumber", "");
-      formik.setFieldValue("business_registration_doc", "");
+      formik.setFieldValue("businessRegistrationDocument", "");
     }
   };
 
@@ -80,9 +80,9 @@ const RegistrationForm = ({
     setStakeholderTyp(newValue);
 
     if (newValue === 0) {
-      formik.setFieldValue("role", realStateUsers);
+      formik.setFieldValue("role", USER_ROLE.REAL_ESTATE_OWNER);
     } else {
-      formik.setFieldValue("role", serviceProvider);
+      formik.setFieldValue("role", USER_ROLE.SERVICE_PROVIDER);
     }
   };
 

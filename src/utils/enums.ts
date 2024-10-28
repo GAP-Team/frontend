@@ -1,4 +1,14 @@
+
 export enum Urgency {
   URGENT = "URGENT",
   NOT_URGENT = "NOT_URGENT",
+}
+export enum USER_ROLE {
+  REAL_ESTATE_OWNER = "REAL_ESTATE_OWNER",
+  SERVICE_PROVIDER = "SERVICE_PROVIDER",
+}
+
+export enum BUSINESS_TYPE {
+  BUSINESS = "BUSINESS",
+  PRIVATE = "PRIVATE",
 }

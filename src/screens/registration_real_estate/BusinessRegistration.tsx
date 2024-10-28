@@ -22,7 +22,7 @@ const BusinessRegistration = ({}: BusinessRegistrationProps): JSX.Element => {
         </Grid>
         <Grid item xs={12} sm={12}>
           <Typography variant="gsub" color="gray.500">
-            OR
+            ODER
           </Typography>
         </Grid>
         <Grid item xs={12} sm={12}>

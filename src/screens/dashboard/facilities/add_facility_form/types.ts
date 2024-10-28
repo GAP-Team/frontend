@@ -3,10 +3,8 @@ import { Dayjs } from "dayjs";
 
 export interface AddFacilityFormValues {
   name: string;
-  genericTerm: string;
+  facilityType: string;
   subcategory: string;
-  contactPerson: string;
-  servicingType: string;
   lastCheckOderMaintenanceDate: Dayjs | null;
   nextCheckIn: number;
   isPublishAutomatically: boolean;
@@ -15,7 +13,7 @@ export interface AddFacilityFormValues {
   reminderInMonths: number;
   isEmailNotificationEnabled: boolean;
   emailNotificationList: string[];
-  buildingName: string;
+  selectedBuilding: string;
   documentChoice: string;
   checkReports: File[];
   floorplanDocs: File[];

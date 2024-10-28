@@ -11,12 +11,13 @@ import {
   StepComponentProps,
   AddFacilityFormValues,
 } from "./types";
-import FacilityCheck from "./FacilityCheck";
 import { IconButton } from "@mui/material";
+import FacilityCheck from "./FacilityCheck";
 import AddFacilityForm from "./AddFacilityForm";
+import FacilitySummary from "./FacilitySummary";
+import PageTitle from "@/components/label/PageTitle";
 import FacilityMaintenance from "./FacilityMaintenance";
 import FacilityInformation from "./FacilityInformation";
-import PageTitle from "@/components/label/PageTitle";
 import SuccessPage from "@/components/common/SuccessPage";
 import SectionTitle from "@/components/label/SectionTitle";
 import FacilityDocumentation from "./FacilityDocumentation";
@@ -37,11 +38,12 @@ const NewFacility: React.FC<NewFacilityProps> = ({}): JSX.Element => {
     { id: 1, stepName: "Prüfung", component: FacilityCheck },
     { id: 2, stepName: "Wartung", component: FacilityMaintenance },
     { id: 3, stepName: "Dokumente", component: FacilityDocumentation },
-    { id: 4, stepName: "Zusammenfassung", component: undefined },
+    { id: 4, stepName: "Zusammenfassung", component: FacilitySummary },
   ];
 
-  const [activeStep, setActiveStep] = useState<ActiveStepItem>(steps[0]);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [activeStep, setActiveStep] = useState<ActiveStepItem>(steps[0]);
+
   const StepComponent = steps[activeStep.id]
     ?.component as React.ComponentType<StepComponentProps>;
 
@@ -74,10 +76,8 @@ const NewFacility: React.FC<NewFacilityProps> = ({}): JSX.Element => {
 
   const initialValues: AddFacilityFormValues = {
     name: "",
-    genericTerm: "",
+    facilityType: "",
     subcategory: "",
-    contactPerson: "",
-    servicingType: "",
     lastCheckOderMaintenanceDate: null,
     nextCheckIn: 0,
     isPublishAutomatically: false,
@@ -86,7 +86,7 @@ const NewFacility: React.FC<NewFacilityProps> = ({}): JSX.Element => {
     reminderInMonths: 0,
     isEmailNotificationEnabled: false,
     emailNotificationList: ["", ""],
-    buildingName: "",
+    selectedBuilding: "",
     documentChoice: "Jetzt hochladen Empfohlen",
     checkReports: [],
     floorplanDocs: [],
