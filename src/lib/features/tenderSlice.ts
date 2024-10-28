@@ -15,7 +15,7 @@ const tenderSlice = createSlice({
   initialState,
   reducers: {
     setTenderNumbers: (state, action: PayloadAction<any>) => {
-      state.tenderNumbers = action.payload?.tenderNumbers;
+      state.tenderNumbers = action.payload;
     },
   },
 });
@@ -23,5 +23,6 @@ const tenderSlice = createSlice({
 export const { setTenderNumbers } = tenderSlice.actions;
 
 export const currentTenderNumbers = (state: RootState): number =>
-    state.tender.tenderNumber;
+    state.tender.tenderNumbers;
   
+export default tenderSlice.reducer;

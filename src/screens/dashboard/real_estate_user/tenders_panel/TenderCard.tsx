@@ -8,7 +8,7 @@ import Divider from "@mui/material/Divider";
 import { BsClockFill } from "react-icons/bs";
 import Typography from "@mui/material/Typography";
 import { VscDebugBreakpointLog } from "react-icons/vsc";
-import { tenderStatusStyles } from "@/utils/Constants";
+import { tenderStatusStyles } from "@/utils/utils";
 import JobMenu from "./JobMenu";
 import SectionTitle from "@/components/label/SectionTitle";
 import { buildingAdress, Tender } from "./types";
@@ -86,7 +86,7 @@ const styles = {
   card: {
     p: "1.25rem",
     borderRadius: "0.5rem",
-    maxWidth: "15rem", // Adjust the width as needed
+    maxWidth: "20rem", // Adjust the width as needed
     minWidth:'13rem',
     height: "21rem",
     flexShrink: 0,
