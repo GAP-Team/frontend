@@ -5,7 +5,6 @@ import { useSelector } from "react-redux";
 
 const TendersPanel = (): JSX.Element => {
   const tenderNumbers = useSelector(currentTenderNumbers);
-  console.log("tender number: ", tenderNumbers);
 
   return (
     <>
