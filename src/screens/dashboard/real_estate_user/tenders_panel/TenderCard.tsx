@@ -8,94 +8,94 @@ import Divider from "@mui/material/Divider";
 import { BsClockFill } from "react-icons/bs";
 import Typography from "@mui/material/Typography";
 import { VscDebugBreakpointLog } from "react-icons/vsc";
-import { statusStyles } from "@/utils/Constants";
+import { getTenderStatusStyle } from "@/utils/utils";
 import JobMenu from "./JobMenu";
 import SectionTitle from "@/components/label/SectionTitle";
+import { buildingAdress, Tender } from "./types";
+import { Urgency } from "@/utils/enums";
 
-interface JobCardProps {
-  id: string;
-  status: string;
-  offers: number;
-  title: string;
-  tags: string[];
-  location: string;
-  projectId: string;
-  sectionId: string;
+interface TenderCardProps {
+  tender: Tender;
+  buildingName: string;
+  buildingAdress: buildingAdress;
 }
 
-const JobCard: React.FC<JobCardProps> = ({
-  id,
-  status,
-  offers,
-  title,
-  tags,
-  location,
-  projectId,
-  sectionId,
+const TenderCard: React.FC<TenderCardProps> = ({
+  tender,
+  buildingName,
+  buildingAdress,
 }) => {
   const router = useRouter();
 
   const handleClick = (): void => {
-    router.push(`/real_estate/tenders/${id}`);
+    router.push(`/real_estate/tenders/${tender.id}`);
   };
 
-  const chipStyles = statusStyles[status] || statusStyles["offen"];
+  const chipStyles = getTenderStatusStyle[tender?.status];
+
+  const checkUrgency = (urgency: string): React.JSX.Element | null => {
+    if (urgency === Urgency.URGENT) {
+      return (
+        <Icon sx={styles.urgentIcon}>
+          <BsClockFill />
+        </Icon>
+      );
+    }
+    return null;
+  };
 
   return (
     <Paper sx={styles.card} elevation={4} style={{ cursor: "pointer" }}>
       <Box sx={styles.header}>
-        <Chip label={status} sx={{ ...chipStyles }} />
-        <Icon sx={{ color: "orange" }}>
-          <BsClockFill />
-        </Icon>
+        <Chip label={chipStyles?.title} sx={{ ...chipStyles }} />
+        {checkUrgency(tender?.urgency)}
         <JobMenu />
       </Box>
       <Box sx={styles.location}>
         <SectionTitle
-          text={`Angebote: ${offers}`}
+          text={`Angebote: 0`}
           sx={{ fontWeight: 400, py: "0.75rem" }}
         />
       </Box>
       <Box onClick={handleClick}>
         <Typography variant="h6" sx={styles.title}>
-          {title}
+          {tender?.tenderType}
         </Typography>
         <Box sx={styles.tags}>
-          {tags.map((tag, index) => (
-            <React.Fragment key={index}>
-              <Chip
-                icon={<VscDebugBreakpointLog color="white" />}
-                color="gprimary"
-                label={tag}
-                size="small"
-                sx={styles.tagChip}
-              />
-            </React.Fragment>
-          ))}
+          <Chip
+            icon={<VscDebugBreakpointLog color="white" />}
+            color="gprimary"
+            label={tender?.tenderForm}
+            size="small"
+            sx={styles.tagChip}
+          />
         </Box>
         <Divider sx={styles.divider} orientation="horizontal" />
         <Typography variant="body2" sx={styles.subText}>
-          {location}
+          {buildingName} - {buildingAdress?.street}{" "}
+          {buildingAdress?.houseNumber}, {buildingAdress?.zip}{" "}
+          {buildingAdress?.city}
         </Typography>
         <Typography variant="body2" sx={{ pl: 2 }}>
-          {`--> ${projectId}`}
+          {`--> ${tender?.facility?.name}`}
         </Typography>
         <Typography variant="body2" sx={{ pl: 4 }}>
-          {`--> ${sectionId}`}
+          {`--> ${tender?.tenderForm}`}
         </Typography>
       </Box>
     </Paper>
   );
 };
 
-export default JobCard;
+export default TenderCard;
 
 // Styles
 const styles = {
   card: {
     p: "1.25rem",
     borderRadius: "0.5rem",
-    maxWidth: "15rem", // Adjust the width as needed
+    maxWidth: "20rem", // Adjust the width as needed
+    minWidth: "13rem",
     height: "21rem",
     flexShrink: 0,
     overflow: "auto",
@@ -111,6 +111,10 @@ const styles = {
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
+  },
+  urgentIcon: {
+    marginLeft: "5rem",
+    color: "orange",
   },
   chip: {
     bgcolor: "purple",

@@ -2,9 +2,9 @@ import * as React from "react";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import OverviewPanel from "./overview_panel/OverviewPanel";
-import AssignmentsPanel from "./assignments_panel/AssignmentsPanel";
+import AssignmentsPanel from "./tenders_panel/TendersPanel";
 import ApplicationsPanel from "./applications_panel/ApplicationsPanel";
-import NewsPanel from "./news_panel/NewsPanel";
+import NewsPanel from "./communication_panel/NewsPanel";
 
 export default function RealEstateUser(): JSX.Element {
   return (

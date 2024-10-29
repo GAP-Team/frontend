@@ -6,7 +6,7 @@ import React, { useState, memo, useEffect } from "react";
 import { MdOutlineDoorSliding, MdOutlineAddHomeWork } from "react-icons/md";
 
 import Layout from "./Layout";
-import Tenders from "./tenders/Tenders";
+import Tenders from "./tenders/TendersOverview";
 import Buildings from "./buildings/building_card/Buildings";
 import NewTender from "./tenders/add_tender_form/NewTender";
 import RealEstateUser from "./real_estate_user/RealEstateUser";

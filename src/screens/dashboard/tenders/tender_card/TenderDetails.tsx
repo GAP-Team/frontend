@@ -1,10 +1,7 @@
 "use client";
-
 import React, { memo, useEffect, useState } from "react";
-import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import TenderTitleBar from "./TenderTitleBar";
-import { jobCardsData } from "@/utils/Constants";
 import Paper from "@mui/material/Paper";
 import TenderSummarySection from "./TenderSummarySection";
 import ApplicationCard from "./ApplicationCard";
@@ -13,10 +10,8 @@ interface TenderDetailsProps {
   id: string;
 }
 
-const TenderDetails: React.FC<TenderDetailsProps> = ({ id }) => {
+const TenderDetails: React.FC<TenderDetailsProps> = () => {
   const [loading, setLoading] = useState(true);
-
-  const jobCard = jobCardsData.find((card) => card.id === id);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -26,17 +21,9 @@ const TenderDetails: React.FC<TenderDetailsProps> = ({ id }) => {
     return (): void => clearTimeout(timer);
   }, []);
 
-  if (!jobCard) {
-    return <Typography variant="h6">Job Card not found</Typography>;
-  }
-
   return (
     <Grid container component="main">
-      <TenderTitleBar
-        title={jobCard.title}
-        projectId={jobCard.projectId}
-        location={jobCard.location}
-      />
+      <TenderTitleBar title="title" projectId="projectId" location="location" />
       <Grid container spacing={2} mx={1} columns={18}>
         <Grid item xs={8}>
           <Paper sx={{ maxWidth: "false", width: "100%", p: "1.25rem" }}>
