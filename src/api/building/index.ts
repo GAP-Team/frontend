@@ -17,7 +17,7 @@ const buildingAPIs = {
       `/users/${userId}/buildings?city=${city}&state=${state}&facilityType=${facilityType}`
     ),
   getBuildingFacilities: (id: string): any =>
-    api.get(`facilities/building/${id}`),
+    api.get(`/buildings/${id}/facilities`),
 };
 
 export default buildingAPIs;
