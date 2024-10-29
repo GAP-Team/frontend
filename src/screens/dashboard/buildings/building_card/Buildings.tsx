@@ -4,12 +4,12 @@ import React, { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
 import { useDispatch, useSelector } from "react-redux";
 import { Building } from "./types";
-import buildingAPIs from "@/api/building";
 import BuildingItemList from "./BuildingItemList";
 import { currentUser, setAllBuildingDetails } from "@/lib/features/userSlice";
 import addObjSrc from "@/../public/icons/add_building.svg";
 import NoContentPage from "@/components/common/NoContentPage";
 import PropertyFilterPanel from "@/components/filter/PropertyFilterPanel";
+import userAPIs from "@/api/user";
 
 const Buildings: React.FC = () => {
   const dispatch = useDispatch();
@@ -27,7 +27,7 @@ const Buildings: React.FC = () => {
   ): Promise<void> => {
     if (!user?._id) return;
 
-    const allBuildings = await buildingAPIs.getBuildings(
+    const allBuildings = await userAPIs.getBuildings(
       user?._id,
       city,
       federalState,
