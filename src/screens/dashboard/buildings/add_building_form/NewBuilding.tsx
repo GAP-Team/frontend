@@ -32,6 +32,7 @@ import { handleUploadMultipleDoc } from "@/utils/uploadToS3";
 import { addObjektFormSchema } from "@/utils/ValidationSchema";
 import { useAppDispatch } from "@/lib/hooks";
 import { showSnackbar } from "@/components/root-snackbar";
+import userAPIs from "@/api/user";
 
 const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
   const router = useRouter();
@@ -275,7 +276,7 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
       );
     }
     if (user?._id) return;
-    const allUpdatedBuildings = await buildingAPIs.getBuildings(
+    const allUpdatedBuildings = await userAPIs.getBuildings(
       user?._id,
       "",
       "",

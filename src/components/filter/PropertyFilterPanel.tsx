@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 import { useSelector } from "react-redux";
 
-import buildingAPIs from "@/api/building";
+import userApi from "@/api/user";
 import { currentUser } from "@/lib/features/userSlice";
 import { PropertyFilterProps } from "@/screens/dashboard/buildings/building_card/types";
 import GButton from "../button/GButton";
@@ -43,9 +43,7 @@ const PropertyFilterPanel = ({
     const fetchData = async (): Promise<void> => {
       if (!user?._id) return;
 
-      const cs = await buildingAPIs?.getUserStatesCitiesFacilityTypes(
-        user?._id
-      );
+      const cs = await userApi?.getFilterCreteria(user?._id);
       if (cs?.data?.cities)
         setUserCities(
           cs.data.cities.map((city: any) => ({ value: city, label: city }))
