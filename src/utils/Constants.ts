@@ -152,7 +152,7 @@ export const listOfOrderTypes = [
   },
 ];
 
-interface Item {
+export interface Item {
   label: string;
   value: string;
 }
