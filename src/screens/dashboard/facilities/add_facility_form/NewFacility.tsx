@@ -1,27 +1,32 @@
 "use client";
-import Link from "next/link";
-import Grid from "@mui/material/Grid";
-import { CgClose } from "react-icons/cg";
-import { useRouter } from "next/navigation";
-import { Formik, FormikHelpers } from "formik";
-import React, { useEffect, useState } from "react";
-import { addFacilityValidationSchema } from "@/utils/ValidationSchema";
 import {
   ActiveStepItem,
   StepComponentProps,
   AddFacilityFormValues,
 } from "./types";
+import Link from "next/link";
+import Grid from "@mui/material/Grid";
+import { CgClose } from "react-icons/cg";
+import facilityAPIs from "@/api/facility";
 import { IconButton } from "@mui/material";
 import FacilityCheck from "./FacilityCheck";
+import { useRouter } from "next/navigation";
+import { useAppDispatch } from "@/lib/hooks";
+import { Formik, FormikHelpers } from "formik";
 import AddFacilityForm from "./AddFacilityForm";
 import FacilitySummary from "./FacilitySummary";
+import { DocumentTypes } from "@/utils/Constants";
+import React, { useEffect, useState } from "react";
 import PageTitle from "@/components/label/PageTitle";
 import FacilityMaintenance from "./FacilityMaintenance";
 import FacilityInformation from "./FacilityInformation";
 import SuccessPage from "@/components/common/SuccessPage";
+import { showSnackbar } from "@/components/root-snackbar";
 import SectionTitle from "@/components/label/SectionTitle";
 import FacilityDocumentation from "./FacilityDocumentation";
+import { handleUploadMultipleDoc } from "@/utils/uploadToS3";
 import GProgressStepper from "@/components/stepper/GProgressStepper";
+import { addFacilityValidationSchema } from "@/utils/ValidationSchema";
 
 interface NewFacilityProps {
   facilityId: string;
@@ -29,6 +34,8 @@ interface NewFacilityProps {
 
 const NewFacility: React.FC<NewFacilityProps> = ({}): JSX.Element => {
   const router = useRouter();
+  const appdispatch = useAppDispatch();
+
   const steps: ActiveStepItem[] = [
     {
       id: 0,
@@ -42,6 +49,7 @@ const NewFacility: React.FC<NewFacilityProps> = ({}): JSX.Element => {
   ];
 
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const [activeStep, setActiveStep] = useState<ActiveStepItem>(steps[0]);
 
   const StepComponent = steps[activeStep.id]
@@ -52,13 +60,16 @@ const NewFacility: React.FC<NewFacilityProps> = ({}): JSX.Element => {
     setIsSubmitted(false);
   }, []);
 
-  const handleNext = (
+  const handleNext = async (
     values: AddFacilityFormValues,
     actions: FormikHelpers<AddFacilityFormValues>
-  ): void => {
+  ): Promise<void> => {
     if (activeStep?.id === steps.length - 1) {
-      setIsSubmitted(true);
-      actions.setSubmitting(false);
+      const saveStatus = await uploadAllDocuments(values);
+      if (saveStatus) {
+        setIsSubmitted(true);
+        actions.setSubmitting(false);
+      }
     } else {
       setActiveStep(steps[activeStep.id + 1]);
       actions.setTouched({});
@@ -74,17 +85,116 @@ const NewFacility: React.FC<NewFacilityProps> = ({}): JSX.Element => {
     }
   };
 
+  const saveFacilityData = async (
+    values: AddFacilityFormValues,
+    docObjList: any[] = []
+  ): Promise<boolean> => {
+    let facilityData = {
+      name: values?.name,
+      facilityType: values?.facilityType,
+      subcategory: values?.subcategory,
+      buildingId: values?.selectedBuilding,
+      check: {
+        lastCheckDate: values?.lastCheckDate,
+        nextCheckInYearNumber: values?.nextCheckInYearNumber,
+        isPublishAutomatically: values?.isPublishAutomatically,
+        publishAutomaticallyInMonth: Number(
+          values?.publishAutomaticallyInMonths
+        ),
+        reminderInMonth: values?.reminderInMonth,
+        isEmailNotificationEnable: values?.isEmailNotificationEnable,
+        emailNotificationList: values?.emailNotificationList,
+      },
+      maintenance: {
+        lastMaintenanceDate: values?.lastMaintenanceDate,
+        nextMaintenanceInMonth: values?.nextMaintenanceInMonth,
+        isPublishAutomatically: values?.isPublishMaintenanceAutomatically,
+        publishAutomaticallyInMonth: Number(
+          values?.publishMaintenanceAutomaticallyInMonth
+        ),
+        reminderInMonth: values?.maintenanceReminderInMonth,
+        isEmailNotificationEnable: values?.isMaintenanceEmailNotificationEnable,
+        emailNotificationList: values?.maintenanceEmailNotificationList,
+      },
+      documents: docObjList,
+      documentUploadType: values?.documentChoice,
+      serverLink: values?.serverLink,
+    };
+
+    const createFacilityResponse = await facilityAPIs.create(facilityData);
+
+    console.log("Facility Save response: ==->", createFacilityResponse);
+
+    if (createFacilityResponse?.data?.id) {
+      appdispatch(
+        showSnackbar({
+          type: "success",
+          message: "Anlage erfolgreich hinzugefügt!",
+        })
+      );
+
+      return true;
+    } else {
+      appdispatch(
+        showSnackbar({
+          type: "error",
+          message:
+            "Anlage konnte nicht hinzugefügt werden. Bitte überprüfen Sie die Eingabedaten und versuchen Sie es erneut",
+        })
+      );
+      return false;
+    }
+  };
+
+  const uploadAllDocuments = async (
+    values: AddFacilityFormValues
+  ): Promise<boolean> => {
+    setLoading(true);
+    const docObjList: any[] = [];
+
+    const uploadDocuments = async (
+      files: File[],
+      docType: string
+    ): Promise<void> => {
+      for (const file of files) {
+        if (file.hasOwnProperty("documentType")) {
+          docObjList.push(file);
+        } else {
+          const uploadedDoc = await handleUploadMultipleDoc(file);
+          uploadedDoc.documentType = docType;
+          docObjList.push(uploadedDoc);
+        }
+      }
+    };
+
+    await uploadDocuments(values.otherDocs, DocumentTypes.SONSTIGE);
+    await uploadDocuments(values.floorplanDocs, DocumentTypes.GRUNDRISSE);
+    await uploadDocuments(values.checkReports, DocumentTypes.BERICHTE);
+
+    try {
+      await saveFacilityData(values, docObjList);
+      return true;
+    } catch {
+      appdispatch(
+        showSnackbar({
+          type: "error",
+          message:
+            "Gebäude konnte nicht hinzugefügt oder bearbeitet werden. Bitte versuchen Sie es erneut!",
+        })
+      );
+      return false;
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const initialValues: AddFacilityFormValues = {
     name: "",
     facilityType: "",
     subcategory: "",
-    lastCheckOderMaintenanceDate: null,
-    nextCheckIn: 0,
     isPublishAutomatically: false,
     publishAutomaticallyInMonths: 0,
     isReminderEnabled: false,
-    reminderInMonths: 0,
-    isEmailNotificationEnabled: false,
     emailNotificationList: ["", ""],
     selectedBuilding: "",
     documentChoice: "Jetzt hochladen Empfohlen",
@@ -103,7 +213,6 @@ const NewFacility: React.FC<NewFacilityProps> = ({}): JSX.Element => {
     nextCheckInYearNumber: 0,
     reminderInMonth: 0,
     isEmailNotificationEnable: false,
-    autoPublishDuration: "",
   };
 
   const formOrSuccessContent = isSubmitted ? (
@@ -158,6 +267,7 @@ const NewFacility: React.FC<NewFacilityProps> = ({}): JSX.Element => {
                 isSubmitting={isSubmitting}
                 isBeyondLastStep={isSubmitted}
                 formOrSuccessContent={formOrSuccessContent}
+                loading={loading}
               />
             </Grid>
           )}
