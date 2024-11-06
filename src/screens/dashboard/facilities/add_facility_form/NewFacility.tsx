@@ -123,8 +123,6 @@ const NewFacility: React.FC<NewFacilityProps> = ({}): JSX.Element => {
 
     const createFacilityResponse = await facilityAPIs.create(facilityData);
 
-    console.log("Facility Save response: ==->", createFacilityResponse);
-
     if (createFacilityResponse?.data?.id) {
       appdispatch(
         showSnackbar({
@@ -132,18 +130,9 @@ const NewFacility: React.FC<NewFacilityProps> = ({}): JSX.Element => {
           message: "Anlage erfolgreich hinzugefügt!",
         })
       );
-
-      return true;
-    } else {
-      appdispatch(
-        showSnackbar({
-          type: "error",
-          message:
-            "Anlage konnte nicht hinzugefügt werden. Bitte überprüfen Sie die Eingabedaten und versuchen Sie es erneut",
-        })
-      );
-      return false;
     }
+
+    return true;
   };
 
   const uploadAllDocuments = async (
@@ -179,7 +168,7 @@ const NewFacility: React.FC<NewFacilityProps> = ({}): JSX.Element => {
         showSnackbar({
           type: "error",
           message:
-            "Gebäude konnte nicht hinzugefügt oder bearbeitet werden. Bitte versuchen Sie es erneut!",
+            "Die Einrichtung konnte nicht hinzugefügt oder bearbeitet werden. Bitte versuchen Sie es erneut!",
         })
       );
       return false;
