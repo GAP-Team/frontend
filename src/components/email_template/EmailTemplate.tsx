@@ -19,7 +19,7 @@ const EmailTemplate = ({
 }): any => (
   <html>
     <body>
-      <p>Dear {name},</p>
+      <p>Hallo {name},</p>
       <p>{emailTemplateGreetins}</p>
       <p>
         {emailTemplateVerificationText} <b> {verificationCode} </b>
