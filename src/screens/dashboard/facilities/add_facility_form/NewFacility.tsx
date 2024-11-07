@@ -168,7 +168,7 @@ const NewFacility: React.FC<NewFacilityProps> = ({}): JSX.Element => {
         showSnackbar({
           type: "error",
           message:
-            "Die Einrichtung konnte nicht hinzugefügt oder bearbeitet werden. Bitte versuchen Sie es erneut!",
+            "Die Anlage konnte nicht hinzugefügt oder bearbeitet werden. Bitte versuchen Sie es erneut!",
         })
       );
       return false;

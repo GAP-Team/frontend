@@ -161,23 +161,24 @@ const FacilityCheck = (): JSX.Element => {
             label="aktivieren"
           />
         </Grid>
-        {formik?.values?.emailNotificationList.map((email, index) => (
-          <Grid key={index} item xs={6}>
-            <GTextInput
-              placeholder="E-Mail"
-              onBlur={formik?.handleBlur}
-              onChange={formik?.handleChange}
-              id={`emailNotificationList[${index}]`}
-              name={`emailNotificationList[${index}]`}
-              value={formik?.values?.emailNotificationList[index]}
-            />
-            <ErrorMessage
-              component="div"
-              className="text-red-500 text-sm"
-              name={`emailNotificationList[${index}]`}
-            />
-          </Grid>
-        ))}
+        {formik?.values?.isEmailNotificationEnable &&
+          formik?.values?.emailNotificationList.map((email, index) => (
+            <Grid key={index} item xs={6}>
+              <GTextInput
+                placeholder="E-Mail"
+                onBlur={formik?.handleBlur}
+                onChange={formik?.handleChange}
+                id={`emailNotificationList[${index}]`}
+                name={`emailNotificationList[${index}]`}
+                value={formik?.values?.emailNotificationList[index]}
+              />
+              <ErrorMessage
+                component="div"
+                className="text-red-500 text-sm"
+                name={`emailNotificationList[${index}]`}
+              />
+            </Grid>
+          ))}
         <Divider />
       </Grid>
     </Box>

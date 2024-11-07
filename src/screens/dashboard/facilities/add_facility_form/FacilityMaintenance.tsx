@@ -163,25 +163,28 @@ const FacilityMaintenance = (): JSX.Element => {
             label="aktivieren"
           />
         </Grid>
-        {formik?.values?.maintenanceEmailNotificationList.map(
-          (email, index) => (
-            <Grid key={index} item xs={6}>
-              <GTextInput
-                placeholder="E-Mail"
-                onBlur={formik?.handleBlur}
-                onChange={formik?.handleChange}
-                id={`maintenanceEmailNotificationList[${index}]`}
-                name={`maintenanceEmailNotificationList[${index}]`}
-                value={formik?.values?.maintenanceEmailNotificationList[index]}
-              />
-              <ErrorMessage
-                component="div"
-                className="text-red-500 text-sm"
-                name={`maintenanceEmailNotificationList[${index}]`}
-              />
-            </Grid>
-          )
-        )}
+        {formik?.values?.isMaintenanceEmailNotificationEnable &&
+          formik?.values?.maintenanceEmailNotificationList.map(
+            (email, index) => (
+              <Grid key={index} item xs={6}>
+                <GTextInput
+                  placeholder="E-Mail"
+                  onBlur={formik?.handleBlur}
+                  onChange={formik?.handleChange}
+                  id={`maintenanceEmailNotificationList[${index}]`}
+                  name={`maintenanceEmailNotificationList[${index}]`}
+                  value={
+                    formik?.values?.maintenanceEmailNotificationList[index]
+                  }
+                />
+                <ErrorMessage
+                  component="div"
+                  className="text-red-500 text-sm"
+                  name={`maintenanceEmailNotificationList[${index}]`}
+                />
+              </Grid>
+            )
+          )}
         <Divider />
       </Grid>
     </Box>
