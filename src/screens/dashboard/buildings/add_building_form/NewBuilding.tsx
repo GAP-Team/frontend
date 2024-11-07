@@ -40,7 +40,6 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
   const user = useSelector(currentUser);
   const allBuildings = useSelector(allBuildingDetails);
   const userBuildings = useSelector(currentUserBuildings);
-
   const appdispatch = useAppDispatch();
 
   const steps: ActiveStepItem[] = [
@@ -142,8 +141,18 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
         setActiveStep(steps[nextStepId]);
       } else {
         const uploadSuccess = await uploadAllDocuments(values);
+
         if (uploadSuccess) {
+          setLoading(false);
           setActiveStep({ ...activeStep, id: nextStepId });
+        } else {
+          appdispatch(
+            showSnackbar({
+              type: "error",
+              message:
+                "Gebäude konnte nicht hinzugefügt oder bearbeitet werden. Bitte versuchen Sie es erneut!",
+            })
+          );
         }
       }
     }
@@ -154,41 +163,6 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
       setActiveStep(steps[activeStep.id - 1]);
     } else {
       router.push("/real_estate/dashboard");
-    }
-  };
-
-  const handleSubmit = async (
-    values: AddBuildingFormValues,
-    docObjList: any[] = []
-  ): Promise<void> => {
-    const addressObj = {
-      city: values.city,
-      state: values.state,
-      street: values.street,
-      country: values.country,
-      zip: Number(values.zip),
-      houseNumber: Number(values.houseNumber),
-    };
-
-    const formateDate = moment().format("YYYY-MM-DDTHH:mm:ss.SSS[Z]");
-
-    let buildingData = {
-      userId: user?._id,
-      documents: docObjList,
-      address: addressObj,
-      createdAt: formateDate,
-      buildingName: values.name,
-      serverLink: values.serverLink,
-      buildingType: values.buildingType,
-      totalArea: values.totalArea !== "" ? Number(values.totalArea) : null,
-      contactPerson: values.contactPerson,
-      documentUploadType: values.documentChoice,
-      buildingAbbreviation: values.buildingAbbreviation,
-    };
-    if (actionType === "edit") {
-      return await UpdateBuildingData(buildingData);
-    } else if (actionType === "add") {
-      return await saveBuildingData(buildingData);
     }
   };
 
@@ -217,24 +191,54 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
     await uploadDocuments(values.floorplanDocs, DocumentTypes.GRUNDRISSE);
     await uploadDocuments(values.constructionDocs, DocumentTypes.BAUUNTERLAGEN);
 
-    try {
-      await handleSubmit(values, docObjList);
+    const status = await handleSubmit(values, docObjList);
+
+    if (status) {
       return true;
-    } catch {
-      appdispatch(
-        showSnackbar({
-          type: "error",
-          message:
-            "Gebäude konnte nicht hinzugefügt oder bearbeitet werden. Bitte versuchen Sie es erneut!",
-        })
-      );
+    } else {
       return false;
-    } finally {
-      setLoading(false);
     }
   };
 
-  const saveBuildingData = async (data: any): Promise<void> => {
+  const handleSubmit = async (
+    values: AddBuildingFormValues,
+    docObjList: any[] = []
+  ): Promise<boolean | undefined> => {
+    const addressObj = {
+      city: values.city,
+      state: values.state,
+      street: values.street,
+      country: values.country,
+      zip: Number(values.zip),
+      houseNumber: Number(values.houseNumber),
+    };
+
+    const formateDate = moment().format("YYYY-MM-DDTHH:mm:ss.SSS[Z]");
+
+    let buildingData = {
+      userId: user?._id,
+      documents: docObjList,
+      address: addressObj,
+      createdAt: formateDate,
+      buildingName: values.name,
+      serverLink: values.serverLink,
+      buildingType: values.buildingType,
+      totalArea: values.totalArea !== "" ? Number(values.totalArea) : null,
+      contactPerson: values.contactPerson,
+      documentUploadType: values.documentChoice,
+      buildingAbbreviation: values.buildingAbbreviation,
+    };
+
+    if (actionType === "edit") {
+      const saveStatus = await UpdateBuildingData(buildingData);
+      return saveStatus;
+    } else if (actionType === "add") {
+      const updateStatus = await saveBuildingData(buildingData);
+      return updateStatus;
+    }
+  };
+
+  const saveBuildingData = async (data: any): Promise<boolean> => {
     const createBuildingResponse = await buildingAPIs.create(data);
     if (createBuildingResponse?.data?.id) {
       const updatedBuildings = [
@@ -248,12 +252,14 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
           message: "Gebäude erfolgreich hinzugefügt!",
         })
       );
+
+      return true;
     } else {
-      throw new Error("Building creation failed.");
+      return false;
     }
   };
 
-  const UpdateBuildingData = async (data: any): Promise<void> => {
+  const UpdateBuildingData = async (data: any): Promise<boolean> => {
     if (!buildingDetails?._id) {
       throw new Error("Building edit failed");
     }
@@ -274,15 +280,19 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
           message: "Gebäude erfolgreich aktualisiert!",
         })
       );
+
+      const allUpdatedBuildings = await userAPIs.getBuildings(
+        user?._id,
+        "",
+        "",
+        ""
+      );
+      dispatch(setAllBuildingDetails(allUpdatedBuildings.data));
+
+      return true;
+    } else {
+      return false;
     }
-    if (user?._id) return;
-    const allUpdatedBuildings = await userAPIs.getBuildings(
-      user?._id,
-      "",
-      "",
-      ""
-    );
-    dispatch(setAllBuildingDetails(allUpdatedBuildings.data));
   };
 
   return (
