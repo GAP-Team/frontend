@@ -27,7 +27,7 @@ export const sendVerificationEmail = async (
     .add(15, "minutes")
     .format("YYYY-MM-DDTHH:mm:ss.SSS[Z]");
 
-  const emailText = `Dear ${name}, ${emailTemplateGreetins} ${emailTemplateVerificationText} ${code} ${emailTemplateFoot}`;
+  const emailText = `Hallo ${name}, ${emailTemplateGreetins} ${emailTemplateVerificationText} ${code} ${emailTemplateFoot}`;
 
   const readyEmailStructure = {
     source: "rihab@gap-pruefen.de",
