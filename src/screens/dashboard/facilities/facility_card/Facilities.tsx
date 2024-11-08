@@ -16,6 +16,8 @@ const Facilities = (): JSX.Element => {
       <FacilityList facilities={facilities} />
     ) : (
       <NoContentPage
+        width={400}
+        height={400}
         image={addObjSrc}
         alt="No Facility"
         buttonLabel="Anlage anlegen"

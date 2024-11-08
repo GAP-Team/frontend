@@ -51,6 +51,8 @@ const Buildings: React.FC = () => {
       <BuildingItemList buildings={buildings} />
     ) : (
       <NoContentPage
+        width={400}
+        height={400}
         image={addObjSrc}
         alt="No Building/Objekt"
         buttonLabel="Objekt anlegen"

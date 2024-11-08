@@ -1,12 +1,14 @@
 import Box from "@mui/material/Box";
-import { scrollBarStyles } from "@/components/scrollbar/Scrollbar";
-import { useState, useEffect } from "react";
 import tenderAPIs from "@/api/tender";
+import TenderCard from "./TenderCard";
+import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { currentUser } from "@/lib/features/userSlice";
-import TenderCard from "./TenderCard";
 import { Building } from "../../tenders/tender_card/types";
 import { setTenderNumbers } from "@/lib/features/tenderSlice";
+import NoContentPage from "@/components/common/NoContentPage";
+import addTenderSrc from "@../../../public/icons/add_tender.svg";
+import { scrollBarStyles } from "@/components/scrollbar/Scrollbar";
 
 const TenderCardList: React.FC = () => {
   const [buildings, setBuildings] = useState<Building[]>([]);
@@ -30,15 +32,29 @@ const TenderCardList: React.FC = () => {
 
   return (
     <Box sx={styles.listContainer}>
-      {buildings.map((building, buildingIndex) =>
-        building.tenders.map((tender, tenderIndex) => (
-          <TenderCard
-            key={`${buildingIndex}-${tenderIndex}`}
-            tender={tender}
-            buildingName={building.buildingName}
-            buildingAdress={building.buildingAdress}
+      {buildings.length > 0 ? (
+        buildings.map((building, buildingIndex) =>
+          building.tenders.map((tender, tenderIndex) => (
+            <TenderCard
+              key={`${buildingIndex}-${tenderIndex}`}
+              tender={tender}
+              buildingName={building.buildingName}
+              buildingAdress={building.buildingAdress}
+            />
+          ))
+        )
+      ) : (
+        <Box sx={styles.noDataContainer}>
+          <NoContentPage
+            width={100}
+            height={100}
+            alt="No Tenders"
+            image={addTenderSrc}
+            title="Erstelle eine neue Ausschreibung."
+            buttonLabel="Ausschreibung erstellen"
+            buttonLink="/real_estate/tenders/add"
           />
-        ))
+        </Box>
       )}
     </Box>
   );
@@ -56,5 +72,12 @@ const styles = {
     px: "0.2rem",
     overflowX: "auto",
     ...scrollBarStyles,
+  },
+  noDataContainer: {
+    display: "flex",
+    height: "20rem",
+    marginLeft: "32.5rem",
+    justifyContent: "center",
+    flexDirection: "column",
   },
 };

@@ -30,6 +30,8 @@ const TendersOverview: React.FC = () => {
       <TendersContainer buildings={buildings} />
     ) : (
       <NoContentPage
+        width={400}
+        height={400}
         alt="No Tenders"
         image={addTenderSrc}
         title="Erstelle eine neue Ausschreibung."
