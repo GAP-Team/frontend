@@ -5,22 +5,18 @@ import GButton from "@/components/button/GButton";
 import React from "react";
 
 interface NoContentPageProps {
+  image: StaticImageData;
   alt: string;
   title: string;
-  width: number;
-  height: number;
   buttonLabel: string;
   buttonLink?: string;
   description?: string;
-  image: StaticImageData;
 }
 
 const NoContentPage: React.FC<NoContentPageProps> = ({
+  image,
   alt,
   title,
-  image,
-  width,
-  height,
   buttonLabel,
   buttonLink,
   description,
@@ -28,11 +24,11 @@ const NoContentPage: React.FC<NoContentPageProps> = ({
   return (
     <Box sx={styles.container}>
       <Image
+        width={400}
+        height={400}
         alt={alt}
-        src={image}
-        width={width}
-        height={height}
         style={{ marginBottom: "1.5rem" }}
+        src={image}
       />
       <Typography variant="h4sb">{title}</Typography>
       <Typography

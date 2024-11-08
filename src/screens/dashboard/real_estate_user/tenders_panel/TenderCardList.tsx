@@ -1,13 +1,12 @@
 import Box from "@mui/material/Box";
 import tenderAPIs from "@/api/tender";
 import TenderCard from "./TenderCard";
+import { Typography } from "@mui/material";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { currentUser } from "@/lib/features/userSlice";
 import { Building } from "../../tenders/tender_card/types";
 import { setTenderNumbers } from "@/lib/features/tenderSlice";
-import NoContentPage from "@/components/common/NoContentPage";
-import addTenderSrc from "@../../../public/icons/add_tender.svg";
 import { scrollBarStyles } from "@/components/scrollbar/Scrollbar";
 
 const TenderCardList: React.FC = () => {
@@ -45,15 +44,13 @@ const TenderCardList: React.FC = () => {
         )
       ) : (
         <Box sx={styles.noDataContainer}>
-          <NoContentPage
-            width={100}
-            height={100}
-            alt="No Tenders"
-            image={addTenderSrc}
-            title="Erstelle eine neue Ausschreibung."
-            buttonLabel="Ausschreibung erstellen"
-            buttonLink="/real_estate/tenders/add"
-          />
+          <Typography
+            component="a"
+            variant="subtitle2"
+            style={{ textDecoration: "none", fontSize: "1.50rem" }}
+          >
+            Keine Aufträge vorhanden
+          </Typography>
         </Box>
       )}
     </Box>
@@ -76,7 +73,8 @@ const styles = {
   noDataContainer: {
     display: "flex",
     height: "20rem",
-    marginLeft: "32.5rem",
+    marginLeft: "38rem",
+    marginBottom: "10rem",
     justifyContent: "center",
     flexDirection: "column",
   },
