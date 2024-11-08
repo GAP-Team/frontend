@@ -203,7 +203,8 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
   const handleSubmit = async (
     values: AddBuildingFormValues,
     docObjList: any[] = []
-  ): Promise<boolean | undefined> => {
+  ): Promise<boolean> => {
+    let status = false;
     const addressObj = {
       city: values.city,
       state: values.state,
@@ -231,11 +232,17 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
 
     if (actionType === "edit") {
       const saveStatus = await UpdateBuildingData(buildingData);
-      return saveStatus;
+      if (saveStatus) {
+        status = true;
+      }
     } else if (actionType === "add") {
       const updateStatus = await saveBuildingData(buildingData);
-      return updateStatus;
+      if (updateStatus) {
+        status = true;
+      }
     }
+
+    return status;
   };
 
   const saveBuildingData = async (data: any): Promise<boolean> => {
