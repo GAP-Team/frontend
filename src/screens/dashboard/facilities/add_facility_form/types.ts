@@ -5,13 +5,9 @@ export interface AddFacilityFormValues {
   name: string;
   facilityType: string;
   subcategory: string;
-  lastCheckOderMaintenanceDate: Dayjs | null;
-  nextCheckIn: number;
   isPublishAutomatically: boolean;
   publishAutomaticallyInMonths: number;
   isReminderEnabled: boolean;
-  reminderInMonths: number;
-  isEmailNotificationEnabled: boolean;
   emailNotificationList: string[];
   selectedBuilding: string;
   documentChoice: string;
@@ -30,7 +26,6 @@ export interface AddFacilityFormValues {
   nextCheckInYearNumber: number;
   reminderInMonth: number;
   isEmailNotificationEnable: boolean;
-  autoPublishDuration: string;
 }
 
 export interface ActiveStepItem {
