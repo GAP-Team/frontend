@@ -33,7 +33,6 @@ const BuildingItemList: React.FC<BuildingItemListProps> = ({
       <Grid
         container
         spacing={"1.25rem"}
-        // paddingBottom={1}
         sx={{ overflow: "auto", flexGrow: 1 }}
       >
         {currentItems.map((building) => (

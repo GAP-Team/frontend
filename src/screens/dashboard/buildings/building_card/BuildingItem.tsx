@@ -37,7 +37,7 @@ const BuildingItem: React.FC<BuildingItemProps> = ({ building }) => {
             variant="bodymsb"
             fontWeight={500}
             color="black"
-          >{`0 Anlagen`}</Typography>
+          >{`${building.facilities.length} Anlagen`}</Typography>
         </Stack>
         <Stack direction="row" alignItems="center" gap={2}>
           <CgNotes size="1.5rem" color="#A0ADB1" />

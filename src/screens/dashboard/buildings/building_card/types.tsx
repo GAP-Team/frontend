@@ -14,6 +14,7 @@ export interface Building {
     houseNumber: string;
     zip: string;
   };
+  facilities: [];
   area: number; // Area in square meters
   documents: [
     {
