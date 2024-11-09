@@ -21,7 +21,6 @@ const TendersOverview: React.FC = () => {
 
   const getTenders = async (): Promise<void> => {
     const buildings = await tenderAPIs.getTenders(user?._id);
-    console.log(buildings);
     setBuildings(buildings.data);
   };
 

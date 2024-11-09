@@ -12,16 +12,19 @@ interface TendersContainerProps {
 const TendersContainer: React.FC<TendersContainerProps> = ({ buildings }) => {
   return (
     <Box sx={styles.listContainer}>
-      {buildings.map((building) => (
-        <>
-          <TenderHeader
-            buildingName={building.buildingName}
-            buildingAdress={building.buildingAdress}
-          />
-          <TenderItems building={building} />
-          <Divider variant="middle" orientation="horizontal" flexItem />
-        </>
-      ))}
+      {buildings.map(
+        (building) =>
+          building?.tenders?.length > 0 && (
+            <>
+              <TenderHeader
+                buildingName={building.buildingName}
+                buildingAdress={building.buildingAdress}
+              />
+              <TenderItems building={building} />
+              <Divider variant="middle" orientation="horizontal" flexItem />
+            </>
+          )
+      )}
     </Box>
   );
 };
