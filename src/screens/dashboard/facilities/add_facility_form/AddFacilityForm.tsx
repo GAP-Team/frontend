@@ -13,6 +13,7 @@ interface AddFacilityFormProps {
   isSubmitting: boolean;
   isBeyondLastStep: boolean;
   formOrSuccessContent: React.ReactNode;
+  loading: boolean;
 }
 
 const AddFacilityForm: React.FC<AddFacilityFormProps> = ({
