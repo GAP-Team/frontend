@@ -45,7 +45,7 @@ const TenderDescription = (): JSX.Element => {
         </Grid>
         <Grid item xs={12}>
           <Typography variant="gsub" color="gray.500">
-            SICHERHEIT ARBEIT ERFODERLICH
+            ARBEITSSICHERHEITS-UNTERWEISUNG ERFORDERLICH
           </Typography>
         </Grid>
         <Grid item xs={12}>
