@@ -23,7 +23,7 @@ const TenderInformation = (): JSX.Element => {
   );
   const handleTenderTypeSelect = (selectedItem: Item | null): void => {
     setSelectedTenderType(selectedItem);
-    formik?.setFieldValue("tenderType", selectedItem ? selectedItem.value : "");
+    formik?.setFieldValue("tenderType", selectedItem ? selectedItem.label : "");
   };
 
   return (
