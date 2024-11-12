@@ -1,15 +1,16 @@
 // Buildings.tsx
 "use client";
-import React, { useState, useEffect } from "react";
-import Box from "@mui/material/Box";
-import { useDispatch, useSelector } from "react-redux";
+import userAPIs from "@/api/user";
 import { Building } from "./types";
+import Box from "@mui/material/Box";
+import facilityAPIs from "@/api/facility";
 import BuildingItemList from "./BuildingItemList";
-import { currentUser, setAllBuildingDetails } from "@/lib/features/userSlice";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import addObjSrc from "@/../public/icons/add_building.svg";
 import NoContentPage from "@/components/common/NoContentPage";
 import PropertyFilterPanel from "@/components/filter/PropertyFilterPanel";
-import userAPIs from "@/api/user";
+import { currentUser, setAllBuildingDetails } from "@/lib/features/userSlice";
 
 const Buildings: React.FC = () => {
   const dispatch = useDispatch();
@@ -33,10 +34,29 @@ const Buildings: React.FC = () => {
       federalState,
       facilityType
     );
-    setBuildings(allBuildings.data);
 
-    dispatch(setAllBuildingDetails(allBuildings.data));
+    const userBuildings = allBuildings.data;
+    
+    const allTenders: any[] | ((prevState: Building[]) => Building[]) = [];
+    userBuildings?.map( async (building: Building) => {
+      const buildingObj = Object.seal(building)
+      building?.facilities?.map( async(facility: string) => {
+        let tenders = await getFacilityTendersCount(facility);
+        const updatedBuildingObj = { ...buildingObj, tendersCount: tenders.length }
+        // building.tendersCount = tenders.length;
+        console.log("Ttemp ----> ", updatedBuildingObj);
+      });
+    });
+    console.log("T ----> ", userBuildings);
+    
+    setBuildings(userBuildings);
+    dispatch(setAllBuildingDetails(userBuildings));
   };
+  
+  const getFacilityTendersCount = async(facilityId: string): Promise<any> => {
+    const tender = await facilityAPIs.getFacilityTenders(facilityId);
+    return tender?.data;
+  }
 
   const onStateCityFacilityTypeChange = (
     city: string,

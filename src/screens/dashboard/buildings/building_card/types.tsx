@@ -23,6 +23,7 @@ export interface Building {
       documentType: string;
     },
   ];
+  tendersCount: number;
 }
 
 export interface PropertyFilterProps {

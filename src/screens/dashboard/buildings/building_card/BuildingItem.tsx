@@ -37,7 +37,7 @@ const BuildingItem: React.FC<BuildingItemProps> = ({ building }) => {
             variant="bodymsb"
             fontWeight={500}
             color="black"
-          >{`${building.facilities.length} Anlagen`}</Typography>
+          >{`${building.tendersCount} Anlagen`}</Typography>
         </Stack>
         <Stack direction="row" alignItems="center" gap={2}>
           <CgNotes size="1.5rem" color="#A0ADB1" />
@@ -45,7 +45,7 @@ const BuildingItem: React.FC<BuildingItemProps> = ({ building }) => {
             variant="bodymsb"
             color="black"
             fontWeight={500}
-          >{`0 Ausschreibungen`}</Typography>
+          >{`${building.tendersCount} Ausschreibungen`}</Typography>
         </Stack>
       </Box>
       <Divider sx={styles.divider} orientation="horizontal" />
