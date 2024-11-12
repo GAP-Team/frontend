@@ -56,7 +56,7 @@ export default function GAppBar(): JSX.Element {
   };
 
   const handleLogout = async (): Promise<void> => {
-    let data = { userId: user?._id };
+    let data = { userId: user?.id };
     const logoutStatus = await authAPIs.logout(data);
     if (logoutStatus?.status === 201) {
       Cookies.remove("access_token");

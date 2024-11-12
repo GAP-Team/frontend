@@ -5,7 +5,7 @@ import { RootState } from "../store";
 
 interface UserState {
   user: {
-    _id: string;
+    id: string;
     company: {};
     role: string;
     email: string;
@@ -19,7 +19,7 @@ interface UserState {
 
 const initialState: UserState = {
   user: {
-    _id: "",
+    id: "",
     role: "",
     email: "",
     company: {},
@@ -36,7 +36,7 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     setUser: (state, action: PayloadAction<UserState>) => {
-      state.user._id = action.payload?.user?._id;
+      state.user.id = action.payload?.user?.id;
       state.user.role = action.payload?.user?.role;
       state.user.email = action.payload?.user?.email;
       state.user.company = action.payload?.user?.company;
@@ -59,7 +59,7 @@ export const { setUser, setUserBuildings, setAllBuildingDetails } =
   userSlice.actions;
 
 export const currentUser = (state: RootState): any => state.user.user;
-export const currentUserId = (state: RootState): string => state.user.user._id;
+export const currentUserId = (state: RootState): string => state.user.user.id;
 export const currentUserEmail = (state: RootState): string =>
   state.user.user.email;
 export const allBuildingDetails = (state: RootState): any =>

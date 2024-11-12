@@ -32,7 +32,7 @@ export default function UserMailVerification(): JSX.Element {
       </section>
       <EmailVerification
         sendMail={true}
-        newUserId={user?._id}
+        newUserId={user?.id}
         newUserEmail={user?.email}
         newUserName={user?.firstName}
         postVerificationAction={postVerificationAction}
