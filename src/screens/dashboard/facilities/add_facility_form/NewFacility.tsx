@@ -104,7 +104,9 @@ const NewFacility: React.FC<NewFacilityProps> = ({}): JSX.Element => {
         reminderInMonth: values?.reminderInMonth,
         isEmailNotificationEnable: values?.isEmailNotificationEnable,
         emailNotificationList: values?.isEmailNotificationEnable
-          ? values?.emailNotificationList
+          ? Array.isArray(values?.emailNotificationList)
+            ? values.emailNotificationList.filter((item) => item !== "")
+            : []
           : [],
       },
       maintenance: {
@@ -117,7 +119,11 @@ const NewFacility: React.FC<NewFacilityProps> = ({}): JSX.Element => {
         reminderInMonth: values?.maintenanceReminderInMonth,
         isEmailNotificationEnable: values?.isMaintenanceEmailNotificationEnable,
         emailNotificationList: values?.isMaintenanceEmailNotificationEnable
-          ? values?.maintenanceEmailNotificationList
+          ? Array.isArray(values?.maintenanceEmailNotificationList)
+            ? values.maintenanceEmailNotificationList.filter(
+                (item) => item !== ""
+              )
+            : []
           : [],
       },
       documents: docObjList,
