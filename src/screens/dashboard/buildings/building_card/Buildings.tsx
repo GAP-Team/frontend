@@ -3,7 +3,6 @@
 import userAPIs from "@/api/user";
 import { Building } from "./types";
 import Box from "@mui/material/Box";
-import facilityAPIs from "@/api/facility";
 import BuildingItemList from "./BuildingItemList";
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -34,29 +33,11 @@ const Buildings: React.FC = () => {
       federalState,
       facilityType
     );
-
     const userBuildings = allBuildings.data;
-    
-    const allTenders: any[] | ((prevState: Building[]) => Building[]) = [];
-    userBuildings?.map( async (building: Building) => {
-      const buildingObj = Object.seal(building)
-      building?.facilities?.map( async(facility: string) => {
-        let tenders = await getFacilityTendersCount(facility);
-        const updatedBuildingObj = { ...buildingObj, tendersCount: tenders.length }
-        // building.tendersCount = tenders.length;
-        console.log("Ttemp ----> ", updatedBuildingObj);
-      });
-    });
-    console.log("T ----> ", userBuildings);
-    
+
     setBuildings(userBuildings);
     dispatch(setAllBuildingDetails(userBuildings));
   };
-  
-  const getFacilityTendersCount = async(facilityId: string): Promise<any> => {
-    const tender = await facilityAPIs.getFacilityTenders(facilityId);
-    return tender?.data;
-  }
 
   const onStateCityFacilityTypeChange = (
     city: string,
