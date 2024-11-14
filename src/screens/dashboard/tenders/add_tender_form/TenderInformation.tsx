@@ -1,29 +1,24 @@
 "use client";
-import { useState } from "react";
-import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
+import Radio from "@mui/material/Radio";
+import { useFormikContext } from "formik";
+import RadioGroup from "@mui/material/RadioGroup";
 import FormControl from "@mui/material/FormControl";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import Radio from "@mui/material/Radio";
-import RadioGroup from "@mui/material/RadioGroup";
-import LabelWithAsterisk from "@/components/label/LabelWithAsterisk";
-import GTextInput from "@/components/input/GTextInput";
-import { useFormikContext } from "formik";
+
 import { AddTenderFormValues } from "./types";
-import { Item } from "../../types";
-import GTextSelector from "@/components/input/GTextSelector";
+import GTextInput from "@/components/input/GTextInput";
+import CustomSelect from "@/components/drop_down/CustomSelect";
+import LabelWithAsterisk from "@/components/label/LabelWithAsterisk";
 import { tenderTypesListHW, tenderTypesListSV } from "@/utils/Constants";
 
 const TenderInformation = (): JSX.Element => {
   const formik = useFormikContext<AddTenderFormValues>();
-  const [selectedTenderType, setSelectedTenderType] = useState<Item | null>(
-    formik?.values?.tenderType
-      ? { label: formik.values.tenderType, value: formik.values.tenderType }
-      : null
-  );
-  const handleTenderTypeSelect = (selectedItem: Item | null): void => {
-    setSelectedTenderType(selectedItem);
-    formik?.setFieldValue("tenderType", selectedItem ? selectedItem.label : "");
+
+  const handleTenderTypeSelect = (selectedItem: any): void => {
+    const selectedTenderType = selectedItem?.target?.value;
+    formik?.setFieldValue("tenderType", selectedTenderType);
   };
 
   return (
@@ -89,22 +84,18 @@ const TenderInformation = (): JSX.Element => {
         </Grid>
         <Grid item xs={12}>
           <LabelWithAsterisk>AUSSCHREIBUNGSTYP</LabelWithAsterisk>
-          <GTextSelector
-            name="tenderType"
-            options={
-              formik?.values?.tenderForm === "Handwerker"
-                ? tenderTypesListHW
-                : tenderTypesListSV
-            }
-            error={
-              formik?.touched?.tenderType && Boolean(formik?.errors?.tenderType)
-            }
-            helperText={
-              formik?.touched?.tenderType && formik?.errors?.tenderType
-            }
-            onSelect={handleTenderTypeSelect}
-            selectedState={selectedTenderType}
-          />
+          <FormControl fullWidth>
+            <CustomSelect
+              name="tenderType"
+              options={
+                formik?.values?.tenderForm === "Handwerker"
+                  ? tenderTypesListHW
+                  : tenderTypesListSV
+              }
+              onChange={handleTenderTypeSelect}
+              value={formik?.values?.tenderType}
+            />
+          </FormControl>
         </Grid>
       </Grid>
     </Box>
