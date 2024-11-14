@@ -20,7 +20,6 @@ const TenderCardList: React.FC = () => {
   }, [user?.id]);
 
   const getBuildings = async (): Promise<void> => {
-
     const buildings = await tenderAPIs.getTenders(user?.id);
     setBuildings(buildings.data);
     const totalTenders = buildings.data.reduce(
