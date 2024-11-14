@@ -14,7 +14,6 @@ interface UserState {
     lastName: string;
     manufacturerExperience: string;
   };
-  buildingIds: [];
 }
 
 const initialState: UserState = {
@@ -28,7 +27,6 @@ const initialState: UserState = {
     buildingIds: [],
     manufacturerExperience: "",
   },
-  buildingIds: [],
 };
 
 const userSlice = createSlice({
@@ -50,7 +48,7 @@ const userSlice = createSlice({
       state.user.buildingIds = action.payload;
     },
     setAllBuildingDetails: (state, action) => {
-      state.buildingIds = action.payload;
+      state.user.buildingIds = action.payload;
     },
   },
 });
@@ -62,8 +60,6 @@ export const currentUser = (state: RootState): any => state.user.user;
 export const currentUserId = (state: RootState): string => state.user.user._id;
 export const currentUserEmail = (state: RootState): string =>
   state.user.user.email;
-export const allBuildingDetails = (state: RootState): any =>
-  state.user.buildingIds;
 export const currentUserCompany = (state: RootState): string =>
   state.user.user.company;
 export const currentUserBuildings = (state: RootState): any =>
