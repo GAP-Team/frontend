@@ -20,6 +20,7 @@ const TenderCardList: React.FC = () => {
   }, [user?.id]);
 
   const getBuildings = async (): Promise<void> => {
+
     const buildings = await tenderAPIs.getTenders(user?.id);
     setBuildings(buildings.data);
     const totalTenders = buildings.data.reduce(
@@ -31,14 +32,14 @@ const TenderCardList: React.FC = () => {
 
   return (
     <Box sx={styles.listContainer}>
-      {buildings.length > 0 ? (
-        buildings.map((building, buildingIndex) =>
-          building.tenders.map((tender, tenderIndex) => (
+      {buildings?.length > 0 ? (
+        buildings?.map((building, buildingIndex) =>
+          building?.tenders?.map((tender, tenderIndex) => (
             <TenderCard
               key={`${buildingIndex}-${tenderIndex}`}
               tender={tender}
-              buildingName={building.buildingName}
-              buildingAdress={building.buildingAdress}
+              buildingName={building?.buildingName}
+              buildingAdress={building?.buildingAdress}
             />
           ))
         )

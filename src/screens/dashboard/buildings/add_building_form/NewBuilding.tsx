@@ -18,7 +18,6 @@ import {
   setUserBuildings,
   currentUserBuildings,
   setAllBuildingDetails,
-  allBuildingDetails,
 } from "@/lib/features/userSlice";
 
 import AddBuildingForm from "./AddBuildingForm";
@@ -37,10 +36,9 @@ import userAPIs from "@/api/user";
 const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
   const router = useRouter();
   const dispatch = useDispatch();
-  const user = useSelector(currentUser);
-  const allBuildings = useSelector(allBuildingDetails);
-  const userBuildings = useSelector(currentUserBuildings);
   const appdispatch = useAppDispatch();
+  const user = useSelector(currentUser);
+  const userBuildings = useSelector(currentUserBuildings);
 
   const steps: ActiveStepItem[] = [
     { id: 0, stepName: "Objektinformation", component: BuildingInformation },
@@ -69,7 +67,7 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
   }, []);
 
   const getCurrentBuildingDetails = (id: any): void => {
-    const selectedBuildingDetails = allBuildings?.filter(
+    const selectedBuildingDetails = userBuildings?.filter(
       (building: any) => id === building?._id
     );
     setBuildingDetails(selectedBuildingDetails[0]);

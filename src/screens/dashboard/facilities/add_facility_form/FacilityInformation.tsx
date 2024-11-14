@@ -11,11 +11,11 @@ import GTextSelector from "@/components/input/GTextSelector";
 import Typography from "@mui/material/Typography";
 import { listOfTrades } from "@/utils/Constants";
 import { useSelector } from "react-redux";
-import { allBuildingDetails } from "@/lib/features/userSlice";
+import { currentUserBuildings } from "@/lib/features/userSlice";
 import { FormControl, MenuItem, Select } from "@mui/material";
 
 const FacilityInformation = (): JSX.Element => {
-  const allBuildings = useSelector(allBuildingDetails);
+  const allBuildings = useSelector(currentUserBuildings);
   const formik = useFormikContext<AddFacilityFormValues>();
 
   const [selectedFacilityType, setSelectedFacilityType] = useState<Item | null>(
