@@ -120,8 +120,10 @@ const NewFacility: React.FC<NewFacilityProps> = ({}): JSX.Element => {
         ),
         reminderInMonth: values?.reminderInMonth,
         isEmailNotificationEnable: values?.isEmailNotificationEnable,
-        emailNotificationList: Array.isArray(values?.emailNotificationList)
-          ? values.emailNotificationList.filter((item) => item !== "")
+        emailNotificationList: values?.isEmailNotificationEnable
+          ? Array.isArray(values?.emailNotificationList)
+            ? values.emailNotificationList.filter((item) => item !== "")
+            : []
           : [],
       },
       maintenance: {
@@ -133,12 +135,12 @@ const NewFacility: React.FC<NewFacilityProps> = ({}): JSX.Element => {
         ),
         reminderInMonth: values?.maintenanceReminderInMonth,
         isEmailNotificationEnable: values?.isMaintenanceEmailNotificationEnable,
-        emailNotificationList: Array.isArray(
-          values?.maintenanceEmailNotificationList
-        )
-          ? values.maintenanceEmailNotificationList.filter(
-              (item) => item !== ""
-            )
+        emailNotificationList: values?.isMaintenanceEmailNotificationEnable
+          ? Array.isArray(values?.maintenanceEmailNotificationList)
+            ? values.maintenanceEmailNotificationList.filter(
+                (item) => item !== ""
+              )
+            : []
           : [],
       },
       documents: docObjList,
