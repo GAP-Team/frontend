@@ -215,7 +215,7 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
     const formateDate = moment().format("YYYY-MM-DDTHH:mm:ss.SSS[Z]");
 
     let buildingData = {
-      userId: user?._id,
+      userId: user?.id,
       documents: docObjList,
       address: addressObj,
       createdAt: formateDate,
@@ -287,7 +287,7 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
       );
 
       const allUpdatedBuildings = await userAPIs.getBuildings(
-        user?._id,
+        user?.id,
         "",
         "",
         ""

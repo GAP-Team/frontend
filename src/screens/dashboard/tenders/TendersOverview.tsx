@@ -17,10 +17,10 @@ const TendersOverview: React.FC = () => {
 
   useEffect(() => {
     getTenders();
-  }, [user?._id]);
+  }, [user?.id]);
 
   const getTenders = async (): Promise<void> => {
-    const buildings = await tenderAPIs.getTenders(user?._id);
+    const buildings = await tenderAPIs.getTenders(user?.id);
     setBuildings(buildings.data);
   };
 

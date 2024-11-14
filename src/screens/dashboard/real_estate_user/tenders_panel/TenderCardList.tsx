@@ -17,13 +17,13 @@ const TenderCardList: React.FC = () => {
 
   useEffect(() => {
     getBuildings();
-  }, [user?._id]);
+  }, [user?.id]);
 
   const getBuildings = async (): Promise<void> => {
-    const buildings = await tenderAPIs.getTenders(user?._id);
-    setBuildings(buildings?.data);
-    const totalTenders = buildings?.data.reduce(
-      (total: any, building: any) => total + (building?.tenders?.length || 0),
+    const buildings = await tenderAPIs.getTenders(user?.id);
+    setBuildings(buildings.data);
+    const totalTenders = buildings.data.reduce(
+      (total: any, building: any) => total + (building.tenders?.length || 0),
       0
     );
     dispatch(setTenderNumbers(totalTenders));
