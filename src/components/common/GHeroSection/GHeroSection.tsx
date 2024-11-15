@@ -11,20 +11,25 @@ import {
 } from "@/utils/Constants";
 import heroBackgroundPicture from "../../../../public/images/hero6.jpg";
 import Image from "next/image";
+import { MenuItem, Checkbox, ListItemText } from "@mui/material";
 
 const HeroSection = (): JSX.Element => {
-  const [selectedFacility, setSelectedFacility] = useState("Anlagentyp");
+  const [selectedFacilities, setSelectedFacilities] = useState<string[]>([]);
   const [selectedOrderType, setSelectedOrderType] = useState("Auftragstypen");
   const [selectedState, setSelectedState] = useState("Bundesländer");
 
-  const truncateLabel = (label: string): string => {
-    const maxLength = 20;
-    if (label?.length > maxLength) {
-      return label.substring(0, maxLength) + "..."; // Truncate and append ellipsis
-    }
-    return label;
+  const truncateLabel = (label: string, maxLength = 20): string => {
+    return label.length > maxLength
+      ? label.substring(0, maxLength) + "..."
+      : label;
   };
   const truncatedOrderType = truncateLabel(selectedOrderType);
+
+  const handleFacilityChange = (item: string): void => {
+    setSelectedFacilities((prev) =>
+      prev.includes(item) ? prev.filter((i) => i !== item) : [...prev, item]
+    );
+  };
 
   return (
     <>
@@ -75,7 +80,11 @@ const HeroSection = (): JSX.Element => {
                           Wählen Sie ein Anlagentyp aus:
                         </label>
                         <Dropdown
-                          label={truncateLabel(selectedFacility)}
+                          label={
+                            selectedFacilities.length > 0
+                              ? truncateLabel(selectedFacilities[0])
+                              : "Anlagentyp"
+                          }
                           size="lg"
                           color="gray"
                           style={{
@@ -96,27 +105,30 @@ const HeroSection = (): JSX.Element => {
                                     color="gray"
                                   >
                                     {category.items.map((item, itemIndex) => (
-                                      <DropdownItem
-                                        onClick={() =>
-                                          setSelectedFacility(category.category)
-                                        }
+                                      <MenuItem
                                         key={itemIndex}
-                                        style={{ width: "max-content" }}
+                                        value={item}
+                                        onChange={() =>
+                                          handleFacilityChange(item)
+                                        }
                                       >
-                                        {item}
-                                      </DropdownItem>
+                                        <Checkbox
+                                          checked={selectedFacilities.includes(
+                                            item
+                                          )}
+                                        />
+                                        <ListItemText primary={item} />
+                                      </MenuItem>
                                     ))}
                                   </Dropdown>
                                 ) : (
                                   category.items.map((item, itemIndex) => (
-                                    <DropdownItem
-                                      onClick={() =>
-                                        setSelectedFacility(category.category)
-                                      }
-                                      key={itemIndex}
-                                    >
-                                      {item}
-                                    </DropdownItem>
+                                    <MenuItem key={itemIndex} value={item}>
+                                      <Checkbox
+                                        checked={category.items.includes(item)}
+                                      />
+                                      <ListItemText primary={item} />
+                                    </MenuItem>
                                   ))
                                 )}
                               </React.Fragment>
