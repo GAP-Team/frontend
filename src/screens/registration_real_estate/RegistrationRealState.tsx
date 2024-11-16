@@ -180,7 +180,7 @@ const RegistrationRealState = (): JSX.Element => {
 
       if (res.status === 201) {
         setActiveStep(steps.length);
-        setNewUserId(res?.data?._id);
+        setNewUserId(res?.data?.id);
         setNewUserEmail(values.email);
         setNewUserName(res?.data?.firstName);
         const code = getNewVerificationCode();
@@ -190,7 +190,7 @@ const RegistrationRealState = (): JSX.Element => {
         const sendStatus = await sendVerificationEmail(
           values.firstName,
           values.email,
-          res?.data?._id,
+          res?.data?.id,
           element,
           code
         );

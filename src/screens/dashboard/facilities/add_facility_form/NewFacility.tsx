@@ -68,7 +68,7 @@ const NewFacility: React.FC<NewFacilityProps> = ({}): JSX.Element => {
 
   const getUSerBuildingDetails = async (): Promise<void> => {
     const allUpdatedBuildings = await userAPIs.getBuildings(
-      user?._id,
+      user?.id,
       "",
       "",
       ""
