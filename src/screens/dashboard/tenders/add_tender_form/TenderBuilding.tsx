@@ -29,7 +29,7 @@ const TenderBuilding = (): JSX.Element => {
     allBuildings?.map((building: any) => {
       const temp = {
         label: building?.buildingName,
-        value: building?._id,
+        value: building?.id,
       };
       buildingOptions.push(temp);
     });
@@ -42,7 +42,7 @@ const TenderBuilding = (): JSX.Element => {
     formik?.setFieldValue("buildingId", selectedBuildingId);
 
     const building = allBuildings.filter(
-      (building: any) => building._id === selectedBuildingId
+      (building: any) => building.id === selectedBuildingId
     );
     formik?.setFieldValue("buildingName", building[0]?.buildingName);
 

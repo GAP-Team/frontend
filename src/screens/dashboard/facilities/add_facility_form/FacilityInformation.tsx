@@ -136,7 +136,7 @@ const FacilityInformation = (): JSX.Element => {
             >
               {allBuildings?.map((building: any, buildingIndex: number) => {
                 return (
-                  <MenuItem key={buildingIndex} value={building?._id}>
+                  <MenuItem key={buildingIndex} value={building?.id}>
                     {building?.buildingName}
                   </MenuItem>
                 );

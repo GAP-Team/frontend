@@ -68,7 +68,7 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
 
   const getCurrentBuildingDetails = (id: any): void => {
     const selectedBuildingDetails = userBuildings?.filter(
-      (building: any) => id === building?._id
+      (building: any) => id === building?.id
     );
     setBuildingDetails(selectedBuildingDetails[0]);
   };
@@ -265,12 +265,12 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
   };
 
   const UpdateBuildingData = async (data: any): Promise<boolean> => {
-    if (!buildingDetails?._id) {
+    if (!buildingDetails?.id) {
       throw new Error("Building edit failed");
     }
 
     const createBuildingResponse = await buildingAPIs.update(
-      buildingDetails?._id,
+      buildingDetails?.id,
       data
     );
     if (createBuildingResponse?.data?.id) {

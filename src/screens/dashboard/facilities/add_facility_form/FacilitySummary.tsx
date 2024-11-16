@@ -25,7 +25,7 @@ const FacilitySummary = ({
 
   useEffect(() => {
     const building = allBuildings.filter(
-      (building: any) => building._id === values.selectedBuilding
+      (building: any) => building.id === values.selectedBuilding
     );
     setSelectedBuildingDetails(building[0]);
   }, []);

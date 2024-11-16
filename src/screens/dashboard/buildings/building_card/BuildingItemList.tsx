@@ -37,7 +37,7 @@ const BuildingItemList: React.FC<BuildingItemListProps> = ({
         sx={{ overflow: "auto", flexGrow: 1 }}
       >
         {currentItems.map((building) => (
-          <Grid item xs={12} md={6} lg={3} key={building._id}>
+          <Grid item xs={12} md={6} lg={3} key={building.id}>
             <BuildingItem building={building} />
           </Grid>
         ))}
