@@ -422,7 +422,7 @@ export const DocumentTypes = {
 
 export const dummyFacilities = [
   {
-    _id: 1,
+    id: 1,
     name: "Facility A",
     facilityType: "Feuerlöschanlage",
     subcategory: "Gaslöschanlage",
@@ -441,7 +441,7 @@ export const dummyFacilities = [
     __v: 0,
   },
   {
-    _id: 2,
+    id: 2,
     name: "Facility B",
     facilityType: "Brandmeldanlage",
     subcategory: "Warehouse",
@@ -460,7 +460,7 @@ export const dummyFacilities = [
     __v: 1,
   },
   {
-    _id: 3,
+    id: 3,
     name: "Facility C",
     facilityType: "Structure",
     subcategory: "Bridge",
@@ -479,7 +479,7 @@ export const dummyFacilities = [
     __v: 2,
   },
   {
-    _id: 4,
+    id: 4,
     name: "Facility D",
     facilityType: "Building",
     subcategory: "School",
@@ -498,7 +498,7 @@ export const dummyFacilities = [
     __v: 3,
   },
   {
-    _id: 5,
+    id: 5,
     name: "Facility E",
     facilityType: "Infrastructure",
     subcategory: "Dam",
