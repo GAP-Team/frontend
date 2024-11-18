@@ -207,7 +207,7 @@ export const addTenderValidationSchema = [
 
 export const addFacilityValidationSchema = [
   yup.object({
-    name: yup.string(),
+    name: yup.string().required("Anlagenname ist erforderlich"),
     facilityType: yup.string().required("Oberbegriff ist erforderlich"),
     subcategory: yup.string(),
     selectedBuilding: yup

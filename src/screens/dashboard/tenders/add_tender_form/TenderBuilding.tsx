@@ -1,15 +1,15 @@
 "use client";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
-import { Item } from "@/utils/Constants";
 import { useSelector } from "react-redux";
 import { useFormikContext } from "formik";
 import buildingAPIs from "@/api/building";
 import { useEffect, useState } from "react";
 import { FormControl } from "@mui/material";
 import { AddTenderFormValues } from "./types";
-import { currentUserBuildings } from "@/lib/features/userSlice";
 import CustomSelect from "@/components/drop_down/CustomSelect";
+import { currentUserBuildings } from "@/lib/features/userSlice";
+import { Item, noBuilding, noFacility } from "@/utils/Constants";
 import LabelWithAsterisk from "@/components/label/LabelWithAsterisk";
 import { AddFacilityFormValues } from "../../facilities/add_facility_form/types";
 
@@ -92,8 +92,12 @@ const TenderBuilding = (): JSX.Element => {
             <CustomSelect
               name={"buildingId"}
               onChange={handleBuildingSelect}
-              options={buildingDropDownOptions}
               value={formik?.values?.buildingId}
+              options={
+                buildingDropDownOptions?.length > 0
+                  ? buildingDropDownOptions
+                  : noBuilding
+              }
             />
             {formik?.touched?.buildingId && (
               <p style={styles.errorTexts}>{formik?.errors?.buildingId}</p>
@@ -106,7 +110,11 @@ const TenderBuilding = (): JSX.Element => {
             <CustomSelect
               name={"facilityId"}
               onChange={handleFacilitySelect}
-              options={facilityDropDownOptions}
+              options={
+                facilityDropDownOptions?.length > 0
+                  ? facilityDropDownOptions
+                  : noFacility
+              }
               value={formik?.values?.facilityId}
             />
             {formik?.touched?.facilityId && (
