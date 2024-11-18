@@ -95,6 +95,9 @@ const TenderInformation = (): JSX.Element => {
               onChange={handleTenderTypeSelect}
               value={formik?.values?.tenderType}
             />
+            {formik?.touched?.tenderType && (
+              <p style={styles.errorTexts}>{formik?.errors?.tenderType}</p>
+            )}
           </FormControl>
         </Grid>
       </Grid>
@@ -103,3 +106,11 @@ const TenderInformation = (): JSX.Element => {
 };
 
 export default TenderInformation;
+
+const styles = {
+  errorTexts: {
+    color: "#d32f2f",
+    fontWeight: 400,
+    fontSize: "0.75rem",
+  },
+};
