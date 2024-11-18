@@ -27,7 +27,7 @@ const BuildingItem: React.FC<BuildingItemProps> = ({ building }) => {
     getFacilityTendersCount();
   }, []);
 
-  const getFacilityTendersCount = async (): Promise<any> => {
+  const getFacilityTendersCount = async () => {
     var count = 0;
     await Promise.all(
       building?.facilities?.map(async (facilityId: string) => {
