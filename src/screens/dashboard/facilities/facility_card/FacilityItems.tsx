@@ -15,7 +15,7 @@ const FacilityItems: React.FC<facilityListProps> = ({ facilities }) => {
       {facilities.map((facility, index) => (
         <Grid item key={index}>
           <FacilityCard
-            key={facility._id}
+            key={facility.id}
             facility={facility}
             status="ausgeschrieben"
           />

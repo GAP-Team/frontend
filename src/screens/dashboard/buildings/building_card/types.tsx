@@ -1,6 +1,6 @@
 // types.ts
 export interface Building {
-  _id: string;
+  id: string;
   buildingName: string;
   buildingType: string;
   noOfInvestment: number;

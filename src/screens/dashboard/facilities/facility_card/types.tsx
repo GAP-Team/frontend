@@ -1,5 +1,5 @@
 export interface Facility {
-  _id: number;
+  id: number;
   name: string;
   facilityType: string;
   subcategory: string;

@@ -44,7 +44,7 @@ export interface Address {
   zip: string;
 }
 export interface SelectedBuildingData {
-  _id: string;
+  id: string;
   buildingName: string;
   totalArea: string;
   buildingType: string;
