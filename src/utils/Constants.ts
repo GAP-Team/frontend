@@ -350,12 +350,12 @@ export const tenderTypesListHW = [
   { label: "Wartung", value: "Wartung" },
   { label: "Installation", value: "Installation" },
   { label: "Prüfung", value: "Prüfung" },
-  { label: "SV Begleitung", value: "SV_Begleitung" },
-  { label: "Beratung/Planprüfung", value: "Beratung_Planpruefung" },
-  { label: "Konzepterstellung BSK", value: "Konzepterstellung_BSK" },
+  { label: "SV Begleitung", value: "SV Begleitung" },
+  { label: "Beratung/Planprüfung", value: "Beratung/Planprüfung" },
+  { label: "Konzepterstellung BSK", value: "Konzepterstellung BSK" },
   {
     label: "Konzepterstellung Löschanlage",
-    value: "Konzepterstellung_Loeschanlage",
+    value: "Konzepterstellung Löschanlage",
   },
   { label: "Brandwache", value: "Brandwache" },
 ];
@@ -363,44 +363,45 @@ export const tenderTypesListHW = [
 export const tenderTypesListSV = [
   {
     label: "Arbeitsstättenverordnung - Gesundheitsschutz der Beschäftigte",
-    value: "Arbeitsstaettenverordnung_Gesundheitsschutz",
+    value: "Arbeitsstättenverordnung - Gesundheitsschutz der Beschäftigte",
   },
   {
     label:
       "Betriebssicherheitsverordnung (ZÜS) - Sicherheit Maschinen und Anlagen",
-    value: "Betriebssicherheitsverordnung_ZUES",
+    value:
+      "Betriebssicherheitsverordnung (ZÜS) - Sicherheit Maschinen und Anlagen",
   },
   {
     label: "Baurechtliche Prüfung - Gesetzlicher Brandschutz",
-    value: "Baurechtliche_Pruefung_Brandschutz",
+    value: "Baurechtliche Prüfung - Gesetzlicher Brandschutz",
   },
   {
     label: "DGUV - Deutsche Gesetzliche Unfallversicherung",
-    value: "DGUV_Unfallversicherung",
+    value: "DGUV - Deutsche Gesetzliche Unfallversicherung",
   },
   {
     label: "Elektrische Anlagen - VDE 0105-100",
-    value: "Elektrische_Anlagen_VDE_0105_100",
+    value: "Elektrische Anlagen - VDE 0105-100",
   },
   {
     label: "Konzepterstellung - Brandschutzkonzept",
-    value: "Konzepterstellung_Brandschutzkonzept",
+    value: "Konzepterstellung - Brandschutzkonzept",
   },
   {
     label: "Hygiene Prüfung Lüftung - VDI 6022",
-    value: "Hygiene_Pruefung_Lueftung_VDI_6022",
+    value: "Hygiene Prüfung Lüftung - VDI 6022",
   },
   {
     label: "Hygiene Prüfung Trinkwasser - VDI 6023",
-    value: "Hygiene_Pruefung_Trinkwasser_VDI_6023",
+    value: "Hygiene Prüfung Trinkwasser - VDI 6023",
   },
   {
     label: "Versicherungsprüfung - VdS Prüfung",
-    value: "Versicherungspruefung_VdS_Pruefung",
+    value: "Versicherungsprüfung - VdS Prüfung",
   },
   {
     label: "Wassergefährdete Stoffe - AwsV Prüfung",
-    value: "Wassergefaehrdete_Stoffe_AwsV_Pruefung",
+    value: "Wassergefährdete Stoffe - AwsV Prüfung",
   },
 ];
 
