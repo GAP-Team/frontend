@@ -75,9 +75,7 @@ const FacilityInformation = (): JSX.Element => {
     >
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <Typography variant="gsub" color="gray.500">
-            ANLAGENNAME-/BEZEICHNUNG
-          </Typography>
+          <LabelWithAsterisk>ANLAGENNAME-/BEZEICHNUNG</LabelWithAsterisk>
           <GTextInput
             id="name"
             name="name"
