@@ -1,20 +1,23 @@
 // Buildings.tsx
 "use client";
 import userAPIs from "@/api/user";
-import { Building } from "./types";
 import Box from "@mui/material/Box";
+import React, { useEffect } from "react";
 import BuildingItemList from "./BuildingItemList";
-import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import addObjSrc from "@/../public/icons/add_building.svg";
 import NoContentPage from "@/components/common/NoContentPage";
 import PropertyFilterPanel from "@/components/filter/PropertyFilterPanel";
-import { currentUser, setAllBuildingDetails } from "@/lib/features/userSlice";
+import {
+  currentUser,
+  setAllBuildingDetails,
+  currentUserBuildings,
+} from "@/lib/features/userSlice";
 
 const Buildings: React.FC = () => {
   const dispatch = useDispatch();
   const user = useSelector(currentUser);
-  const [buildings, setBuildings] = useState<Building[]>([]);
+  const userBuildings = useSelector(currentUserBuildings);
 
   useEffect(() => {
     getUserBuildings("", "", "");
@@ -35,7 +38,7 @@ const Buildings: React.FC = () => {
     );
     const userBuildings = allBuildings.data;
 
-    setBuildings(userBuildings);
+    // setBuildings(userBuildings);
     dispatch(setAllBuildingDetails(userBuildings));
   };
 
@@ -48,8 +51,8 @@ const Buildings: React.FC = () => {
   };
 
   const buildingContent =
-    buildings?.length > 0 ? (
-      <BuildingItemList buildings={buildings} />
+    userBuildings !== undefined && userBuildings?.length > 0 ? (
+      <BuildingItemList buildings={userBuildings} />
     ) : (
       <NoContentPage
         image={addObjSrc}
@@ -60,6 +63,7 @@ const Buildings: React.FC = () => {
         description="Du hast noch keine Objekte angelegt, wenn Du Deine Objekte erstellt hast findest Du sie hier."
       />
     );
+
   return (
     <Box sx={styles.mainContainer}>
       <PropertyFilterPanel

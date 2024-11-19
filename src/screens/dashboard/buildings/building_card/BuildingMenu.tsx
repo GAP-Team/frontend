@@ -1,6 +1,8 @@
 "use client";
 import * as React from "react";
+import userAPIs from "@/api/user";
 import Menu from "@mui/material/Menu";
+import buildingAPIs from "@/api/building";
 import Dialog from "@mui/material/Dialog";
 import { FaRegEdit } from "react-icons/fa";
 import { useRouter } from "next/navigation";
@@ -9,23 +11,32 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import IconButton from "@mui/material/IconButton";
 import { RiDeleteBin6Line } from "react-icons/ri";
+import GButton from "@/components/button/GButton";
 import DialogTitle from "@mui/material/DialogTitle";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import { IoEllipsisHorizontal } from "react-icons/io5";
+import { useDispatch, useSelector } from "react-redux";
 import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContentText from "@mui/material/DialogContentText";
-
-import GButton from "@/components/button/GButton";
+import { currentUser, setAllBuildingDetails } from "@/lib/features/userSlice";
 
 interface BuildingMenuProps {
   buildingId: string;
+  totalTenders?: number;
+  totalFacilities: number;
 }
 
-const BuildingMenu: React.FC<BuildingMenuProps> = ({ buildingId }) => {
+const BuildingMenu: React.FC<BuildingMenuProps> = ({
+  buildingId,
+  totalTenders,
+  totalFacilities,
+}) => {
   const router = useRouter();
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const dispatch = useDispatch();
+  const user = useSelector(currentUser);
   const [openDialog, setOpenDialog] = React.useState(false);
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
   const handleClick = (event: React.MouseEvent<HTMLElement>): void => {
@@ -45,9 +56,14 @@ const BuildingMenu: React.FC<BuildingMenuProps> = ({ buildingId }) => {
     setOpenDialog(false);
   };
 
-  const handleConfirmDelete = (): void => {
-    // Add delete logic here
-    setOpenDialog(false);
+  const handleConfirmDelete = async (): Promise<void> => {
+    const deleteStatus = await buildingAPIs.delete(buildingId);
+    if (deleteStatus?.data?.statusCode === 204) {
+      const allBuildings = await userAPIs.getBuildings(user?.id, "", "", "");
+      const userBuildings = allBuildings.data;
+      dispatch(setAllBuildingDetails(userBuildings));
+      setOpenDialog(false);
+    }
   };
 
   const handleEditClick = (): void => {
@@ -105,7 +121,20 @@ const BuildingMenu: React.FC<BuildingMenuProps> = ({ buildingId }) => {
         <DialogTitle id="alert-dialog-title">Bestätigung</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            Sind Sie sicher, dass Sie dieses Element löschen möchten?
+            Beim Löschen dieses Gebäudes werden alle relevanten Objekte
+            mitgelöscht:
+            {totalFacilities > 0 && (
+              <>
+                <br /> {`- ${totalFacilities} Anlagen`}
+              </>
+            )}
+            {totalTenders !== undefined && totalTenders > 0 && (
+              <>
+                <br />
+                {`- ${totalTenders} Ausschreibungen`}
+              </>
+            )}
+            <br /> Sind Sie sicher, dass Sie dieses Gebäude löschen möchten?
           </DialogContentText>
         </DialogContent>
         <DialogActions>
