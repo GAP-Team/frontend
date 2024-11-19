@@ -4,12 +4,14 @@ import List from "@mui/material/List";
 import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
 import { CgNotes } from "react-icons/cg";
+import { useEffect, useState } from "react";
 import { FaRegFlag } from "react-icons/fa6";
 import Divider from "@mui/material/Divider";
 import Typography from "@mui/material/Typography";
 import { IoExtensionPuzzleOutline } from "react-icons/io5";
 
 import { Building } from "./types";
+import facilityAPIs from "@/api/facility";
 import BuildingMenu from "./BuildingMenu";
 import DocumentList from "./DocumentList ";
 import { scrollBarStyles } from "@/components/scrollbar/Scrollbar";
@@ -19,6 +21,23 @@ interface BuildingItemProps {
 }
 
 const BuildingItem: React.FC<BuildingItemProps> = ({ building }) => {
+  const [totalTenders, setTotalTenders] = useState<number>();
+
+  useEffect(() => {
+    getFacilityTendersCount();
+  }, []);
+
+  const getFacilityTendersCount = async (): Promise<void> => {
+    var count = 0;
+    await Promise.all(
+      building?.facilities?.map(async (facilityId: string) => {
+        const tender = await facilityAPIs.getFacilityTenders(facilityId);
+        count = count + tender?.data?.length;
+      })
+    );
+    setTotalTenders(count);
+  };
+
   return (
     <Paper sx={styles.card}>
       <Box sx={styles.header}>
@@ -37,7 +56,7 @@ const BuildingItem: React.FC<BuildingItemProps> = ({ building }) => {
             variant="bodymsb"
             fontWeight={500}
             color="black"
-          >{`0 Anlagen`}</Typography>
+          >{`${building.facilities.length} Anlagen`}</Typography>
         </Stack>
         <Stack direction="row" alignItems="center" gap={2}>
           <CgNotes size="1.5rem" color="#A0ADB1" />
@@ -45,7 +64,7 @@ const BuildingItem: React.FC<BuildingItemProps> = ({ building }) => {
             variant="bodymsb"
             color="black"
             fontWeight={500}
-          >{`0 Ausschreibungen`}</Typography>
+          >{`${totalTenders} Ausschreibungen`}</Typography>
         </Stack>
       </Box>
       <Divider sx={styles.divider} orientation="horizontal" />

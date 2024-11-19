@@ -1,15 +1,15 @@
 // Buildings.tsx
 "use client";
-import React, { useState, useEffect } from "react";
-import Box from "@mui/material/Box";
-import { useDispatch, useSelector } from "react-redux";
+import userAPIs from "@/api/user";
 import { Building } from "./types";
+import Box from "@mui/material/Box";
 import BuildingItemList from "./BuildingItemList";
-import { currentUser, setAllBuildingDetails } from "@/lib/features/userSlice";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import addObjSrc from "@/../public/icons/add_building.svg";
 import NoContentPage from "@/components/common/NoContentPage";
 import PropertyFilterPanel from "@/components/filter/PropertyFilterPanel";
-import userAPIs from "@/api/user";
+import { currentUser, setAllBuildingDetails } from "@/lib/features/userSlice";
 
 const Buildings: React.FC = () => {
   const dispatch = useDispatch();
@@ -33,9 +33,10 @@ const Buildings: React.FC = () => {
       federalState,
       facilityType
     );
-    setBuildings(allBuildings.data);
+    const userBuildings = allBuildings.data;
 
-    dispatch(setAllBuildingDetails(allBuildings.data));
+    setBuildings(userBuildings);
+    dispatch(setAllBuildingDetails(userBuildings));
   };
 
   const onStateCityFacilityTypeChange = (

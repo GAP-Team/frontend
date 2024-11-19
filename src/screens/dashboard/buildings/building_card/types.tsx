@@ -14,6 +14,7 @@ export interface Building {
     houseNumber: string;
     zip: string;
   };
+  facilities: [];
   area: number; // Area in square meters
   documents: [
     {
@@ -22,6 +23,7 @@ export interface Building {
       documentType: string;
     },
   ];
+  tendersCount: number;
 }
 
 export interface PropertyFilterProps {
