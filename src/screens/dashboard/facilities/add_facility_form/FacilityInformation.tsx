@@ -132,6 +132,7 @@ const FacilityInformation = (): JSX.Element => {
               value={formik?.values?.selectedBuilding}
               label="Objekt Zuordnen"
               onChange={formik.handleChange}
+              displayEmpty
             >
               {allBuildings?.length > 0
                 ? allBuildings?.map((building: any, buildingIndex: number) => {
@@ -143,7 +144,11 @@ const FacilityInformation = (): JSX.Element => {
                   })
                 : noBuilding?.map((building: any, buildingIndex: number) => {
                     return (
-                      <MenuItem key={buildingIndex} value={building?.value}>
+                      <MenuItem
+                        disabled
+                        key={buildingIndex}
+                        value={building?.value}
+                      >
                         {building?.label}
                       </MenuItem>
                     );
