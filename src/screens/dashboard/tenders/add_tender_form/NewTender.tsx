@@ -1,34 +1,39 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import Link from "next/link";
 import Grid from "@mui/material/Grid";
+import { CgClose } from "react-icons/cg";
+import { useSelector } from "react-redux";
+import { IconButton } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { Formik, FormikHelpers } from "formik";
-import { addTenderValidationSchema } from "@/utils/ValidationSchema";
-import PageTitle from "@/components/label/PageTitle";
+import React, { useEffect, useState } from "react";
+
 import {
-  AddTenderFormValues,
   ActiveStepItem,
   StepComponentProps,
+  AddTenderFormValues,
 } from "./types";
-import SuccessPage from "@/components/common/SuccessPage";
-import SectionTitle from "@/components/label/SectionTitle";
-import AddTenderForm from "./AddTenderForm";
-import TenderInformation from "./TenderInformation";
-import TenderBuilding from "./TenderBuilding";
-import TenderDescription from "./TenderDescription";
-import TenderClassification from "./TenderClassification";
-import GProgressStepper from "@/components/stepper/GProgressStepper";
-import Link from "next/link";
-import { IconButton } from "@mui/material";
-import { CgClose } from "react-icons/cg";
-import TenderSummary from "./TenderSummary";
 import tenderAPIs from "@/api/tender";
+import AddTenderForm from "./AddTenderForm";
+import TenderSummary from "./TenderSummary";
 import { useAppDispatch } from "@/lib/hooks";
+import TenderBuilding from "./TenderBuilding";
+import TenderInformation from "./TenderInformation";
+import TenderDescription from "./TenderDescription";
+import PageTitle from "@/components/label/PageTitle";
+import { getUserBuildingDetails } from "@/utils/helper";
+import SuccessPage from "@/components/common/SuccessPage";
+import TenderClassification from "./TenderClassification";
 import { showSnackbar } from "@/components/root-snackbar";
+import SectionTitle from "@/components/label/SectionTitle";
+import { addTenderValidationSchema } from "@/utils/ValidationSchema";
+import GProgressStepper from "@/components/stepper/GProgressStepper";
+import { currentUser, setUserBuildings } from "@/lib/features/userSlice";
 
 const NewTender = (): JSX.Element => {
   const router = useRouter();
-  const appdispatch = useAppDispatch();
+  const appDispatch = useAppDispatch();
+  const user = useSelector(currentUser);
   const steps: ActiveStepItem[] = [
     {
       id: 0,
@@ -49,7 +54,13 @@ const NewTender = (): JSX.Element => {
   useEffect(() => {
     setActiveStep(steps[0]);
     setIsSubmitted(false);
+    getBuildingDetails();
   }, []);
+
+  const getBuildingDetails = async (): Promise<void> => {
+    const buildingDetails = await getUserBuildingDetails(user?.id);
+    appDispatch(setUserBuildings(buildingDetails));
+  };
 
   const handleNext = async (
     values: AddTenderFormValues,
@@ -97,7 +108,7 @@ const NewTender = (): JSX.Element => {
     const createTenderResponse = await tenderAPIs.create(tenderData);
 
     if (createTenderResponse?.data?.id) {
-      appdispatch(
+      appDispatch(
         showSnackbar({
           type: "success",
           message: "Ausschreibung erfolgreich hinzugefügt!",
@@ -106,7 +117,7 @@ const NewTender = (): JSX.Element => {
 
       return true;
     } else {
-      appdispatch(
+      appDispatch(
         showSnackbar({
           type: "error",
           message:

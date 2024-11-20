@@ -5,10 +5,10 @@ import {
   AddFacilityFormValues,
 } from "./types";
 import Link from "next/link";
-import userAPIs from "@/api/user";
 import Grid from "@mui/material/Grid";
 import { CgClose } from "react-icons/cg";
 import facilityAPIs from "@/api/facility";
+import { useSelector } from "react-redux";
 import { IconButton } from "@mui/material";
 import FacilityCheck from "./FacilityCheck";
 import { useRouter } from "next/navigation";
@@ -19,7 +19,6 @@ import FacilitySummary from "./FacilitySummary";
 import { DocumentTypes } from "@/utils/Constants";
 import React, { useEffect, useState } from "react";
 import PageTitle from "@/components/label/PageTitle";
-import { useSelector, useDispatch } from "react-redux";
 import FacilityMaintenance from "./FacilityMaintenance";
 import FacilityInformation from "./FacilityInformation";
 import SuccessPage from "@/components/common/SuccessPage";
@@ -30,6 +29,7 @@ import { handleUploadMultipleDoc } from "@/utils/uploadToS3";
 import GProgressStepper from "@/components/stepper/GProgressStepper";
 import { addFacilityValidationSchema } from "@/utils/ValidationSchema";
 import { currentUser, setUserBuildings } from "@/lib/features/userSlice";
+import { getUserBuildingDetails } from "@/utils/helper";
 
 interface NewFacilityProps {
   facilityId: string;
@@ -37,8 +37,7 @@ interface NewFacilityProps {
 
 const NewFacility: React.FC<NewFacilityProps> = ({}): JSX.Element => {
   const router = useRouter();
-  const dispatch = useDispatch();
-  const appdispatch = useAppDispatch();
+  const appDispatch = useAppDispatch();
   const user = useSelector(currentUser);
 
   const steps: ActiveStepItem[] = [
@@ -63,18 +62,12 @@ const NewFacility: React.FC<NewFacilityProps> = ({}): JSX.Element => {
   useEffect(() => {
     setActiveStep(steps[0]);
     setIsSubmitted(false);
-    getUSerBuildingDetails();
+    getBuildingDetails();
   }, []);
 
-  const getUSerBuildingDetails = async (): Promise<void> => {
-    const allUpdatedBuildings = await userAPIs.getBuildings(
-      user?.id,
-      "",
-      "",
-      ""
-    );
-
-    dispatch(setUserBuildings(allUpdatedBuildings.data));
+  const getBuildingDetails = async (): Promise<void> => {
+    const buildingDetails = await getUserBuildingDetails(user?.id);
+    appDispatch(setUserBuildings(buildingDetails));
   };
 
   const handleNext = async (
@@ -151,7 +144,7 @@ const NewFacility: React.FC<NewFacilityProps> = ({}): JSX.Element => {
     const createFacilityResponse = await facilityAPIs.create(facilityData);
 
     if (createFacilityResponse?.data?.id) {
-      appdispatch(
+      appDispatch(
         showSnackbar({
           type: "success",
           message: "Anlage erfolgreich hinzugefügt!",
@@ -191,7 +184,7 @@ const NewFacility: React.FC<NewFacilityProps> = ({}): JSX.Element => {
       await saveFacilityData(values, docObjList);
       return true;
     } catch {
-      appdispatch(
+      appDispatch(
         showSnackbar({
           type: "error",
           message:
