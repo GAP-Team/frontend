@@ -1,16 +1,14 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import Box from "@mui/material/Box";
 import PropertyFilterPanel from "@/components/filter/PropertyFilterPanel";
 import NoContentPage from "@/components/common/NoContentPage";
 import addTenderSrc from "@/../public/icons/add_tender.svg";
 import TendersContainer from "./tender_card/TendersContainer";
-import { Building } from "./tender_card/types";
 import { currentUser } from "@/lib/features/userSlice";
 import { useSelector } from "react-redux";
-import tenderAPIs from "@/api/tender";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
-import { fetchTenders, setTenders } from "@/lib/features/tenderSlice";
+import { fetchTenders } from "@/lib/features/tenderSlice";
 
 const TendersOverview: React.FC = () => {
   const user = useSelector(currentUser);
@@ -40,10 +38,7 @@ const TendersOverview: React.FC = () => {
   })();
   return (
     <Box sx={styles.mainContainer}>
-      <PropertyFilterPanel
-        handleOnChange={() => {}}
-        title="Alle Ausschreibungen"
-      />
+      <PropertyFilterPanel title="Alle Ausschreibungen" />
       {tenderContent}
     </Box>
   );
