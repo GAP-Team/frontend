@@ -58,14 +58,15 @@ const TenderCard: React.FC<TenderCardProps> = ({
           message: "Ausschreibung erfolgreich gelöscht!",
         })
       );
-      router.push(`/real_estate/tenders`)
+      router.push(`/real_estate/tenders`);
     } catch {
       appdispatch(
         showSnackbar({
           type: "error",
           message:
             "Es ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut",
-        }))
+        })
+      );
     }
   };
 

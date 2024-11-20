@@ -23,7 +23,11 @@ interface ActionMenuProps {
   onDelete: (itemId: string) => void;
 }
 
-const ActionMenu: React.FC<ActionMenuProps> = ({ itemId, onEdit, onDelete }) => {
+const ActionMenu: React.FC<ActionMenuProps> = ({
+  itemId,
+  onEdit,
+  onDelete,
+}) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [openDialog, setOpenDialog] = React.useState(false);
   const open = Boolean(anchorEl);

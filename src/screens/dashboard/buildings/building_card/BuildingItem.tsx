@@ -39,7 +39,6 @@ const BuildingItem: React.FC<BuildingItemProps> = ({ building }) => {
     setTotalTenders(count);
   };
 
-
   const router = useRouter();
 
   return (
@@ -54,7 +53,9 @@ const BuildingItem: React.FC<BuildingItemProps> = ({ building }) => {
         <ActionMenu
           itemId={building?.id}
           onEdit={(id) => router.push(`/real_estate/buildings/edit/${id}`)}
-          onDelete={(id) => console.log(`Building with ${id} deleted successfully`)}
+          onDelete={(id) =>
+            console.log(`Building with ${id} deleted successfully`)
+          }
         />
       </Box>
       <Box sx={styles.header} marginTop="1rem">
