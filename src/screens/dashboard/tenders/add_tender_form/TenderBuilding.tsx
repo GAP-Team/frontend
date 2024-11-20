@@ -1,15 +1,15 @@
 "use client";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
-import { Item } from "@/utils/Constants";
 import { useSelector } from "react-redux";
 import { useFormikContext } from "formik";
 import buildingAPIs from "@/api/building";
 import { useEffect, useState } from "react";
 import { FormControl } from "@mui/material";
 import { AddTenderFormValues } from "./types";
-import { currentUserBuildings } from "@/lib/features/userSlice";
 import CustomSelect from "@/components/drop_down/CustomSelect";
+import { currentUserBuildings } from "@/lib/features/userSlice";
+import { Item, noBuilding, noFacility } from "@/utils/Constants";
 import LabelWithAsterisk from "@/components/label/LabelWithAsterisk";
 import { AddFacilityFormValues } from "../../facilities/add_facility_form/types";
 
@@ -39,27 +39,31 @@ const TenderBuilding = (): JSX.Element => {
 
   const handleBuildingSelect = async (selectedItem: any): Promise<void> => {
     const selectedBuildingId = selectedItem.target.value;
-    formik?.setFieldValue("buildingId", selectedBuildingId);
+    if (selectedBuildingId !== "0") {
+      formik?.setFieldValue("buildingId", selectedBuildingId);
+      const building = allBuildings.filter(
+        (building: any) => building.id === selectedBuildingId
+      );
+      formik?.setFieldValue("buildingName", building[0]?.buildingName);
 
-    const building = allBuildings.filter(
-      (building: any) => building.id === selectedBuildingId
-    );
-    formik?.setFieldValue("buildingName", building[0]?.buildingName);
+      const allFacilities =
+        await buildingAPIs.getBuildingFacilities(selectedBuildingId);
 
-    const allFacilities =
-      await buildingAPIs.getBuildingFacilities(selectedBuildingId);
+      const facilityOptions: Item[] = [];
+      allFacilities?.data?.map((facility: any) => {
+        const temp = {
+          label: facility?.name,
+          value: facility?.id,
+        };
+        facilityOptions.push(temp);
+      });
 
-    const facilityOptions: Item[] = [];
-    allFacilities?.data?.map((facility: any) => {
-      const temp = {
-        label: facility?.name,
-        value: facility?.id,
-      };
-      facilityOptions.push(temp);
-    });
-
-    setFacilityDropDownOptions(facilityOptions);
-    setBuildingFacilities(allFacilities?.data);
+      setFacilityDropDownOptions(facilityOptions);
+      setBuildingFacilities(allFacilities?.data);
+    } else {
+      formik?.setFieldValue("buildingId", selectedBuildingId);
+      formik?.setFieldValue("buildingName", "");
+    }
   };
 
   const handleFacilitySelect = async (selectedItem: any): Promise<void> => {
@@ -92,7 +96,11 @@ const TenderBuilding = (): JSX.Element => {
             <CustomSelect
               name={"buildingId"}
               onChange={handleBuildingSelect}
-              options={buildingDropDownOptions}
+              options={
+                buildingDropDownOptions?.length > 0
+                  ? buildingDropDownOptions
+                  : noBuilding
+              }
               value={formik?.values?.buildingId}
             />
             {formik?.touched?.buildingId && (
@@ -106,7 +114,11 @@ const TenderBuilding = (): JSX.Element => {
             <CustomSelect
               name={"facilityId"}
               onChange={handleFacilitySelect}
-              options={facilityDropDownOptions}
+              options={
+                facilityDropDownOptions?.length > 0
+                  ? facilityDropDownOptions
+                  : noFacility
+              }
               value={formik?.values?.facilityId}
             />
             {formik?.touched?.facilityId && (
