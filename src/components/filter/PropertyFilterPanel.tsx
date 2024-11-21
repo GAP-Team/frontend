@@ -18,7 +18,7 @@ import { PropertyFilterProps } from "@/screens/dashboard/buildings/building_card
 import GButton from "../button/GButton";
 
 const PropertyFilterPanel = ({
-  handleOnChange,
+  handleOnChange = () => {},
   title,
 }: PropertyFilterProps): JSX.Element => {
   const user = useSelector(currentUser);
