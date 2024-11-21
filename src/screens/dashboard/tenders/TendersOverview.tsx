@@ -24,7 +24,7 @@ const TendersOverview: React.FC = () => {
   const tenderContent = (() => {
     if (loading) return <div>Loading...</div>;
     if (error) return <div>Error: {error}</div>;
-    return tenders.length > 0 ? (
+    return tenders?.length > 0 ? (
       <TendersContainer buildings={tenders} />
     ) : (
       <NoContentPage
