@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import { useFormikContext } from "formik";
 import { useEffect, useState } from "react";
 import { ActiveStepItem } from "../../types";
-import { currentUserBuildings } from "@/lib/features/userSlice";
+import { getUserBuildings } from "@/lib/features/buildingSlice";
 import SummarySection, { Detail } from "@/components/summary/SummarySection";
 import { SelectedBuildingData } from "../../buildings/add_building_form/types";
 
@@ -19,7 +19,7 @@ const FacilitySummary = ({
   steps,
 }: FacilitySummaryProps): JSX.Element => {
   const { values } = useFormikContext<any>();
-  const allBuildings = useSelector(currentUserBuildings);
+  const allBuildings = useSelector(getUserBuildings);
   const [selectedBuildingDetails, setSelectedBuildingDetails] =
     useState<SelectedBuildingData>();
 

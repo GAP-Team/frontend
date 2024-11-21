@@ -12,11 +12,11 @@ import { AddFacilityFormValues } from "./types";
 import GTextInput from "@/components/input/GTextInput";
 import { noBuilding, listOfTrades } from "@/utils/Constants";
 import GTextSelector from "@/components/input/GTextSelector";
-import { currentUserBuildings } from "@/lib/features/userSlice";
+import { getUserBuildings } from "@/lib/features/buildingSlice";
 import LabelWithAsterisk from "@/components/label/LabelWithAsterisk";
 
 const FacilityInformation = (): JSX.Element => {
-  const allBuildings = useSelector(currentUserBuildings);
+  const allBuildings = useSelector(getUserBuildings);
   const formik = useFormikContext<AddFacilityFormValues>();
 
   const [selectedFacilityType, setSelectedFacilityType] = useState<Item | null>(

@@ -13,12 +13,7 @@ import {
   SelectedBuildingData,
 } from "./types";
 import { SubmitFormFunction } from "@/typings/types";
-import {
-  currentUser,
-  setUserBuildings,
-  currentUserBuildings,
-  setAllBuildingDetails,
-} from "@/lib/features/userSlice";
+import { currentUser } from "@/lib/features/userSlice";
 
 import AddBuildingForm from "./AddBuildingForm";
 import BuildingAddress from "./BuildingAddress";
@@ -32,13 +27,17 @@ import { addObjektFormSchema } from "@/utils/ValidationSchema";
 import { useAppDispatch } from "@/lib/hooks";
 import { showSnackbar } from "@/components/root-snackbar";
 import userAPIs from "@/api/user";
+import {
+  setUserBuildingDetails,
+  getUserBuildings,
+} from "@/lib/features/buildingSlice";
 
 const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
   const router = useRouter();
   const dispatch = useDispatch();
   const appdispatch = useAppDispatch();
   const user = useSelector(currentUser);
-  const userBuildings = useSelector(currentUserBuildings);
+  const userBuildingDetails = useSelector(getUserBuildings);
 
   const steps: ActiveStepItem[] = [
     { id: 0, stepName: "Objektinformation", component: BuildingInformation },
@@ -67,7 +66,7 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
   }, []);
 
   const getCurrentBuildingDetails = (id: any): void => {
-    const selectedBuildingDetails = userBuildings?.filter(
+    const selectedBuildingDetails = userBuildingDetails?.filter(
       (building: any) => id === building?.id
     );
     setBuildingDetails(selectedBuildingDetails[0]);
@@ -246,11 +245,10 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
   const saveBuildingData = async (data: any): Promise<boolean> => {
     const createBuildingResponse = await buildingAPIs.create(data);
     if (createBuildingResponse?.data?.id) {
-      const updatedBuildings = [
-        ...userBuildings,
-        createBuildingResponse.data.id,
-      ];
-      dispatch(setUserBuildings(updatedBuildings));
+      const updatedBuildingsList = await buildingAPIs.get(
+        createBuildingResponse?.data?.id
+      );
+      dispatch(setUserBuildingDetails(updatedBuildingsList?.data));
       appdispatch(
         showSnackbar({
           type: "success",
@@ -269,16 +267,15 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
       throw new Error("Building edit failed");
     }
 
-    const createBuildingResponse = await buildingAPIs.update(
+    const updateBuildingResponse = await buildingAPIs.update(
       buildingDetails?.id,
       data
     );
-    if (createBuildingResponse?.data?.id) {
-      const updatedBuildings = [
-        ...userBuildings,
-        createBuildingResponse.data.id,
-      ];
-      dispatch(setUserBuildings(updatedBuildings));
+    if (updateBuildingResponse?.data?.id) {
+      const updatedBuildingsList = await buildingAPIs.get(
+        updateBuildingResponse?.data?.id
+      );
+      dispatch(setUserBuildingDetails(updatedBuildingsList?.data));
       appdispatch(
         showSnackbar({
           type: "success",
@@ -292,7 +289,7 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
         "",
         ""
       );
-      dispatch(setAllBuildingDetails(allUpdatedBuildings.data));
+      dispatch(setUserBuildingDetails(allUpdatedBuildings.data));
 
       return true;
     } else {
