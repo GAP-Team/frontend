@@ -4,37 +4,11 @@ import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../store";
 
 interface BuildingState {
-  building: {
-    id: string;
-    address: {};
-    documents: [];
-    facilities: [];
-    totalArea: number;
-    contactPerson: [];
-    serverLink: string;
-    buildingName: string;
-    buildingType: string;
-    documentUploadType: string;
-    buildingAbbreviation: string;
-  };
   buildings: [];
   buildingIds: [];
 }
 
 const initialState: BuildingState = {
-  building: {
-    id: "",
-    address: {},
-    totalArea: 0,
-    documents: [],
-    facilities: [],
-    serverLink: "",
-    buildingName: "",
-    buildingType: "",
-    contactPerson: [],
-    documentUploadType: "",
-    buildingAbbreviation: "",
-  },
   buildings: [],
   buildingIds: [],
 };

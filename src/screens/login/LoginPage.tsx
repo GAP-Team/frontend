@@ -18,7 +18,6 @@ import authAPIs from "@/api/auth";
 import { setUser } from "@/lib/features/userSlice";
 import { GapLogo } from "@/components/logo/GapLogo";
 import HeroBanner from "../../components/common/InfoBanner";
-import { setUserBuildingDetails } from "@/lib/features/buildingSlice";
 import { loginValidationSchema } from "@/utils/ValidationSchema";
 import { setAccessToken, setIsUserVerified } from "@/utils/helperJWT";
 
@@ -43,7 +42,6 @@ export default function LoginPage(): JSX.Element {
           dispatch(setUser(res.data));
           setAccessToken(res.data.access_token);
           setIsUserVerified(res.data.user?.isVerified);
-          dispatch(setUserBuildingDetails(res.data?.user?.buildings));
           router.push("/real_estate/dashboard");
         }
       } catch (error: any) {

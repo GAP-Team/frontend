@@ -28,8 +28,8 @@ import { useAppDispatch } from "@/lib/hooks";
 import { showSnackbar } from "@/components/root-snackbar";
 import userAPIs from "@/api/user";
 import {
-  setUserBuildingDetails,
   getUserBuildings,
+  setUserBuildingDetails,
 } from "@/lib/features/buildingSlice";
 
 const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
@@ -245,16 +245,20 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
   const saveBuildingData = async (data: any): Promise<boolean> => {
     const createBuildingResponse = await buildingAPIs.create(data);
     if (createBuildingResponse?.data?.id) {
-      const updatedBuildingsList = await buildingAPIs.get(
-        createBuildingResponse?.data?.id
-      );
-      dispatch(setUserBuildingDetails(updatedBuildingsList?.data));
       appdispatch(
         showSnackbar({
           type: "success",
           message: "Gebäude erfolgreich hinzugefügt!",
         })
       );
+
+      const allUpdatedBuildings = await userAPIs.getBuildings(
+        user?.id,
+        "",
+        "",
+        ""
+      );
+      dispatch(setUserBuildingDetails(allUpdatedBuildings.data));
 
       return true;
     } else {
@@ -272,10 +276,6 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
       data
     );
     if (updateBuildingResponse?.data?.id) {
-      const updatedBuildingsList = await buildingAPIs.get(
-        updateBuildingResponse?.data?.id
-      );
-      dispatch(setUserBuildingDetails(updatedBuildingsList?.data));
       appdispatch(
         showSnackbar({
           type: "success",

@@ -10,7 +10,7 @@ import { FormControl, MenuItem, Select } from "@mui/material";
 import { Item } from "../../types";
 import { AddFacilityFormValues } from "./types";
 import GTextInput from "@/components/input/GTextInput";
-import { noBuilding, listOfTrades } from "@/utils/Constants";
+import { listOfTrades } from "@/utils/Constants";
 import GTextSelector from "@/components/input/GTextSelector";
 import { getUserBuildings } from "@/lib/features/buildingSlice";
 import LabelWithAsterisk from "@/components/label/LabelWithAsterisk";
@@ -134,25 +134,19 @@ const FacilityInformation = (): JSX.Element => {
               onChange={formik.handleChange}
               displayEmpty
             >
-              {allBuildings?.length > 0
-                ? allBuildings?.map((building: any, buildingIndex: number) => {
-                    return (
-                      <MenuItem key={buildingIndex} value={building?.id}>
-                        {building?.buildingName}
-                      </MenuItem>
-                    );
-                  })
-                : noBuilding?.map((building: any, buildingIndex: number) => {
-                    return (
-                      <MenuItem
-                        disabled
-                        key={buildingIndex}
-                        value={building?.value}
-                      >
-                        {building?.label}
-                      </MenuItem>
-                    );
-                  })}
+              {allBuildings?.length > 0 ? (
+                allBuildings?.map((building: any, buildingIndex: number) => {
+                  return (
+                    <MenuItem key={buildingIndex} value={building?.id}>
+                      {building?.buildingName}
+                    </MenuItem>
+                  );
+                })
+              ) : (
+                <MenuItem disabled key={0} value={"0"}>
+                  {`Kein Objekt vorhanden`}
+                </MenuItem>
+              )}
             </Select>
             {formik?.touched?.selectedBuilding && (
               <p style={styles.errorTexts}>
