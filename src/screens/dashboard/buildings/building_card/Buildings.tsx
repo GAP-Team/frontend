@@ -38,7 +38,6 @@ const Buildings: React.FC = () => {
     );
     const userBuildings = allBuildings.data;
 
-    // setBuildings(userBuildings);
     dispatch(setAllBuildingDetails(userBuildings));
   };
 

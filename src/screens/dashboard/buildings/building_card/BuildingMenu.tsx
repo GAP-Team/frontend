@@ -19,7 +19,7 @@ import { useDispatch, useSelector } from "react-redux";
 import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContentText from "@mui/material/DialogContentText";
-import { currentUser, setAllBuildingDetails } from "@/lib/features/userSlice";
+import { currentUser, setAllBuildingDetails, currentUserBuildings } from "@/lib/features/userSlice";
 
 interface BuildingMenuProps {
   buildingId: string;
@@ -35,10 +35,13 @@ const BuildingMenu: React.FC<BuildingMenuProps> = ({
   const router = useRouter();
   const dispatch = useDispatch();
   const user = useSelector(currentUser);
+  const userBuildings = useSelector(currentUserBuildings);
   const [openDialog, setOpenDialog] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
+  console.log("User Buildings: => ", userBuildings);
+  
   const handleClick = (event: React.MouseEvent<HTMLElement>): void => {
     setAnchorEl(event.currentTarget);
   };
@@ -125,13 +128,13 @@ const BuildingMenu: React.FC<BuildingMenuProps> = ({
             mitgelöscht:
             {totalFacilities > 0 && (
               <>
-                <br /> {`- ${totalFacilities} Anlagen`}
+                <br /> {`- ${totalFacilities} Anlage(n)`}
               </>
             )}
             {totalTenders !== undefined && totalTenders > 0 && (
               <>
                 <br />
-                {`- ${totalTenders} Ausschreibungen`}
+                {`- ${totalTenders} Ausschreibunge(n)`}
               </>
             )}
             <br /> Sind Sie sicher, dass Sie dieses Gebäude löschen möchten?
