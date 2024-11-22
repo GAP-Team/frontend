@@ -66,10 +66,10 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
   }, []);
 
   const getCurrentBuildingDetails = (id: any): void => {
-    const selectedBuildingDetails = userBuildingDetails?.filter(
+    const selectedBuildingDetails = userBuildingDetails?.find(
       (building: any) => id === building?.id
     );
-    setSelectedBuildingDetails(selectedBuildingDetails[0]);
+    setSelectedBuildingDetails(selectedBuildingDetails);
   };
 
   const initialValues: AddBuildingFormValues = {
@@ -253,12 +253,7 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
         })
       );
 
-      const allUpdatedBuildings = await userAPIs.getBuildings(
-        user?.id,
-        "",
-        "",
-        ""
-      );
+      const allUpdatedBuildings = await userAPIs.getBuildings(user?.id);
       dispatch(setUserBuildingDetails(allUpdatedBuildings.data));
 
       return true;
@@ -284,12 +279,7 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
         })
       );
 
-      const allUpdatedBuildings = await userAPIs.getBuildings(
-        user?.id,
-        "",
-        "",
-        ""
-      );
+      const allUpdatedBuildings = await userAPIs.getBuildings(user?.id);
       dispatch(setUserBuildingDetails(allUpdatedBuildings.data));
 
       return true;
