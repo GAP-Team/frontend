@@ -27,7 +27,7 @@ export interface Building {
 }
 
 export interface PropertyFilterProps {
-  handleOnChange: (
+  handleOnChange?: (
     city: string,
     federalState: string,
     facilityType: string

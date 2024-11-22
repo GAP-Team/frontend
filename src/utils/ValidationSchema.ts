@@ -226,6 +226,11 @@ export const addFacilityValidationSchema = [
     subcategory: yup.string(),
     selectedBuilding: yup
       .string()
+      .test(
+        "not-zero",
+        "Sie müssen vorher Gebäude erstellen",
+        (value) => value !== "0"
+      )
       .required("Gebäude Zuordnung ist erforderlich"),
   }),
   yup.object({

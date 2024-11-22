@@ -750,3 +750,4 @@ export const notifications: Notification[] = [
     status: "danger",
   },
 ];
+

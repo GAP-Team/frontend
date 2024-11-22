@@ -8,13 +8,12 @@ import { useEffect, useState } from "react";
 import { FormControl, MenuItem, Select } from "@mui/material";
 import { AddTenderFormValues } from "./types";
 import CustomSelect from "@/components/drop_down/CustomSelect";
-import { currentUserBuildings } from "@/lib/features/userSlice";
-import { Item } from "@/utils/Constants";
+import { getUserBuildings } from "@/lib/features/buildingSlice";
 import LabelWithAsterisk from "@/components/label/LabelWithAsterisk";
 import { AddFacilityFormValues } from "../../facilities/add_facility_form/types";
 
 const TenderBuilding = (): JSX.Element => {
-  const allBuildings = useSelector(currentUserBuildings);
+  const allBuildings = useSelector(getUserBuildings);
   const formik = useFormikContext<AddTenderFormValues>();
   const [buildingFacilities, setBuildingFacilities] = useState([]);
   const [buildingDropDownOptions, setBuildingDropDownOptions] = useState<
