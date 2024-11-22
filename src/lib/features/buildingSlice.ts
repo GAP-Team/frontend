@@ -8,7 +8,7 @@ interface BuildingState {
 }
 
 const initialState: BuildingState = {
-  buildings: []
+  buildings: [],
 };
 
 const buildingSlice = createSlice({

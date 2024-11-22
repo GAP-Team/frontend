@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import moment from "moment";
 import { useRouter } from "next/navigation";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { Formik, FormikHelpers } from "formik";
 import Grid from "@mui/material/Grid";
 import buildingAPIs from "@/api/building";
@@ -26,15 +26,10 @@ import { handleUploadMultipleDoc } from "@/utils/uploadToS3";
 import { addObjektFormSchema } from "@/utils/ValidationSchema";
 import { useAppDispatch } from "@/lib/hooks";
 import { showSnackbar } from "@/components/root-snackbar";
-import userAPIs from "@/api/user";
-import {
-  getUserBuildings,
-  setUserBuildingDetails,
-} from "@/lib/features/buildingSlice";
+import { getUserBuildings } from "@/lib/features/buildingSlice";
 
 const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
   const router = useRouter();
-  const dispatch = useDispatch();
   const appdispatch = useAppDispatch();
   const user = useSelector(currentUser);
   const userBuildingDetails = useSelector(getUserBuildings);
