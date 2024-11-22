@@ -4,13 +4,11 @@ import { RootState } from "../store";
 import { AddBuildingFormValues } from "@/screens/dashboard/buildings/add_building_form/types";
 
 interface BuildingState {
-  buildingIds: string[];
   buildings: AddBuildingFormValues[];
 }
 
 const initialState: BuildingState = {
-  buildings: [],
-  buildingIds: [],
+  buildings: []
 };
 
 const buildingSlice = createSlice({

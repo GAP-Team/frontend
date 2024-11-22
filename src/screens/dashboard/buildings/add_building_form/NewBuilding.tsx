@@ -253,9 +253,6 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
         })
       );
 
-      const allUpdatedBuildings = await userAPIs.getBuildings(user?.id);
-      dispatch(setUserBuildingDetails(allUpdatedBuildings.data));
-
       return true;
     } else {
       return false;
@@ -278,9 +275,6 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
           message: "Gebäude erfolgreich aktualisiert!",
         })
       );
-
-      const allUpdatedBuildings = await userAPIs.getBuildings(user?.id);
-      dispatch(setUserBuildingDetails(allUpdatedBuildings.data));
 
       return true;
     } else {

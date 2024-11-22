@@ -7,7 +7,6 @@ const buildingAPIs = {
     api.put(`/buildings/${buildingId}`, data),
   getBuildingFacilities: (id: string): any =>
     api.get(`/buildings/${id}/facilities`),
-  get: (buildingId: string): any => api.get(`/buildings/${buildingId}`),
 };
 
 export default buildingAPIs;
