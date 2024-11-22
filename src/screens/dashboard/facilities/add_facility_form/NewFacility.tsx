@@ -29,7 +29,8 @@ import FacilityDocumentation from "./FacilityDocumentation";
 import { handleUploadMultipleDoc } from "@/utils/uploadToS3";
 import GProgressStepper from "@/components/stepper/GProgressStepper";
 import { addFacilityValidationSchema } from "@/utils/ValidationSchema";
-import { currentUser, setUserBuildings } from "@/lib/features/userSlice";
+import { currentUser } from "@/lib/features/userSlice";
+import { setUserBuildingDetails } from "@/lib/features/buildingSlice";
 
 interface NewFacilityProps {
   facilityId: string;
@@ -67,14 +68,9 @@ const NewFacility: React.FC<NewFacilityProps> = ({}): JSX.Element => {
   }, []);
 
   const getUSerBuildingDetails = async (): Promise<void> => {
-    const allUpdatedBuildings = await userAPIs.getBuildings(
-      user?.id,
-      "",
-      "",
-      ""
-    );
+    const allUpdatedBuildings = await userAPIs.getBuildings(user?.id);
 
-    dispatch(setUserBuildings(allUpdatedBuildings.data));
+    dispatch(setUserBuildingDetails(allUpdatedBuildings.data));
   };
 
   const handleNext = async (
