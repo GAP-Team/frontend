@@ -21,14 +21,15 @@ import TenderBuilding from "./TenderBuilding";
 import TenderInformation from "./TenderInformation";
 import TenderDescription from "./TenderDescription";
 import PageTitle from "@/components/label/PageTitle";
-import { getUserBuildingDetails } from "@/utils/helper";
+import { currentUser } from "@/lib/features/userSlice";
 import SuccessPage from "@/components/common/SuccessPage";
 import TenderClassification from "./TenderClassification";
 import { showSnackbar } from "@/components/root-snackbar";
 import SectionTitle from "@/components/label/SectionTitle";
 import { addTenderValidationSchema } from "@/utils/ValidationSchema";
 import GProgressStepper from "@/components/stepper/GProgressStepper";
-import { currentUser, setUserBuildings } from "@/lib/features/userSlice";
+import { setUserBuildingDetails } from "@/lib/features/buildingSlice";
+import userAPIs from "@/api/user";
 
 const NewTender = (): JSX.Element => {
   const router = useRouter();
@@ -58,8 +59,8 @@ const NewTender = (): JSX.Element => {
   }, []);
 
   const getBuildingDetails = async (): Promise<void> => {
-    const buildingDetails = await getUserBuildingDetails(user?.id);
-    appDispatch(setUserBuildings(buildingDetails));
+    const allUpdatedBuildings = await userAPIs.getBuildings(user?.id);
+    appDispatch(setUserBuildingDetails(allUpdatedBuildings?.data));
   };
 
   const handleNext = async (

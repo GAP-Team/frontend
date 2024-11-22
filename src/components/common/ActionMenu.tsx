@@ -3,7 +3,6 @@ import * as React from "react";
 import Menu from "@mui/material/Menu";
 import Dialog from "@mui/material/Dialog";
 import { FaRegEdit } from "react-icons/fa";
-import { useRouter } from "next/navigation";
 import Divider from "@mui/material/Divider";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
@@ -18,12 +17,17 @@ import DialogContentText from "@mui/material/DialogContentText";
 
 import GButton from "@/components/button/GButton";
 
-interface BuildingMenuProps {
-  buildingId: string;
+interface ActionMenuProps {
+  itemId: string;
+  onEdit: (itemId: string) => void;
+  onDelete: (itemId: string) => void;
 }
 
-const BuildingMenu: React.FC<BuildingMenuProps> = ({ buildingId }) => {
-  const router = useRouter();
+const ActionMenu: React.FC<ActionMenuProps> = ({
+  itemId,
+  onEdit,
+  onDelete,
+}) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [openDialog, setOpenDialog] = React.useState(false);
   const open = Boolean(anchorEl);
@@ -46,12 +50,12 @@ const BuildingMenu: React.FC<BuildingMenuProps> = ({ buildingId }) => {
   };
 
   const handleConfirmDelete = (): void => {
-    // Add delete logic here
+    onDelete(itemId); // Call delete action with item ID
     setOpenDialog(false);
   };
 
   const handleEditClick = (): void => {
-    router.push(`/real_estate/buildings/edit/${buildingId}`);
+    onEdit(itemId); // Call edit action with item ID
     handleCloseMenu();
   };
 
@@ -66,7 +70,7 @@ const BuildingMenu: React.FC<BuildingMenuProps> = ({ buildingId }) => {
           aria-haspopup="true"
           aria-expanded={open ? "true" : undefined}
         >
-          <IoEllipsisHorizontal size="1.5rem" />
+          <IoEllipsisHorizontal size="1.2rem" />
         </IconButton>
       </Tooltip>
       <Menu
@@ -121,7 +125,7 @@ const BuildingMenu: React.FC<BuildingMenuProps> = ({ buildingId }) => {
   );
 };
 
-export default BuildingMenu;
+export default ActionMenu;
 
 // Styles placed at the bottom
 const menuStyles = {

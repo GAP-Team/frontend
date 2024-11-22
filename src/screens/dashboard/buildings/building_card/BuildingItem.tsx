@@ -12,9 +12,11 @@ import { IoExtensionPuzzleOutline } from "react-icons/io5";
 
 import { Building } from "./types";
 import facilityAPIs from "@/api/facility";
-import BuildingMenu from "./BuildingMenu";
+
 import DocumentList from "./DocumentList ";
 import { scrollBarStyles } from "@/components/scrollbar/Scrollbar";
+import ActionMenu from "@/components/common/ActionMenu";
+import { useRouter } from "next/navigation";
 
 interface BuildingItemProps {
   building: Building;
@@ -22,7 +24,6 @@ interface BuildingItemProps {
 
 const BuildingItem: React.FC<BuildingItemProps> = ({ building }) => {
   const [totalTenders, setTotalTenders] = useState<number>();
-
   useEffect(() => {
     getFacilityTendersCount();
   }, []);
@@ -38,6 +39,8 @@ const BuildingItem: React.FC<BuildingItemProps> = ({ building }) => {
     setTotalTenders(count);
   };
 
+  const router = useRouter();
+
   return (
     <Paper sx={styles.card}>
       <Box sx={styles.header}>
@@ -47,7 +50,13 @@ const BuildingItem: React.FC<BuildingItemProps> = ({ building }) => {
             {building.buildingType}
           </Typography>
         </Box>
-        <BuildingMenu buildingId={building?.id} />
+        <ActionMenu
+          itemId={building?.id}
+          onEdit={(id) => router.push(`/real_estate/buildings/edit/${id}`)}
+          onDelete={(id) =>
+            console.log(`Building with ${id} deleted successfully`)
+          }
+        />
       </Box>
       <Box sx={styles.header} marginTop="1rem">
         <Stack direction="row" alignItems="center" gap={2}>
