@@ -5,11 +5,11 @@ import { useSelector } from "react-redux";
 import { useFormikContext } from "formik";
 import buildingAPIs from "@/api/building";
 import { useEffect, useState } from "react";
-import { FormControl } from "@mui/material";
+import { FormControl, MenuItem, Select } from "@mui/material";
 import { AddTenderFormValues } from "./types";
 import CustomSelect from "@/components/drop_down/CustomSelect";
 import { currentUserBuildings } from "@/lib/features/userSlice";
-import { Item, noBuilding, noFacility } from "@/utils/Constants";
+import { Item } from "@/utils/Constants";
 import LabelWithAsterisk from "@/components/label/LabelWithAsterisk";
 import { AddFacilityFormValues } from "../../facilities/add_facility_form/types";
 
@@ -93,36 +93,60 @@ const TenderBuilding = (): JSX.Element => {
         <Grid item xs={12}>
           <LabelWithAsterisk>OBJEKT AUSWÄHLEN</LabelWithAsterisk>
           <FormControl fullWidth>
-            <CustomSelect
-              name={"buildingId"}
-              onChange={handleBuildingSelect}
-              options={
-                buildingDropDownOptions?.length > 0
-                  ? buildingDropDownOptions
-                  : noBuilding
-              }
-              value={formik?.values?.buildingId}
-            />
-            {formik?.touched?.buildingId && (
-              <p style={styles.errorTexts}>{formik?.errors?.buildingId}</p>
+            {buildingDropDownOptions?.length > 0 ? (
+              <>
+                <CustomSelect
+                  name={"buildingId"}
+                  onChange={handleBuildingSelect}
+                  options={buildingDropDownOptions}
+                  value={formik?.values?.buildingId}
+                />
+                {formik?.touched?.buildingId && (
+                  <p style={styles.errorTexts}>{formik?.errors?.buildingId}</p>
+                )}
+              </>
+            ) : (
+              <Select
+                name="buildingId"
+                value={formik?.values?.buildingId}
+                label="Objekt Zuordnen"
+                onChange={formik.handleChange}
+                displayEmpty
+              >
+                <MenuItem disabled key={0} value={"0"}>
+                  {`Kein Objekt vorhanden`}
+                </MenuItem>
+              </Select>
             )}
           </FormControl>
         </Grid>
         <Grid item xs={12}>
           <LabelWithAsterisk>ANLAGE AUSWÄHLEN</LabelWithAsterisk>
           <FormControl fullWidth>
-            <CustomSelect
-              name={"facilityId"}
-              onChange={handleFacilitySelect}
-              options={
-                facilityDropDownOptions?.length > 0
-                  ? facilityDropDownOptions
-                  : noFacility
-              }
-              value={formik?.values?.facilityId}
-            />
-            {formik?.touched?.facilityId && (
-              <p style={styles.errorTexts}>{formik?.errors?.facilityId}</p>
+            {facilityDropDownOptions?.length > 0 ? (
+              <>
+                <CustomSelect
+                  name={"facilityId"}
+                  onChange={handleFacilitySelect}
+                  options={facilityDropDownOptions}
+                  value={formik?.values?.facilityId}
+                />
+                {formik?.touched?.facilityId && (
+                  <p style={styles.errorTexts}>{formik?.errors?.facilityId}</p>
+                )}
+              </>
+            ) : (
+              <Select
+                name="facilityId"
+                value={formik?.values?.facilityId}
+                label="Anlagen zuordnen"
+                onChange={formik.handleChange}
+                displayEmpty
+              >
+                <MenuItem disabled key={0} value={"0"}>
+                  {`Keine Anlage vorhanden`}
+                </MenuItem>
+              </Select>
             )}
           </FormControl>
         </Grid>
