@@ -1,11 +1,11 @@
-"use client";
 import { createSlice } from "@reduxjs/toolkit";
 
 import { RootState } from "../store";
+import { AddBuildingFormValues } from "@/screens/dashboard/buildings/add_building_form/types";
 
 interface BuildingState {
-  buildings: [];
-  buildingIds: [];
+  buildingIds: string[];
+  buildings: AddBuildingFormValues[];
 }
 
 const initialState: BuildingState = {

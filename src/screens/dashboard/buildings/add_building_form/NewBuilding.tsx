@@ -53,7 +53,7 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
   const [actionType, setActionType] = useState("add");
   const [loading, setLoading] = useState<boolean>(false);
   const [activeStep, setActiveStep] = useState<ActiveStepItem>(steps[0]);
-  const [buildingDetails, setBuildingDetails] =
+  const [selectedBuildingDetails, setSelectedBuildingDetails] =
     useState<SelectedBuildingData | null>();
 
   useEffect(() => {
@@ -69,39 +69,40 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
     const selectedBuildingDetails = userBuildingDetails?.filter(
       (building: any) => id === building?.id
     );
-    setBuildingDetails(selectedBuildingDetails[0]);
+    setSelectedBuildingDetails(selectedBuildingDetails[0]);
   };
 
   const initialValues: AddBuildingFormValues = {
-    name: buildingDetails?.buildingName || "",
-    totalArea: buildingDetails?.totalArea || "",
-    buildingType: buildingDetails?.buildingType || "",
-    buildingAbbreviation: buildingDetails?.buildingAbbreviation || "",
-    contactPerson: buildingDetails?.contactPerson
-      ? buildingDetails?.contactPerson
+    name: selectedBuildingDetails?.buildingName || "",
+    totalArea: selectedBuildingDetails?.totalArea || "",
+    buildingType: selectedBuildingDetails?.buildingType || "",
+    buildingAbbreviation: selectedBuildingDetails?.buildingAbbreviation || "",
+    contactPerson: selectedBuildingDetails?.contactPerson
+      ? selectedBuildingDetails?.contactPerson
       : [],
-    zip: buildingDetails?.address?.zip || "",
-    city: buildingDetails?.address?.city || "",
-    state: buildingDetails?.address?.state || "",
-    street: buildingDetails?.address?.street || "",
-    houseNumber: buildingDetails?.address?.houseNumber || "",
-    country: buildingDetails?.address?.country || "Deutschland",
+    zip: selectedBuildingDetails?.address?.zip || "",
+    city: selectedBuildingDetails?.address?.city || "",
+    state: selectedBuildingDetails?.address?.state || "",
+    street: selectedBuildingDetails?.address?.street || "",
+    houseNumber: selectedBuildingDetails?.address?.houseNumber || "",
+    country: selectedBuildingDetails?.address?.country || "Deutschland",
     documentChoice:
-      buildingDetails?.documentUploadType || "Jetzt hochladen Empfohlen",
+      selectedBuildingDetails?.documentUploadType ||
+      "Jetzt hochladen Empfohlen",
     constructionDocs:
-      buildingDetails?.documents?.filter(
+      selectedBuildingDetails?.documents?.filter(
         (doc: any) => doc.documentType === "BAUUNTERLAGEN"
       ) || [],
     floorplanDocs:
-      buildingDetails?.documents?.filter(
+      selectedBuildingDetails?.documents?.filter(
         (doc: any) => doc.documentType === "GRUNDRISSE"
       ) || [],
     otherDocs:
-      buildingDetails?.documents?.filter(
+      selectedBuildingDetails?.documents?.filter(
         (doc: any) => doc.documentType === "SONSTIGE"
       ) || [],
 
-    serverLink: buildingDetails?.serverLink || "",
+    serverLink: selectedBuildingDetails?.serverLink || "",
   };
 
   const stepFieldsMap: { [key: number]: string[] } = {
@@ -267,12 +268,12 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
   };
 
   const UpdateBuildingData = async (data: any): Promise<boolean> => {
-    if (!buildingDetails?.id) {
+    if (!selectedBuildingDetails?.id) {
       throw new Error("Building edit failed");
     }
 
     const updateBuildingResponse = await buildingAPIs.update(
-      buildingDetails?.id,
+      selectedBuildingDetails?.id,
       data
     );
     if (updateBuildingResponse?.data?.id) {
