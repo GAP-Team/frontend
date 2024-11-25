@@ -9,7 +9,8 @@ import { useDispatch, useSelector } from "react-redux";
 import addObjSrc from "@/../public/icons/add_building.svg";
 import NoContentPage from "@/components/common/NoContentPage";
 import PropertyFilterPanel from "@/components/filter/PropertyFilterPanel";
-import { currentUser, setAllBuildingDetails } from "@/lib/features/userSlice";
+import { currentUser } from "@/lib/features/userSlice";
+import { setUserBuildingDetails } from "@/lib/features/buildingSlice";
 
 const Buildings: React.FC = () => {
   const dispatch = useDispatch();
@@ -36,7 +37,7 @@ const Buildings: React.FC = () => {
     const userBuildings = allBuildings.data;
 
     setBuildings(userBuildings);
-    dispatch(setAllBuildingDetails(userBuildings));
+    dispatch(setUserBuildingDetails(userBuildings));
   };
 
   const onStateCityFacilityTypeChange = (

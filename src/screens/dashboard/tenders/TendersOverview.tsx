@@ -1,32 +1,31 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import Box from "@mui/material/Box";
 import PropertyFilterPanel from "@/components/filter/PropertyFilterPanel";
 import NoContentPage from "@/components/common/NoContentPage";
 import addTenderSrc from "@/../public/icons/add_tender.svg";
 import TendersContainer from "./tender_card/TendersContainer";
-import { Building } from "./tender_card/types";
 import { currentUser } from "@/lib/features/userSlice";
 import { useSelector } from "react-redux";
-import tenderAPIs from "@/api/tender";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
+import { fetchTenders } from "@/lib/features/tenderSlice";
 
 const TendersOverview: React.FC = () => {
-  const [buildings, setBuildings] = useState<Building[]>([]);
-
   const user = useSelector(currentUser);
+  const dispatch = useAppDispatch();
+  const { tenders, loading, error } = useAppSelector((state) => state.tender);
 
   useEffect(() => {
-    getTenders();
-  }, [user?.id]);
+    if (user?.id) {
+      dispatch(fetchTenders(user.id));
+    }
+  }, [user?.id, dispatch]);
 
-  const getTenders = async (): Promise<void> => {
-    const buildings = await tenderAPIs.getTenders(user?.id);
-    setBuildings(buildings.data);
-  };
-
-  const tenderContent =
-    buildings.length > 0 ? (
-      <TendersContainer buildings={buildings} />
+  const tenderContent = (() => {
+    if (loading) return <div>Loading...</div>;
+    if (error) return <div>Error: {error}</div>;
+    return tenders?.length > 0 ? (
+      <TendersContainer buildings={tenders} />
     ) : (
       <NoContentPage
         alt="No Tenders"
@@ -36,12 +35,10 @@ const TendersOverview: React.FC = () => {
         buttonLink="/real_estate/tenders/add"
       />
     );
+  })();
   return (
     <Box sx={styles.mainContainer}>
-      <PropertyFilterPanel
-        handleOnChange={() => {}}
-        title="Alle Ausschreibungen"
-      />
+      <PropertyFilterPanel title="Alle Ausschreibungen" />
       {tenderContent}
     </Box>
   );

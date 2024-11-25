@@ -1,21 +1,22 @@
 "use client";
 import { useState } from "react";
-import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import LabelWithAsterisk from "@/components/label/LabelWithAsterisk";
-import GTextInput from "@/components/input/GTextInput";
-import { useFormikContext } from "formik";
-import { AddFacilityFormValues } from "./types";
-import { Item } from "../../types";
-import GTextSelector from "@/components/input/GTextSelector";
-import Typography from "@mui/material/Typography";
-import { listOfTrades } from "@/utils/Constants";
+import Grid from "@mui/material/Grid";
 import { useSelector } from "react-redux";
-import { currentUserBuildings } from "@/lib/features/userSlice";
+import { useFormikContext } from "formik";
+import Typography from "@mui/material/Typography";
 import { FormControl, MenuItem, Select } from "@mui/material";
 
+import { Item } from "../../types";
+import { AddFacilityFormValues } from "./types";
+import GTextInput from "@/components/input/GTextInput";
+import { listOfTrades } from "@/utils/Constants";
+import GTextSelector from "@/components/input/GTextSelector";
+import { getUserBuildings } from "@/lib/features/buildingSlice";
+import LabelWithAsterisk from "@/components/label/LabelWithAsterisk";
+
 const FacilityInformation = (): JSX.Element => {
-  const allBuildings = useSelector(currentUserBuildings);
+  const allBuildings = useSelector(getUserBuildings);
   const formik = useFormikContext<AddFacilityFormValues>();
 
   const [selectedFacilityType, setSelectedFacilityType] = useState<Item | null>(
@@ -131,15 +132,27 @@ const FacilityInformation = (): JSX.Element => {
               value={formik?.values?.selectedBuilding}
               label="Objekt Zuordnen"
               onChange={formik.handleChange}
+              displayEmpty
             >
-              {allBuildings?.map((building: any, buildingIndex: number) => {
-                return (
-                  <MenuItem key={buildingIndex} value={building?.id}>
-                    {building?.buildingName}
-                  </MenuItem>
-                );
-              })}
+              {allBuildings?.length > 0 ? (
+                allBuildings?.map((building: any, buildingIndex: number) => {
+                  return (
+                    <MenuItem key={buildingIndex} value={building?.id}>
+                      {building?.buildingName}
+                    </MenuItem>
+                  );
+                })
+              ) : (
+                <MenuItem disabled key={0} value={"0"}>
+                  {`Kein Objekt vorhanden`}
+                </MenuItem>
+              )}
             </Select>
+            {formik?.touched?.selectedBuilding && (
+              <p style={styles.errorTexts}>
+                {formik?.errors?.selectedBuilding}
+              </p>
+            )}
           </FormControl>
         </Grid>
       </Grid>
@@ -148,3 +161,11 @@ const FacilityInformation = (): JSX.Element => {
 };
 
 export default FacilityInformation;
+
+const styles = {
+  errorTexts: {
+    color: "#d32f2f",
+    fontWeight: 400,
+    fontSize: "0.75rem",
+  },
+};

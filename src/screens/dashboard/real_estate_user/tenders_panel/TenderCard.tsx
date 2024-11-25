@@ -9,10 +9,14 @@ import { BsClockFill } from "react-icons/bs";
 import Typography from "@mui/material/Typography";
 import { VscDebugBreakpointLog } from "react-icons/vsc";
 import { getTenderStatusStyle } from "@/utils/utils";
-import JobMenu from "./JobMenu";
 import SectionTitle from "@/components/label/SectionTitle";
 import { buildingAdress, Tender } from "./types";
 import { Urgency } from "@/utils/enums";
+import ActionMenu from "@/components/common/ActionMenu";
+import tenderAPIs from "@/api/tender";
+import { useAppDispatch } from "@/lib/hooks";
+import { showSnackbar } from "@/components/root-snackbar";
+import { removeTender } from "@/lib/features/tenderSlice";
 
 interface TenderCardProps {
   tender: Tender;
@@ -26,7 +30,7 @@ const TenderCard: React.FC<TenderCardProps> = ({
   buildingAdress,
 }) => {
   const router = useRouter();
-
+  const appdispatch = useAppDispatch();
   const handleClick = (): void => {
     router.push(`/real_estate/tenders/${tender.id}`);
   };
@@ -44,12 +48,38 @@ const TenderCard: React.FC<TenderCardProps> = ({
     return null;
   };
 
+  const handleDeleteTender = async (tenderId: string): Promise<void> => {
+    try {
+      await tenderAPIs.delete(tenderId);
+      appdispatch(removeTender(tenderId));
+      appdispatch(
+        showSnackbar({
+          type: "success",
+          message: "Ausschreibung erfolgreich gelöscht!",
+        })
+      );
+      router.push(`/real_estate/tenders`);
+    } catch {
+      appdispatch(
+        showSnackbar({
+          type: "error",
+          message:
+            "Es ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut",
+        })
+      );
+    }
+  };
+
   return (
     <Paper sx={styles.card} elevation={4} style={{ cursor: "pointer" }}>
       <Box sx={styles.header}>
         <Chip label={chipStyles?.title} sx={{ ...chipStyles }} />
         {checkUrgency(tender?.urgency)}
-        <JobMenu />
+        <ActionMenu
+          itemId={tender?.id}
+          onEdit={(id) => router.push(`/real_estate/tenders/edit/${id}`)}
+          onDelete={handleDeleteTender}
+        />
       </Box>
       <Box sx={styles.location}>
         <SectionTitle

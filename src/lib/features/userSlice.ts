@@ -40,21 +40,13 @@ const userSlice = createSlice({
       state.user.company = action.payload?.user?.company;
       state.user.lastName = action.payload?.user?.lastName;
       state.user.firstName = action.payload?.user?.firstName;
-      state.user.buildingIds = action.payload?.user?.buildingIds;
       state.user.manufacturerExperience =
         action.payload?.user?.manufacturerExperience;
-    },
-    setUserBuildings: (state, action) => {
-      state.user.buildingIds = action.payload;
-    },
-    setAllBuildingDetails: (state, action) => {
-      state.user.buildingIds = action.payload;
     },
   },
 });
 
-export const { setUser, setUserBuildings, setAllBuildingDetails } =
-  userSlice.actions;
+export const { setUser } = userSlice.actions;
 
 export const currentUser = (state: RootState): any => state.user.user;
 export const currentUserId = (state: RootState): string => state.user.user.id;
@@ -62,8 +54,6 @@ export const currentUserEmail = (state: RootState): string =>
   state.user.user.email;
 export const currentUserCompany = (state: RootState): string =>
   state.user.user.company;
-export const currentUserBuildings = (state: RootState): any =>
-  state.user.user.buildingIds;
 export const currentUserName = (state: RootState): string =>
   `${state.user.user.firstName} ${state.user.user.lastName}`;
 
