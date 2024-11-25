@@ -750,12 +750,6 @@ export const notifications: Notification[] = [
     status: "danger",
   },
 ];
-export const noBuilding: Item[] = [
-  {
-    label: "Kein Objekt vorhanden",
-    value: "0",
-  },
-];
 export const noFacility: Item[] = [
   {
     label: "Keine Anlage vorhanden",

@@ -4,26 +4,26 @@ import userAPIs from "@/api/user";
 import Box from "@mui/material/Box";
 import React, { useEffect } from "react";
 import BuildingItemList from "./BuildingItemList";
+import { currentUser } from "@/lib/features/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import addObjSrc from "@/../public/icons/add_building.svg";
 import NoContentPage from "@/components/common/NoContentPage";
 import PropertyFilterPanel from "@/components/filter/PropertyFilterPanel";
 import {
-  currentUser,
-  setAllBuildingDetails,
-  currentUserBuildings,
-} from "@/lib/features/userSlice";
+  getUserBuildings,
+  setUserBuildingDetails,
+} from "@/lib/features/buildingSlice";
 
 const Buildings: React.FC = () => {
   const dispatch = useDispatch();
   const user = useSelector(currentUser);
-  const userBuildings = useSelector(currentUserBuildings);
+  const userBuildings = useSelector(getUserBuildings);
 
   useEffect(() => {
-    getUserBuildings("", "", "");
+    fetchUserBuildings("", "", "");
   }, [user?.id]);
 
-  const getUserBuildings = async (
+  const fetchUserBuildings = async (
     city: string,
     federalState: string,
     facilityType: string
@@ -36,9 +36,9 @@ const Buildings: React.FC = () => {
       federalState,
       facilityType
     );
-    const userBuildings = allBuildings.data;
+    const fetchedBuildings = allBuildings.data;
 
-    dispatch(setAllBuildingDetails(userBuildings));
+    dispatch(setUserBuildingDetails(fetchedBuildings));
   };
 
   const onStateCityFacilityTypeChange = (
@@ -46,11 +46,11 @@ const Buildings: React.FC = () => {
     federalState: string,
     facilityType: string
   ): void => {
-    getUserBuildings(city, federalState, facilityType);
+    fetchUserBuildings(city, federalState, facilityType);
   };
 
   const buildingContent =
-    userBuildings !== undefined && userBuildings?.length > 0 ? (
+    userBuildings?.length > 0 ? (
       <BuildingItemList buildings={userBuildings} />
     ) : (
       <NoContentPage

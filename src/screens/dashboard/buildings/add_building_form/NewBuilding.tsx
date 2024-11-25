@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import moment from "moment";
 import { useRouter } from "next/navigation";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { Formik, FormikHelpers } from "formik";
 import Grid from "@mui/material/Grid";
 import buildingAPIs from "@/api/building";
@@ -13,12 +13,7 @@ import {
   SelectedBuildingData,
 } from "./types";
 import { SubmitFormFunction } from "@/typings/types";
-import {
-  currentUser,
-  setUserBuildings,
-  currentUserBuildings,
-  setAllBuildingDetails,
-} from "@/lib/features/userSlice";
+import { currentUser } from "@/lib/features/userSlice";
 
 import AddBuildingForm from "./AddBuildingForm";
 import BuildingAddress from "./BuildingAddress";
@@ -31,14 +26,13 @@ import { handleUploadMultipleDoc } from "@/utils/uploadToS3";
 import { addObjektFormSchema } from "@/utils/ValidationSchema";
 import { useAppDispatch } from "@/lib/hooks";
 import { showSnackbar } from "@/components/root-snackbar";
-import userAPIs from "@/api/user";
+import { getUserBuildings } from "@/lib/features/buildingSlice";
 
 const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
   const router = useRouter();
-  const dispatch = useDispatch();
   const appdispatch = useAppDispatch();
   const user = useSelector(currentUser);
-  const userBuildings = useSelector(currentUserBuildings);
+  const userBuildingDetails = useSelector(getUserBuildings);
 
   const steps: ActiveStepItem[] = [
     { id: 0, stepName: "Objektinformation", component: BuildingInformation },
@@ -54,7 +48,7 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
   const [actionType, setActionType] = useState("add");
   const [loading, setLoading] = useState<boolean>(false);
   const [activeStep, setActiveStep] = useState<ActiveStepItem>(steps[0]);
-  const [buildingDetails, setBuildingDetails] =
+  const [selectedBuildingDetails, setSelectedBuildingDetails] =
     useState<SelectedBuildingData | null>();
 
   useEffect(() => {
@@ -67,42 +61,43 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
   }, []);
 
   const getCurrentBuildingDetails = (id: any): void => {
-    const selectedBuildingDetails = userBuildings?.filter(
+    const selectedBuildingDetails = userBuildingDetails?.find(
       (building: any) => id === building?.id
     );
-    setBuildingDetails(selectedBuildingDetails[0]);
+    setSelectedBuildingDetails(selectedBuildingDetails);
   };
 
   const initialValues: AddBuildingFormValues = {
-    name: buildingDetails?.buildingName || "",
-    totalArea: buildingDetails?.totalArea || "",
-    buildingType: buildingDetails?.buildingType || "",
-    buildingAbbreviation: buildingDetails?.buildingAbbreviation || "",
-    contactPerson: buildingDetails?.contactPerson
-      ? buildingDetails?.contactPerson
+    name: selectedBuildingDetails?.buildingName || "",
+    totalArea: selectedBuildingDetails?.totalArea || "",
+    buildingType: selectedBuildingDetails?.buildingType || "",
+    buildingAbbreviation: selectedBuildingDetails?.buildingAbbreviation || "",
+    contactPerson: selectedBuildingDetails?.contactPerson
+      ? selectedBuildingDetails?.contactPerson
       : [],
-    zip: buildingDetails?.address?.zip || "",
-    city: buildingDetails?.address?.city || "",
-    state: buildingDetails?.address?.state || "",
-    street: buildingDetails?.address?.street || "",
-    houseNumber: buildingDetails?.address?.houseNumber || "",
-    country: buildingDetails?.address?.country || "Deutschland",
+    zip: selectedBuildingDetails?.address?.zip || "",
+    city: selectedBuildingDetails?.address?.city || "",
+    state: selectedBuildingDetails?.address?.state || "",
+    street: selectedBuildingDetails?.address?.street || "",
+    houseNumber: selectedBuildingDetails?.address?.houseNumber || "",
+    country: selectedBuildingDetails?.address?.country || "Deutschland",
     documentChoice:
-      buildingDetails?.documentUploadType || "Jetzt hochladen Empfohlen",
+      selectedBuildingDetails?.documentUploadType ||
+      "Jetzt hochladen Empfohlen",
     constructionDocs:
-      buildingDetails?.documents?.filter(
+      selectedBuildingDetails?.documents?.filter(
         (doc: any) => doc.documentType === "BAUUNTERLAGEN"
       ) || [],
     floorplanDocs:
-      buildingDetails?.documents?.filter(
+      selectedBuildingDetails?.documents?.filter(
         (doc: any) => doc.documentType === "GRUNDRISSE"
       ) || [],
     otherDocs:
-      buildingDetails?.documents?.filter(
+      selectedBuildingDetails?.documents?.filter(
         (doc: any) => doc.documentType === "SONSTIGE"
       ) || [],
 
-    serverLink: buildingDetails?.serverLink || "",
+    serverLink: selectedBuildingDetails?.serverLink || "",
   };
 
   const stepFieldsMap: { [key: number]: string[] } = {
@@ -246,11 +241,6 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
   const saveBuildingData = async (data: any): Promise<boolean> => {
     const createBuildingResponse = await buildingAPIs.create(data);
     if (createBuildingResponse?.data?.id) {
-      const updatedBuildings = [
-        ...userBuildings,
-        createBuildingResponse.data.id,
-      ];
-      dispatch(setUserBuildings(updatedBuildings));
       appdispatch(
         showSnackbar({
           type: "success",
@@ -265,34 +255,21 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
   };
 
   const UpdateBuildingData = async (data: any): Promise<boolean> => {
-    if (!buildingDetails?.id) {
+    if (!selectedBuildingDetails?.id) {
       throw new Error("Building edit failed");
     }
 
-    const createBuildingResponse = await buildingAPIs.update(
-      buildingDetails?.id,
+    const updateBuildingResponse = await buildingAPIs.update(
+      selectedBuildingDetails?.id,
       data
     );
-    if (createBuildingResponse?.data?.id) {
-      const updatedBuildings = [
-        ...userBuildings,
-        createBuildingResponse.data.id,
-      ];
-      dispatch(setUserBuildings(updatedBuildings));
+    if (updateBuildingResponse?.data?.id) {
       appdispatch(
         showSnackbar({
           type: "success",
           message: "Gebäude erfolgreich aktualisiert!",
         })
       );
-
-      const allUpdatedBuildings = await userAPIs.getBuildings(
-        user?.id,
-        "",
-        "",
-        ""
-      );
-      dispatch(setAllBuildingDetails(allUpdatedBuildings.data));
 
       return true;
     } else {

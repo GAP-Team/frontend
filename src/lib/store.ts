@@ -5,6 +5,7 @@ import { createWrapper } from "next-redux-wrapper";
 import { persistStore, persistReducer } from "redux-persist";
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import userReducer from "./features/userSlice";
+import buildingReducer from "./features/buildingSlice";
 import snackbarReducer from "./features/snackbarSlice";
 import tenderReducer from "./features/tenderSlice";
 
@@ -12,6 +13,7 @@ const rootReducer = combineReducers({
   user: userReducer,
   snackbar: snackbarReducer,
   tender: tenderReducer,
+  building: buildingReducer,
 });
 
 const persistConfig = {

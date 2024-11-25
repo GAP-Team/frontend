@@ -1,47 +1,39 @@
 "use client";
 import * as React from "react";
-import userAPIs from "@/api/user";
 import Menu from "@mui/material/Menu";
-import buildingAPIs from "@/api/building";
 import Dialog from "@mui/material/Dialog";
 import { FaRegEdit } from "react-icons/fa";
-import { useRouter } from "next/navigation";
 import Divider from "@mui/material/Divider";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import IconButton from "@mui/material/IconButton";
 import { RiDeleteBin6Line } from "react-icons/ri";
-import GButton from "@/components/button/GButton";
 import DialogTitle from "@mui/material/DialogTitle";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import { IoEllipsisHorizontal } from "react-icons/io5";
-import { useDispatch, useSelector } from "react-redux";
 import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContentText from "@mui/material/DialogContentText";
-import { currentUser, setAllBuildingDetails, currentUserBuildings } from "@/lib/features/userSlice";
 
-interface BuildingMenuProps {
-  buildingId: string;
-  totalTenders?: number;
-  totalFacilities: number;
+import GButton from "@/components/button/GButton";
+
+interface ActionMenuProps {
+  itemId: string;
+  messege: any;
+  onEdit: (itemId: string) => void;
+  onDelete: (itemId: string) => void;
 }
 
-const BuildingMenu: React.FC<BuildingMenuProps> = ({
-  buildingId,
-  totalTenders,
-  totalFacilities,
+const ActionMenu: React.FC<ActionMenuProps> = ({
+  itemId,
+  messege,
+  onEdit,
+  onDelete,
 }) => {
-  const router = useRouter();
-  const dispatch = useDispatch();
-  const user = useSelector(currentUser);
-  const userBuildings = useSelector(currentUserBuildings);
-  const [openDialog, setOpenDialog] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [openDialog, setOpenDialog] = React.useState(false);
   const open = Boolean(anchorEl);
 
-  console.log("User Buildings: => ", userBuildings);
-  
   const handleClick = (event: React.MouseEvent<HTMLElement>): void => {
     setAnchorEl(event.currentTarget);
   };
@@ -59,18 +51,13 @@ const BuildingMenu: React.FC<BuildingMenuProps> = ({
     setOpenDialog(false);
   };
 
-  const handleConfirmDelete = async (): Promise<void> => {
-    const deleteStatus = await buildingAPIs.delete(buildingId);
-    if (deleteStatus?.data?.statusCode === 204) {
-      const allBuildings = await userAPIs.getBuildings(user?.id, "", "", "");
-      const userBuildings = allBuildings.data;
-      dispatch(setAllBuildingDetails(userBuildings));
-      setOpenDialog(false);
-    }
+  const handleConfirmDelete = (): void => {
+    onDelete(itemId); // Call delete action with item ID
+    setOpenDialog(false);
   };
 
   const handleEditClick = (): void => {
-    router.push(`/real_estate/buildings/edit/${buildingId}`);
+    onEdit(itemId); // Call edit action with item ID
     handleCloseMenu();
   };
 
@@ -85,7 +72,7 @@ const BuildingMenu: React.FC<BuildingMenuProps> = ({
           aria-haspopup="true"
           aria-expanded={open ? "true" : undefined}
         >
-          <IoEllipsisHorizontal size="1.5rem" />
+          <IoEllipsisHorizontal size="1.2rem" />
         </IconButton>
       </Tooltip>
       <Menu
@@ -124,20 +111,7 @@ const BuildingMenu: React.FC<BuildingMenuProps> = ({
         <DialogTitle id="alert-dialog-title">Bestätigung</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            Beim Löschen dieses Gebäudes werden alle relevanten Objekte
-            mitgelöscht:
-            {totalFacilities > 0 && (
-              <>
-                <br /> {`- ${totalFacilities} Anlage(n)`}
-              </>
-            )}
-            {totalTenders !== undefined && totalTenders > 0 && (
-              <>
-                <br />
-                {`- ${totalTenders} Ausschreibunge(n)`}
-              </>
-            )}
-            <br /> Sind Sie sicher, dass Sie dieses Gebäude löschen möchten?
+            <div dangerouslySetInnerHTML={{ __html: messege }} />
           </DialogContentText>
         </DialogContent>
         <DialogActions>
@@ -153,7 +127,7 @@ const BuildingMenu: React.FC<BuildingMenuProps> = ({
   );
 };
 
-export default BuildingMenu;
+export default ActionMenu;
 
 // Styles placed at the bottom
 const menuStyles = {

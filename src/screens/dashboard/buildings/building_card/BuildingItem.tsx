@@ -4,23 +4,34 @@ import List from "@mui/material/List";
 import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
 import { CgNotes } from "react-icons/cg";
+import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { FaRegFlag } from "react-icons/fa6";
 import Divider from "@mui/material/Divider";
+import { useAppDispatch } from "@/lib/hooks";
 import Typography from "@mui/material/Typography";
 import { IoExtensionPuzzleOutline } from "react-icons/io5";
 
 import { Building } from "./types";
 import facilityAPIs from "@/api/facility";
-import BuildingMenu from "./BuildingMenu";
+import buildingAPIs from "@/api/building";
 import DocumentList from "./DocumentList ";
+import { useRouter } from "next/navigation";
+import ActionMenu from "@/components/common/ActionMenu";
 import { scrollBarStyles } from "@/components/scrollbar/Scrollbar";
+import {
+  getUserBuildings,
+  setUserBuildingDetails,
+} from "@/lib/features/buildingSlice";
 
 interface BuildingItemProps {
   building: Building;
 }
 
 const BuildingItem: React.FC<BuildingItemProps> = ({ building }) => {
+  const router = useRouter();
+  const dispatch = useAppDispatch();
+  const userBuildings = useSelector(getUserBuildings);
   const [totalTenders, setTotalTenders] = useState<number>();
 
   useEffect(() => {
@@ -38,6 +49,29 @@ const BuildingItem: React.FC<BuildingItemProps> = ({ building }) => {
     setTotalTenders(count);
   };
 
+  const delMsg = `
+    Beim Löschen dieses Gebäudes werden alle relevanten Objekte mitgelöscht.
+    ${
+      building.facilities.length > 0
+        ? `
+        <br/>${`- ${building.facilities.length} Anlage(n)`}
+        <br/>${`- ${totalTenders} Ausschreibunge(n)`}
+      `
+        : ``
+    }
+    <br/>Sind Sie sicher, dass Sie dieses Gebäude löschen möchten?
+  `;
+
+  const deleteBuilding = async (buildingId: string): Promise<void> => {
+    const deleteStatus = await buildingAPIs.delete(buildingId);
+    if (deleteStatus?.data?.statusCode === 204) {
+      const buildingsAfterDelete = userBuildings.filter(
+        (building: Building) => building.id !== buildingId
+      );
+      dispatch(setUserBuildingDetails(buildingsAfterDelete));
+    }
+  };
+
   return (
     <Paper sx={styles.card}>
       <Box sx={styles.header}>
@@ -47,10 +81,14 @@ const BuildingItem: React.FC<BuildingItemProps> = ({ building }) => {
             {building.buildingType}
           </Typography>
         </Box>
-        <BuildingMenu
-          totalFacilities={building.facilities.length}
-          totalTenders={totalTenders}
-          buildingId={building?.id}
+        <ActionMenu
+          itemId={building?.id}
+          onEdit={(id) => router.push(`/real_estate/buildings/edit/${id}`)}
+          onDelete={
+            (id) => deleteBuilding(id)
+            //console.log(`Building with ${id} deleted successfully`)
+          }
+          messege={delMsg}
         />
       </Box>
       <Box sx={styles.header} marginTop="1rem">
