@@ -44,9 +44,9 @@ const BuildingInformation = ({ formik }: { formik?: any }): JSX.Element => {
   const [selectedBuildingType, setSelectedBuildingType] = useState<Item | null>(
     formik?.values?.buildingType
       ? {
-        label: formik?.values?.buildingType,
-        value: formik?.values?.buildingType,
-      }
+          label: formik?.values?.buildingType,
+          value: formik?.values?.buildingType,
+        }
       : null
   );
 
@@ -138,8 +138,13 @@ const BuildingInformation = ({ formik }: { formik?: any }): JSX.Element => {
             options={buildingTypesList}
             value={selectedBuildingType}
             onChange={handleStateSelect}
-            error={formik?.touched?.buildingType && Boolean(formik?.errors?.buildingType)}
-            helperText={formik?.touched?.buildingType && formik?.errors?.buildingType}
+            error={
+              formik?.touched?.buildingType &&
+              Boolean(formik?.errors?.buildingType)
+            }
+            helperText={
+              formik?.touched?.buildingType && formik?.errors?.buildingType
+            }
           />
         </Grid>
         <Grid item xs={12} sm={3}>
