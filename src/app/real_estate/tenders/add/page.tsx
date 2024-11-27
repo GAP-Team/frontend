@@ -4,7 +4,7 @@ import RealStateUserLayout from "../../page";
 export default function AddTenderFormPage(): JSX.Element {
   return (
     <RealStateUserLayout>
-      <NewTender />
+      <NewTender id="" />
     </RealStateUserLayout>
   );
 }
