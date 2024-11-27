@@ -1,4 +1,5 @@
 import { Dispatch, SetStateAction } from "react";
+import { Dayjs } from "dayjs";
 export interface AddTenderFormValues {
   //Tender Info feilds = Form 1
   clientName: string;
@@ -13,8 +14,8 @@ export interface AddTenderFormValues {
   detailDescription: string;
   //Classification = Form 4
   urgency: string;
-  fromDate: Date | null;
-  toDate: Date | null;
+  fromDate: Dayjs | null;
+  toDate: Dayjs | null;
   safetyWorkRequired: boolean;
   freeParkingAvailable: boolean;
 }
