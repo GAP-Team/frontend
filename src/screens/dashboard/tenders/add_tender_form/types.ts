@@ -1,5 +1,4 @@
 import { Dispatch, SetStateAction } from "react";
-import { Dayjs } from "dayjs";
 export interface AddTenderFormValues {
   //Tender Info feilds = Form 1
   clientName: string;
@@ -7,23 +6,17 @@ export interface AddTenderFormValues {
   tenderType: string;
   //Tender Building feilds = Form 2
   buildingName: string;
+  buildingId: string;
   facilityName: string;
+  facilityId: string;
   //Description feild = Form 3
   detailDescription: string;
   //Classification = Form 4
   urgency: string;
-  fromDate: Dayjs | null;
-  toDate: Dayjs | null;
+  fromDate: Date | null;
+  toDate: Date | null;
   safetyWorkRequired: boolean;
   freeParkingAvailable: boolean;
-  //Documentation = Form 5
-  documentChoice: string;
-  constructionDocs: File[];
-  floorplanDocs: File[];
-  equipmentDocs: File[];
-  serverLink: string;
-  buildingId: string;
-  facilityId: string;
 }
 export interface ActiveStepItem {
   id: number;
@@ -32,6 +25,11 @@ export interface ActiveStepItem {
 }
 
 export interface StepComponentProps {
+  formik?: any;
   setActiveStep: Dispatch<SetStateAction<ActiveStepItem>>;
   steps: ActiveStepItem[];
+}
+
+export interface NewTenderProps {
+  id: string;
 }

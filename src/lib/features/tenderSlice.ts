@@ -1,19 +1,24 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 import { RootState } from "../store";
-import { Building } from "@/screens/dashboard/tenders/tender_card/types";
 import tenderAPIs from "@/api/tender";
+import {
+  Tender,
+  BuildingTenders,
+} from "@/screens/dashboard/tenders/tender_card/types";
 
 interface TenderState {
   tenderNumbers: number;
-  tenders: Building[];
+  tenders: BuildingTenders[];
+  tendersList: Tender[];
   loading: boolean;
   error: string | null;
 }
 
 const initialState: TenderState = {
   tenderNumbers: 0,
-  tenders: [] as Building[],
+  tenders: [] as BuildingTenders[],
+  tendersList: [] as Tender[],
   loading: false as boolean,
   error: null as string | null,
 };
@@ -33,8 +38,11 @@ const tenderSlice = createSlice({
     setTenderNumbers: (state, action: PayloadAction<any>) => {
       state.tenderNumbers = action.payload;
     },
-    setTenders: (state, action: PayloadAction<Building[]>) => {
+    setTendersByBuilding: (state, action: PayloadAction<BuildingTenders[]>) => {
       state.tenders = action.payload;
+    },
+    setTenders: (state, action: PayloadAction<Tender[]>) => {
+      state.tendersList = action.payload;
     },
     removeTender: (state, action: PayloadAction<string>) => {
       state.tenders = state.tenders.map((tender) => ({
@@ -61,10 +69,16 @@ const tenderSlice = createSlice({
   },
 });
 
-export const { setTenderNumbers, removeTender, setTenders } =
-  tenderSlice.actions;
+export const {
+  setTenderNumbers,
+  removeTender,
+  setTendersByBuilding,
+  setTenders,
+} = tenderSlice.actions;
 
 export const currentTenderNumbers = (state: RootState): number =>
   state.tender.tenderNumbers;
+export const getAllTenders = (state: RootState): any =>
+  state.tender.tendersList;
 
 export default tenderSlice.reducer;

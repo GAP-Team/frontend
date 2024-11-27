@@ -5,13 +5,13 @@ import { Typography } from "@mui/material";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { currentUser } from "@/lib/features/userSlice";
-import { Building } from "../../tenders/tender_card/types";
-import { setTenderNumbers } from "@/lib/features/tenderSlice";
 import { scrollBarStyles } from "@/components/scrollbar/Scrollbar";
+import { BuildingTenders, Tender } from "../../tenders/tender_card/types";
+import { setTenderNumbers, setTenders } from "@/lib/features/tenderSlice";
 
 const TenderCardList: React.FC = () => {
-  const [buildings, setBuildings] = useState<Building[]>([]);
   const dispatch = useDispatch();
+  const [buildings, setBuildings] = useState<BuildingTenders[]>([]);
 
   const user = useSelector(currentUser);
 
@@ -20,10 +20,19 @@ const TenderCardList: React.FC = () => {
   }, [user?.id]);
 
   const getBuildings = async (): Promise<void> => {
-    const buildings = await tenderAPIs.getTenders(user?.id);
-    setBuildings(buildings?.data);
-    const totalTenders = buildings.data.reduce(
-      (total: any, building: any) => total + (building?.tenders?.length || 0),
+    const buildingTenders = await tenderAPIs.getTenders(user?.id);
+    setBuildings(buildingTenders?.data);
+    const allTenders: Tender[] = [];
+    buildingTenders?.data?.map((buildingTenders: any) => {
+      buildingTenders.tenders?.map((tender: Tender) => {
+        allTenders.push(tender);
+      });
+    });
+    dispatch(setTenders(allTenders));
+
+    const totalTenders = buildingTenders.data.reduce(
+      (total: number, building: BuildingTenders) =>
+        total + (building?.tenders?.length || 0),
       0
     );
     dispatch(setTenderNumbers(totalTenders));

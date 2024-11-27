@@ -35,7 +35,25 @@ const TenderBuilding = (): JSX.Element => {
     });
 
     setBuildingDropDownOptions(buildingOptions);
+    setSelectedBuildingFacilities();
   }, []);
+
+  const setSelectedBuildingFacilities = async (): Promise<void> => {
+    const allFacilities = await buildingAPIs.getBuildingFacilities(
+      formik?.values?.buildingId
+    );
+
+    const facilityOptions: Item[] = [];
+    allFacilities?.data?.map((facility: any) => {
+      const temp = {
+        label: facility?.name,
+        value: facility?.id,
+      };
+      facilityOptions.push(temp);
+    });
+
+    setFacilityDropDownOptions(facilityOptions);
+  };
 
   const handleBuildingSelect = async (selectedItem: any): Promise<void> => {
     const selectedBuildingId = selectedItem.target.value;
