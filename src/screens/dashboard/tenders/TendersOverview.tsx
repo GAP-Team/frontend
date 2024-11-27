@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import PropertyFilterPanel from "@/components/filter/PropertyFilterPanel";
 import NoContentPage from "@/components/common/NoContentPage";
@@ -8,18 +8,51 @@ import TendersContainer from "./tender_card/TendersContainer";
 import { currentUser } from "@/lib/features/userSlice";
 import { useSelector } from "react-redux";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
-import { fetchTenders } from "@/lib/features/tenderSlice";
+import { fetchTenders, setTenders } from "@/lib/features/tenderSlice";
+import userAPIs from "@/api/user";
+import { Tender } from "./tender_card/types";
 
 const TendersOverview: React.FC = () => {
   const user = useSelector(currentUser);
   const dispatch = useAppDispatch();
   const { tenders, loading, error } = useAppSelector((state) => state.tender);
 
+  const [allTenders, setAllTenders] = useState<Tender[]>([]);
+
   useEffect(() => {
     if (user?.id) {
       dispatch(fetchTenders(user.id));
     }
+    getUserTenders("", "", "");
+    console.log(allTenders);
   }, [user?.id, dispatch]);
+
+  const getUserTenders = async (
+    city: string,
+    federalState: string,
+    facilityType: string
+  ): Promise<void> => {
+    if (!user?.id) return;
+
+    const allTenders = await userAPIs.getBuildings(
+      user?.id,
+      city,
+      federalState,
+      facilityType
+    );
+    const userTenders = allTenders.data;
+
+    setAllTenders(userTenders);
+    dispatch(setTenders(userTenders));
+  };
+
+  const onStateCityFacilityTypeChange = (
+    city: string,
+    federalState: string,
+    facilityType: string
+  ): void => {
+    getUserTenders(city, federalState, facilityType);
+  };
 
   const tenderContent = (() => {
     if (loading) return <div>Loading...</div>;
@@ -38,7 +71,10 @@ const TendersOverview: React.FC = () => {
   })();
   return (
     <Box sx={styles.mainContainer}>
-      <PropertyFilterPanel title="Alle Ausschreibungen" />
+      <PropertyFilterPanel
+        handleOnChange={onStateCityFacilityTypeChange}
+        title="Alle Ausschreibungen"
+      />
       {tenderContent}
     </Box>
   );
