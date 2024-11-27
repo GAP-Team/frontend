@@ -14,7 +14,7 @@ import {
   StepComponentProps,
   AddTenderFormValues,
 } from "./types";
-import { Dayjs } from "dayjs";
+import dayjs from "dayjs";
 import tenderAPIs from "@/api/tender";
 import AddTenderForm from "./AddTenderForm";
 import TenderSummary from "./TenderSummary";
@@ -185,12 +185,21 @@ const NewTender: React.FC<NewTenderProps> = ({ id }): JSX.Element => {
     facilityName: selectedTenderDetails?.facility?.name || "",
     detailDescription: selectedTenderDetails?.detailDescription || "",
     urgency: selectedTenderDetails?.urgency || "Nicht Dringend",
-    fromDate: new Dayjs(selectedTenderDetails?.fromDate) || null,
-    toDate: new Dayjs(selectedTenderDetails?.toDate) || null,
+    fromDate: selectedTenderDetails?.fromDate
+      ? dayjs(selectedTenderDetails?.fromDate)
+      : null,
+    toDate: selectedTenderDetails?.toDate
+      ? dayjs(selectedTenderDetails?.toDate)
+      : null,
     safetyWorkRequired: selectedTenderDetails?.safetyWorkRequired || false,
     freeParkingAvailable: selectedTenderDetails?.freeParkingAvailable || false,
     buildingId: selectedTenderDetails?.building?.id || "",
     facilityId: selectedTenderDetails?.facility?.id || "",
+    documentChoice: "Jetzt hochladen Empfohlen",
+    constructionDocs: [],
+    floorplanDocs: [],
+    equipmentDocs: [],
+    serverLink: "",
   };
 
   const formOrSuccessContent = isSubmitted ? (
