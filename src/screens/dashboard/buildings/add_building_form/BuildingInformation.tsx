@@ -25,7 +25,7 @@ const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 
 const BuildingInformation = ({ formik }: { formik?: any }): JSX.Element => {
   const [dialogOpen, setDialogOpen] = useState(false);
-  const [options] = useState(buildingTypesList);
+  // const [options] = useState(buildingTypesList);
 
   const [newContact, setNewContact] = useState<ContactPersonItem>({
     firstName: "",
@@ -44,9 +44,9 @@ const BuildingInformation = ({ formik }: { formik?: any }): JSX.Element => {
   const [selectedBuildingType, setSelectedBuildingType] = useState<Item | null>(
     formik?.values?.buildingType
       ? {
-          label: formik?.values?.buildingType,
-          value: formik?.values?.buildingType,
-        }
+        label: formik?.values?.buildingType,
+        value: formik?.values?.buildingType,
+      }
       : null
   );
 
