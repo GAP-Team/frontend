@@ -44,9 +44,9 @@ const BuildingInformation = ({ formik }: { formik?: any }): JSX.Element => {
   const [selectedBuildingType, setSelectedBuildingType] = useState<Item | null>(
     formik?.values?.buildingType
       ? {
-          label: formik?.values?.buildingType,
-          value: formik?.values?.buildingType,
-        }
+        label: formik?.values?.buildingType,
+        value: formik?.values?.buildingType,
+      }
       : null
   );
 
@@ -59,16 +59,12 @@ const BuildingInformation = ({ formik }: { formik?: any }): JSX.Element => {
     } else {
       setSelectedBuildingType({ label: "", value: "" });
     }
-  }, [formik?.values]);
+  }, [formik?.values?.buildingType]);
 
   const handleStateSelect = (selectedItem: Item | null): void => {
     setSelectedBuildingType(selectedItem);
-    formik?.setFieldValue(
-      "buildingType",
-      selectedItem ? selectedItem.value : ""
-    );
+    formik?.setFieldValue("buildingType", selectedItem?.value || "");
   };
-
   const handleContactPersonChange = (
     event: any,
     value: ContactPersonItem[]
@@ -139,16 +135,11 @@ const BuildingInformation = ({ formik }: { formik?: any }): JSX.Element => {
           <LabelWithAsterisk>GEBÄUDETYP</LabelWithAsterisk>
           <GTextSelector
             name="buildingType"
-            options={options}
-            error={
-              formik?.touched?.buildingType &&
-              Boolean(formik?.errors?.buildingType)
-            }
-            helperText={
-              formik?.touched?.buildingType && formik?.errors?.buildingType
-            }
-            onSelect={handleStateSelect}
-            selectedState={selectedBuildingType}
+            options={buildingTypesList}
+            value={selectedBuildingType}
+            onChange={handleStateSelect}
+            error={formik?.touched?.buildingType && Boolean(formik?.errors?.buildingType)}
+            helperText={formik?.touched?.buildingType && formik?.errors?.buildingType}
           />
         </Grid>
         <Grid item xs={12} sm={3}>

@@ -70,6 +70,9 @@ export default function GAppBar(): JSX.Element {
   const handleMenuItemClick = (menuItem: string): void => {
     setActiveMenuItem(menuItem);
     handleClose();
+    if (menuItem === "Unternehmens Profil") {
+      router.push("/real_estate/settings/company_profile");
+    }
   };
 
   return (

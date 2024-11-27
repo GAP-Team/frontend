@@ -20,6 +20,6 @@ const styles = {
   fontSize: "2rem",
   lineHeight: "2.5rem",
   fontWeight: "700",
-  marginLeft: "3.75rem",
-  my: "2rem",
+  marginLeft: "3.5rem",
+  my: "1rem",
 };
