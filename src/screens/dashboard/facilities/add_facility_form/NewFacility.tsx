@@ -37,7 +37,7 @@ interface NewFacilityProps {
 
 const NewFacility: React.FC<NewFacilityProps> = ({}): JSX.Element => {
   const router = useRouter();
-  const appdispatch = useAppDispatch();
+  const appDispatch = useAppDispatch();
   const user = useSelector(currentUser);
 
   const steps: ActiveStepItem[] = [
@@ -72,7 +72,7 @@ const NewFacility: React.FC<NewFacilityProps> = ({}): JSX.Element => {
       federalState: "",
       facilityType: "",
     };
-    appdispatch(fetchBuildings(query));
+    appDispatch(fetchBuildings(query));
   };
 
   const handleNext = async (
@@ -149,7 +149,7 @@ const NewFacility: React.FC<NewFacilityProps> = ({}): JSX.Element => {
     const createFacilityResponse = await facilityAPIs.create(facilityData);
 
     if (createFacilityResponse?.data?.id) {
-      appdispatch(
+      appDispatch(
         showSnackbar({
           type: "success",
           message: "Anlage erfolgreich hinzugefügt!",
@@ -189,7 +189,7 @@ const NewFacility: React.FC<NewFacilityProps> = ({}): JSX.Element => {
       await saveFacilityData(values, docObjList);
       return true;
     } catch {
-      appdispatch(
+      appDispatch(
         showSnackbar({
           type: "error",
           message:
