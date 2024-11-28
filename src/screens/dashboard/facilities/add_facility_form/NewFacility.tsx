@@ -5,10 +5,10 @@ import {
   AddFacilityFormValues,
 } from "./types";
 import Link from "next/link";
-import userAPIs from "@/api/user";
 import Grid from "@mui/material/Grid";
 import { CgClose } from "react-icons/cg";
 import facilityAPIs from "@/api/facility";
+import { useSelector } from "react-redux";
 import { IconButton } from "@mui/material";
 import FacilityCheck from "./FacilityCheck";
 import { useRouter } from "next/navigation";
@@ -19,7 +19,7 @@ import FacilitySummary from "./FacilitySummary";
 import { DocumentTypes } from "@/utils/Constants";
 import React, { useEffect, useState } from "react";
 import PageTitle from "@/components/label/PageTitle";
-import { useSelector, useDispatch } from "react-redux";
+import { currentUser } from "@/lib/features/userSlice";
 import FacilityMaintenance from "./FacilityMaintenance";
 import FacilityInformation from "./FacilityInformation";
 import SuccessPage from "@/components/common/SuccessPage";
@@ -27,10 +27,9 @@ import { showSnackbar } from "@/components/root-snackbar";
 import SectionTitle from "@/components/label/SectionTitle";
 import FacilityDocumentation from "./FacilityDocumentation";
 import { handleUploadMultipleDoc } from "@/utils/uploadToS3";
+import { fetchBuildings } from "@/lib/features/buildingSlice";
 import GProgressStepper from "@/components/stepper/GProgressStepper";
 import { addFacilityValidationSchema } from "@/utils/ValidationSchema";
-import { currentUser } from "@/lib/features/userSlice";
-import { setUserBuildingDetails } from "@/lib/features/buildingSlice";
 
 interface NewFacilityProps {
   facilityId: string;
@@ -38,7 +37,6 @@ interface NewFacilityProps {
 
 const NewFacility: React.FC<NewFacilityProps> = ({}): JSX.Element => {
   const router = useRouter();
-  const dispatch = useDispatch();
   const appdispatch = useAppDispatch();
   const user = useSelector(currentUser);
 
@@ -68,9 +66,13 @@ const NewFacility: React.FC<NewFacilityProps> = ({}): JSX.Element => {
   }, []);
 
   const getUSerBuildingDetails = async (): Promise<void> => {
-    const allUpdatedBuildings = await userAPIs.getBuildings(user?.id);
-
-    dispatch(setUserBuildingDetails(allUpdatedBuildings.data));
+    const query = {
+      userId: user?.id,
+      city: "",
+      federalState: "",
+      facilityType: "",
+    };
+    appdispatch(fetchBuildings(query));
   };
 
   const handleNext = async (
