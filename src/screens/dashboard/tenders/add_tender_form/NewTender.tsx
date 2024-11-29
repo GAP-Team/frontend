@@ -97,7 +97,8 @@ const NewTender = (): JSX.Element => {
       building: buildingObj,
       facility: facilityObj,
       toDate: values?.toDate,
-      urgency: values?.urgency === "Dringend" ? Urgency.URGENT : values?.urgency,
+      urgency:
+        values?.urgency === "Dringend" ? Urgency.URGENT : values?.urgency,
       fromDate: values?.fromDate,
       clientName: values?.clientName,
       tenderForm: values?.tenderForm,
