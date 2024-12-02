@@ -14,7 +14,7 @@ const CompanyProfile = (): JSX.Element => {
     initialValues: {
       companyName: "GAP | Gesetzliche Anlagen Prüfung",
       logo: null,
-      country: "Germany",
+      country: "Deutschland",
       state: "Baden-Württemberg",
       street: "",
       houseNumber: "",
