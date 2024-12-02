@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import Box from "@mui/material/Box";
 import PropertyFilterPanel from "@/components/filter/PropertyFilterPanel";
 import NoContentPage from "@/components/common/NoContentPage";
@@ -10,21 +10,17 @@ import { useSelector } from "react-redux";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { fetchTenders, setTenders } from "@/lib/features/tenderSlice";
 import userAPIs from "@/api/user";
-import { Tender } from "./tender_card/types";
 
 const TendersOverview: React.FC = () => {
   const user = useSelector(currentUser);
   const dispatch = useAppDispatch();
   const { tenders, loading, error } = useAppSelector((state) => state.tender);
 
-  const [allTenders, setAllTenders] = useState<Tender[]>([]);
-
   useEffect(() => {
     if (user?.id) {
       dispatch(fetchTenders(user.id));
     }
     getUserTenders("", "", "");
-    console.log(allTenders);
   }, [user?.id, dispatch]);
 
   const getUserTenders = async (
@@ -34,15 +30,14 @@ const TendersOverview: React.FC = () => {
   ): Promise<void> => {
     if (!user?.id) return;
 
-    const allTenders = await userAPIs.getBuildings(
+    const allBuildingsWithTenders = await userAPIs.getBuildings(
       user?.id,
       city,
       federalState,
       facilityType
     );
-    const userTenders = allTenders.data;
+    const userTenders = allBuildingsWithTenders.data;
 
-    setAllTenders(userTenders);
     dispatch(setTenders(userTenders));
   };
 
