@@ -30,6 +30,7 @@ import { addTenderValidationSchema } from "@/utils/ValidationSchema";
 import GProgressStepper from "@/components/stepper/GProgressStepper";
 import { setUserBuildingDetails } from "@/lib/features/buildingSlice";
 import userAPIs from "@/api/user";
+import { Urgency } from "@/utils/enums";
 
 const NewTender = (): JSX.Element => {
   const router = useRouter();
@@ -96,7 +97,8 @@ const NewTender = (): JSX.Element => {
       building: buildingObj,
       facility: facilityObj,
       toDate: values?.toDate,
-      urgency: values?.urgency,
+      urgency:
+        values?.urgency === "Dringend" ? Urgency.URGENT : values?.urgency,
       fromDate: values?.fromDate,
       clientName: values?.clientName,
       tenderForm: values?.tenderForm,
