@@ -18,8 +18,6 @@ const menuItems = [
     label: "Unternehmens Informationen",
     href: "/real_estate/settings/company_profile",
   },
-  { label: "Zahlungsdaten", href: "/real_estate/settings/billing_data" },
-  { label: "Benachrichtigungen", href: "/real_estate/settings" },
   { label: "E-Mail ändern", href: "/real_estate/settings/email_change" },
   { label: "Passwort ändern", href: "/real_estate/settings/password_change" },
   {
@@ -45,51 +43,23 @@ export default function SettingsLayout({
       <PageTitle title={currentMenuItem?.label || "Einstellungen"} />
 
       {/* Main Layout Container */}
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "flex-start",
-          p: { xs: 2, sm: 2 },
-          gap: 2,
-          maxWidth: { xs: "95%", lg: "98%" },
-          minHeight: "75vh",
-          mx: "auto", // Centers the layout horizontally
-          borderRadius: 2,
-          boxShadow: 3,
-          bgcolor: "background.paper",
-        }}
-      >
+      <Box sx={styles.mainContainer}>
         {/* Sidebar */}
-        <Box
-          component="aside"
-          sx={{
-            minWidth: "300px",
-            borderRight: "1px solid #ddd",
-            p: 1,
-          }}
-        >
-          <Typography variant="h6" sx={{ mb: 2, fontWeight: 700 }}>
+        <Box component="aside" sx={styles.sidebar}>
+          <Typography variant="h6" sx={styles.sidebarTitle}>
             Einstellungen
           </Typography>
-          <Divider sx={{ mb: 2 }} />
+          <Divider sx={styles.divider} />
           <List>
             {menuItems.map((item) => (
               <ListItem key={item.href} disablePadding>
-                <Link
-                  href={item.href}
-                  style={{ textDecoration: "none", width: "100%" }}
-                >
+                <Link href={item.href} style={styles.link}>
                   <ListItemButton
                     selected={pathname === item.href}
                     sx={{
-                      borderRadius: 1,
+                      ...styles.listItemButton,
                       ...(item.style || {}),
-                      "&.Mui-selected": {
-                        bgcolor: "#E5F5FA",
-                        color: "gprimary.main",
-                        fontWeight: "bold",
-                      },
+                      "&.Mui-selected": styles.selectedListItemButton,
                     }}
                   >
                     <ListItemText
@@ -106,18 +76,57 @@ export default function SettingsLayout({
         </Box>
 
         {/* Main Content */}
-        <Box
-          component="main"
-          sx={{
-            flexGrow: 1,
-            m: 2,
-            minWidth: "0",
-            overflowY: "auto",
-          }}
-        >
+        <Box component="main" sx={styles.mainContent}>
           {children}
         </Box>
       </Box>
     </RealStateUserLayout>
   );
 }
+
+// Styles
+const styles = {
+  mainContainer: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "flex-start",
+    p: { xs: 2, sm: 2 },
+    gap: 2,
+    maxWidth: { xs: "95%", lg: "98%" },
+    minHeight: "75vh",
+    mx: "auto", // Centers the layout horizontally
+    borderRadius: 2,
+    boxShadow: 3,
+    bgcolor: "background.paper",
+  },
+  sidebar: {
+    minWidth: "300px",
+    borderRight: "1px solid #ddd",
+    p: 1,
+  },
+  sidebarTitle: {
+    mb: 2,
+    fontWeight: 700,
+  },
+  divider: {
+    mb: 2,
+  },
+  link: {
+    textDecoration: "none",
+    width: "100%",
+  },
+  listItemButton: {
+    borderRadius: 1,
+  },
+  selectedListItemButton: {
+    bgcolor: "#E5F5FA",
+    color: "gprimary.main",
+    fontWeight: "bold",
+  },
+  mainContent: {
+    flexGrow: 1,
+    m: 2,
+    minWidth: "0",
+    overflowY: "auto",
+  },
+};

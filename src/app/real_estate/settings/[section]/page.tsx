@@ -15,8 +15,6 @@ export default function SectionPage({
         return <UserProfile />;
       case "company_profile":
         return <CompanyProfile />;
-      //   case "billing_data":
-      //     return <BillingDataForm />;
     }
   };
 
