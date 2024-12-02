@@ -33,10 +33,14 @@ const CompanyProfile = (): JSX.Element => {
       <Grid container spacing={2}>
         {/* Firmenname */}
         <Grid item xs={12} sm={6}>
-          <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
+          <Typography variant="subtitle1" sx={styles.sectionTitle}>
             Firmenname
           </Typography>
-          <Typography variant="body2" color="textSecondary" sx={{ mb: 1 }}>
+          <Typography
+            variant="body2"
+            color="textSecondary"
+            sx={styles.sectionDescription}
+          >
             Dies wird in Ihrem Profil angezeigt.
           </Typography>
         </Grid>
@@ -52,35 +56,29 @@ const CompanyProfile = (): JSX.Element => {
         <Grid item xs={12}>
           <Divider />
         </Grid>
+
         {/* Unternehmenslogo */}
         <Grid item xs={12} sm={6}>
-          <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
+          <Typography variant="subtitle1" sx={styles.sectionTitle}>
             Unternehmenslogo
           </Typography>
-          <Typography variant="body2" color="textSecondary" sx={{ mb: 1 }}>
+          <Typography
+            variant="body2"
+            color="textSecondary"
+            sx={styles.sectionDescription}
+          >
             Wählen Sie Ihr Firmenlogo und laden Sie es hoch.
           </Typography>
         </Grid>
         <Grid item xs={12} sm={6}>
           <Grid container alignItems="center" spacing={2}>
             <Grid item>
-              <div
-                style={{
-                  width: "80px",
-                  height: "80px",
-                  border: "1px dashed gray",
-                  borderRadius: "8px",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  overflow: "hidden",
-                }}
-              >
+              <div style={styles.logoContainer}>
                 {formik.values.logo ? (
                   <img
                     src={formik.values.logo}
                     alt="Logo"
-                    style={{ width: "100%" }}
+                    style={styles.logoImage}
                   />
                 ) : (
                   <Typography variant="caption" color="textSecondary">
@@ -91,7 +89,7 @@ const CompanyProfile = (): JSX.Element => {
             </Grid>
             <Grid item>
               <Button variant="outlined" component="label">
-                Click to upload
+                Klicken, um hochzuladen
                 <input
                   type="file"
                   hidden
@@ -115,10 +113,14 @@ const CompanyProfile = (): JSX.Element => {
 
         {/* Adresse */}
         <Grid item xs={12} sm={6}>
-          <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
+          <Typography variant="subtitle1" sx={styles.sectionTitle}>
             Adresse
           </Typography>
-          <Typography variant="body2" color="textSecondary" sx={{ mb: 1 }}>
+          <Typography
+            variant="body2"
+            color="textSecondary"
+            sx={styles.sectionDescription}
+          >
             Geben Sie Ihre echte Adresse an, damit wir wichtige Informationen
             senden können.
           </Typography>
@@ -132,8 +134,7 @@ const CompanyProfile = (): JSX.Element => {
                 value={formik.values.country}
                 onChange={formik.handleChange}
                 options={[
-                  { label: "Germany", value: "Germany" },
-                  { label: "France", value: "France" },
+                  { label: "Deutschland", value: "Deutschland" },
                 ]}
               />
             </Grid>
@@ -194,10 +195,14 @@ const CompanyProfile = (): JSX.Element => {
 
         {/* Gewerbeanmeldung */}
         <Grid item xs={12} sm={6}>
-          <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
+          <Typography variant="subtitle1" sx={styles.sectionTitle}>
             Gewerbeanmeldung
           </Typography>
-          <Typography variant="body2" color="textSecondary" sx={{ mb: 1 }}>
+          <Typography
+            variant="body2"
+            color="textSecondary"
+            sx={styles.sectionDescription}
+          >
             Fotoscan Ihrer Gewerbeanmeldung.
           </Typography>
         </Grid>
@@ -214,7 +219,7 @@ const CompanyProfile = (): JSX.Element => {
 
         {/* Rechtliche Unternehmensform */}
         <Grid item xs={12} sm={6}>
-          <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
+          <Typography variant="subtitle1" sx={styles.sectionTitle}>
             Rechtliche Unternehmensform
           </Typography>
         </Grid>
@@ -264,3 +269,26 @@ const CompanyProfile = (): JSX.Element => {
 };
 
 export default CompanyProfile;
+
+// Styles
+const styles = {
+  sectionTitle: {
+    fontWeight: 600,
+  },
+  sectionDescription: {
+    mb: 1,
+  },
+  logoContainer: {
+    width: "80px",
+    height: "80px",
+    border: "1px dashed gray",
+    borderRadius: "8px",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    overflow: "hidden",
+  },
+  logoImage: {
+    width: "100%",
+  },
+};
