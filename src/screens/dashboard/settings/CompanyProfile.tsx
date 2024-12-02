@@ -133,9 +133,7 @@ const CompanyProfile = (): JSX.Element => {
                 label="Land"
                 value={formik.values.country}
                 onChange={formik.handleChange}
-                options={[
-                  { label: "Deutschland", value: "Deutschland" },
-                ]}
+                options={[{ label: "Deutschland", value: "Deutschland" }]}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
