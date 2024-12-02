@@ -29,28 +29,20 @@ const UserProfile = (): JSX.Element => {
       <Grid container spacing={4}>
         {/* Profilfoto Section */}
         <Grid item xs={12} sm={6}>
-          <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
+          <Typography variant="subtitle1" sx={styles.sectionTitle}>
             Profilfoto
           </Typography>
-          <Typography variant="body2" color="textSecondary" sx={{ mb: 1 }}>
+          <Typography
+            variant="body2"
+            color="textSecondary"
+            sx={styles.sectionDescription}
+          >
             Das Foto wird für alle Benutzer angezeigt
           </Typography>
         </Grid>
         <Grid item xs={12} sm={6}>
-          <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-            <Box
-              sx={{
-                width: "80px",
-                height: "80px",
-                borderRadius: "50%",
-                overflow: "hidden",
-                border: "1px solid #ddd",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                backgroundColor: "#f5f5f5",
-              }}
-            >
+          <Box sx={styles.photoContainer}>
+            <Box sx={styles.photoBox}>
               {formik.values.profilePhoto ? (
                 <img
                   src={formik.values.profilePhoto}
@@ -86,10 +78,14 @@ const UserProfile = (): JSX.Element => {
 
         {/* Voller Name Section */}
         <Grid item xs={12} sm={6}>
-          <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
+          <Typography variant="subtitle1" sx={styles.sectionTitle}>
             Voller Name
           </Typography>
-          <Typography variant="body2" color="textSecondary">
+          <Typography
+            variant="body2"
+            color="textSecondary"
+            sx={styles.sectionDescription}
+          >
             Dies wird in Ihrem Profil angezeigt.
           </Typography>
         </Grid>
@@ -131,10 +127,14 @@ const UserProfile = (): JSX.Element => {
 
         {/* E-Mail Section */}
         <Grid item xs={12} sm={6}>
-          <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
+          <Typography variant="subtitle1" sx={styles.sectionTitle}>
             E-Mail
           </Typography>
-          <Typography variant="body2" color="textSecondary">
+          <Typography
+            variant="body2"
+            color="textSecondary"
+            sx={styles.sectionDescription}
+          >
             Sie können Ihre E-Mail-Adresse ändern, indem Sie einen Code auf dem
             Postweg erhalten.
           </Typography>
@@ -155,8 +155,13 @@ const UserProfile = (): JSX.Element => {
               />
             </Grid>
             <Grid item xs={2}>
-              <Button variant="outlined" fullWidth size="large">
-                Change
+              <Button
+                variant="outlined"
+                fullWidth
+                size="large"
+                sx={styles.button}
+              >
+                Ändern
               </Button>
             </Grid>
           </Grid>
@@ -167,10 +172,14 @@ const UserProfile = (): JSX.Element => {
 
         {/* Position Section */}
         <Grid item xs={12} sm={6}>
-          <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
+          <Typography variant="subtitle1" sx={styles.sectionTitle}>
             Position
           </Typography>
-          <Typography variant="body2" color="textSecondary">
+          <Typography
+            variant="body2"
+            color="textSecondary"
+            sx={styles.sectionDescription}
+          >
             Dies wird in Ihrem Profil angezeigt.
           </Typography>
         </Grid>
@@ -192,10 +201,14 @@ const UserProfile = (): JSX.Element => {
 
         {/* Lade Teammitglieder ein Section */}
         <Grid item xs={12} sm={6}>
-          <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
+          <Typography variant="subtitle1" sx={styles.sectionTitle}>
             Lade Teammitglieder ein
           </Typography>
-          <Typography variant="body2" color="textSecondary">
+          <Typography
+            variant="body2"
+            color="textSecondary"
+            sx={styles.sectionDescription}
+          >
             Laden Sie ihn einfach als Teammitglied ein. Auf diese Weise haben
             Sie gemeinsame Bestellungen, Chats und mehr.
           </Typography>
@@ -220,8 +233,13 @@ const UserProfile = (): JSX.Element => {
               />
             </Grid>
             <Grid item xs={2}>
-              <Button variant="outlined" fullWidth size="large">
-                Invite
+              <Button
+                variant="outlined"
+                fullWidth
+                size="large"
+                sx={styles.button}
+              >
+                Einladen
               </Button>
             </Grid>
           </Grid>
@@ -251,3 +269,37 @@ const UserProfile = (): JSX.Element => {
 };
 
 export default UserProfile;
+
+// Styles
+const styles = {
+  sectionTitle: {
+    fontWeight: 600,
+  },
+  sectionDescription: {
+    mb: 1,
+  },
+  photoContainer: {
+    display: "flex",
+    alignItems: "center",
+    gap: 2,
+  },
+  photoBox: {
+    width: "80px",
+    height: "80px",
+    borderRadius: "50%",
+    overflow: "hidden",
+    border: "1px solid #ddd",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#f5f5f5",
+  },
+  photoImage: {
+    width: "100%",
+    height: "100%",
+    objectFit: "cover",
+  },
+  button: {
+    height: "56px",
+  },
+};
