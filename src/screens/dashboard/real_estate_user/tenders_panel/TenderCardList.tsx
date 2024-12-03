@@ -8,6 +8,7 @@ import { scrollBarStyles } from "@/components/scrollbar/Scrollbar";
 import { BuildingTenders, Tender } from "../../tenders/tender_card/types";
 import { setTenderNumbers, setTenders } from "@/lib/features/tenderSlice";
 import userAPIs from "@/api/user";
+import { Building } from "../../buildings/building_card/types";
 
 const TenderCardList: React.FC = () => {
   const dispatch = useDispatch();
@@ -38,20 +39,9 @@ const TenderCardList: React.FC = () => {
     dispatch(setTenderNumbers(totalTenders));
   };
 
-  return (
-    <Box sx={styles.listContainer}>
-      {buildings?.length > 0 ? (
-        buildings?.map((building, buildingIndex) =>
-          building?.tenders?.map((tender, tenderIndex) => (
-            <TenderCard
-              key={`${buildingIndex}-${tenderIndex}`}
-              tender={tender}
-              buildingName={building?.buildingName}
-              buildingAdress={building?.buildingAdress}
-            />
-          ))
-        )
-      ) : (
+  const renderSortedTenders = (buildings: Building[]): React.ReactNode => {
+    if (!Array.isArray(buildings) || buildings.length === 0) {
+      return (
         <Box sx={styles.noDataContainer}>
           <Typography
             component="a"
@@ -61,12 +51,44 @@ const TenderCardList: React.FC = () => {
             Keine Aufträge vorhanden
           </Typography>
         </Box>
-      )}
-    </Box>
-  );
+      );
+    }
+
+    // Extract tenders and include building details
+    const allTendersWithBuilding = buildings.flatMap((building) =>
+      (building.tenders || []).map((tender) => ({
+        ...tender,
+        buildingName: building.buildingName,
+        buildingAdress: building.buildingAdress,
+      }))
+    );
+
+    // Sort tenders by urgency and createdAt
+    const sortedTenders = allTendersWithBuilding.sort((a, b) => {
+      // Sort by urgency: "URGENT" comes first
+      if (a.urgency === "URGENT" && b.urgency !== "URGENT") return -1;
+      if (a.urgency !== "URGENT" && b.urgency === "URGENT") return 1;
+
+      // Sort by createdAt: most recent first
+      return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+    });
+
+    // Render the sorted tenders
+    return sortedTenders.map((tender, index) => (
+      <TenderCard
+        key={tender.id || index}
+        tender={tender}
+        buildingName={tender.buildingName}
+        buildingAdress={tender.buildingAdress}
+      />
+    ));
+  };
+
+  return <Box sx={styles.listContainer}>{renderSortedTenders(buildings)}</Box>;
 };
 
 export default TenderCardList;
+
 // Styles
 const styles = {
   listContainer: {
@@ -82,9 +104,8 @@ const styles = {
   noDataContainer: {
     display: "flex",
     height: "20rem",
-    marginLeft: "38rem",
-    marginBottom: "10rem",
     justifyContent: "center",
     flexDirection: "column",
+    textAlign: "center",
   },
 };
