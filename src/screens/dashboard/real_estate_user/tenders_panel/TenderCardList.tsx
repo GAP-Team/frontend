@@ -8,7 +8,6 @@ import { scrollBarStyles } from "@/components/scrollbar/Scrollbar";
 import { BuildingTenders, Tender } from "../../tenders/tender_card/types";
 import { setTenderNumbers, setTenders } from "@/lib/features/tenderSlice";
 import userAPIs from "@/api/user";
-import { Building } from "../../buildings/building_card/types";
 
 const TenderCardList: React.FC = () => {
   const dispatch = useDispatch();
@@ -39,7 +38,9 @@ const TenderCardList: React.FC = () => {
     dispatch(setTenderNumbers(totalTenders));
   };
 
-  const renderSortedTenders = (buildings: Building[]): React.ReactNode => {
+  const renderSortedTenders = (
+    buildings: BuildingTenders[]
+  ): React.ReactNode => {
     if (!Array.isArray(buildings) || buildings.length === 0) {
       return (
         <Box sx={styles.noDataContainer}>
