@@ -16,7 +16,7 @@ import ActionMenu from "@/components/common/ActionMenu";
 import tenderAPIs from "@/api/tender";
 import { useAppDispatch } from "@/lib/hooks";
 import { showSnackbar } from "@/components/root-snackbar";
-import { removeTender } from "@/lib/features/tenderSlice";
+import { removeTender, setTenderIdToEdit } from "@/lib/features/tenderSlice";
 
 interface TenderCardProps {
   tender: Tender;
@@ -30,7 +30,7 @@ const TenderCard: React.FC<TenderCardProps> = ({
   buildingAdress,
 }) => {
   const router = useRouter();
-  const appdispatch = useAppDispatch();
+  const appDispatch = useAppDispatch();
   const handleClick = (): void => {
     router.push(`/real_estate/tenders/${tender.id}`);
   };
@@ -51,8 +51,8 @@ const TenderCard: React.FC<TenderCardProps> = ({
   const handleDeleteTender = async (tenderId: string): Promise<void> => {
     try {
       await tenderAPIs.delete(tenderId);
-      appdispatch(removeTender(tenderId));
-      appdispatch(
+      appDispatch(removeTender(tenderId));
+      appDispatch(
         showSnackbar({
           type: "success",
           message: "Ausschreibung erfolgreich gelöscht!",
@@ -60,7 +60,7 @@ const TenderCard: React.FC<TenderCardProps> = ({
       );
       router.push(`/real_estate/tenders`);
     } catch {
-      appdispatch(
+      appDispatch(
         showSnackbar({
           type: "error",
           message:
@@ -70,6 +70,11 @@ const TenderCard: React.FC<TenderCardProps> = ({
     }
   };
 
+  const handleEdit = (id: string): void => {
+    appDispatch(setTenderIdToEdit(id));
+    router.push(`/real_estate/tenders/edit/${id}`);
+  };
+
   return (
     <Paper sx={styles.card} elevation={4} style={{ cursor: "pointer" }}>
       <Box sx={styles.header}>
@@ -77,7 +82,7 @@ const TenderCard: React.FC<TenderCardProps> = ({
         {checkUrgency(tender?.urgency)}
         <ActionMenu
           itemId={tender?.id}
-          onEdit={(id) => router.push(`/real_estate/tenders/edit/${id}`)}
+          onEdit={(id) => handleEdit(id)}
           onDelete={handleDeleteTender}
         />
       </Box>

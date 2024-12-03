@@ -1,5 +1,4 @@
 import Box from "@mui/material/Box";
-import tenderAPIs from "@/api/tender";
 import TenderCard from "./TenderCard";
 import { Typography } from "@mui/material";
 import { useState, useEffect } from "react";
@@ -8,6 +7,7 @@ import { currentUser } from "@/lib/features/userSlice";
 import { scrollBarStyles } from "@/components/scrollbar/Scrollbar";
 import { BuildingTenders, Tender } from "../../tenders/tender_card/types";
 import { setTenderNumbers, setTenders } from "@/lib/features/tenderSlice";
+import userAPIs from "@/api/user";
 
 const TenderCardList: React.FC = () => {
   const dispatch = useDispatch();
@@ -20,11 +20,11 @@ const TenderCardList: React.FC = () => {
   }, [user?.id]);
 
   const getBuildings = async (): Promise<void> => {
-    const buildingTenders = await tenderAPIs.getTenders(user?.id);
+    const buildingTenders = await userAPIs.getUserTenders(user?.id);
     setBuildings(buildingTenders?.data);
     const allTenders: Tender[] = [];
-    buildingTenders?.data?.map((buildingTenders: any) => {
-      buildingTenders.tenders?.map((tender: Tender) => {
+    buildingTenders?.data?.forEach((buildingTenders: BuildingTenders) => {
+      buildingTenders.tenders?.forEach((tender: Tender) => {
         allTenders.push(tender);
       });
     });

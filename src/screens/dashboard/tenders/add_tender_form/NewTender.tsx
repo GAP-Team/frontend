@@ -30,12 +30,15 @@ import { showSnackbar } from "@/components/root-snackbar";
 import SectionTitle from "@/components/label/SectionTitle";
 import { addTenderValidationSchema } from "@/utils/ValidationSchema";
 import GProgressStepper from "@/components/stepper/GProgressStepper";
-import { getAllTenders } from "@/lib/features/tenderSlice";
+import {
+  getAllTenders /*getTenderIdToEdit*/,
+} from "@/lib/features/tenderSlice";
 
 const NewTender: React.FC<NewTenderProps> = ({ id }): JSX.Element => {
   const router = useRouter();
   const appDispatch = useAppDispatch();
   const userTenders = useSelector(getAllTenders);
+  // const editTenderId = useSelector(getTenderIdToEdit);
   const formik = useFormikContext<AddTenderFormValues>();
 
   const steps: ActiveStepItem[] = [
@@ -195,17 +198,16 @@ const NewTender: React.FC<NewTenderProps> = ({ id }): JSX.Element => {
     freeParkingAvailable: selectedTenderDetails?.freeParkingAvailable || false,
     buildingId: selectedTenderDetails?.building?.id || "",
     facilityId: selectedTenderDetails?.facility?.id || "",
-    documentChoice: "Jetzt hochladen Empfohlen",
-    constructionDocs: [],
-    floorplanDocs: [],
-    equipmentDocs: [],
-    serverLink: "",
   };
 
   const formOrSuccessContent = isSubmitted ? (
     <SuccessPage
       title="Ausschreibung Online!"
-      description2="Aussschreibung wurde erfolgreich angelegt"
+      description2={
+        actionType === "edit"
+          ? `Ausschreibung wurde erfolgreich aktualisiert`
+          : `Aussschreibung wurde erfolgreich angelegt`
+      }
       description="Du kannst Ihre Ausschreibung in der Ausschreibung-übersicht sehen und bearbeiten."
       buttonLabel="Schließen"
       redirectUrl="/real_estate/tenders"
@@ -244,7 +246,7 @@ const NewTender: React.FC<NewTenderProps> = ({ id }): JSX.Element => {
         <PageTitle
           title={
             actionType === "edit"
-              ? `Ausschreibung Bearbeiten: ${initialValues?.clientName}`
+              ? `Ausschreibung Bearbeiten`
               : `Neue Ausschreibung veröffentlichen`
           }
           sx={{ ml: "1.5rem" }}

@@ -35,7 +35,9 @@ const TenderBuilding = (): JSX.Element => {
     });
 
     setBuildingDropDownOptions(buildingOptions);
-    setSelectedBuildingFacilities();
+    if (formik?.values?.buildingId !== "") {
+      setSelectedBuildingFacilities();
+    }
   }, []);
 
   const setSelectedBuildingFacilities = async (): Promise<void> => {
@@ -44,7 +46,7 @@ const TenderBuilding = (): JSX.Element => {
     );
 
     const facilityOptions: Item[] = [];
-    allFacilities?.data?.map((facility: any) => {
+    allFacilities?.data?.forEach((facility: any) => {
       const temp = {
         label: facility?.name,
         value: facility?.id,

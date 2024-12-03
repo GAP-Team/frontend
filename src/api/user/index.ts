@@ -18,6 +18,7 @@ const userAPIs = {
     api.get(
       `/users/${userId}/buildings?city=${city}&state=${state}&facilityType=${facilityType}`
     ),
+  getUserTenders: (userId: string): any => api.get(`/users/${userId}/tenders`),
 };
 
 export default userAPIs;
