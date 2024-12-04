@@ -8,12 +8,14 @@ import TendersContainer from "./tender_card/TendersContainer";
 import { currentUser } from "@/lib/features/userSlice";
 import { useSelector } from "react-redux";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
-import { fetchTenders } from "@/lib/features/tenderSlice";
+import { fetchTenders, currentTenderNumbers } from "@/lib/features/tenderSlice";
 
 const TendersOverview: React.FC = () => {
   const user = useSelector(currentUser);
   const dispatch = useAppDispatch();
-  const { tenders, loading, error } = useAppSelector((state) => state.tender);
+  const { tenders, loading, error, numOfTenders } = useAppSelector(
+    (state) => state.tender
+  );
 
   useEffect(() => {
     if (user?.id) {
@@ -24,7 +26,7 @@ const TendersOverview: React.FC = () => {
   const tenderContent = (() => {
     if (loading) return <div>Loading...</div>;
     if (error) return <div>Error: {error}</div>;
-    return tenders?.length > 0 ? (
+    return numOfTenders > 0 ? (
       <TendersContainer buildings={tenders} />
     ) : (
       <NoContentPage

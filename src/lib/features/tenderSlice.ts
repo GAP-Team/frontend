@@ -5,14 +5,14 @@ import { Building } from "@/screens/dashboard/tenders/tender_card/types";
 import tenderAPIs from "@/api/tender";
 
 interface TenderState {
-  tenderNumbers: number;
+  numOfTenders: number;
   tenders: Building[];
   loading: boolean;
   error: string | null;
 }
 
 const initialState: TenderState = {
-  tenderNumbers: 0,
+  numOfTenders: 0,
   tenders: [] as Building[],
   loading: false as boolean,
   error: null as string | null,
@@ -31,7 +31,7 @@ const tenderSlice = createSlice({
   initialState,
   reducers: {
     setTenderNumbers: (state, action: PayloadAction<any>) => {
-      state.tenderNumbers = action.payload;
+      state.numOfTenders = action.payload;
     },
     setTenders: (state, action: PayloadAction<Building[]>) => {
       state.tenders = action.payload;
@@ -65,6 +65,6 @@ export const { setTenderNumbers, removeTender, setTenders } =
   tenderSlice.actions;
 
 export const currentTenderNumbers = (state: RootState): number =>
-  state.tender.tenderNumbers;
+  state.tender.numOfTenders;
 
 export default tenderSlice.reducer;
