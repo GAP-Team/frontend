@@ -32,4 +32,5 @@ export interface Tender {
   fromDate: Date;
   toDate: Date;
   status: string;
+  createdAt: Date;
 }
