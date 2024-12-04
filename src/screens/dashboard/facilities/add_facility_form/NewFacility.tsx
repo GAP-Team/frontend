@@ -62,10 +62,10 @@ const NewFacility: React.FC<NewFacilityProps> = ({}): JSX.Element => {
   useEffect(() => {
     setActiveStep(steps[0]);
     setIsSubmitted(false);
-    getUSerBuildingDetails();
+    getUserBuildingDetails();
   }, []);
 
-  const getUSerBuildingDetails = async (): Promise<void> => {
+  const getUserBuildingDetails = async (): Promise<void> => {
     const query = {
       userId: user?.id,
       city: "",

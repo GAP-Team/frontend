@@ -24,7 +24,7 @@ const initialState: BuildingState = {
 };
 
 export const fetchBuildings = createAsyncThunk(
-  "tender/fetchBuildings",
+  "building/fetchBuildings",
   async (query: queryType) => {
     const response = await userAPIs.getBuildings(
       query.userId,
@@ -54,7 +54,7 @@ const buildingSlice = createSlice({
         state.loading = false;
       })
       .addCase(fetchBuildings.rejected, (state, action) => {
-        state.error = action.error.message || "Failed to fetch tenders";
+        state.error = action.error.message || "Failed to fetch buildings";
         state.loading = false;
       });
   },

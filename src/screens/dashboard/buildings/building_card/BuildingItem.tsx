@@ -84,10 +84,7 @@ const BuildingItem: React.FC<BuildingItemProps> = ({ building }) => {
         <ActionMenu
           itemId={building?.id}
           onEdit={(id) => router.push(`/real_estate/buildings/edit/${id}`)}
-          onDelete={
-            (id) => deleteBuilding(id)
-            //console.log(`Building with ${id} deleted successfully`)
-          }
+          onDelete={(id) => deleteBuilding(id)}
           messege={delMsg}
         />
       </Box>
