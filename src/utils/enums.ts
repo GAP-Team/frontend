@@ -1,6 +1,6 @@
 export enum Urgency {
-  URGENT = "URGENT",
-  NOT_URGENT = "NOT_URGENT",
+  URGENT = "Dringend",
+  NOT_URGENT = "Nicht Dringend",
 }
 export enum USER_ROLE {
   REAL_ESTATE_OWNER = "REAL_ESTATE_OWNER",
