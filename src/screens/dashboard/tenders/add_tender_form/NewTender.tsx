@@ -30,7 +30,6 @@ import { addTenderValidationSchema } from "@/utils/ValidationSchema";
 import GProgressStepper from "@/components/stepper/GProgressStepper";
 import { setUserBuildingDetails } from "@/lib/features/buildingSlice";
 import userAPIs from "@/api/user";
-import { Urgency } from "@/utils/enums";
 
 const NewTender = (): JSX.Element => {
   const router = useRouter();
