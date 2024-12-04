@@ -13,6 +13,6 @@ export enum BUSINESS_TYPE {
 }
 
 export enum TENDER_FORM {
-  CRAFTMAN = "CRAFTMAN",
+  CRAFTSMAN = "CRAFTSMAN",
   EXPERT = "EXPERT",
 }

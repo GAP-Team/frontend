@@ -24,7 +24,7 @@ const TenderSummary = ({
     values.tenderForm && {
       label: "Ausschreibungsart",
       value:
-        values.tenderForm === TENDER_FORM.CRAFTMAN
+        values.tenderForm === TENDER_FORM.CRAFTSMAN
           ? "Handwerker"
           : "Sachverständigen",
     },

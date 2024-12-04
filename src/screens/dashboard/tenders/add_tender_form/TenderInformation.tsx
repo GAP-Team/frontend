@@ -57,7 +57,7 @@ const TenderInformation = (): JSX.Element => {
               onBlur={formik?.handleBlur}
             >
               <FormControlLabel
-                value={TENDER_FORM.CRAFTMAN}
+                value={TENDER_FORM.CRAFTSMAN}
                 control={<Radio />}
                 label="Handwerker"
                 sx={{ marginBottom: 0 }}
