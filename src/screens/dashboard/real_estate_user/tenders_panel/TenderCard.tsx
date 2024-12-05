@@ -79,6 +79,7 @@ const TenderCard: React.FC<TenderCardProps> = ({
           itemId={tender?.id}
           onEdit={(id) => router.push(`/real_estate/tenders/edit/${id}`)}
           onDelete={handleDeleteTender}
+          messege={"Sind Sie sicher, dass Sie dieses Element löschen möchten?"}
         />
       </Box>
       <Box sx={styles.location}>
