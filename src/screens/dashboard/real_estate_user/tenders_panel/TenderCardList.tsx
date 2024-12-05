@@ -30,7 +30,9 @@ const TenderCardList: React.FC = () => {
     dispatch(setTenderNumbers(totalTenders));
   };
 
-  const renderSortedTenders = (buildings: BuildingTenders[]): React.ReactNode => {
+  const renderSortedTenders = (
+    buildings: BuildingTenders[]
+  ): React.ReactNode => {
     if (!Array.isArray(buildings) || buildings.length === 0) {
       return (
         <Box sx={styles.noDataContainer}>

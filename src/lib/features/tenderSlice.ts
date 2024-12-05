@@ -1,7 +1,10 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 import { RootState } from "../store";
-import { BuildingTenders } from "@/screens/dashboard/tenders/tender_card/types";
+import {
+  BuildingTenders,
+  Tender,
+} from "@/screens/dashboard/tenders/tender_card/types";
 import tenderAPIs from "@/api/tender";
 
 interface TenderState {
@@ -66,5 +69,16 @@ export const { setTenderNumbers, removeTender, setTenders } =
 
 export const currentTenderNumbers = (state: RootState): number =>
   state.tender.tenderNumbers;
+
+export const selectTenderById = (
+  state: RootState,
+  tenderId: string
+): Tender | undefined => {
+  for (const building of state.tender.tenders) {
+    const tender = building.tenders.find((t: Tender) => t.id === tenderId);
+    if (tender) return tender;
+  }
+  return undefined;
+};
 
 export default tenderSlice.reducer;

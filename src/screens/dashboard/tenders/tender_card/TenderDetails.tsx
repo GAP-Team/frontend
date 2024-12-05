@@ -1,5 +1,7 @@
 "use client";
 import React, { memo, useEffect, useState } from "react";
+import { useAppSelector } from "@/lib/hooks";
+import { selectTenderById } from "@/lib/features/tenderSlice";
 import Grid from "@mui/material/Grid";
 import TenderTitleBar from "./TenderTitleBar";
 import Paper from "@mui/material/Paper";
@@ -10,8 +12,11 @@ interface TenderDetailsProps {
   id: string;
 }
 
-const TenderDetails: React.FC<TenderDetailsProps> = () => {
+const TenderDetails: React.FC<TenderDetailsProps> = ({ id }) => {
   const [loading, setLoading] = useState(true);
+
+  // Fetch tender details by ID
+  const tender = useAppSelector((state) => selectTenderById(state, id));
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -27,7 +32,7 @@ const TenderDetails: React.FC<TenderDetailsProps> = () => {
       <Grid container spacing={2} mx={1} columns={18}>
         <Grid item xs={8}>
           <Paper sx={{ maxWidth: "false", width: "100%", p: "1.25rem" }}>
-            <TenderSummarySection />
+            <TenderSummarySection tender={tender} />
           </Paper>
         </Grid>
         <Grid item xs={8}>

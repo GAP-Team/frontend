@@ -1,57 +1,70 @@
 "use client";
 
 import HeaderSection from "../../real_estate_user/HeaderSection";
-import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import Image from "next/image";
-import stepperHorizontal from "../../../../../public/icons/stepper-horizontal.svg";
 import Grid from "@mui/material/Grid";
 import Divider from "@mui/material/Divider";
 import GButton from "@/components/button/GButton";
 import { useRouter } from "next/navigation";
 import LabelText from "@/components/label/LabelText";
+import { Tender } from "./types";
 
-//TODO: in the future this data will be fetched from the backend and dynamically updated the values
-const summaryData = [
-  { label: "Name des Auftraggebers", value: "Fire Service GmbH" },
-  { label: "Name der Ausschreibung", value: "Fire Service GmbH" },
-  { label: "Ausschreibungsart", value: "Handwerker" },
-  { label: "Ausschreibungstyp", value: "SV-Begleitung" },
-  { label: "Objekt", value: "Handwerker" },
-  { label: "Anlage", value: "Handwerker" },
-  { label: "Anlagetyp", value: "Handwerker" },
-  { label: "Dringlichkeit", value: "Eröffnungstermin" },
-  { label: "Verfügbares Zeitfenster", value: "14. Jan 2024 - 28 Mar. 2025" },
-  { label: "Detailbeschreibung", value: "Klicken Sie hier, um zu sehen" },
-  { label: "Dokumente", value: "Vor Ort zur Verfügung stellen" },
-  { label: "Sicherheit Arbeit erforderlich", value: "Ja" },
-  { label: "Kostenlose Parkplätze", value: "Ja" },
-];
+interface TenderSummarySectionProps {
+  tender?: Tender;
+}
 
-const TenderSummarySection = (): JSX.Element => {
+const TenderSummarySection: React.FC<TenderSummarySectionProps> = ({
+  tender,
+}) => {
   const router = useRouter();
+
+  // Prepare summary data
+  const summaryData = [
+    { label: "Name des Auftraggebers", value: tender?.clientName },
+    { label: "Ausschreibungsart", value: tender?.tenderForm },
+    { label: "Ausschreibungstyp", value: tender?.tenderType },
+    { label: "Objekt", value: tender?.building.name },
+    { label: "Anlage", value: tender?.facility.name },
+    { label: "Anlagetyp", value: tender?.tenderType },
+    { label: "Dringlichkeit", value: tender?.urgency },
+    {
+      label: "Verfügbares Zeitfenster",
+      value:
+        tender?.fromDate &&
+        tender?.toDate &&
+        `${new Date(tender?.fromDate).toLocaleDateString()} - ${new Date(
+          tender?.toDate
+        ).toLocaleDateString()}`,
+    },
+    {
+      label: "Detailbeschreibung",
+      value: tender?.detailDescription
+        ? `${tender?.detailDescription.substring(0, 60)}...`
+        : "",
+    },
+    {
+      label: "Sicherheit Arbeit erforderlich",
+      value: tender?.safetyWorkRequired ? "Ja" : "Nein",
+    },
+    {
+      label: "Kostenlose Parkplätze",
+      value: tender?.freeParkingAvailable ? "Ja" : "Nein",
+    },
+  ].filter((item) => item.value);
+
+  const editHandler = (): void => {
+    router.push("/real_estate/tenders/add_tender_form");
+  };
 
   const backHandler = (): void => {
     router.push("/real_estate/tenders");
   };
 
-  const editHandler = (): void => {
-    router.push("/real_estate/tenders/add_tender_form");
-  };
   return (
     <>
       <HeaderSection titletext="DATEN ÜBERPRÜFEN" />
       <Typography variant="bodymsb">Zusammenfassung</Typography>
-      <Box sx={styles.imageContainer}>
-        <Image
-          priority
-          alt="stepper"
-          src={stepperHorizontal}
-          width={700}
-          style={{ marginTop: "1rem", marginBottom: "3rem" }}
-        />
-      </Box>
-      <Grid container spacing={2} marginLeft={1}>
+      <Grid container spacing={2} marginLeft={1} pt={2}>
         {summaryData.map((item, index) => (
           <Grid item xs={6} key={index} paddingBottom={2}>
             <LabelText
@@ -86,13 +99,3 @@ const TenderSummarySection = (): JSX.Element => {
 };
 
 export default TenderSummarySection;
-
-const styles = {
-  imageContainer: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    width: "100%",
-    textAlign: "center",
-  },
-};
