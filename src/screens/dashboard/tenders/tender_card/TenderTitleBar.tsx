@@ -24,7 +24,9 @@ const TenderTitleBar: React.FC<TenderTitleBarProps> = ({
           {projectId} <span style={{ color: "black" }}>•</span> &nbsp;
         </Typography>
       )}
-      {location && <Typography sx={styles.desTypography}>{location}</Typography>}
+      {location && (
+        <Typography sx={styles.desTypography}>{location}</Typography>
+      )}
     </Container>
   );
 };

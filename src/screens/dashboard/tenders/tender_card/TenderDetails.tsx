@@ -28,7 +28,10 @@ const TenderDetails: React.FC<TenderDetailsProps> = ({ id }) => {
 
   return (
     <Grid container component="main">
-      <TenderTitleBar title={tender?.tenderType} projectId={tender?.facility.name} />
+      <TenderTitleBar
+        title={tender?.tenderType}
+        projectId={tender?.facility.name}
+      />
       <Grid container spacing={2} mx={1} columns={18}>
         <Grid item xs={8}>
           <Paper sx={{ maxWidth: "false", width: "100%", p: "1.25rem" }}>
