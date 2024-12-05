@@ -4,9 +4,9 @@ import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 
 interface TenderTitleBarProps {
-  title: string;
-  projectId: string;
-  location: string;
+  title?: string;
+  projectId?: string;
+  location?: string;
 }
 
 const TenderTitleBar: React.FC<TenderTitleBarProps> = ({
@@ -16,11 +16,15 @@ const TenderTitleBar: React.FC<TenderTitleBarProps> = ({
 }) => {
   return (
     <Container maxWidth={false} sx={styles.container}>
-      <Typography sx={styles.titleTypography}>{title} • &nbsp;</Typography>
-      <Typography sx={styles.desTypography}>
-        {projectId} <span style={{ color: "black" }}>•</span> &nbsp;
-      </Typography>
-      <Typography sx={styles.desTypography}>{location}</Typography>
+      {title && (
+        <Typography sx={styles.titleTypography}>{title} • &nbsp;</Typography>
+      )}
+      {projectId && (
+        <Typography sx={styles.desTypography}>
+          {projectId} <span style={{ color: "black" }}>•</span> &nbsp;
+        </Typography>
+      )}
+      {location && <Typography sx={styles.desTypography}>{location}</Typography>}
     </Container>
   );
 };
