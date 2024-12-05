@@ -1,4 +1,4 @@
-export interface Building {
+export interface BuildingTenders {
   buildingName: string;
   buildingAdress: buildingAdress;
   tenders: Tender[];

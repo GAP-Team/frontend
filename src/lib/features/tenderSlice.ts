@@ -1,19 +1,19 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 import { RootState } from "../store";
-import { Building } from "@/screens/dashboard/tenders/tender_card/types";
+import { BuildingTenders } from "@/screens/dashboard/tenders/tender_card/types";
 import tenderAPIs from "@/api/tender";
 
 interface TenderState {
   tenderNumbers: number;
-  tenders: Building[];
+  tenders: BuildingTenders[];
   loading: boolean;
   error: string | null;
 }
 
 const initialState: TenderState = {
   tenderNumbers: 0,
-  tenders: [] as Building[],
+  tenders: [] as BuildingTenders[],
   loading: false as boolean,
   error: null as string | null,
 };
@@ -33,7 +33,7 @@ const tenderSlice = createSlice({
     setTenderNumbers: (state, action: PayloadAction<any>) => {
       state.tenderNumbers = action.payload;
     },
-    setTenders: (state, action: PayloadAction<Building[]>) => {
+    setTenders: (state, action: PayloadAction<BuildingTenders[]>) => {
       state.tenders = action.payload;
     },
     removeTender: (state, action: PayloadAction<string>) => {

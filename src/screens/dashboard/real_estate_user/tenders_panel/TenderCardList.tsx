@@ -5,12 +5,12 @@ import { Typography } from "@mui/material";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { currentUser } from "@/lib/features/userSlice";
-import { Building } from "../../tenders/tender_card/types";
+import { BuildingTenders } from "../../tenders/tender_card/types";
 import { setTenderNumbers } from "@/lib/features/tenderSlice";
 import { scrollBarStyles } from "@/components/scrollbar/Scrollbar";
 
 const TenderCardList: React.FC = () => {
-  const [buildings, setBuildings] = useState<Building[]>([]);
+  const [buildings, setBuildings] = useState<BuildingTenders[]>([]);
   const dispatch = useDispatch();
 
   const user = useSelector(currentUser);
@@ -30,7 +30,7 @@ const TenderCardList: React.FC = () => {
     dispatch(setTenderNumbers(totalTenders));
   };
 
-  const renderSortedTenders = (buildings: Building[]): React.ReactNode => {
+  const renderSortedTenders = (buildings: BuildingTenders[]): React.ReactNode => {
     if (!Array.isArray(buildings) || buildings.length === 0) {
       return (
         <Box sx={styles.noDataContainer}>
