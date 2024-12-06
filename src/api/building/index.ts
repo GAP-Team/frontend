@@ -7,6 +7,7 @@ const buildingAPIs = {
     api.put(`/buildings/${buildingId}`, data),
   getBuildingFacilities: (id: string): any =>
     api.get(`/buildings/${id}/facilities`),
+  delete: (buildingId: string): any => api.delete(`/buildings/${buildingId}`),
 };
 
 export default buildingAPIs;

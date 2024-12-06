@@ -19,12 +19,14 @@ import GButton from "@/components/button/GButton";
 
 interface ActionMenuProps {
   itemId: string;
+  messege: any;
   onEdit: (itemId: string) => void;
   onDelete: (itemId: string) => void;
 }
 
 const ActionMenu: React.FC<ActionMenuProps> = ({
   itemId,
+  messege,
   onEdit,
   onDelete,
 }) => {
@@ -109,7 +111,7 @@ const ActionMenu: React.FC<ActionMenuProps> = ({
         <DialogTitle id="alert-dialog-title">Bestätigung</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            Sind Sie sicher, dass Sie dieses Element löschen möchten?
+            <div dangerouslySetInnerHTML={{ __html: messege }} />
           </DialogContentText>
         </DialogContent>
         <DialogActions>

@@ -11,3 +11,8 @@ export enum BUSINESS_TYPE {
   BUSINESS = "BUSINESS",
   PRIVATE = "PRIVATE",
 }
+
+export enum TENDER_FORM {
+  CRAFTSMAN = "CRAFTSMAN",
+  EXPERT = "EXPERT",
+}

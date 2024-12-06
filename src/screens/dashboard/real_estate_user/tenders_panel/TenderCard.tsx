@@ -11,7 +11,7 @@ import { VscDebugBreakpointLog } from "react-icons/vsc";
 import { getTenderStatusStyle } from "@/utils/utils";
 import SectionTitle from "@/components/label/SectionTitle";
 import { buildingAdress, Tender } from "./types";
-import { Urgency } from "@/utils/enums";
+import { TENDER_FORM, Urgency } from "@/utils/enums";
 import ActionMenu from "@/components/common/ActionMenu";
 import tenderAPIs from "@/api/tender";
 import { useAppDispatch } from "@/lib/hooks";
@@ -23,6 +23,13 @@ interface TenderCardProps {
   buildingName: string;
   buildingAdress: buildingAdress;
 }
+
+// Helper to translate tenderForm
+const translateTenderForm = (tenderForm: string): string => {
+  return tenderForm === TENDER_FORM.CRAFTSMAN
+    ? "Handwerker"
+    : "Sachverständigen";
+};
 
 const TenderCard: React.FC<TenderCardProps> = ({
   tender,
@@ -79,6 +86,7 @@ const TenderCard: React.FC<TenderCardProps> = ({
           itemId={tender?.id}
           onEdit={(id) => router.push(`/real_estate/tenders/edit/${id}`)}
           onDelete={handleDeleteTender}
+          messege={"Sind Sie sicher, dass Sie dieses Element löschen möchten?"}
         />
       </Box>
       <Box sx={styles.location}>
@@ -95,7 +103,7 @@ const TenderCard: React.FC<TenderCardProps> = ({
           <Chip
             icon={<VscDebugBreakpointLog color="white" />}
             color="gprimary"
-            label={tender?.tenderForm}
+            label={translateTenderForm(tender?.tenderForm)}
             size="small"
             sx={styles.tagChip}
           />
@@ -110,7 +118,7 @@ const TenderCard: React.FC<TenderCardProps> = ({
           {`--> ${tender?.facility?.name}`}
         </Typography>
         <Typography variant="body2" sx={{ pl: 4 }}>
-          {`--> ${tender?.tenderForm}`}
+          {`--> ${translateTenderForm(tender?.tenderForm)}`}
         </Typography>
       </Box>
     </Paper>
@@ -124,7 +132,7 @@ const styles = {
   card: {
     p: "1.25rem",
     borderRadius: "0.5rem",
-    maxWidth: "20rem", // Adjust the width as needed
+    maxWidth: "20rem",
     minWidth: "13rem",
     height: "21rem",
     flexShrink: 0,

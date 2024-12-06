@@ -19,6 +19,7 @@ import FacilitySummary from "./FacilitySummary";
 import { DocumentTypes } from "@/utils/Constants";
 import React, { useEffect, useState } from "react";
 import PageTitle from "@/components/label/PageTitle";
+import { currentUser } from "@/lib/features/userSlice";
 import FacilityMaintenance from "./FacilityMaintenance";
 import FacilityInformation from "./FacilityInformation";
 import SuccessPage from "@/components/common/SuccessPage";
@@ -26,11 +27,9 @@ import { showSnackbar } from "@/components/root-snackbar";
 import SectionTitle from "@/components/label/SectionTitle";
 import FacilityDocumentation from "./FacilityDocumentation";
 import { handleUploadMultipleDoc } from "@/utils/uploadToS3";
+import { fetchBuildings } from "@/lib/features/buildingSlice";
 import GProgressStepper from "@/components/stepper/GProgressStepper";
 import { addFacilityValidationSchema } from "@/utils/ValidationSchema";
-import userAPIs from "@/api/user";
-import { currentUser } from "@/lib/features/userSlice";
-import { setUserBuildingDetails } from "@/lib/features/buildingSlice";
 
 interface NewFacilityProps {
   facilityId: string;
@@ -63,12 +62,17 @@ const NewFacility: React.FC<NewFacilityProps> = ({}): JSX.Element => {
   useEffect(() => {
     setActiveStep(steps[0]);
     setIsSubmitted(false);
-    getUSerBuildingDetails();
+    getUserBuildingDetails();
   }, []);
 
-  const getUSerBuildingDetails = async (): Promise<void> => {
-    const allUpdatedBuildings = await userAPIs.getBuildings(user?.id);
-    appDispatch(setUserBuildingDetails(allUpdatedBuildings.data));
+  const getUserBuildingDetails = async (): Promise<void> => {
+    const query = {
+      userId: user?.id,
+      city: "",
+      federalState: "",
+      facilityType: "",
+    };
+    appDispatch(fetchBuildings(query));
   };
 
   const handleNext = async (
