@@ -1,43 +1,39 @@
 // Buildings.tsx
 "use client";
-import userAPIs from "@/api/user";
-import { Building } from "./types";
 import Box from "@mui/material/Box";
+import React, { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { useAppDispatch } from "@/lib/hooks";
 import BuildingItemList from "./BuildingItemList";
-import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { currentUser } from "@/lib/features/userSlice";
 import addObjSrc from "@/../public/icons/add_building.svg";
 import NoContentPage from "@/components/common/NoContentPage";
 import PropertyFilterPanel from "@/components/filter/PropertyFilterPanel";
-import { currentUser } from "@/lib/features/userSlice";
-import { setUserBuildingDetails } from "@/lib/features/buildingSlice";
+import { fetchBuildings, getUserBuildings } from "@/lib/features/buildingSlice";
 
 const Buildings: React.FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const user = useSelector(currentUser);
-  const [buildings, setBuildings] = useState<Building[]>([]);
+  const userBuildings = useSelector(getUserBuildings);
 
   useEffect(() => {
-    getUserBuildings("", "", "");
+    fetchUserBuildings("", "", "");
   }, [user?.id]);
 
-  const getUserBuildings = async (
+  const fetchUserBuildings = async (
     city: string,
     federalState: string,
     facilityType: string
   ): Promise<void> => {
     if (!user?.id) return;
 
-    const allBuildings = await userAPIs.getBuildings(
-      user?.id,
-      city,
-      federalState,
-      facilityType
-    );
-    const userBuildings = allBuildings.data;
-
-    setBuildings(userBuildings);
-    dispatch(setUserBuildingDetails(userBuildings));
+    const query = {
+      userId: user?.id,
+      city: city,
+      federalState: federalState,
+      facilityType: facilityType,
+    };
+    dispatch(fetchBuildings(query));
   };
 
   const onStateCityFacilityTypeChange = (
@@ -45,12 +41,12 @@ const Buildings: React.FC = () => {
     federalState: string,
     facilityType: string
   ): void => {
-    getUserBuildings(city, federalState, facilityType);
+    fetchUserBuildings(city, federalState, facilityType);
   };
 
   const buildingContent =
-    buildings?.length > 0 ? (
-      <BuildingItemList buildings={buildings} />
+    userBuildings?.length > 0 ? (
+      <BuildingItemList buildings={userBuildings} />
     ) : (
       <NoContentPage
         image={addObjSrc}
@@ -61,6 +57,7 @@ const Buildings: React.FC = () => {
         description="Du hast noch keine Objekte angelegt, wenn Du Deine Objekte erstellt hast findest Du sie hier."
       />
     );
+
   return (
     <Box sx={styles.mainContainer}>
       <PropertyFilterPanel

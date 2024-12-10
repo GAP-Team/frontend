@@ -114,17 +114,12 @@ const TenderBuilding = (): JSX.Element => {
           <LabelWithAsterisk>OBJEKT AUSWÄHLEN</LabelWithAsterisk>
           <FormControl fullWidth>
             {buildingDropDownOptions?.length > 0 ? (
-              <>
-                <CustomSelect
-                  name={"buildingId"}
-                  onChange={handleBuildingSelect}
-                  options={buildingDropDownOptions}
-                  value={formik?.values?.buildingId}
-                />
-                {formik?.touched?.buildingId && (
-                  <p style={styles.errorTexts}>{formik?.errors?.buildingId}</p>
-                )}
-              </>
+              <CustomSelect
+                name={"buildingId"}
+                onChange={handleBuildingSelect}
+                options={buildingDropDownOptions}
+                value={formik?.values?.buildingId}
+              />
             ) : (
               <Select
                 name="buildingId"
@@ -138,23 +133,21 @@ const TenderBuilding = (): JSX.Element => {
                 </MenuItem>
               </Select>
             )}
+            {formik?.touched?.buildingId && (
+              <p style={styles.errorTexts}>{formik?.errors?.buildingId}</p>
+            )}
           </FormControl>
         </Grid>
         <Grid item xs={12}>
           <LabelWithAsterisk>ANLAGE AUSWÄHLEN</LabelWithAsterisk>
           <FormControl fullWidth>
             {facilityDropDownOptions?.length > 0 ? (
-              <>
-                <CustomSelect
-                  name={"facilityId"}
-                  onChange={handleFacilitySelect}
-                  options={facilityDropDownOptions}
-                  value={formik?.values?.facilityId}
-                />
-                {formik?.touched?.facilityId && (
-                  <p style={styles.errorTexts}>{formik?.errors?.facilityId}</p>
-                )}
-              </>
+              <CustomSelect
+                name={"facilityId"}
+                onChange={handleFacilitySelect}
+                options={facilityDropDownOptions}
+                value={formik?.values?.facilityId}
+              />
             ) : (
               <Select
                 name="facilityId"
@@ -167,6 +160,9 @@ const TenderBuilding = (): JSX.Element => {
                   {`Keine Anlage vorhanden`}
                 </MenuItem>
               </Select>
+            )}
+            {formik?.touched?.facilityId && (
+              <p style={styles.errorTexts}>{formik?.errors?.facilityId}</p>
             )}
           </FormControl>
         </Grid>
