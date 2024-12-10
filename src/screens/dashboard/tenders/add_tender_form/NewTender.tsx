@@ -30,16 +30,13 @@ import { showSnackbar } from "@/components/root-snackbar";
 import SectionTitle from "@/components/label/SectionTitle";
 import { addTenderValidationSchema } from "@/utils/ValidationSchema";
 import GProgressStepper from "@/components/stepper/GProgressStepper";
-import {
-  getAllTenders /*getTenderIdToEdit*/,
-} from "@/lib/features/tenderSlice";
+import { getAllTenders } from "@/lib/features/tenderSlice";
 import { Urgency } from "@/utils/enums";
 
 const NewTender: React.FC<NewTenderProps> = ({ id }): JSX.Element => {
   const router = useRouter();
   const appDispatch = useAppDispatch();
   const userTenders = useSelector(getAllTenders);
-  // const editTenderId = useSelector(getTenderIdToEdit);
   const formik = useFormikContext<AddTenderFormValues>();
 
   const steps: ActiveStepItem[] = [
@@ -122,6 +119,7 @@ const NewTender: React.FC<NewTenderProps> = ({ id }): JSX.Element => {
       detailDescription: values?.detailDescription,
       safetyWorkRequired: values?.safetyWorkRequired,
       freeParkingAvailable: values?.freeParkingAvailable,
+      updatedAt: new Date().toLocaleDateString(),
     };
 
     if (actionType === "add") {
@@ -205,12 +203,12 @@ const NewTender: React.FC<NewTenderProps> = ({ id }): JSX.Element => {
   const formOrSuccessContent = isSubmitted ? (
     <SuccessPage
       title="Ausschreibung Online!"
-      description2={
+      primaryDescription={
         actionType === "edit"
           ? `Ausschreibung wurde erfolgreich aktualisiert`
           : `Aussschreibung wurde erfolgreich angelegt`
       }
-      description="Du kannst Ihre Ausschreibung in der Ausschreibung-übersicht sehen und bearbeiten."
+      secondaryDescription="Du kannst Ihre Ausschreibung in der Ausschreibung-übersicht sehen und bearbeiten."
       buttonLabel="Schließen"
       redirectUrl="/real_estate/tenders"
     />

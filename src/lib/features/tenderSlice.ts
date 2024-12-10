@@ -13,7 +13,6 @@ interface TenderState {
   tendersList: Tender[];
   loading: boolean;
   error: string | null;
-  tenderIdToEdit: string;
 }
 
 const initialState: TenderState = {
@@ -22,7 +21,6 @@ const initialState: TenderState = {
   tendersList: [] as Tender[],
   loading: false as boolean,
   error: null as string | null,
-  tenderIdToEdit: "" as string,
 };
 
 export const fetchTenders = createAsyncThunk(
@@ -45,9 +43,6 @@ const tenderSlice = createSlice({
     },
     setTenders: (state, action: PayloadAction<Tender[]>) => {
       state.tendersList = action.payload;
-    },
-    setTenderIdToEdit: (state, action: PayloadAction<string>) => {
-      state.tenderIdToEdit = action.payload;
     },
     removeTender: (state, action: PayloadAction<string>) => {
       state.tenders = state.tenders.map((tender) => ({
@@ -79,14 +74,11 @@ export const {
   removeTender,
   setTendersByBuilding,
   setTenders,
-  setTenderIdToEdit,
 } = tenderSlice.actions;
 
 export const currentTenderNumbers = (state: RootState): number =>
   state.tender.tenderNumbers;
-export const getAllTenders = (state: RootState): any =>
+export const getAllTenders = (state: RootState): Tender[] =>
   state.tender.tendersList;
-export const getTenderIdToEdit = (state: RootState): string =>
-  state.tender.tenderIdToEdit;
 
 export default tenderSlice.reducer;
