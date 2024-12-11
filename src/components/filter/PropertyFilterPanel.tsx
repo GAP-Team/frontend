@@ -131,23 +131,33 @@ const FilterSelect = ({
 }): JSX.Element => (
   <FormControl size="small" sx={styles.formControl}>
     <InputLabel id={`${id}-label`}>{label}</InputLabel>
-    <Select
-      labelId={`${id}-label`}
-      id={`${id}-select`}
-      value={value}
-      label={label}
-      onChange={onChange}
-    >
-      {options.length > 0 ? (
-        options.map((option) => (
+    {options.length > 0 ? (
+      <Select
+        labelId={`${id}-label`}
+        id={`${id}-select`}
+        value={value}
+        label={label}
+        onChange={onChange}
+      >
+        {options.map((option) => (
           <MenuItem key={option.value} value={option.value}>
             {option.label || option.value}
           </MenuItem>
-        ))
-      ) : (
-        <MenuItem value="">Keine {label}</MenuItem>
-      )}
-    </Select>
+        ))}
+      </Select>
+    ) : (
+      <Select
+        displayEmpty
+        value={value}
+        id={`${id}-select`}
+        onChange={onChange}
+        labelId={`${id}-label`}
+      >
+        <MenuItem disabled key={0} value={""}>
+          Keine {label}
+        </MenuItem>
+      </Select>
+    )}
   </FormControl>
 );
 
