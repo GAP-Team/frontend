@@ -9,7 +9,6 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import Divider from "@mui/material/Divider";
 import Typography from "@mui/material/Typography";
-import RealStateUserLayout from "../page";
 import PageTitle from "@/components/label/PageTitle";
 
 const menuItems = [
@@ -38,7 +37,7 @@ export default function SettingsLayout({
   const currentMenuItem = menuItems.find((item) => pathname === item.href);
 
   return (
-    <RealStateUserLayout>
+    <>
       {/* Page Title */}
       <PageTitle title={currentMenuItem?.label || "Einstellungen"} />
 
@@ -80,7 +79,7 @@ export default function SettingsLayout({
           {children}
         </Box>
       </Box>
-    </RealStateUserLayout>
+    </>
   );
 }
 
