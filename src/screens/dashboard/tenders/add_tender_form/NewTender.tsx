@@ -74,6 +74,7 @@ const NewTender: React.FC<NewTenderProps> = ({ id }): JSX.Element => {
     const tenderDetails = userTenders?.find(
       (tender: Tender) => id === tender?.id
     );
+
     setSelectedTenderDetails(tenderDetails);
   };
 

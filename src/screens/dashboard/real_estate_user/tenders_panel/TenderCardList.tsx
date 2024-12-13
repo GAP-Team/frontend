@@ -11,26 +11,30 @@ import userAPIs from "@/api/user";
 
 const TenderCardList: React.FC = () => {
   const dispatch = useDispatch();
-  const [buildings, setBuildings] = useState<BuildingTenders[]>([]);
+  const [tendersInBuilding, setTendersInBuildings] = useState<
+    BuildingTenders[]
+  >([]);
 
   const user = useSelector(currentUser);
 
   useEffect(() => {
     getBuildings();
-  }, [user?.id]);
+  }, []);
 
   const getBuildings = async (): Promise<void> => {
-    const buildingTenders = await userAPIs.getUserTenders(user?.id);
-    setBuildings(buildingTenders?.data);
+    const buildingTendersList = await userAPIs.getUserTenders(user?.id);
+    setTendersInBuildings(buildingTendersList?.data);
+
     const allTenders: Tender[] = [];
-    buildingTenders?.data?.forEach((buildingTenders: BuildingTenders) => {
+    buildingTendersList?.data?.forEach((buildingTenders: BuildingTenders) => {
       buildingTenders.tenders?.forEach((tender: Tender) => {
         allTenders.push(tender);
       });
     });
+
     dispatch(setTenders(allTenders));
 
-    const totalTenders = buildingTenders.data.reduce(
+    const totalTenders = buildingTendersList.data.reduce(
       (total: number, building: BuildingTenders) =>
         total + (building?.tenders?.length || 0),
       0
@@ -39,9 +43,9 @@ const TenderCardList: React.FC = () => {
   };
 
   const renderSortedTenders = (
-    buildings: BuildingTenders[]
+    tendersInBuilding: BuildingTenders[]
   ): React.ReactNode => {
-    if (!Array.isArray(buildings) || buildings.length === 0) {
+    if (!Array.isArray(tendersInBuilding) || tendersInBuilding.length === 0) {
       return (
         <Box sx={styles.noDataContainer}>
           <Typography
@@ -56,7 +60,7 @@ const TenderCardList: React.FC = () => {
     }
 
     // Extract tenders and include building details
-    const allTendersWithBuilding = buildings.flatMap((building) =>
+    const allTendersWithBuilding = tendersInBuilding.flatMap((building) =>
       (building.tenders || []).map((tender) => ({
         ...tender,
         buildingName: building.buildingName,
@@ -85,7 +89,11 @@ const TenderCardList: React.FC = () => {
     ));
   };
 
-  return <Box sx={styles.listContainer}>{renderSortedTenders(buildings)}</Box>;
+  return (
+    <Box sx={styles.listContainer}>
+      {renderSortedTenders(tendersInBuilding)}
+    </Box>
+  );
 };
 
 export default TenderCardList;
