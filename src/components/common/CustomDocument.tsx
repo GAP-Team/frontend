@@ -38,11 +38,7 @@ const CustomDocumentation = ({
   }, [formikValue.documentChoice]);
 
   return (
-    <Box
-      noValidate
-      component="form"
-      sx={{ p: 1, width: "auto", marginLeft: "1.5rem" }}
-    >
+    <Box noValidate component="form" style={style.boxContainer}>
       <Grid container spacing={1} ml={0.1}>
         <FormControl sx={{ display: "block" }}>
           <RadioGroup
@@ -60,9 +56,7 @@ const CustomDocumentation = ({
                   label={
                     <Typography>
                       Jetzt hochladen{" "}
-                      <span style={{ fontWeight: "600", color: "#22A7F1" }}>
-                        Empfohlen
-                      </span>
+                      <span style={style.highlightText}>Empfohlen</span>
                     </Typography>
                   }
                 />
@@ -206,3 +200,8 @@ const CustomDocumentation = ({
 };
 
 export default CustomDocumentation;
+
+const style = {
+  boxContainer: { p: 1, width: "auto", marginLeft: "1.5rem" },
+  highlightText: { fontWeight: "600", color: "#22A7F1" },
+};

@@ -1,5 +1,5 @@
 "use client";
-import CustomDocumentation from "@/components/custom_documentation/CustomDocument";
+import CustomDocumentation from "@/components/common/CustomDocument";
 
 const BuildingDocumentation = ({ formik }: { formik?: any }): JSX.Element => {
   return (
