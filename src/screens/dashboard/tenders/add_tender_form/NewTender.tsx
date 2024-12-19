@@ -15,6 +15,7 @@ import {
   AddTenderFormValues,
 } from "./types";
 import dayjs from "dayjs";
+import moment from "moment";
 import tenderAPIs from "@/api/tender";
 import AddTenderForm from "./AddTenderForm";
 import TenderSummary from "./TenderSummary";
@@ -120,7 +121,7 @@ const NewTender: React.FC<NewTenderProps> = ({ id }): JSX.Element => {
       detailDescription: values?.detailDescription,
       safetyWorkRequired: values?.safetyWorkRequired,
       freeParkingAvailable: values?.freeParkingAvailable,
-      updatedAt: new Date().toLocaleDateString(),
+      updatedAt: moment().format(),
     };
 
     if (actionType === "add") {
