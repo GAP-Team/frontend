@@ -1,5 +1,6 @@
 // EmailVerification.tsx
 "use client";
+import bcrypt from "bcryptjs";
 import React, { useRef, useState, useEffect } from "react";
 import Cookies from "js-cookie";
 import Grid from "@mui/material/Grid";
@@ -88,12 +89,12 @@ const EmailVerification = ({
     setLoading(true);
     try {
       const code = verificationCode.join("");
-
-      if (code !== "") {
+      var vCode = '' + code;
+      if (vCode !== "") {
         let verificationQuery = {
           userId: newUserId,
           email: newUserEmail,
-          token: Number(code),
+          token: vCode, 
         };
 
         const res = await userAPIs.verifyEmail(verificationQuery);
@@ -130,15 +131,18 @@ const EmailVerification = ({
   const handleResendCode = async (): Promise<void> => {
     setResendDisabled(true);
     let code = getNewVerificationCode();
+    var verificationCode = '' + code;
     const element = (
-      <EmailTemplate name={newUserName} verificationCode={code} />
+      <EmailTemplate name={newUserName} verificationCode={verificationCode} />
     );
+
+    const hashedCode = await bcrypt.hash(verificationCode, 10);
     let sendStatus = await sendVerificationEmail(
       newUserName,
       newUserEmail,
       newUserId,
       element,
-      code
+      hashedCode
     );
 
     if (sendStatus.status === 201) {

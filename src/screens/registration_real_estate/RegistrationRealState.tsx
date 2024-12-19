@@ -184,15 +184,16 @@ const RegistrationRealState = (): JSX.Element => {
         setNewUserEmail(values.email);
         setNewUserName(res?.data?.firstName);
         const code = getNewVerificationCode();
+        var verificationCode = '' + code;
         const element = (
-          <EmailTemplate name={res?.data?.firstName} verificationCode={code} />
+          <EmailTemplate name={res?.data?.firstName} verificationCode={verificationCode} />
         );
         const sendStatus = await sendVerificationEmail(
           values.firstName,
           values.email,
           res?.data?.id,
           element,
-          code
+          verificationCode
         );
 
         if (sendStatus.status === 201) {

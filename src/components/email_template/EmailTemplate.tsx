@@ -15,7 +15,7 @@ const EmailTemplate = ({
   verificationCode,
 }: {
   name: string;
-  verificationCode: number;
+  verificationCode: string;
 }): any => (
   <html>
     <body>

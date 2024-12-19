@@ -1,12 +1,14 @@
-import userAPIs from "@/api/user";
+import bcrypt from "bcryptjs";
 import moment from "moment-timezone";
 import ReactDOMServer from "react-dom/server";
+
 import {
-  emailTemplateGreetins,
-  emailTemplateVerificationText,
   emailTemplateFoot,
   emailTemplateSubject,
+  emailTemplateGreetins,
+  emailTemplateVerificationText,
 } from "./Constants";
+import userAPIs from "@/api/user";
 
 export const getNewVerificationCode = (): number => {
   const verificationCode = Math.floor(100000 + Math.random() * 900000);
@@ -18,7 +20,7 @@ export const sendVerificationEmail = async (
   email: string,
   userId: string,
   template: any,
-  code: number
+  code: string
 ): Promise<any> => {
   const emailTemplate = renderEmailTemplate(name, code, template);
 
@@ -51,11 +53,12 @@ export const sendVerificationEmail = async (
       },
     },
   };
-
+  const hashedCode = await bcrypt.hash(code, 10);
+  
   const verificationTokenSaveQuery = {
     userId: userId,
     email: email,
-    token: code,
+    token: hashedCode,
     expiresAt: expiresAt,
   };
 
@@ -71,7 +74,7 @@ export const sendVerificationEmail = async (
 
 const renderEmailTemplate = (
   name: string,
-  code: number,
+  code: string,
   template: any
 ): string => {
   const htmlString = ReactDOMServer.renderToStaticMarkup(template);
