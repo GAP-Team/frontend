@@ -134,9 +134,9 @@ const FilterSelect = ({
     {options.length > 0 ? (
       <Select
         labelId={`${id}-label`}
-        id={`${id}-select`}
         value={value}
         label={label}
+        id={`${id}-select`}
         onChange={onChange}
       >
         {options.map((option) => (
@@ -147,11 +147,11 @@ const FilterSelect = ({
       </Select>
     ) : (
       <Select
-        displayEmpty
+        labelId={`${id}-label`}
         value={value}
+        label={label}
         id={`${id}-select`}
         onChange={onChange}
-        labelId={`${id}-label`}
       >
         <MenuItem disabled key={0} value={""}>
           Keine {label}
