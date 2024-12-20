@@ -28,7 +28,13 @@ const summaryData = [
   { label: "Kostenlose Parkplätze", value: "Ja" },
 ];
 
-const TenderSummarySection = (): JSX.Element => {
+interface TenderSummarySectionProps {
+  id: string;
+}
+
+const TenderSummarySection: React.FC<TenderSummarySectionProps> = ({
+  id,
+}): JSX.Element => {
   const router = useRouter();
 
   const backHandler = (): void => {
@@ -36,7 +42,7 @@ const TenderSummarySection = (): JSX.Element => {
   };
 
   const editHandler = (): void => {
-    router.push("/real_estate/tenders/add_tender_form");
+    router.push(`/real_estate/tenders/edit/${id}`);
   };
   return (
     <>

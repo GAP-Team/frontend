@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import RealStateUserLayout from "../page";
 import { checkIsLoggedIn, getIsUserVerified } from "@/utils/helperJWT";
 import RealEstateUser from "@/screens/dashboard/real_estate_user/RealEstateUser";
 
@@ -28,13 +27,5 @@ export default function DashboardPage(): JSX.Element {
     }
   };
 
-  return (
-    <>
-      {isLoggedIn && isUserVerified && (
-        <RealStateUserLayout>
-          <RealEstateUser />
-        </RealStateUserLayout>
-      )}
-    </>
-  );
+  return <>{isLoggedIn && isUserVerified && <RealEstateUser />}</>;
 }
