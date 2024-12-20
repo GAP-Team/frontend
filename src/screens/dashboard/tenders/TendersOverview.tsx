@@ -8,7 +8,9 @@ import TendersContainer from "./tender_card/TendersContainer";
 import { currentUser } from "@/lib/features/userSlice";
 import { useSelector } from "react-redux";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
-import { fetchTenders } from "@/lib/features/tenderSlice";
+import { fetchTenders, setTenders } from "@/lib/features/tenderSlice";
+import { BuildingTenders, Tender } from "./tender_card/types";
+import userAPIs from "@/api/user";
 
 const TendersOverview: React.FC = () => {
   const user = useSelector(currentUser);
@@ -19,7 +21,19 @@ const TendersOverview: React.FC = () => {
     if (user?.id) {
       dispatch(fetchTenders(user.id));
     }
+    storeTenders();
   }, [user?.id, dispatch]);
+
+  const storeTenders = async (): Promise<void> => {
+    const buildingTendersList = await userAPIs.getUserTenders(user?.id);
+    const allTenders: Tender[] = [];
+    buildingTendersList?.data?.forEach((tendersList: BuildingTenders) => {
+      tendersList?.tenders?.forEach((tender: Tender) => {
+        allTenders.push(tender);
+      });
+    });
+    dispatch(setTenders(allTenders));
+  };
 
   const tenderContent = (() => {
     if (loading) return <div>Loading...</div>;

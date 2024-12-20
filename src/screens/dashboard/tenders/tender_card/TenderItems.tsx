@@ -1,10 +1,10 @@
 import React from "react";
 import TenderCard from "../../real_estate_user/tenders_panel/TenderCard";
 import Grid from "@mui/material/Grid";
-import { Building } from "./types";
+import { BuildingTenders } from "./types";
 
 interface TenderItemsProps {
-  building: Building;
+  building: BuildingTenders;
 }
 
 const TenderItems: React.FC<TenderItemsProps> = ({ building }) => {

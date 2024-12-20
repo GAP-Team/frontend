@@ -2,11 +2,11 @@ import React from "react";
 import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
 import TenderHeader from "./TenderHeader";
-import { Building } from "./types";
+import { BuildingTenders } from "./types";
 import TenderItems from "./TenderItems";
 
 interface TendersContainerProps {
-  buildings: Building[];
+  buildings: BuildingTenders[];
 }
 
 const TendersContainer: React.FC<TendersContainerProps> = ({ buildings }) => {
