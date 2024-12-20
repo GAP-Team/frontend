@@ -18,18 +18,13 @@ import {
 import userAPIs from "@/api/user";
 import { RegistrationFormValues } from "./types";
 
-import {
-  sendVerificationEmail,
-  getNewVerificationCode,
-} from "@/utils/helperEmail";
+import { BUSINESS_TYPE } from "@/utils/enums";
 import PageTitle from "@/components/label/PageTitle";
 import { handleUploadDoc } from "@/utils/uploadToS3";
 import BackButton from "@/components/button/BackButton";
 import InfoBanner from "@/components/common/InfoBanner";
-import EmailTemplate from "@/components/email_template/EmailTemplate";
+import EmailVerification from "@/components/email/EmailVerification";
 import { registrationValidationSchema } from "@/utils/ValidationSchema";
-import EmailVerification from "../../components/email/EmailVerification";
-import { BUSINESS_TYPE } from "@/utils/enums";
 
 function getSteps(): string[] {
   return [
@@ -183,18 +178,9 @@ const RegistrationRealState = (): JSX.Element => {
         setNewUserId(res?.data?.id);
         setNewUserEmail(values.email);
         setNewUserName(res?.data?.firstName);
-        const code = getNewVerificationCode();
-        var verificationCode = '' + code;
-        const element = (
-          <EmailTemplate name={res?.data?.firstName} verificationCode={verificationCode} />
-        );
-        const sendStatus = await sendVerificationEmail(
-          values.firstName,
-          values.email,
-          res?.data?.id,
-          element,
-          verificationCode
-        );
+
+        const sendEmailQuery = { email: values.email };
+        const sendStatus = await userAPIs.sendVerificationEmail(sendEmailQuery);
 
         if (sendStatus.status === 201) {
           setIsVerificationEmailSent(true);
