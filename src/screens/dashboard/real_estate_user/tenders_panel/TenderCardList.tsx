@@ -20,10 +20,10 @@ const TenderCardList: React.FC = () => {
   }, [user?.id]);
 
   const getBuildings = async (): Promise<void> => {
-    const buildings = await tenderAPIs.getTenders(user?.id);
-    setBuildings(buildings?.data);
+    const buildingTenders = await tenderAPIs.getTenders(user?.id);
+    setBuildingTenders(buildingTenders?.data);
 
-    const totalTenders = buildings.data.reduce(
+    const totalTenders = buildingTenders.data.reduce(
       (total: any, building: any) => total + (building?.tenders?.length || 0),
       0
     );
@@ -31,9 +31,9 @@ const TenderCardList: React.FC = () => {
   };
 
   const renderSortedTenders = (
-    buildings: BuildingTenders[]
+    buildingTenders: BuildingTenders[]
   ): React.ReactNode => {
-    if (!Array.isArray(buildings) || buildings.length === 0) {
+    if (!Array.isArray(buildingTenders) || buildingTenders.length === 0) {
       return (
         <Box sx={styles.noDataContainer}>
           <Typography
@@ -48,7 +48,7 @@ const TenderCardList: React.FC = () => {
     }
 
     // Extract tenders and include building details
-    const allTendersWithBuilding = buildings.flatMap((building) =>
+    const allTendersWithBuilding = buildingTenders.flatMap((building) =>
       (building.tenders || []).map((tender) => ({
         ...tender,
         buildingName: building.buildingName,
@@ -77,7 +77,7 @@ const TenderCardList: React.FC = () => {
     ));
   };
 
-  return <Box sx={styles.listContainer}>{renderSortedTenders(buildings)}</Box>;
+  return <Box sx={styles.listContainer}>{renderSortedTenders(buildingTenders)}</Box>;
 };
 
 export default TenderCardList;
