@@ -4,6 +4,7 @@ import Grid from "@mui/material/Grid";
 import { useFormikContext } from "formik";
 import { StepComponentProps } from "./types";
 import SummarySection, { Detail } from "@/components/summary/SummarySection";
+import { TENDER_FORM } from "@/utils/enums";
 
 const TenderSummary = ({
   setActiveStep,
@@ -22,7 +23,10 @@ const TenderSummary = ({
     },
     values.tenderForm && {
       label: "Ausschreibungsart",
-      value: values.tenderForm,
+      value:
+        values.tenderForm === TENDER_FORM.CRAFTSMAN
+          ? "Handwerker"
+          : "Sachverständigen",
     },
     values.tenderType && {
       label: "Ausschreibungstyp",

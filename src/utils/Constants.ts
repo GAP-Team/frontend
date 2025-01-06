@@ -157,6 +157,15 @@ export interface Item {
   value: string;
 }
 
+export interface Documentation {
+  documentChoice: string;
+  constructionDocs: File[];
+  floorplanDocs: File[];
+  checkReports: File[];
+  otherDocs: File[];
+  serverLink: string;
+}
+
 export const germanStates: Item[] = [
   { label: "Baden-Württemberg", value: "Baden-Württemberg" },
   { label: "Bayern", value: "Bayern" }, // Bavaria

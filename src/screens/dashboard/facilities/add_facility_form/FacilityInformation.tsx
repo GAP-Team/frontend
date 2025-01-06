@@ -100,8 +100,8 @@ const FacilityInformation = (): JSX.Element => {
             helperText={
               formik?.touched?.facilityType && formik?.errors?.facilityType
             }
-            onSelect={handleFacilityTypeSelect}
-            selectedState={selectedFacilityType}
+            onChange={handleFacilityTypeSelect}
+            value={selectedFacilityType}
           />
         </Grid>
 
@@ -119,8 +119,8 @@ const FacilityInformation = (): JSX.Element => {
             helperText={
               formik?.touched?.subcategory && formik?.errors?.subcategory
             }
-            onSelect={handleSubCategorySelect}
-            selectedState={selectedSubCategory}
+            onChange={handleSubCategorySelect}
+            value={selectedSubCategory}
           />
         </Grid>
 

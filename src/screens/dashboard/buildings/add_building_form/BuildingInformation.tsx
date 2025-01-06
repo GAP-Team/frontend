@@ -25,7 +25,6 @@ const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 
 const BuildingInformation = ({ formik }: { formik?: any }): JSX.Element => {
   const [dialogOpen, setDialogOpen] = useState(false);
-  const [options] = useState(buildingTypesList);
 
   const [newContact, setNewContact] = useState<ContactPersonItem>({
     firstName: "",
@@ -59,16 +58,12 @@ const BuildingInformation = ({ formik }: { formik?: any }): JSX.Element => {
     } else {
       setSelectedBuildingType({ label: "", value: "" });
     }
-  }, [formik?.values]);
+  }, [formik?.values?.buildingType]);
 
   const handleStateSelect = (selectedItem: Item | null): void => {
     setSelectedBuildingType(selectedItem);
-    formik?.setFieldValue(
-      "buildingType",
-      selectedItem ? selectedItem.value : ""
-    );
+    formik?.setFieldValue("buildingType", selectedItem?.value || "");
   };
-
   const handleContactPersonChange = (
     event: any,
     value: ContactPersonItem[]
@@ -139,7 +134,9 @@ const BuildingInformation = ({ formik }: { formik?: any }): JSX.Element => {
           <LabelWithAsterisk>GEBÄUDETYP</LabelWithAsterisk>
           <GTextSelector
             name="buildingType"
-            options={options}
+            options={buildingTypesList}
+            value={selectedBuildingType}
+            onChange={handleStateSelect}
             error={
               formik?.touched?.buildingType &&
               Boolean(formik?.errors?.buildingType)
@@ -147,8 +144,6 @@ const BuildingInformation = ({ formik }: { formik?: any }): JSX.Element => {
             helperText={
               formik?.touched?.buildingType && formik?.errors?.buildingType
             }
-            onSelect={handleStateSelect}
-            selectedState={selectedBuildingType}
           />
         </Grid>
         <Grid item xs={12} sm={3}>

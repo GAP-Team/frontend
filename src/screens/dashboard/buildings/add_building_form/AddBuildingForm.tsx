@@ -39,7 +39,7 @@ const AddBuildingForm = ({
     !loading && (
       <SuccessPage
         title="Objekt angelegt!"
-        description2="Objekt wurde erfolgreich angelegt"
+        primaryDescription="Objekt wurde erfolgreich angelegt"
       />
     )
   ) : (

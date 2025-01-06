@@ -4,26 +4,36 @@ import List from "@mui/material/List";
 import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
 import { CgNotes } from "react-icons/cg";
+import { useSelector } from "react-redux";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { FaRegFlag } from "react-icons/fa6";
 import Divider from "@mui/material/Divider";
+import { useAppDispatch } from "@/lib/hooks";
 import Typography from "@mui/material/Typography";
 import { IoExtensionPuzzleOutline } from "react-icons/io5";
 
 import { Building } from "./types";
 import facilityAPIs from "@/api/facility";
-
+import buildingAPIs from "@/api/building";
 import DocumentList from "./DocumentList ";
-import { scrollBarStyles } from "@/components/scrollbar/Scrollbar";
 import ActionMenu from "@/components/common/ActionMenu";
-import { useRouter } from "next/navigation";
+import { scrollBarStyles } from "@/components/scrollbar/Scrollbar";
+import {
+  getUserBuildings,
+  setUserBuildingDetails,
+} from "@/lib/features/buildingSlice";
 
 interface BuildingItemProps {
   building: Building;
 }
 
 const BuildingItem: React.FC<BuildingItemProps> = ({ building }) => {
+  const router = useRouter();
+  const dispatch = useAppDispatch();
+  const userBuildings = useSelector(getUserBuildings);
   const [totalTenders, setTotalTenders] = useState<number>();
+
   useEffect(() => {
     getFacilityTendersCount();
   }, []);
@@ -39,7 +49,32 @@ const BuildingItem: React.FC<BuildingItemProps> = ({ building }) => {
     setTotalTenders(count);
   };
 
-  const router = useRouter();
+  const delMsg = `
+    Beim Löschen dieses Gebäudes werden alle relevanten Objekte mitgelöscht.
+    ${
+      building.facilities.length > 0
+        ? `
+        <br/>${`- ${building.facilities.length} Anlage(n)`}
+        <br/>${`- ${totalTenders} Ausschreibunge(n)`}
+      `
+        : ``
+    }
+    <br/>Sind Sie sicher, dass Sie dieses Gebäude löschen möchten?
+  `;
+
+  const deleteBuilding = async (buildingId: string): Promise<void> => {
+    const deleteStatus = await buildingAPIs.delete(buildingId);
+    if (deleteStatus?.data?.statusCode === 204) {
+      const buildingsAfterDelete = userBuildings.filter(
+        (building: Building) => building.id !== buildingId
+      );
+      dispatch(setUserBuildingDetails(buildingsAfterDelete));
+    }
+  };
+
+  const handleRedirect = (redirect: string): void => {
+    router.push(`/real_estate/${redirect}`);
+  };
 
   return (
     <Paper sx={styles.card}>
@@ -53,26 +88,23 @@ const BuildingItem: React.FC<BuildingItemProps> = ({ building }) => {
         <ActionMenu
           itemId={building?.id}
           onEdit={(id) => router.push(`/real_estate/buildings/edit/${id}`)}
-          onDelete={(id) =>
-            console.log(`Building with ${id} deleted successfully`)
-          }
+          onDelete={(id) => deleteBuilding(id)}
+          messege={delMsg}
         />
       </Box>
       <Box sx={styles.header} marginTop="1rem">
         <Stack direction="row" alignItems="center" gap={2}>
           <IoExtensionPuzzleOutline size="1.5rem" color="#A0ADB1" />
           <Typography
-            variant="bodymsb"
-            fontWeight={500}
-            color="black"
+            style={styles.items}
+            onClick={() => handleRedirect("facilities")}
           >{`${building.facilities.length} Anlagen`}</Typography>
         </Stack>
         <Stack direction="row" alignItems="center" gap={2}>
           <CgNotes size="1.5rem" color="#A0ADB1" />
           <Typography
-            variant="bodymsb"
-            color="black"
-            fontWeight={500}
+            style={styles.items}
+            onClick={() => handleRedirect("tenders")}
           >{`${totalTenders} Ausschreibungen`}</Typography>
         </Stack>
       </Box>
@@ -148,5 +180,11 @@ const styles = {
     overflow: "auto",
     paddingRight: "0.65rem",
     ...scrollBarStyles,
+  },
+  items: {
+    variant: "bodymsb",
+    fontWeight: 500,
+    color: "#22A7F1",
+    cursor: "pointer",
   },
 };
