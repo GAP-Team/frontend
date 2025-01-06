@@ -10,7 +10,7 @@ import { setTenderNumbers } from "@/lib/features/tenderSlice";
 import { scrollBarStyles } from "@/components/scrollbar/Scrollbar";
 
 const TenderCardList: React.FC = () => {
-  const [buildings, setBuildings] = useState<BuildingTenders[]>([]);
+  const [buildingTenders, setBuildingTenders] = useState<BuildingTenders[]>([]);
   const dispatch = useDispatch();
 
   const user = useSelector(currentUser);
