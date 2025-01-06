@@ -18,14 +18,6 @@ const TenderDetails: React.FC<TenderDetailsProps> = ({ id }) => {
   // Fetch tender details by ID
   const tender = useAppSelector((state) => selectTenderById(state, id));
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 8000);
-
-    return (): void => clearTimeout(timer);
-  }, []);
-
   return (
     <Grid container component="main">
       <TenderTitleBar
