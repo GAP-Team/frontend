@@ -1,4 +1,4 @@
-export interface Building {
+export interface BuildingTenders {
   buildingName: string;
   buildingAdress: buildingAdress;
   tenders: Tender[];
@@ -31,6 +31,7 @@ export interface Tender {
   urgency: string;
   fromDate: Date;
   toDate: Date;
+  updatedAt: Date;
   status: string;
   createdAt: Date;
 }

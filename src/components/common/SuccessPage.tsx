@@ -8,8 +8,8 @@ import sucessSvg from "../../../public/icons/success.svg";
 
 interface SuccessPageProps {
   title: string;
-  description?: string;
-  description2?: string;
+  secondaryDescription?: string;
+  primaryDescription?: string;
   buttonLabel?: string;
   imageUrl?: string;
   redirectUrl?: string;
@@ -17,8 +17,8 @@ interface SuccessPageProps {
 
 const SuccessPage: NextPage<SuccessPageProps> = ({
   title,
-  description,
-  description2,
+  secondaryDescription,
+  primaryDescription,
   buttonLabel,
   imageUrl = sucessSvg,
   redirectUrl = "/",
@@ -35,20 +35,20 @@ const SuccessPage: NextPage<SuccessPageProps> = ({
       >
         <Image priority alt="Success" src={imageUrl} fill />
       </div>
-      {description2 && (
+      {primaryDescription && (
         <Typography variant="bodymr" color="#475A60">
-          {description2}
+          {primaryDescription}
         </Typography>
       )}
       <Typography variant="h4sb" padding={"0.5rem"}>
         {title}
       </Typography>
-      {description && (
+      {secondaryDescription && (
         <Typography
           variant="bodymr"
           style={{ maxWidth: "22rem", textAlign: "center", color: "#8D999C" }}
         >
-          {description}
+          {secondaryDescription}
         </Typography>
       )}
       {buttonLabel && (

@@ -5,37 +5,41 @@ import { CgClose } from "react-icons/cg";
 import { useSelector } from "react-redux";
 import { IconButton } from "@mui/material";
 import { useRouter } from "next/navigation";
-import { Formik, FormikHelpers } from "formik";
 import React, { useEffect, useState } from "react";
+import { Formik, FormikHelpers, useFormikContext } from "formik";
 
 import {
+  NewTenderProps,
   ActiveStepItem,
   StepComponentProps,
   AddTenderFormValues,
 } from "./types";
+import dayjs from "dayjs";
+import moment from "moment";
 import tenderAPIs from "@/api/tender";
 import AddTenderForm from "./AddTenderForm";
 import TenderSummary from "./TenderSummary";
 import { useAppDispatch } from "@/lib/hooks";
+import { Tender } from "../tender_card/types";
 import TenderBuilding from "./TenderBuilding";
 import TenderInformation from "./TenderInformation";
 import TenderDescription from "./TenderDescription";
 import PageTitle from "@/components/label/PageTitle";
-import { currentUser } from "@/lib/features/userSlice";
 import SuccessPage from "@/components/common/SuccessPage";
 import TenderClassification from "./TenderClassification";
 import { showSnackbar } from "@/components/root-snackbar";
 import SectionTitle from "@/components/label/SectionTitle";
 import { addTenderValidationSchema } from "@/utils/ValidationSchema";
 import GProgressStepper from "@/components/stepper/GProgressStepper";
-import { setUserBuildingDetails } from "@/lib/features/buildingSlice";
-import userAPIs from "@/api/user";
-import { Urgency } from "@/utils/enums";
+import { getAllTenders } from "@/lib/features/tenderSlice";
+import { TENDER_FORM, Urgency } from "@/utils/enums";
 
-const NewTender = (): JSX.Element => {
+const NewTender: React.FC<NewTenderProps> = ({ id }): JSX.Element => {
   const router = useRouter();
   const appDispatch = useAppDispatch();
-  const user = useSelector(currentUser);
+  const userTenders = useSelector(getAllTenders);
+  const formik = useFormikContext<AddTenderFormValues>();
+
   const steps: ActiveStepItem[] = [
     {
       id: 0,
@@ -48,20 +52,31 @@ const NewTender = (): JSX.Element => {
     { id: 4, stepName: "Übersicht Ausschreibung", component: TenderSummary },
   ];
 
-  const [activeStep, setActiveStep] = useState<ActiveStepItem>(steps[0]);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [actionType, setActionType] = useState<string>("add");
+  const [activeStep, setActiveStep] = useState<ActiveStepItem>(steps[0]);
   const StepComponent = steps[activeStep.id]
     ?.component as React.ComponentType<StepComponentProps>;
+  const [selectedTenderDetails, setSelectedTenderDetails] =
+    useState<Tender | null>();
 
   useEffect(() => {
-    setActiveStep(steps[0]);
-    setIsSubmitted(false);
-    getBuildingDetails();
+    if (id === "") {
+      setActionType("add");
+      setActiveStep(steps[0]);
+      setIsSubmitted(false);
+    } else {
+      setActionType("edit");
+      getCurrentTenderDetails(id);
+    }
   }, []);
 
-  const getBuildingDetails = async (): Promise<void> => {
-    const allUpdatedBuildings = await userAPIs.getBuildings(user?.id);
-    appDispatch(setUserBuildingDetails(allUpdatedBuildings?.data));
+  const getCurrentTenderDetails = (id: string): void => {
+    const tenderDetails = userTenders?.find(
+      (tender: Tender) => id === tender?.id
+    );
+
+    setSelectedTenderDetails(tenderDetails);
   };
 
   const handleNext = async (
@@ -106,28 +121,56 @@ const NewTender = (): JSX.Element => {
       detailDescription: values?.detailDescription,
       safetyWorkRequired: values?.safetyWorkRequired,
       freeParkingAvailable: values?.freeParkingAvailable,
+      updatedAt: moment().format(),
     };
 
-    const createTenderResponse = await tenderAPIs.create(tenderData);
+    if (actionType === "add") {
+      const createTenderResponse = await tenderAPIs.create(tenderData);
 
-    if (createTenderResponse?.data?.id) {
-      appDispatch(
-        showSnackbar({
-          type: "success",
-          message: "Ausschreibung erfolgreich hinzugefügt!",
-        })
-      );
+      if (createTenderResponse?.data?.id) {
+        appDispatch(
+          showSnackbar({
+            type: "success",
+            message: "Ausschreibung erfolgreich hinzugefügt!",
+          })
+        );
 
-      return true;
+        return true;
+      } else {
+        appDispatch(
+          showSnackbar({
+            type: "error",
+            message:
+              "Ausschreibung konnte nicht hinzugefügt werden. Bitte überprüfen Sie die Eingabedaten und versuchen Sie es erneut",
+          })
+        );
+        return false;
+      }
     } else {
-      appDispatch(
-        showSnackbar({
-          type: "error",
-          message:
-            "Ausschreibung konnte nicht hinzugefügt werden. Bitte überprüfen Sie die Eingabedaten und versuchen Sie es erneut",
-        })
+      const updateTenderResponse = await tenderAPIs.update(
+        selectedTenderDetails?.id,
+        tenderData
       );
-      return false;
+
+      if (updateTenderResponse?.data?.id) {
+        appDispatch(
+          showSnackbar({
+            type: "success",
+            message: "Ausschreibung erfolgreich aktualisiert!",
+          })
+        );
+
+        return true;
+      } else {
+        appDispatch(
+          showSnackbar({
+            type: "error",
+            message:
+              "Die Ausschreibung konnte nicht aktualisiert werden. Bitte überprüfen Sie die Eingabedaten und versuchen Sie es erneut",
+          })
+        );
+        return false;
+      }
     }
   };
 
@@ -140,31 +183,34 @@ const NewTender = (): JSX.Element => {
   };
 
   const initialValues: AddTenderFormValues = {
-    clientName: "",
-    tenderForm: "Handwerker",
-    tenderType: "",
-    buildingName: "",
-    facilityName: "",
-    detailDescription: "",
-    urgency: "Nicht Dringend",
-    fromDate: null,
-    toDate: null,
-    safetyWorkRequired: false,
-    freeParkingAvailable: false,
-    documentChoice: "Jetzt hochladen Empfohlen",
-    constructionDocs: [],
-    floorplanDocs: [],
-    equipmentDocs: [],
-    serverLink: "",
-    buildingId: "",
-    facilityId: "",
+    clientName: selectedTenderDetails?.clientName || "",
+    tenderForm: selectedTenderDetails?.tenderForm || TENDER_FORM.CRAFTSMAN,
+    tenderType: selectedTenderDetails?.tenderType || "",
+    buildingName: selectedTenderDetails?.building?.name || "",
+    facilityName: selectedTenderDetails?.facility?.name || "",
+    detailDescription: selectedTenderDetails?.detailDescription || "",
+    urgency: selectedTenderDetails?.urgency || "Nicht Dringend",
+    fromDate: selectedTenderDetails?.fromDate
+      ? dayjs(selectedTenderDetails?.fromDate)
+      : null,
+    toDate: selectedTenderDetails?.toDate
+      ? dayjs(selectedTenderDetails?.toDate)
+      : null,
+    safetyWorkRequired: selectedTenderDetails?.safetyWorkRequired || false,
+    freeParkingAvailable: selectedTenderDetails?.freeParkingAvailable || false,
+    buildingId: selectedTenderDetails?.building?.id || "",
+    facilityId: selectedTenderDetails?.facility?.id || "",
   };
 
   const formOrSuccessContent = isSubmitted ? (
     <SuccessPage
       title="Ausschreibung Online!"
-      description2="Aussschreibung wurde erfolgreich angelegt"
-      description="Du kannst Ihre Ausschreibung in der Ausschreibung-übersicht sehen und bearbeiten."
+      primaryDescription={
+        actionType === "edit"
+          ? `Ausschreibung wurde erfolgreich aktualisiert`
+          : `Aussschreibung wurde erfolgreich angelegt`
+      }
+      secondaryDescription="Du kannst Ihre Ausschreibung in der Ausschreibung-übersicht sehen und bearbeiten."
       buttonLabel="Schließen"
       redirectUrl="/real_estate/tenders"
     />
@@ -187,7 +233,11 @@ const NewTender = (): JSX.Element => {
         </Grid>
       </Grid>
       {StepComponent && (
-        <StepComponent setActiveStep={setActiveStep} steps={steps} />
+        <StepComponent
+          setActiveStep={setActiveStep}
+          steps={steps}
+          formik={formik}
+        />
       )}
     </>
   );
@@ -196,19 +246,24 @@ const NewTender = (): JSX.Element => {
     <Grid container component="main">
       <Grid item xs={12} md={12} lg={12} sx={{ backgroundColor: "#F9FAFA" }}>
         <PageTitle
-          title="Neue Ausschreibung veröffentlichen"
+          title={
+            actionType === "edit"
+              ? `Ausschreibung Bearbeiten`
+              : `Neue Ausschreibung veröffentlichen`
+          }
           sx={{ ml: "1.5rem" }}
         />
         <Formik
           initialValues={initialValues}
           validationSchema={addTenderValidationSchema[activeStep?.id]}
           onSubmit={handleNext}
+          enableReinitialize
         >
           {({ isSubmitting, handleSubmit }) => (
             <Grid sx={styles.form}>
               <AddTenderForm
-                activeStep={activeStep}
                 steps={steps}
+                activeStep={activeStep}
                 handleBack={handleBack}
                 handleSubmit={handleSubmit}
                 isSubmitting={isSubmitting}
