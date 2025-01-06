@@ -78,7 +78,7 @@ export const selectTenderById = (
     const tender = building.tenders.find((t: Tender) => t.id === tenderId);
     if (tender) return tender;
   }
-  return undefined;
+  return null;
 };
 
 export default tenderSlice.reducer;
