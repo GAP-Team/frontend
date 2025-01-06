@@ -1,39 +1,51 @@
 import Box from "@mui/material/Box";
-import tenderAPIs from "@/api/tender";
 import TenderCard from "./TenderCard";
 import { Typography } from "@mui/material";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { currentUser } from "@/lib/features/userSlice";
-import { BuildingTenders } from "../../tenders/tender_card/types";
-import { setTenderNumbers } from "@/lib/features/tenderSlice";
 import { scrollBarStyles } from "@/components/scrollbar/Scrollbar";
+import { BuildingTenders, Tender } from "../../tenders/tender_card/types";
+import { setTenderNumbers, setTenders} from "@/lib/features/tenderSlice";
+import userAPIs from "@/api/user";
 
 const TenderCardList: React.FC = () => {
-  const [buildingTenders, setBuildingTenders] = useState<BuildingTenders[]>([]);
   const dispatch = useDispatch();
+  const [tendersInBuilding, setTendersInBuildings] = useState<
+    BuildingTenders[]
+  >([]);
 
   const user = useSelector(currentUser);
 
   useEffect(() => {
     getBuildings();
-  }, [user?.id]);
+  }, []);
 
   const getBuildings = async (): Promise<void> => {
-    const buildingTenders = await tenderAPIs.getTenders(user?.id);
-    setBuildingTenders(buildingTenders?.data);
+    const buildingTendersList = await userAPIs.getUserTenders(user?.id);
+    setTendersInBuildings(buildingTendersList?.data);
 
-    const totalTenders = buildingTenders.data.reduce(
-      (total: any, building: any) => total + (building?.tenders?.length || 0),
+    const allTenders: Tender[] = [];
+    buildingTendersList?.data?.forEach((buildingTenders: BuildingTenders) => {
+      buildingTenders.tenders?.forEach((tender: Tender) => {
+        allTenders.push(tender);
+      });
+    });
+
+    dispatch(setTenders(allTenders));
+
+    const totalTenders = buildingTendersList.data.reduce(
+      (total: number, building: BuildingTenders) =>
+        total + (building?.tenders?.length || 0),
       0
     );
     dispatch(setTenderNumbers(totalTenders));
   };
 
   const renderSortedTenders = (
-    buildingTenders: BuildingTenders[]
+    tendersInBuilding: BuildingTenders[]
   ): React.ReactNode => {
-    if (!Array.isArray(buildingTenders) || buildingTenders.length === 0) {
+    if (!Array.isArray(tendersInBuilding) || tendersInBuilding.length === 0) {
       return (
         <Box sx={styles.noDataContainer}>
           <Typography
@@ -48,7 +60,7 @@ const TenderCardList: React.FC = () => {
     }
 
     // Extract tenders and include building details
-    const allTendersWithBuilding = buildingTenders.flatMap((building) =>
+    const allTendersWithBuilding = tendersInBuilding.flatMap((building) =>
       (building.tenders || []).map((tender) => ({
         ...tender,
         buildingName: building.buildingName,
@@ -77,7 +89,11 @@ const TenderCardList: React.FC = () => {
     ));
   };
 
-  return <Box sx={styles.listContainer}>{renderSortedTenders(buildingTenders)}</Box>;
+  return (
+    <Box sx={styles.listContainer}>
+      {renderSortedTenders(tendersInBuilding)}
+    </Box>
+  );
 };
 
 export default TenderCardList;

@@ -31,6 +31,7 @@ export interface Tender {
   urgency: string;
   fromDate: Date;
   toDate: Date;
+  updatedAt: Date;
   status: string;
   createdAt: Date;
 }

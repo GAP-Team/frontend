@@ -2,14 +2,16 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 import { RootState } from "../store";
 import {
-  BuildingTenders,
   Tender,
+  BuildingTenders,
 } from "@/screens/dashboard/tenders/tender_card/types";
+import userAPIs from "@/api/user";
 import tenderAPIs from "@/api/tender";
 
 interface TenderState {
   tenderNumbers: number;
   tenders: BuildingTenders[];
+  tendersList: Tender[];
   loading: boolean;
   error: string | null;
 }
@@ -17,6 +19,7 @@ interface TenderState {
 const initialState: TenderState = {
   tenderNumbers: 0,
   tenders: [] as BuildingTenders[],
+  tendersList: [] as Tender[],
   loading: false as boolean,
   error: null as string | null,
 };
@@ -24,7 +27,7 @@ const initialState: TenderState = {
 export const fetchTenders = createAsyncThunk(
   "tender/fetchTenders",
   async (userId: string) => {
-    const response = await tenderAPIs.getTenders(userId);
+    const response = await userAPIs.getUserTenders(userId);
     return response.data;
   }
 );
@@ -36,8 +39,11 @@ const tenderSlice = createSlice({
     setTenderNumbers: (state, action: PayloadAction<any>) => {
       state.tenderNumbers = action.payload;
     },
-    setTenders: (state, action: PayloadAction<BuildingTenders[]>) => {
+    setTendersByBuilding: (state, action: PayloadAction<BuildingTenders[]>) => {
       state.tenders = action.payload;
+    },
+    setTenders: (state, action: PayloadAction<Tender[]>) => {
+      state.tendersList = action.payload;
     },
     removeTender: (state, action: PayloadAction<string>) => {
       state.tenders = state.tenders.map((tender) => ({
@@ -64,11 +70,17 @@ const tenderSlice = createSlice({
   },
 });
 
-export const { setTenderNumbers, removeTender, setTenders } =
-  tenderSlice.actions;
+export const {
+  setTenderNumbers,
+  removeTender,
+  setTendersByBuilding,
+  setTenders,
+} = tenderSlice.actions;
 
 export const currentTenderNumbers = (state: RootState): number =>
   state.tender.tenderNumbers;
+export const getAllTenders = (state: RootState): Tender[] =>
+  state.tender.tendersList;
 
 export const selectTenderById = (
   state: RootState,

@@ -1,57 +1,72 @@
 import React from "react";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
-
-export interface Item {
-  label: string;
-  value: string;
-}
-
-interface GTextSelectorProps<> {
+import { Item } from "@/utils/Constants";
+interface GTextSelectorProps {
   options: Item[];
-  selectedState: Item | null;
+  value: Item | string | null;
   placeholder?: string;
   name: string;
-  onSelect: (selectedItem: Item) => void;
+  onChange: (selectedItem: any) => void;
   error?: boolean;
-  helperText?: React.ReactNode | undefined;
+  helperText?: React.ReactNode;
+  disabled?: boolean;
+  required?: boolean;
+  size?: "small" | "medium";
+  label?: string;
+  fullWidth?: boolean;
+  freeSolo?: boolean;
 }
 
 const GTextSelector = ({
   name,
   options,
+  value,
   placeholder = "Wählen Sie aus",
-  onSelect,
-  selectedState,
-  error,
+  onChange,
+  error = false,
   helperText,
+  disabled = false,
+  required = false,
+  size = "medium",
+  label,
+  fullWidth = true,
+  freeSolo = true,
 }: GTextSelectorProps): JSX.Element => {
   return (
     <Autocomplete
-      freeSolo
-      value={selectedState}
+      freeSolo={freeSolo}
+      value={value}
       options={options}
-      openOnFocus={false}
-      getOptionLabel={(option: any) => option?.label}
-      onInputChange={(e, value: string) => {
-        const newValue = { label: value, value: value };
-        onSelect(newValue);
-      }}
+      getOptionLabel={(option) =>
+        typeof option === "string" ? option : option.label
+      }
+      isOptionEqualToValue={(option, val) =>
+        typeof val === "string"
+          ? option.label === val
+          : option.value === val?.value
+      }
+      disabled={disabled}
       onChange={(e, value: any) => {
         if (typeof value === "string") {
           const newValue = { label: value, value: value };
-          onSelect(newValue);
+          onChange(newValue);
         } else if (value) {
-          onSelect(value);
+          onChange(value);
         }
       }}
       renderInput={(params) => (
         <TextField
           {...params}
           name={name}
+          label={label}
           placeholder={placeholder}
           error={error}
           helperText={helperText}
+          disabled={disabled}
+          required={required}
+          size={size}
+          fullWidth={fullWidth}
         />
       )}
     />

@@ -12,6 +12,7 @@ import GTextInput from "@/components/input/GTextInput";
 import CustomSelect from "@/components/drop_down/CustomSelect";
 import LabelWithAsterisk from "@/components/label/LabelWithAsterisk";
 import { tenderTypesListHW, tenderTypesListSV } from "@/utils/Constants";
+import { TENDER_FORM } from "@/utils/enums";
 
 const TenderInformation = (): JSX.Element => {
   const formik = useFormikContext<AddTenderFormValues>();
@@ -56,13 +57,13 @@ const TenderInformation = (): JSX.Element => {
               onBlur={formik?.handleBlur}
             >
               <FormControlLabel
-                value="Handwerker"
+                value={TENDER_FORM.CRAFTSMAN}
                 control={<Radio />}
                 label="Handwerker"
                 sx={{ marginBottom: 0 }}
               />
               <FormControlLabel
-                value="Sachverständigen"
+                value={TENDER_FORM.EXPERT}
                 control={<Radio />}
                 label="Sachverständigen"
                 sx={{ marginBottom: 0 }}
@@ -88,7 +89,7 @@ const TenderInformation = (): JSX.Element => {
             <CustomSelect
               name="tenderType"
               options={
-                formik?.values?.tenderForm === "Handwerker"
+                formik?.values?.tenderForm === TENDER_FORM.CRAFTSMAN
                   ? tenderTypesListHW
                   : tenderTypesListSV
               }
