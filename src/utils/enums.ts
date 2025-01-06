@@ -3,7 +3,7 @@ export enum Urgency {
   NOT_URGENT = "Nicht Dringend",
   DEADLINE_BUILDING_AUTHORITY = "Frist Bauamt",
   OPENING_DATE = "Eröffnungstermin",
-  HANDOVER = "Übergabe an Bauherren/Kunden"
+  HANDOVER = "Übergabe an Bauherren/Kunden",
 }
 export enum USER_ROLE {
   REAL_ESTATE_OWNER = "REAL_ESTATE_OWNER",

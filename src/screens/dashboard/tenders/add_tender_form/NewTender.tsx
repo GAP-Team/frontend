@@ -32,9 +32,7 @@ import SectionTitle from "@/components/label/SectionTitle";
 import { addTenderValidationSchema } from "@/utils/ValidationSchema";
 import GProgressStepper from "@/components/stepper/GProgressStepper";
 import { getAllTenders } from "@/lib/features/tenderSlice";
-import { TENDER_FORM, Urgency } from "@/utils/enums";
-import { setUserBuildingDetails } from "@/lib/features/buildingSlice";
-import userAPIs from "@/api/user";
+import { TENDER_FORM } from "@/utils/enums";
 
 const NewTender: React.FC<NewTenderProps> = ({ id }): JSX.Element => {
   const router = useRouter();
