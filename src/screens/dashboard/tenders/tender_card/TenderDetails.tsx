@@ -1,5 +1,5 @@
 "use client";
-import React, { memo, useEffect, useState } from "react";
+import React, { memo } from "react";
 import { useAppSelector } from "@/lib/hooks";
 import { selectTenderById } from "@/lib/features/tenderSlice";
 import Grid from "@mui/material/Grid";
@@ -13,8 +13,6 @@ interface TenderDetailsProps {
 }
 
 const TenderDetails: React.FC<TenderDetailsProps> = ({ id }) => {
-  const [loading, setLoading] = useState(true);
-
   // Fetch tender details by ID
   const tender = useAppSelector((state) => selectTenderById(state, id));
 
@@ -33,13 +31,13 @@ const TenderDetails: React.FC<TenderDetailsProps> = ({ id }) => {
         <Grid item xs={8}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
-              <ApplicationCard loading={loading} />
+              <ApplicationCard />
             </Grid>
             <Grid item xs={12}>
-              <ApplicationCard loading={loading} />
+              <ApplicationCard />
             </Grid>
             <Grid item xs={12}>
-              <ApplicationCard loading={loading} />
+              <ApplicationCard />
             </Grid>
           </Grid>
         </Grid>

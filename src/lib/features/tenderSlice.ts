@@ -6,8 +6,6 @@ import {
   BuildingTenders,
 } from "@/screens/dashboard/tenders/tender_card/types";
 import userAPIs from "@/api/user";
-import tenderAPIs from "@/api/tender";
-
 interface TenderState {
   tenderNumbers: number;
   tenders: BuildingTenders[];
