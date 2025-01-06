@@ -8,6 +8,9 @@ import { scrollBarStyles } from "@/components/scrollbar/Scrollbar";
 import { BuildingTenders, Tender } from "../../tenders/tender_card/types";
 import { setTenderNumbers, setTenders } from "@/lib/features/tenderSlice";
 import userAPIs from "@/api/user";
+import addTenderSrc from "@/../public/icons/add_tender.svg";
+import NoContentPage from "@/components/common/NoContentPage";
+import { Widgets } from "@mui/icons-material";
 
 const TenderCardList: React.FC = () => {
   const dispatch = useDispatch();
@@ -45,13 +48,14 @@ const TenderCardList: React.FC = () => {
   const renderSortedTenders = (
     tendersInBuilding: BuildingTenders[]
   ): React.ReactNode => {
-    if (!Array.isArray(tendersInBuilding) || tendersInBuilding.length === 0) {
+    if (!tendersInBuilding?.some(
+      (building: BuildingTenders) => building.tenders?.length > 0
+    )) {
       return (
         <Box sx={styles.noDataContainer}>
           <Typography
-            component="a"
             variant="subtitle2"
-            style={{ textDecoration: "none", fontSize: "1.50rem" }}
+            style={{ fontSize: "1.50rem" }}
           >
             Keine Aufträge vorhanden
           </Typography>
@@ -111,10 +115,10 @@ const styles = {
     ...scrollBarStyles,
   },
   noDataContainer: {
-    display: "flex",
-    height: "20rem",
-    justifyContent: "center",
-    flexDirection: "column",
+    display: "grid",
+    placeItems: "center",    
     textAlign: "center",
+    height: "20rem",
+    width: "100%", 
   },
 };
