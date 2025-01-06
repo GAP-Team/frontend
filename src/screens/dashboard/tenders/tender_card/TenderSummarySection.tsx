@@ -10,7 +10,7 @@ import LabelText from "@/components/label/LabelText";
 import { Tender } from "./types";
 
 interface TenderSummarySectionProps {
-  tender?: Tender;
+  tender?: Tender | null;
 }
 
 const TenderSummarySection: React.FC<TenderSummarySectionProps> = ({

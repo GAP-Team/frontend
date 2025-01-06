@@ -22,7 +22,7 @@ const TenderDetails: React.FC<TenderDetailsProps> = ({ id }) => {
     <Grid container component="main">
       <TenderTitleBar
         title={tender?.tenderType}
-        projectId={tender?.facility.name}
+        subTitle={tender?.facility.name}
       />
       <Grid container spacing={2} mx={1} columns={18}>
         <Grid item xs={8}>

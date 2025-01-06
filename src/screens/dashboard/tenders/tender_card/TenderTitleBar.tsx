@@ -5,27 +5,22 @@ import Typography from "@mui/material/Typography";
 
 interface TenderTitleBarProps {
   title?: string;
-  projectId?: string;
-  location?: string;
+  subTitle?: string;
 }
 
 const TenderTitleBar: React.FC<TenderTitleBarProps> = ({
   title,
-  projectId,
-  location,
+  subTitle,
 }) => {
   return (
     <Container maxWidth={false} sx={styles.container}>
       {title && (
         <Typography sx={styles.titleTypography}>{title} • &nbsp;</Typography>
       )}
-      {projectId && (
+      {subTitle && (
         <Typography sx={styles.desTypography}>
-          {projectId} <span style={{ color: "black" }}>•</span> &nbsp;
+          {subTitle};
         </Typography>
-      )}
-      {location && (
-        <Typography sx={styles.desTypography}>{location}</Typography>
       )}
     </Container>
   );
