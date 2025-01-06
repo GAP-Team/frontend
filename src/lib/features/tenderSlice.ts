@@ -87,7 +87,9 @@ export const selectTenderById = (
   tenderId: string
 ): Tender | null => {
   for (const building of state.tender.tenders) {
-    const tender = building.tenders.find((tender: Tender) => tender.id === tenderId);
+    const tender = building.tenders.find(
+      (tender: Tender) => tender.id === tenderId
+    );
     if (tender) return tender;
   }
   return null;

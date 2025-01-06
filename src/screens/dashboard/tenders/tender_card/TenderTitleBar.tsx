@@ -8,19 +8,14 @@ interface TenderTitleBarProps {
   subTitle?: string;
 }
 
-const TenderTitleBar: React.FC<TenderTitleBarProps> = ({
-  title,
-  subTitle,
-}) => {
+const TenderTitleBar: React.FC<TenderTitleBarProps> = ({ title, subTitle }) => {
   return (
     <Container maxWidth={false} sx={styles.container}>
       {title && (
         <Typography sx={styles.titleTypography}>{title} • &nbsp;</Typography>
       )}
       {subTitle && (
-        <Typography sx={styles.desTypography}>
-          {subTitle};
-        </Typography>
+        <Typography sx={styles.desTypography}>{subTitle};</Typography>
       )}
     </Container>
   );

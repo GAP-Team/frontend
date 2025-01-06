@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { currentUser } from "@/lib/features/userSlice";
 import { scrollBarStyles } from "@/components/scrollbar/Scrollbar";
 import { BuildingTenders, Tender } from "../../tenders/tender_card/types";
-import { setTenderNumbers, setTenders} from "@/lib/features/tenderSlice";
+import { setTenderNumbers, setTenders } from "@/lib/features/tenderSlice";
 import userAPIs from "@/api/user";
 
 const TenderCardList: React.FC = () => {
