@@ -73,7 +73,7 @@ export const currentTenderNumbers = (state: RootState): number =>
 export const selectTenderById = (
   state: RootState,
   tenderId: string
-): Tender | undefined => {
+): Tender | null => {
   for (const building of state.tender.tenders) {
     const tender = building.tenders.find((t: Tender) => t.id === tenderId);
     if (tender) return tender;
