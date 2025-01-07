@@ -46,14 +46,14 @@ const TenderCardList: React.FC = () => {
   const renderSortedTenders = (
     tendersInBuilding: BuildingTenders[]
   ): React.ReactNode => {
-    if (!Array.isArray(tendersInBuilding) || tendersInBuilding.length === 0) {
+    if (
+      !tendersInBuilding?.some(
+        (building: BuildingTenders) => building.tenders?.length > 0
+      )
+    ) {
       return (
         <Box sx={styles.noDataContainer}>
-          <Typography
-            component="a"
-            variant="subtitle2"
-            style={{ textDecoration: "none", fontSize: "1.50rem" }}
-          >
+          <Typography variant="subtitle2" style={{ fontSize: "1.50rem" }}>
             Keine Aufträge vorhanden
           </Typography>
         </Box>
@@ -125,10 +125,10 @@ const styles = {
     ...scrollBarStyles,
   },
   noDataContainer: {
-    display: "flex",
-    height: "20rem",
-    justifyContent: "center",
-    flexDirection: "column",
+    display: "grid",
+    placeItems: "center",
     textAlign: "center",
+    height: "20rem",
+    width: "100%",
   },
 };

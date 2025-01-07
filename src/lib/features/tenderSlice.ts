@@ -8,7 +8,7 @@ import {
 import userAPIs from "@/api/user";
 
 interface TenderState {
-  tenderNumbers: number;
+  numOfTenders: number;
   tenders: BuildingTenders[];
   tendersList: Tender[];
   loading: boolean;
@@ -16,7 +16,7 @@ interface TenderState {
 }
 
 const initialState: TenderState = {
-  tenderNumbers: 0,
+  numOfTenders: 0,
   tenders: [] as BuildingTenders[],
   tendersList: [] as Tender[],
   loading: false as boolean,
@@ -36,7 +36,7 @@ const tenderSlice = createSlice({
   initialState,
   reducers: {
     setTenderNumbers: (state, action: PayloadAction<any>) => {
-      state.tenderNumbers = action.payload;
+      state.numOfTenders = action.payload;
     },
     setTendersByBuilding: (state, action: PayloadAction<BuildingTenders[]>) => {
       state.tenders = action.payload;
@@ -77,7 +77,7 @@ export const {
 } = tenderSlice.actions;
 
 export const currentTenderNumbers = (state: RootState): number =>
-  state.tender.tenderNumbers;
+  state.tender.numOfTenders;
 export const getAllTenders = (state: RootState): Tender[] =>
   state.tender.tendersList;
 
