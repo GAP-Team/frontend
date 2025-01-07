@@ -83,12 +83,12 @@ const EmailVerification = ({
     setLoading(true);
     try {
       const code = verificationCode.join("");
-      var vCode = "" + code;
-      if (vCode !== "") {
+
+      if (verificationCode !== "") {
         let verificationQuery = {
           userId: newUserId,
           email: newUserEmail,
-          token: vCode,
+          token: code.toString(),
         };
 
         const res = await userAPIs.verifyEmail(verificationQuery);
