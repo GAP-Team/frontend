@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { currentUser } from "@/lib/features/userSlice";
 import { scrollBarStyles } from "@/components/scrollbar/Scrollbar";
+import { Urgency } from "@/utils/enums";
 import { BuildingTenders, Tender } from "../../tenders/tender_card/types";
 import { setTenderNumbers, setTenders } from "@/lib/features/tenderSlice";
 import userAPIs from "@/api/user";
@@ -45,14 +46,14 @@ const TenderCardList: React.FC = () => {
   const renderSortedTenders = (
     tendersInBuilding: BuildingTenders[]
   ): React.ReactNode => {
-    if (!Array.isArray(tendersInBuilding) || tendersInBuilding.length === 0) {
+    if (
+      !tendersInBuilding?.some(
+        (building: BuildingTenders) => building.tenders?.length > 0
+      )
+    ) {
       return (
         <Box sx={styles.noDataContainer}>
-          <Typography
-            component="a"
-            variant="subtitle2"
-            style={{ textDecoration: "none", fontSize: "1.50rem" }}
-          >
+          <Typography variant="subtitle2" style={{ fontSize: "1.50rem" }}>
             Keine Aufträge vorhanden
           </Typography>
         </Box>
@@ -69,14 +70,27 @@ const TenderCardList: React.FC = () => {
     );
 
     // Sort tenders by urgency and createdAt
-    const sortedTenders = allTendersWithBuilding.sort((a, b) => {
-      // Sort by urgency: "URGENT" comes first
-      if (a.urgency === "URGENT" && b.urgency !== "URGENT") return -1;
-      if (a.urgency !== "URGENT" && b.urgency === "URGENT") return 1;
+    const sortedTenders = allTendersWithBuilding.sort(
+      (firstTender, secondTender) => {
+        // Sort by urgency: "URGENT" comes first
+        if (
+          firstTender.urgency === Urgency.URGENT &&
+          secondTender.urgency !== Urgency.URGENT
+        )
+          return -1;
+        if (
+          firstTender.urgency !== Urgency.URGENT &&
+          secondTender.urgency === Urgency.URGENT
+        )
+          return 1;
 
-      // Sort by createdAt: most recent first
-      return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
-    });
+        // Sort by createdAt: most recent first
+        return (
+          new Date(secondTender.createdAt).getTime() -
+          new Date(firstTender.createdAt).getTime()
+        );
+      }
+    );
 
     // Render the sorted tenders
     return sortedTenders.map((tender, index) => (
@@ -111,10 +125,10 @@ const styles = {
     ...scrollBarStyles,
   },
   noDataContainer: {
-    display: "flex",
-    height: "20rem",
-    justifyContent: "center",
-    flexDirection: "column",
+    display: "grid",
+    placeItems: "center",
     textAlign: "center",
+    height: "20rem",
+    width: "100%",
   },
 };
