@@ -8,6 +8,7 @@ import GButton from "@/components/button/GButton";
 import { useRouter } from "next/navigation";
 import LabelText from "@/components/label/LabelText";
 import { Tender } from "./types";
+import { TENDER_FORM } from "@/utils/enums";
 
 interface TenderSummarySectionProps {
   tender?: Tender | null;
@@ -21,7 +22,13 @@ const TenderSummarySection: React.FC<TenderSummarySectionProps> = ({
   // Prepare summary data
   const summaryData = [
     { label: "Name des Auftraggebers", value: tender?.clientName },
-    { label: "Ausschreibungsart", value: tender?.tenderForm },
+    {
+      label: "Ausschreibungsart",
+      value:
+        tender?.tenderForm === TENDER_FORM.CRAFTSMAN
+          ? "Handwerker"
+          : "Sachverständigen",
+    },
     { label: "Ausschreibungstyp", value: tender?.tenderType },
     { label: "Objekt", value: tender?.building.name },
     { label: "Anlage", value: tender?.facility.name },
