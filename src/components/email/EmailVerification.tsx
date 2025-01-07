@@ -84,7 +84,7 @@ const EmailVerification = ({
     try {
       const code = verificationCode.join("");
 
-      if (verificationCode !== "") {
+      if (code !== "") {
         let verificationQuery = {
           userId: newUserId,
           email: newUserEmail,
