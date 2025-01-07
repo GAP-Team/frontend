@@ -8,8 +8,7 @@ import TendersContainer from "./tender_card/TendersContainer";
 import { currentUser } from "@/lib/features/userSlice";
 import { useSelector } from "react-redux";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
-import { fetchTenders, setTenders } from "@/lib/features/tenderSlice";
-import { BuildingTenders, Tender } from "./tender_card/types";
+import { fetchTenders, setTendersByBuilding } from "@/lib/features/tenderSlice";
 import userAPIs from "@/api/user";
 
 const TendersOverview: React.FC = () => {
@@ -21,37 +20,20 @@ const TendersOverview: React.FC = () => {
     if (user?.id) {
       dispatch(fetchTenders(user.id));
     }
-    storeTenders();
-    getUserTenders("", "", "");
   }, [user?.id, dispatch]);
 
-  const getUserTenders = async (
+  const storeTenders = async (
     city: string,
     federalState: string,
     facilityType: string
   ): Promise<void> => {
-    if (!user?.id) return;
-
-    const allBuildingsWithTenders = await userAPIs.getBuildings(
+    const buildingTendersList = await userAPIs.getUserTenders(
       user?.id,
       city,
       federalState,
       facilityType
     );
-    const userTenders = allBuildingsWithTenders.data;
-
-    dispatch(setTenders(userTenders));
-  };
-
-  const storeTenders = async (): Promise<void> => {
-    const buildingTendersList = await userAPIs.getUserTenders(user?.id);
-    const allTenders: Tender[] = [];
-    buildingTendersList?.data?.forEach((tendersList: BuildingTenders) => {
-      tendersList?.tenders?.forEach((tender: Tender) => {
-        allTenders.push(tender);
-      });
-    });
-    dispatch(setTenders(allTenders));
+    dispatch(setTendersByBuilding(buildingTendersList?.data));
   };
 
   const onStateCityFacilityTypeChange = (
@@ -59,7 +41,7 @@ const TendersOverview: React.FC = () => {
     federalState: string,
     facilityType: string
   ): void => {
-    getUserTenders(city, federalState, facilityType);
+    storeTenders(city, federalState, facilityType);
   };
 
   const tenderContent = (() => {
@@ -77,6 +59,7 @@ const TendersOverview: React.FC = () => {
       />
     );
   })();
+
   return (
     <Box sx={styles.mainContainer}>
       <PropertyFilterPanel
