@@ -8,14 +8,10 @@ import { IoMailUnread } from "react-icons/io5";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import CircularProgress from "@mui/material/CircularProgress";
-import {
-  sendVerificationEmail,
-  getNewVerificationCode,
-} from "@/utils/helperEmail";
+
 import userAPIs from "@/api/user";
 import GButton from "@/components/button/GButton";
 import SuccessPage from "@/components/common/SuccessPage";
-import EmailTemplate from "@/components/email_template/EmailTemplate";
 
 interface EmailVerificationProps {
   sendMail: boolean;
@@ -28,7 +24,6 @@ interface EmailVerificationProps {
 const EmailVerification = ({
   sendMail,
   newUserId,
-  newUserName,
   newUserEmail,
   postVerificationAction,
 }: EmailVerificationProps): JSX.Element => {
@@ -93,7 +88,7 @@ const EmailVerification = ({
         let verificationQuery = {
           userId: newUserId,
           email: newUserEmail,
-          token: Number(code),
+          token: code.toString(),
         };
 
         const res = await userAPIs.verifyEmail(verificationQuery);
@@ -129,17 +124,8 @@ const EmailVerification = ({
 
   const handleResendCode = async (): Promise<void> => {
     setResendDisabled(true);
-    let code = getNewVerificationCode();
-    const element = (
-      <EmailTemplate name={newUserName} verificationCode={code} />
-    );
-    let sendStatus = await sendVerificationEmail(
-      newUserName,
-      newUserEmail,
-      newUserId,
-      element,
-      code
-    );
+    const sendEmailQuery = { email: newUserEmail };
+    const sendStatus = await userAPIs.sendVerificationEmail(sendEmailQuery);
 
     if (sendStatus.status === 201) {
       setIsVerificationEmailSent(true);

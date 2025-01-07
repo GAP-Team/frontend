@@ -414,15 +414,6 @@ export const tenderTypesListSV = [
   },
 ];
 
-export const emailTemplateSubject = `Betreff: Bestätigen Sie Ihre E-Mail für GAP (Gesetzliche Anlagen Prüfen)`;
-export const emailTemplateGreetins = `vielen Dank für Ihre Registrierung bei GAP (Gesetzliche Anlagen Prüfen)! Um Ihre Registrierung abzuschließen und Ihr Konto zu aktivieren, bestätigen Sie bitte Ihre E-Mail-Adresse, indem Sie den unten angegebenen Bestätigungscode eingeben.`;
-export const emailTemplateVerificationText = `Ihr Bestätigungscode: `;
-export const emailTemplateFoot = `Diese Bestätigung hilft uns, die Sicherheit Ihres Kontos zu gewährleisten und Ihnen eine reibungslose Erfahrung auf unserer Plattform zu bieten. Sollten Sie kein Konto bei GAP erstellt haben, ignorieren Sie bitte diese E-Mail. Bei Problemen während des Bestätigungsprozesses können Sie sich gerne an unser Support-Team unter support@gap.com wenden. Vielen Dank, dass Sie sich für GAP entschieden haben.`;
-export const emailSignature1 = `Mit freundlichen Grüßen`;
-export const emailSignature2 = `Das GAP-Team`;
-export const emailSignature3 = `info@gap.com`;
-export const emailSignature4 = `Düsseldorf, Deutschland`;
-
 export const DocumentTypes = {
   SONSTIGE: "SONSTIGE",
   GRUNDRISSE: "GRUNDRISSE",
