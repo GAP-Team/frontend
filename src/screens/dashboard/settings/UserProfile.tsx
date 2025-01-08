@@ -8,73 +8,52 @@ import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
 import TextField from "@mui/material/TextField";
+import { useAppSelector, useAppDispatch } from "@/lib/hooks";
+import { showSnackbar } from "@/components/root-snackbar";
+import { updateUserProfile } from "@/lib/features/userSlice";
+import { USER_ROLE } from "@/utils/enums";
 
 const UserProfile = (): JSX.Element => {
+  const dispatch = useAppDispatch();
+  const user = useAppSelector((state) => state.user);
   const formik = useFormik({
     initialValues: {
-      profilePhoto: null,
-      firstName: "Mario",
-      lastName: "Müller",
-      email: "mario.mueller@gmail.com",
-      position: "Fire Inspector",
-      inviteEmail: "",
+      firstName: user?.firstName,
+      lastName: user?.lastName,
+      position: user?.role,
     },
-    onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+    validationSchema: loginValidationSchema,
+    onSubmit: async (values) => {
+      try {
+        await dispatch(updateUserProfile({
+          id: user.id,
+          data: {
+            firstName: values.firstName,
+            lastName: values.lastName,
+            role: values.position,
+          }
+        })).unwrap();
+
+        dispatch(
+          showSnackbar({
+            type: "success",
+            message: "Benutzerinformationen erfolgreich aktualisiert",
+          })
+        );
+      } catch (error) {
+        dispatch(
+          showSnackbar({
+            type: "error",
+            message: "Benutzerdaten konnten nicht aktualisiert werden. Versuchen Sie es erneut",
+          })
+        );
+      }
     },
   });
 
   return (
     <form onSubmit={formik.handleSubmit}>
       <Grid container spacing={4}>
-        {/* Profilfoto Section */}
-        <Grid item xs={12} sm={6}>
-          <Typography variant="subtitle1" sx={styles.sectionTitle}>
-            Profilfoto
-          </Typography>
-          <Typography
-            variant="body2"
-            color="textSecondary"
-            sx={styles.sectionDescription}
-          >
-            Das Foto wird für alle Benutzer angezeigt
-          </Typography>
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <Box sx={styles.photoContainer}>
-            <Box sx={styles.photoBox}>
-              {formik.values.profilePhoto ? (
-                <img
-                  src={formik.values.profilePhoto}
-                  alt="Profilfoto"
-                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                />
-              ) : (
-                <Typography variant="caption" color="textSecondary">
-                  Photo
-                </Typography>
-              )}
-            </Box>
-            <Button variant="outlined" component="label">
-              Click to upload
-              <input
-                type="file"
-                hidden
-                onChange={(e) =>
-                  formik.setFieldValue(
-                    "profilePhoto",
-                    e.target.files?.[0]
-                      ? URL.createObjectURL(e.target.files[0])
-                      : null
-                  )
-                }
-              />
-            </Button>
-          </Box>
-        </Grid>
-        <Grid item xs={12}>
-          <Divider />
-        </Grid>
 
         {/* Voller Name Section */}
         <Grid item xs={12} sm={6}>
@@ -90,7 +69,7 @@ const UserProfile = (): JSX.Element => {
           </Typography>
         </Grid>
         <Grid item xs={12} sm={6}>
-          <Grid container spacing={2}>
+          <Grid container spacing={2} pt={1}>
             <Grid item xs={6}>
               <TextField
                 label="Vorname"
@@ -101,7 +80,7 @@ const UserProfile = (): JSX.Element => {
                 error={
                   formik.touched.firstName && Boolean(formik.errors.firstName)
                 }
-                helperText={formik.touched.firstName && formik.errors.firstName}
+                helperText={formik.touched.firstName && formik.errors.firstName?.toString()}
                 fullWidth
               />
             </Grid>
@@ -115,54 +94,9 @@ const UserProfile = (): JSX.Element => {
                 error={
                   formik.touched.lastName && Boolean(formik.errors.lastName)
                 }
-                helperText={formik.touched.lastName && formik.errors.lastName}
+                helperText={formik.touched.lastName && formik.errors.lastName?.toString()}
                 fullWidth
               />
-            </Grid>
-          </Grid>
-        </Grid>
-        <Grid item xs={12}>
-          <Divider />
-        </Grid>
-
-        {/* E-Mail Section */}
-        <Grid item xs={12} sm={6}>
-          <Typography variant="subtitle1" sx={styles.sectionTitle}>
-            E-Mail
-          </Typography>
-          <Typography
-            variant="body2"
-            color="textSecondary"
-            sx={styles.sectionDescription}
-          >
-            Sie können Ihre E-Mail-Adresse ändern, indem Sie einen Code auf dem
-            Postweg erhalten.
-          </Typography>
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <Grid container spacing={2} alignItems="center">
-            <Grid item xs={10}>
-              <TextField
-                label="E-Mail"
-                name="email"
-                value={formik.values.email}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                error={formik.touched.email && Boolean(formik.errors.email)}
-                helperText={formik.touched.email && formik.errors.email}
-                fullWidth
-                disabled
-              />
-            </Grid>
-            <Grid item xs={2}>
-              <Button
-                variant="outlined"
-                fullWidth
-                size="large"
-                sx={styles.button}
-              >
-                Ändern
-              </Button>
             </Grid>
           </Grid>
         </Grid>
@@ -184,71 +118,24 @@ const UserProfile = (): JSX.Element => {
           </Typography>
         </Grid>
         <Grid item xs={12} sm={6}>
+          
           <TextField
             label="Position"
             name="position"
-            value={formik.values.position}
+            value={formik.values.position == USER_ROLE.REAL_ESTATE_OWNER ? "Immobilienbesitzer" : "Dienstleister"}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             error={formik.touched.position && Boolean(formik.errors.position)}
-            helperText={formik.touched.position && formik.errors.position}
+            helperText={formik.touched.position && formik.errors.position?.toString()}
+            disabled
             fullWidth
           />
         </Grid>
         <Grid item xs={12}>
           <Divider />
         </Grid>
-
-        {/* Lade Teammitglieder ein Section */}
-        <Grid item xs={12} sm={6}>
-          <Typography variant="subtitle1" sx={styles.sectionTitle}>
-            Lade Teammitglieder ein
-          </Typography>
-          <Typography
-            variant="body2"
-            color="textSecondary"
-            sx={styles.sectionDescription}
-          >
-            Laden Sie ihn einfach als Teammitglied ein. Auf diese Weise haben
-            Sie gemeinsame Bestellungen, Chats und mehr.
-          </Typography>
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <Grid container spacing={2} alignItems="center">
-            <Grid item xs={10}>
-              <TextField
-                label="E-Mail"
-                name="inviteEmail"
-                value={formik.values.inviteEmail}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                error={
-                  formik.touched.inviteEmail &&
-                  Boolean(formik.errors.inviteEmail)
-                }
-                helperText={
-                  formik.touched.inviteEmail && formik.errors.inviteEmail
-                }
-                fullWidth
-              />
-            </Grid>
-            <Grid item xs={2}>
-              <Button
-                variant="outlined"
-                fullWidth
-                size="large"
-                sx={styles.button}
-              >
-                Einladen
-              </Button>
-            </Grid>
-          </Grid>
-        </Grid>
-        <Grid item xs={12}>
-          <Divider />
-        </Grid>
-
-        {/* Actions */}
+        
+          {/* Actions */}
         <Grid item xs={12}>
           <Grid container justifyContent="flex-end" spacing={2}>
             <Grid item>
@@ -302,4 +189,9 @@ const styles = {
   button: {
     height: "56px",
   },
+  actionContainer: {
+    // position: 'fixed',
+    bottom: 0,
+    right: 0,
+  }
 };

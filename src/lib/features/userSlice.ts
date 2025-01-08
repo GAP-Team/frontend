@@ -1,60 +1,95 @@
-"use client";
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 import { RootState } from "../store";
+import userAPIs from "@/api/user";
 
+interface Company {
+  name: string;
+  phonenumber: number;
+  numberOfEmployees: number;
+  address: UserAddress
+  business: UserBusiness;
+}
+ interface UserAddress {
+  state: string;
+  street: string;
+  country: string;
+  houseNo: number;
+ }
+ export interface UserBusiness {
+  businessType: string;
+  registrationNumber: string;
+  documents: Documents[];
+ }
+ export interface Documents {
+  name: string;
+  key: string;
+}
 interface UserState {
-  user: {
-    id: string;
-    company: {};
-    role: string;
-    email: string;
-    buildingIds: [];
-    firstName: string;
-    lastName: string;
-    manufacturerExperience: string;
-  };
+  id: string;
+  role: string;
+  email: string;
+  company: Company;
+  lastName: string;
+  firstName: string;
+  buildingIds: string[];
+  manufacturerExperience: string;
 }
 
 const initialState: UserState = {
-  user: {
-    id: "",
-    role: "",
-    email: "",
-    company: {},
-    lastName: "",
-    firstName: "",
-    buildingIds: [],
-    manufacturerExperience: "",
+  id: "",
+  role: "",
+  email: "",
+  company: {
+    name: "",
+    phonenumber: 0,
+    numberOfEmployees: 0,
+    address: {
+      state: "",
+      street: "",
+      country: "",
+      houseNo: 0
+    },
+    business: {
+      businessType: "",
+      registrationNumber: "",
+      documents: []
+    }
   },
+  lastName: "",
+  firstName: "",
+  buildingIds: [],
+  manufacturerExperience: ""
 };
+
+export const updateUserProfile = createAsyncThunk(
+  "user/updateProfile",
+  async ({ id, data }: { id: string; data: Partial<UserState> }) => {
+    const response = await userAPIs.updateUser(id, data);
+    return response.data;
+  }
+);
 
 const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
     setUser: (state, action: PayloadAction<UserState>) => {
-      state.user.id = action.payload?.user?.id;
-      state.user.role = action.payload?.user?.role;
-      state.user.email = action.payload?.user?.email;
-      state.user.company = action.payload?.user?.company;
-      state.user.lastName = action.payload?.user?.lastName;
-      state.user.firstName = action.payload?.user?.firstName;
-      state.user.manufacturerExperience =
-        action.payload?.user?.manufacturerExperience;
+      return { ...state, ...action.payload };
     },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(updateUserProfile.fulfilled, (state, action) => {
+        return { ...state, ...action.payload };
+      })
   },
 });
 
 export const { setUser } = userSlice.actions;
 
-export const currentUser = (state: RootState): any => state.user.user;
-export const currentUserId = (state: RootState): string => state.user.user.id;
-export const currentUserEmail = (state: RootState): string =>
-  state.user.user.email;
-export const currentUserCompany = (state: RootState): string =>
-  state.user.user.company;
-export const currentUserName = (state: RootState): string =>
-  `${state.user.user.firstName} ${state.user.user.lastName}`;
-
+export const currentUser = (state: RootState): UserState => state.user;
+export const currentUserId = (state: RootState): string => state.user.id;
+export const currentUserEmail = (state: RootState): string => state.user.email;
+export const currentUserCompany = (state: RootState): Company => state.user.company;
 export default userSlice.reducer;
