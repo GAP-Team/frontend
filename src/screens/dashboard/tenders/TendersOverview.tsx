@@ -37,7 +37,7 @@ const TendersOverview: React.FC = () => {
     dispatch(setTendersByBuilding(buildingTendersList?.data));
   };
 
-  const onStateCityFacilityTypeChange = (
+  const onFilterCriteriaChange = (
     city: string,
     federalState: string,
     facilityType: string
