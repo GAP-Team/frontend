@@ -67,7 +67,7 @@ const TendersOverview: React.FC = () => {
   return (
     <Box sx={styles.mainContainer}>
       <PropertyFilterPanel
-        handleOnChange={onStateCityFacilityTypeChange}
+        handleOnChange={onFilterCriteriaChange}
         title="Alle Ausschreibungen"
       />
       {tenderContent}
