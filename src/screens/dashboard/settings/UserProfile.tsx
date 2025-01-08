@@ -5,7 +5,6 @@ import { useFormik } from "formik";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
 import TextField from "@mui/material/TextField";
 import { useAppSelector, useAppDispatch } from "@/lib/hooks";
@@ -26,14 +25,16 @@ const UserProfile = (): JSX.Element => {
     validationSchema: UserProfileSchema,
     onSubmit: async (values) => {
       try {
-        await dispatch(updateUserProfile({
-          id: user.id,
-          data: {
-            firstName: values.firstName,
-            lastName: values.lastName,
-            role: values.position,
-          }
-        })).unwrap();
+        await dispatch(
+          updateUserProfile({
+            id: user.id,
+            data: {
+              firstName: values.firstName,
+              lastName: values.lastName,
+              role: values.position,
+            },
+          })
+        ).unwrap();
 
         dispatch(
           showSnackbar({
@@ -41,11 +42,12 @@ const UserProfile = (): JSX.Element => {
             message: "Benutzerinformationen erfolgreich aktualisiert",
           })
         );
-      } catch (error) {
+      } catch {
         dispatch(
           showSnackbar({
             type: "error",
-            message: "Benutzerdaten konnten nicht aktualisiert werden. Versuchen Sie es erneut",
+            message:
+              "Benutzerdaten konnten nicht aktualisiert werden. Versuchen Sie es erneut",
           })
         );
       }
@@ -55,7 +57,6 @@ const UserProfile = (): JSX.Element => {
   return (
     <form onSubmit={formik.handleSubmit}>
       <Grid container spacing={4}>
-
         {/* Voller Name Section */}
         <Grid item xs={12} sm={6}>
           <Typography variant="subtitle1" sx={styles.sectionTitle}>
@@ -81,7 +82,10 @@ const UserProfile = (): JSX.Element => {
                 error={
                   formik.touched.firstName && Boolean(formik.errors.firstName)
                 }
-                helperText={formik.touched.firstName && formik.errors.firstName?.toString()}
+                helperText={
+                  formik.touched.firstName &&
+                  formik.errors.firstName?.toString()
+                }
                 fullWidth
               />
             </Grid>
@@ -95,7 +99,9 @@ const UserProfile = (): JSX.Element => {
                 error={
                   formik.touched.lastName && Boolean(formik.errors.lastName)
                 }
-                helperText={formik.touched.lastName && formik.errors.lastName?.toString()}
+                helperText={
+                  formik.touched.lastName && formik.errors.lastName?.toString()
+                }
                 fullWidth
               />
             </Grid>
@@ -119,15 +125,20 @@ const UserProfile = (): JSX.Element => {
           </Typography>
         </Grid>
         <Grid item xs={12} sm={6}>
-          
           <TextField
             label="Position"
             name="position"
-            value={formik.values.position == USER_ROLE.REAL_ESTATE_OWNER ? "Immobilienbesitzer" : "Dienstleister"}
+            value={
+              formik.values.position === USER_ROLE.REAL_ESTATE_OWNER
+                ? "Immobilienbesitzer"
+                : "Dienstleister"
+            }
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             error={formik.touched.position && Boolean(formik.errors.position)}
-            helperText={formik.touched.position && formik.errors.position?.toString()}
+            helperText={
+              formik.touched.position && formik.errors.position?.toString()
+            }
             disabled
             fullWidth
           />
@@ -135,8 +146,8 @@ const UserProfile = (): JSX.Element => {
         <Grid item xs={12}>
           <Divider />
         </Grid>
-        
-          {/* Actions */}
+
+        {/* Actions */}
         <Grid item xs={12}>
           <Grid container justifyContent="flex-end" spacing={2}>
             <Grid item>

@@ -7,21 +7,21 @@ interface Company {
   name: string;
   phonenumber: number;
   numberOfEmployees: number;
-  address: UserAddress
+  address: UserAddress;
   business: UserBusiness;
 }
- interface UserAddress {
+interface UserAddress {
   state: string;
   street: string;
   country: string;
   houseNo: number;
- }
- export interface UserBusiness {
+}
+export interface UserBusiness {
   businessType: string;
   registrationNumber: string;
   documents: Documents[];
- }
- export interface Documents {
+}
+export interface Documents {
   name: string;
   key: string;
 }
@@ -48,18 +48,18 @@ const initialState: UserState = {
       state: "",
       street: "",
       country: "",
-      houseNo: 0
+      houseNo: 0,
     },
     business: {
       businessType: "",
       registrationNumber: "",
-      documents: []
-    }
+      documents: [],
+    },
   },
   lastName: "",
   firstName: "",
   buildingIds: [],
-  manufacturerExperience: ""
+  manufacturerExperience: "",
 };
 
 export const updateUserProfile = createAsyncThunk(
@@ -79,10 +79,9 @@ const userSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder
-      .addCase(updateUserProfile.fulfilled, (state, action) => {
-        return { ...state, ...action.payload };
-      })
+    builder.addCase(updateUserProfile.fulfilled, (state, action) => {
+      return { ...state, ...action.payload };
+    });
   },
 });
 
@@ -91,5 +90,6 @@ export const { setUser } = userSlice.actions;
 export const currentUser = (state: RootState): UserState => state.user;
 export const currentUserId = (state: RootState): string => state.user.id;
 export const currentUserEmail = (state: RootState): string => state.user.email;
-export const currentUserCompany = (state: RootState): Company => state.user.company;
+export const currentUserCompany = (state: RootState): Company =>
+  state.user.company;
 export default userSlice.reducer;

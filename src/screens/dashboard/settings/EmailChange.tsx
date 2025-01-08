@@ -37,7 +37,7 @@ const EmailChange = (): JSX.Element => {
             message: "E-Mail-Adresse wurde erfolgreich geändert",
           })
         );
-      } catch (error) {
+      } catch {
         dispatch(
           showSnackbar({
             type: "error",
@@ -111,5 +111,5 @@ const styles = {
   },
   sectionDescription: {
     mb: 1,
-  }
+  },
 };
