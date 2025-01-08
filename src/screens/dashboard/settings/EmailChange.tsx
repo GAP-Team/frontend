@@ -7,14 +7,45 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
 import TextField from "@mui/material/TextField";
+import { EmailChangeSchema } from "@/utils/ValidationSchema";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
+import { updateUserProfile } from "@/lib/features/userSlice";
+import { showSnackbar } from "@/components/root-snackbar";
 
 const EmailChange = (): JSX.Element => {
+  const dispatch = useAppDispatch();
+  const user = useAppSelector((state) => state.user);
   const formik = useFormik({
     initialValues: {
-      email: "mario.mueller@gmail.com",
+      email: user?.email,
     },
-    onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+    validationSchema: EmailChangeSchema,
+    onSubmit: async (values) => {
+      try {
+        await dispatch(
+          updateUserProfile({
+            id: user.id,
+            data: {
+              email: values.email,
+            },
+          })
+        ).unwrap();
+
+        dispatch(
+          showSnackbar({
+            type: "success",
+            message: "E-Mail-Adresse wurde erfolgreich geändert",
+          })
+        );
+      } catch (error) {
+        dispatch(
+          showSnackbar({
+            type: "error",
+            message:
+              "E-Mail-Adresse konnte nicht geändert werden. Bitte versuchen Sie es erneut.",
+          })
+        );
+      }
     },
   });
 
@@ -36,21 +67,21 @@ const EmailChange = (): JSX.Element => {
           </Typography>
         </Grid>
         <Grid item xs={12} sm={6} mt={1}>
-              <TextField
-                label="E-Mail"
-                name="email"
-                value={formik.values.email}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                error={formik.touched.email && Boolean(formik.errors.email)}
-                helperText={formik.touched.email && formik.errors.email}
-                fullWidth
-              />
+          <TextField
+            label="E-Mail"
+            name="email"
+            value={formik.values.email}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={formik.touched.email && Boolean(formik.errors.email)}
+            helperText={formik.touched.email && formik.errors.email?.toString()}
+            fullWidth
+          />
         </Grid>
         <Grid item xs={12}>
           <Divider />
         </Grid>
-      
+
         {/* Actions */}
         <Grid item xs={12}>
           <Grid container justifyContent="flex-end" spacing={2}>
@@ -80,8 +111,5 @@ const styles = {
   },
   sectionDescription: {
     mb: 1,
-  },
-  button: {
-    height: "56px",
-  },
+  }
 };

@@ -12,6 +12,7 @@ import { useAppSelector, useAppDispatch } from "@/lib/hooks";
 import { showSnackbar } from "@/components/root-snackbar";
 import { updateUserProfile } from "@/lib/features/userSlice";
 import { USER_ROLE } from "@/utils/enums";
+import { UserProfileSchema } from "@/utils/ValidationSchema";
 
 const UserProfile = (): JSX.Element => {
   const dispatch = useAppDispatch();
@@ -22,7 +23,7 @@ const UserProfile = (): JSX.Element => {
       lastName: user?.lastName,
       position: user?.role,
     },
-    validationSchema: loginValidationSchema,
+    validationSchema: UserProfileSchema,
     onSubmit: async (values) => {
       try {
         await dispatch(updateUserProfile({
@@ -165,33 +166,4 @@ const styles = {
   sectionDescription: {
     mb: 1,
   },
-  photoContainer: {
-    display: "flex",
-    alignItems: "center",
-    gap: 2,
-  },
-  photoBox: {
-    width: "80px",
-    height: "80px",
-    borderRadius: "50%",
-    overflow: "hidden",
-    border: "1px solid #ddd",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#f5f5f5",
-  },
-  photoImage: {
-    width: "100%",
-    height: "100%",
-    objectFit: "cover",
-  },
-  button: {
-    height: "56px",
-  },
-  actionContainer: {
-    // position: 'fixed',
-    bottom: 0,
-    right: 0,
-  }
 };

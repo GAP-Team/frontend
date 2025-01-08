@@ -327,3 +327,15 @@ export const addFacilityValidationSchema = [
       }
     ),
 ];
+
+export const UserProfileSchema = yup.object({
+  firstName: yup.string().required("Vorname ist erforderlich"),
+  lastName: yup.string().required("Nachname ist erforderlich"),
+});
+
+export const EmailChangeSchema = yup.object({
+  email: yup
+    .string()
+    .matches(EMAIL_REGEX, "Ungültige Email")
+    .required("Email ist erforderlich."),
+});
