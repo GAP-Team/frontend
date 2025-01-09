@@ -84,9 +84,10 @@ const tenderSlice = createSlice({
             total + (building?.tenders?.length || 0),
           0
         );
-        state.tendersList = action.payload?.flatMap(
-          (building: BuildingTenders) => building.tenders ?? []
-        );
+        state.tendersList =
+          action.payload?.flatMap(
+            (building: BuildingTenders) => building?.tenders ?? []
+          ) ?? [];
         state.loading = false;
       })
       .addCase(fetchTendersByBuilding.rejected, (state, action) => {
