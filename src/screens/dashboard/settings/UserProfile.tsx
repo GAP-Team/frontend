@@ -39,7 +39,7 @@ const UserProfile = (): JSX.Element => {
         dispatch(
           showSnackbar({
             type: "success",
-            message: "Benutzerinformationen erfolgreich aktualisiert",
+            message: "Benutzerinformationen wurden erfolgreich aktualisiert.",
           })
         );
       } catch {
