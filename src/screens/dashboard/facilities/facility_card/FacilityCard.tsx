@@ -1,4 +1,4 @@
-import React, { use, useEffect } from "react";
+import React, { useEffect } from "react";
 import Paper from "@mui/material/Paper";
 import Chip from "@mui/material/Chip";
 import Typography from "@mui/material/Typography";
@@ -22,7 +22,7 @@ const statusStyles: { [key: string]: { bgcolor: string; color: string } } = {
 
 const FacilityCard: React.FC<FacilityCardProps> = ({ facility }) => {
   const handleClick = (): void => {};
-  const { tenders, loading, error } = useAppSelector((state) => state.tender);
+  const { tenders } = useAppSelector((state) => state.tender);
   const dispatch = useAppDispatch();
 
   const chipStyles = statusStyles[status] || statusStyles["aktiv"];
@@ -32,7 +32,6 @@ const FacilityCard: React.FC<FacilityCardProps> = ({ facility }) => {
   }, [dispatch]);
 
   const checkStatus = (): string => {
-    // check if at least one tender is active then return active status
     for (const tender of tenders || []) {
       if (tender.status === "active") {
         return "aktiv";

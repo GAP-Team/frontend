@@ -1,7 +1,6 @@
 import React from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import { buildingAdress } from "../../screens/dashboard/tenders/tender_card/types";
 
 interface TenderHeaderProps {
   buildingName: string;

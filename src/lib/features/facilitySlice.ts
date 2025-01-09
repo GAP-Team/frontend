@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../store";
 import { Facility } from "@/screens/dashboard/facilities/facility_card/types";
-import userAPIs from "@/api/user";
 import buildingAPIs from "@/api/building";
 
 interface FacilityState {

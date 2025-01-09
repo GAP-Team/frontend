@@ -2,11 +2,6 @@ import React, { useEffect, useState } from "react";
 import FacilityCard from "./FacilityCard";
 import Grid from "@mui/material/Grid";
 import Divider from "@mui/material/Divider";
-import { useAppDispatch, useAppSelector } from "@/lib/hooks";
-import {
-  fetchFacilities,
-  getAllFacilities,
-} from "@/lib/features/facilitySlice";
 import { Facility } from "./types";
 import buildingAPIs from "@/api/building";
 
@@ -16,11 +11,10 @@ interface facilityListProps {
 }
 
 const FacilityItems: React.FC<facilityListProps> = ({ buildingId }) => {
-  const dispatch = useAppDispatch();
   const [facilities, setFacilities] = useState<Facility[]>();
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchData = async (): Promise<void> => {
       const response = await buildingAPIs.getBuildingFacilities(buildingId);
       setFacilities(response.data);
     };

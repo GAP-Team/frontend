@@ -1,7 +1,7 @@
 "use client";
 import { Box } from "@mui/system";
 import PropertyFilterPanel from "@/components/filter/PropertyFilterPanel";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import addObjSrc from "@/../public/icons/add_building.svg";
 import NoContentPage from "@/components/common/NoContentPage";
 import FacilityContainer from "./facility_card/FacilityContainer";
@@ -13,9 +13,7 @@ import { fetchBuildings } from "@/lib/features/buildingSlice";
 const Facilities = (): JSX.Element => {
   const user = useSelector(currentUser);
   const dispatch = useAppDispatch();
-  const { buildings, loading, error } = useAppSelector(
-    (state) => state.building
-  );
+  const { buildings } = useAppSelector((state) => state.building);
 
   useEffect(() => {
     if (user?.id) {
