@@ -47,7 +47,7 @@ const UserProfile = (): JSX.Element => {
           showSnackbar({
             type: "error",
             message:
-              "Benutzerdaten konnten nicht aktualisiert werden. Versuchen Sie es erneut",
+              "Die Benutzerdaten konnten nicht aktualisiert werden. Bitte versuchen Sie es erneut.",
           })
         );
       }
