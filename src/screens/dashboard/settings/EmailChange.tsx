@@ -62,8 +62,7 @@ const EmailChange = (): JSX.Element => {
             color="textSecondary"
             sx={styles.sectionDescription}
           >
-            Sie können Ihre E-Mail-Adresse ändern, indem Sie einen Code auf dem
-            Postweg erhalten.
+           Sie können Ihre E-Mail-Adresse ändern, indem Sie einen Code an Ihre E-Mail-Adresse geschickt bekommen. Geben Sie den Code ein, um die Änderung zu bestätigen.
           </Typography>
         </Grid>
         <Grid item xs={12} sm={6} mt={1}>
