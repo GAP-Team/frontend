@@ -3,18 +3,16 @@ export interface Building {
   id: string;
   buildingName: string;
   buildingType: string;
-  noOfInvestment: number;
-  noOfTenders: number;
   totalArea: number;
   address: {
     country: string;
     state: string;
     street: string;
     city: string;
-    houseNumber: string;
-    zip: string;
+    houseNumber: number;
+    zip: number;
   };
-  facilities: [];
+  facilityIds: [];
   area: number; // Area in square meters
   documents: [
     {
