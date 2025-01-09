@@ -11,6 +11,7 @@ interface Company {
   business: UserBusiness;
 }
 interface UserAddress {
+  zip: number;
   state: string;
   street: string;
   country: string;
@@ -45,6 +46,7 @@ const initialState: UserState = {
     phonenumber: 0,
     numberOfEmployees: 0,
     address: {
+      zip: 0,
       state: "",
       street: "",
       country: "",
