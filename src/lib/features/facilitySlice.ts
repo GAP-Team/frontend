@@ -4,7 +4,6 @@ import { Facility } from "@/screens/dashboard/facilities/facility_card/types";
 import userAPIs from "@/api/user";
 import buildingAPIs from "@/api/building";
 
-
 interface FacilityState {
   facilities: Facility[];
   loading: boolean;
@@ -24,7 +23,6 @@ export const fetchFacilities = createAsyncThunk(
     return response.data;
   }
 );
-
 
 const FacilitySlice = createSlice({
   name: "facility",
@@ -50,12 +48,9 @@ const FacilitySlice = createSlice({
   },
 });
 
-export const {
-    setFacilities
-} = FacilitySlice.actions;
+export const { setFacilities } = FacilitySlice.actions;
 
 export const getAllFacilities = (state: RootState): Facility[] =>
   state.facility.facilities;
-
 
 export default FacilitySlice.reducer;

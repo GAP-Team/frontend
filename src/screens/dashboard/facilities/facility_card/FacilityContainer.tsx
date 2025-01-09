@@ -9,7 +9,6 @@ interface FacilityListProps {
 }
 
 const FacilityContainer: React.FC<FacilityListProps> = ({ buildings }) => {
- 
   return (
     <Box sx={styles.listContainer}>
       {buildings.map(

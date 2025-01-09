@@ -8,6 +8,8 @@ import Icon from "@mui/material/Icon"; // or a specific icon component from @mui
 import { BsClockFill } from "react-icons/bs";
 import SectionTitle from "@/components/label/SectionTitle";
 import { Facility } from "./types";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
+import { fetchFacilityTenders } from "@/lib/features/tenderSlice";
 
 interface FacilityCardProps {
   facility: Facility;
@@ -20,12 +22,35 @@ const statusStyles: { [key: string]: { bgcolor: string; color: string } } = {
 
 const FacilityCard: React.FC<FacilityCardProps> = ({ facility }) => {
   const handleClick = (): void => {};
+  const { tenders, loading, error } = useAppSelector((state) => state.tender);
+  const dispatch = useAppDispatch();
 
   const chipStyles = statusStyles[status] || statusStyles["aktiv"];
 
   useEffect(() => {
-    console.log(facility);
-  }, [facility]);
+    dispatch(fetchFacilityTenders(facility.id));
+  }, [dispatch]);
+
+  const checkStatus = (): string => {
+    // check if at least one tender is active then return active status
+    for (const tender of tenders || []) {
+      if (tender.status === "active") {
+        return "aktiv";
+      }
+    }
+    return "";
+  };
+
+  const checkUrgency = (): string => {
+    const monthsUntilCheck = facility.check.nextCheckInYearNumber * 12;
+
+    if (monthsUntilCheck > 6 && monthsUntilCheck < 12) {
+      return "orange";
+    } else if (monthsUntilCheck < 2) {
+      return "red";
+    }
+    return "";
+  };
 
   return (
     <Paper
@@ -35,10 +60,12 @@ const FacilityCard: React.FC<FacilityCardProps> = ({ facility }) => {
       style={{ cursor: "pointer" }}
     >
       <Box sx={styles.header}>
-        <Chip label="Aktiv" sx={{ ...chipStyles }} />
-        <Icon sx={{ color: "red" }}>
-          <BsClockFill />
-        </Icon>
+        {checkStatus() && <Chip label={checkStatus()} sx={{ ...chipStyles }} />}
+        {checkUrgency() && (
+          <Icon sx={{ color: checkUrgency() }}>
+            <BsClockFill />
+          </Icon>
+        )}
       </Box>
       <SectionTitle
         text={facility.name}
@@ -50,10 +77,10 @@ const FacilityCard: React.FC<FacilityCardProps> = ({ facility }) => {
       <Box sx={styles.tags}></Box>
       <Divider sx={styles.divider} orientation="horizontal" />
       <Typography variant="body2" sx={styles.subText}>
-        Prüfung in: {facility.check.nextCheckInYearNumber} Monaten
+        Prüfung in: {facility.check.nextCheckInYearNumber * 12} Monaten
       </Typography>
       <Typography variant="body2" sx={styles.subText}>
-        Wartung in: {facility.maintenance.nextMaintenanceInMonth} Tagen
+        Wartung in: {facility.maintenance.nextMaintenanceInMonth * 30} Tagen
       </Typography>
     </Paper>
   );

@@ -1,11 +1,11 @@
 export interface Check {
   lastCheckDate: Date;
-  nextCheckInYearNumber: number; 
+  nextCheckInYearNumber: number;
   isPublishAutomatically: boolean;
   publishAutomaticallyInMonth: number;
   reminderInMonth: number;
-  isEmailNotificationEnable: boolean; 
-  emailNotificationList: []
+  isEmailNotificationEnable: boolean;
+  emailNotificationList: [];
 }
 
 export interface Maintenance {
@@ -15,7 +15,7 @@ export interface Maintenance {
   publishAutomaticallyInMonth: number;
   reminderInMonth: number;
   isEmailNotificationEnable: boolean;
-  emailNotificationList: []
+  emailNotificationList: [];
 }
 export interface Facility {
   id: string;
@@ -25,7 +25,7 @@ export interface Facility {
   buildingId: string;
   check: Check;
   maintenance: Maintenance;
-  document:  [
+  document: [
     {
       name: string;
       key: string;

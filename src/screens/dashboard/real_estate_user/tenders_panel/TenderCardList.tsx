@@ -19,7 +19,7 @@ const TenderCardList: React.FC = () => {
   const user = useSelector(currentUser);
 
   useEffect(() => {
-    if(user?.id) {
+    if (user?.id) {
       getBuildings();
     }
   }, [user?.id]);

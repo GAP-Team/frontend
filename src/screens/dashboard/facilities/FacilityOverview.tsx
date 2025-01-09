@@ -5,22 +5,30 @@ import React, { useEffect, useState } from "react";
 import addObjSrc from "@/../public/icons/add_building.svg";
 import NoContentPage from "@/components/common/NoContentPage";
 import FacilityContainer from "./facility_card/FacilityContainer";
-import { useAppDispatch, useAppSelector} from "@/lib/hooks";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { currentUser } from "@/lib/features/userSlice";
 import { useSelector } from "react-redux";
 import { fetchBuildings } from "@/lib/features/buildingSlice";
 
-
 const Facilities = (): JSX.Element => {
   const user = useSelector(currentUser);
   const dispatch = useAppDispatch();
-  const { buildings, loading, error} = useAppSelector((state) => state.building);
+  const { buildings, loading, error } = useAppSelector(
+    (state) => state.building
+  );
 
-   useEffect(() => {
-      if (user?.id) {
-        dispatch(fetchBuildings({userId: user?.id, city: "", federalState: "", facilityType: ""}));
-      }
-    }, [user?.id, dispatch]);
+  useEffect(() => {
+    if (user?.id) {
+      dispatch(
+        fetchBuildings({
+          userId: user?.id,
+          city: "",
+          federalState: "",
+          facilityType: "",
+        })
+      );
+    }
+  }, [user?.id, dispatch]);
 
   const facilityContent =
     buildings?.length > 0 ? (
@@ -54,4 +62,3 @@ const styles = {
 };
 
 export default Facilities;
-

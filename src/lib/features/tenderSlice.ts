@@ -6,6 +6,7 @@ import {
   BuildingTenders,
 } from "@/screens/dashboard/tenders/tender_card/types";
 import userAPIs from "@/api/user";
+import facilityAPIs from "@/api/facility";
 
 interface TenderState {
   numOfTenders: number;
@@ -27,6 +28,14 @@ export const fetchTenders = createAsyncThunk(
   "tender/fetchTenders",
   async (userId: string) => {
     const response = await userAPIs.getUserTenders(userId);
+    return response.data;
+  }
+);
+
+export const fetchFacilityTenders = createAsyncThunk(
+  "tender/fetchFacilityTenders",
+  async (facilityId: string) => {
+    const response = await facilityAPIs.getFacilityTenders(facilityId);
     return response.data;
   }
 );
