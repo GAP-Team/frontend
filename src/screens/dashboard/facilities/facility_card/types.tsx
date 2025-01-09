@@ -1,17 +1,3 @@
-export interface BuildingFacilities {
-  buildingName: string;
-  buildingAdress: buildingAdress;
-  facilities: Facility[];
-}
-
-export interface buildingAdress {
-  city: string;
-  country: string;
-  houseNumber: number;
-  street: string;
-  zip: number;
-}
-
 export interface Check {
   lastCheckDate: Date;
   nextCheckInYearNumber: number; 

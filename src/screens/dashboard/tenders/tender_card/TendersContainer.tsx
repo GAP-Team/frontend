@@ -1,7 +1,7 @@
 import React from "react";
 import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
-import TenderHeader from "./TenderHeader";
+import TenderHeader from "../../../../components/label/Header";
 import { BuildingTenders } from "./types";
 import TenderItems from "./TenderItems";
 
