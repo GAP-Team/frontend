@@ -8,8 +8,7 @@ import TendersContainer from "./tender_card/TendersContainer";
 import { currentUser } from "@/lib/features/userSlice";
 import { useSelector } from "react-redux";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
-import { fetchTenders, setTendersByBuilding } from "@/lib/features/tenderSlice";
-import userAPIs from "@/api/user";
+import { fetchTenders } from "@/lib/features/tenderSlice";
 import { BuildingTenders } from "./tender_card/types";
 
 const TendersOverview: React.FC = () => {
@@ -30,7 +29,7 @@ const TendersOverview: React.FC = () => {
   ): void => {
     dispatch(fetchTenders(user?.id, city, federalState, facilityType));
   };
-  
+
   const hasTenders = tenders?.some(
     (building: BuildingTenders) => building?.tenders?.length > 0
   );

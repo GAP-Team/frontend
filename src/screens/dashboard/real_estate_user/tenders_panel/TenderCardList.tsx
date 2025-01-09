@@ -9,16 +9,15 @@ import { fetchTenders } from "@/lib/features/tenderSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 
 const TenderCardList: React.FC = () => {
-   const dispatch = useAppDispatch();
-   const user = useAppSelector((state) => state.user);
+  const dispatch = useAppDispatch();
+  const user = useAppSelector((state) => state.user);
   const tenders = useAppSelector((state) => state.tender.tenders);
-  
-   useEffect(() => {
-     if (user?.id) {
-       dispatch(fetchTenders(user.id));
-     }
-   }, [user?.id, dispatch]);
 
+  useEffect(() => {
+    if (user?.id) {
+      dispatch(fetchTenders(user.id));
+    }
+  }, [user?.id, dispatch]);
 
   const renderSortedTenders = (
     tendersInBuilding: BuildingTenders[]
@@ -80,11 +79,7 @@ const TenderCardList: React.FC = () => {
     ));
   };
 
-  return (
-    <Box sx={styles.listContainer}>
-      {renderSortedTenders(tenders)}
-    </Box>
-  );
+  return <Box sx={styles.listContainer}>{renderSortedTenders(tenders)}</Box>;
 };
 
 export default TenderCardList;

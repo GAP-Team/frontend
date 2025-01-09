@@ -23,22 +23,32 @@ const initialState: TenderState = {
   error: null as string | null,
 };
 
-
 const fetchTendersByBuilding = createAsyncThunk(
   "tender/fetchTenders",
-  async (param: { userId: string; city?: string; state?: string; facilityType?: string }) => {
+  async (param: {
+    userId: string;
+    city?: string;
+    state?: string;
+    facilityType?: string;
+  }) => {
     const { userId, city, state, facilityType } = param;
-    const response = await userAPIs.getUserTenders(userId, city, state, facilityType);
+    const response = await userAPIs.getUserTenders(
+      userId,
+      city,
+      state,
+      facilityType
+    );
     return response.data;
   }
 );
 
-export const fetchTenders= (
+export const fetchTenders = (
   userId: string,
   city?: string,
   state?: string,
   facilityType?: string
-) => fetchTendersByBuilding({ userId, city, state, facilityType });
+): ReturnType<typeof fetchTendersByBuilding> =>
+  fetchTendersByBuilding({ userId, city, state, facilityType });
 
 const tenderSlice = createSlice({
   name: "tender",
@@ -74,7 +84,9 @@ const tenderSlice = createSlice({
             total + (building?.tenders?.length || 0),
           0
         );
-        state.tendersList = action.payload?.flatMap((building:BuildingTenders) => building.tenders ?? []);
+        state.tendersList = action.payload?.flatMap(
+          (building: BuildingTenders) => building.tenders ?? []
+        );
         state.loading = false;
       })
       .addCase(fetchTendersByBuilding.rejected, (state, action) => {
