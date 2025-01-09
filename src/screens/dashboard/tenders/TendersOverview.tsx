@@ -23,27 +23,14 @@ const TendersOverview: React.FC = () => {
     }
   }, [user?.id, dispatch]);
 
-  const storeTenders = async (
-    city: string,
-    federalState: string,
-    facilityType: string
-  ): Promise<void> => {
-    const buildingTendersList = await userAPIs.getUserTenders(
-      user?.id,
-      city,
-      federalState,
-      facilityType
-    );
-    dispatch(setTendersByBuilding(buildingTendersList?.data));
-  };
-
   const onFilterCriteriaChange = (
     city: string,
     federalState: string,
     facilityType: string
   ): void => {
-    storeTenders(city, federalState, facilityType);
+    dispatch(fetchTenders(user?.id, city, federalState, facilityType));
   };
+  
   const hasTenders = tenders?.some(
     (building: BuildingTenders) => building?.tenders?.length > 0
   );

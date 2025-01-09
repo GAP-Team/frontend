@@ -16,7 +16,7 @@ const TenderItems: React.FC<TenderItemsProps> = ({ building }) => {
             key={index}
             tender={tender}
             buildingName={building.buildingName}
-            buildingAdress={building.buildingAdress}
+            buildingAddress={building.buildingAddress}
           />
         </Grid>
       ))}

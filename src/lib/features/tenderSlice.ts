@@ -23,13 +23,22 @@ const initialState: TenderState = {
   error: null as string | null,
 };
 
-export const fetchTenders = createAsyncThunk(
+
+const fetchTendersByBuilding = createAsyncThunk(
   "tender/fetchTenders",
-  async (userId: string) => {
-    const response = await userAPIs.getUserTenders(userId);
+  async (param: { userId: string; city?: string; state?: string; facilityType?: string }) => {
+    const { userId, city, state, facilityType } = param;
+    const response = await userAPIs.getUserTenders(userId, city, state, facilityType);
     return response.data;
   }
 );
+
+export const fetchTenders= (
+  userId: string,
+  city?: string,
+  state?: string,
+  facilityType?: string
+) => fetchTendersByBuilding({ userId, city, state, facilityType });
 
 const tenderSlice = createSlice({
   name: "tender",
@@ -55,14 +64,20 @@ const tenderSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchTenders.pending, (state) => {
+      .addCase(fetchTendersByBuilding.pending, (state) => {
         state.loading = true;
       })
-      .addCase(fetchTenders.fulfilled, (state, action) => {
+      .addCase(fetchTendersByBuilding.fulfilled, (state, action) => {
         state.tenders = action.payload;
+        state.numOfTenders = action.payload.reduce(
+          (total: number, building: BuildingTenders) =>
+            total + (building?.tenders?.length || 0),
+          0
+        );
+        state.tendersList = action.payload?.flatMap((building:BuildingTenders) => building.tenders ?? []);
         state.loading = false;
       })
-      .addCase(fetchTenders.rejected, (state, action) => {
+      .addCase(fetchTendersByBuilding.rejected, (state, action) => {
         state.error = action.error.message || "Failed to fetch tenders";
         state.loading = false;
       });
