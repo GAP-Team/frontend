@@ -10,7 +10,7 @@ import userAPIs from "@/api/user";
 interface TenderState {
   numOfTenders: number;
   tenders: BuildingTenders[];
-  tendersList: Tender[];
+  tenderList: Tender[];
   loading: boolean;
   error: string | null;
 }
@@ -18,7 +18,7 @@ interface TenderState {
 const initialState: TenderState = {
   numOfTenders: 0,
   tenders: [] as BuildingTenders[],
-  tendersList: [] as Tender[],
+  tenderList: [] as Tender[],
   loading: false as boolean,
   error: null as string | null,
 };
@@ -61,7 +61,7 @@ const tenderSlice = createSlice({
       state.tenders = action.payload;
     },
     setTenders: (state, action: PayloadAction<Tender[]>) => {
-      state.tendersList = action.payload;
+      state.tenderList = action.payload;
     },
     removeTender: (state, action: PayloadAction<string>) => {
       state.tenders = state.tenders.map((tender) => ({
@@ -84,7 +84,7 @@ const tenderSlice = createSlice({
             total + (building?.tenders?.length || 0),
           0
         );
-        state.tendersList =
+        state.tenderList =
           action.payload?.flatMap(
             (building: BuildingTenders) => building?.tenders ?? []
           ) ?? [];
