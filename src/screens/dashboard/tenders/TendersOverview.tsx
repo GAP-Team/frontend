@@ -8,7 +8,8 @@ import TendersContainer from "./tender_card/TendersContainer";
 import { currentUser } from "@/lib/features/userSlice";
 import { useSelector } from "react-redux";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
-import { fetchTenders } from "@/lib/features/tenderSlice";
+import { fetchTenders, setTendersByBuilding } from "@/lib/features/tenderSlice";
+import userAPIs from "@/api/user";
 import { BuildingTenders } from "./tender_card/types";
 
 const TendersOverview: React.FC = () => {
@@ -22,8 +23,29 @@ const TendersOverview: React.FC = () => {
     }
   }, [user?.id, dispatch]);
 
+  const storeTenders = async (
+    city: string,
+    federalState: string,
+    facilityType: string
+  ): Promise<void> => {
+    const buildingTendersList = await userAPIs.getUserTenders(
+      user?.id,
+      city,
+      federalState,
+      facilityType
+    );
+    dispatch(setTendersByBuilding(buildingTendersList?.data));
+  };
+
+  const onFilterCriteriaChange = (
+    city: string,
+    federalState: string,
+    facilityType: string
+  ): void => {
+    storeTenders(city, federalState, facilityType);
+  };
   const hasTenders = tenders?.some(
-    (building: BuildingTenders) => building.tenders?.length > 0
+    (building: BuildingTenders) => building?.tenders?.length > 0
   );
 
   const tenderContent = (() => {
@@ -41,9 +63,13 @@ const TendersOverview: React.FC = () => {
       />
     );
   })();
+
   return (
     <Box sx={styles.mainContainer}>
-      <PropertyFilterPanel title="Alle Ausschreibungen" />
+      <PropertyFilterPanel
+        handleOnChange={onFilterCriteriaChange}
+        title="Alle Ausschreibungen"
+      />
       {tenderContent}
     </Box>
   );
