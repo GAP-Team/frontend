@@ -2,10 +2,10 @@ import { Box, Divider } from "@mui/material";
 import React from "react";
 import FacilityHeader from "./FacilityHeader";
 import FacilityItems from "./FacilityItems";
-import { Facility } from "./types";
+import { BuildingFacilities } from "./types";
 
 interface FacilityListProps {
-  facilities: Facility[];
+  facilities: BuildingFacilities[];
 }
 
 const FacilityList: React.FC<FacilityListProps> = ({ facilities }) => {
