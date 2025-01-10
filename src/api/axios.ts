@@ -13,8 +13,6 @@ api.interceptors.request.use(
     }
     if (accessToken) {
       config.headers!.Authorization = `Bearer ${accessToken}`;
-      config.headers!["Access-Control-Allow-Origin"] = "*";
-      config.headers!["Access-Control-Allow-Credentials"] = "true";
     }
     return config;
   },
