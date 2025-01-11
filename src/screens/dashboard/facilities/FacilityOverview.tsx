@@ -1,19 +1,36 @@
 "use client";
 import { Box } from "@mui/system";
 import PropertyFilterPanel from "@/components/filter/PropertyFilterPanel";
-import React, { useState } from "react";
-import { Facility } from "./types";
-import FacilityList from "./FacilityList";
-import { dummyFacilities } from "@/utils/Constants";
+import React, { useEffect } from "react";
 import addObjSrc from "@/../public/icons/add_building.svg";
 import NoContentPage from "@/components/common/NoContentPage";
+import FacilityContainer from "./facility_card/FacilityContainer";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
+import { currentUser } from "@/lib/features/userSlice";
+import { useSelector } from "react-redux";
+import { fetchBuildings } from "@/lib/features/buildingSlice";
 
 const Facilities = (): JSX.Element => {
-  const [facilities] = useState<Facility[]>(dummyFacilities);
+  const user = useSelector(currentUser);
+  const dispatch = useAppDispatch();
+  const { buildings } = useAppSelector((state) => state.building);
+
+  useEffect(() => {
+    if (user?.id) {
+      dispatch(
+        fetchBuildings({
+          userId: user?.id,
+          city: "",
+          federalState: "",
+          facilityType: "",
+        })
+      );
+    }
+  }, [user?.id, dispatch]);
 
   const facilityContent =
-    facilities?.length > 0 ? (
-      <FacilityList facilities={facilities} />
+    buildings?.length > 0 ? (
+      <FacilityContainer buildings={buildings} />
     ) : (
       <NoContentPage
         image={addObjSrc}

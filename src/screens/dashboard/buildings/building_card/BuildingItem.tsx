@@ -41,7 +41,7 @@ const BuildingItem: React.FC<BuildingItemProps> = ({ building }) => {
   const getFacilityTendersCount = async (): Promise<void> => {
     var count = 0;
     await Promise.all(
-      building?.facilities?.map(async (facilityId: string) => {
+      building?.facilityIds?.map(async (facilityId: string) => {
         const tender = await facilityAPIs.getFacilityTenders(facilityId);
         count = count + tender?.data?.length;
       })
@@ -52,9 +52,9 @@ const BuildingItem: React.FC<BuildingItemProps> = ({ building }) => {
   const delMsg = `
     Beim Löschen dieses Gebäudes werden alle relevanten Objekte mitgelöscht.
     ${
-      building.facilities.length > 0
+      building.facilityIds?.length > 0
         ? `
-        <br/>${`- ${building.facilities.length} Anlage(n)`}
+        <br/>${`- ${building.facilityIds?.length} Anlage(n)`}
         <br/>${`- ${totalTenders} Ausschreibunge(n)`}
       `
         : ``
@@ -98,7 +98,7 @@ const BuildingItem: React.FC<BuildingItemProps> = ({ building }) => {
           <Typography
             style={styles.items}
             onClick={() => handleRedirect("facilities")}
-          >{`${building.facilities.length} Anlagen`}</Typography>
+          >{`${building.facilityIds?.length} Anlagen`}</Typography>
         </Stack>
         <Stack direction="row" alignItems="center" gap={2}>
           <CgNotes size="1.5rem" color="#A0ADB1" />

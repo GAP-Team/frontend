@@ -3,27 +3,20 @@ export interface Building {
   id: string;
   buildingName: string;
   buildingType: string;
-  noOfInvestment: number;
-  noOfTenders: number;
   totalArea: number;
-  address: {
-    country: string;
-    state: string;
-    street: string;
-    city: string;
-    houseNumber: string;
-    zip: string;
-  };
-  facilities: [];
-  area: number; // Area in square meters
-  documents: [
-    {
-      name: string;
-      key: string;
-      documentType: string;
-    },
-  ];
+  address: BuildingAddress;
+  facilityIds: string[];
+  documents: Document[];
   tendersCount: number;
+}
+
+export interface BuildingAddress {
+  country: string;
+  state: string;
+  street: string;
+  city: string;
+  houseNumber: number;
+  zip: number;
 }
 
 export interface PropertyFilterProps {
