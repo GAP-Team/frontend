@@ -80,37 +80,49 @@ const EmailVerification = ({
   };
 
   const handleSubmit = async (): Promise<void> => {
-    setLoading(true);
-    try {
-      const code = verificationCode.join("");
-
-      if (code !== "") {
-        let verificationQuery = {
-          userId: newUserId,
-          email: newUserEmail,
-          token: code.toString(),
-        };
-
-        const res = await userAPIs.verifyEmailToken(verificationQuery);
-
-        if (res?.data?.status) {
-          setLoading(false);
-          Cookies.remove("isVerified");
-
-          if (sendMail) {
-            postVerificationAction();
-          } else {
-            setVerificationSuccess(true);
-          }
-          Cookies.set("isVerified", "true");
-        }
-      } else {
-        setVerificationError(true);
-      }
-    } catch {
-      setLoading(false);
+    if (verificationCode.some((code) => code === "")) {
       setVerificationError(true);
+      return;
     }
+
+    setLoading(true);
+    const code = verificationCode.join("");
+    const verificationQuery = {
+      userId: newUserId,
+      email: newUserEmail,
+      token: code,
+    };
+
+    try {
+      const res = await userAPIs.verifyEmailToken(verificationQuery);
+
+      if (res?.data?.status) {
+        handleVerificationSuccess();
+      } else {
+        handleVerificationFailure();
+      }
+    } catch (error) {
+      console.error("Verification error:", error);
+      handleVerificationFailure();
+    }
+  };
+
+  const handleVerificationSuccess = (): void => {
+    setLoading(false);
+    Cookies.remove("isVerified");
+
+    if (sendMail) {
+      postVerificationAction();
+    } else {
+      setVerificationSuccess(true);
+    }
+
+    Cookies.set("isVerified", "true");
+  };
+
+  const handleVerificationFailure = (): void => {
+    setLoading(false);
+    setVerificationError(true);
   };
 
   const handlePaste = (e: React.ClipboardEvent): void => {
