@@ -15,7 +15,7 @@ import { BuildingTenders } from "./tender_card/types";
 const TendersOverview: React.FC = () => {
   const user = useSelector(currentUser);
   const dispatch = useAppDispatch();
-  const { tenders, loading, error } = useAppSelector((state) => state.tender);
+  const { tenders, loading } = useAppSelector((state) => state.tender);
 
   useEffect(() => {
     if (user?.id) {
@@ -50,7 +50,6 @@ const TendersOverview: React.FC = () => {
 
   const tenderContent = (() => {
     if (loading) return <div>Loading...</div>;
-    if (error) return <div>Error: {error}</div>;
     return hasTenders ? (
       <TendersContainer buildings={tenders} />
     ) : (
