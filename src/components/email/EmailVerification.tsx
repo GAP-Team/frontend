@@ -91,7 +91,7 @@ const EmailVerification = ({
           token: code.toString(),
         };
 
-        const res = await userAPIs.verifyEmail(verificationQuery);
+        const res = await userAPIs.verifyEmailToken(verificationQuery);
 
         if (res?.data?.status) {
           setLoading(false);

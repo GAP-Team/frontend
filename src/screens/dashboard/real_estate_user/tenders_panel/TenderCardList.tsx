@@ -16,7 +16,9 @@ const TenderCardList: React.FC = () => {
   const user = useSelector(currentUser);
 
   useEffect(() => {
-    getBuildings();
+    if (user?.id) {
+      getBuildings();
+    }
   }, [user?.id]);
 
   const getBuildings = async (): Promise<void> => {
