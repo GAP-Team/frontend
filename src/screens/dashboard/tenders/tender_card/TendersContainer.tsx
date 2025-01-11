@@ -18,7 +18,7 @@ const TendersContainer: React.FC<TendersContainerProps> = ({ buildings }) => {
             <>
               <TenderHeader
                 buildingName={building.buildingName}
-                buildingAdress={building.buildingAdress}
+                buildingAddress={building.buildingAddress}
               />
               <TenderItems building={building} />
               <Divider variant="middle" orientation="horizontal" flexItem />

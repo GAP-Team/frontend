@@ -10,7 +10,7 @@ import userAPIs from "@/api/user";
 interface TenderState {
   numOfTenders: number;
   tenders: BuildingTenders[];
-  tendersList: Tender[];
+  tenderList: Tender[];
   loading: boolean;
   error: string | null;
 }
@@ -18,18 +18,37 @@ interface TenderState {
 const initialState: TenderState = {
   numOfTenders: 0,
   tenders: [] as BuildingTenders[],
-  tendersList: [] as Tender[],
+  tenderList: [] as Tender[],
   loading: false as boolean,
   error: null as string | null,
 };
 
-export const fetchTenders = createAsyncThunk(
+const fetchTendersByBuilding = createAsyncThunk(
   "tender/fetchTenders",
-  async (userId: string) => {
-    const response = await userAPIs.getUserTenders(userId);
+  async (param: {
+    userId: string;
+    city?: string;
+    state?: string;
+    facilityType?: string;
+  }) => {
+    const { userId, city, state, facilityType } = param;
+    const response = await userAPIs.getUserTenders(
+      userId,
+      city,
+      state,
+      facilityType
+    );
     return response.data;
   }
 );
+
+export const fetchTenders = (
+  userId: string,
+  city?: string,
+  state?: string,
+  facilityType?: string
+): ReturnType<typeof fetchTendersByBuilding> =>
+  fetchTendersByBuilding({ userId, city, state, facilityType });
 
 const tenderSlice = createSlice({
   name: "tender",
@@ -42,7 +61,7 @@ const tenderSlice = createSlice({
       state.tenders = action.payload;
     },
     setTenders: (state, action: PayloadAction<Tender[]>) => {
-      state.tendersList = action.payload;
+      state.tenderList = action.payload;
     },
     removeTender: (state, action: PayloadAction<string>) => {
       state.tenders = state.tenders.map((tender) => ({
@@ -55,14 +74,23 @@ const tenderSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchTenders.pending, (state) => {
+      .addCase(fetchTendersByBuilding.pending, (state) => {
         state.loading = true;
       })
-      .addCase(fetchTenders.fulfilled, (state, action) => {
+      .addCase(fetchTendersByBuilding.fulfilled, (state, action) => {
         state.tenders = action.payload;
+        state.numOfTenders = action.payload.reduce(
+          (total: number, building: BuildingTenders) =>
+            total + (building?.tenders?.length || 0),
+          0
+        );
+        state.tenderList =
+          action.payload?.flatMap(
+            (building: BuildingTenders) => building?.tenders ?? []
+          ) ?? [];
         state.loading = false;
       })
-      .addCase(fetchTenders.rejected, (state, action) => {
+      .addCase(fetchTendersByBuilding.rejected, (state, action) => {
         state.error = action.error.message || "Failed to fetch tenders";
         state.loading = false;
       });
