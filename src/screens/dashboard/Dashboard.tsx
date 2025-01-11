@@ -12,7 +12,7 @@ import NewTender from "./tenders/add_tender_form/NewTender";
 import RealEstateUser from "./real_estate_user/RealEstateUser";
 import NewBuilding from "./buildings/add_building_form/NewBuilding";
 import { SidebarItem, SubItem } from "@/components/navigation/GSidebar/SideBar";
-import Facilities from "./facilities/FacilityOverview";
+import FacilityOverview from "./facilities/FacilityOverview";
 import NewFacility from "./facilities/add_facility_form/NewFacility";
 
 interface DashboardProps {
@@ -56,7 +56,7 @@ const Dashboard: React.FC<DashboardProps> = ({ overrideComponent }) => {
           id: 20,
           text: "Alle Anlagen",
           url: "facilities",
-          component: <Facilities />,
+          component: <FacilityOverview />,
         },
         {
           id: 21,
