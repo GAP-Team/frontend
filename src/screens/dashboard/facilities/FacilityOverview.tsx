@@ -9,6 +9,7 @@ import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { currentUser } from "@/lib/features/userSlice";
 import { useSelector } from "react-redux";
 import { fetchBuildings } from "@/lib/features/buildingSlice";
+import { Building } from "../buildings/building_card/types";
 
 const Facilities = (): JSX.Element => {
   const user = useSelector(currentUser);
@@ -28,19 +29,22 @@ const Facilities = (): JSX.Element => {
     }
   }, [user?.id, dispatch]);
 
-  const facilityContent =
-    buildings?.length > 0 ? (
-      <FacilityContainer buildings={buildings} />
-    ) : (
-      <NoContentPage
-        image={addObjSrc}
-        alt="No Facility"
-        buttonLabel="Anlage anlegen"
-        title="Noch keine Anlagen angelegt"
-        buttonLink="/real_estate/facilities/add"
-        description="Du hast noch keine Anlagen angelegt, wenn Du Deine Anlagen erstellt hast findest Du sie hier."
-      />
-    );
+  const hasFacilities = buildings?.some(
+    (building: Building) => building?.facilityIds?.length > 0
+  );
+
+  const facilityContent = hasFacilities ? (
+    <FacilityContainer buildings={buildings} />
+  ) : (
+    <NoContentPage
+      image={addObjSrc}
+      alt="No Facility"
+      buttonLabel="Anlage anlegen"
+      title="Noch keine Anlagen angelegt"
+      buttonLink="/real_estate/facilities/add"
+      description="Du hast noch keine Anlagen angelegt, wenn Du Deine Anlagen erstellt hast findest Du sie hier."
+    />
+  );
 
   return (
     <Box sx={styles.mainContainer}>
