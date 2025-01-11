@@ -541,37 +541,37 @@ export const reminderOptions = [
     value: 0,
   },
   {
-    label: "Vor 3 Monate",
+    label: "3 Monate",
     value: 3,
   },
   {
-    label: "Vor 6 Monate",
+    label: "6 Monate",
     value: 6,
   },
   {
-    label: "Vor 9 Monate",
+    label: "9 Monate",
     value: 9,
   },
   {
-    label: "Vor 12 Monate",
+    label: "12 Monate",
     value: 12,
   },
 ];
 export const autoPublishMonthsOptions = [
   {
-    label: "alle 12 Monate",
+    label: "12 Monate",
     value: 12,
   },
   {
-    label: "alle 9 Monate",
+    label: "9 Monate",
     value: 9,
   },
   {
-    label: "alle 6 Monate",
+    label: "6 Monate",
     value: 6,
   },
   {
-    label: "alle 3 Monate",
+    label: "3 Monate",
     value: 3,
   },
 ];

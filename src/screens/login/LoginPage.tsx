@@ -39,7 +39,7 @@ export default function LoginPage(): JSX.Element {
         const res = await authAPIs.login(values);
 
         if (res?.data?.access_token) {
-          dispatch(setUser(res.data));
+          dispatch(setUser(res.data?.user));
           setAccessToken(res.data.access_token);
           setIsUserVerified(res.data.user?.isVerified);
           router.push("/real_estate/dashboard");

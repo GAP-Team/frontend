@@ -1,49 +1,23 @@
 import Box from "@mui/material/Box";
 import TenderCard from "./TenderCard";
 import { Typography } from "@mui/material";
-import { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { currentUser } from "@/lib/features/userSlice";
+import { useEffect } from "react";
 import { scrollBarStyles } from "@/components/scrollbar/Scrollbar";
 import { Urgency } from "@/utils/enums";
-import { BuildingTenders, Tender } from "../../tenders/tender_card/types";
-import { setTenderNumbers, setTenders } from "@/lib/features/tenderSlice";
-import userAPIs from "@/api/user";
+import { BuildingTenders } from "../../tenders/tender_card/types";
+import { fetchTenders } from "@/lib/features/tenderSlice";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 
 const TenderCardList: React.FC = () => {
-  const dispatch = useDispatch();
-  const [tendersInBuilding, setTendersInBuildings] = useState<
-    BuildingTenders[]
-  >([]);
-
-  const user = useSelector(currentUser);
+  const dispatch = useAppDispatch();
+  const user = useAppSelector((state) => state.user);
+  const tenders = useAppSelector((state) => state.tender.tenders);
 
   useEffect(() => {
     if (user?.id) {
-      getBuildings();
+      dispatch(fetchTenders(user.id));
     }
-  }, [user?.id]);
-
-  const getBuildings = async (): Promise<void> => {
-    const buildingTendersList = await userAPIs.getUserTenders(user?.id);
-    setTendersInBuildings(buildingTendersList?.data);
-
-    const allTenders: Tender[] = [];
-    buildingTendersList?.data?.forEach((buildingTenders: BuildingTenders) => {
-      buildingTenders.tenders?.forEach((tender: Tender) => {
-        allTenders.push(tender);
-      });
-    });
-
-    dispatch(setTenders(allTenders));
-
-    const totalTenders = buildingTendersList.data.reduce(
-      (total: number, building: BuildingTenders) =>
-        total + (building?.tenders?.length || 0),
-      0
-    );
-    dispatch(setTenderNumbers(totalTenders));
-  };
+  }, [user?.id, dispatch]);
 
   const renderSortedTenders = (
     tendersInBuilding: BuildingTenders[]
@@ -105,11 +79,7 @@ const TenderCardList: React.FC = () => {
     ));
   };
 
-  return (
-    <Box sx={styles.listContainer}>
-      {renderSortedTenders(tendersInBuilding)}
-    </Box>
-  );
+  return <Box sx={styles.listContainer}>{renderSortedTenders(tenders)}</Box>;
 };
 
 export default TenderCardList;

@@ -4,7 +4,6 @@ export interface BuildingTenders {
   buildingAddress: BuildingAddress;
   tenders: Tender[];
 }
-
 export interface Tender {
   id: string;
   clientName: string;
