@@ -150,7 +150,6 @@ const RegistrationRealState = (): JSX.Element => {
       const companyObj = {
         address: addressObj,
         name: values.company,
-        numberOfEmployees: null,
         phonenumber: Number(values.telephone),
         business: {
           documents: docObj,
@@ -168,7 +167,6 @@ const RegistrationRealState = (): JSX.Element => {
         email: values.email,
         role: values.role,
         company: companyObj,
-        manufacturerExperience: values.manufacturerExperience,
       };
 
       const res = await userAPIs.register(arrangedDataObj);
