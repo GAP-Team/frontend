@@ -2,7 +2,7 @@ import { Box, Divider } from "@mui/material";
 import React from "react";
 import FacilityItems from "./FacilityItems";
 import { Building } from "../../buildings/building_card/types";
-import Header from "@/components/label/Header";
+import OverviewHeader from "@/components/label/OverviewHeader";
 
 interface FacilityListProps {
   buildings: Building[];
@@ -15,9 +15,9 @@ const FacilityContainer: React.FC<FacilityListProps> = ({ buildings }) => {
         (building) =>
           building?.facilityIds?.length > 0 && (
             <>
-              <Header
+              <OverviewHeader
                 buildingName={building.buildingName}
-                buildingAdress={building.address}
+                buildingAddress={building.address}
               />
               <FacilityItems buildingId={building.id} />
               <Divider variant="middle" orientation="horizontal" flexItem />

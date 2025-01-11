@@ -1,7 +1,7 @@
 import React from "react";
 import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
-import TenderHeader from "../../../../components/label/Header";
+import OverviewHeader from "../../../../components/label/OverviewHeader";
 import { BuildingTenders } from "./types";
 import TenderItems from "./TenderItems";
 
@@ -16,9 +16,9 @@ const TendersContainer: React.FC<TendersContainerProps> = ({ buildings }) => {
         (building) =>
           building?.tenders?.length > 0 && (
             <>
-              <TenderHeader
+              <OverviewHeader
                 buildingName={building.buildingName}
-                buildingAdress={building.buildingAdress}
+                buildingAddress={building.buildingAddress}
               />
               <TenderItems building={building} />
               <Divider variant="middle" orientation="horizontal" flexItem />
