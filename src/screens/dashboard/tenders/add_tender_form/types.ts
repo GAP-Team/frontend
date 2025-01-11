@@ -7,7 +7,9 @@ export interface AddTenderFormValues {
   tenderType: string;
   //Tender Building feilds = Form 2
   buildingName: string;
+  buildingId: string;
   facilityName: string;
+  facilityId: string;
   //Description feild = Form 3
   detailDescription: string;
   //Classification = Form 4
@@ -16,14 +18,6 @@ export interface AddTenderFormValues {
   toDate: Dayjs | null;
   safetyWorkRequired: boolean;
   freeParkingAvailable: boolean;
-  //Documentation = Form 5
-  documentChoice: string;
-  constructionDocs: File[];
-  floorplanDocs: File[];
-  equipmentDocs: File[];
-  serverLink: string;
-  buildingId: string;
-  facilityId: string;
 }
 export interface ActiveStepItem {
   id: number;
@@ -32,6 +26,11 @@ export interface ActiveStepItem {
 }
 
 export interface StepComponentProps {
+  formik?: any;
   setActiveStep: Dispatch<SetStateAction<ActiveStepItem>>;
   steps: ActiveStepItem[];
+}
+
+export interface NewTenderProps {
+  id: string;
 }

@@ -89,7 +89,7 @@ const TenderInformation = (): JSX.Element => {
             <CustomSelect
               name="tenderType"
               options={
-                formik?.values?.tenderForm === "Handwerker"
+                formik?.values?.tenderForm === TENDER_FORM.CRAFTSMAN
                   ? tenderTypesListHW
                   : tenderTypesListSV
               }

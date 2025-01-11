@@ -5,6 +5,7 @@ import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
 import { CgNotes } from "react-icons/cg";
 import { useSelector } from "react-redux";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { FaRegFlag } from "react-icons/fa6";
 import Divider from "@mui/material/Divider";
@@ -16,7 +17,6 @@ import { Building } from "./types";
 import facilityAPIs from "@/api/facility";
 import buildingAPIs from "@/api/building";
 import DocumentList from "./DocumentList ";
-import { useRouter } from "next/navigation";
 import ActionMenu from "@/components/common/ActionMenu";
 import { scrollBarStyles } from "@/components/scrollbar/Scrollbar";
 import {
@@ -41,7 +41,7 @@ const BuildingItem: React.FC<BuildingItemProps> = ({ building }) => {
   const getFacilityTendersCount = async (): Promise<void> => {
     var count = 0;
     await Promise.all(
-      building?.facilities?.map(async (facilityId: string) => {
+      building?.facilityIds?.map(async (facilityId: string) => {
         const tender = await facilityAPIs.getFacilityTenders(facilityId);
         count = count + tender?.data?.length;
       })
@@ -52,9 +52,9 @@ const BuildingItem: React.FC<BuildingItemProps> = ({ building }) => {
   const delMsg = `
     Beim Löschen dieses Gebäudes werden alle relevanten Objekte mitgelöscht.
     ${
-      building.facilities.length > 0
+      building.facilityIds?.length > 0
         ? `
-        <br/>${`- ${building.facilities.length} Anlage(n)`}
+        <br/>${`- ${building.facilityIds?.length} Anlage(n)`}
         <br/>${`- ${totalTenders} Ausschreibunge(n)`}
       `
         : ``
@@ -70,6 +70,10 @@ const BuildingItem: React.FC<BuildingItemProps> = ({ building }) => {
       );
       dispatch(setUserBuildingDetails(buildingsAfterDelete));
     }
+  };
+
+  const handleRedirect = (redirect: string): void => {
+    router.push(`/real_estate/${redirect}`);
   };
 
   return (
@@ -92,17 +96,15 @@ const BuildingItem: React.FC<BuildingItemProps> = ({ building }) => {
         <Stack direction="row" alignItems="center" gap={2}>
           <IoExtensionPuzzleOutline size="1.5rem" color="#A0ADB1" />
           <Typography
-            variant="bodymsb"
-            fontWeight={500}
-            color="black"
-          >{`${building.facilities.length} Anlagen`}</Typography>
+            style={styles.items}
+            onClick={() => handleRedirect("facilities")}
+          >{`${building.facilityIds?.length} Anlagen`}</Typography>
         </Stack>
         <Stack direction="row" alignItems="center" gap={2}>
           <CgNotes size="1.5rem" color="#A0ADB1" />
           <Typography
-            variant="bodymsb"
-            color="black"
-            fontWeight={500}
+            style={styles.items}
+            onClick={() => handleRedirect("tenders")}
           >{`${totalTenders} Ausschreibungen`}</Typography>
         </Stack>
       </Box>
@@ -178,5 +180,11 @@ const styles = {
     overflow: "auto",
     paddingRight: "0.65rem",
     ...scrollBarStyles,
+  },
+  items: {
+    variant: "bodymsb",
+    fontWeight: 500,
+    color: "#22A7F1",
+    cursor: "pointer",
   },
 };

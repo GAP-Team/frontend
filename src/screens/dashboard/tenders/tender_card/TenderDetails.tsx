@@ -10,7 +10,7 @@ interface TenderDetailsProps {
   id: string;
 }
 
-const TenderDetails: React.FC<TenderDetailsProps> = () => {
+const TenderDetails: React.FC<TenderDetailsProps> = ({ id }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -27,7 +27,7 @@ const TenderDetails: React.FC<TenderDetailsProps> = () => {
       <Grid container spacing={2} mx={1} columns={18}>
         <Grid item xs={8}>
           <Paper sx={{ maxWidth: "false", width: "100%", p: "1.25rem" }}>
-            <TenderSummarySection />
+            <TenderSummarySection id={id} />
           </Paper>
         </Grid>
         <Grid item xs={8}>

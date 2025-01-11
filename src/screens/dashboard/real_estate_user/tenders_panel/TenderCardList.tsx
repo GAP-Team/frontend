@@ -1,46 +1,35 @@
 import Box from "@mui/material/Box";
-import tenderAPIs from "@/api/tender";
 import TenderCard from "./TenderCard";
 import { Typography } from "@mui/material";
-import { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { currentUser } from "@/lib/features/userSlice";
-import { Building } from "../../tenders/tender_card/types";
-import { setTenderNumbers } from "@/lib/features/tenderSlice";
+import { useEffect } from "react";
 import { scrollBarStyles } from "@/components/scrollbar/Scrollbar";
+import { Urgency } from "@/utils/enums";
+import { BuildingTenders } from "../../tenders/tender_card/types";
+import { fetchTenders } from "@/lib/features/tenderSlice";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 
 const TenderCardList: React.FC = () => {
-  const [buildings, setBuildings] = useState<Building[]>([]);
-  const dispatch = useDispatch();
-
-  const user = useSelector(currentUser);
+  const dispatch = useAppDispatch();
+  const user = useAppSelector((state) => state.user);
+  const tenders = useAppSelector((state) => state.tender.tenders);
 
   useEffect(() => {
     if (user?.id) {
-      getBuildings();
+      dispatch(fetchTenders(user.id));
     }
-  }, [user?.id]);
+  }, [user?.id, dispatch]);
 
-  const getBuildings = async (): Promise<void> => {
-    const buildings = await tenderAPIs.getTenders(user?.id);
-    setBuildings(buildings?.data);
-
-    const totalTenders = buildings.data.reduce(
-      (total: any, building: any) => total + (building?.tenders?.length || 0),
-      0
-    );
-    dispatch(setTenderNumbers(totalTenders));
-  };
-
-  const renderSortedTenders = (buildings: Building[]): React.ReactNode => {
-    if (!Array.isArray(buildings) || buildings.length === 0) {
+  const renderSortedTenders = (
+    tendersInBuilding: BuildingTenders[]
+  ): React.ReactNode => {
+    if (
+      !tendersInBuilding?.some(
+        (building: BuildingTenders) => building.tenders?.length > 0
+      )
+    ) {
       return (
         <Box sx={styles.noDataContainer}>
-          <Typography
-            component="a"
-            variant="subtitle2"
-            style={{ textDecoration: "none", fontSize: "1.50rem" }}
-          >
+          <Typography variant="subtitle2" style={{ fontSize: "1.50rem" }}>
             Keine Aufträge vorhanden
           </Typography>
         </Box>
@@ -48,23 +37,36 @@ const TenderCardList: React.FC = () => {
     }
 
     // Extract tenders and include building details
-    const allTendersWithBuilding = buildings.flatMap((building) =>
+    const allTendersWithBuilding = tendersInBuilding.flatMap((building) =>
       (building.tenders || []).map((tender) => ({
         ...tender,
         buildingName: building.buildingName,
-        buildingAdress: building.buildingAdress,
+        buildingAddress: building.buildingAddress,
       }))
     );
 
     // Sort tenders by urgency and createdAt
-    const sortedTenders = allTendersWithBuilding.sort((a, b) => {
-      // Sort by urgency: "URGENT" comes first
-      if (a.urgency === "URGENT" && b.urgency !== "URGENT") return -1;
-      if (a.urgency !== "URGENT" && b.urgency === "URGENT") return 1;
+    const sortedTenders = allTendersWithBuilding.sort(
+      (firstTender, secondTender) => {
+        // Sort by urgency: "URGENT" comes first
+        if (
+          firstTender.urgency === Urgency.URGENT &&
+          secondTender.urgency !== Urgency.URGENT
+        )
+          return -1;
+        if (
+          firstTender.urgency !== Urgency.URGENT &&
+          secondTender.urgency === Urgency.URGENT
+        )
+          return 1;
 
-      // Sort by createdAt: most recent first
-      return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
-    });
+        // Sort by createdAt: most recent first
+        return (
+          new Date(secondTender.createdAt).getTime() -
+          new Date(firstTender.createdAt).getTime()
+        );
+      }
+    );
 
     // Render the sorted tenders
     return sortedTenders.map((tender, index) => (
@@ -72,12 +74,12 @@ const TenderCardList: React.FC = () => {
         key={tender.id || index}
         tender={tender}
         buildingName={tender.buildingName}
-        buildingAdress={tender.buildingAdress}
+        buildingAddress={tender.buildingAddress}
       />
     ));
   };
 
-  return <Box sx={styles.listContainer}>{renderSortedTenders(buildings)}</Box>;
+  return <Box sx={styles.listContainer}>{renderSortedTenders(tenders)}</Box>;
 };
 
 export default TenderCardList;
@@ -95,10 +97,10 @@ const styles = {
     ...scrollBarStyles,
   },
   noDataContainer: {
-    display: "flex",
-    height: "20rem",
-    justifyContent: "center",
-    flexDirection: "column",
+    display: "grid",
+    placeItems: "center",
     textAlign: "center",
+    height: "20rem",
+    width: "100%",
   },
 };

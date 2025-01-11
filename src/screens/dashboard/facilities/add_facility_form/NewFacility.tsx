@@ -232,8 +232,8 @@ const NewFacility: React.FC<NewFacilityProps> = ({}): JSX.Element => {
   const formOrSuccessContent = isSubmitted ? (
     <SuccessPage
       title="Anlage ist Online!"
-      description2="Anlage wurde erfolgreich angelegt"
-      description="Du kannst Ihre Anlage in der Anlagen-übersicht sehen und bearbeiten."
+      primaryDescription="Anlage wurde erfolgreich angelegt"
+      secondaryDescription="Du kannst Ihre Anlage in der Anlagen-übersicht sehen und bearbeiten."
       buttonLabel="Schließen"
       redirectUrl="/real_estate/facilities"
     />

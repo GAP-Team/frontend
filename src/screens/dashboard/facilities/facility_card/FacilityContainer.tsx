@@ -1,26 +1,25 @@
+import { Box, Divider } from "@mui/material";
 import React from "react";
-import Box from "@mui/material/Box";
-import Divider from "@mui/material/Divider";
-import OverviewHeader from "../../../../components/label/OverviewHeader";
-import { BuildingTenders } from "./types";
-import TenderItems from "./TenderItems";
+import FacilityItems from "./FacilityItems";
+import { Building } from "../../buildings/building_card/types";
+import OverviewHeader from "@/components/label/OverviewHeader";
 
-interface TendersContainerProps {
-  buildings: BuildingTenders[];
+interface FacilityListProps {
+  buildings: Building[];
 }
 
-const TendersContainer: React.FC<TendersContainerProps> = ({ buildings }) => {
+const FacilityContainer: React.FC<FacilityListProps> = ({ buildings }) => {
   return (
     <Box sx={styles.listContainer}>
       {buildings.map(
         (building) =>
-          building?.tenders?.length > 0 && (
+          building?.facilityIds?.length > 0 && (
             <>
               <OverviewHeader
                 buildingName={building.buildingName}
-                buildingAddress={building.buildingAddress}
+                buildingAddress={building.address}
               />
-              <TenderItems building={building} />
+              <FacilityItems buildingId={building.id} />
               <Divider variant="middle" orientation="horizontal" flexItem />
             </>
           )
@@ -29,7 +28,8 @@ const TendersContainer: React.FC<TendersContainerProps> = ({ buildings }) => {
   );
 };
 
-export default TendersContainer;
+export default FacilityContainer;
+
 // Styles
 const styles = {
   listContainer: {

@@ -157,6 +157,15 @@ export interface Item {
   value: string;
 }
 
+export interface Documentation {
+  documentChoice: string;
+  constructionDocs: File[];
+  floorplanDocs: File[];
+  checkReports: File[];
+  otherDocs: File[];
+  serverLink: string;
+}
+
 export const germanStates: Item[] = [
   { label: "Baden-Württemberg", value: "Baden-Württemberg" },
   { label: "Bayern", value: "Bayern" }, // Bavaria
@@ -412,104 +421,6 @@ export const DocumentTypes = {
   BERICHTE: "BERICHTE PRÜFEN",
 };
 
-export const dummyFacilities = [
-  {
-    id: 1,
-    name: "Facility A",
-    facilityType: "Feuerlöschanlage",
-    subcategory: "Gaslöschanlage",
-    contactPerson: "John Doe",
-    servicingType: "Type A",
-    lastCheckOderMaintenanceDate: { $date: "2023-01-01T00:00:00.000Z" },
-    nextCheckIn: 2,
-    isPublishAutomatically: true,
-    publishAutomaticallyInMonth: 6,
-    reminderInMonth: 3,
-    isReminderEnabled: true,
-    isEmailNotificationEnabled: true,
-    emailNotificationList: ["example1@domain.com", "example2@domain.com"],
-    createdAt: "2023-08-07T12:34:56Z",
-    updatedAt: "2024-08-08T12:34:56Z",
-    __v: 0,
-  },
-  {
-    id: 2,
-    name: "Facility B",
-    facilityType: "Brandmeldanlage",
-    subcategory: "Warehouse",
-    contactPerson: "Jane Smith",
-    servicingType: "Type B",
-    lastCheckOderMaintenanceDate: { $date: "2023-02-15T00:00:00.000Z" },
-    nextCheckIn: 12,
-    isPublishAutomatically: false,
-    publishAutomaticallyInMonth: 0,
-    reminderInMonth: 1,
-    isReminderEnabled: true,
-    isEmailNotificationEnabled: false,
-    emailNotificationList: [],
-    createdAt: "2023-09-10T10:22:45Z",
-    updatedAt: "2024-08-08T10:22:45Z",
-    __v: 1,
-  },
-  {
-    id: 3,
-    name: "Facility C",
-    facilityType: "Structure",
-    subcategory: "Bridge",
-    contactPerson: "Mark Johnson",
-    servicingType: "Type C",
-    lastCheckOderMaintenanceDate: { $date: "2023-05-21T00:00:00.000Z" },
-    nextCheckIn: 6,
-    isPublishAutomatically: true,
-    publishAutomaticallyInMonth: 3,
-    reminderInMonth: 2,
-    isReminderEnabled: true,
-    isEmailNotificationEnabled: true,
-    emailNotificationList: ["admin@domain.com"],
-    createdAt: "2023-10-01T08:10:30Z",
-    updatedAt: "2024-08-08T08:10:30Z",
-    __v: 2,
-  },
-  {
-    id: 4,
-    name: "Facility D",
-    facilityType: "Building",
-    subcategory: "School",
-    contactPerson: "Emily Davis",
-    servicingType: "Type D",
-    lastCheckOderMaintenanceDate: { $date: "2023-07-10T00:00:00.000Z" },
-    nextCheckIn: 9,
-    isPublishAutomatically: false,
-    publishAutomaticallyInMonth: 0,
-    reminderInMonth: 4,
-    isReminderEnabled: false,
-    isEmailNotificationEnabled: false,
-    emailNotificationList: [],
-    createdAt: "2023-11-15T14:15:22Z",
-    updatedAt: "2024-08-08T14:15:22Z",
-    __v: 3,
-  },
-  {
-    id: 5,
-    name: "Facility E",
-    facilityType: "Infrastructure",
-    subcategory: "Dam",
-    contactPerson: "Michael Brown",
-    servicingType: "Type E",
-    lastCheckOderMaintenanceDate: { $date: "2023-03-03T00:00:00.000Z" },
-    nextCheckIn: 24,
-    isPublishAutomatically: true,
-    publishAutomaticallyInMonth: 12,
-    reminderInMonth: 6,
-    isReminderEnabled: true,
-    isEmailNotificationEnabled: true,
-    emailNotificationList: ["maintenance@domain.com", "safety@domain.com"],
-    createdAt: "2023-12-01T09:30:00Z",
-    updatedAt: "2024-08-08T09:30:00Z",
-    __v: 4,
-  },
-];
-
 export const jobItemListInCostPage = [
   {
     facilityType: "Brandschutzprüfung inkl. Reparatur",
@@ -630,37 +541,37 @@ export const reminderOptions = [
     value: 0,
   },
   {
-    label: "Vor 3 Monate",
+    label: "3 Monate",
     value: 3,
   },
   {
-    label: "Vor 6 Monate",
+    label: "6 Monate",
     value: 6,
   },
   {
-    label: "Vor 9 Monate",
+    label: "9 Monate",
     value: 9,
   },
   {
-    label: "Vor 12 Monate",
+    label: "12 Monate",
     value: 12,
   },
 ];
 export const autoPublishMonthsOptions = [
   {
-    label: "alle 12 Monate",
+    label: "12 Monate",
     value: 12,
   },
   {
-    label: "alle 9 Monate",
+    label: "9 Monate",
     value: 9,
   },
   {
-    label: "alle 6 Monate",
+    label: "6 Monate",
     value: 6,
   },
   {
-    label: "alle 3 Monate",
+    label: "3 Monate",
     value: 3,
   },
 ];

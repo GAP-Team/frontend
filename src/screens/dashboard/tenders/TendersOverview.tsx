@@ -9,11 +9,12 @@ import { currentUser } from "@/lib/features/userSlice";
 import { useSelector } from "react-redux";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { fetchTenders } from "@/lib/features/tenderSlice";
+import { BuildingTenders } from "./tender_card/types";
 
 const TendersOverview: React.FC = () => {
   const user = useSelector(currentUser);
   const dispatch = useAppDispatch();
-  const { tenders, loading, error } = useAppSelector((state) => state.tender);
+  const { tenders, loading } = useAppSelector((state) => state.tender);
 
   useEffect(() => {
     if (user?.id) {
@@ -21,10 +22,21 @@ const TendersOverview: React.FC = () => {
     }
   }, [user?.id, dispatch]);
 
+  const onFilterCriteriaChange = (
+    city: string,
+    federalState: string,
+    facilityType: string
+  ): void => {
+    dispatch(fetchTenders(user?.id, city, federalState, facilityType));
+  };
+
+  const hasTenders = tenders?.some(
+    (building: BuildingTenders) => building?.tenders?.length > 0
+  );
+
   const tenderContent = (() => {
     if (loading) return <div>Loading...</div>;
-    if (error) return <div>Error: {error}</div>;
-    return tenders?.length > 0 ? (
+    return hasTenders ? (
       <TendersContainer buildings={tenders} />
     ) : (
       <NoContentPage
@@ -36,9 +48,13 @@ const TendersOverview: React.FC = () => {
       />
     );
   })();
+
   return (
     <Box sx={styles.mainContainer}>
-      <PropertyFilterPanel title="Alle Ausschreibungen" />
+      <PropertyFilterPanel
+        handleOnChange={onFilterCriteriaChange}
+        title="Alle Ausschreibungen"
+      />
       {tenderContent}
     </Box>
   );

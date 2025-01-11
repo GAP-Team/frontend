@@ -10,18 +10,19 @@ import Typography from "@mui/material/Typography";
 import { VscDebugBreakpointLog } from "react-icons/vsc";
 import { getTenderStatusStyle } from "@/utils/utils";
 import SectionTitle from "@/components/label/SectionTitle";
-import { buildingAdress, Tender } from "./types";
 import { TENDER_FORM, Urgency } from "@/utils/enums";
 import ActionMenu from "@/components/common/ActionMenu";
 import tenderAPIs from "@/api/tender";
 import { useAppDispatch } from "@/lib/hooks";
 import { showSnackbar } from "@/components/root-snackbar";
 import { removeTender } from "@/lib/features/tenderSlice";
+import { BuildingAddress } from "@/screens/dashboard/buildings/building_card/types";
+import { Tender } from "@/screens/dashboard/tenders/tender_card/types";
 
 interface TenderCardProps {
   tender: Tender;
   buildingName: string;
-  buildingAdress: buildingAdress;
+  buildingAddress: BuildingAddress;
 }
 
 // Helper to translate tenderForm
@@ -34,10 +35,10 @@ const translateTenderForm = (tenderForm: string): string => {
 const TenderCard: React.FC<TenderCardProps> = ({
   tender,
   buildingName,
-  buildingAdress,
+  buildingAddress,
 }) => {
   const router = useRouter();
-  const appdispatch = useAppDispatch();
+  const appDispatch = useAppDispatch();
   const handleClick = (): void => {
     router.push(`/real_estate/tenders/${tender.id}`);
   };
@@ -58,8 +59,8 @@ const TenderCard: React.FC<TenderCardProps> = ({
   const handleDeleteTender = async (tenderId: string): Promise<void> => {
     try {
       await tenderAPIs.delete(tenderId);
-      appdispatch(removeTender(tenderId));
-      appdispatch(
+      appDispatch(removeTender(tenderId));
+      appDispatch(
         showSnackbar({
           type: "success",
           message: "Ausschreibung erfolgreich gelöscht!",
@@ -67,7 +68,7 @@ const TenderCard: React.FC<TenderCardProps> = ({
       );
       router.push(`/real_estate/tenders`);
     } catch {
-      appdispatch(
+      appDispatch(
         showSnackbar({
           type: "error",
           message:
@@ -77,6 +78,10 @@ const TenderCard: React.FC<TenderCardProps> = ({
     }
   };
 
+  const handleEdit = (id: string): void => {
+    router.push(`/real_estate/tenders/edit/${id}`);
+  };
+
   return (
     <Paper sx={styles.card} elevation={4} style={{ cursor: "pointer" }}>
       <Box sx={styles.header}>
@@ -84,7 +89,7 @@ const TenderCard: React.FC<TenderCardProps> = ({
         {checkUrgency(tender?.urgency)}
         <ActionMenu
           itemId={tender?.id}
-          onEdit={(id) => router.push(`/real_estate/tenders/edit/${id}`)}
+          onEdit={(id) => handleEdit(id)}
           onDelete={handleDeleteTender}
           messege={"Sind Sie sicher, dass Sie dieses Element löschen möchten?"}
         />
@@ -110,9 +115,9 @@ const TenderCard: React.FC<TenderCardProps> = ({
         </Box>
         <Divider sx={styles.divider} orientation="horizontal" />
         <Typography variant="body2" sx={styles.subText}>
-          {buildingName} - {buildingAdress?.street}{" "}
-          {buildingAdress?.houseNumber}, {buildingAdress?.zip}{" "}
-          {buildingAdress?.city}
+          {buildingName} - {buildingAddress?.street}{" "}
+          {buildingAddress?.houseNumber}, {buildingAddress?.zip}{" "}
+          {buildingAddress?.city}
         </Typography>
         <Typography variant="body2" sx={{ pl: 2 }}>
           {`--> ${tender?.facility?.name}`}
