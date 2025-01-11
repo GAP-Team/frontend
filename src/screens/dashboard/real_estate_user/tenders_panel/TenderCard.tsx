@@ -10,18 +10,19 @@ import Typography from "@mui/material/Typography";
 import { VscDebugBreakpointLog } from "react-icons/vsc";
 import { getTenderStatusStyle } from "@/utils/utils";
 import SectionTitle from "@/components/label/SectionTitle";
-import { buildingAdress, Tender } from "./types";
 import { TENDER_FORM, Urgency } from "@/utils/enums";
 import ActionMenu from "@/components/common/ActionMenu";
 import tenderAPIs from "@/api/tender";
 import { useAppDispatch } from "@/lib/hooks";
 import { showSnackbar } from "@/components/root-snackbar";
 import { removeTender } from "@/lib/features/tenderSlice";
+import { BuildingAddress } from "@/screens/dashboard/buildings/building_card/types";
+import { Tender } from "@/screens/dashboard/tenders/tender_card/types";
 
 interface TenderCardProps {
   tender: Tender;
   buildingName: string;
-  buildingAdress: buildingAdress;
+  buildingAddress: BuildingAddress;
 }
 
 // Helper to translate tenderForm
@@ -34,7 +35,7 @@ const translateTenderForm = (tenderForm: string): string => {
 const TenderCard: React.FC<TenderCardProps> = ({
   tender,
   buildingName,
-  buildingAdress,
+  buildingAddress,
 }) => {
   const router = useRouter();
   const appDispatch = useAppDispatch();
@@ -114,9 +115,9 @@ const TenderCard: React.FC<TenderCardProps> = ({
         </Box>
         <Divider sx={styles.divider} orientation="horizontal" />
         <Typography variant="body2" sx={styles.subText}>
-          {buildingName} - {buildingAdress?.street}{" "}
-          {buildingAdress?.houseNumber}, {buildingAdress?.zip}{" "}
-          {buildingAdress?.city}
+          {buildingName} - {buildingAddress?.street}{" "}
+          {buildingAddress?.houseNumber}, {buildingAddress?.zip}{" "}
+          {buildingAddress?.city}
         </Typography>
         <Typography variant="body2" sx={{ pl: 2 }}>
           {`--> ${tender?.facility?.name}`}

@@ -1,15 +1,8 @@
+import { BuildingAddress } from "../../buildings/building_card/types";
 export interface BuildingTenders {
   buildingName: string;
-  buildingAdress: buildingAdress;
+  buildingAddress: BuildingAddress;
   tenders: Tender[];
-}
-
-export interface buildingAdress {
-  city: string;
-  country: string;
-  houseNumber: number;
-  street: string;
-  zip: number;
 }
 
 export interface Tender {

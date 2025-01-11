@@ -4,24 +4,19 @@ export interface Building {
   buildingName: string;
   buildingType: string;
   totalArea: number;
-  address: {
-    country: string;
-    state: string;
-    street: string;
-    city: string;
-    houseNumber: number;
-    zip: number;
-  };
-  facilityIds: [];
-  area: number; // Area in square meters
-  documents: [
-    {
-      name: string;
-      key: string;
-      documentType: string;
-    },
-  ];
+  address: BuildingAddress;
+  facilityIds: string[];
+  documents: Document[];
   tendersCount: number;
+}
+
+export interface BuildingAddress {
+  country: string;
+  state: string;
+  street: string;
+  city: string;
+  houseNumber: number;
+  zip: number;
 }
 
 export interface PropertyFilterProps {
