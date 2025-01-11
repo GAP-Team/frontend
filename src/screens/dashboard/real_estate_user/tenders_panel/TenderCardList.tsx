@@ -67,7 +67,7 @@ const TenderCardList: React.FC = () => {
       (building.tenders || []).map((tender) => ({
         ...tender,
         buildingName: building.buildingName,
-        buildingAdress: building.buildingAdress,
+        buildingAddress: building.buildingAddress,
       }))
     );
 
@@ -100,7 +100,7 @@ const TenderCardList: React.FC = () => {
         key={tender.id || index}
         tender={tender}
         buildingName={tender.buildingName}
-        buildingAdress={tender.buildingAdress}
+        buildingAddress={tender.buildingAddress}
       />
     ));
   };
