@@ -15,7 +15,7 @@ export interface RegistrationFormValues {
   confirmPassword: string;
   businessType: string;
   registrationNumber: string;
-  approvalDocument: string | null ;
+  approvalDocument: string | null;
   businessRegistrationDocument: string | null;
   landRegisterEntryDocument: string | null;
 }
