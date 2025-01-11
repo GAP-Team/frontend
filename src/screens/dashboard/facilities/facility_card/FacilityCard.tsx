@@ -4,12 +4,12 @@ import Chip from "@mui/material/Chip";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
-import Icon from "@mui/material/Icon"; // or a specific icon component from @mui/icons-material
+import Icon from "@mui/material/Icon";
 import { BsClockFill } from "react-icons/bs";
 import SectionTitle from "@/components/label/SectionTitle";
 import { Facility } from "./types";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
-import { fetchFacilityTenders } from "@/lib/features/tenderSlice";
+import { fetchFacilityTenders } from "@/lib/features/facilitySlice";
 
 interface FacilityCardProps {
   facility: Facility;

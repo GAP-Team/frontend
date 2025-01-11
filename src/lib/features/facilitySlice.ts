@@ -1,6 +1,7 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../store";
 import { Facility } from "@/screens/dashboard/facilities/facility_card/types";
+import facilityAPIs from "@/api/facility";
 
 interface FacilityState {
   facilities: Facility[];
@@ -13,6 +14,14 @@ const initialState: FacilityState = {
   loading: false as boolean,
   error: null as string | null,
 };
+
+export const fetchFacilityTenders = createAsyncThunk(
+  "facility/fetchTenders",
+  async (facilityId: string) => {
+    const response = await facilityAPIs.getFacilityTenders(facilityId);
+    return response.data;
+  }
+);
 
 const FacilitySlice = createSlice({
   name: "facility",
