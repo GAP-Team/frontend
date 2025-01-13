@@ -10,6 +10,8 @@ import SectionTitle from "@/components/label/SectionTitle";
 import { Facility } from "./types";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { fetchFacilityTenders } from "@/lib/features/facilitySlice";
+import ActionMenu from "@/components/common/ActionMenu";
+import { useRouter } from "next/navigation";
 
 interface FacilityCardProps {
   facility: Facility;
@@ -24,6 +26,7 @@ const FacilityCard: React.FC<FacilityCardProps> = ({ facility }) => {
   const handleClick = (): void => {};
   const { tenders } = useAppSelector((state) => state.tender);
   const dispatch = useAppDispatch();
+  const router = useRouter();
 
   const chipStyles = statusStyles[status] || statusStyles["aktiv"];
 
@@ -51,6 +54,10 @@ const FacilityCard: React.FC<FacilityCardProps> = ({ facility }) => {
     return "";
   };
 
+  const deleteFacility = (id: string): void => {
+    throw new Error("Function not implemented." + id);
+  };
+
   return (
     <Paper
       sx={styles.card}
@@ -65,6 +72,14 @@ const FacilityCard: React.FC<FacilityCardProps> = ({ facility }) => {
             <BsClockFill />
           </Icon>
         )}
+      </Box>
+      <Box sx={styles.actionMenu}>
+        <ActionMenu
+          itemId={facility?.id}
+          onEdit={(id) => router.push(`/real_estate/facility/edit/${id}`)}
+          onDelete={(id) => deleteFacility(id)}
+          messege={"dummy delete message"}
+        />
       </Box>
       <SectionTitle
         text={facility.name}
@@ -137,4 +152,5 @@ const styles = {
       mr: 0.5,
     },
   },
+  actionMenu: { display: "flex", justifyContent: "flex-end", width: "100%" },
 };

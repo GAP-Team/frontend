@@ -3,15 +3,15 @@ import { Building } from "./types";
 import { Box } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import React, { useState } from "react";
-import BuildingItem from "./BuildingItem";
+import BuildingCard from "./BuildingCard";
 import Pagination from "@mui/material/Pagination";
 
-interface BuildingItemListProps {
+interface BuildingContainerProps {
   buildings: Building[];
   itemsPerPage?: number;
 }
 
-const BuildingItemList: React.FC<BuildingItemListProps> = ({
+const BuildingContainer: React.FC<BuildingContainerProps> = ({
   buildings,
   itemsPerPage = 8,
 }) => {
@@ -37,7 +37,7 @@ const BuildingItemList: React.FC<BuildingItemListProps> = ({
       >
         {currentItems.map((building) => (
           <Grid item xs={12} md={6} lg={3} key={building.id}>
-            <BuildingItem building={building} />
+            <BuildingCard building={building} />
           </Grid>
         ))}
       </Grid>
@@ -52,7 +52,7 @@ const BuildingItemList: React.FC<BuildingItemListProps> = ({
   );
 };
 
-export default BuildingItemList;
+export default BuildingContainer;
 
 const styles = {
   container: {

@@ -24,11 +24,11 @@ import {
   setUserBuildingDetails,
 } from "@/lib/features/buildingSlice";
 
-interface BuildingItemProps {
+interface BuildingCardProps {
   building: Building;
 }
 
-const BuildingItem: React.FC<BuildingItemProps> = ({ building }) => {
+const BuildingCard: React.FC<BuildingCardProps> = ({ building }) => {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const userBuildings = useSelector(getUserBuildings);
@@ -148,7 +148,7 @@ const BuildingItem: React.FC<BuildingItemProps> = ({ building }) => {
   );
 };
 
-export default BuildingItem;
+export default BuildingCard;
 
 // Styles
 const styles = {
