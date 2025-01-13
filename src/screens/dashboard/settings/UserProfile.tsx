@@ -10,7 +10,6 @@ import TextField from "@mui/material/TextField";
 import { useAppSelector, useAppDispatch } from "@/lib/hooks";
 import { showSnackbar } from "@/components/root-snackbar";
 import { updateUserProfile } from "@/lib/features/userSlice";
-import { USER_ROLE } from "@/utils/enums";
 import { UserProfileSchema } from "@/utils/ValidationSchema";
 
 const UserProfile = (): JSX.Element => {
@@ -20,10 +19,11 @@ const UserProfile = (): JSX.Element => {
     initialValues: {
       firstName: user?.firstName,
       lastName: user?.lastName,
-      position: user?.role,
+      position: user?.position,
     },
     validationSchema: UserProfileSchema,
     onSubmit: async (values) => {
+      
       try {
         await dispatch(
           updateUserProfile({
@@ -31,7 +31,7 @@ const UserProfile = (): JSX.Element => {
             data: {
               firstName: values.firstName,
               lastName: values.lastName,
-              role: values.position,
+              position: values.position,
             },
           })
         ).unwrap();
@@ -128,18 +128,13 @@ const UserProfile = (): JSX.Element => {
           <TextField
             label="Position"
             name="position"
-            value={
-              formik.values.position === USER_ROLE.REAL_ESTATE_OWNER
-                ? "Immobilienbesitzer"
-                : "Dienstleister"
-            }
+            value={formik.values.position}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             error={formik.touched.position && Boolean(formik.errors.position)}
             helperText={
               formik.touched.position && formik.errors.position?.toString()
             }
-            disabled
             fullWidth
           />
         </Grid>

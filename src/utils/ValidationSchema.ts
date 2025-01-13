@@ -331,6 +331,7 @@ export const addFacilityValidationSchema = [
 export const UserProfileSchema = yup.object({
   firstName: yup.string().required("Vorname ist erforderlich"),
   lastName: yup.string().required("Nachname ist erforderlich"),
+  position: yup.string(),
 });
 
 export const EmailChangeSchema = yup.object({
