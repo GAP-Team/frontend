@@ -39,16 +39,12 @@ const UserProfile = (): JSX.Element => {
         );
         return;
       }
-      
+
       try {
         await dispatch(
           updateUserProfile({
             id: user.id,
-            data: {
-              firstName: values.firstName,
-              lastName: values.lastName,
-              position: values.position,
-            },
+            data: changedFields,
           })
         ).unwrap();
 
