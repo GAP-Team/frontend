@@ -305,6 +305,7 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
                 }
                 setActiveStep={setActiveStep}
                 loading={loading}
+                actionType={actionType}
               />
             </Grid>
           )}
