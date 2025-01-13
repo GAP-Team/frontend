@@ -23,6 +23,22 @@ const UserProfile = (): JSX.Element => {
     },
     validationSchema: UserProfileSchema,
     onSubmit: async (values) => {
+      const changedFields = Object.entries(values).reduce<Record<string, string>>((acc, [key, value]) => {
+        if (value !== formik.initialValues[key as keyof typeof values]) {
+          acc[key] = value;
+        }
+        return acc;
+      }, {});
+
+      if (!Object.keys(changedFields).length) {
+        dispatch(
+          showSnackbar({
+            type: "info",
+            message: "Es gibt keine Änderungen zum Speichern.",
+          })
+        );
+        return;
+      }
       
       try {
         await dispatch(
