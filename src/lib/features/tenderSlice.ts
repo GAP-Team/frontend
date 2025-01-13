@@ -23,8 +23,8 @@ const initialState: TenderState = {
   error: null as string | null,
 };
 
-const fetchTendersByBuilding = createAsyncThunk(
-  "tender/fetchTenders",
+const getTenders = createAsyncThunk(
+  "tender/getTenders",
   async (param: {
     userId: string;
     city?: string;
@@ -47,8 +47,8 @@ export const fetchTenders = (
   city?: string,
   state?: string,
   facilityType?: string
-): ReturnType<typeof fetchTendersByBuilding> =>
-  fetchTendersByBuilding({ userId, city, state, facilityType });
+): ReturnType<typeof getTenders> =>
+  getTenders({ userId, city, state, facilityType });
 
 const tenderSlice = createSlice({
   name: "tender",
@@ -74,10 +74,10 @@ const tenderSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchTendersByBuilding.pending, (state) => {
+      .addCase(getTenders.pending, (state) => {
         state.loading = true;
       })
-      .addCase(fetchTendersByBuilding.fulfilled, (state, action) => {
+      .addCase(getTenders.fulfilled, (state, action) => {
         state.tenders = action.payload;
         state.numOfTenders = action.payload.reduce(
           (total: number, building: BuildingTenders) =>
@@ -90,7 +90,7 @@ const tenderSlice = createSlice({
           ) ?? [];
         state.loading = false;
       })
-      .addCase(fetchTendersByBuilding.rejected, (state, action) => {
+      .addCase(getTenders.rejected, (state, action) => {
         state.error = action.error.message || "Failed to fetch tenders";
         state.loading = false;
       });
