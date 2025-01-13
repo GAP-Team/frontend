@@ -8,12 +8,14 @@ import userReducer from "./features/userSlice";
 import buildingReducer from "./features/buildingSlice";
 import snackbarReducer from "./features/snackbarSlice";
 import tenderReducer from "./features/tenderSlice";
+import facilityReducer from "./features/facilitySlice";
 
 const rootReducer = combineReducers({
   user: userReducer,
   snackbar: snackbarReducer,
   tender: tenderReducer,
   building: buildingReducer,
+  facility: facilityReducer,
 });
 
 const persistConfig = {

@@ -15,7 +15,7 @@ import { showSnackbar } from "@/components/root-snackbar";
 const TendersOverview: React.FC = () => {
   const user = useSelector(currentUser);
   const dispatch = useAppDispatch();
-  const { tenders, loading, error } = useAppSelector((state) => state.tender);
+  const { tenders, error, loading } = useAppSelector((state) => state.tender);
 
   useEffect(() => {
     if (user?.id) {
@@ -41,10 +41,11 @@ const TendersOverview: React.FC = () => {
       dispatch(
         showSnackbar({
           type: "error",
-          message: "Ausschreibungen konnten nicht geladen werden. Bitte versuchen Sie es erneut!",
+          message:
+            "Ausschreibungen konnten nicht geladen werden. Bitte versuchen Sie es erneut!",
         })
       );
-    };
+    }
     return hasTenders ? (
       <TendersContainer buildings={tenders} />
     ) : (

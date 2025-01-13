@@ -1,14 +1,13 @@
 import React from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import { buildingAddress } from "./types";
-
-interface TenderHeaderProps {
+import { BuildingAddress } from "@/screens/dashboard/buildings/building_card/types";
+interface HeaderProps {
   buildingName: string;
-  buildingAddress: buildingAddress;
+  buildingAddress: BuildingAddress;
 }
 
-const TenderHeader: React.FC<TenderHeaderProps> = ({
+const OverviewHeader: React.FC<HeaderProps> = ({
   buildingName,
   buildingAddress,
 }) => {
@@ -23,4 +22,4 @@ const TenderHeader: React.FC<TenderHeaderProps> = ({
   );
 };
 
-export default TenderHeader;
+export default OverviewHeader;
