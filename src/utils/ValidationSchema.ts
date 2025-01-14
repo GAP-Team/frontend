@@ -329,9 +329,17 @@ export const addFacilityValidationSchema = [
 ];
 
 export const UserProfileSchema = yup.object({
-  firstName: yup.string().required("Vorname ist erforderlich"),
-  lastName: yup.string().required("Nachname ist erforderlich"),
-  position: yup.string(),
+  firstName: yup
+    .string()
+    .matches(/^[A-Za-z]+$/, "Vorname darf nur Buchstaben enthalten")
+    .required("Vorname ist erforderlich"),
+  lastName: yup
+    .string()
+    .matches(/^[A-Za-z]+$/, "Nachname darf nur Buchstaben enthalten")
+    .required("Nachname ist erforderlich"),
+  position: yup
+    .string()
+    .matches(/^[A-Za-z]+$/, "Position darf nur Buchstaben enthalten"),
 });
 
 export const EmailChangeSchema = yup.object({
