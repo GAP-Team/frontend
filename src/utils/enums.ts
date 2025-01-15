@@ -19,3 +19,10 @@ export enum TENDER_FORM {
   CRAFTSMAN = "CRAFTSMAN",
   EXPERT = "EXPERT",
 }
+
+export enum TenderStatusEnum {
+  OPEN = "OPEN",
+  ACTIVE = "ACTIVE",
+  DONE = "DONE",
+  REVIEW_REQUIRED = "REVIEW_REQUIRED",
+}

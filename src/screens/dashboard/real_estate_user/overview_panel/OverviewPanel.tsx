@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import SectionTitle from "@/components/label/SectionTitle";
 import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
@@ -6,8 +6,39 @@ import StatisticsItem from "@/components/label/StatisticsItem";
 import ProjectCard from "./ProjectCard";
 import UserCard from "./UserCard";
 import DividerDecorator from "@/components/divider/DividerDecorator";
+import { useAppSelector } from "@/lib/hooks";
+import { Tender, BuildingTenders } from "../../tenders/tender_card/types";
+import { TenderStatusEnum } from "@/utils/enums";
 
 const OverviewPanel = (): JSX.Element => {
+  const tenders = useAppSelector((state) => state.tender.tenders);
+  const [totalOpenTenders, setTotalOpenTenders] = useState<number>(0);
+  const [totalActiveTenders, setTotalActiveTenders] = useState<number>(0);
+
+  useEffect(() => {
+    getDashboardTenderNumbers();
+  }, []);
+
+  const getDashboardTenderNumbers = (): void => {
+    let openTenders = 0;
+    let activeTenders = 0;
+
+    tenders?.map((building: BuildingTenders) => {
+      building?.tenders?.map((tender: Tender) => {
+        if (tender?.status === TenderStatusEnum.OPEN) {
+          openTenders = openTenders + 1;
+        }
+
+        if (tender?.status === TenderStatusEnum.ACTIVE) {
+          activeTenders = activeTenders + 1;
+        }
+      });
+    });
+
+    setTotalOpenTenders(openTenders);
+    setTotalActiveTenders(activeTenders);
+  };
+
   return (
     <>
       <SectionTitle
@@ -17,12 +48,15 @@ const OverviewPanel = (): JSX.Element => {
       <DividerDecorator />
       <Box sx={styles.statsSection}>
         <StatisticsItem
-          number="3"
+          number={totalOpenTenders}
           color="#FECB00"
-          text="aktive Ausschreibung"
+          text="offene Ausschreibungen"
         />
         <Divider orientation="vertical" flexItem sx={styles.dividerStats} />
-        <StatisticsItem number="11" text="laufende Projekte" />
+        <StatisticsItem
+          number={totalActiveTenders}
+          text="laufende Ausschreibungen"
+        />
       </Box>
       <SectionTitle
         text="Bald fällig"
