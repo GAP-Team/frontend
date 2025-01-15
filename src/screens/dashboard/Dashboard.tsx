@@ -7,12 +7,12 @@ import { MdOutlineDoorSliding, MdOutlineAddHomeWork } from "react-icons/md";
 
 import Layout from "./Layout";
 import Tenders from "./tenders/TendersOverview";
-import Buildings from "./buildings/building_card/Buildings";
+import BuildingOverview from "./buildings/BuildingOverview";
 import NewTender from "./tenders/add_tender_form/NewTender";
 import RealEstateUser from "./real_estate_user/RealEstateUser";
 import NewBuilding from "./buildings/add_building_form/NewBuilding";
 import { SidebarItem, SubItem } from "@/components/navigation/GSidebar/SideBar";
-import Facilities from "./facilities/facility_card/Facilities";
+import FacilityOverview from "./facilities/FacilityOverview";
 import NewFacility from "./facilities/add_facility_form/NewFacility";
 
 interface DashboardProps {
@@ -56,7 +56,7 @@ const Dashboard: React.FC<DashboardProps> = ({ overrideComponent }) => {
           id: 20,
           text: "Alle Anlagen",
           url: "facilities",
-          component: <Facilities />,
+          component: <FacilityOverview />,
         },
         {
           id: 21,
@@ -75,7 +75,7 @@ const Dashboard: React.FC<DashboardProps> = ({ overrideComponent }) => {
           id: 30,
           text: "Alle Gebäude",
           url: "buildings",
-          component: <Buildings />,
+          component: <BuildingOverview />,
         },
         {
           id: 31,

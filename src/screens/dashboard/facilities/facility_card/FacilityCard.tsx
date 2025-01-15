@@ -4,14 +4,17 @@ import Chip from "@mui/material/Chip";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
-import Icon from "@mui/material/Icon"; // or a specific icon component from @mui/icons-material
+import Icon from "@mui/material/Icon";
 import { BsClockFill } from "react-icons/bs";
 import SectionTitle from "@/components/label/SectionTitle";
 import { Facility } from "./types";
+import { useAppSelector } from "@/lib/hooks";
+import ActionMenu from "@/components/common/ActionMenu";
+import { useRouter } from "next/navigation";
+import { checkActiveTenderForFacility } from "@/lib/features/tenderSlice";
 
 interface FacilityCardProps {
   facility: Facility;
-  status: string;
 }
 const statusStyles: { [key: string]: { bgcolor: string; color: string } } = {
   aktiv: { bgcolor: "#96E9CB", color: "#056643" },
@@ -19,10 +22,28 @@ const statusStyles: { [key: string]: { bgcolor: string; color: string } } = {
   Nachprüfung: { bgcolor: "#FFE1D7", color: "#EB4444" },
 };
 
-const FacilityCard: React.FC<FacilityCardProps> = ({ facility, status }) => {
+const FacilityCard: React.FC<FacilityCardProps> = ({ facility }) => {
   const handleClick = (): void => {};
-
+  const router = useRouter();
+  const isFacilityActive = useAppSelector(
+    checkActiveTenderForFacility(facility?.id)
+  );
   const chipStyles = statusStyles[status] || statusStyles["aktiv"];
+
+  const checkUrgency = (): string => {
+    const monthsUntilCheck = facility.check.nextCheckInYearNumber * 12;
+
+    if (monthsUntilCheck > 6 && monthsUntilCheck < 12) {
+      return "orange";
+    } else if (monthsUntilCheck < 2) {
+      return "red";
+    }
+    return "";
+  };
+
+  const deleteFacility = (id: string): void => {
+    throw new Error("Function not implemented." + id);
+  };
 
   return (
     <Paper
@@ -32,10 +53,20 @@ const FacilityCard: React.FC<FacilityCardProps> = ({ facility, status }) => {
       style={{ cursor: "pointer" }}
     >
       <Box sx={styles.header}>
-        <Chip label="Aktiv" sx={{ ...chipStyles }} />
-        <Icon sx={{ color: "red" }}>
-          <BsClockFill />
-        </Icon>
+        {isFacilityActive && <Chip label={"aktiv"} sx={{ ...chipStyles }} />}
+        {checkUrgency() && (
+          <Icon sx={{ color: checkUrgency() }}>
+            <BsClockFill />
+          </Icon>
+        )}
+      </Box>
+      <Box sx={styles.actionMenu}>
+        <ActionMenu
+          itemId={facility?.id}
+          onEdit={(id) => router.push(`/real_estate/facility/edit/${id}`)}
+          onDelete={(id) => deleteFacility(id)}
+          messege={"dummy delete message"}
+        />
       </Box>
       <SectionTitle
         text={facility.name}
@@ -47,10 +78,10 @@ const FacilityCard: React.FC<FacilityCardProps> = ({ facility, status }) => {
       <Box sx={styles.tags}></Box>
       <Divider sx={styles.divider} orientation="horizontal" />
       <Typography variant="body2" sx={styles.subText}>
-        Prüfung in: {facility.nextCheckIn} Monaten
+        Prüfung in: {facility.check.nextCheckInYearNumber * 12} Monaten
       </Typography>
       <Typography variant="body2" sx={styles.subText}>
-        Wartung in: {facility.nextCheckIn} Tagen
+        Wartung in: {facility.maintenance.nextMaintenanceInMonth * 30} Tagen
       </Typography>
     </Paper>
   );
@@ -108,4 +139,5 @@ const styles = {
       mr: 0.5,
     },
   },
+  actionMenu: { display: "flex", justifyContent: "flex-end", width: "100%" },
 };

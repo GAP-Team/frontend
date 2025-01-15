@@ -32,7 +32,7 @@ import SectionTitle from "@/components/label/SectionTitle";
 import { addTenderValidationSchema } from "@/utils/ValidationSchema";
 import GProgressStepper from "@/components/stepper/GProgressStepper";
 import { getAllTenders } from "@/lib/features/tenderSlice";
-import { TENDER_FORM, Urgency } from "@/utils/enums";
+import { TENDER_FORM } from "@/utils/enums";
 
 const NewTender: React.FC<NewTenderProps> = ({ id }): JSX.Element => {
   const router = useRouter();
@@ -112,8 +112,7 @@ const NewTender: React.FC<NewTenderProps> = ({ id }): JSX.Element => {
       building: buildingObj,
       facility: facilityObj,
       toDate: values?.toDate,
-      urgency:
-        values?.urgency === "Dringend" ? Urgency.URGENT : values?.urgency,
+      urgency: values?.urgency,
       fromDate: values?.fromDate,
       clientName: values?.clientName,
       tenderForm: values?.tenderForm,

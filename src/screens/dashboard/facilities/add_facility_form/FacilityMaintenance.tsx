@@ -42,7 +42,7 @@ const FacilityMaintenance = (): JSX.Element => {
       <Grid container spacing={2}>
         <Grid item xs={6}>
           <Typography variant="gsub" color="gray.500">
-            LETZTE WARTUNG
+            LETZTE WARTUNG (Einschätzung)
           </Typography>
           <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="de">
             <Box mt={1} sx={{ width: "auto" }}>

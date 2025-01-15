@@ -1,21 +1,21 @@
 export interface RegistrationFormValues {
-  zip: string;
-  city: string;
-  role: string;
+  firstName: string;
+  lastName: string;
   email: string;
+  company: string;
+  telephone: string;
+  role: string;
   state: string;
   street: string;
-  company: string;
-  country: string;
   houseNo: string;
-  lastName: string;
+  city: string;
+  country: string;
+  zip: string;
   password: string;
-  telephone: string;
-  firstName: string;
-  businessType: string;
   confirmPassword: string;
+  businessType: string;
   registrationNumber: string;
-  approvalDocument: string | null | undefined;
-  businessRegistrationDocument: string | null | undefined;
-  landRegisterEntryDocument: string | null | undefined;
+  approvalDocument: string | null;
+  businessRegistrationDocument: string | null;
+  landRegisterEntryDocument: string | null;
 }

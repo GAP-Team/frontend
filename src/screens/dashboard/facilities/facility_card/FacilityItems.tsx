@@ -1,24 +1,32 @@
-import React from "react";
-import { Facility } from "./types";
+import React, { useEffect } from "react";
 import FacilityCard from "./FacilityCard";
 import Grid from "@mui/material/Grid";
 import Divider from "@mui/material/Divider";
+import { Facility } from "./types";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
+import {
+  fetchFacilities,
+  getFacilitiesByBuilding,
+} from "@/lib/features/facilitySlice";
 
 interface facilityListProps {
-  facilities: Facility[];
+  buildingId: string;
   itemsPerPage?: number;
 }
 
-const FacilityItems: React.FC<facilityListProps> = ({ facilities }) => {
+const FacilityItems: React.FC<facilityListProps> = ({ buildingId }) => {
+  const dispatch = useAppDispatch();
+  const facilities = useAppSelector(getFacilitiesByBuilding(buildingId));
+
+  useEffect(() => {
+    dispatch(fetchFacilities(buildingId));
+  }, [dispatch, buildingId]);
+
   return (
     <Grid container spacing={"1.25rem"} sx={{ overflow: "auto", flexGrow: 1 }}>
-      {facilities.map((facility, index) => (
+      {facilities?.map((facility: Facility, index: number) => (
         <Grid item key={index}>
-          <FacilityCard
-            key={facility.id}
-            facility={facility}
-            status="ausgeschrieben"
-          />
+          <FacilityCard key={facility.id} facility={facility} />
         </Grid>
       ))}
       <Divider variant="middle" orientation="horizontal" flexItem />

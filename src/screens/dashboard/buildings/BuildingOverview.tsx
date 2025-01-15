@@ -4,14 +4,14 @@ import Box from "@mui/material/Box";
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useAppDispatch } from "@/lib/hooks";
-import BuildingItemList from "./BuildingItemList";
+import BuildingContainer from "./building_card/BuildingContainer";
 import { currentUser } from "@/lib/features/userSlice";
 import addObjSrc from "@/../public/icons/add_building.svg";
 import NoContentPage from "@/components/common/NoContentPage";
 import PropertyFilterPanel from "@/components/filter/PropertyFilterPanel";
 import { fetchBuildings, getUserBuildings } from "@/lib/features/buildingSlice";
 
-const Buildings: React.FC = () => {
+const BuildingOverview: React.FC = () => {
   const dispatch = useAppDispatch();
   const user = useSelector(currentUser);
   const userBuildings = useSelector(getUserBuildings);
@@ -46,7 +46,7 @@ const Buildings: React.FC = () => {
 
   const buildingContent =
     userBuildings?.length > 0 ? (
-      <BuildingItemList buildings={userBuildings} />
+      <BuildingContainer buildings={userBuildings} />
     ) : (
       <NoContentPage
         image={addObjSrc}
@@ -69,7 +69,7 @@ const Buildings: React.FC = () => {
   );
 };
 
-export default Buildings;
+export default BuildingOverview;
 
 // Styles
 const styles = {

@@ -42,7 +42,7 @@ const FacilityCheck = (): JSX.Element => {
       <Grid container spacing={2}>
         <Grid item xs={6}>
           <Typography variant="gsub" color="gray.500">
-            LETZTE PRÜFUNG
+            LETZTE PRÜFUNG (Einschätzung)
           </Typography>
           <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="de">
             <DatePicker
