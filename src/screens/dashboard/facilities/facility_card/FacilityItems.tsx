@@ -4,6 +4,8 @@ import Grid from "@mui/material/Grid";
 import Divider from "@mui/material/Divider";
 import { Facility } from "./types";
 import buildingAPIs from "@/api/building";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
+import { fetchFacilities, getFacilitiesByBuilding } from "@/lib/features/facilitySlice";
 
 interface facilityListProps {
   buildingId: string;
@@ -11,15 +13,12 @@ interface facilityListProps {
 }
 
 const FacilityItems: React.FC<facilityListProps> = ({ buildingId }) => {
-  const [facilities, setFacilities] = useState<Facility[]>();
-
-  useEffect(() => {
-    const fetchData = async (): Promise<void> => {
-      const response = await buildingAPIs.getBuildingFacilities(buildingId);
-      setFacilities(response.data);
-    };
-    fetchData();
-  }, [buildingId]);
+  const dispatch = useAppDispatch();
+  const facilities = useAppSelector((state) => getFacilitiesByBuilding(state, buildingId));
+  
+   useEffect(() => {
+        dispatch(fetchFacilities(buildingId));
+    }, [dispatch, buildingId]);
 
   return (
     <Grid container spacing={"1.25rem"} sx={{ overflow: "auto", flexGrow: 1 }}>

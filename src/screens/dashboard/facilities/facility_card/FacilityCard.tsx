@@ -9,7 +9,6 @@ import { BsClockFill } from "react-icons/bs";
 import SectionTitle from "@/components/label/SectionTitle";
 import { Facility } from "./types";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
-import { fetchFacilityTenders } from "@/lib/features/facilitySlice";
 import ActionMenu from "@/components/common/ActionMenu";
 import { useRouter } from "next/navigation";
 
@@ -30,9 +29,6 @@ const FacilityCard: React.FC<FacilityCardProps> = ({ facility }) => {
 
   const chipStyles = statusStyles[status] || statusStyles["aktiv"];
 
-  useEffect(() => {
-    dispatch(fetchFacilityTenders(facility.id));
-  }, [dispatch]);
 
   const checkStatus = (): string => {
     for (const tender of tenders || []) {
