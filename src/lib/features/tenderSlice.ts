@@ -108,4 +108,13 @@ export const currentTenderNumbers = (state: RootState): number =>
 export const getAllTenders = (state: RootState): Tender[] =>
   state.tender.tendersList;
 
+export const checkActiveTenderForFacility =
+  (facilityId: string) =>
+  (state: RootState): boolean => {
+    const { tenderList } = state.tender;
+    return tenderList
+      .filter((tender: Tender) => tender.facility.id === facilityId)
+      .some((tender: Tender) => tender.status === "ACTIVE");
+  };
+
 export default tenderSlice.reducer;
