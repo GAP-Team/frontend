@@ -7,6 +7,7 @@ import TenderTitleBar from "./TenderTitleBar";
 import Paper from "@mui/material/Paper";
 import TenderSummarySection from "./TenderSummarySection";
 import ApplicationCard from "./ApplicationCard";
+import { Facility } from "../../facilities/facility_card/types";
 
 interface TenderDetailsProps {
   tenderId: string;
@@ -15,12 +16,14 @@ interface TenderDetailsProps {
 const TenderDetails: React.FC<TenderDetailsProps> = ({ tenderId }) => {
   // Fetch tender details by ID
   const tender = useAppSelector(selectTenderById(tenderId));
-
+  const { facilities } = useAppSelector((state) => state.facility);
+  const subcategory = facilities.find((facility: Facility) => facility.id === tender?.facility?.id)?.subcategory;
+  
   return (
     <Grid container component="main">
       <TenderTitleBar
         title={tender?.tenderType}
-        subTitle={tender?.facility.name}
+        subTitle={subcategory || tender?.facility.name}
       />
       <Grid container spacing={2} mx={1} columns={18}>
         <Grid item xs={8}>

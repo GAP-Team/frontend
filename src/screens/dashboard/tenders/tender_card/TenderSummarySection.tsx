@@ -9,6 +9,8 @@ import { useRouter } from "next/navigation";
 import LabelText from "@/components/label/LabelText";
 import { Tender } from "./types";
 import { TENDER_FORM } from "@/utils/enums";
+import { useAppSelector } from "@/lib/hooks";
+import { Facility } from "../../facilities/facility_card/types";
 
 interface TenderSummarySectionProps {
   tender?: Tender | null;
@@ -18,6 +20,8 @@ const TenderSummarySection: React.FC<TenderSummarySectionProps> = ({
   tender,
 }) => {
   const router = useRouter();
+  const { facilities } = useAppSelector((state) => state.facility);
+  const subcategory = facilities.find((facility: Facility)=>facility.id === tender?.facility?.id)?.subcategory;
 
   // Prepare summary data
   const summaryData = [
@@ -32,7 +36,7 @@ const TenderSummarySection: React.FC<TenderSummarySectionProps> = ({
     { label: "Ausschreibungstyp", value: tender?.tenderType },
     { label: "Objekt", value: tender?.building.name },
     { label: "Anlage", value: tender?.facility.name },
-    { label: "Anlagetyp", value: tender?.tenderType },
+    { label: "Anlagetyp", value: subcategory },
     { label: "Dringlichkeit", value: tender?.urgency },
     {
       label: "Verfügbares Zeitfenster",
