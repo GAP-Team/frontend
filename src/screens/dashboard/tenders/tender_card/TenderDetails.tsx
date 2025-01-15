@@ -1,5 +1,7 @@
 "use client";
-import React, { memo, useEffect, useState } from "react";
+import React, { memo } from "react";
+import { useAppSelector } from "@/lib/hooks";
+import { selectTenderById } from "@/lib/features/tenderSlice";
 import Grid from "@mui/material/Grid";
 import TenderTitleBar from "./TenderTitleBar";
 import Paper from "@mui/material/Paper";
@@ -11,35 +13,31 @@ interface TenderDetailsProps {
 }
 
 const TenderDetails: React.FC<TenderDetailsProps> = ({ id }) => {
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 8000);
-
-    return (): void => clearTimeout(timer);
-  }, []);
+  // Fetch tender details by ID
+  const tender = useAppSelector((state) => selectTenderById(state, id));
 
   return (
     <Grid container component="main">
-      <TenderTitleBar title="title" projectId="projectId" location="location" />
+      <TenderTitleBar
+        title={tender?.tenderType}
+        subTitle={tender?.facility.name}
+      />
       <Grid container spacing={2} mx={1} columns={18}>
         <Grid item xs={8}>
           <Paper sx={{ maxWidth: "false", width: "100%", p: "1.25rem" }}>
-            <TenderSummarySection id={id} />
+            <TenderSummarySection tender={tender} />
           </Paper>
         </Grid>
         <Grid item xs={8}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
-              <ApplicationCard loading={loading} />
+              <ApplicationCard />
             </Grid>
             <Grid item xs={12}>
-              <ApplicationCard loading={loading} />
+              <ApplicationCard />
             </Grid>
             <Grid item xs={12}>
-              <ApplicationCard loading={loading} />
+              <ApplicationCard />
             </Grid>
           </Grid>
         </Grid>

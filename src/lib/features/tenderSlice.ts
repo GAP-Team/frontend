@@ -5,7 +5,6 @@ import {
   BuildingTenders,
 } from "@/screens/dashboard/tenders/tender_card/types";
 import userAPIs from "@/api/user";
-
 interface TenderState {
   numOfTenders: number;
   tenders: BuildingTenders[];
@@ -107,6 +106,19 @@ export const currentTenderNumbers = (state: RootState): number =>
   state.tender.numOfTenders;
 export const getAllTenders = (state: RootState): Tender[] =>
   state.tender.tendersList;
+
+export const selectTenderById = (
+  state: RootState,
+  tenderId: string
+): Tender | null => {
+  for (const building of state.tender.tenders) {
+    const tender = building.tenders.find(
+      (tender: Tender) => tender.id === tenderId
+    );
+    if (tender) return tender;
+  }
+  return null;
+};
 
 export const checkActiveTenderForFacility =
   (facilityId: string) =>
