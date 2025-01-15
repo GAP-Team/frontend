@@ -10,7 +10,6 @@ import TextField from "@mui/material/TextField";
 import { useAppSelector, useAppDispatch } from "@/lib/hooks";
 import { showSnackbar } from "@/components/root-snackbar";
 import { updateUserProfile } from "@/lib/features/userSlice";
-import { USER_ROLE } from "@/utils/enums";
 import { UserProfileSchema } from "@/utils/ValidationSchema";
 
 const UserProfile = (): JSX.Element => {
@@ -20,19 +19,34 @@ const UserProfile = (): JSX.Element => {
     initialValues: {
       firstName: user?.firstName,
       lastName: user?.lastName,
-      position: user?.role,
+      position: user?.position,
     },
     validationSchema: UserProfileSchema,
     onSubmit: async (values) => {
+      const changedFields = Object.entries(values).reduce<
+        Record<string, string>
+      >((acc, [key, value]) => {
+        if (value !== formik.initialValues[key as keyof typeof values]) {
+          acc[key] = value;
+        }
+        return acc;
+      }, {});
+
+      if (!Object.keys(changedFields).length) {
+        dispatch(
+          showSnackbar({
+            type: "info",
+            message: "Es gibt keine Änderungen zum Speichern.",
+          })
+        );
+        return;
+      }
+
       try {
         await dispatch(
           updateUserProfile({
             id: user.id,
-            data: {
-              firstName: values.firstName,
-              lastName: values.lastName,
-              role: values.position,
-            },
+            data: changedFields,
           })
         ).unwrap();
 
@@ -128,18 +142,13 @@ const UserProfile = (): JSX.Element => {
           <TextField
             label="Position"
             name="position"
-            value={
-              formik.values.position === USER_ROLE.REAL_ESTATE_OWNER
-                ? "Immobilienbesitzer"
-                : "Dienstleister"
-            }
+            value={formik.values.position}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             error={formik.touched.position && Boolean(formik.errors.position)}
             helperText={
               formik.touched.position && formik.errors.position?.toString()
             }
-            disabled
             fullWidth
           />
         </Grid>

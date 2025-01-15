@@ -35,6 +35,7 @@ interface UserState {
   firstName: string;
   buildingIds: string[];
   manufacturerExperience: string;
+  position: string;
 }
 
 const initialState: UserState = {
@@ -62,6 +63,7 @@ const initialState: UserState = {
   firstName: "",
   buildingIds: [],
   manufacturerExperience: "",
+  position: "",
 };
 
 export const updateUserProfile = createAsyncThunk(
