@@ -69,50 +69,6 @@ const TenderSummarySection: React.FC<TenderSummarySectionProps> = ({
     router.push(`/real_estate/tenders/edit/${tender?.id}`);
   };
 
-  // Prepare summary data
-  const summaryData = [
-    { label: "Name des Auftraggebers", value: tender?.clientName },
-    {
-      label: "Ausschreibungsart",
-      value:
-        tender?.tenderForm === TENDER_FORM.CRAFTSMAN
-          ? "Handwerker"
-          : "Sachverständigen",
-    },
-    { label: "Ausschreibungstyp", value: tender?.tenderType },
-    { label: "Objekt", value: tender?.building.name },
-    { label: "Anlage", value: tender?.facility.name },
-    { label: "Anlagetyp", value: tender?.tenderType },
-    { label: "Dringlichkeit", value: tender?.urgency },
-    {
-      label: "Verfügbares Zeitfenster",
-      value:
-        tender?.fromDate &&
-        tender?.toDate &&
-        `${new Date(tender?.fromDate).toLocaleDateString()} - ${new Date(
-          tender?.toDate
-        ).toLocaleDateString()}`,
-    },
-    {
-      label: "Detailbeschreibung",
-      value: tender?.detailDescription
-        ? `${tender?.detailDescription.substring(0, 60)}...`
-        : "",
-    },
-    {
-      label: "Sicherheit Arbeit erforderlich",
-      value: tender?.safetyWorkRequired ? "Ja" : "Nein",
-    },
-    {
-      label: "Kostenlose Parkplätze",
-      value: tender?.freeParkingAvailable ? "Ja" : "Nein",
-    },
-  ].filter((item) => item.value);
-
-  const editHandler = (): void => {
-    router.push(`/real_estate/tenders/edit/${tender?.id}`);
-  };
-
   const backHandler = (): void => {
     router.push("/real_estate/tenders");
   };
