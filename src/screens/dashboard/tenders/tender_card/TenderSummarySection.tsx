@@ -21,7 +21,9 @@ const TenderSummarySection: React.FC<TenderSummarySectionProps> = ({
 }) => {
   const router = useRouter();
   const { facilities } = useAppSelector((state) => state.facility);
-  const subcategory = facilities.find((facility: Facility)=>facility.id === tender?.facility?.id)?.subcategory;
+  const subcategory = facilities.find(
+    (facility: Facility) => facility.id === tender?.facility?.id
+  )?.subcategory;
 
   // Prepare summary data
   const summaryData = [

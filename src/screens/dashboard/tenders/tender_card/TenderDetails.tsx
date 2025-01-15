@@ -17,8 +17,10 @@ const TenderDetails: React.FC<TenderDetailsProps> = ({ tenderId }) => {
   // Fetch tender details by ID
   const tender = useAppSelector(selectTenderById(tenderId));
   const { facilities } = useAppSelector((state) => state.facility);
-  const subcategory = facilities.find((facility: Facility) => facility.id === tender?.facility?.id)?.subcategory;
-  
+  const subcategory = facilities.find(
+    (facility: Facility) => facility.id === tender?.facility?.id
+  )?.subcategory;
+
   return (
     <Grid container component="main">
       <TenderTitleBar

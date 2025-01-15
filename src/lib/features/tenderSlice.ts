@@ -107,8 +107,11 @@ export const currentTenderNumbers = (state: RootState): number =>
 export const getAllTenders = (state: RootState): Tender[] =>
   state.tender.tendersList;
 
-export const selectTenderById = (tenderId: string) => (state: RootState): Tender | null =>
-  state.tender.tenderList.find((tender: Tender) => tender.id === tenderId) ?? null;
+export const selectTenderById =
+  (tenderId: string) =>
+  (state: RootState): Tender | null =>
+    state.tender.tenderList.find((tender: Tender) => tender.id === tenderId) ??
+    null;
 
 export const checkActiveTenderForFacility =
   (facilityId: string) =>
