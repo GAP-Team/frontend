@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import FacilityCard from "./FacilityCard";
 import Grid from "@mui/material/Grid";
 import Divider from "@mui/material/Divider";
 import { Facility } from "./types";
-import buildingAPIs from "@/api/building";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import {
   fetchFacilities,

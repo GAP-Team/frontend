@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Paper from "@mui/material/Paper";
 import Chip from "@mui/material/Chip";
 import Typography from "@mui/material/Typography";
@@ -8,7 +8,7 @@ import Icon from "@mui/material/Icon";
 import { BsClockFill } from "react-icons/bs";
 import SectionTitle from "@/components/label/SectionTitle";
 import { Facility } from "./types";
-import { useAppDispatch, useAppSelector } from "@/lib/hooks";
+import { useAppSelector } from "@/lib/hooks";
 import ActionMenu from "@/components/common/ActionMenu";
 import { useRouter } from "next/navigation";
 import { checkActiveTenderForFacility } from "@/lib/features/tenderSlice";
