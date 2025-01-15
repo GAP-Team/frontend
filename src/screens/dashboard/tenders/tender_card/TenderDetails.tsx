@@ -9,12 +9,12 @@ import TenderSummarySection from "./TenderSummarySection";
 import ApplicationCard from "./ApplicationCard";
 
 interface TenderDetailsProps {
-  id: string;
+  tenderId: string;
 }
 
-const TenderDetails: React.FC<TenderDetailsProps> = ({ id }) => {
+const TenderDetails: React.FC<TenderDetailsProps> = ({ tenderId }) => {
   // Fetch tender details by ID
-  const tender = useAppSelector((state) => selectTenderById(state, id));
+  const tender = useAppSelector(selectTenderById(tenderId));
 
   return (
     <Grid container component="main">
