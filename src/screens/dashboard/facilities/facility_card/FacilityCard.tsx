@@ -11,6 +11,7 @@ import { Facility } from "./types";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import ActionMenu from "@/components/common/ActionMenu";
 import { useRouter } from "next/navigation";
+import { checkActiveTenderForFacility } from "@/lib/features/tenderSlice";
 
 interface FacilityCardProps {
   facility: Facility;
@@ -23,21 +24,11 @@ const statusStyles: { [key: string]: { bgcolor: string; color: string } } = {
 
 const FacilityCard: React.FC<FacilityCardProps> = ({ facility }) => {
   const handleClick = (): void => {};
-  const { tenders } = useAppSelector((state) => state.tender);
-  const dispatch = useAppDispatch();
   const router = useRouter();
-
+  const isFacilityActive = useAppSelector(
+    checkActiveTenderForFacility(facility?.id)
+  );
   const chipStyles = statusStyles[status] || statusStyles["aktiv"];
-
-
-  const checkStatus = (): string => {
-    for (const tender of tenders || []) {
-      if (tender.status === "active") {
-        return "aktiv";
-      }
-    }
-    return "";
-  };
 
   const checkUrgency = (): string => {
     const monthsUntilCheck = facility.check.nextCheckInYearNumber * 12;
@@ -62,7 +53,7 @@ const FacilityCard: React.FC<FacilityCardProps> = ({ facility }) => {
       style={{ cursor: "pointer" }}
     >
       <Box sx={styles.header}>
-        {checkStatus() && <Chip label={checkStatus()} sx={{ ...chipStyles }} />}
+        {isFacilityActive && <Chip label={"aktiv"} sx={{ ...chipStyles }} />}
         {checkUrgency() && (
           <Icon sx={{ color: checkUrgency() }}>
             <BsClockFill />
