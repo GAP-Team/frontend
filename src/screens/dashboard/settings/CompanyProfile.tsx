@@ -8,20 +8,26 @@ import { Button, RadioGroup, FormControlLabel, Radio } from "@mui/material";
 import GTextInput from "@/components/input/GTextInput";
 import GTextSelector from "@/components/input/GTextSelector";
 import Divider from "@mui/material/Divider";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
+import { germanStates } from "@/utils/Constants";
 
 const CompanyProfile = (): JSX.Element => {
+  const dispatch = useAppDispatch();
+  const user = useAppSelector((state) => state.user);
   const formik = useFormik({
     initialValues: {
-      companyName: "GAP | Gesetzliche Anlagen Prüfung",
+      companyName: user?.company?.name,
       logo: null,
-      country: "Deutschland",
-      state: "Baden-Württemberg",
-      street: "",
-      houseNumber: "",
-      zip: "",
-      city: "",
-      registration: null,
-      legalForm: "GmbH",
+      country: user?.company?.address?.country,
+      state: user?.company?.address?.state,
+      street: user?.company?.address?.street,
+      houseNumber: user?.company?.address?.houseNo,
+      zip: user?.company?.address?.zip,
+      city: user?.company?.address?.city,
+      registration: user?.company?.business?.registrationNumber,
+      phonenumber: user?.company?.phonenumber,
+      registrationNumber: user?.company?.business?.registrationNumber,
+      // legalForm: "GmbH",
     },
     onSubmit: (values) => {
       alert(JSON.stringify(values, null, 2));
@@ -30,9 +36,9 @@ const CompanyProfile = (): JSX.Element => {
 
   return (
     <form onSubmit={formik.handleSubmit}>
-      <Grid container spacing={2}>
+      <Grid container spacing={2.5}>
         {/* Firmenname */}
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={12} sm={3}>
           <Typography variant="subtitle1" sx={styles.sectionTitle}>
             Firmenname
           </Typography>
@@ -44,7 +50,7 @@ const CompanyProfile = (): JSX.Element => {
             Dies wird in Ihrem Profil angezeigt.
           </Typography>
         </Grid>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={12} sm={3}>
           <GTextInput
             id="companyName"
             name="companyName"
@@ -53,12 +59,8 @@ const CompanyProfile = (): JSX.Element => {
             onBlur={formik.handleBlur}
           />
         </Grid>
-        <Grid item xs={12}>
-          <Divider />
-        </Grid>
-
         {/* Unternehmenslogo */}
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={12} sm={3}>
           <Typography variant="subtitle1" sx={styles.sectionTitle}>
             Unternehmenslogo
           </Typography>
@@ -70,41 +72,33 @@ const CompanyProfile = (): JSX.Element => {
             Wählen Sie Ihr Firmenlogo und laden Sie es hoch.
           </Typography>
         </Grid>
-        <Grid item xs={12} sm={6}>
-          <Grid container alignItems="center" spacing={2}>
-            <Grid item>
-              <div style={styles.logoContainer}>
-                {formik.values.logo ? (
-                  <img
-                    src={formik.values.logo}
-                    alt="Logo"
-                    style={styles.logoImage}
-                  />
-                ) : (
-                  <Typography variant="caption" color="textSecondary">
-                    Logo
-                  </Typography>
-                )}
-              </div>
-            </Grid>
-            <Grid item>
-              <Button variant="outlined" component="label">
-                Klicken, um hochzuladen
-                <input
-                  type="file"
-                  hidden
-                  onChange={(e) =>
-                    formik.setFieldValue(
-                      "logo",
-                      e.target.files?.[0]
-                        ? URL.createObjectURL(e.target.files[0])
-                        : null
-                    )
-                  }
+        <Grid item xs={12} sm={3} justifyItems={'right'}>
+           
+              <Button variant="text" component="label" style={styles.logoContainer}>
+              {formik.values.logo ? (
+                <img
+                src={formik.values.logo}
+                alt="Logo"
+                style={styles.logoImage}
                 />
+              ) : (
+                <Typography variant="caption" color="textSecondary">
+                Logo
+                </Typography>
+              )}
+              <input
+                type="file"
+                hidden
+                onChange={(e) =>
+                formik.setFieldValue(
+                  "logo",
+                  e.target.files?.[0]
+                  ? URL.createObjectURL(e.target.files[0])
+                  : null
+                )
+                }
+              />
               </Button>
-            </Grid>
-          </Grid>
         </Grid>
 
         <Grid item xs={12}>
@@ -134,6 +128,7 @@ const CompanyProfile = (): JSX.Element => {
                 value={formik.values.country}
                 onChange={formik.handleChange}
                 options={[{ label: "Deutschland", value: "Deutschland" }]}
+                disabled
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -142,10 +137,7 @@ const CompanyProfile = (): JSX.Element => {
                 label="Bundesland"
                 value={formik.values.state}
                 onChange={formik.handleChange}
-                options={[
-                  { label: "Baden-Württemberg", value: "Baden-Württemberg" },
-                  { label: "Bayern", value: "Bayern" },
-                ]}
+                options={germanStates}
               />
             </Grid>
             <Grid item xs={12}>
@@ -214,14 +206,65 @@ const CompanyProfile = (): JSX.Element => {
         <Grid item xs={12}>
           <Divider />
         </Grid>
+                
+        {/* Telefonnummer */}
+        <Grid item xs={12} sm={3}>
+          <Typography variant="subtitle1" sx={styles.sectionTitle}>
+            Telefonnummer
+          </Typography>
+            <Typography
+            variant="body2"
+            color="textSecondary"
+            sx={styles.sectionDescription}
+            >
+            Dies wird Ihre Telefonnummer sein.
+            </Typography>
+        </Grid>
+        <Grid item xs={12} sm={3}>
+          <GTextInput
+            id="phonenumber"
+            name="phonenumber"
+            value={formik.values.phonenumber}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+          />
+        </Grid>
 
+        
+        <Grid item xs={12} sm={3}>
+            <Typography variant="subtitle1" sx={styles.sectionTitle}>
+            Handelsregisternummer
+            </Typography>
+            <Typography
+            variant="body2"
+            color="textSecondary"
+            sx={styles.sectionDescription}
+            >
+            Dies wird Ihre Handelsregisternummer sein.
+            </Typography>
+        </Grid>
+        <Grid item xs={12} sm={3}>
+          <GTextInput
+            id="registrationNumber"
+            name="registrationNumber"
+            value={formik.values.registrationNumber}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+          />
+        </Grid>
+
+        <Grid item xs={12}>
+          <Divider />
+        </Grid>
+
+        {/* Uncomment in V2 */}
         {/* Rechtliche Unternehmensform */}
-        <Grid item xs={12} sm={6}>
+        {/* <Grid item xs={12} sm={6}>
           <Typography variant="subtitle1" sx={styles.sectionTitle}>
             Rechtliche Unternehmensform
           </Typography>
-        </Grid>
-        <Grid item xs={12} sm={6}>
+        </Grid> */}
+        {/* <Grid item xs={12} sm={6}>
           <RadioGroup
             row
             id="legalForm"
@@ -240,11 +283,8 @@ const CompanyProfile = (): JSX.Element => {
             <FormControlLabel value="AG" control={<Radio />} label="AG" />
             <FormControlLabel value="KG" control={<Radio />} label="KG" />
           </RadioGroup>
-        </Grid>
+        </Grid> */}
 
-        <Grid item xs={12}>
-          <Divider />
-        </Grid>
 
         {/* Buttons */}
         <Grid item xs={12}>
@@ -280,7 +320,7 @@ const styles = {
     width: "80px",
     height: "80px",
     border: "1px dashed gray",
-    borderRadius: "8px",
+    borderRadius: "10px",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",

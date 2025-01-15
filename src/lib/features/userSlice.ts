@@ -16,6 +16,7 @@ interface UserAddress {
   street: string;
   country: string;
   houseNo: number;
+  city: string;
 }
 export interface UserBusiness {
   businessType: string;
@@ -51,6 +52,7 @@ const initialState: UserState = {
       street: "",
       country: "",
       houseNo: 0,
+      city: "",
     },
     business: {
       businessType: "",
