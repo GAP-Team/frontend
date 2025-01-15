@@ -1,23 +1,13 @@
 import Box from "@mui/material/Box";
 import TenderCard from "./TenderCard";
 import { Typography } from "@mui/material";
-import { useEffect } from "react";
 import { scrollBarStyles } from "@/components/scrollbar/Scrollbar";
 import { Urgency } from "@/utils/enums";
 import { BuildingTenders } from "../../tenders/tender_card/types";
-import { fetchTenders } from "@/lib/features/tenderSlice";
-import { useAppDispatch, useAppSelector } from "@/lib/hooks";
+import { useAppSelector } from "@/lib/hooks";
 
 const TenderCardList: React.FC = () => {
-  const dispatch = useAppDispatch();
-  const user = useAppSelector((state) => state.user);
   const tenders = useAppSelector((state) => state.tender.tenders);
-
-  useEffect(() => {
-    if (user?.id) {
-      dispatch(fetchTenders(user.id));
-    }
-  }, [user?.id, dispatch]);
 
   const renderSortedTenders = (
     tendersInBuilding: BuildingTenders[]

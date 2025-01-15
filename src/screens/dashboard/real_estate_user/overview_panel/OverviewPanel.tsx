@@ -6,40 +6,37 @@ import StatisticsItem from "@/components/label/StatisticsItem";
 import ProjectCard from "./ProjectCard";
 import UserCard from "./UserCard";
 import DividerDecorator from "@/components/divider/DividerDecorator";
-import { fetchTenders } from "@/lib/features/tenderSlice";
-import { useAppDispatch, useAppSelector } from "@/lib/hooks";
+import { useAppSelector } from "@/lib/hooks";
 import { Tender, BuildingTenders } from "../../tenders/tender_card/types";
+import { TenderStatusEnum } from "@/utils/enums";
 
 const OverviewPanel = (): JSX.Element => {
-  const dispatch = useAppDispatch();
-  const user = useAppSelector((state) => state.user);
   const tenders = useAppSelector((state) => state.tender.tenders);
   const [totalOpenTenders, setTotalOpenTenders] = useState<number>(0);
   const [totalActiveTenders, setTotalActiveTenders] = useState<number>(0);
 
   useEffect(() => {
-    dispatch(fetchTenders(user.id));
     getDashboardTenderNumbers();
-  }, [user?.id, dispatch]);
+  }, []);
 
   const getDashboardTenderNumbers = (): void => {
     let openTenders = 0;
-    let actiiveTenders = 0;
+    let activeTenders = 0;
 
     tenders?.map((building: BuildingTenders) => {
       building?.tenders?.map((tender: Tender) => {
-        if (tender?.status === "OPEN") {
+        if (tender?.status === TenderStatusEnum.OPEN) {
           openTenders = openTenders + 1;
         }
 
-        if (tender?.status === "ACTIVE") {
-          actiiveTenders = actiiveTenders + 1;
+        if (tender?.status === TenderStatusEnum.ACTIVE) {
+          activeTenders = activeTenders + 1;
         }
       });
     });
 
     setTotalOpenTenders(openTenders);
-    setTotalActiveTenders(actiiveTenders);
+    setTotalActiveTenders(activeTenders);
   };
 
   return (
