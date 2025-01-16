@@ -4,23 +4,19 @@ import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 
 interface TenderTitleBarProps {
-  title: string;
-  projectId: string;
-  location: string;
+  title?: string;
+  subTitle?: string;
 }
 
-const TenderTitleBar: React.FC<TenderTitleBarProps> = ({
-  title,
-  projectId,
-  location,
-}) => {
+const TenderTitleBar: React.FC<TenderTitleBarProps> = ({ title, subTitle }) => {
   return (
     <Container maxWidth={false} sx={styles.container}>
-      <Typography sx={styles.titleTypography}>{title} • &nbsp;</Typography>
-      <Typography sx={styles.desTypography}>
-        {projectId} <span style={{ color: "black" }}>•</span> &nbsp;
-      </Typography>
-      <Typography sx={styles.desTypography}>{location}</Typography>
+      {title && (
+        <Typography sx={styles.titleTypography}>{title} • &nbsp;</Typography>
+      )}
+      {subTitle && (
+        <Typography sx={styles.desTypography}>{subTitle}</Typography>
+      )}
     </Container>
   );
 };

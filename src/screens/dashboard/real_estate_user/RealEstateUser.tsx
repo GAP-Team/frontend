@@ -1,12 +1,22 @@
-import * as React from "react";
+import React, { useEffect } from "react";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import OverviewPanel from "./overview_panel/OverviewPanel";
 import AssignmentsPanel from "./tenders_panel/TendersPanel";
 import ApplicationsPanel from "./applications_panel/ApplicationsPanel";
 import NewsPanel from "./communication_panel/NewsPanel";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
+import { fetchTenders } from "@/lib/features/tenderSlice";
 
 export default function RealEstateUser(): JSX.Element {
+  const dispatch = useAppDispatch();
+  const user = useAppSelector((state) => state.user);
+  useEffect(() => {
+    if (user?.id) {
+      dispatch(fetchTenders(user.id));
+    }
+  }, [user?.id, dispatch]);
+
   return (
     <Grid container spacing={2} sx={styles.mainContainer} columns={16}>
       <Grid item xs={3}>

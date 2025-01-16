@@ -23,7 +23,7 @@ export default function DashboardPage(): JSX.Element {
       setIsUserVerified(true);
     }
     if (checkIsLoggedIn() && getIsUserVerified() !== "true") {
-      router.push("/real_estate/user_verify");
+      router.push("/user_verify");
     }
   };
 

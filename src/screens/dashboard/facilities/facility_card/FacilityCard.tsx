@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Paper from "@mui/material/Paper";
 import Chip from "@mui/material/Chip";
 import Typography from "@mui/material/Typography";
@@ -8,10 +8,10 @@ import Icon from "@mui/material/Icon";
 import { BsClockFill } from "react-icons/bs";
 import SectionTitle from "@/components/label/SectionTitle";
 import { Facility } from "./types";
-import { useAppDispatch, useAppSelector } from "@/lib/hooks";
-import { fetchFacilityTenders } from "@/lib/features/facilitySlice";
+import { useAppSelector } from "@/lib/hooks";
 import ActionMenu from "@/components/common/ActionMenu";
 import { useRouter } from "next/navigation";
+import { checkActiveTenderForFacility } from "@/lib/features/tenderSlice";
 
 interface FacilityCardProps {
   facility: Facility;
@@ -24,24 +24,11 @@ const statusStyles: { [key: string]: { bgcolor: string; color: string } } = {
 
 const FacilityCard: React.FC<FacilityCardProps> = ({ facility }) => {
   const handleClick = (): void => {};
-  const { tenders } = useAppSelector((state) => state.tender);
-  const dispatch = useAppDispatch();
   const router = useRouter();
-
+  const isFacilityActive = useAppSelector(
+    checkActiveTenderForFacility(facility?.id)
+  );
   const chipStyles = statusStyles[status] || statusStyles["aktiv"];
-
-  useEffect(() => {
-    dispatch(fetchFacilityTenders(facility.id));
-  }, [dispatch]);
-
-  const checkStatus = (): string => {
-    for (const tender of tenders || []) {
-      if (tender.status === "active") {
-        return "aktiv";
-      }
-    }
-    return "";
-  };
 
   const checkUrgency = (): string => {
     const monthsUntilCheck = facility.check.nextCheckInYearNumber * 12;
@@ -66,7 +53,7 @@ const FacilityCard: React.FC<FacilityCardProps> = ({ facility }) => {
       style={{ cursor: "pointer" }}
     >
       <Box sx={styles.header}>
-        {checkStatus() && <Chip label={checkStatus()} sx={{ ...chipStyles }} />}
+        {isFacilityActive && <Chip label={"aktiv"} sx={{ ...chipStyles }} />}
         {checkUrgency() && (
           <Icon sx={{ color: checkUrgency() }}>
             <BsClockFill />
