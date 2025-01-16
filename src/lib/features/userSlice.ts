@@ -6,9 +6,9 @@ import userAPIs from "@/api/user";
 interface Company {
   name: string;
   phonenumber: number;
-  numberOfEmployees: number;
-  address: UserAddress;
-  business: UserBusiness;
+  numberOfEmployees?: number;
+  address: Partial<UserAddress>;
+  business?: Partial<UserBusiness>;
 }
 interface UserAddress {
   zip: number;
@@ -31,7 +31,7 @@ interface UserState {
   id: string;
   role: string;
   email: string;
-  company: Company;
+  company: Partial<Company>;
   lastName: string;
   firstName: string;
   buildingIds: string[];

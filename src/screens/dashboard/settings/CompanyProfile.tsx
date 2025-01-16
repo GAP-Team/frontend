@@ -4,12 +4,20 @@ import React from "react";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import { useFormik } from "formik";
-import { Button, RadioGroup, FormControlLabel, Radio } from "@mui/material";
+import Button from "@mui/material/Button";
 import GTextInput from "@/components/input/GTextInput";
 import GTextSelector from "@/components/input/GTextSelector";
 import Divider from "@mui/material/Divider";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { germanStates } from "@/utils/Constants";
+import { CompanyProfileSchema } from "@/utils/ValidationSchema";
+import FormControl from "@mui/material/FormControl";
+import FormHelperText from "@mui/material/FormHelperText";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import Select  from "@mui/material/Select";
+import { showSnackbar } from "@/components/root-snackbar";
+import { updateUserProfile } from "@/lib/features/userSlice";
 
 const CompanyProfile = (): JSX.Element => {
   const dispatch = useAppDispatch();
@@ -24,13 +32,72 @@ const CompanyProfile = (): JSX.Element => {
       houseNumber: user?.company?.address?.houseNo,
       zip: user?.company?.address?.zip,
       city: user?.company?.address?.city,
-      registration: user?.company?.business?.registrationNumber,
       phonenumber: user?.company?.phonenumber,
       registrationNumber: user?.company?.business?.registrationNumber,
       // legalForm: "GmbH",
     },
-    onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+    validationSchema: CompanyProfileSchema,
+    onSubmit: async (values) => {
+      const changedFields = Object.entries(values).reduce<
+      Record<string, string>
+    >((acc, [key, value]) => {
+      if (value !== formik.initialValues[key as keyof typeof values]) {
+        acc[key] = value;
+      }
+      return acc;
+    }, {});
+
+    if (!Object.keys(changedFields).length) {
+      dispatch(
+        showSnackbar({
+          type: "info",
+          message: "Es gibt keine Änderungen zum Speichern.",
+        })
+      );
+      return;
+    }
+    const requestData = {
+      company: {
+        name: values.companyName,
+        phonenumber: values.phonenumber,
+        address: {
+          zip: values.zip,
+          city: values.city,
+          state: values.state,
+          street: values.street,
+          country: values.country,
+          houseNo: values.houseNumber,
+        },
+        business: {
+          registrationNumber: values.registrationNumber,
+        },
+      },
+    };
+      
+    try {
+      await dispatch(
+        updateUserProfile({
+          id: user.id,
+          data: requestData,
+        })
+      ).unwrap();
+
+      dispatch(
+        showSnackbar({
+          type: "success",
+          message: "Benutzerinformationen wurden erfolgreich aktualisiert.",
+        })
+      );
+    } catch {
+      dispatch(
+        showSnackbar({
+          type: "error",
+          message:
+            "Die Benutzerdaten konnten nicht aktualisiert werden. Bitte versuchen Sie es erneut.",
+        })
+      );
+    }
+      
     },
   });
 
@@ -57,6 +124,13 @@ const CompanyProfile = (): JSX.Element => {
             value={formik.values.companyName}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
+            error={
+              formik.touched.companyName && Boolean(formik.errors.companyName)
+            }
+            helperText={
+              formik.touched.companyName &&
+              formik.errors.companyName?.toString()
+            }
           />
         </Grid>
         {/* Unternehmenslogo */}
@@ -72,33 +146,32 @@ const CompanyProfile = (): JSX.Element => {
             Wählen Sie Ihr Firmenlogo und laden Sie es hoch.
           </Typography>
         </Grid>
-        <Grid item xs={12} sm={3} justifyItems={'right'}>
-           
-              <Button variant="text" component="label" style={styles.logoContainer}>
-              {formik.values.logo ? (
-                <img
+        <Grid item xs={12} sm={3} justifyItems={"right"}>
+          <Button variant="text" component="label" style={styles.logoContainer}>
+            {formik.values.logo ? (
+              <img
                 src={formik.values.logo}
                 alt="Logo"
                 style={styles.logoImage}
-                />
-              ) : (
-                <Typography variant="caption" color="textSecondary">
+              />
+            ) : (
+              <Typography variant="caption" color="textSecondary">
                 Logo
-                </Typography>
-              )}
-              <input
-                type="file"
-                hidden
-                onChange={(e) =>
+              </Typography>
+            )}
+            <input
+              type="file"
+              hidden
+              onChange={(e) =>
                 formik.setFieldValue(
                   "logo",
                   e.target.files?.[0]
-                  ? URL.createObjectURL(e.target.files[0])
-                  : null
+                    ? URL.createObjectURL(e.target.files[0])
+                    : null
                 )
-                }
-              />
-              </Button>
+              }
+            />
+          </Button>
         </Grid>
 
         <Grid item xs={12}>
@@ -120,7 +193,7 @@ const CompanyProfile = (): JSX.Element => {
           </Typography>
         </Grid>
         <Grid item xs={12} sm={6}>
-          <Grid container spacing={2}>
+          <Grid container spacing={4}>
             <Grid item xs={12} sm={6}>
               <GTextSelector
                 name="country"
@@ -132,13 +205,24 @@ const CompanyProfile = (): JSX.Element => {
               />
             </Grid>
             <Grid item xs={12} sm={6}>
-              <GTextSelector
+              <FormControl fullWidth error={formik.touched.state && Boolean(formik.errors.state)}>
+              <InputLabel id="state-label">Bundesland</InputLabel>
+              <Select
+                id="state"
                 name="state"
-                label="Bundesland"
                 value={formik.values.state}
                 onChange={formik.handleChange}
-                options={germanStates}
-              />
+              >
+                {germanStates.map((state) => (
+                <MenuItem key={state.value} value={state.value}>
+                  {state.label}
+                </MenuItem>
+                ))}
+              </Select>
+              {formik.touched.state && formik.errors.state && (
+                <FormHelperText>{formik.errors.state.toString()}</FormHelperText>
+              )}
+              </FormControl>
             </Grid>
             <Grid item xs={12}>
               <GTextInput
@@ -147,6 +231,10 @@ const CompanyProfile = (): JSX.Element => {
                 label="Straße"
                 value={formik.values.street}
                 onChange={formik.handleChange}
+                error={formik.touched.street && Boolean(formik.errors.street)}
+                helperText={
+                  formik.touched.street && formik.errors.street?.toString()
+                }
               />
             </Grid>
             <Grid item xs={6}>
@@ -156,6 +244,14 @@ const CompanyProfile = (): JSX.Element => {
                 label="Hausnr"
                 value={formik.values.houseNumber}
                 onChange={formik.handleChange}
+                error={
+                  formik.touched.houseNumber &&
+                  Boolean(formik.errors.houseNumber)
+                }
+                helperText={
+                  formik.touched.houseNumber &&
+                  formik.errors.houseNumber?.toString()
+                }
               />
             </Grid>
             <Grid item xs={6}>
@@ -165,6 +261,8 @@ const CompanyProfile = (): JSX.Element => {
                 label="PLZ"
                 value={formik.values.zip}
                 onChange={formik.handleChange}
+                error={formik.touched.zip && Boolean(formik.errors.zip)}
+                helperText={formik.touched.zip && formik.errors.zip?.toString()}
               />
             </Grid>
             <Grid item xs={12}>
@@ -174,6 +272,10 @@ const CompanyProfile = (): JSX.Element => {
                 label="Stadt/Ort"
                 value={formik.values.city}
                 onChange={formik.handleChange}
+                error={formik.touched.city && Boolean(formik.errors.city)}
+                helperText={
+                  formik.touched.city && formik.errors.city?.toString()
+                }
               />
             </Grid>
           </Grid>
@@ -206,19 +308,19 @@ const CompanyProfile = (): JSX.Element => {
         <Grid item xs={12}>
           <Divider />
         </Grid>
-                
+
         {/* Telefonnummer */}
         <Grid item xs={12} sm={3}>
           <Typography variant="subtitle1" sx={styles.sectionTitle}>
             Telefonnummer
           </Typography>
-            <Typography
+          <Typography
             variant="body2"
             color="textSecondary"
             sx={styles.sectionDescription}
-            >
+          >
             Dies wird Ihre Telefonnummer sein.
-            </Typography>
+          </Typography>
         </Grid>
         <Grid item xs={12} sm={3}>
           <GTextInput
@@ -227,21 +329,27 @@ const CompanyProfile = (): JSX.Element => {
             value={formik.values.phonenumber}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
+            error={
+              formik.touched.phonenumber && Boolean(formik.errors.phonenumber)
+            }
+            helperText={
+              formik.touched.phonenumber &&
+              formik.errors.phonenumber?.toString()
+            }
           />
         </Grid>
 
-        
         <Grid item xs={12} sm={3}>
-            <Typography variant="subtitle1" sx={styles.sectionTitle}>
+          <Typography variant="subtitle1" sx={styles.sectionTitle}>
             Handelsregisternummer
-            </Typography>
-            <Typography
+          </Typography>
+          <Typography
             variant="body2"
             color="textSecondary"
             sx={styles.sectionDescription}
-            >
+          >
             Dies wird Ihre Handelsregisternummer sein.
-            </Typography>
+          </Typography>
         </Grid>
         <Grid item xs={12} sm={3}>
           <GTextInput
@@ -250,6 +358,14 @@ const CompanyProfile = (): JSX.Element => {
             value={formik.values.registrationNumber}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
+            error={
+              formik.touched.registrationNumber &&
+              Boolean(formik.errors.registrationNumber)
+            }
+            helperText={
+              formik.touched.registrationNumber &&
+              formik.errors.registrationNumber?.toString()
+            }
           />
         </Grid>
 
@@ -284,7 +400,6 @@ const CompanyProfile = (): JSX.Element => {
             <FormControlLabel value="KG" control={<Radio />} label="KG" />
           </RadioGroup>
         </Grid> */}
-
 
         {/* Buttons */}
         <Grid item xs={12}>
