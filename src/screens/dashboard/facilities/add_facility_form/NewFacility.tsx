@@ -4,6 +4,7 @@ import {
   StepComponentProps,
   AddFacilityFormValues,
 } from "./types";
+import dayjs from "dayjs";
 import Link from "next/link";
 import Grid from "@mui/material/Grid";
 import { CgClose } from "react-icons/cg";
@@ -16,8 +17,8 @@ import { useAppDispatch } from "@/lib/hooks";
 import { Formik, FormikHelpers } from "formik";
 import AddFacilityForm from "./AddFacilityForm";
 import FacilitySummary from "./FacilitySummary";
+import { Document, SelectedFacilityData } from "../facility_card/types";
 import { DocumentTypes } from "@/utils/Constants";
-import { Facility } from "../facility_card/types";
 import React, { useEffect, useState } from "react";
 import PageTitle from "@/components/label/PageTitle";
 import { currentUser } from "@/lib/features/userSlice";
@@ -28,19 +29,22 @@ import { showSnackbar } from "@/components/root-snackbar";
 import SectionTitle from "@/components/label/SectionTitle";
 import FacilityDocumentation from "./FacilityDocumentation";
 import { handleUploadMultipleDoc } from "@/utils/uploadToS3";
-import dayjs from "dayjs";
 import { fetchBuildings } from "@/lib/features/buildingSlice";
 import GProgressStepper from "@/components/stepper/GProgressStepper";
 import { addFacilityValidationSchema } from "@/utils/ValidationSchema";
+import { getAllFacilities } from "@/lib/features/facilitySlice";
 
 interface NewFacilityProps {
   facilityId: string;
 }
 
-const NewFacility: React.FC<NewFacilityProps> = ({ facilityId }): JSX.Element => {
+const NewFacility: React.FC<NewFacilityProps> = ({
+  facilityId,
+}): JSX.Element => {
   const router = useRouter();
   const appDispatch = useAppDispatch();
   const user = useSelector(currentUser);
+  const facilities = useSelector(getAllFacilities);
 
   const steps: ActiveStepItem[] = [
     {
@@ -59,7 +63,7 @@ const NewFacility: React.FC<NewFacilityProps> = ({ facilityId }): JSX.Element =>
   const [loading, setLoading] = useState<boolean>(false);
   const [activeStep, setActiveStep] = useState<ActiveStepItem>(steps[0]);
   const [selectedFacilityDetails, setSelectedFacilityDetails] =
-      useState<Facility | null>();
+    useState<SelectedFacilityData | null>();
 
   const StepComponent = steps[activeStep.id]
     ?.component as React.ComponentType<StepComponentProps>;
@@ -70,16 +74,17 @@ const NewFacility: React.FC<NewFacilityProps> = ({ facilityId }): JSX.Element =>
     getUserBuildingDetails();
     setActionType("add");
 
-    if (facilityId != "") {
+    if (facilityId !== "") {
       setActionType("edit");
       getCurrentFacilityDetails(facilityId);
     }
   }, []);
 
-  const getCurrentFacilityDetails = async (id: string): Promise<void> => {
-    const facilityDetails = await facilityAPIs.getFacility(id);
-    console.log("facilityDetails: =>", facilityDetails?.data);    
-    setSelectedFacilityDetails(facilityDetails?.data);
+  const getCurrentFacilityDetails = (id: string): void => {
+    const facilityDetails: any = facilities?.find(
+      (facility: any) => id === facility.id
+    );
+    setSelectedFacilityDetails(facilityDetails);
   };
 
   const getUserBuildingDetails = async (): Promise<void> => {
@@ -117,10 +122,52 @@ const NewFacility: React.FC<NewFacilityProps> = ({ facilityId }): JSX.Element =>
     }
   };
 
-  const saveFacilityData = async (
-    values: AddFacilityFormValues,
-    docObjList: any[] = []
+  const uploadAllDocuments = async (
+    values: AddFacilityFormValues
   ): Promise<boolean> => {
+    setLoading(true);
+    const docObjList: any[] = [];
+
+    const uploadDocuments = async (
+      files: File[],
+      docType: string
+    ): Promise<void> => {
+      for (const file of files) {
+        if (file.hasOwnProperty("documentType")) {
+          docObjList.push(file);
+        } else {
+          const uploadedDoc = await handleUploadMultipleDoc(file);
+          uploadedDoc.documentType = docType;
+          docObjList.push(uploadedDoc);
+        }
+      }
+    };
+
+    await uploadDocuments(values.otherDocs, DocumentTypes.SONSTIGE);
+    await uploadDocuments(values.floorplanDocs, DocumentTypes.GRUNDRISSE);
+    await uploadDocuments(values.checkReports, DocumentTypes.BERICHTE);
+
+    try {
+      await handleSubmit(values, docObjList);
+      return true;
+    } catch {
+      appDispatch(
+        showSnackbar({
+          type: "error",
+          message:
+            "Die Anlage konnte nicht hinzugefügt oder bearbeitet werden. Bitte versuchen Sie es erneut!",
+        })
+      );
+      return false;
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSubmit = async (
+    values: AddFacilityFormValues,
+    docObjList: Document[] = []
+  ): Promise<void> => {
     let facilityData = {
       name: values?.name,
       facilityType: values?.facilityType,
@@ -163,59 +210,71 @@ const NewFacility: React.FC<NewFacilityProps> = ({ facilityId }): JSX.Element =>
       serverLink: values?.serverLink,
     };
 
-    const createFacilityResponse = await facilityAPIs.create(facilityData);
+    console.log("facilityData ==> ", facilityData);
 
-    if (createFacilityResponse?.data?.id) {
-      appDispatch(
-        showSnackbar({
-          type: "success",
-          message: "Anlage erfolgreich hinzugefügt!",
-        })
-      );
+    if (actionType === "add") {
+      const createResponse = await saveFacilityData(facilityData);
+
+      if (createResponse) {
+        appDispatch(
+          showSnackbar({
+            type: "success",
+            message: "Anlage erfolgreich hinzugefügt!",
+          })
+        );
+      } else {
+        appDispatch(
+          showSnackbar({
+            type: "error",
+            message: "Das Hinzufügen der Einrichtung ist fehlgeschlagen!",
+          })
+        );
+      }
+    } else {
+      const createResponse = selectedFacilityDetails?.id
+        ? await updateFacilityData(selectedFacilityDetails.id, facilityData)
+        : false;
+
+      if (createResponse) {
+        appDispatch(
+          showSnackbar({
+            type: "success",
+            message: "Anlage erfolgreich aktualisiert!",
+          })
+        );
+      } else {
+        appDispatch(
+          showSnackbar({
+            type: "error",
+            message: "Anlage update ist fehlgeschlagen",
+          })
+        );
+      }
     }
-
-    return true;
   };
 
-  const uploadAllDocuments = async (
-    values: AddFacilityFormValues
-  ): Promise<boolean> => {
-    setLoading(true);
-    const docObjList: any[] = [];
-
-    const uploadDocuments = async (
-      files: File[],
-      docType: string
-    ): Promise<void> => {
-      for (const file of files) {
-        if (file.hasOwnProperty("documentType")) {
-          docObjList.push(file);
-        } else {
-          const uploadedDoc = await handleUploadMultipleDoc(file);
-          uploadedDoc.documentType = docType;
-          docObjList.push(uploadedDoc);
-        }
-      }
-    };
-
-    await uploadDocuments(values.otherDocs, DocumentTypes.SONSTIGE);
-    await uploadDocuments(values.floorplanDocs, DocumentTypes.GRUNDRISSE);
-    await uploadDocuments(values.checkReports, DocumentTypes.BERICHTE);
-
-    try {
-      await saveFacilityData(values, docObjList);
+  const saveFacilityData = async (facilityData: any): Promise<boolean> => {
+    const createFacilityResponse = await facilityAPIs.create(facilityData);
+    if (createFacilityResponse?.data?.id) {
       return true;
-    } catch {
-      appDispatch(
-        showSnackbar({
-          type: "error",
-          message:
-            "Die Anlage konnte nicht hinzugefügt oder bearbeitet werden. Bitte versuchen Sie es erneut!",
-        })
-      );
+    } else {
       return false;
-    } finally {
-      setLoading(false);
+    }
+  };
+
+  const updateFacilityData = async (
+    facilityId: string,
+    facilityData: any
+  ): Promise<boolean> => {
+    const updateFacilityResponse = await facilityAPIs.update(
+      facilityId,
+      facilityData
+    );
+
+    if (updateFacilityResponse?.status === 200) {
+      return true;
+    } else {
+      return false;
     }
   };
 
@@ -223,27 +282,62 @@ const NewFacility: React.FC<NewFacilityProps> = ({ facilityId }): JSX.Element =>
     name: selectedFacilityDetails?.name || "",
     facilityType: selectedFacilityDetails?.facilityType || "",
     subcategory: selectedFacilityDetails?.subcategory || "",
-    isPublishAutomatically: selectedFacilityDetails?.check?.isPublishAutomatically || false,
-    publishAutomaticallyInMonths: selectedFacilityDetails?.check?.publishAutomaticallyInMonth || 0,
+    isPublishAutomatically:
+      selectedFacilityDetails?.check?.isPublishAutomatically || false,
+    publishAutomaticallyInMonths:
+      selectedFacilityDetails?.check?.publishAutomaticallyInMonth || 0,
     isReminderEnabled: false,
-    emailNotificationList:   ["", ""],
+    emailNotificationList:
+      selectedFacilityDetails?.check?.emailNotificationList &&
+      selectedFacilityDetails.check.emailNotificationList.length > 0
+        ? selectedFacilityDetails.check.emailNotificationList
+        : ["", ""],
     selectedBuilding: selectedFacilityDetails?.buildingId || "",
-    documentChoice: selectedFacilityDetails?.documentUploadType || "Jetzt hochladen Empfohlen",
-    checkReports: [],
-    floorplanDocs: [],
-    otherDocs: [],
+    documentChoice:
+      selectedFacilityDetails?.documentUploadType ||
+      "Jetzt hochladen Empfohlen",
+
+    checkReports:
+      selectedFacilityDetails?.documents?.filter(
+        (doc: any) => doc.documentType === "BERICHTE PRÜFEN"
+      ) || [],
+    floorplanDocs:
+      selectedFacilityDetails?.documents?.filter(
+        (doc: any) => doc.documentType === "GRUNDRISSE"
+      ) || [],
+    otherDocs:
+      selectedFacilityDetails?.documents?.filter(
+        (doc: any) => doc.documentType === "SONSTIGE"
+      ) || [],
+
     serverLink: selectedFacilityDetails?.serverLink || "",
-    isMaintenanceEmailNotificationEnable: selectedFacilityDetails?.maintenance?.isEmailNotificationEnable || false,
-    lastMaintenanceDate: selectedFacilityDetails?.maintenance?.lastMaintenanceDate ? dayjs(selectedFacilityDetails.maintenance.lastMaintenanceDate) : null,
-    nextMaintenanceInMonth: selectedFacilityDetails?.maintenance?.nextMaintenanceInMonth || 0,
-    isPublishMaintenanceAutomatically: selectedFacilityDetails?.maintenance?.isPublishAutomatically || false,
-    publishMaintenanceAutomaticallyInMonth: selectedFacilityDetails?.maintenance?.publishAutomaticallyInMonth || 0,
-    maintenanceReminderInMonth: selectedFacilityDetails?.maintenance?.reminderInMonth || 0,
-    maintenanceEmailNotificationList: selectedFacilityDetails?.check?.emailNotificationList || ["", ""],
-    lastCheckDate: selectedFacilityDetails?.check?.lastCheckDate ? dayjs(selectedFacilityDetails.check.lastCheckDate) : null,
-    nextCheckInYearNumber: selectedFacilityDetails?.check?.nextCheckInYearNumber || 0,
+    isMaintenanceEmailNotificationEnable:
+      selectedFacilityDetails?.maintenance?.isEmailNotificationEnable || false,
+    lastMaintenanceDate: selectedFacilityDetails?.maintenance
+      ?.lastMaintenanceDate
+      ? dayjs(selectedFacilityDetails.maintenance.lastMaintenanceDate)
+      : null,
+    nextMaintenanceInMonth:
+      selectedFacilityDetails?.maintenance?.nextMaintenanceInMonth || 0,
+    isPublishMaintenanceAutomatically:
+      selectedFacilityDetails?.maintenance?.isPublishAutomatically || false,
+    publishMaintenanceAutomaticallyInMonth:
+      selectedFacilityDetails?.maintenance?.publishAutomaticallyInMonth || 0,
+    maintenanceReminderInMonth:
+      selectedFacilityDetails?.maintenance?.reminderInMonth || 0,
+    maintenanceEmailNotificationList:
+      selectedFacilityDetails?.maintenance?.emailNotificationList &&
+      selectedFacilityDetails.maintenance.emailNotificationList.length > 0
+        ? selectedFacilityDetails.maintenance.emailNotificationList
+        : ["", ""],
+    lastCheckDate: selectedFacilityDetails?.check?.lastCheckDate
+      ? dayjs(selectedFacilityDetails.check.lastCheckDate)
+      : null,
+    nextCheckInYearNumber:
+      selectedFacilityDetails?.check?.nextCheckInYearNumber || 0,
     reminderInMonth: selectedFacilityDetails?.check?.reminderInMonth || 0,
-    isEmailNotificationEnable: selectedFacilityDetails?.check?.isEmailNotificationEnable || false,
+    isEmailNotificationEnable:
+      selectedFacilityDetails?.check?.isEmailNotificationEnable || false,
   };
 
   const formOrSuccessContent = isSubmitted ? (

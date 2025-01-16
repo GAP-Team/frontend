@@ -18,16 +18,21 @@ import LabelWithAsterisk from "@/components/label/LabelWithAsterisk";
 const FacilityInformation = (): JSX.Element => {
   const allBuildings = useSelector(getUserBuildings);
   const formik = useFormikContext<AddFacilityFormValues>();
-  console.log("formik?.values?.facilityType ==> ", formik?.values?.facilityType);
-  
+
   const [selectedFacilityType, setSelectedFacilityType] = useState<Item | null>(
     formik?.values?.facilityType
-      ? { label: formik.values.facilityType, value: formik.values.facilityType }
+      ? {
+          label: formik?.values?.facilityType,
+          value: formik?.values?.facilityType,
+        }
       : null
   );
   const [selectedSubCategory, setSelectedSubCategory] = useState<Item | null>(
     formik?.values?.subcategory
-      ? { label: formik.values.subcategory, value: formik.values.subcategory }
+      ? {
+          label: formik?.values?.subcategory,
+          value: formik?.values?.subcategory,
+        }
       : null
   );
   const [subCategoryOptions, setSubCategoryOptions] = useState<Item[]>([]);
