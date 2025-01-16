@@ -17,6 +17,7 @@ import { Formik, FormikHelpers } from "formik";
 import AddFacilityForm from "./AddFacilityForm";
 import FacilitySummary from "./FacilitySummary";
 import { DocumentTypes } from "@/utils/Constants";
+import { Facility } from "../facility_card/types";
 import React, { useEffect, useState } from "react";
 import PageTitle from "@/components/label/PageTitle";
 import { currentUser } from "@/lib/features/userSlice";
@@ -27,6 +28,7 @@ import { showSnackbar } from "@/components/root-snackbar";
 import SectionTitle from "@/components/label/SectionTitle";
 import FacilityDocumentation from "./FacilityDocumentation";
 import { handleUploadMultipleDoc } from "@/utils/uploadToS3";
+import dayjs from "dayjs";
 import { fetchBuildings } from "@/lib/features/buildingSlice";
 import GProgressStepper from "@/components/stepper/GProgressStepper";
 import { addFacilityValidationSchema } from "@/utils/ValidationSchema";
@@ -35,7 +37,7 @@ interface NewFacilityProps {
   facilityId: string;
 }
 
-const NewFacility: React.FC<NewFacilityProps> = ({}): JSX.Element => {
+const NewFacility: React.FC<NewFacilityProps> = ({ facilityId }): JSX.Element => {
   const router = useRouter();
   const appDispatch = useAppDispatch();
   const user = useSelector(currentUser);
@@ -52,9 +54,12 @@ const NewFacility: React.FC<NewFacilityProps> = ({}): JSX.Element => {
     { id: 4, stepName: "Zusammenfassung", component: FacilitySummary },
   ];
 
+  const [actionType, setActionType] = useState("add");
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [activeStep, setActiveStep] = useState<ActiveStepItem>(steps[0]);
+  const [selectedFacilityDetails, setSelectedFacilityDetails] =
+      useState<Facility | null>();
 
   const StepComponent = steps[activeStep.id]
     ?.component as React.ComponentType<StepComponentProps>;
@@ -63,7 +68,19 @@ const NewFacility: React.FC<NewFacilityProps> = ({}): JSX.Element => {
     setActiveStep(steps[0]);
     setIsSubmitted(false);
     getUserBuildingDetails();
+    setActionType("add");
+
+    if (facilityId != "") {
+      setActionType("edit");
+      getCurrentFacilityDetails(facilityId);
+    }
   }, []);
+
+  const getCurrentFacilityDetails = async (id: string): Promise<void> => {
+    const facilityDetails = await facilityAPIs.getFacility(id);
+    console.log("facilityDetails: =>", facilityDetails?.data);    
+    setSelectedFacilityDetails(facilityDetails?.data);
+  };
 
   const getUserBuildingDetails = async (): Promise<void> => {
     const query = {
@@ -203,30 +220,30 @@ const NewFacility: React.FC<NewFacilityProps> = ({}): JSX.Element => {
   };
 
   const initialValues: AddFacilityFormValues = {
-    name: "",
-    facilityType: "",
-    subcategory: "",
-    isPublishAutomatically: false,
-    publishAutomaticallyInMonths: 0,
+    name: selectedFacilityDetails?.name || "",
+    facilityType: selectedFacilityDetails?.facilityType || "",
+    subcategory: selectedFacilityDetails?.subcategory || "",
+    isPublishAutomatically: selectedFacilityDetails?.check?.isPublishAutomatically || false,
+    publishAutomaticallyInMonths: selectedFacilityDetails?.check?.publishAutomaticallyInMonth || 0,
     isReminderEnabled: false,
-    emailNotificationList: ["", ""],
-    selectedBuilding: "",
-    documentChoice: "Jetzt hochladen Empfohlen",
+    emailNotificationList:   ["", ""],
+    selectedBuilding: selectedFacilityDetails?.buildingId || "",
+    documentChoice: selectedFacilityDetails?.documentUploadType || "Jetzt hochladen Empfohlen",
     checkReports: [],
     floorplanDocs: [],
     otherDocs: [],
-    serverLink: "",
-    lastMaintenanceDate: null,
-    nextMaintenanceInMonth: 0,
-    isPublishMaintenanceAutomatically: false,
-    publishMaintenanceAutomaticallyInMonth: 0,
-    maintenanceReminderInMonth: 0,
-    maintenanceEmailNotificationList: ["", ""],
-    isMaintenanceEmailNotificationEnable: false,
-    lastCheckDate: null,
-    nextCheckInYearNumber: 0,
-    reminderInMonth: 0,
-    isEmailNotificationEnable: false,
+    serverLink: selectedFacilityDetails?.serverLink || "",
+    isMaintenanceEmailNotificationEnable: selectedFacilityDetails?.maintenance?.isEmailNotificationEnable || false,
+    lastMaintenanceDate: selectedFacilityDetails?.maintenance?.lastMaintenanceDate ? dayjs(selectedFacilityDetails.maintenance.lastMaintenanceDate) : null,
+    nextMaintenanceInMonth: selectedFacilityDetails?.maintenance?.nextMaintenanceInMonth || 0,
+    isPublishMaintenanceAutomatically: selectedFacilityDetails?.maintenance?.isPublishAutomatically || false,
+    publishMaintenanceAutomaticallyInMonth: selectedFacilityDetails?.maintenance?.publishAutomaticallyInMonth || 0,
+    maintenanceReminderInMonth: selectedFacilityDetails?.maintenance?.reminderInMonth || 0,
+    maintenanceEmailNotificationList: selectedFacilityDetails?.check?.emailNotificationList || ["", ""],
+    lastCheckDate: selectedFacilityDetails?.check?.lastCheckDate ? dayjs(selectedFacilityDetails.check.lastCheckDate) : null,
+    nextCheckInYearNumber: selectedFacilityDetails?.check?.nextCheckInYearNumber || 0,
+    reminderInMonth: selectedFacilityDetails?.check?.reminderInMonth || 0,
+    isEmailNotificationEnable: selectedFacilityDetails?.check?.isEmailNotificationEnable || false,
   };
 
   const formOrSuccessContent = isSubmitted ? (
