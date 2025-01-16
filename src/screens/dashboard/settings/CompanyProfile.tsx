@@ -15,7 +15,7 @@ import FormControl from "@mui/material/FormControl";
 import FormHelperText from "@mui/material/FormHelperText";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
-import Select  from "@mui/material/Select";
+import Select from "@mui/material/Select";
 import { showSnackbar } from "@/components/root-snackbar";
 import { updateUserProfile } from "@/lib/features/userSlice";
 
@@ -39,65 +39,64 @@ const CompanyProfile = (): JSX.Element => {
     validationSchema: CompanyProfileSchema,
     onSubmit: async (values) => {
       const changedFields = Object.entries(values).reduce<
-      Record<string, string>
-    >((acc, [key, value]) => {
-      if (value !== formik.initialValues[key as keyof typeof values]) {
-        acc[key] = value;
+        Record<string, string>
+      >((acc, [key, value]) => {
+        if (value !== formik.initialValues[key as keyof typeof values]) {
+          acc[key] = value;
+        }
+        return acc;
+      }, {});
+
+      if (!Object.keys(changedFields).length) {
+        dispatch(
+          showSnackbar({
+            type: "info",
+            message: "Es gibt keine Änderungen zum Speichern.",
+          })
+        );
+        return;
       }
-      return acc;
-    }, {});
-
-    if (!Object.keys(changedFields).length) {
-      dispatch(
-        showSnackbar({
-          type: "info",
-          message: "Es gibt keine Änderungen zum Speichern.",
-        })
-      );
-      return;
-    }
-    const requestData = {
-      company: {
-        name: values.companyName,
-        phonenumber: values.phonenumber,
-        address: {
-          zip: values.zip,
-          city: values.city,
-          state: values.state,
-          street: values.street,
-          country: values.country,
-          houseNo: values.houseNumber,
+      const requestData = {
+        company: {
+          name: values.companyName,
+          phonenumber: values.phonenumber,
+          address: {
+            zip: values.zip,
+            city: values.city,
+            state: values.state,
+            street: values.street,
+            country: values.country,
+            houseNo: values.houseNumber,
+          },
+          business: {
+            registrationNumber: values.registrationNumber,
+          },
         },
-        business: {
-          registrationNumber: values.registrationNumber,
-        },
-      },
-    };
-      
-    try {
-      await dispatch(
-        updateUserProfile({
-          id: user.id,
-          data: requestData,
-        })
-      ).unwrap();
+      };
 
-      dispatch(
-        showSnackbar({
-          type: "success",
-          message: "Benutzerinformationen wurden erfolgreich aktualisiert.",
-        })
-      );
-    } catch {
-      dispatch(
-        showSnackbar({
-          type: "error",
-          message:
-            "Die Benutzerdaten konnten nicht aktualisiert werden. Bitte versuchen Sie es erneut.",
-        })
-      );
-    }
-      
+      try {
+        await dispatch(
+          updateUserProfile({
+            id: user.id,
+            data: requestData,
+          })
+        ).unwrap();
+
+        dispatch(
+          showSnackbar({
+            type: "success",
+            message: "Benutzerinformationen wurden erfolgreich aktualisiert.",
+          })
+        );
+      } catch {
+        dispatch(
+          showSnackbar({
+            type: "error",
+            message:
+              "Die Benutzerdaten konnten nicht aktualisiert werden. Bitte versuchen Sie es erneut.",
+          })
+        );
+      }
     },
   });
 
@@ -205,23 +204,28 @@ const CompanyProfile = (): JSX.Element => {
               />
             </Grid>
             <Grid item xs={12} sm={6}>
-              <FormControl fullWidth error={formik.touched.state && Boolean(formik.errors.state)}>
-              <InputLabel id="state-label">Bundesland</InputLabel>
-              <Select
-                id="state"
-                name="state"
-                value={formik.values.state}
-                onChange={formik.handleChange}
+              <FormControl
+                fullWidth
+                error={formik.touched.state && Boolean(formik.errors.state)}
               >
-                {germanStates.map((state) => (
-                <MenuItem key={state.value} value={state.value}>
-                  {state.label}
-                </MenuItem>
-                ))}
-              </Select>
-              {formik.touched.state && formik.errors.state && (
-                <FormHelperText>{formik.errors.state.toString()}</FormHelperText>
-              )}
+                <InputLabel id="state-label">Bundesland</InputLabel>
+                <Select
+                  id="state"
+                  name="state"
+                  value={formik.values.state}
+                  onChange={formik.handleChange}
+                >
+                  {germanStates.map((state) => (
+                    <MenuItem key={state.value} value={state.value}>
+                      {state.label}
+                    </MenuItem>
+                  ))}
+                </Select>
+                {formik.touched.state && formik.errors.state && (
+                  <FormHelperText>
+                    {formik.errors.state.toString()}
+                  </FormHelperText>
+                )}
               </FormControl>
             </Grid>
             <Grid item xs={12}>

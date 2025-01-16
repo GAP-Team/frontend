@@ -15,6 +15,7 @@ export interface AddComponentFormProps {
   handleBack: () => void;
   handleNext: () => void;
   loading: boolean;
+  actionType: string;
 }
 
 export interface Item {

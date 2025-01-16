@@ -20,6 +20,7 @@ const AddBuildingForm = ({
   steps,
   activeStep,
   loading,
+  actionType,
   handleBack,
   handleNext,
   setActiveStep,
@@ -38,8 +39,14 @@ const AddBuildingForm = ({
   const formOrSuccessContent = isBeyondLastStep ? (
     !loading && (
       <SuccessPage
-        title="Objekt angelegt!"
-        primaryDescription="Objekt wurde erfolgreich angelegt"
+        title={
+          actionType === "edit" ? "Objekt aktualisiert!" : "Objekt angelegt!"
+        }
+        primaryDescription={
+          actionType === "edit"
+            ? "Objekt wurde erfolgreich aktualisiert"
+            : "Objekt wurde erfolgreich angelegt"
+        }
       />
     )
   ) : (
