@@ -10,12 +10,11 @@ import { useSelector } from "react-redux";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { fetchTenders } from "@/lib/features/tenderSlice";
 import { BuildingTenders } from "./tender_card/types";
-import { showSnackbar } from "@/components/root-snackbar";
 
 const TendersOverview: React.FC = () => {
   const user = useSelector(currentUser);
   const dispatch = useAppDispatch();
-  const { tenders, error, loading } = useAppSelector((state) => state.tender);
+  const { tenders } = useAppSelector((state) => state.tender);
 
   useEffect(() => {
     if (user?.id) {
@@ -36,16 +35,6 @@ const TendersOverview: React.FC = () => {
   );
 
   const tenderContent = (() => {
-    if (loading) return <div>Loading...</div>;
-    if (error) {
-      dispatch(
-        showSnackbar({
-          type: "error",
-          message:
-            "Ausschreibungen konnten nicht geladen werden. Bitte versuchen Sie es erneut!",
-        })
-      );
-    }
     return hasTenders ? (
       <TendersContainer buildings={tenders} />
     ) : (
