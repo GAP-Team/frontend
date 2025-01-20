@@ -4,7 +4,7 @@ import { MenuItem, Select } from "@mui/material";
 
 interface CustomSelectProps {
   name: string;
-  value: string;
+  value?: string;
   options: Item[];
   onChange: (selectedItem: any) => void;
 }

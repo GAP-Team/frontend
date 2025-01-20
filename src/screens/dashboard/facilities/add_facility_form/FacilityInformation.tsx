@@ -9,9 +9,9 @@ import { FormControl, MenuItem, Select } from "@mui/material";
 
 import { Item } from "../../types";
 import { AddFacilityFormValues } from "./types";
-import GTextInput from "@/components/input/GTextInput";
 import { listOfTrades } from "@/utils/Constants";
-import GTextSelector from "@/components/input/GTextSelector";
+import GTextInput from "@/components/input/GTextInput";
+import CustomSelect from "@/components/drop_down/CustomSelect";
 import { getUserBuildings } from "@/lib/features/buildingSlice";
 import LabelWithAsterisk from "@/components/label/LabelWithAsterisk";
 
@@ -19,22 +19,8 @@ const FacilityInformation = (): JSX.Element => {
   const allBuildings = useSelector(getUserBuildings);
   const formik = useFormikContext<AddFacilityFormValues>();
 
-  const [selectedFacilityType, setSelectedFacilityType] = useState<Item | null>(
-    formik?.values?.facilityType !== ""
-      ? {
-          label: formik?.values?.facilityType,
-          value: formik?.values?.facilityType,
-        }
-      : null
-  );
-  const [selectedSubCategory, setSelectedSubCategory] = useState<Item | null>(
-    formik?.values?.subcategory
-      ? {
-          label: formik?.values?.subcategory,
-          value: formik?.values?.subcategory,
-        }
-      : null
-  );
+  const [selectedFacilityType, setSelectedFacilityType] = useState<string>();
+  const [selectedSubCategory, setSelectedSubCategory] = useState<string>();
   const [subCategoryOptions, setSubCategoryOptions] = useState<Item[]>([]);
 
   const facilityTypeOptions = listOfTrades.map((trade) => ({
@@ -42,16 +28,18 @@ const FacilityInformation = (): JSX.Element => {
     value: trade.category,
   }));
 
-  const handleFacilityTypeSelect = (selectedItem: Item | null): void => {
-    setSelectedFacilityType(selectedItem);
+  const handleFacilityTypeSelect = (selectedItem: any): void => {
+    const selectedFacility = selectedItem.target.value;
+
+    setSelectedFacilityType(selectedFacility);
     formik?.setFieldValue(
       "facilityType",
-      selectedItem ? selectedItem.value : ""
+      selectedFacility ? selectedFacility : ""
     );
 
-    if (selectedItem) {
+    if (selectedFacility) {
       const selectedTrade = listOfTrades.find(
-        (trade) => trade.category === selectedItem.value
+        (trade) => trade.category === selectedFacility
       );
       if (selectedTrade) {
         setSubCategoryOptions(
@@ -62,15 +50,16 @@ const FacilityInformation = (): JSX.Element => {
       setSubCategoryOptions([]);
     }
 
-    setSelectedSubCategory(null);
+    setSelectedSubCategory("");
     formik?.setFieldValue("subcategory", "");
   };
 
-  const handleSubCategorySelect = (selectedItem: Item | null): void => {
-    setSelectedSubCategory(selectedItem);
+  const handleSubCategorySelect = (selectedItem: any): void => {
+    const selectedSubCategory = selectedItem.target.value;
+    setSelectedSubCategory(selectedSubCategory);
     formik?.setFieldValue(
       "subcategory",
-      selectedItem ? selectedItem.value : ""
+      selectedSubCategory ? selectedSubCategory : ""
     );
   };
 
@@ -96,38 +85,28 @@ const FacilityInformation = (): JSX.Element => {
 
         <Grid item xs={6}>
           <LabelWithAsterisk>ANLAGENART</LabelWithAsterisk>
-          <GTextSelector
-            name="facilityType"
-            options={facilityTypeOptions}
-            error={
-              formik?.touched?.facilityType &&
-              Boolean(formik?.errors?.facilityType)
-            }
-            helperText={
-              formik?.touched?.facilityType && formik?.errors?.facilityType
-            }
-            onChange={handleFacilityTypeSelect}
-            value={selectedFacilityType}
-          />
+          <FormControl fullWidth>
+            <CustomSelect
+              name={"buildingId"}
+              onChange={handleFacilityTypeSelect}
+              options={facilityTypeOptions}
+              value={selectedFacilityType}
+            />
+          </FormControl>
         </Grid>
 
         <Grid item xs={6}>
           <Typography variant="gsub" color="gray.500">
             ANLAGENTYP
           </Typography>
-          <GTextSelector
-            name="subcategory"
-            options={subCategoryOptions}
-            error={
-              formik?.touched?.subcategory &&
-              Boolean(formik?.errors?.subcategory)
-            }
-            helperText={
-              formik?.touched?.subcategory && formik?.errors?.subcategory
-            }
-            onChange={handleSubCategorySelect}
-            value={selectedSubCategory}
-          />
+          <FormControl fullWidth>
+            <CustomSelect
+              name={"buildingId"}
+              onChange={handleSubCategorySelect}
+              options={subCategoryOptions}
+              value={selectedSubCategory}
+            />
+          </FormControl>
         </Grid>
 
         <Grid item xs={12}>
