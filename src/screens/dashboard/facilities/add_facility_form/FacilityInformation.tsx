@@ -18,7 +18,6 @@ import LabelWithAsterisk from "@/components/label/LabelWithAsterisk";
 const FacilityInformation = (): JSX.Element => {
   const allBuildings = useSelector(getUserBuildings);
   const formik = useFormikContext<AddFacilityFormValues>();
-  console.log("formik?.values?.facilityType=> ", formik?.values?.facilityType);
 
   const [selectedFacilityType, setSelectedFacilityType] = useState<Item | null>(
     formik?.values?.facilityType !== ""
