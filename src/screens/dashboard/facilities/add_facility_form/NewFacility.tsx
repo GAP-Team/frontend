@@ -13,11 +13,9 @@ import { useSelector } from "react-redux";
 import { IconButton } from "@mui/material";
 import FacilityCheck from "./FacilityCheck";
 import { useRouter } from "next/navigation";
-import { useAppDispatch } from "@/lib/hooks";
 import { Formik, FormikHelpers } from "formik";
 import AddFacilityForm from "./AddFacilityForm";
 import FacilitySummary from "./FacilitySummary";
-import { Document, SelectedFacilityData } from "../facility_card/types";
 import { DocumentTypes } from "@/utils/Constants";
 import React, { useEffect, useState } from "react";
 import PageTitle from "@/components/label/PageTitle";
@@ -28,11 +26,13 @@ import SuccessPage from "@/components/common/SuccessPage";
 import { showSnackbar } from "@/components/root-snackbar";
 import SectionTitle from "@/components/label/SectionTitle";
 import FacilityDocumentation from "./FacilityDocumentation";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { handleUploadMultipleDoc } from "@/utils/uploadToS3";
 import { fetchBuildings } from "@/lib/features/buildingSlice";
 import GProgressStepper from "@/components/stepper/GProgressStepper";
 import { addFacilityValidationSchema } from "@/utils/ValidationSchema";
-import { getAllFacilities } from "@/lib/features/facilitySlice";
+import { Document, SelectedFacilityData } from "../facility_card/types";
+import { setFacilities } from "@/lib/features/facilitySlice";
 
 interface NewFacilityProps {
   facilityId: string;
@@ -44,7 +44,7 @@ const NewFacility: React.FC<NewFacilityProps> = ({
   const router = useRouter();
   const appDispatch = useAppDispatch();
   const user = useSelector(currentUser);
-  const facilities = useSelector(getAllFacilities);
+  const facilities = useAppSelector((state) => state.facility.facilities);
 
   const steps: ActiveStepItem[] = [
     {
@@ -76,11 +76,11 @@ const NewFacility: React.FC<NewFacilityProps> = ({
 
     if (facilityId !== "") {
       setActionType("edit");
-      getCurrentFacilityDetails(facilityId);
+      setCurrentFacilityDetails(facilityId);
     }
   }, []);
 
-  const getCurrentFacilityDetails = (id: string): void => {
+  const setCurrentFacilityDetails = (id: string): void => {
     const facilityDetails: any = facilities?.find(
       (facility: any) => id === facility.id
     );
@@ -169,6 +169,7 @@ const NewFacility: React.FC<NewFacilityProps> = ({
     docObjList: Document[] = []
   ): Promise<void> => {
     let facilityData = {
+      id: selectedFacilityDetails?.id || "",
       name: values?.name,
       facilityType: values?.facilityType,
       subcategory: values?.subcategory,
@@ -208,9 +209,8 @@ const NewFacility: React.FC<NewFacilityProps> = ({
       documents: docObjList,
       documentUploadType: values?.documentChoice,
       serverLink: values?.serverLink,
+      tenderIds: selectedFacilityDetails?.tenderIds || [],
     };
-
-    console.log("facilityData ==> ", facilityData);
 
     if (actionType === "add") {
       const createResponse = await saveFacilityData(facilityData);
@@ -226,16 +226,23 @@ const NewFacility: React.FC<NewFacilityProps> = ({
         appDispatch(
           showSnackbar({
             type: "error",
-            message: "Das Hinzufügen der Einrichtung ist fehlgeschlagen!",
+            message: "Das Hinzufügen der Anlage ist fehlgeschlagen!",
           })
         );
       }
     } else {
-      const createResponse = selectedFacilityDetails?.id
+      const updateResponse = selectedFacilityDetails?.id
         ? await updateFacilityData(selectedFacilityDetails.id, facilityData)
         : false;
 
-      if (createResponse) {
+      if (updateResponse) {
+        // Update the facility in the redux store
+        const otherFacilities: any = facilities?.filter(
+          (facility: any) => selectedFacilityDetails?.id !== facility.id
+        );
+        otherFacilities.push(facilityData);
+        appDispatch(setFacilities(otherFacilities));
+
         appDispatch(
           showSnackbar({
             type: "success",

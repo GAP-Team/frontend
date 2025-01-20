@@ -51,4 +51,5 @@ export interface SelectedFacilityData {
   documents: File[];
   documentUploadType: string;
   serverLink: string;
+  tenderIds?: string[];
 }
