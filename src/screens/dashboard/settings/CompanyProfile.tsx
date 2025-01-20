@@ -18,9 +18,11 @@ import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import { showSnackbar } from "@/components/root-snackbar";
 import { updateUserProfile } from "@/lib/features/userSlice";
+import { useRouter } from "next/navigation";
 
 const CompanyProfile = (): JSX.Element => {
   const dispatch = useAppDispatch();
+  const router = useRouter();
   const user = useAppSelector((state) => state.user);
   const formik = useFormik({
     initialValues: {
@@ -69,6 +71,7 @@ const CompanyProfile = (): JSX.Element => {
             houseNo: values.houseNumber,
           },
           business: {
+            businessType: user?.company?.business?.businessType,
             registrationNumber: values.registrationNumber,
           },
         },
@@ -187,8 +190,7 @@ const CompanyProfile = (): JSX.Element => {
             color="textSecondary"
             sx={styles.sectionDescription}
           >
-            Geben Sie Ihre echte Adresse an, damit wir wichtige Informationen
-            senden können.
+            Dies ist die Adresse Ihres Unternehmens.
           </Typography>
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -409,7 +411,7 @@ const CompanyProfile = (): JSX.Element => {
         <Grid item xs={12}>
           <Grid container justifyContent="flex-end" spacing={2}>
             <Grid item>
-              <Button variant="outlined" onClick={() => formik.resetForm()}>
+              <Button variant="outlined" onClick={() =>  router.push("/real_estate/dashboard") }>
                 Abbrechen
               </Button>
             </Grid>
