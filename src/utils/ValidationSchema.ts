@@ -343,8 +343,15 @@ export const UserProfileSchema = yup.object({
 });
 
 export const EmailChangeSchema = yup.object({
-  email: yup
-    .string()
-    .matches(EMAIL_REGEX, "Ungültige Email")
-    .required("Email ist erforderlich."),
+  email: registrationValidationSchema.fields.email,
+});
+
+export const CompanyProfileSchema = yup.object({
+  companyName: registrationValidationSchema.fields.company,
+  street: registrationValidationSchema.fields.street,
+  houseNumber: registrationValidationSchema.fields.houseNo,
+  zip: registrationValidationSchema.fields.zip,
+  city: registrationValidationSchema.fields.city,
+  phonenumber: registrationValidationSchema.fields.telephone,
+  registrationNumber: registrationValidationSchema.fields.registrationNumber,
 });
