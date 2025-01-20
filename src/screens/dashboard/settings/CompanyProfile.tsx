@@ -411,7 +411,10 @@ const CompanyProfile = (): JSX.Element => {
         <Grid item xs={12}>
           <Grid container justifyContent="flex-end" spacing={2}>
             <Grid item>
-              <Button variant="outlined" onClick={() =>  router.push("/real_estate/dashboard") }>
+              <Button
+                variant="outlined"
+                onClick={() => router.push("/real_estate/dashboard")}
+              >
                 Abbrechen
               </Button>
             </Grid>
