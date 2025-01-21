@@ -32,7 +32,7 @@ import { fetchBuildings } from "@/lib/features/buildingSlice";
 import GProgressStepper from "@/components/stepper/GProgressStepper";
 import { addFacilityValidationSchema } from "@/utils/ValidationSchema";
 import { Document, SelectedFacilityData } from "../facility_card/types";
-import { setFacilities } from "@/lib/features/facilitySlice";
+import { setFacilities, updateFacility } from "@/lib/features/facilitySlice";
 
 interface NewFacilityProps {
   facilityId: string;
@@ -232,11 +232,11 @@ const NewFacility: React.FC<NewFacilityProps> = ({
       }
     }
     if (actionType === "edit") {
-      const updateResponse = selectedFacilityDetails?.id
+      selectedFacilityDetails?.id
         ? await updateFacilityData(selectedFacilityDetails.id, facilityData)
         : false;
 
-      if (updateResponse) {
+      /*if (updateResponse) {
         // Update the facility in the redux store
         const otherFacilities: any = facilities?.filter(
           (facility: any) => selectedFacilityDetails?.id !== facility.id
@@ -257,7 +257,7 @@ const NewFacility: React.FC<NewFacilityProps> = ({
             message: "Anlage update ist fehlgeschlagen",
           })
         );
-      }
+      }*/
     }
   };
 
@@ -274,7 +274,32 @@ const NewFacility: React.FC<NewFacilityProps> = ({
     facilityId: string,
     facilityData: any
   ): Promise<boolean> => {
-    const updateFacilityResponse = await facilityAPIs.update(
+    try {
+      await appDispatch(
+        updateFacility({ facilityId: facilityId, facility: facilityData })
+      ).unwrap();
+
+      const otherFacilities: any = facilities?.filter(
+        (facility: any) => selectedFacilityDetails?.id !== facility.id
+      );
+      otherFacilities.push(facilityData);
+      appDispatch(setFacilities(otherFacilities));
+
+      appDispatch(
+        showSnackbar({
+          type: "success",
+          message: "Anlage erfolgreich aktualisiert!",
+        })
+      );
+    } catch {
+      appDispatch(
+        showSnackbar({
+          type: "error",
+          message: "Anlage update ist fehlgeschlagen",
+        })
+      );
+    }
+    /*const updateFacilityResponse = await facilityAPIs.update(
       facilityId,
       facilityData
     );
@@ -283,7 +308,8 @@ const NewFacility: React.FC<NewFacilityProps> = ({
       return true;
     } else {
       return false;
-    }
+    }*/
+    return true;
   };
 
   const initialValues: AddFacilityFormValues = {

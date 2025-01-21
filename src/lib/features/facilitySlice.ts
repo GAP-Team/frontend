@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../store";
 import { Facility } from "@/screens/dashboard/facilities/facility_card/types";
 import buildingAPIs from "@/api/building";
+import facilityAPIs from "@/api/facility";
 
 interface FacilityState {
   facilities: Facility[];
@@ -25,6 +26,23 @@ export const fetchFacilities = createAsyncThunk(
     } catch (error: any) {
       return rejectWithValue(
         error.response?.data?.message || "Failed to fetch facilities"
+      );
+    }
+  }
+);
+
+export const updateFacility = createAsyncThunk(
+  "facilities/update",
+  async (
+    { facilityId, facility }: { facilityId: string; facility: Facility },
+    { rejectWithValue }: { rejectWithValue: (value: any) => void }
+  ) => {
+    try {
+      const response = await facilityAPIs.update(facilityId, facility);
+      return response.data;
+    } catch (error: any) {
+      return rejectWithValue(
+        error.response?.data?.message || "Failed to update facility"
       );
     }
   }
@@ -62,6 +80,19 @@ const FacilitySlice = createSlice({
         state.loading = false;
       })
       .addCase(fetchFacilities.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      });
+
+    builder
+      .addCase(updateFacility.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(updateFacility.fulfilled, (state, action) => {
+        return { ...state, ...action.payload };
+      })
+      .addCase(updateFacility.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
       });
