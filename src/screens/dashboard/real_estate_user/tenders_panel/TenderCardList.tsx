@@ -14,7 +14,7 @@ const TenderCardList: React.FC = () => {
   ): React.ReactNode => {
     if (
       !tendersInBuilding?.some(
-        (building: BuildingTenders) => building.tenders?.length > 0
+        (building: BuildingTenders) => building?.tenders?.length > 0
       )
     ) {
       return (
@@ -27,11 +27,11 @@ const TenderCardList: React.FC = () => {
     }
 
     // Extract tenders and include building details
-    const allTendersWithBuilding = tendersInBuilding.flatMap((building) =>
-      (building.tenders || []).map((tender) => ({
+    const allTendersWithBuilding = tendersInBuilding?.flatMap((building) =>
+      (building?.tenders || []).map((tender) => ({
         ...tender,
-        buildingName: building.buildingName,
-        buildingAddress: building.buildingAddress,
+        buildingName: building?.buildingName,
+        buildingAddress: building?.buildingAddress,
       }))
     );
 

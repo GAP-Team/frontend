@@ -2,11 +2,10 @@
 import Link from "next/link";
 import Grid from "@mui/material/Grid";
 import { CgClose } from "react-icons/cg";
-import { useSelector } from "react-redux";
 import { IconButton } from "@mui/material";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
-import { Formik, FormikHelpers, useFormikContext } from "formik";
+import { Formik, FormikHelpers } from "formik";
 
 import {
   NewTenderProps,
@@ -19,7 +18,7 @@ import moment from "moment";
 import tenderAPIs from "@/api/tender";
 import AddTenderForm from "./AddTenderForm";
 import TenderSummary from "./TenderSummary";
-import { useAppDispatch } from "@/lib/hooks";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { Tender } from "../tender_card/types";
 import TenderBuilding from "./TenderBuilding";
 import TenderInformation from "./TenderInformation";
@@ -31,14 +30,12 @@ import { showSnackbar } from "@/components/root-snackbar";
 import SectionTitle from "@/components/label/SectionTitle";
 import { addTenderValidationSchema } from "@/utils/ValidationSchema";
 import GProgressStepper from "@/components/stepper/GProgressStepper";
-import { getAllTenders } from "@/lib/features/tenderSlice";
 import { TENDER_FORM } from "@/utils/enums";
 
 const NewTender: React.FC<NewTenderProps> = ({ id }): JSX.Element => {
   const router = useRouter();
   const appDispatch = useAppDispatch();
-  const userTenders = useSelector(getAllTenders);
-  const formik = useFormikContext<AddTenderFormValues>();
+  const userTenders = useAppSelector((state) => state.tender.tenderList);
 
   const steps: ActiveStepItem[] = [
     {
@@ -61,21 +58,20 @@ const NewTender: React.FC<NewTenderProps> = ({ id }): JSX.Element => {
     useState<Tender | null>();
 
   useEffect(() => {
-    if (id === "") {
+    if (id) {
+      setActionType("edit");
+      getCurrentTenderDetails(id);
+    } else {
       setActionType("add");
       setActiveStep(steps[0]);
       setIsSubmitted(false);
-    } else {
-      setActionType("edit");
-      getCurrentTenderDetails(id);
     }
-  }, []);
+  }, [id]);
 
   const getCurrentTenderDetails = (id: string): void => {
     const tenderDetails = userTenders?.find(
       (tender: Tender) => id === tender?.id
     );
-
     setSelectedTenderDetails(tenderDetails);
   };
 
@@ -145,7 +141,8 @@ const NewTender: React.FC<NewTenderProps> = ({ id }): JSX.Element => {
         );
         return false;
       }
-    } else {
+    }
+    if (actionType === "edit") {
       const updateTenderResponse = await tenderAPIs.update(
         selectedTenderDetails?.id,
         tenderData
@@ -171,6 +168,7 @@ const NewTender: React.FC<NewTenderProps> = ({ id }): JSX.Element => {
         return false;
       }
     }
+    return false;
   };
 
   const handleBack = (): void => {
@@ -232,11 +230,7 @@ const NewTender: React.FC<NewTenderProps> = ({ id }): JSX.Element => {
         </Grid>
       </Grid>
       {StepComponent && (
-        <StepComponent
-          setActiveStep={setActiveStep}
-          steps={steps}
-          formik={formik}
-        />
+        <StepComponent setActiveStep={setActiveStep} steps={steps} />
       )}
     </>
   );
