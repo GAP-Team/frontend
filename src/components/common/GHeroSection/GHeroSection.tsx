@@ -7,7 +7,7 @@ import { FaArrowRightLong } from "react-icons/fa6";
 import {
   germanStates,
   listOfOrderTypes,
-  listOfTrades,
+  listOfFacilityType,
 } from "@/utils/Constants";
 import heroBackgroundPicture from "../../../../public/images/hero6.jpg";
 import Image from "next/image";
@@ -94,7 +94,7 @@ const HeroSection = (): JSX.Element => {
                           }}
                         >
                           <div className="max-h-60 overflow-y-auto">
-                            {listOfTrades.map((category, index) => (
+                            {listOfFacilityType.map((category, index) => (
                               <React.Fragment key={index}>
                                 {category.category ? (
                                   <Dropdown

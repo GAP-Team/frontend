@@ -230,7 +230,8 @@ const NewFacility: React.FC<NewFacilityProps> = ({
           })
         );
       }
-    } else {
+    }
+    if (actionType === "edit") {
       const updateResponse = selectedFacilityDetails?.id
         ? await updateFacilityData(selectedFacilityDetails.id, facilityData)
         : false;
@@ -289,35 +290,27 @@ const NewFacility: React.FC<NewFacilityProps> = ({
     name: selectedFacilityDetails?.name || "",
     facilityType: selectedFacilityDetails?.facilityType || "",
     subcategory: selectedFacilityDetails?.subcategory || "",
+
+    // Check
     isPublishAutomatically:
       selectedFacilityDetails?.check?.isPublishAutomatically || false,
     publishAutomaticallyInMonths:
       selectedFacilityDetails?.check?.publishAutomaticallyInMonth || 0,
-    isReminderEnabled: false,
     emailNotificationList:
       selectedFacilityDetails?.check?.emailNotificationList &&
       selectedFacilityDetails.check.emailNotificationList.length > 0
         ? selectedFacilityDetails.check.emailNotificationList
         : ["", ""],
-    selectedBuilding: selectedFacilityDetails?.buildingId || "",
-    documentChoice:
-      selectedFacilityDetails?.documentUploadType ||
-      "Jetzt hochladen Empfohlen",
+    lastCheckDate: selectedFacilityDetails?.check?.lastCheckDate
+      ? dayjs(selectedFacilityDetails.check.lastCheckDate)
+      : null,
+    nextCheckInYearNumber:
+      selectedFacilityDetails?.check?.nextCheckInYearNumber || 0,
+    reminderInMonth: selectedFacilityDetails?.check?.reminderInMonth || 0,
+    isEmailNotificationEnable:
+      selectedFacilityDetails?.check?.isEmailNotificationEnable || false,
 
-    checkReports:
-      selectedFacilityDetails?.documents?.filter(
-        (doc: any) => doc.documentType === "BERICHTE PRÜFEN"
-      ) || [],
-    floorplanDocs:
-      selectedFacilityDetails?.documents?.filter(
-        (doc: any) => doc.documentType === "GRUNDRISSE"
-      ) || [],
-    otherDocs:
-      selectedFacilityDetails?.documents?.filter(
-        (doc: any) => doc.documentType === "SONSTIGE"
-      ) || [],
-
-    serverLink: selectedFacilityDetails?.serverLink || "",
+    // Maintenance
     isMaintenanceEmailNotificationEnable:
       selectedFacilityDetails?.maintenance?.isEmailNotificationEnable || false,
     lastMaintenanceDate: selectedFacilityDetails?.maintenance
@@ -337,21 +330,46 @@ const NewFacility: React.FC<NewFacilityProps> = ({
       selectedFacilityDetails.maintenance.emailNotificationList.length > 0
         ? selectedFacilityDetails.maintenance.emailNotificationList
         : ["", ""],
-    lastCheckDate: selectedFacilityDetails?.check?.lastCheckDate
-      ? dayjs(selectedFacilityDetails.check.lastCheckDate)
-      : null,
-    nextCheckInYearNumber:
-      selectedFacilityDetails?.check?.nextCheckInYearNumber || 0,
-    reminderInMonth: selectedFacilityDetails?.check?.reminderInMonth || 0,
-    isEmailNotificationEnable:
-      selectedFacilityDetails?.check?.isEmailNotificationEnable || false,
+
+    // Building
+    selectedBuilding: selectedFacilityDetails?.buildingId || "",
+
+    // Documents
+    documentChoice:
+      selectedFacilityDetails?.documentUploadType ||
+      "Jetzt hochladen Empfohlen",
+    checkReports:
+      selectedFacilityDetails?.documents?.filter(
+        (doc: any) => doc.documentType === "BERICHTE PRÜFEN"
+      ) || [],
+    floorplanDocs:
+      selectedFacilityDetails?.documents?.filter(
+        (doc: any) => doc.documentType === "GRUNDRISSE"
+      ) || [],
+    otherDocs:
+      selectedFacilityDetails?.documents?.filter(
+        (doc: any) => doc.documentType === "SONSTIGE"
+      ) || [],
+    serverLink: selectedFacilityDetails?.serverLink || "",
   };
 
   const formOrSuccessContent = isSubmitted ? (
     <SuccessPage
-      title="Anlage ist Online!"
-      primaryDescription="Anlage wurde erfolgreich angelegt"
-      secondaryDescription="Du kannst Ihre Anlage in der Anlagen-übersicht sehen und bearbeiten."
+      title={
+        actionType === "edit"
+          ? "Die Anlage wurde erfolgreich aktualisiert"
+          : "Anlage ist Online!"
+      }
+      primaryDescription={
+        actionType === "edit"
+          ? "Das Anlage wurde erfolgreich aktualisiert"
+          : "Anlage wurde erfolgreich angelegt"
+      }
+      secondaryDescription={
+        actionType === "edit"
+          ? ""
+          : "Du kannst Ihre Anlage in der Anlagen-übersicht sehen und bearbeiten."
+      }
       buttonLabel="Schließen"
       redirectUrl="/real_estate/facilities"
     />

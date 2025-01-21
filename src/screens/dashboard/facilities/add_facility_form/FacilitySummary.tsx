@@ -35,9 +35,9 @@ const FacilitySummary = ({
       label: "Name der Anlage/Bezeichnung",
       value: values.name,
     },
-    values.facilityType && {
+    values?.facilityType && {
       label: "Anlagenart",
-      value: values.facilityType,
+      value: values?.facilityType,
     },
     values.subcategory && { label: "Anlagentyp", value: values.subcategory },
     values.selectedBuilding && {

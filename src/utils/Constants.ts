@@ -1,6 +1,6 @@
 import { Notification } from "@/components/navigation/GAppbar/types";
 
-export const listOfTrades = [
+export const listOfFacilityType = [
   {
     category: "Brandwache",
     items: ["Brandwache"],

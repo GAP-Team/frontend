@@ -7,7 +7,6 @@ export interface AddFacilityFormValues {
   subcategory: string;
   isPublishAutomatically: boolean;
   publishAutomaticallyInMonths: number;
-  isReminderEnabled: boolean;
   emailNotificationList: string[];
   selectedBuilding: string;
   documentChoice: string;

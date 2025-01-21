@@ -1,15 +1,15 @@
 "use client";
-import { useState } from "react";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import { useSelector } from "react-redux";
 import { useFormikContext } from "formik";
+import { useState, useEffect } from "react";
 import Typography from "@mui/material/Typography";
 import { FormControl, MenuItem, Select } from "@mui/material";
 
 import { Item } from "../../types";
 import { AddFacilityFormValues } from "./types";
-import { listOfTrades } from "@/utils/Constants";
+import { listOfFacilityType } from "@/utils/Constants";
 import GTextInput from "@/components/input/GTextInput";
 import CustomSelect from "@/components/drop_down/CustomSelect";
 import { getUserBuildings } from "@/lib/features/buildingSlice";
@@ -19,48 +19,54 @@ const FacilityInformation = (): JSX.Element => {
   const allBuildings = useSelector(getUserBuildings);
   const formik = useFormikContext<AddFacilityFormValues>();
 
-  const [selectedFacilityType, setSelectedFacilityType] = useState<string>();
-  const [selectedSubCategory, setSelectedSubCategory] = useState<string>();
   const [subCategoryOptions, setSubCategoryOptions] = useState<Item[]>([]);
 
-  const facilityTypeOptions = listOfTrades.map((trade) => ({
-    label: trade.category,
-    value: trade.category,
+  useEffect(() => {
+    if (formik?.values?.facilityType !== "") {
+      handleSetSubCategorylist();
+    }
+  }, [formik?.values?.facilityType]);
+
+  const facilityTypeOptions = listOfFacilityType.map((type) => ({
+    label: type.category,
+    value: type.category,
   }));
 
   const handleFacilityTypeSelect = (selectedItem: any): void => {
     const selectedFacility = selectedItem.target.value;
 
-    setSelectedFacilityType(selectedFacility);
-    formik?.setFieldValue(
-      "facilityType",
-      selectedFacility ? selectedFacility : ""
-    );
+    formik?.setFieldValue("facilityType", selectedFacility);
 
     if (selectedFacility) {
-      const selectedTrade = listOfTrades.find(
-        (trade) => trade.category === selectedFacility
+      const subCategory = listOfFacilityType.find(
+        (type) => type.category === selectedFacility
       );
-      if (selectedTrade) {
+      if (subCategory) {
         setSubCategoryOptions(
-          selectedTrade.items.map((item) => ({ label: item, value: item }))
+          subCategory.items.map((item) => ({ label: item, value: item }))
         );
       }
     } else {
       setSubCategoryOptions([]);
     }
-
-    setSelectedSubCategory("");
     formik?.setFieldValue("subcategory", "");
+  };
+
+  const handleSetSubCategorylist = (): void => {
+    const subCategory = listOfFacilityType.find(
+      (type) => type.category === formik?.values?.facilityType
+    );
+    if (subCategory) {
+      setSubCategoryOptions(
+        subCategory.items.map((item) => ({ label: item, value: item }))
+      );
+    }
   };
 
   const handleSubCategorySelect = (selectedItem: any): void => {
     const selectedSubCategory = selectedItem.target.value;
-    setSelectedSubCategory(selectedSubCategory);
-    formik?.setFieldValue(
-      "subcategory",
-      selectedSubCategory ? selectedSubCategory : ""
-    );
+
+    formik?.setFieldValue("subcategory", selectedSubCategory);
   };
 
   return (
@@ -86,12 +92,24 @@ const FacilityInformation = (): JSX.Element => {
         <Grid item xs={6}>
           <LabelWithAsterisk>ANLAGENART</LabelWithAsterisk>
           <FormControl fullWidth>
-            <CustomSelect
-              name={"buildingId"}
+            <Select
+              name="facilityType"
+              value={formik?.values?.facilityType}
+              label="Anlagenart"
               onChange={handleFacilityTypeSelect}
-              options={facilityTypeOptions}
-              value={selectedFacilityType}
-            />
+              displayEmpty
+            >
+              {facilityTypeOptions?.map((type: any, typeIndex: number) => {
+                return (
+                  <MenuItem key={typeIndex} value={type?.value}>
+                    {type?.label}
+                  </MenuItem>
+                );
+              })}
+            </Select>
+            {formik?.touched?.facilityType && (
+              <p style={styles.errorTexts}>{formik?.errors?.facilityType}</p>
+            )}
           </FormControl>
         </Grid>
 
@@ -101,10 +119,10 @@ const FacilityInformation = (): JSX.Element => {
           </Typography>
           <FormControl fullWidth>
             <CustomSelect
-              name={"buildingId"}
+              name={"subcategory"}
               onChange={handleSubCategorySelect}
               options={subCategoryOptions}
-              value={selectedSubCategory}
+              value={formik?.values?.subcategory}
             />
           </FormControl>
         </Grid>
