@@ -74,6 +74,7 @@ const TenderClassification = (): JSX.Element => {
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <Box mt={1}>
               <DatePicker
+                disablePast
                 name="fromDate"
                 label="Zeitfenster von"
                 format="DD.MM.YYYY"
@@ -90,10 +91,12 @@ const TenderClassification = (): JSX.Element => {
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <Box mt={1}>
               <DatePicker
+                disablePast
                 name="toDate"
                 label="Zeitfenster bis"
                 format="DD.MM.YYYY"
                 value={formik?.values?.toDate}
+                disabled={!formik?.values?.fromDate}
                 onChange={(value) => formik?.setFieldValue("toDate", value)}
               />
             </Box>
