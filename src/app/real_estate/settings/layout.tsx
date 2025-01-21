@@ -87,11 +87,12 @@ export default function SettingsLayout({
 const styles = {
   mainContainer: {
     display: "flex",
+    flexDirection: { xs: "column", md: "row" }, // Stacks items vertically on small screens
     justifyContent: "center",
     alignItems: "flex-start",
-    p: { xs: 2, sm: 2 },
-    gap: 2,
-    maxWidth: { xs: "95%", lg: "98%" },
+    p: { xs: 2, sm: 3 },
+    gap: { xs: 2, md: 3 },
+    maxWidth: "95%",
     minHeight: "75vh",
     mx: "auto", // Centers the layout horizontally
     borderRadius: 2,
@@ -99,13 +100,14 @@ const styles = {
     bgcolor: "background.paper",
   },
   sidebar: {
-    minWidth: "300px",
-    borderRight: "1px solid #ddd",
+    width: { xs: "100%", md: "300px" }, // Full-width on small screens
+    borderRight: { xs: "none", md: "1px solid #ddd" }, // Hide border on small screens
     p: 1,
   },
   sidebarTitle: {
     mb: 2,
     fontWeight: 700,
+    textAlign: { xs: "center", md: "left" }, // Center-align title on small screens
   },
   divider: {
     mb: 2,
@@ -124,8 +126,9 @@ const styles = {
   },
   mainContent: {
     flexGrow: 1,
-    m: 2,
-    minWidth: "155vh",
+    width: "100%",
+    m: { xs: 0, md: 2 }, 
+    mt: { xs: 2, md: 0 }, 
     minHeight: "77vh",
     overflowY: "auto",
   },
