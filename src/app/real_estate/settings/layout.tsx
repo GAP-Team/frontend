@@ -127,8 +127,8 @@ const styles = {
   mainContent: {
     flexGrow: 1,
     width: "100%",
-    m: { xs: 0, md: 2 }, 
-    mt: { xs: 2, md: 0 }, 
+    m: { xs: 0, md: 2 },
+    mt: { xs: 2, md: 0 },
     minHeight: "77vh",
     overflowY: "auto",
   },
