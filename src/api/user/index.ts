@@ -29,6 +29,15 @@ const userAPIs = {
     api.get(
       `/users/${userId}/tenders?city=${city}&state=${state}&facilityType=${facilityType}`
     ),
+  getUserFacilities: (
+    userId: string,
+    city: string = "",
+    state: string = "",
+    facilityType: string = ""
+  ): any =>
+    api.get(
+      `/users/${userId}/facilities?city=${city}&state=${state}&facilityType=${facilityType}`
+    ),
 };
 
 export default userAPIs;

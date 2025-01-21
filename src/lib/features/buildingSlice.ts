@@ -1,9 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-
 import userAPIs from "@/api/user";
 import { RootState } from "../store";
-import { AddBuildingFormValues } from "@/screens/dashboard/buildings/add_building_form/types";
-
+import { Building } from "@/screens/dashboard/buildings/building_card/types";
 interface queryType {
   userId: string;
   city: string;
@@ -12,7 +10,7 @@ interface queryType {
 }
 
 interface BuildingState {
-  buildings: AddBuildingFormValues[];
+  buildings: Building[];
   loading: boolean;
   error: string | null;
 }
@@ -64,5 +62,7 @@ export const { setUserBuildingDetails } = buildingSlice.actions;
 
 export const getUserBuildings = (state: RootState): any =>
   state.building.buildings;
+export const getBuildingById = (id: string) => (state: RootState) =>
+  state.building.buildings.find((building: Building) => building.id === id);
 
 export default buildingSlice.reducer;

@@ -12,17 +12,13 @@ import {
 import heroBackgroundPicture from "../../../../public/images/hero6.jpg";
 import Image from "next/image";
 import { MenuItem, Checkbox, ListItemText } from "@mui/material";
+import { truncateLabel } from "@/utils/utils";
 
 const HeroSection = (): JSX.Element => {
   const [selectedFacilities, setSelectedFacilities] = useState<string[]>([]);
   const [selectedOrderType, setSelectedOrderType] = useState("Auftragstypen");
   const [selectedState, setSelectedState] = useState("Bundesländer");
 
-  const truncateLabel = (label: string, maxLength = 20): string => {
-    return label.length > maxLength
-      ? label.substring(0, maxLength) + "..."
-      : label;
-  };
   const truncatedOrderType = truncateLabel(selectedOrderType);
 
   const handleFacilityChange = (item: string): void => {
