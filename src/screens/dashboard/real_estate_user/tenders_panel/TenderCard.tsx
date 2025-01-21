@@ -40,9 +40,9 @@ const TenderCard: React.FC<TenderCardProps> = ({
   const router = useRouter();
   const appDispatch = useAppDispatch();
 
-  /*const handleClick = (): void => {
+  const handleClick = (): void => {
     router.push(`/real_estate/tenders/${tender.id}`);
-  };*/
+  };
 
   const chipStyles = getTenderStatusStyle[tender?.status];
 
@@ -84,7 +84,12 @@ const TenderCard: React.FC<TenderCardProps> = ({
   };
 
   return (
-    <Paper sx={styles.card} elevation={4} style={{ cursor: "pointer" }}>
+    <Paper
+      sx={styles.card}
+      elevation={4}
+      style={{ cursor: "pointer" }}
+      onClick={handleClick}
+    >
       <Box sx={styles.header}>
         <Chip label={chipStyles?.title} sx={{ ...chipStyles }} />
         {checkUrgency(tender?.urgency)}
