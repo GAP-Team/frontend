@@ -235,29 +235,6 @@ const NewFacility: React.FC<NewFacilityProps> = ({
       selectedFacilityDetails?.id
         ? await updateFacilityData(selectedFacilityDetails.id, facilityData)
         : false;
-
-      /*if (updateResponse) {
-        // Update the facility in the redux store
-        const otherFacilities: any = facilities?.filter(
-          (facility: any) => selectedFacilityDetails?.id !== facility.id
-        );
-        otherFacilities.push(facilityData);
-        appDispatch(setFacilities(otherFacilities));
-
-        appDispatch(
-          showSnackbar({
-            type: "success",
-            message: "Anlage erfolgreich aktualisiert!",
-          })
-        );
-      } else {
-        appDispatch(
-          showSnackbar({
-            type: "error",
-            message: "Anlage update ist fehlgeschlagen",
-          })
-        );
-      }*/
     }
   };
 
