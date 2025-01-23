@@ -69,7 +69,7 @@ const TenderClassification = (): JSX.Element => {
         </Grid>
         <Grid item xs={12} sm={6}>
           <Typography variant="gsub" color="gray.500">
-            ZEITFENSTER VON
+            GEWÜNSCHTES ZEITFENSTER VON
           </Typography>
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <Box mt={1}>
@@ -86,7 +86,7 @@ const TenderClassification = (): JSX.Element => {
         </Grid>
         <Grid item xs={12} sm={6}>
           <Typography variant="gsub" color="gray.500">
-            ZEITFENSTER BIS
+            GEWÜNSCHTES ZEITFENSTER BIS
           </Typography>
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <Box mt={1}>

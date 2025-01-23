@@ -130,7 +130,7 @@ const UserProfile = (): JSX.Element => {
         {/* Position Section */}
         <Grid item xs={12} sm={6}>
           <Typography variant="subtitle1" sx={styles.sectionTitle}>
-            Position
+            Beruf
           </Typography>
           <Typography
             variant="body2"
