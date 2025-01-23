@@ -43,7 +43,7 @@ const Dashboard: React.FC<DashboardProps> = ({ overrideComponent }) => {
           id: 11,
           text: "Ausschreibung hinzufügen",
           url: "tenders/add",
-          component: <NewTender id="" />,
+          component: <NewTender />,
         },
       ],
     },

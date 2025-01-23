@@ -32,5 +32,5 @@ export interface StepComponentProps {
 }
 
 export interface NewTenderProps {
-  id: string;
+  id?: string;
 }

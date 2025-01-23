@@ -6,7 +6,6 @@ import { IconButton } from "@mui/material";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { Formik, FormikHelpers } from "formik";
-
 import {
   NewTenderProps,
   ActiveStepItem,
@@ -14,12 +13,9 @@ import {
   AddTenderFormValues,
 } from "./types";
 import dayjs from "dayjs";
-import moment from "moment";
-import tenderAPIs from "@/api/tender";
 import AddTenderForm from "./AddTenderForm";
 import TenderSummary from "./TenderSummary";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
-import { Tender } from "../tender_card/types";
 import TenderBuilding from "./TenderBuilding";
 import TenderInformation from "./TenderInformation";
 import TenderDescription from "./TenderDescription";
@@ -31,12 +27,18 @@ import SectionTitle from "@/components/label/SectionTitle";
 import { addTenderValidationSchema } from "@/utils/ValidationSchema";
 import GProgressStepper from "@/components/stepper/GProgressStepper";
 import { TENDER_FORM } from "@/utils/enums";
+import {
+  createTender,
+  selectTenderById,
+  updateTender,
+} from "@/lib/features/tenderSlice";
 
 const NewTender: React.FC<NewTenderProps> = ({ id }): JSX.Element => {
   const router = useRouter();
-  const appDispatch = useAppDispatch();
-  const userTenders = useAppSelector((state) => state.tender.tenderList);
-
+  const dispatch = useAppDispatch();
+  const tender = useAppSelector((state) =>
+    id ? selectTenderById(id)(state) : null
+  );
   const steps: ActiveStepItem[] = [
     {
       id: 0,
@@ -50,30 +52,14 @@ const NewTender: React.FC<NewTenderProps> = ({ id }): JSX.Element => {
   ];
 
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [actionType, setActionType] = useState<string>("add");
   const [activeStep, setActiveStep] = useState<ActiveStepItem>(steps[0]);
   const StepComponent = steps[activeStep.id]
     ?.component as React.ComponentType<StepComponentProps>;
-  const [selectedTenderDetails, setSelectedTenderDetails] =
-    useState<Tender | null>();
 
   useEffect(() => {
-    if (id) {
-      setActionType("edit");
-      getCurrentTenderDetails(id);
-    } else {
-      setActionType("add");
-      setActiveStep(steps[0]);
-      setIsSubmitted(false);
-    }
-  }, [id]);
-
-  const getCurrentTenderDetails = (id: string): void => {
-    const tenderDetails = userTenders?.find(
-      (tender: Tender) => id === tender?.id
-    );
-    setSelectedTenderDetails(tenderDetails);
-  };
+    setActiveStep(steps[0]);
+    setIsSubmitted(false);
+  }, []);
 
   const handleNext = async (
     values: AddTenderFormValues,
@@ -116,23 +102,42 @@ const NewTender: React.FC<NewTenderProps> = ({ id }): JSX.Element => {
       detailDescription: values?.detailDescription,
       safetyWorkRequired: values?.safetyWorkRequired,
       freeParkingAvailable: values?.freeParkingAvailable,
-      updatedAt: moment().format(),
     };
 
-    if (actionType === "add") {
-      const createTenderResponse = await tenderAPIs.create(tenderData);
-
-      if (createTenderResponse?.data?.id) {
-        appDispatch(
+    if (tender) {
+      try {
+        await dispatch(
+          updateTender({ tenderId: tender?.id, data: tenderData })
+        ).unwrap();
+        dispatch(
+          showSnackbar({
+            type: "success",
+            message: "Ausschreibung erfolgreich aktualisiert!",
+          })
+        );
+        return true;
+      } catch {
+        dispatch(
+          showSnackbar({
+            type: "error",
+            message:
+              "Die Ausschreibung konnte nicht aktualisiert werden. Bitte überprüfen Sie die Eingabedaten und versuchen Sie es erneut",
+          })
+        );
+        return false;
+      }
+    } else {
+      try {
+        await dispatch(createTender(tenderData)).unwrap();
+        dispatch(
           showSnackbar({
             type: "success",
             message: "Ausschreibung erfolgreich hinzugefügt!",
           })
         );
-
         return true;
-      } else {
-        appDispatch(
+      } catch {
+        dispatch(
           showSnackbar({
             type: "error",
             message:
@@ -142,33 +147,6 @@ const NewTender: React.FC<NewTenderProps> = ({ id }): JSX.Element => {
         return false;
       }
     }
-    if (actionType === "edit") {
-      const updateTenderResponse = await tenderAPIs.update(
-        selectedTenderDetails?.id,
-        tenderData
-      );
-
-      if (updateTenderResponse?.data?.id) {
-        appDispatch(
-          showSnackbar({
-            type: "success",
-            message: "Ausschreibung erfolgreich aktualisiert!",
-          })
-        );
-
-        return true;
-      } else {
-        appDispatch(
-          showSnackbar({
-            type: "error",
-            message:
-              "Die Ausschreibung konnte nicht aktualisiert werden. Bitte überprüfen Sie die Eingabedaten und versuchen Sie es erneut",
-          })
-        );
-        return false;
-      }
-    }
-    return false;
   };
 
   const handleBack = (): void => {
@@ -180,30 +158,26 @@ const NewTender: React.FC<NewTenderProps> = ({ id }): JSX.Element => {
   };
 
   const initialValues: AddTenderFormValues = {
-    clientName: selectedTenderDetails?.clientName || "",
-    tenderForm: selectedTenderDetails?.tenderForm || TENDER_FORM.CRAFTSMAN,
-    tenderType: selectedTenderDetails?.tenderType || "",
-    buildingName: selectedTenderDetails?.building?.name || "",
-    facilityName: selectedTenderDetails?.facility?.name || "",
-    detailDescription: selectedTenderDetails?.detailDescription || "",
-    urgency: selectedTenderDetails?.urgency || "Nicht Dringend",
-    fromDate: selectedTenderDetails?.fromDate
-      ? dayjs(selectedTenderDetails?.fromDate)
-      : null,
-    toDate: selectedTenderDetails?.toDate
-      ? dayjs(selectedTenderDetails?.toDate)
-      : null,
-    safetyWorkRequired: selectedTenderDetails?.safetyWorkRequired || false,
-    freeParkingAvailable: selectedTenderDetails?.freeParkingAvailable || false,
-    buildingId: selectedTenderDetails?.building?.id || "",
-    facilityId: selectedTenderDetails?.facility?.id || "",
+    clientName: tender?.clientName || "",
+    tenderForm: tender?.tenderForm || TENDER_FORM.CRAFTSMAN,
+    tenderType: tender?.tenderType || "",
+    buildingName: tender?.building?.name || "",
+    facilityName: tender?.facility?.name || "",
+    detailDescription: tender?.detailDescription || "",
+    urgency: tender?.urgency || "Nicht Dringend",
+    fromDate: tender?.fromDate ? dayjs(tender?.fromDate) : null,
+    toDate: tender?.toDate ? dayjs(tender?.toDate) : null,
+    safetyWorkRequired: tender?.safetyWorkRequired || false,
+    freeParkingAvailable: tender?.freeParkingAvailable || false,
+    buildingId: tender?.building?.id || "",
+    facilityId: tender?.facility?.id || "",
   };
 
   const formOrSuccessContent = isSubmitted ? (
     <SuccessPage
       title="Ausschreibung Online!"
       primaryDescription={
-        actionType === "edit"
+        tender
           ? `Ausschreibung wurde erfolgreich aktualisiert`
           : `Aussschreibung wurde erfolgreich angelegt`
       }
@@ -240,7 +214,7 @@ const NewTender: React.FC<NewTenderProps> = ({ id }): JSX.Element => {
       <Grid item xs={12} md={12} lg={12} sx={{ backgroundColor: "#F9FAFA" }}>
         <PageTitle
           title={
-            actionType === "edit"
+            tender
               ? `Ausschreibung Bearbeiten`
               : `Neue Ausschreibung veröffentlichen`
           }
