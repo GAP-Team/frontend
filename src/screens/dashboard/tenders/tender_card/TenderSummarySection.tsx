@@ -41,7 +41,7 @@ const TenderSummarySection: React.FC<TenderSummarySectionProps> = ({
     { label: "Anlagetyp", value: subcategory },
     { label: "Dringlichkeit", value: tender?.urgency },
     {
-      label: "Verfügbares Zeitfenster",
+      label: "Gewünschtes Zeitfenster",
       value:
         tender?.fromDate &&
         tender?.toDate &&

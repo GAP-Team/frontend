@@ -76,7 +76,12 @@ const TenderCard: React.FC<TenderCardProps> = ({
   };
 
   return (
-    <Paper sx={styles.card} elevation={4} style={{ cursor: "pointer" }}>
+    <Paper
+      sx={styles.card}
+      elevation={4}
+      style={{ cursor: "pointer" }}
+      onClick={handleClick}
+    >
       <Box sx={styles.header}>
         <Chip label={chipStyles?.title} sx={{ ...chipStyles }} />
         {checkUrgency(tender?.urgency)}
@@ -93,7 +98,7 @@ const TenderCard: React.FC<TenderCardProps> = ({
           sx={{ fontWeight: 400, py: "0.75rem" }}
         />
       </Box>
-      <Box onClick={handleClick}>
+      <Box>
         <Typography variant="h6" sx={styles.title}>
           {tender?.tenderType}
         </Typography>

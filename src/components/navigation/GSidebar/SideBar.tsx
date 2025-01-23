@@ -33,7 +33,7 @@ interface SidebarProps {
   selected: SidebarItem | SubItem;
 }
 
-const drawerWidth = 240;
+const drawerWidth = 300;
 const drawerClosedWidth = 72;
 
 const openedMixin = (theme: Theme): CSSObject => ({

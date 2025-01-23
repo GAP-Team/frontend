@@ -11,9 +11,11 @@ import { useAppSelector, useAppDispatch } from "@/lib/hooks";
 import { showSnackbar } from "@/components/root-snackbar";
 import { updateUserProfile } from "@/lib/features/userSlice";
 import { UserProfileSchema } from "@/utils/ValidationSchema";
+import { useRouter } from "next/navigation";
 
 const UserProfile = (): JSX.Element => {
   const dispatch = useAppDispatch();
+  const router = useRouter();
   const user = useAppSelector((state) => state.user);
   const formik = useFormik({
     initialValues: {
@@ -128,7 +130,7 @@ const UserProfile = (): JSX.Element => {
         {/* Position Section */}
         <Grid item xs={12} sm={6}>
           <Typography variant="subtitle1" sx={styles.sectionTitle}>
-            Position
+            Beruf
           </Typography>
           <Typography
             variant="body2"
@@ -160,7 +162,10 @@ const UserProfile = (): JSX.Element => {
         <Grid item xs={12}>
           <Grid container justifyContent="flex-end" spacing={2}>
             <Grid item>
-              <Button variant="outlined" onClick={() => formik.resetForm()}>
+              <Button
+                variant="outlined"
+                onClick={() => router.push("/real_estate/dashboard")}
+              >
                 Abbrechen
               </Button>
             </Grid>

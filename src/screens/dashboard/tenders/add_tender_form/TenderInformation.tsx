@@ -17,7 +17,9 @@ import { TENDER_FORM } from "@/utils/enums";
 const TenderInformation = (): JSX.Element => {
   const formik = useFormikContext<AddTenderFormValues>();
 
-  const handleTenderFormChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+  const handleTenderFormChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ): void => {
     const selectedForm = event.target.value;
     formik.setFieldValue("tenderForm", selectedForm);
     formik.setFieldValue("tenderType", "");

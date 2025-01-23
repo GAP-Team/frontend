@@ -339,7 +339,7 @@ export const UserProfileSchema = yup.object({
     .required("Nachname ist erforderlich"),
   position: yup
     .string()
-    .matches(/^[A-Za-z]+$/, "Position darf nur Buchstaben enthalten"),
+    .matches(/^[A-Za-z]+$/, "Beruf darf nur Buchstaben enthalten"),
 });
 
 export const EmailChangeSchema = yup.object({
