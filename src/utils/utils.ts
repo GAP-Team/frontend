@@ -10,3 +10,9 @@ export const getTenderStatusStyle: {
     title: "Nachprüfung",
   },
 };
+
+export const truncateLabel = (label: string, maxLength = 20): string => {
+  return label.length > maxLength
+    ? label.substring(0, maxLength) + "..."
+    : label;
+};

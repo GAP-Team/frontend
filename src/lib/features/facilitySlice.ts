@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../store";
 import { Facility } from "@/screens/dashboard/facilities/facility_card/types";
 import buildingAPIs from "@/api/building";
+import userAPIs from "@/api/user";
 
 interface FacilityState {
   facilities: Facility[];
@@ -29,6 +30,33 @@ export const fetchFacilities = createAsyncThunk(
     }
   }
 );
+
+const getFacilitiesByUserId = createAsyncThunk(
+  "tender/getFacilitiesByUserId",
+  async (param: {
+    userId: string;
+    city?: string;
+    state?: string;
+    facilityType?: string;
+  }) => {
+    const { userId, city, state, facilityType } = param;
+    const response = await userAPIs.getUserFacilities(
+      userId,
+      city,
+      state,
+      facilityType
+    );
+    return response.data;
+  }
+);
+
+export const getFacilitiesByUser = (
+  userId: string,
+  city?: string,
+  state?: string,
+  facilityType?: string
+): ReturnType<typeof getFacilitiesByUserId> =>
+  getFacilitiesByUserId({ userId, city, state, facilityType });
 
 const FacilitySlice = createSlice({
   name: "facility",
@@ -64,6 +92,19 @@ const FacilitySlice = createSlice({
       .addCase(fetchFacilities.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
+      })
+      .addCase(getFacilitiesByUserId.fulfilled, (state, action) => {
+        state.facilities = action.payload; // Update state with fetched facilities
+        state.loading = false;
+        state.error = null;
+      })
+      .addCase(getFacilitiesByUserId.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getFacilitiesByUserId.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message || "Failed to fetch user facilities";
       });
   },
 });
@@ -79,5 +120,10 @@ export const getFacilitiesByBuilding =
     state.facility.facilities.filter(
       (facility: Facility) => facility.buildingId === buildingId
     );
+
+export const getFacilityById = (facilityId: string) => (state: RootState) =>
+  state.facility.facilities.find(
+    (facility: Facility) => facility.id === facilityId
+  );
 
 export default FacilitySlice.reducer;

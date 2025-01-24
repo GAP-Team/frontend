@@ -6,12 +6,14 @@ interface ProjectCardProps {
   code: string;
   address: string;
   daysRemaining: number;
+  text?: string;
 }
 
 const ProjectCard: React.FC<ProjectCardProps> = ({
   code,
   address,
   daysRemaining,
+  text,
 }) => {
   return (
     <Box sx={styles.card}>
@@ -27,7 +29,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
         <Typography variant="h5" component="div" sx={styles.daysNumber}>
           {daysRemaining}
         </Typography>
-        <Typography variant="body2">Tage übrig</Typography>
+        {text && <Typography variant="body2">{text}</Typography>}
       </Box>
     </Box>
   );
