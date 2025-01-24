@@ -49,7 +49,12 @@ const LoginPage = (): JSX.Element => {
             });
           }
 
-          router.push("/real_estate/dashboard");
+          if (res.data.user?.role === "SERVICE_PROVIDER") {
+            router.push("/service_provider/dashboard");
+          }
+          if (res.data.user?.role === "REAL_ESTATE_OWNER") {
+            router.push("/real_estate/dashboard");
+          }
         }
       } catch (error: any) {
         setLoginError(
