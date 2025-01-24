@@ -5,6 +5,7 @@ import {
   BuildingTenders,
 } from "@/screens/dashboard/tenders/tender_card/types";
 import userAPIs from "@/api/user";
+import tenderAPIs from "@/api/tender";
 interface TenderState {
   numOfTenders: number;
   tenders: BuildingTenders[];
@@ -48,6 +49,33 @@ export const fetchTenders = (
 ): ReturnType<typeof getTenders> =>
   getTenders({ userId, city, state, facilityType });
 
+// Create Tender
+export const createTender = createAsyncThunk(
+  "tender/createTender",
+  async (newTender: any) => {
+    const response = await tenderAPIs.create(newTender);
+    return response.data;
+  }
+);
+
+// Update tender
+export const updateTender = createAsyncThunk(
+  "tender/updateTender",
+  async ({ tenderId, data }: { tenderId: string; data: any }) => {
+    const response = await tenderAPIs.update(tenderId, data);
+    return response.data;
+  }
+);
+
+// Delete tender
+export const deleteTender = createAsyncThunk(
+  "tender/deleteTender",
+  async (tenderId: string) => {
+    await tenderAPIs.delete(tenderId);
+    return tenderId;
+  }
+);
+
 const tenderSlice = createSlice({
   name: "tender",
   initialState,
@@ -90,6 +118,55 @@ const tenderSlice = createSlice({
       })
       .addCase(getTenders.rejected, (state, action) => {
         state.error = action.error.message || "Failed to fetch tenders";
+        state.loading = false;
+      })
+      // Edit Tender
+      .addCase(updateTender.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(updateTender.fulfilled, (state, action) => {
+        const updatedTender = action.payload;
+        const index = state.tenderList.findIndex(
+          (tender) => tender.id === updatedTender.id
+        );
+        if (index !== -1) {
+          state.tenderList[index] = {
+            ...state.tenderList[index],
+            ...updatedTender,
+          };
+          state.tenders = state.tenders.map((building) => ({
+            ...building,
+            tenders: building.tenders.map((tender) =>
+              tender.id === updatedTender.id
+                ? { ...tender, ...updatedTender }
+                : tender
+            ),
+          }));
+        }
+        state.loading = false;
+      })
+      .addCase(updateTender.rejected, (state, action) => {
+        state.error = action.error.message || "Failed to edit tender";
+        state.loading = false;
+      })
+      // Delete Tender
+      .addCase(deleteTender.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(deleteTender.fulfilled, (state, action) => {
+        const tenderId = action.payload;
+        state.tenderList = state.tenderList.filter(
+          (tender) => tender.id !== tenderId
+        );
+        state.tenders = state.tenders.map((building) => ({
+          ...building,
+          tenders: building.tenders.filter((tender) => tender.id !== tenderId),
+        }));
+        state.numOfTenders -= 1;
+        state.loading = false;
+      })
+      .addCase(deleteTender.rejected, (state, action) => {
+        state.error = action.error.message || "Failed to delete tender";
         state.loading = false;
       });
   },

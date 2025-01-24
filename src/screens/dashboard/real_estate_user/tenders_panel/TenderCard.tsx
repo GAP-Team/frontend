@@ -12,10 +12,9 @@ import { getTenderStatusStyle } from "@/utils/utils";
 import SectionTitle from "@/components/label/SectionTitle";
 import { TENDER_FORM, Urgency } from "@/utils/enums";
 import ActionMenu from "@/components/common/ActionMenu";
-import tenderAPIs from "@/api/tender";
 import { useAppDispatch } from "@/lib/hooks";
 import { showSnackbar } from "@/components/root-snackbar";
-import { removeTender } from "@/lib/features/tenderSlice";
+import { deleteTender } from "@/lib/features/tenderSlice";
 import { BuildingAddress } from "@/screens/dashboard/buildings/building_card/types";
 import { Tender } from "@/screens/dashboard/tenders/tender_card/types";
 
@@ -38,8 +37,7 @@ const TenderCard: React.FC<TenderCardProps> = ({
   buildingAddress,
 }) => {
   const router = useRouter();
-  const appDispatch = useAppDispatch();
-
+  const dispatch = useAppDispatch();
   const handleClick = (): void => {
     router.push(`/real_estate/tenders/${tender.id}`);
   };
@@ -59,17 +57,15 @@ const TenderCard: React.FC<TenderCardProps> = ({
 
   const handleDeleteTender = async (tenderId: string): Promise<void> => {
     try {
-      await tenderAPIs.delete(tenderId);
-      appDispatch(removeTender(tenderId));
-      appDispatch(
+      await dispatch(deleteTender(tenderId)).unwrap();
+      dispatch(
         showSnackbar({
           type: "success",
           message: "Ausschreibung erfolgreich gelöscht!",
         })
       );
-      router.push(`/real_estate/tenders`);
     } catch {
-      appDispatch(
+      dispatch(
         showSnackbar({
           type: "error",
           message:
@@ -77,10 +73,6 @@ const TenderCard: React.FC<TenderCardProps> = ({
         })
       );
     }
-  };
-
-  const handleEdit = (id: string): void => {
-    router.push(`/real_estate/tenders/edit/${id}`);
   };
 
   return (
@@ -95,7 +87,7 @@ const TenderCard: React.FC<TenderCardProps> = ({
         {checkUrgency(tender?.urgency)}
         <ActionMenu
           itemId={tender?.id}
-          onEdit={(id) => handleEdit(id)}
+          onEdit={(id) => router.push(`/real_estate/tenders/edit/${id}`)}
           onDelete={handleDeleteTender}
           messege={"Sind Sie sicher, dass Sie dieses Element löschen möchten?"}
         />
