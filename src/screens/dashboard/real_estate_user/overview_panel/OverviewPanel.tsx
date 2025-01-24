@@ -34,57 +34,37 @@ const OverviewPanel = (): JSX.Element => {
     }
   }, [user?.id, dispatch]);
 
-  const filterTendersByDays = (
-    tenders: Tender[],
-    facilities: Facility[],
-    condition: (daysUntilCheck: number) => boolean
-  ): Tender[] => {
-    return tenders?.filter((tender: Tender) => {
-      const facility = facilities.find((f) => f.id === tender.facility?.id);
-      const lastCheckDate = dayjs(facility?.check?.lastCheckDate);
-      const nextCheckDate = lastCheckDate.add(
-        Number(facility?.check?.nextCheckInYearNumber),
-        "year"
-      );
-      const daysUntilCheck = nextCheckDate.diff(dayjs(), "day");
-      return condition(daysUntilCheck);
-    });
+  const getDaysRemaining = (facilityId: string): number => {
+    const facility = facilities.find((f: Facility) => f.id === facilityId);
+    const lastCheckDate = dayjs(facility.check?.lastCheckDate);
+    const nextCheckDate = lastCheckDate.add(
+      Number(facility.check?.nextCheckInYearNumber),
+      "year"
+    );
+    return Math.abs(nextCheckDate.diff(dayjs(), "days"));
   };
 
-  const tendersDueSoon = filterTendersByDays(
-    tenders,
-    facilities,
-    (daysUntilCheck) => daysUntilCheck < 183
+  const tendersDueSoon = tenders?.filter(
+    (tender: Tender) => getDaysRemaining(tender.facility?.id) < 183
   );
-  const tendersExceedingDays = filterTendersByDays(
-    tenders,
-    facilities,
-    (daysUntilCheck) => daysUntilCheck > 183
+  const tendersExceedingDays = tenders?.filter(
+    (tender: Tender) => getDaysRemaining(tender.facility?.id) > 183
   );
 
   const renderTenderCards = (tendersList: Tender[]): React.ReactNode =>
     tendersList?.map((tender, index) => {
-      const facility = facilities.find(
-        (f: Facility) => f.id === tender.facility?.id
-      );
-      const lastCheckDate = dayjs(facility?.check?.lastCheckDate);
-      const nextCheckDate = lastCheckDate.add(
-        facility?.check?.nextCheckInYearNumber,
-        "year"
-      );
-      const daysRemaining = nextCheckDate.diff(dayjs(), "days");
+      const daysRemaining = getDaysRemaining(tender.facility?.id);
       const buildingAddress = buildings.find(
         (b: Building) => b.id === tender.building?.id
       )?.address;
+
       return (
         <ProjectCard
           key={index}
-          address={
-            `${buildingAddress?.houseNumber} ${buildingAddress?.street} - ${buildingAddress?.city}, ${buildingAddress?.state}` ||
-            "N/A"
-          }
-          code={truncateLabel(tender?.tenderType, 10) || "N/A"}
-          daysRemaining={daysRemaining}
+          address={`${buildingAddress?.street} - ${buildingAddress?.city}, ${buildingAddress?.state}`}
+          code={truncateLabel(tender?.tenderType, 10)}
+          daysRemaining={daysRemaining > 183 ? -daysRemaining : daysRemaining}
+          text={daysRemaining > 183 ? "Tage" : "Tage übrig"}
         />
       );
     });
