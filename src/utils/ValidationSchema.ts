@@ -346,25 +346,6 @@ export const EmailChangeSchema = yup.object({
   email: registrationValidationSchema.fields.email,
 });
 
-const validatePasswordStrength = (password: string): string | void => {
-  const minLength = /.{8,}/;
-  const hasUpperCase = /[A-Z]/;
-  const hasLowerCase = /[a-z]/;
-  const hasNumber = /[0-9]/;
-  const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/;
-
-  if (!minLength.test(password))
-    return "Das Current Passwort sollte mindestens 8 Zeichen lang sein";
-  if (!hasUpperCase.test(password))
-    return "Passwort muss mindestens einen Großbuchstaben enthalten.";
-  if (!hasLowerCase.test(password))
-    return "Passwort muss mindestens einen Kleinbuchstaben enthalten.";
-  if (!hasNumber.test(password))
-    return "Passwort muss mindestens eine Zahl enthalten.";
-  if (!hasSpecialChar.test(password))
-    return "Passwort muss mindestens ein Sonderzeichen enthalten.";
-};
-
 export const passwordChangeSchema = yup.object({
   currentPassword: yup
     .string()
@@ -377,17 +358,16 @@ export const passwordChangeSchema = yup.object({
   newPassword: yup
     .string()
     .required("New Passwort ist erforderlich")
-    .test("password-strength", validatePasswordStrength, (value) => {
-      if (!value) return false;
-      return !validatePasswordStrength(value);
-    })
     .matches(
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-      "Das Passwort muss Groß- und Kleinbuchstaben, eine Ziffer und ein Sonderzeichen enthalten"
+      "Das Passwort muss mindestens einen Groß- und einen Kleinbuchstaben, eine Zahl und ein Sonderzeichen enthalten"
     ),
   confirmPassword: yup
     .string()
-    .oneOf([yup.ref("newPassword")], "Passwörter müssen übereinstimmen")
+    .oneOf(
+      [yup.ref("newPassword"), undefined],
+      "Passwörter müssen übereinstimmen"
+    )
     .required("Passwort bestätigen ist erforderlich"),
 });
 

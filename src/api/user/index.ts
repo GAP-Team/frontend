@@ -29,6 +29,9 @@ const userAPIs = {
     api.get(
       `/users/${userId}/tenders?city=${city}&state=${state}&facilityType=${facilityType}`
     ),
+
+  ChangePassword: (id: string, data: any): any =>
+    api.post(`/users/${id}/change-password`, data),
 };
 
 export default userAPIs;

@@ -37,7 +37,8 @@ interface UserState {
   buildingIds: string[];
   manufacturerExperience: string;
   position: string;
-  password: string;
+  currentPassword: string;
+  newPassword: string;
 }
 
 const initialState: UserState = {
@@ -67,13 +68,22 @@ const initialState: UserState = {
   buildingIds: [],
   manufacturerExperience: "",
   position: "",
-  password: "",
+  currentPassword: "",
+  newPassword: "",
 };
 
 export const updateUserProfile = createAsyncThunk(
   "user/updateProfile",
   async ({ id, data }: { id: string; data: Partial<UserState> }) => {
     const response = await userAPIs.updateUser(id, data);
+    return response.data;
+  }
+);
+
+export const updateUserPassword = createAsyncThunk(
+  "user/updatePassword",
+  async ({ id, data }: { id: string; data: Partial<UserState> }) => {
+    const response = await userAPIs.ChangePassword(id, data);
     return response.data;
   }
 );
@@ -88,6 +98,9 @@ const userSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(updateUserProfile.fulfilled, (state, action) => {
+      return { ...state, ...action.payload };
+    });
+    builder.addCase(updateUserPassword.fulfilled, (state, action) => {
       return { ...state, ...action.payload };
     });
   },

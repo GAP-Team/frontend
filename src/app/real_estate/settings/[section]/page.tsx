@@ -1,4 +1,3 @@
-import React from "react";
 import UserProfile from "@/screens/dashboard/settings/UserProfile";
 import EmailChange from "@/screens/dashboard/settings/EmailChange";
 import CompanyProfile from "@/screens/dashboard/settings/CompanyProfile";

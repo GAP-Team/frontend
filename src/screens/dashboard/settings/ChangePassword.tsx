@@ -1,6 +1,4 @@
 "use client";
-
-import bcrypt from "bcryptjs";
 import { useFormik } from "formik";
 import Grid from "@mui/material/Grid";
 import React, { useState } from "react";
@@ -10,37 +8,51 @@ import Typography from "@mui/material/Typography";
 import GTextInput from "@/components/input/GTextInput";
 import { showSnackbar } from "@/components/root-snackbar";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
-import { updateUserProfile } from "@/lib/features/userSlice";
+import { updateUserPassword } from "@/lib/features/userSlice";
 import { passwordChangeSchema } from "@/utils/ValidationSchema";
-import ShowPasswordButton from "@/components/show_password_button/ShowPasswordButton";
+import ShowPasswordButton from "@/components/button/ShowPasswordButton";
+import {
+  calculateStrength,
+  getPasswordStrengthLabel,
+  getPasswordStrengthColor,
+} from "@/utils/utils";
+
+interface ChangePasswordInitialValuesProps {
+  currentPassword: string;
+  newPassword: string;
+  confirmPassword: string;
+}
 
 const ChangePassword = (): JSX.Element => {
-  const [passwordStrength, setPasswordStrength] = useState(0);
-
   const [showPassword, setShowPassword] = useState(false);
+  const [passwordStrength, setPasswordStrength] = useState(0);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.user);
+
+  const initialValues: ChangePasswordInitialValuesProps = {
+    currentPassword: "",
+    newPassword: "",
+    confirmPassword: "",
+  };
   const formik = useFormik({
-    initialValues: {
-      currentPassword: "",
-      newPassword: "",
-      confirmPassword: "",
-    },
+    initialValues: initialValues,
     validationSchema: passwordChangeSchema,
     onSubmit: async (values) => {
       try {
-        const hashedPassword = await bcrypt.hash(values.newPassword, 10);
         await dispatch(
-          updateUserProfile({
+          updateUserPassword({
             id: user.id,
             data: {
-              password: hashedPassword,
+              newPassword: values.newPassword,
+              currentPassword: values.currentPassword,
             },
           })
         ).unwrap();
+
+        formik.resetForm();
 
         dispatch(
           showSnackbar({
@@ -60,51 +72,9 @@ const ChangePassword = (): JSX.Element => {
     },
   });
 
-  const calculateStrength = (password: string): Promise<number> => {
-    let score = 0;
-    if (password.length >= 8) score++;
-    if (/[A-Z]/.test(password)) score++;
-    if (/[a-z]/.test(password)) score++;
-    if (/[0-9]/.test(password)) score++;
-    if (/[!@#$%^&*(),.?":{}|<>]/.test(password)) score++;
-    return Promise.resolve(score);
-  };
-
   const onPasswordChange = async (password: string): Promise<void> => {
     const strength = await calculateStrength(password);
     setPasswordStrength(strength);
-  };
-
-  const getStrengthLabel = (): string => {
-    switch (passwordStrength) {
-      case 1:
-      case 2:
-        return "Schwach";
-      case 3:
-        return "Medium";
-      case 4:
-        return "Stark";
-      case 5:
-        return "Sehr Stark";
-      default:
-        return "Sehr Schwach";
-    }
-  };
-
-  const getStrengthColor = (): string => {
-    switch (passwordStrength) {
-      case 1:
-      case 2:
-        return "red";
-      case 3:
-        return "orange";
-      case 4:
-        return "green";
-      case 5:
-        return "darkgreen";
-      default:
-        return "gray";
-    }
   };
 
   const handleNewPasswordChange = (
@@ -135,9 +105,9 @@ const ChangePassword = (): JSX.Element => {
             sx={styles.sectionDescription}
           >
             Sie können Ihr Passwort ändern, indem Sie Ihr aktuelles Passwort
-            eingeben. Geben Sie Ihr aktuelles Passwort ein und geben Sie ein
-            neues sicheres Passwort ein und geben Sie es erneut ein, um die
-            Änderung zu bestätigen.
+            eingeben. Geben Sie anschließend ein neues, sicheres Passwort ein
+            und bestätigen Sie die Änderung, indem Sie das neue Passwort erneut
+            eingeben.
           </Typography>
         </Grid>
 
@@ -158,6 +128,7 @@ const ChangePassword = (): JSX.Element => {
               id="currentPassword"
               name="currentPassword"
               label="Aktuelles Passwort"
+              onBlur={formik.handleBlur}
               value={formik.values.currentPassword}
               onChange={formik.handleChange}
               error={
@@ -181,6 +152,7 @@ const ChangePassword = (): JSX.Element => {
               id="newPassword"
               name="newPassword"
               label="Neues Passwort"
+              onBlur={formik.handleBlur}
               value={formik.values.newPassword}
               onChange={handleNewPasswordChange}
               error={
@@ -205,18 +177,18 @@ const ChangePassword = (): JSX.Element => {
                   style={{
                     height: "100%",
                     width: `${(passwordStrength / 5) * 100}%`,
-                    backgroundColor: getStrengthColor(),
+                    backgroundColor: getPasswordStrengthColor(passwordStrength),
                     transition: "width 0.3s ease-in-out",
                   }}
                 />
               </Grid>
               <span
                 style={{
-                  color: getStrengthColor(),
+                  color: getPasswordStrengthColor(passwordStrength),
                   fontWeight: "bold",
                 }}
               >
-                {getStrengthLabel()}
+                {getPasswordStrengthLabel(passwordStrength)}
               </span>
             </Grid>
           </Grid>
@@ -229,6 +201,7 @@ const ChangePassword = (): JSX.Element => {
               name="confirmPassword"
               label="Neues Passwort wiederholen"
               value={formik.values.confirmPassword}
+              onBlur={formik.handleBlur}
               onChange={formik.handleChange}
               error={
                 formik.touched.confirmPassword &&
