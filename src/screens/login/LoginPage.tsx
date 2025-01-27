@@ -20,8 +20,9 @@ import { GapLogo } from "@/components/logo/GapLogo";
 import HeroBanner from "../../components/common/InfoBanner";
 import { loginValidationSchema } from "@/utils/ValidationSchema";
 import { setAccessToken, setIsUserVerified } from "@/utils/helperJWT";
+import userAPIs from "@/api/user";
 
-export default function LoginPage(): JSX.Element {
+const LoginPage = (): JSX.Element => {
   const router = useRouter();
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
@@ -42,6 +43,12 @@ export default function LoginPage(): JSX.Element {
           dispatch(setUser(res.data?.user));
           setAccessToken(res.data.access_token);
           setIsUserVerified(res.data.user?.isVerified);
+          if (!res.data.user?.isVerified) {
+            await userAPIs.sendVerificationEmail({
+              email: res.data?.user.email,
+            });
+          }
+
           router.push("/real_estate/dashboard");
         }
       } catch (error: any) {
@@ -71,7 +78,7 @@ export default function LoginPage(): JSX.Element {
         <HeroBanner
           title="Where skills are developed"
           subtitle="Gesetzliche Anlagenprüfung"
-          copyright="©2023 GAP GmbH"
+          copyright="©2024 GAP GmbH"
         />
       </Grid>
       <Grid item xs={12} md={6} lg={6} component={Paper}>
@@ -80,25 +87,12 @@ export default function LoginPage(): JSX.Element {
           <Box sx={styles.formBox}>
             <Grid container sx={{ mb: "2rem", color: "#1E3137" }}>
               <Grid item xs>
-                <Link
-                  href="#"
-                  variant="h6"
-                  sx={{
-                    fontSize: "1.5rem",
-                    color: "black",
-                    fontWeight: "bold",
-                    textDecoration: "none",
-                  }}
-                >
+                <Link variant="h6" sx={styles.linkDesignBig}>
                   Anmelden
                 </Link>
               </Grid>
               <Grid item>
-                <Link
-                  href="#"
-                  variant="body2"
-                  sx={{ fontSize: "1rem", fontWeight: "bold", color: "black" }}
-                >
+                <Link href="#" variant="body2" sx={styles.linkDesignSmall}>
                   Passwort vergessen
                 </Link>
               </Grid>
@@ -195,7 +189,7 @@ export default function LoginPage(): JSX.Element {
           </Box>
           <Typography sx={styles.supportLink}>
             Hilfe?{" "}
-            <Link href="#" color="#1E3137" fontWeight="bold">
+            <Link href="#" sx={styles.linkDesignSmall}>
               Support kontaktieren
             </Link>
           </Typography>
@@ -203,7 +197,9 @@ export default function LoginPage(): JSX.Element {
       </Grid>
     </Grid>
   );
-}
+};
+
+export default LoginPage;
 
 //Styles
 
@@ -263,4 +259,11 @@ const styles = {
     marginRight: "auto",
     marginLeft: 18.5,
   },
+  linkDesignBig: {
+    fontSize: "1.5rem",
+    color: "black",
+    fontWeight: "bold",
+    textDecoration: "none",
+  },
+  linkDesignSmall: { fontSize: "1rem", fontWeight: "bold", color: "black" },
 };

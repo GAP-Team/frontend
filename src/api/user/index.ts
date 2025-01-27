@@ -32,6 +32,15 @@ const userAPIs = {
 
   ChangePassword: (id: string, data: any): any =>
     api.post(`/users/${id}/change-password`, data),
+  getUserFacilities: (
+    userId: string,
+    city: string = "",
+    state: string = "",
+    facilityType: string = ""
+  ): any =>
+    api.get(
+      `/users/${userId}/facilities?city=${city}&state=${state}&facilityType=${facilityType}`
+    ),
 };
 
 export default userAPIs;

@@ -69,11 +69,12 @@ const TenderClassification = (): JSX.Element => {
         </Grid>
         <Grid item xs={12} sm={6}>
           <Typography variant="gsub" color="gray.500">
-            ZEITFENSTER VON
+            GEWÜNSCHTES ZEITFENSTER VON
           </Typography>
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <Box mt={1}>
               <DatePicker
+                disablePast
                 name="fromDate"
                 label="Zeitfenster von"
                 format="DD.MM.YYYY"
@@ -85,15 +86,17 @@ const TenderClassification = (): JSX.Element => {
         </Grid>
         <Grid item xs={12} sm={6}>
           <Typography variant="gsub" color="gray.500">
-            ZEITFENSTER BIS
+            GEWÜNSCHTES ZEITFENSTER BIS
           </Typography>
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <Box mt={1}>
               <DatePicker
+                disablePast
                 name="toDate"
                 label="Zeitfenster bis"
                 format="DD.MM.YYYY"
                 value={formik?.values?.toDate}
+                disabled={!formik?.values?.fromDate}
                 onChange={(value) => formik?.setFieldValue("toDate", value)}
               />
             </Box>

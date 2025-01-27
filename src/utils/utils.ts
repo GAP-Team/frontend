@@ -52,3 +52,9 @@ export const getPasswordStrengthColor = (passwordStrength: number): string => {
       return "gray";
   }
 };
+
+export const truncateLabel = (label: string, maxLength = 20): string => {
+  return label.length > maxLength
+    ? label.substring(0, maxLength) + "..."
+    : label;
+};

@@ -11,9 +11,11 @@ import { EmailChangeSchema } from "@/utils/ValidationSchema";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { updateUserProfile } from "@/lib/features/userSlice";
 import { showSnackbar } from "@/components/root-snackbar";
+import { useRouter } from "next/navigation";
 
 const EmailChange = (): JSX.Element => {
   const dispatch = useAppDispatch();
+  const router = useRouter();
   const user = useAppSelector((state) => state.user);
   const formik = useFormik({
     initialValues: {
@@ -87,7 +89,10 @@ const EmailChange = (): JSX.Element => {
         <Grid item xs={12}>
           <Grid container justifyContent="flex-end" spacing={2}>
             <Grid item>
-              <Button variant="outlined" onClick={() => formik.resetForm()}>
+              <Button
+                variant="outlined"
+                onClick={() => router.push("/real_estate/dashboard")}
+              >
                 Abbrechen
               </Button>
             </Grid>
