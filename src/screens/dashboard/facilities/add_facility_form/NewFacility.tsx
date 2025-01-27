@@ -30,7 +30,9 @@ import { handleUploadMultipleDoc } from "@/utils/uploadToS3";
 import { fetchBuildings } from "@/lib/features/buildingSlice";
 import GProgressStepper from "@/components/stepper/GProgressStepper";
 import { addFacilityValidationSchema } from "@/utils/ValidationSchema";
-
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+dayjs.extend(utc);
 interface NewFacilityProps {
   facilityId: string;
 }
@@ -110,7 +112,7 @@ const NewFacility: React.FC<NewFacilityProps> = ({}): JSX.Element => {
       subcategory: values?.subcategory,
       buildingId: values?.selectedBuilding,
       check: {
-        lastCheckDate: values?.lastCheckDate,
+        lastCheckDate: values?.lastCheckDate?.utc(true).format("YYYY-MM-DD"),
         nextCheckInYearNumber: values?.nextCheckInYearNumber,
         isPublishAutomatically: values?.isPublishAutomatically,
         publishAutomaticallyInMonth: Number(
@@ -125,7 +127,9 @@ const NewFacility: React.FC<NewFacilityProps> = ({}): JSX.Element => {
           : [],
       },
       maintenance: {
-        lastMaintenanceDate: values?.lastMaintenanceDate,
+        lastMaintenanceDate: values?.lastMaintenanceDate
+          ?.utc(true)
+          .format("YYYY-MM-DD"),
         nextMaintenanceInMonth: values?.nextMaintenanceInMonth,
         isPublishAutomatically: values?.isPublishMaintenanceAutomatically,
         publishAutomaticallyInMonth: Number(
