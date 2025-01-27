@@ -31,10 +31,10 @@ const CompanyProfile = (): JSX.Element => {
       country: user?.company?.address?.country,
       state: user?.company?.address?.state,
       street: user?.company?.address?.street,
-      houseNumber: Number(user?.company?.address?.houseNo),
-      zip: Number(user?.company?.address?.zip),
+      houseNumber: user?.company?.address?.houseNo,
+      zip: user?.company?.address?.zip,
       city: user?.company?.address?.city,
-      phonenumber: Number(user?.company?.phonenumber),
+      phonenumber: user?.company?.phonenumber,
       registrationNumber: user?.company?.business?.registrationNumber,
       // legalForm: "GmbH",
     },
@@ -61,14 +61,14 @@ const CompanyProfile = (): JSX.Element => {
       const requestData = {
         company: {
           name: values.companyName,
-          phonenumber: values.phonenumber,
+          phonenumber: Number(values.phonenumber),
           address: {
-            zip: values.zip,
+            zip: Number(values.zip),
             city: values.city,
             state: values.state,
             street: values.street,
             country: values.country,
-            houseNo: values.houseNumber,
+            houseNo: Number(values.houseNumber),
           },
           business: {
             businessType: user?.company?.business?.businessType,
