@@ -44,10 +44,13 @@ const OverviewPanel = (): JSX.Element => {
     return nextCheckDate.diff(dayjs(), "days");
   };
 
-  const tendersDueSoon = tenders?.filter(
-    (tender: Tender) =>{ return  (getDaysRemaining(tender.facility?.id) < 183) && (getDaysRemaining(tender.facility?.id) > 0)}
-  );
-  
+  const tendersDueSoon = tenders?.filter((tender: Tender) => {
+    return (
+      getDaysRemaining(tender.facility?.id) < 183 &&
+      getDaysRemaining(tender.facility?.id) > 0
+    );
+  });
+
   const tendersExceedingDays = tenders?.filter(
     (tender: Tender) => getDaysRemaining(tender.facility?.id) <= 0
   );
@@ -58,10 +61,15 @@ const OverviewPanel = (): JSX.Element => {
       const buildingAddress = buildings.find(
         (b: Building) => b.id === tender.building?.id
       )?.address;
-      
+
       // Check if facility has a check date and and then only show the card
-      const facility = facilities.find((f: Facility) => f.id === tender.facility?.id);
-      if (!facility?.check?.lastCheckDate || facility.check.nextCheckInYearNumber === 0) {
+      const facility = facilities.find(
+        (f: Facility) => f.id === tender.facility?.id
+      );
+      if (
+        !facility?.check?.lastCheckDate ||
+        facility.check.nextCheckInYearNumber === 0
+      ) {
         return null;
       }
 
