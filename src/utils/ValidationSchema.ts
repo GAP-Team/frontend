@@ -329,14 +329,8 @@ export const addFacilityValidationSchema = [
 ];
 
 export const UserProfileSchema = yup.object({
-  firstName: yup
-    .string()
-    .matches(/^[A-Za-z]+$/, "Vorname darf nur Buchstaben enthalten")
-    .required("Vorname ist erforderlich"),
-  lastName: yup
-    .string()
-    .matches(/^[A-Za-z]+$/, "Nachname darf nur Buchstaben enthalten")
-    .required("Nachname ist erforderlich"),
+  firstName: registrationValidationSchema.fields.firstName,
+  lastName: registrationValidationSchema.fields.lastName,
   position: yup
     .string()
     .matches(/^[A-Za-z]+$/, "Beruf darf nur Buchstaben enthalten"),
