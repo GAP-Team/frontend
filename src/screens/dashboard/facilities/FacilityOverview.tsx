@@ -10,6 +10,7 @@ import { currentUser } from "@/lib/features/userSlice";
 import { useSelector } from "react-redux";
 import { fetchBuildings } from "@/lib/features/buildingSlice";
 import { Building } from "../buildings/building_card/types";
+import { getFacilitiesByUser } from "@/lib/features/facilitySlice";
 
 const Facilities = (): JSX.Element => {
   const user = useSelector(currentUser);
@@ -28,6 +29,14 @@ const Facilities = (): JSX.Element => {
       );
     }
   }, [user?.id, dispatch]);
+
+  const onFilterCriteriaChange = (
+    city: string,
+    federalState: string,
+    facilityType: string
+  ): void => {
+    dispatch(getFacilitiesByUser(user?.id, city, federalState, facilityType));
+  };
 
   const hasFacilities = buildings?.some(
     (building: Building) => building?.facilityIds?.length > 0
@@ -48,7 +57,10 @@ const Facilities = (): JSX.Element => {
 
   return (
     <Box sx={styles.mainContainer}>
-      <PropertyFilterPanel handleOnChange={() => {}} title="Alle Anlagen" />
+      <PropertyFilterPanel
+        handleOnChange={onFilterCriteriaChange}
+        title="Alle Anlagen"
+      />
       {facilityContent}
     </Box>
   );
