@@ -158,12 +158,10 @@ const RegistrationRealState = (): JSX.Element => {
         },
       };
 
-      const hashedPassword = await bcrypt.hash(values.password, 10);
-
       const arrangedDataObj = {
         firstName: values.firstName,
         lastName: values.lastName,
-        password: hashedPassword,
+        password: values.password,
         email: values.email,
         role: values.role,
         company: companyObj,
