@@ -347,17 +347,11 @@ export const EmailChangeSchema = yup.object({
 });
 
 export const passwordChangeSchema = yup.object({
-  currentPassword: yup
-    .string()
-    .required("Current Passwort ist erforderlich")
-    .min(8, "Das Current Passwort sollte mindestens 8 Zeichen lang sein")
-    .matches(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-      "Das Passwort muss Groß- und Kleinbuchstaben, eine Ziffer und ein Sonderzeichen enthalten"
-    ),
+  currentPassword: yup.string().required("Current Passwort ist erforderlich"),
   newPassword: yup
     .string()
     .required("New Passwort ist erforderlich")
+    .min(8, "Das Current Passwort sollte mindestens 8 Zeichen lang sein")
     .matches(
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
       "Das Passwort muss mindestens einen Groß- und einen Kleinbuchstaben, eine Zahl und ein Sonderzeichen enthalten"

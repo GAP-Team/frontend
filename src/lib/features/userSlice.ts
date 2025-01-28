@@ -100,9 +100,6 @@ const userSlice = createSlice({
     builder.addCase(updateUserProfile.fulfilled, (state, action) => {
       return { ...state, ...action.payload };
     });
-    builder.addCase(updateUserPassword.fulfilled, (state, action) => {
-      return { ...state, ...action.payload };
-    });
   },
 });
 

@@ -65,7 +65,7 @@ const ChangePassword = (): JSX.Element => {
           showSnackbar({
             type: "error",
             message:
-              "Password konnte nicht geändert werden. Bitte versuchen Sie es erneut.",
+              "Passwort konnte nicht geändert werden. Bitte überprüfen Sie das aktuelle Passwort und versuchen Sie es erneut",
           })
         );
       }
