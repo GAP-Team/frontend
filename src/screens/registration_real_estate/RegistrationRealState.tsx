@@ -1,5 +1,4 @@
 "use client";
-import bcrypt from "bcryptjs";
 import Cookies from "js-cookie";
 import React, { useState } from "react";
 import Link from "@mui/material/Link";
