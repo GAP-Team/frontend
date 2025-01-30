@@ -1,15 +1,24 @@
-import { Button } from "flowbite-react";
+import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
-import Link from "next/link";
-import gapLogo from "../../../../public/icons/gap-logo.svg";
-import { Lalezar } from "next/font/google";
-import { FaArrowRightToBracket } from "react-icons/fa6";
-const lalezar = Lalezar({ subsets: ["latin"], weight: ["400"] });
+import { Button } from "@mui/material";
 import { FiMenu } from "react-icons/fi";
+import { Lalezar } from "next/font/google";
+import { usePathname } from "next/navigation";
+import { FaArrowRightToBracket } from "react-icons/fa6";
+import gapLogo from "../../../../public/icons/gap-logo.svg";
+
+const lalezar = Lalezar({ subsets: ["latin"], weight: ["400"] });
 
 const GNavbar = (): JSX.Element => {
+  const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
+
+  const menuItems = [
+    { name: "Als Dienstleister", path: "/" },
+    { name: "Als Immobilienbetreiber", path: "/real-estate" },
+  ];
+
   return (
     <nav className="container p-4 mx-auto lg:flex lg:justify-between lg:items-center bg-opacity-70">
       <div className="flex items-center justify-between">
@@ -61,31 +70,43 @@ const GNavbar = (): JSX.Element => {
         className={`absolute inset-x-0 z-20 w-full px-6 py-4 transition-all duration-300 ease-in-out bg-white shadow-md lg:bg-transparent lg:dark:bg-transparent lg:shadow-none dark:bg-gray-900 lg:mt-0 lg:p-0 lg:top-0 lg:relative lg:w-auto lg:opacity-100 lg:translate-x-0 lg:flex lg:items-center ${isOpen ? "translate-x-0 opacity-100" : "opacity-0 -translate-x-full"}`}
       >
         <div className="flex flex-col space-y-4 lg:mt-0 lg:flex-row lg:-px-8 lg:space-y-0">
-          <a
-            className="text-gray-700 transition-colors text-lg font-semibold duration-300 transform lg:mx-8 dark:text-gray-200 dark:hover:text-blue-400 hover:text-[#005e99]"
-            href="#"
-          >
-            Startseite
-          </a>
-          <a
-            className="text-gray-700 transition-colors text-lg font-semibold duration-300 transform lg:mx-8 dark:text-gray-200 dark:hover:text-blue-400 hover:text-[#005e99]"
-            href="#"
-          >
-            Für Dienstleister
-          </a>
-          <a
-            className="text-gray-700 transition-colors text-lg font-semibold duration-300 transform lg:mx-8 dark:text-gray-200 dark:hover:text-blue-400 hover:text-[#005e99]"
-            href="#"
-          >
-            für Immobilienbetreiber
-          </a>
+          {menuItems.map((item) => (
+            <Link key={item.path} href={item.path}>
+              <span
+                className={`
+                  text-gray-700 
+                  transition-colors 
+                  text-lg 
+                  font-semibold 
+                  duration-300 
+                  transform lg:mx-8 
+                  dark:text-gray-200 
+                  dark:hover:text-blue-400 
+                  hover:text-[#005e99]
+                  ${pathname === item.path && "bg-yellow-500"}
+                `}
+                style={
+                  pathname === item.path
+                    ? styles.activeMenu
+                    : styles.inActiveMenu
+                }
+              >
+                {item?.name}
+              </span>
+            </Link>
+          ))}
         </div>
       </div>
       <Button
-        as="a"
+        component="a"
         href="/login"
-        className="block px-5 py-2 mt-4 text-center text-sm text-white rounded-lg text-md lg:mt-0 capitalize lg:w-auto bg-[#005e99] hover:bg-[#0071b8]"
-        size="sm"
+        className="block px-5 py-2 mt-4 text-center rounded-lg text-md"
+        size="small"
+        style={styles.loginButton}
+        sx={{
+          textTransform: "none",
+          whiteSpace: "pre",
+        }}
       >
         <FaArrowRightToBracket className="mr-2 h-5 w-5" />
         Anmeldung
@@ -95,3 +116,25 @@ const GNavbar = (): JSX.Element => {
 };
 
 export default GNavbar;
+
+const styles = {
+  activeMenu: {
+    background: "#D0EDE8",
+    padding: 15,
+    borderRadius: 7,
+  },
+  inActiveMenu: {
+    background: "#FFFFFF",
+  },
+  loginButton: {
+    background: "#005e99",
+    color: "#FFFFFF",
+    padding: "0.7rem",
+    paddingRight: "1.7rem",
+    paddingLeft: "1.7rem",
+    borderRadius: 7,
+    "&:hover": {
+      background: "#0071b8",
+    },
+  },
+};

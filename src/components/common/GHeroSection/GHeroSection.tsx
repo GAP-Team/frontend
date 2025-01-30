@@ -1,30 +1,49 @@
+"use client";
+import Image from "next/image";
 import React, { useState } from "react";
 import Badge from "../../badge/GBadge";
 import { FaCheck } from "react-icons/fa";
-import { Dropdown, DropdownItem, Button } from "flowbite-react";
-import GNavbar from "@/components/navigation/GNavbar/GNavbar";
 import { FaArrowRightLong } from "react-icons/fa6";
+import GNavbar from "@/components/navigation/GNavbar/GNavbar";
 import {
+  FormControl,
+  Checkbox,
+  Autocomplete,
+  TextField,
+  Typography,
+  Button,
+} from "@mui/material";
+import {
+  Item,
   germanStates,
-  listOfOrderTypes,
   listOfTrades,
+  listOfOrderTypes,
 } from "@/utils/Constants";
+import { CheckBoxOutlineBlank, CheckBox } from "@mui/icons-material";
 import heroBackgroundPicture from "../../../../public/images/hero6.jpg";
-import Image from "next/image";
-import { MenuItem, Checkbox, ListItemText } from "@mui/material";
-import { truncateLabel } from "@/utils/utils";
+
+interface Option {
+  category: string;
+  label: string;
+}
+const facilityFlatOptions: Option[] = listOfTrades.flatMap(
+  ({ category, items }) => items.map((item) => ({ category, label: item }))
+);
+const orderFlatOptions: Option[] = listOfOrderTypes.flatMap(
+  ({ category, items }) => items.map((item) => ({ category, label: item }))
+);
 
 const HeroSection = (): JSX.Element => {
-  const [selectedFacilities, setSelectedFacilities] = useState<string[]>([]);
-  const [selectedOrderType, setSelectedOrderType] = useState("Auftragstypen");
-  const [selectedState, setSelectedState] = useState("Bundesländer");
+  const [selectedOrder, setSelectedOrder] = useState<Option[]>([]);
+  const [selectedState, setSelectedState] = useState<Item | null>(null);
+  const [selectedFacilities, setSelectedFacilities] = useState<Option[]>([]);
 
-  const truncatedOrderType = truncateLabel(selectedOrderType);
+  const handleFacilityChange = (_event: any, newValue: Option[]): void => {
+    setSelectedFacilities(newValue);
+  };
 
-  const handleFacilityChange = (item: string): void => {
-    setSelectedFacilities((prev) =>
-      prev.includes(item) ? prev.filter((i) => i !== item) : [...prev, item]
-    );
+  const handleOrderChange = (_event: any, newValue: Option[]): void => {
+    setSelectedOrder(newValue);
   };
 
   return (
@@ -51,6 +70,7 @@ const HeroSection = (): JSX.Element => {
           <div className="relative bg-gray-900 bg-opacity-0 h-[800px]">
             <div className="px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20">
               <div className="flex flex-col items-center justify-center">
+                {/* Query Section Start */}
                 <div className="w-full xl:mb-0 xl:px-16">
                   <div className="bg-white bg-opacity-90 rounded-xl shadow-2xl p-4 sm:p-7 md:p-10">
                     <div className="flex justify-center flex-col items-center text-center pb-5 px-4 md:px-5">
@@ -69,163 +89,124 @@ const HeroSection = (): JSX.Element => {
                     </div>
                     <form className="flex flex-col justify-center text-center pt-10 pb-4 md:flex-row">
                       <div className="flex flex-col w-full px-2 sm:px-4 md:w-1/3">
-                        <label
-                          htmlFor="craft"
-                          className="text-sm font-medium text-gray-700"
-                        >
-                          Wählen Sie ein Anlagentyp aus:
-                        </label>
-                        <Dropdown
-                          label={
-                            selectedFacilities.length > 0
-                              ? truncateLabel(selectedFacilities[0])
-                              : "Anlagentyp"
-                          }
-                          size="lg"
-                          color="gray"
-                          style={{
-                            width: "90%",
-                            alignSelf: "center",
-                            margin: 2,
-                          }}
-                        >
-                          <div className="max-h-60 overflow-y-auto">
-                            {listOfTrades.map((category, index) => (
-                              <React.Fragment key={index}>
-                                {category.category ? (
-                                  <Dropdown
-                                    label={category.category}
-                                    size="md"
-                                    placement="right"
-                                    style={{ width: "300px" }}
-                                    color="gray"
-                                  >
-                                    {category.items.map((item, itemIndex) => (
-                                      <MenuItem
-                                        key={itemIndex}
-                                        value={item}
-                                        onChange={() =>
-                                          handleFacilityChange(item)
-                                        }
-                                      >
-                                        <Checkbox
-                                          checked={selectedFacilities.includes(
-                                            item
-                                          )}
-                                        />
-                                        <ListItemText primary={item} />
-                                      </MenuItem>
-                                    ))}
-                                  </Dropdown>
-                                ) : (
-                                  category.items.map((item, itemIndex) => (
-                                    <MenuItem key={itemIndex} value={item}>
-                                      <Checkbox
-                                        checked={category.items.includes(item)}
-                                      />
-                                      <ListItemText primary={item} />
-                                    </MenuItem>
-                                  ))
-                                )}
-                              </React.Fragment>
-                            ))}
-                          </div>
-                        </Dropdown>
+                        <FormControl sx={{ m: 1, minWidth: 120 }}>
+                          <label
+                            htmlFor="craft"
+                            className="text-sm font-medium text-gray-700 mb-4"
+                          >
+                            Wählen Sie ein Anlagentyp aus:
+                          </label>
+                          <Autocomplete
+                            multiple
+                            disablePortal
+                            options={facilityFlatOptions}
+                            groupBy={(option) => option.category}
+                            getOptionLabel={(option) => option.category}
+                            renderInput={(params) => (
+                              <TextField {...params} label="Anlagentyp" />
+                            )}
+                            disableCloseOnSelect
+                            onChange={handleFacilityChange}
+                            value={selectedFacilities}
+                            sx={{ width: 300 }}
+                            renderOption={(props, option, { selected }) => (
+                              <li {...props}>
+                                <Checkbox
+                                  icon={
+                                    <CheckBoxOutlineBlank fontSize="small" />
+                                  }
+                                  checkedIcon={<CheckBox fontSize="small" />}
+                                  checked={selected}
+                                />
+                                <Typography>{option.category}</Typography>
+                              </li>
+                            )}
+                          />
+                        </FormControl>
+                      </div>
+
+                      <div className="flex flex-col w-full px-2 sm:px-4 md:w-1/3">
+                        <FormControl sx={{ m: 1, minWidth: 120 }}>
+                          <label
+                            htmlFor="craft"
+                            className="text-sm font-medium text-gray-700 mb-4"
+                          >
+                            Wählen Sie ein Auftragstyp aus:
+                          </label>
+                          <Autocomplete
+                            multiple
+                            disablePortal
+                            options={orderFlatOptions}
+                            groupBy={(option) => option.category}
+                            getOptionLabel={(option) => option.category}
+                            renderInput={(params) => (
+                              <TextField {...params} label="Auftragstypen" />
+                            )}
+                            disableCloseOnSelect
+                            onChange={handleOrderChange}
+                            value={selectedOrder}
+                            sx={{ width: 300 }}
+                            renderOption={(props, option, { selected }) => (
+                              <li {...props}>
+                                <Checkbox
+                                  icon={
+                                    <CheckBoxOutlineBlank fontSize="small" />
+                                  }
+                                  checkedIcon={<CheckBox fontSize="small" />}
+                                  checked={selected}
+                                />
+                                <Typography>{option.category}</Typography>
+                              </li>
+                            )}
+                          />
+                        </FormControl>
                       </div>
 
                       <div className="flex flex-col w-full px-2 sm:px-4 md:w-1/3">
                         <label
                           htmlFor="type"
-                          className="text-sm font-medium text-gray-700"
-                        >
-                          Wählen Sie ein Auftragstyp aus:
-                        </label>
-                        <Dropdown
-                          label={truncatedOrderType}
-                          size="lg"
-                          style={{
-                            width: "90%",
-                            alignSelf: "center",
-                            margin: 2,
-                            overflow: "hidden",
-                            textOverflow: "ellipsis",
-                            whiteSpace: "nowrap",
-                            maxWidth: "100%",
-                          }}
-                          color="gray"
-                        >
-                          {listOfOrderTypes.map((category, index) => (
-                            <React.Fragment key={index}>
-                              {category.category ? (
-                                <Dropdown
-                                  label={category.category}
-                                  size="md"
-                                  placement="right"
-                                  style={{ width: "300px" }}
-                                  color="gray"
-                                >
-                                  {category.items.map((item, itemIndex) => (
-                                    <DropdownItem
-                                      onClick={() => setSelectedOrderType(item)}
-                                      key={itemIndex}
-                                      style={{ width: "max-content" }}
-                                    >
-                                      {item}
-                                    </DropdownItem>
-                                  ))}
-                                </Dropdown>
-                              ) : (
-                                category.items.map((item, itemIndex) => (
-                                  <DropdownItem
-                                    onClick={() => setSelectedOrderType(item)}
-                                    key={itemIndex}
-                                  >
-                                    {item}
-                                  </DropdownItem>
-                                ))
-                              )}
-                            </React.Fragment>
-                          ))}
-                        </Dropdown>
-                      </div>
-
-                      <div className="flex flex-col w-full px-2 sm:px-4 md:w-1/3">
-                        <label
-                          htmlFor="type"
-                          className="text-sm font-medium text-gray-700"
+                          className="text-sm font-medium text-gray-700 mb-4"
                         >
                           Wählen Sie ein Bundesland aus:
                         </label>
-                        <Dropdown
-                          label={selectedState}
-                          size="lg"
-                          style={{
-                            width: "90%",
-                            alignSelf: "center",
-                            margin: 2,
-                          }}
-                          color="gray"
-                        >
-                          <div className="relative w-90% self-center m-2 max-h-60 overflow-y-auto">
-                            {germanStates.map((item, ind) => (
-                              <DropdownItem
-                                onClick={() => setSelectedState(item.label)}
-                                key={ind}
-                                style={{ width: "max-content" }}
-                              >
-                                {item.label}
-                              </DropdownItem>
-                            ))}
-                          </div>
-                        </Dropdown>
+                        <Autocomplete
+                          options={germanStates}
+                          getOptionLabel={(option) => option.label}
+                          disableCloseOnSelect
+                          onChange={(_event, newValue) =>
+                            setSelectedState(newValue)
+                          }
+                          value={selectedState || null}
+                          isOptionEqualToValue={(option, value) =>
+                            option.value === value?.value
+                          }
+                          renderInput={(params) => (
+                            <TextField {...params} label="Bundesländer" />
+                          )}
+                          renderOption={(props, option, { selected }) => (
+                            <li {...props}>
+                              <Checkbox
+                                icon={<CheckBoxOutlineBlank fontSize="small" />}
+                                checkedIcon={<CheckBox fontSize="small" />}
+                                checked={selected}
+                              />
+                              <Typography>{option.label}</Typography>
+                            </li>
+                          )}
+                        />
                       </div>
                     </form>
                     <div className="flex justify-center items-center">
                       <Button
-                        as="a"
                         href="#"
-                        className="mt-10 text-lg bg-[#005e99] hover:bg-[#0071b8] rounded-lg"
-                        size="xl"
+                        size="large"
+                        component="a"
+                        style={styles.querySubmitButton}
+                        className="mt-10 rounded-lg"
+                        sx={{
+                          textTransform: "none",
+                          whiteSpace: "pre",
+                        }}
                       >
                         Jetzt Auftrag Finden
                         <FaArrowRightLong className="ml-2 h-5 w-5" />
@@ -253,6 +234,7 @@ const HeroSection = (): JSX.Element => {
                     </div>
                   </div>
                 </div>
+                {/* Query Section End */}
               </div>
             </div>
           </div>
@@ -263,3 +245,18 @@ const HeroSection = (): JSX.Element => {
 };
 
 export default HeroSection;
+
+const styles = {
+  querySubmitButton: {
+    background: "#005e99",
+    color: "#FFFFFF",
+    padding: "0.8rem",
+    paddingRight: "1.7rem",
+    paddingLeft: "1.7rem",
+    borderRadius: 7,
+    fontSize: "small",
+    "&:hover": {
+      background: "#0071b8",
+    },
+  },
+};
