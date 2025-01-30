@@ -21,6 +21,7 @@ import HeroBanner from "../../components/common/InfoBanner";
 import { loginValidationSchema } from "@/utils/ValidationSchema";
 import { setAccessToken, setIsUserVerified } from "@/utils/helperJWT";
 import userAPIs from "@/api/user";
+import { USER_ROLE } from "@/utils/enums";
 
 const LoginPage = (): JSX.Element => {
   const router = useRouter();
@@ -49,10 +50,10 @@ const LoginPage = (): JSX.Element => {
             });
           }
 
-          if (res.data.user?.role === "SERVICE_PROVIDER") {
+          if (res.data.user?.role === USER_ROLE.SERVICE_PROVIDER) {
             router.push("/service_provider/dashboard");
           }
-          if (res.data.user?.role === "REAL_ESTATE_OWNER") {
+          if (res.data.user?.role === USER_ROLE.REAL_ESTATE_OWNER) {
             router.push("/real_estate/dashboard");
           }
         }

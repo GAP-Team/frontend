@@ -1,16 +1,12 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import Box from "@mui/material/Box";
 import { BiTask } from "react-icons/bi";
 import { CgNotes } from "react-icons/cg";
+import { useEffect, useState } from "react";
 import { BsEnvelope } from "react-icons/bs";
-import Sidebar, {
-  SubItem,
-  SidebarItem,
-} from "@/components/navigation/GSidebar/SideBar";
+import Layout from "@/screens/dashboard/Layout";
+import { SubItem, SidebarItem } from "@/components/navigation/GSidebar/SideBar";
 import { LuLayoutDashboard } from "react-icons/lu";
 import { useRouter, usePathname } from "next/navigation";
-import GAppbar from "@/components/navigation/GAppbar/GAppbar";
 
 const sidebarItems: SidebarItem[] = [
   {
@@ -73,32 +69,14 @@ const ServiceProviderLayout: React.FC<any> = ({ children }) => {
   };
 
   return (
-    <Box sx={styles.main}>
-      <Sidebar
-        selected={selected}
-        items={sidebarItems}
-        setSelected={handleRedirect}
-      />
-      <Box sx={styles.contentContainer}>
-        <GAppbar />
-        {children}
-      </Box>
-    </Box>
+    <Layout
+      sidebarItems={sidebarItems}
+      selected={selected}
+      setSelected={handleRedirect}
+    >
+      {children}
+    </Layout>
   );
 };
 
 export default ServiceProviderLayout;
-
-const styles = {
-  main: {
-    display: "flex",
-    minHeight: "100vh",
-    backgroundColor: "#F1F3F4",
-  },
-  contentContainer: {
-    display: "flex",
-    flexDirection: "column",
-    flex: 1,
-    minHeight: "100vh",
-  },
-};

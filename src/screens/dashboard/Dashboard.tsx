@@ -1,119 +1,77 @@
 "use client";
-import { CgNotes } from "react-icons/cg";
-import { TbPigMoney } from "react-icons/tb";
-import { LuLayoutDashboard } from "react-icons/lu";
-import React, { useState, memo, useEffect } from "react";
-import { MdOutlineDoorSliding, MdOutlineAddHomeWork } from "react-icons/md";
-
-import Layout from "./Layout";
-import Tenders from "./tenders/TendersOverview";
-import BuildingOverview from "./buildings/BuildingOverview";
-import NewTender from "./tenders/add_tender_form/NewTender";
-import RealEstateUser from "./real_estate_user/RealEstateUser";
-import NewBuilding from "./buildings/add_building_form/NewBuilding";
-import { SidebarItem, SubItem } from "@/components/navigation/GSidebar/SideBar";
-import FacilityOverview from "./facilities/FacilityOverview";
-import NewFacility from "./facilities/add_facility_form/NewFacility";
+import React, { memo } from "react";
+import Grid from "@mui/material/Grid";
+import Paper from "@mui/material/Paper";
 
 interface DashboardProps {
-  overrideComponent?: React.ReactElement;
+  NewsPanel?: React.ReactElement;
+  TendersPanel?: React.ReactElement;
+  OverviewPanel?: React.ReactElement;
+  ApplicationsPanel?: React.ReactElement;
 }
 
-const Dashboard: React.FC<DashboardProps> = ({ overrideComponent }) => {
-  const sidebarItems: SidebarItem[] = [
-    {
-      id: 0,
-      icon: LuLayoutDashboard,
-      text: "Dashboard",
-      url: "dashboard",
-      component: <RealEstateUser />,
-    },
-    {
-      id: 1,
-      icon: CgNotes,
-      text: "Ausschreibungen",
-      subItems: [
-        {
-          id: 10,
-          text: "Alle Ausschreibungen",
-          url: "tenders",
-          component: <Tenders />,
-        },
-        {
-          id: 11,
-          text: "Ausschreibung hinzufügen",
-          url: "tenders/add",
-          component: <NewTender id="" />,
-        },
-      ],
-    },
-    {
-      id: 2,
-      icon: MdOutlineDoorSliding,
-      text: "Anlagen",
-      subItems: [
-        {
-          id: 20,
-          text: "Alle Anlagen",
-          url: "facilities",
-          component: <FacilityOverview />,
-        },
-        {
-          id: 21,
-          text: "Anlage hinzufügen",
-          url: "facilities/add",
-          component: <NewFacility facilityId="" />,
-        },
-      ],
-    },
-    {
-      id: 3,
-      icon: MdOutlineAddHomeWork,
-      text: "Gebäude",
-      subItems: [
-        {
-          id: 30,
-          text: "Alle Gebäude",
-          url: "buildings",
-          component: <BuildingOverview />,
-        },
-        {
-          id: 31,
-          text: "Gebäude hinzufügen",
-          url: "buildings/add",
-          component: <NewBuilding id="" />,
-        },
-      ],
-    },
-    // { id:4, icon: MdOutlineNoteAlt, text: "Aufträge"},
-    {
-      id: 4,
-      icon: TbPigMoney,
-      url: "kosteneinsparung",
-      text: "Kosteneinsparung",
-    },
-    // { id:5, icon: FaRegFlag, text: "Favoriten" }, // NOT INCLUDED IN GP-V1
-  ];
-
-  const [selected, setSelected] = useState<SidebarItem | SubItem>(
-    sidebarItems[0]
-  );
-
-  useEffect(() => {
-    if (overrideComponent) {
-      setSelected({ ...selected, component: overrideComponent }); // Only updating the component part
-    }
-  }, [overrideComponent]);
-
+const Dashboard: React.FC<DashboardProps> = ({
+  OverviewPanel,
+  TendersPanel,
+  ApplicationsPanel,
+  NewsPanel,
+}) => {
   return (
-    <Layout
-      sidebarItems={sidebarItems}
-      selected={selected}
-      setSelected={setSelected}
-    >
-      {selected?.component}
-    </Layout>
+    <Grid container spacing={2} sx={styles.mainContainer} columns={16}>
+      <Grid item xs={3}>
+        <Paper sx={styles.coloredPaper}>{OverviewPanel && OverviewPanel}</Paper>
+      </Grid>
+      <Grid item xs={13}>
+        <Grid container spacing={2} columns={16}>
+          <Grid item xs={16}>
+            <Paper sx={styles.topPaper}>{TendersPanel && TendersPanel}</Paper>
+          </Grid>
+          <Grid item xs={9}>
+            <Paper sx={styles.bottomLeftPaper}>
+              {ApplicationsPanel && ApplicationsPanel}
+            </Paper>
+          </Grid>
+          <Grid item xs={7}>
+            <Paper sx={styles.bottomRightPaper}>{NewsPanel && NewsPanel}</Paper>
+          </Grid>
+        </Grid>
+      </Grid>
+    </Grid>
   );
 };
 
 export default memo(Dashboard);
+
+// Styles defined at the bottom of the component
+const styles = {
+  mainContainer: {
+    height: "calc(100% - 24px)",
+    p: "1rem",
+    boxSizing: "border-box",
+  },
+  coloredPaper: {
+    height: "100%",
+    width: "100%",
+    boxSizing: "border-box",
+    backgroundColor: "#2356FF",
+    p: "1rem",
+  },
+  topPaper: {
+    height: "calc(50vh - 24px)",
+    width: "100%",
+    boxSizing: "border-box",
+    p: "1.25rem",
+  },
+  bottomLeftPaper: {
+    height: "calc(40vh - 12px)",
+    width: "100%",
+    boxSizing: "border-box",
+    p: "1.25rem",
+  },
+  bottomRightPaper: {
+    height: "calc(40vh - 12px)",
+    width: "100%",
+    boxSizing: "border-box",
+    p: "1.25rem",
+  },
+};
