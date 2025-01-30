@@ -17,9 +17,12 @@ import { TENDER_FORM } from "@/utils/enums";
 const TenderInformation = (): JSX.Element => {
   const formik = useFormikContext<AddTenderFormValues>();
 
-  const handleTenderTypeSelect = (selectedItem: any): void => {
-    const selectedTenderType = selectedItem?.target?.value;
-    formik?.setFieldValue("tenderType", selectedTenderType);
+  const handleTenderFormChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ): void => {
+    const selectedForm = event.target.value;
+    formik.setFieldValue("tenderForm", selectedForm);
+    formik.setFieldValue("tenderType", "");
   };
 
   return (
@@ -53,7 +56,7 @@ const TenderInformation = (): JSX.Element => {
               id="tenderForm"
               name="tenderForm"
               value={formik?.values?.tenderForm}
-              onChange={formik?.handleChange}
+              onChange={handleTenderFormChange}
               onBlur={formik?.handleBlur}
             >
               <FormControlLabel
@@ -93,7 +96,7 @@ const TenderInformation = (): JSX.Element => {
                   ? tenderTypesListHW
                   : tenderTypesListSV
               }
-              onChange={handleTenderTypeSelect}
+              onChange={formik?.handleChange}
               value={formik?.values?.tenderType}
             />
             {formik?.touched?.tenderType && (

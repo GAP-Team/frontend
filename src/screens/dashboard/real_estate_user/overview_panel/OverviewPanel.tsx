@@ -1,43 +1,73 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import SectionTitle from "@/components/label/SectionTitle";
 import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
 import StatisticsItem from "@/components/label/StatisticsItem";
 import ProjectCard from "./ProjectCard";
-import UserCard from "./UserCard";
 import DividerDecorator from "@/components/divider/DividerDecorator";
-import { useAppSelector } from "@/lib/hooks";
-import { Tender, BuildingTenders } from "../../tenders/tender_card/types";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
+import { Tender } from "../../tenders/tender_card/types";
 import { TenderStatusEnum } from "@/utils/enums";
+import { getFacilitiesByUser } from "@/lib/features/facilitySlice";
+import dayjs from "dayjs";
+import { Facility } from "../../facilities/facility_card/types";
+import { Building } from "../../buildings/building_card/types";
+import { truncateLabel } from "@/utils/utils";
 
 const OverviewPanel = (): JSX.Element => {
-  const tenders = useAppSelector((state) => state.tender.tenders);
-  const [totalOpenTenders, setTotalOpenTenders] = useState<number>(0);
-  const [totalActiveTenders, setTotalActiveTenders] = useState<number>(0);
+  const tenders = useAppSelector((state) => state.tender.tenderList);
+  const facilities = useAppSelector((state) => state.facility.facilities);
+  const buildings = useAppSelector((state) => state.building.buildings);
+  const user = useAppSelector((state) => state.user);
+  const dispatch = useAppDispatch();
+
+  const openTenders = tenders?.filter(
+    (tender: Tender) => tender.status === TenderStatusEnum.OPEN
+  ).length;
+  const activeTender = tenders?.filter(
+    (tender: Tender) => tender.status === TenderStatusEnum.ACTIVE
+  ).length;
 
   useEffect(() => {
-    getDashboardTenderNumbers();
-  }, []);
+    if (user?.id) {
+      dispatch(getFacilitiesByUser(user.id));
+    }
+  }, [user?.id, dispatch]);
 
-  const getDashboardTenderNumbers = (): void => {
-    let openTenders = 0;
-    let activeTenders = 0;
-
-    tenders?.map((building: BuildingTenders) => {
-      building?.tenders?.map((tender: Tender) => {
-        if (tender?.status === TenderStatusEnum.OPEN) {
-          openTenders = openTenders + 1;
-        }
-
-        if (tender?.status === TenderStatusEnum.ACTIVE) {
-          activeTenders = activeTenders + 1;
-        }
-      });
-    });
-
-    setTotalOpenTenders(openTenders);
-    setTotalActiveTenders(activeTenders);
+  const getDaysRemaining = (facilityId: string): number => {
+    const facility = facilities.find((f: Facility) => f.id === facilityId);
+    const lastCheckDate = dayjs(facility.check?.lastCheckDate);
+    const nextCheckDate = lastCheckDate.add(
+      Number(facility.check?.nextCheckInYearNumber),
+      "year"
+    );
+    return Math.abs(nextCheckDate.diff(dayjs(), "days"));
   };
+
+  const tendersDueSoon = tenders?.filter(
+    (tender: Tender) => getDaysRemaining(tender.facility?.id) < 183
+  );
+  const tendersExceedingDays = tenders?.filter(
+    (tender: Tender) => getDaysRemaining(tender.facility?.id) > 183
+  );
+
+  const renderTenderCards = (tendersList: Tender[]): React.ReactNode =>
+    tendersList?.map((tender, index) => {
+      const daysRemaining = getDaysRemaining(tender.facility?.id);
+      const buildingAddress = buildings.find(
+        (b: Building) => b.id === tender.building?.id
+      )?.address;
+
+      return (
+        <ProjectCard
+          key={index}
+          address={`${buildingAddress?.street} - ${buildingAddress?.city}, ${buildingAddress?.state}`}
+          code={truncateLabel(tender?.tenderType, 10)}
+          daysRemaining={daysRemaining > 183 ? -daysRemaining : daysRemaining}
+          text={daysRemaining > 183 ? "Tage" : "Tage übrig"}
+        />
+      );
+    });
 
   return (
     <>
@@ -48,44 +78,24 @@ const OverviewPanel = (): JSX.Element => {
       <DividerDecorator />
       <Box sx={styles.statsSection}>
         <StatisticsItem
-          number={totalOpenTenders}
+          number={openTenders}
           color="#FECB00"
           text="offene Ausschreibungen"
         />
         <Divider orientation="vertical" flexItem sx={styles.dividerStats} />
-        <StatisticsItem
-          number={totalActiveTenders}
-          text="laufende Ausschreibungen"
-        />
+        <StatisticsItem number={activeTender} text="laufende Ausschreibungen" />
       </Box>
       <SectionTitle
         text="Bald fällig"
         sx={{ color: "white", lineHeight: "1rem", mt: "2.5rem" }}
       />
-      <ProjectCard
-        address="Mittelstraße 129"
-        code="BMA - 000237D"
-        daysRemaining={14}
-      />
-      <ProjectCard
-        address="Mittelstraße 129"
-        code="BMA - 000237D"
-        daysRemaining={14}
-      />
-      <ProjectCard
-        address="Mittelstraße 129"
-        code="BMA - 000237D"
-        daysRemaining={14}
-      />
+      {renderTenderCards(tendersDueSoon)}
+
       <SectionTitle
-        text="Abgeschlossen"
+        text="Frist abgelaufen"
         sx={{ color: "white", lineHeight: "1rem", mt: "2.5rem" }}
       />
-      <UserCard
-        name="Allan Jackson"
-        designation="IT Specialist"
-        numberOfRequests={11}
-      />
+      {renderTenderCards(tendersExceedingDays)}
     </>
   );
 };
