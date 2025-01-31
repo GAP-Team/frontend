@@ -3,6 +3,7 @@ import { RootState } from "../store";
 import { Facility } from "@/screens/dashboard/facilities/facility_card/types";
 import buildingAPIs from "@/api/building";
 import userAPIs from "@/api/user";
+import facilityAPIs from "@/api/facility";
 
 interface FacilityState {
   facilities: Facility[];
@@ -47,6 +48,15 @@ const getFacilitiesByUserId = createAsyncThunk(
       facilityType
     );
     return response.data;
+  }
+);
+
+// Delete facility
+export const deleteFacility = createAsyncThunk(
+  "tender/deleteFacility",
+  async (facilityId: string) => {
+    await facilityAPIs.delete(facilityId);
+    return facilityId;
   }
 );
 
@@ -105,6 +115,22 @@ const FacilitySlice = createSlice({
       .addCase(getFacilitiesByUserId.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message || "Failed to fetch user facilities";
+      })
+      // delete facility reducers
+      .addCase(deleteFacility.fulfilled, (state, action) => {
+        state.facilities = state.facilities.filter(
+          (facility) => facility.id !== action.payload
+        );
+        state.loading = false;
+        state.error = null;
+      })
+      .addCase(deleteFacility.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(deleteFacility.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message || "Failed to delete facility";
       });
   },
 });
