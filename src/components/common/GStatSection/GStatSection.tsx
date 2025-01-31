@@ -1,7 +1,7 @@
-import React, { ReactNode } from "react";
-import classes from "./GStatSection.module.scss";
-import { Button } from "flowbite-react";
+import { ReactNode } from "react";
+import { Button } from "@mui/material";
 import GBadge from "@/components/badge/GBadge";
+import classes from "./GStatSection.module.scss";
 import GCountDown from "@/components/countdown/GCountDown";
 
 interface GStatSectionProps {
@@ -23,10 +23,15 @@ const GStatSection: React.FC<GStatSectionProps> = ({
         <p className="text-lg font-normal max-w-4xl mx-auto">{subtitle}</p>
         <div className="flex justify-center xl:justify-start">
           <Button
-            as="a"
-            href="#"
-            className="mt-10 bg-[#005e99] hover:bg-[#0071b8]"
-            size="lg"
+            component="a"
+            href="/registration"
+            className="block px-5 py-2 mt-4 text-center rounded-lg text-md"
+            size="small"
+            style={styles.registerButton}
+            sx={{
+              textTransform: "none",
+              whiteSpace: "pre",
+            }}
           >
             Jetzt anmeldung
           </Button>
@@ -74,3 +79,18 @@ const GStatSection: React.FC<GStatSectionProps> = ({
 };
 
 export default GStatSection;
+
+const styles = {
+  registerButton: {
+    background: "#005e99",
+    color: "#FFFFFF",
+    padding: "0.7rem",
+    paddingRight: "1.7rem",
+    paddingLeft: "1.7rem",
+    borderRadius: 7,
+    fontSize: "15px",
+    "&:hover": {
+      background: "#0071b8",
+    },
+  },
+};
