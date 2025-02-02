@@ -24,7 +24,7 @@ const GStatSection: React.FC<GStatSectionProps> = ({
         <div className="flex justify-center xl:justify-start">
           <Button
             component="a"
-            href="/registration"
+            href="/login"
             className="block px-5 py-2 mt-4 text-center rounded-lg text-md"
             size="small"
             style={styles.registerButton}
