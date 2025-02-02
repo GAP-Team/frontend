@@ -1,14 +1,9 @@
-import React from "react";
 import styles from "./LandingPage.module.scss";
-import GBlogSection from "@/components/common/GBlogSection/GBlogSection";
 import GFeatures from "@/components/common/GFeatures/GFeatures";
+import HeroSection from "@/components/common/GHeroSection/GHeroSection";
+import GStatSection from "@/components/common/GStatSection/GStatSection";
 import GOfferSection from "@/components/common/GOfferSection/GOfferSection";
 import GFunctionSection from "@/components/common/GFunctionSection/GFunctionSection";
-import GTestimonials from "@/components/testimonial/GTestimonials";
-import GVideoSection from "@/components/common/GVideoSection/GVideoSection";
-import GClientSection from "@/components/common/GClientSection/GClientSection";
-import GStatSection from "@/components/common/GStatSection/GStatSection";
-import HeroSection from "@/components/common/GHeroSection/GHeroSection";
 
 export default function LandingPage(): JSX.Element {
   return (
@@ -17,10 +12,6 @@ export default function LandingPage(): JSX.Element {
       <GFunctionSection />
       <GOfferSection />
       <GFeatures />
-      <GVideoSection />
-      <GBlogSection />
-      <GTestimonials />
-      <GClientSection />
       <GStatSection />
     </div>
   );
