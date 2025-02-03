@@ -97,7 +97,7 @@ const TenderCard: React.FC<TenderCardProps> = ({
           sx={{ fontWeight: 400, py: "0.75rem" }}
         />
       </Box>
-      <Box>
+      <Box onClick={handleClick}>
         <Typography variant="h6" sx={styles.title}>
           {tender?.tenderType}
         </Typography>
