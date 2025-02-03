@@ -14,13 +14,13 @@ import {
   Button,
 } from "@mui/material";
 import {
-  Item,
   germanStates,
   listOfTrades,
   listOfOrderTypes,
 } from "@/utils/Constants";
 import { CheckBoxOutlineBlank, CheckBox } from "@mui/icons-material";
 import heroBackgroundPicture from "../../../../public/images/hero6.jpg";
+import CustomSelect from "@/components/drop_down/CustomSelect";
 
 interface Option {
   label: string;
@@ -34,7 +34,7 @@ const orderFlatOptions: Option[] = listOfOrderTypes.flatMap(
 );
 
 const HeroSection = (): JSX.Element => {
-  const [selectedState, setSelectedState] = useState<Item | null>(null);
+  const [selectedState, setSelectedState] = useState<string>("");
   const [selectedTenderType, setSelectedTenderType] = useState<Option[]>([]);
   const [selectedFacilities, setSelectedFacilities] = useState<Option[]>([]);
 
@@ -170,32 +170,14 @@ const HeroSection = (): JSX.Element => {
                           >
                             Wählen Sie ein Bundesland aus:
                           </label>
-                          <Autocomplete
+                          <CustomSelect
+                            label={"Bundesländer"}
+                            name={"bundesländer"}
+                            onChange={(newValue) =>
+                              setSelectedState(newValue?.target?.value)
+                            }
                             options={germanStates}
-                            getOptionLabel={(option) => option.label}
-                            disableCloseOnSelect
-                            onChange={(_event, newValue) =>
-                              setSelectedState(newValue)
-                            }
-                            value={selectedState || null}
-                            isOptionEqualToValue={(option, value) =>
-                              option.value === value?.value
-                            }
-                            renderInput={(params) => (
-                              <TextField {...params} label="Bundesländer" />
-                            )}
-                            renderOption={(props, option, { selected }) => (
-                              <li {...props}>
-                                <Checkbox
-                                  icon={
-                                    <CheckBoxOutlineBlank fontSize="small" />
-                                  }
-                                  checkedIcon={<CheckBox fontSize="small" />}
-                                  checked={selected}
-                                />
-                                <Typography>{option.label}</Typography>
-                              </li>
-                            )}
+                            value={selectedState || ""}
                           />
                         </FormControl>
                       </div>
