@@ -23,7 +23,7 @@ const GNavbar = (): JSX.Element => {
     <nav className="container p-4 mx-auto lg:flex lg:justify-between lg:items-center bg-opacity-70">
       <div className="flex items-center justify-between">
         <Link
-          href="#"
+          href="/"
           className="flex flex-row justify-start items-center gap-4"
         >
           <div style={{ position: "relative", height: "3rem", width: "3rem" }}>

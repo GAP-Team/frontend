@@ -23,8 +23,8 @@ import { CheckBoxOutlineBlank, CheckBox } from "@mui/icons-material";
 import heroBackgroundPicture from "../../../../public/images/hero6.jpg";
 
 interface Option {
-  category: string;
   label: string;
+  category: string;
 }
 const facilityFlatOptions: Option[] = listOfTrades.flatMap(
   ({ category, items }) => items.map((item) => ({ category, label: item }))
@@ -34,16 +34,16 @@ const orderFlatOptions: Option[] = listOfOrderTypes.flatMap(
 );
 
 const HeroSection = (): JSX.Element => {
-  const [selectedOrder, setSelectedOrder] = useState<Option[]>([]);
   const [selectedState, setSelectedState] = useState<Item | null>(null);
+  const [selectedTenderType, setSelectedTenderType] = useState<Option[]>([]);
   const [selectedFacilities, setSelectedFacilities] = useState<Option[]>([]);
 
   const handleFacilityChange = (_event: any, newValue: Option[]): void => {
     setSelectedFacilities(newValue);
   };
 
-  const handleOrderChange = (_event: any, newValue: Option[]): void => {
-    setSelectedOrder(newValue);
+  const handleTenderTypeChange = (_event: any, newValue: Option[]): void => {
+    setSelectedTenderType(newValue);
   };
 
   return (
@@ -118,7 +118,7 @@ const HeroSection = (): JSX.Element => {
                                   checkedIcon={<CheckBox fontSize="small" />}
                                   checked={selected}
                                 />
-                                <Typography>{option.category}</Typography>
+                                <Typography>{option.label}</Typography>
                               </li>
                             )}
                           />
@@ -143,8 +143,8 @@ const HeroSection = (): JSX.Element => {
                               <TextField {...params} label="Auftragstypen" />
                             )}
                             disableCloseOnSelect
-                            onChange={handleOrderChange}
-                            value={selectedOrder}
+                            onChange={handleTenderTypeChange}
+                            value={selectedTenderType}
                             sx={{ width: 300 }}
                             renderOption={(props, option, { selected }) => (
                               <li {...props}>
@@ -155,7 +155,7 @@ const HeroSection = (): JSX.Element => {
                                   checkedIcon={<CheckBox fontSize="small" />}
                                   checked={selected}
                                 />
-                                <Typography>{option.category}</Typography>
+                                <Typography>{option.label}</Typography>
                               </li>
                             )}
                           />
@@ -163,37 +163,41 @@ const HeroSection = (): JSX.Element => {
                       </div>
 
                       <div className="flex flex-col w-full px-2 sm:px-4 md:w-1/3">
-                        <label
-                          htmlFor="type"
-                          className="text-sm font-medium text-gray-700 mb-4"
-                        >
-                          Wählen Sie ein Bundesland aus:
-                        </label>
-                        <Autocomplete
-                          options={germanStates}
-                          getOptionLabel={(option) => option.label}
-                          disableCloseOnSelect
-                          onChange={(_event, newValue) =>
-                            setSelectedState(newValue)
-                          }
-                          value={selectedState || null}
-                          isOptionEqualToValue={(option, value) =>
-                            option.value === value?.value
-                          }
-                          renderInput={(params) => (
-                            <TextField {...params} label="Bundesländer" />
-                          )}
-                          renderOption={(props, option, { selected }) => (
-                            <li {...props}>
-                              <Checkbox
-                                icon={<CheckBoxOutlineBlank fontSize="small" />}
-                                checkedIcon={<CheckBox fontSize="small" />}
-                                checked={selected}
-                              />
-                              <Typography>{option.label}</Typography>
-                            </li>
-                          )}
-                        />
+                        <FormControl sx={{ m: 1, minWidth: 120 }}>
+                          <label
+                            htmlFor="type"
+                            className="text-sm font-medium text-gray-700 mb-4"
+                          >
+                            Wählen Sie ein Bundesland aus:
+                          </label>
+                          <Autocomplete
+                            options={germanStates}
+                            getOptionLabel={(option) => option.label}
+                            disableCloseOnSelect
+                            onChange={(_event, newValue) =>
+                              setSelectedState(newValue)
+                            }
+                            value={selectedState || null}
+                            isOptionEqualToValue={(option, value) =>
+                              option.value === value?.value
+                            }
+                            renderInput={(params) => (
+                              <TextField {...params} label="Bundesländer" />
+                            )}
+                            renderOption={(props, option, { selected }) => (
+                              <li {...props}>
+                                <Checkbox
+                                  icon={
+                                    <CheckBoxOutlineBlank fontSize="small" />
+                                  }
+                                  checkedIcon={<CheckBox fontSize="small" />}
+                                  checked={selected}
+                                />
+                                <Typography>{option.label}</Typography>
+                              </li>
+                            )}
+                          />
+                        </FormControl>
                       </div>
                     </form>
                     <div className="flex justify-center items-center">
