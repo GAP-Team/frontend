@@ -53,7 +53,7 @@ const getFacilitiesByUserId = createAsyncThunk(
 
 // Delete facility
 export const deleteFacility = createAsyncThunk(
-  "tender/deleteFacility",
+  "facility/deleteFacility",
   async (facilityId: string) => {
     await facilityAPIs.delete(facilityId);
     return facilityId;
