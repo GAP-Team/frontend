@@ -61,7 +61,7 @@ export default function GAppBar(): JSX.Element {
     if (logoutStatus?.status === 201) {
       Cookies.remove("access_token");
       Cookies.remove("isVerified");
-      localStorage.removeItem("access_token");
+      localStorage.clear();
       handleClose();
       router.push("/login");
     }
