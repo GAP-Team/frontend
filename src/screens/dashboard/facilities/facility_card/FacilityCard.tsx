@@ -50,7 +50,7 @@ const FacilityCard: React.FC<FacilityCardProps> = ({ facility }) => {
       dispatch(
         showSnackbar({
           type: "success",
-          message: "Anlagen erfolgreich gelöscht!",
+          message: "Die Anlage wurden erfolgreich gelöscht!",
         })
       );
     } catch {
