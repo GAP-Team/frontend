@@ -32,6 +32,8 @@ import {
   selectTenderById,
   updateTender,
 } from "@/lib/features/tenderSlice";
+import utc from "dayjs/plugin/utc";
+dayjs.extend(utc);
 
 const NewTender: React.FC<NewTenderProps> = ({ id }): JSX.Element => {
   const router = useRouter();
