@@ -57,7 +57,7 @@ const FacilityCard: React.FC<FacilityCardProps> = ({ facility }) => {
       dispatch(
         showSnackbar({
           type: "error",
-          message: "Es ist ein Fehler. Bitte versuchen Sie es erneut",
+          message: "Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut.",
         })
       );
     }
