@@ -26,8 +26,6 @@ const statusStyles: { [key: string]: { bgcolor: string; color: string } } = {
 };
 
 const FacilityCard: React.FC<FacilityCardProps> = ({ facility }) => {
-  console.log("facility: -> ", facility);
-
   const handleClick = (): void => {};
   const router = useRouter();
   const isFacilityActive = useAppSelector(
