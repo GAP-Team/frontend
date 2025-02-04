@@ -41,14 +41,18 @@ const OverviewPanel = (): JSX.Element => {
       Number(facility?.check?.nextCheckInYearNumber),
       "year"
     );
-    return Math.abs(nextCheckDate.diff(dayjs(), "days"));
+    return nextCheckDate.diff(dayjs(), "days");
   };
 
-  const tendersDueSoon = tenders?.filter(
-    (tender: Tender) => getDaysRemaining(tender.facility?.id) < 183
-  );
+  const tendersDueSoon = tenders?.filter((tender: Tender) => {
+    return (
+      getDaysRemaining(tender.facility?.id) < 183 &&
+      getDaysRemaining(tender.facility?.id) > 0
+    );
+  });
+
   const tendersExceedingDays = tenders?.filter(
-    (tender: Tender) => getDaysRemaining(tender.facility?.id) > 183
+    (tender: Tender) => getDaysRemaining(tender.facility?.id) <= 0
   );
 
   const renderTenderCards = (tendersList: Tender[]): React.ReactNode =>
@@ -58,13 +62,24 @@ const OverviewPanel = (): JSX.Element => {
         (b: Building) => b.id === tender.building?.id
       )?.address;
 
+      // Check if facility has a check date and and then only show the card
+      const facility = facilities.find(
+        (f: Facility) => f.id === tender.facility?.id
+      );
+      if (
+        !facility?.check?.lastCheckDate ||
+        facility.check.nextCheckInYearNumber === 0
+      ) {
+        return null;
+      }
+
       return (
         <ProjectCard
           key={index}
           address={`${buildingAddress?.street} - ${buildingAddress?.city}, ${buildingAddress?.state}`}
           code={truncateLabel(tender?.tenderType, 10)}
-          daysRemaining={daysRemaining > 183 ? -daysRemaining : daysRemaining}
-          text={daysRemaining > 183 ? "Tage" : "Tage übrig"}
+          daysRemaining={daysRemaining}
+          text={daysRemaining >= 0 ? "Tage" : "Tage übrig"}
         />
       );
     });
