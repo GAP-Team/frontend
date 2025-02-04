@@ -20,13 +20,19 @@ export const registrationValidationSchema = yup
       .required("Vorname ist erforderlich")
       .min(2, "Vorname muss mindestens 2 Zeichen lang sein")
       .max(50, "Vorname darf maximal 50 Zeichen lang sein")
-      .matches(NAME_REGEX, "Name darf nur Buchstaben, Leerzeichen, Bindestriche und Apostrophe enthalten"),
+      .matches(
+        NAME_REGEX,
+        "Name darf nur Buchstaben, Leerzeichen, Bindestriche und Apostrophe enthalten"
+      ),
     lastName: yup
       .string()
       .required("Nachname ist erforderlich")
       .min(2, "Nachname muss mindestens 2 Zeichen lang sein")
       .max(50, "Nachname darf maximal 50 Zeichen lang sein")
-      .matches(NAME_REGEX, "Name darf nur Buchstaben, Leerzeichen, Bindestriche und Apostrophe enthalten"),
+      .matches(
+        NAME_REGEX,
+        "Name darf nur Buchstaben, Leerzeichen, Bindestriche und Apostrophe enthalten"
+      ),
     email: yup
       .string()
       .matches(EMAIL_REGEX, "Eingabe einer gültigen E-Mail")
