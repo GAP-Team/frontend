@@ -83,7 +83,7 @@ const FacilityCard: React.FC<FacilityCardProps> = ({ facility }) => {
           itemId={facility?.id}
           onEdit={(id) => router.push(`/real_estate/facility/edit/${id}`)}
           onDelete={handleDeleteFacility}
-          messege={"dummy delete message"}
+          messege={"Sind Sie sicher, dass Sie dieses Element löschen möchten?"}
         />
       </Box>
       <SectionTitle
