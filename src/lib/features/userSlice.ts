@@ -37,6 +37,10 @@ interface UserState {
   buildingIds: string[];
   manufacturerExperience: string;
   position: string;
+  password: string;
+}
+
+interface ChangePassword {
   currentPassword: string;
   newPassword: string;
 }
@@ -68,8 +72,7 @@ const initialState: UserState = {
   buildingIds: [],
   manufacturerExperience: "",
   position: "",
-  currentPassword: "",
-  newPassword: "",
+  password: "",
 };
 
 export const updateUserProfile = createAsyncThunk(
@@ -82,8 +85,8 @@ export const updateUserProfile = createAsyncThunk(
 
 export const updateUserPassword = createAsyncThunk(
   "user/updatePassword",
-  async ({ id, data }: { id: string; data: Partial<UserState> }) => {
-    const response = await userAPIs.ChangePassword(id, data);
+  async ({ id, data }: { id: string; data: Partial<ChangePassword> }) => {
+    const response = await userAPIs.changePassword(id, data);
     return response.data;
   }
 );

@@ -72,7 +72,9 @@ const ChangePassword = (): JSX.Element => {
     },
   });
 
-  const onPasswordChange = async (password: string): Promise<void> => {
+  const onPasswordChangeCalculateStrength = async (
+    password: string
+  ): Promise<void> => {
     const strength = await calculateStrength(password);
     setPasswordStrength(strength);
   };
@@ -81,8 +83,7 @@ const ChangePassword = (): JSX.Element => {
     e: React.ChangeEvent<HTMLInputElement>
   ): void => {
     formik?.setFieldValue("newPassword", e.target.value ? e.target.value : "");
-
-    onPasswordChange(e.target.value);
+    onPasswordChangeCalculateStrength(e.target.value);
   };
 
   const togglePasswordVisibility = (type: string): void => {

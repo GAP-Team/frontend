@@ -30,7 +30,7 @@ const userAPIs = {
       `/users/${userId}/tenders?city=${city}&state=${state}&facilityType=${facilityType}`
     ),
 
-  ChangePassword: (id: string, data: any): any =>
+  changePassword: (id: string, data: any): any =>
     api.post(`/users/${id}/change-password`, data),
   getUserFacilities: (
     userId: string,
