@@ -18,8 +18,8 @@ const Facilities = (): JSX.Element => {
   const dispatch = useAppDispatch();
   const { buildings } = useAppSelector((state) => state.building);
   const facilities = useAppSelector((state) => state.facility.facilities);
-  const filteredBuildings = buildings.filter((building: Building) => 
-    facilities.some((facility: Facility) => facility.buildingId == building.id)
+  const filteredBuildings = buildings.filter((building: Building) =>
+    facilities.some((facility: Facility) => facility.buildingId === building.id)
   );
 
   useEffect(() => {
@@ -32,7 +32,7 @@ const Facilities = (): JSX.Element => {
           facilityType: "",
         })
       );
-      dispatch(getFacilitiesByUser(user?.id))
+      dispatch(getFacilitiesByUser(user?.id));
     }
   }, [user?.id, dispatch]);
 
@@ -41,14 +41,15 @@ const Facilities = (): JSX.Element => {
     federalState: string,
     facilityType: string
   ): Promise<void> => {
-    await dispatch(getFacilitiesByUser(user?.id, city, federalState, facilityType)).unwrap();
+    await dispatch(
+      getFacilitiesByUser(user?.id, city, federalState, facilityType)
+    ).unwrap();
   };
 
   const hasFacilities = filteredBuildings?.some(
     (building: Building) => building?.facilityIds?.length > 0
   );
 
-    
   const facilityContent = hasFacilities ? (
     <FacilityContainer buildings={filteredBuildings} />
   ) : (
