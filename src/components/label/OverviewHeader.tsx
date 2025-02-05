@@ -16,7 +16,7 @@ const OverviewHeader: React.FC<HeaderProps> = ({
       <Typography variant="bodylsb">{buildingName} - &nbsp;</Typography>
       <Typography variant="bodylr">
         {buildingAddress?.street} {buildingAddress?.houseNumber},{" "}
-        {buildingAddress?.zip} {buildingAddress?.city}
+        {buildingAddress?.zip} {buildingAddress?.city} {buildingAddress?.state}
       </Typography>
     </Box>
   );

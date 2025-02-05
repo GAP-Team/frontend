@@ -11,11 +11,16 @@ import { useSelector } from "react-redux";
 import { fetchBuildings } from "@/lib/features/buildingSlice";
 import { Building } from "../buildings/building_card/types";
 import { getFacilitiesByUser } from "@/lib/features/facilitySlice";
+import { Facility } from "./facility_card/types";
 
 const Facilities = (): JSX.Element => {
   const user = useSelector(currentUser);
   const dispatch = useAppDispatch();
   const { buildings } = useAppSelector((state) => state.building);
+  const facilities = useAppSelector((state) => state.facility.facilities);
+  const filteredBuildings = buildings.filter((building: Building) => 
+    facilities.some((facility: Facility) => facility.buildingId == building.id)
+  );
 
   useEffect(() => {
     if (user?.id) {
@@ -27,23 +32,25 @@ const Facilities = (): JSX.Element => {
           facilityType: "",
         })
       );
+      dispatch(getFacilitiesByUser(user?.id))
     }
   }, [user?.id, dispatch]);
 
-  const onFilterCriteriaChange = (
+  const onFilterCriteriaChange = async (
     city: string,
     federalState: string,
     facilityType: string
-  ): void => {
-    dispatch(getFacilitiesByUser(user?.id, city, federalState, facilityType));
+  ): Promise<void> => {
+    await dispatch(getFacilitiesByUser(user?.id, city, federalState, facilityType)).unwrap();
   };
 
-  const hasFacilities = buildings?.some(
+  const hasFacilities = filteredBuildings?.some(
     (building: Building) => building?.facilityIds?.length > 0
   );
 
+    
   const facilityContent = hasFacilities ? (
-    <FacilityContainer buildings={buildings} />
+    <FacilityContainer buildings={filteredBuildings} />
   ) : (
     <NoContentPage
       image={addObjSrc}
