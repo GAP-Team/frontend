@@ -6,7 +6,7 @@ const facilityAPIs = {
   getFacilityTenders: (facilityId: string): any =>
     api.get(`/facilities/${facilityId}/tenders`),
   update: (facilityId: string, facilityData: any): any =>
-    api.put(`/facilities/${facilityId}`, facilityDate),
+    api.put(`/facilities/${facilityId}`, facilityData),
 };
 
 export default facilityAPIs;
