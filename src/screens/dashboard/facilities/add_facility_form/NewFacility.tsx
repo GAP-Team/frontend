@@ -162,7 +162,7 @@ const NewFacility: React.FC<NewFacilityProps> = ({
         dispatch(
           showSnackbar({
             type: "success",
-            message: "Anlage erfolgreich aktualisiert!",
+            message: "Die Anlage wurde erfolgreich aktualisiert!",
           })
         );
         return true;
