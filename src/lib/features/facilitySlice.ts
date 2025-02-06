@@ -121,9 +121,12 @@ export const getFacilitiesByBuilding =
       (facility: Facility) => facility.buildingId === buildingId
     );
 
-export const getFacilityById = (facilityId: string) => (state: RootState) =>
-  state.facility.facilities.find(
-    (facility: Facility) => facility.id === facilityId
-  );
+export const getFacilityById = (facilityId: string | null | undefined) => (state: RootState): Facility | null => {
+  if (!facilityId || !state?.facility?.facilities) return null;
+  
+  return state.facility.facilities.find(
+    (facility: Facility) => facility?.id === facilityId
+  ) ?? null;
+};
 
 export default FacilitySlice.reducer;

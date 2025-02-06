@@ -12,7 +12,7 @@ import { useSelector } from "react-redux";
 import { IconButton } from "@mui/material";
 import FacilityCheck from "./FacilityCheck";
 import { useRouter } from "next/navigation";
-import { useAppDispatch } from "@/lib/hooks";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { Formik, FormikHelpers } from "formik";
 import AddFacilityForm from "./AddFacilityForm";
 import FacilitySummary from "./FacilitySummary";
@@ -30,6 +30,8 @@ import { handleUploadMultipleDoc } from "@/utils/uploadToS3";
 import { fetchBuildings } from "@/lib/features/buildingSlice";
 import GProgressStepper from "@/components/stepper/GProgressStepper";
 import { addFacilityValidationSchema } from "@/utils/ValidationSchema";
+import { getFacilityById } from "@/lib/features/facilitySlice";
+import { getTenderById } from "@/lib/features/tenderSlice";
 
 interface NewFacilityProps {
   facilityId?: string;
@@ -39,7 +41,8 @@ const NewFacility: React.FC<NewFacilityProps> = ({facilityId}): JSX.Element => {
   const router = useRouter();
   const appDispatch = useAppDispatch();
   const user = useSelector(currentUser);
-
+  const facility = useAppSelector(getFacilityById(facilityId));
+  
   const steps: ActiveStepItem[] = [
     {
       id: 0,
