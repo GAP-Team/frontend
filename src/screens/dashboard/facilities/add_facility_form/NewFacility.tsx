@@ -35,6 +35,7 @@ import {
   updateFacility,
 } from "@/lib/features/facilitySlice";
 import dayjs from "dayjs";
+import { DocumentChoice } from "@/utils/enums";
 
 interface NewFacilityProps {
   facilityId?: string;
@@ -61,7 +62,6 @@ const NewFacility: React.FC<NewFacilityProps> = ({
   ];
 
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [loading, setLoading] = useState<boolean>(false);
   const [activeStep, setActiveStep] = useState<ActiveStepItem>(steps[0]);
 
   const StepComponent = steps[activeStep.id]
@@ -202,29 +202,32 @@ const NewFacility: React.FC<NewFacilityProps> = ({
   const uploadAllDocuments = async (
     values: AddFacilityFormValues
   ): Promise<boolean> => {
-    setLoading(true);
-    const docObjList: any[] = [];
+    // If document choice is NO_DOCUMENTS, pass empty array
+    if (values.documentChoice === DocumentChoice.NO_DOCUMENTS) {
+      return await saveFacilityData(values, []);
+    }
 
-    const uploadDocuments = async (
-      files: File[],
-      docType: string
-    ): Promise<void> => {
-      for (const file of files) {
-        if (file.hasOwnProperty("documentType")) {
-          docObjList.push(file);
-        } else {
-          const uploadedDoc = await handleUploadMultipleDoc(file);
-          uploadedDoc.documentType = docType;
-          docObjList.push(uploadedDoc);
-        }
-      }
-    };
-
-    await uploadDocuments(values.otherDocs, DocumentTypes.SONSTIGE);
-    await uploadDocuments(values.floorplanDocs, DocumentTypes.GRUNDRISSE);
-    await uploadDocuments(values.checkReports, DocumentTypes.BERICHTE);
+    const docTypes = [
+      { files: values.otherDocs, type: DocumentTypes.SONSTIGE },
+      { files: values.floorplanDocs, type: DocumentTypes.GRUNDRISSE },
+      { files: values.checkReports, type: DocumentTypes.BERICHTE },
+    ];
 
     try {
+      const docObjList = await Promise.all(
+        docTypes.flatMap(async ({ files, type }) => {
+          return Promise.all(
+            files.map(async (file) => {
+              if ("documentType" in file) {
+                return file;
+              }
+              const uploadedDoc = await handleUploadMultipleDoc(file);
+              return { ...uploadedDoc, documentType: type };
+            })
+          );
+        })
+      ).then((results) => results.flat());
+
       await saveFacilityData(values, docObjList);
       return true;
     } catch {
@@ -236,8 +239,6 @@ const NewFacility: React.FC<NewFacilityProps> = ({
         })
       );
       return false;
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -251,7 +252,7 @@ const NewFacility: React.FC<NewFacilityProps> = ({
     isReminderEnabled: false,
     emailNotificationList: facility?.check?.emailNotificationList || ["", ""],
     selectedBuilding: facility?.buildingId || "",
-    documentChoice: facility?.documentUploadType || "Jetzt hochladen Empfohlen",
+    documentChoice: facility?.documentUploadType || DocumentChoice.UPLOAD_NOW,
     checkReports:
       facility?.documents?.filter(
         (doc: any) => doc.documentType === DocumentTypes.BERICHTE
@@ -336,7 +337,6 @@ const NewFacility: React.FC<NewFacilityProps> = ({
                 isSubmitting={isSubmitting}
                 isBeyondLastStep={isSubmitted}
                 formOrSuccessContent={formOrSuccessContent}
-                loading={loading}
               />
             </Grid>
           )}

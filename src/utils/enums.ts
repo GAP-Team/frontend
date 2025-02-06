@@ -26,3 +26,11 @@ export enum TenderStatusEnum {
   DONE = "DONE",
   REVIEW_REQUIRED = "REVIEW_REQUIRED",
 }
+
+export enum DocumentChoice {
+  UPLOAD_NOW = "Jetzt hochladen Empfohlen",
+  NO_DOCUMENTS = "Keine Dokumente vorhanden",
+  SEND_EMAIL = "Per email versenden",
+  SERVER_LINK = "Server verküpfung",
+  ON_SITE = "Dokumente vor Ort zur Verfügung stellen",
+}

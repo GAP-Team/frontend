@@ -13,6 +13,7 @@ import {
   RadioGroup,
   Typography,
 } from "@mui/material";
+import { DocumentChoice } from "@/utils/enums";
 
 interface CustomDocumentationProps {
   formikValue: any;
@@ -26,13 +27,14 @@ const CustomDocumentation = ({
   const formik = useFormikContext<Documentation>();
 
   useEffect(() => {
-    if (formikValue.documentChoice !== "Jetzt hochladen Empfohlen") {
+    if (formikValue.documentChoice !== DocumentChoice.UPLOAD_NOW) {
       formik.setFieldValue("constructionDocs", []);
       formik.setFieldValue("floorplanDocs", []);
       formik.setFieldValue("otherDocs", []);
+      formik.setFieldValue("checkReports", []);
     }
 
-    if (formikValue.documentChoice !== "Server verküpfung") {
+    if (formikValue.documentChoice !== DocumentChoice.SERVER_LINK) {
       formik.setFieldValue("serverLink", "");
     }
   }, [formikValue.documentChoice]);
@@ -51,7 +53,7 @@ const CustomDocumentation = ({
             <Grid container spacing={1}>
               <Grid item xs={4}>
                 <FormControlLabel
-                  value="Jetzt hochladen Empfohlen"
+                  value={DocumentChoice.UPLOAD_NOW}
                   control={<Radio />}
                   label={
                     <Typography>
@@ -63,28 +65,28 @@ const CustomDocumentation = ({
               </Grid>
               <Grid item xs={4}>
                 <FormControlLabel
-                  value="Keine Dokumente vorhanden"
+                  value={DocumentChoice.NO_DOCUMENTS}
                   control={<Radio />}
                   label="Keine Dokumente vorhanden"
                 />
               </Grid>
               <Grid item xs={4}>
                 <FormControlLabel
-                  value="Per email versenden"
+                  value={DocumentChoice.SEND_EMAIL}
                   control={<Radio />}
                   label="Per email versenden"
                 />
               </Grid>
               <Grid item xs={4}>
                 <FormControlLabel
-                  value="Server verküpfung"
+                  value={DocumentChoice.SERVER_LINK}
                   control={<Radio />}
                   label="Server verküpfung"
                 />
               </Grid>
               <Grid item xs={4}>
                 <FormControlLabel
-                  value="Dokumente vor Ort zur Verfügung stellen"
+                  value={DocumentChoice.ON_SITE}
                   control={<Radio />}
                   label="Dokumente vor Ort zur Verfügung stellen"
                 />
@@ -93,7 +95,7 @@ const CustomDocumentation = ({
           </RadioGroup>
         </FormControl>
       </Grid>
-      {formik.values.documentChoice === "Jetzt hochladen Empfohlen" && (
+      {formik.values.documentChoice === DocumentChoice.UPLOAD_NOW && (
         <>
           <Grid item xs={12}>
             {documentFor === "facility" ? (
@@ -176,7 +178,7 @@ const CustomDocumentation = ({
           </Grid>
         </>
       )}
-      {formik.values.documentChoice === "Server verküpfung" && (
+      {formik.values.documentChoice === DocumentChoice.SERVER_LINK && (
         <Grid item xs={12}>
           <Typography variant="gsub" color="gray.500">
             SERVER-LINK HINZUFPGEN
