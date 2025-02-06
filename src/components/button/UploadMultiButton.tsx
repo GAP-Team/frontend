@@ -119,19 +119,8 @@ export default function UploadMultiButton({
           tabIndex={-1}
           color="gprimary"
           sx={{ fontWeight: "600" }}
-          component="label"
         >
           Dokumente suchen
-          <Input
-            type="file"
-            id={id}
-            name={name}
-            accept="application/pdf"
-            onChange={(event) =>
-              handleFileChange(Array.from(event.target.files || []))
-            }
-            multiple
-          />
         </Button>
       </Box>
       {error && <FormHelperText error>{helperText}</FormHelperText>}
