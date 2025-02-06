@@ -30,7 +30,7 @@ export enum TenderStatusEnum {
 export enum DocumentChoice {
   UPLOAD_NOW = "Jetzt hochladen Empfohlen",
   NO_DOCUMENTS = "Keine Dokumente vorhanden",
-  SEND_EMAIL = "Per email versenden",
+  PER_EMAIL = "Per email versenden",
   SERVER_LINK = "Server verküpfung",
   ON_SITE = "Dokumente vor Ort zur Verfügung stellen",
 }
