@@ -254,19 +254,19 @@ const NewFacility: React.FC<NewFacilityProps> = ({
     documentChoice: facility?.documentUploadType || "Jetzt hochladen Empfohlen",
     checkReports:
       facility?.documents?.filter(
-        (doc: any) => doc.documentType === "BERICHTE"
+        (doc: any) => doc.documentType === DocumentTypes.BERICHTE
       ) || [],
     floorplanDocs:
       facility?.documents?.filter(
-        (doc: any) => doc.documentType === "GRUNDRISSE"
+        (doc: any) => doc.documentType === DocumentTypes.GRUNDRISSE
       ) || [],
     otherDocs:
       facility?.documents?.filter(
-        (doc: any) => doc.documentType === "SONSTIGE"
+        (doc: any) => doc.documentType === DocumentTypes.SONSTIGE
       ) || [],
     serverLink: facility?.serverLink || "",
     lastMaintenanceDate:
-      dayjs(facility?.maintenance?.lastMaintenanceDate) || null,
+      (facility && dayjs(facility?.maintenance?.lastMaintenanceDate)) || null,
     nextMaintenanceInMonth: facility?.maintenance?.nextMaintenanceInMonth || 0,
     isPublishMaintenanceAutomatically:
       facility?.maintenance?.isPublishAutomatically || false,
@@ -277,7 +277,7 @@ const NewFacility: React.FC<NewFacilityProps> = ({
       ?.emailNotificationList || ["", ""],
     isMaintenanceEmailNotificationEnable:
       facility?.maintenance?.isEmailNotificationEnable || false,
-    lastCheckDate: dayjs(facility?.check?.lastCheckDate) || null,
+    lastCheckDate: (facility && dayjs(facility?.check?.lastCheckDate)) || null,
     nextCheckInYearNumber: facility?.check?.nextCheckInYearNumber || 0,
     reminderInMonth: facility?.check?.reminderInMonth || 0,
     isEmailNotificationEnable:
