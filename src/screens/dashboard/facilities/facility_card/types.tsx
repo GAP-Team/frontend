@@ -1,4 +1,3 @@
-import { Document } from "@/typings/types";
 import { Dayjs } from "dayjs";
 export interface Check {
   lastCheckDate: Dayjs | null;

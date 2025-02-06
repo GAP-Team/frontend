@@ -7,7 +7,6 @@ import {
 import Link from "next/link";
 import Grid from "@mui/material/Grid";
 import { CgClose } from "react-icons/cg";
-import facilityAPIs from "@/api/facility";
 import { useSelector } from "react-redux";
 import { IconButton } from "@mui/material";
 import FacilityCheck from "./FacilityCheck";
@@ -30,14 +29,20 @@ import { handleUploadMultipleDoc } from "@/utils/uploadToS3";
 import { fetchBuildings } from "@/lib/features/buildingSlice";
 import GProgressStepper from "@/components/stepper/GProgressStepper";
 import { addFacilityValidationSchema } from "@/utils/ValidationSchema";
-import { createFacility, getFacilityById, updateFacility } from "@/lib/features/facilitySlice";
+import {
+  createFacility,
+  getFacilityById,
+  updateFacility,
+} from "@/lib/features/facilitySlice";
 import dayjs from "dayjs";
 
 interface NewFacilityProps {
   facilityId?: string;
 }
 
-const NewFacility: React.FC<NewFacilityProps> = ({facilityId}): JSX.Element => {
+const NewFacility: React.FC<NewFacilityProps> = ({
+  facilityId,
+}): JSX.Element => {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const user = useSelector(currentUser);
@@ -150,49 +155,48 @@ const NewFacility: React.FC<NewFacilityProps> = ({facilityId}): JSX.Element => {
     };
 
     if (facility) {
-          try {
-            await dispatch(
-              updateFacility({ facilityId: facility?.id, data: facilityData })
-            ).unwrap();
-            dispatch(
-              showSnackbar({
-                type: "success",
-                message: "Anlage erfolgreich aktualisiert!",
-              })
-            );
-            return true;
-          } catch {
-            dispatch(
-              showSnackbar({
-                type: "error",
-                message:
-                  "Die Anlage konnte nicht aktualisiert werden. Bitte überprüfen Sie die Eingabedaten und versuchen Sie es erneut",
-              })
-            );
-            return false;
-          }
-        } else {
-          try {
-            await dispatch(createFacility(facilityData)).unwrap();
-            dispatch(
-              showSnackbar({
-                type: "success",
-                message: "Anlage erfolgreich hinzugefügt!",
-              })
-            );
-            return true;
-          } catch {
-            dispatch(
-              showSnackbar({
-                type: "error",
-                message:
-                  "Anlage konnte nicht hinzugefügt werden. Bitte überprüfen Sie die Eingabedaten und versuchen Sie es erneut",
-              })
-            );
-            return false;
-          }
-        }
-
+      try {
+        await dispatch(
+          updateFacility({ facilityId: facility?.id, data: facilityData })
+        ).unwrap();
+        dispatch(
+          showSnackbar({
+            type: "success",
+            message: "Anlage erfolgreich aktualisiert!",
+          })
+        );
+        return true;
+      } catch {
+        dispatch(
+          showSnackbar({
+            type: "error",
+            message:
+              "Die Anlage konnte nicht aktualisiert werden. Bitte überprüfen Sie die Eingabedaten und versuchen Sie es erneut",
+          })
+        );
+        return false;
+      }
+    } else {
+      try {
+        await dispatch(createFacility(facilityData)).unwrap();
+        dispatch(
+          showSnackbar({
+            type: "success",
+            message: "Anlage erfolgreich hinzugefügt!",
+          })
+        );
+        return true;
+      } catch {
+        dispatch(
+          showSnackbar({
+            type: "error",
+            message:
+              "Anlage konnte nicht hinzugefügt werden. Bitte überprüfen Sie die Eingabedaten und versuchen Sie es erneut",
+          })
+        );
+        return false;
+      }
+    }
   };
 
   const uploadAllDocuments = async (
@@ -242,32 +246,42 @@ const NewFacility: React.FC<NewFacilityProps> = ({facilityId}): JSX.Element => {
     facilityType: facility?.facilityType || "",
     subcategory: facility?.subcategory || "",
     isPublishAutomatically: facility?.check?.isPublishAutomatically || false,
-    publishAutomaticallyInMonths: facility?.check?.publishAutomaticallyInMonth ||  0,
-    isReminderEnabled:  false,
+    publishAutomaticallyInMonths:
+      facility?.check?.publishAutomaticallyInMonth || 0,
+    isReminderEnabled: false,
     emailNotificationList: facility?.check?.emailNotificationList || ["", ""],
-    selectedBuilding: facility?.buildingId ||  "",
-    documentChoice: facility?.documentUploadType ||  "Jetzt hochladen Empfohlen",
-    checkReports: facility?.documents?.filter(
-      (doc: any) => doc.documentType === "BERICHTE"
-    ) || [],
-    floorplanDocs:facility?.documents?.filter(
-      (doc: any) => doc.documentType === "GRUNDRISSE"
-    ) || [],
-    otherDocs: facility?.documents?.filter(
-      (doc: any) => doc.documentType === "SONSTIGE"
-    ) || [],
-    serverLink: facility?.serverLink ||  "",
-    lastMaintenanceDate: dayjs(facility?.maintenance?.lastMaintenanceDate) ||  null,
-    nextMaintenanceInMonth: facility?.maintenance?.nextMaintenanceInMonth ||  0,
-    isPublishMaintenanceAutomatically: facility?.maintenance?.isPublishAutomatically ||  false,
-    publishMaintenanceAutomaticallyInMonth: facility?.maintenance?.publishAutomaticallyInMonth ||  0,
-    maintenanceReminderInMonth: facility?.maintenance?.reminderInMonth ||  0,
-    maintenanceEmailNotificationList: facility?.maintenance?.emailNotificationList || ["", ""],
-    isMaintenanceEmailNotificationEnable: facility?.maintenance?.isEmailNotificationEnable ||  false,
-    lastCheckDate: dayjs(facility?.check?.lastCheckDate) ||  null,
-    nextCheckInYearNumber: facility?.check?.nextCheckInYearNumber ||  0,
-    reminderInMonth: facility?.check?.reminderInMonth ||  0,
-    isEmailNotificationEnable: facility?.check?.isEmailNotificationEnable ||  false,
+    selectedBuilding: facility?.buildingId || "",
+    documentChoice: facility?.documentUploadType || "Jetzt hochladen Empfohlen",
+    checkReports:
+      facility?.documents?.filter(
+        (doc: any) => doc.documentType === "BERICHTE"
+      ) || [],
+    floorplanDocs:
+      facility?.documents?.filter(
+        (doc: any) => doc.documentType === "GRUNDRISSE"
+      ) || [],
+    otherDocs:
+      facility?.documents?.filter(
+        (doc: any) => doc.documentType === "SONSTIGE"
+      ) || [],
+    serverLink: facility?.serverLink || "",
+    lastMaintenanceDate:
+      dayjs(facility?.maintenance?.lastMaintenanceDate) || null,
+    nextMaintenanceInMonth: facility?.maintenance?.nextMaintenanceInMonth || 0,
+    isPublishMaintenanceAutomatically:
+      facility?.maintenance?.isPublishAutomatically || false,
+    publishMaintenanceAutomaticallyInMonth:
+      facility?.maintenance?.publishAutomaticallyInMonth || 0,
+    maintenanceReminderInMonth: facility?.maintenance?.reminderInMonth || 0,
+    maintenanceEmailNotificationList: facility?.maintenance
+      ?.emailNotificationList || ["", ""],
+    isMaintenanceEmailNotificationEnable:
+      facility?.maintenance?.isEmailNotificationEnable || false,
+    lastCheckDate: dayjs(facility?.check?.lastCheckDate) || null,
+    nextCheckInYearNumber: facility?.check?.nextCheckInYearNumber || 0,
+    reminderInMonth: facility?.check?.reminderInMonth || 0,
+    isEmailNotificationEnable:
+      facility?.check?.isEmailNotificationEnable || false,
   };
 
   const formOrSuccessContent = isSubmitted ? (

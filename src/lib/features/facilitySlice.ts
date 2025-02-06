@@ -51,7 +51,6 @@ const getFacilitiesByUserId = createAsyncThunk(
   }
 );
 
-
 export const getFacilitiesByUser = (
   userId: string,
   city?: string,
@@ -59,8 +58,8 @@ export const getFacilitiesByUser = (
   facilityType?: string
 ): ReturnType<typeof getFacilitiesByUserId> =>
   getFacilitiesByUserId({ userId, city, state, facilityType });
-  
-  // Create Facility
+
+// Create Facility
 export const createFacility = createAsyncThunk(
   "facility/createFacility",
   async (newFacility: any) => {
@@ -68,14 +67,20 @@ export const createFacility = createAsyncThunk(
     return response.data;
   }
 );
-  // Update Facility
-  export const updateFacility = createAsyncThunk(
-    "facility/updateFacility",
-    async ({ facilityId, data }: { facilityId: string; data: Partial<Facility> }) => {
-      const response = await facilityAPIs.update(facilityId, data);
-      return response.data;
-    }
-  );
+// Update Facility
+export const updateFacility = createAsyncThunk(
+  "facility/updateFacility",
+  async ({
+    facilityId,
+    data,
+  }: {
+    facilityId: string;
+    data: Partial<Facility>;
+  }) => {
+    const response = await facilityAPIs.update(facilityId, data);
+    return response.data;
+  }
+);
 
 const FacilitySlice = createSlice({
   name: "facility",
@@ -158,12 +163,16 @@ export const getFacilitiesByBuilding =
       (facility: Facility) => facility.buildingId === buildingId
     );
 
-export const getFacilityById = (facilityId: string | null | undefined) => (state: RootState): Facility | null => {
-  if (!facilityId || !state?.facility?.facilities) return null;
-  
-  return state.facility.facilities.find(
-    (facility: Facility) => facility?.id === facilityId
-  ) ?? null;
-};
+export const getFacilityById =
+  (facilityId: string | null | undefined) =>
+  (state: RootState): Facility | null => {
+    if (!facilityId || !state?.facility?.facilities) return null;
+
+    return (
+      state.facility.facilities.find(
+        (facility: Facility) => facility?.id === facilityId
+      ) ?? null
+    );
+  };
 
 export default FacilitySlice.reducer;

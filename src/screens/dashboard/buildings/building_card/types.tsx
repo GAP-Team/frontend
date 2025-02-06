@@ -28,5 +28,3 @@ export interface PropertyFilterProps {
   ) => void;
   title: string;
 }
-
-
