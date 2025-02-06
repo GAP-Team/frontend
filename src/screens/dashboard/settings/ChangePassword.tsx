@@ -72,20 +72,6 @@ const ChangePassword = (): JSX.Element => {
     },
   });
 
-  const onPasswordChangeCalculateStrength = async (
-    password: string
-  ): Promise<void> => {
-    const strength = await calculateStrength(password);
-    setPasswordStrength(strength);
-  };
-
-  const handleNewPasswordChange = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ): void => {
-    formik?.setFieldValue("newPassword", e.target.value ? e.target.value : "");
-    onPasswordChangeCalculateStrength(e.target.value);
-  };
-
   const togglePasswordVisibility = (type: string): void => {
     if (type === "current") setShowPassword((prevState) => !prevState);
     if (type === "new") setShowNewPassword((prevState) => !prevState);
@@ -155,7 +141,10 @@ const ChangePassword = (): JSX.Element => {
               label="Neues Passwort"
               onBlur={formik.handleBlur}
               value={formik.values.newPassword}
-              onChange={handleNewPasswordChange}
+              onChange={(e) => {
+                formik.handleChange(e);
+                calculateStrength(e.target.value).then(setPasswordStrength);
+              }}
               error={
                 formik.touched.newPassword && Boolean(formik.errors.newPassword)
               }
