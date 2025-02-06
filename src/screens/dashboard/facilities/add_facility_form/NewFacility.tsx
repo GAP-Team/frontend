@@ -30,7 +30,7 @@ import { handleUploadMultipleDoc } from "@/utils/uploadToS3";
 import { fetchBuildings } from "@/lib/features/buildingSlice";
 import GProgressStepper from "@/components/stepper/GProgressStepper";
 import { addFacilityValidationSchema } from "@/utils/ValidationSchema";
-import { getFacilityById } from "@/lib/features/facilitySlice";
+import { createFacility, getFacilityById, updateFacility } from "@/lib/features/facilitySlice";
 import dayjs from "dayjs";
 
 interface NewFacilityProps {
@@ -39,7 +39,7 @@ interface NewFacilityProps {
 
 const NewFacility: React.FC<NewFacilityProps> = ({facilityId}): JSX.Element => {
   const router = useRouter();
-  const appDispatch = useAppDispatch();
+  const dispatch = useAppDispatch();
   const user = useSelector(currentUser);
   const facility = useAppSelector(getFacilityById(facilityId));
 
@@ -75,7 +75,7 @@ const NewFacility: React.FC<NewFacilityProps> = ({facilityId}): JSX.Element => {
       federalState: "",
       facilityType: "",
     };
-    appDispatch(fetchBuildings(query));
+    dispatch(fetchBuildings(query));
   };
 
   const handleNext = async (
@@ -149,18 +149,50 @@ const NewFacility: React.FC<NewFacilityProps> = ({facilityId}): JSX.Element => {
       serverLink: values?.serverLink,
     };
 
-    const createFacilityResponse = await facilityAPIs.create(facilityData);
+    if (facility) {
+          try {
+            await dispatch(
+              updateFacility({ facilityId: facility?.id, data: facilityData })
+            ).unwrap();
+            dispatch(
+              showSnackbar({
+                type: "success",
+                message: "Anlage erfolgreich aktualisiert!",
+              })
+            );
+            return true;
+          } catch {
+            dispatch(
+              showSnackbar({
+                type: "error",
+                message:
+                  "Die Anlage konnte nicht aktualisiert werden. Bitte überprüfen Sie die Eingabedaten und versuchen Sie es erneut",
+              })
+            );
+            return false;
+          }
+        } else {
+          try {
+            await dispatch(createFacility(facilityData)).unwrap();
+            dispatch(
+              showSnackbar({
+                type: "success",
+                message: "Anlage erfolgreich hinzugefügt!",
+              })
+            );
+            return true;
+          } catch {
+            dispatch(
+              showSnackbar({
+                type: "error",
+                message:
+                  "Anlage konnte nicht hinzugefügt werden. Bitte überprüfen Sie die Eingabedaten und versuchen Sie es erneut",
+              })
+            );
+            return false;
+          }
+        }
 
-    if (createFacilityResponse?.data?.id) {
-      appDispatch(
-        showSnackbar({
-          type: "success",
-          message: "Anlage erfolgreich hinzugefügt!",
-        })
-      );
-    }
-
-    return true;
   };
 
   const uploadAllDocuments = async (
@@ -192,7 +224,7 @@ const NewFacility: React.FC<NewFacilityProps> = ({facilityId}): JSX.Element => {
       await saveFacilityData(values, docObjList);
       return true;
     } catch {
-      appDispatch(
+      dispatch(
         showSnackbar({
           type: "error",
           message:
@@ -215,9 +247,15 @@ const NewFacility: React.FC<NewFacilityProps> = ({facilityId}): JSX.Element => {
     emailNotificationList: facility?.check?.emailNotificationList || ["", ""],
     selectedBuilding: facility?.buildingId ||  "",
     documentChoice: facility?.documentUploadType ||  "Jetzt hochladen Empfohlen",
-    checkReports: [],
-    floorplanDocs:  [],
-    otherDocs:  [],
+    checkReports: facility?.documents?.filter(
+      (doc: any) => doc.documentType === "BERICHTE"
+    ) || [],
+    floorplanDocs:facility?.documents?.filter(
+      (doc: any) => doc.documentType === "GRUNDRISSE"
+    ) || [],
+    otherDocs: facility?.documents?.filter(
+      (doc: any) => doc.documentType === "SONSTIGE"
+    ) || [],
     serverLink: facility?.serverLink ||  "",
     lastMaintenanceDate: dayjs(facility?.maintenance?.lastMaintenanceDate) ||  null,
     nextMaintenanceInMonth: facility?.maintenance?.nextMaintenanceInMonth ||  0,
