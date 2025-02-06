@@ -27,7 +27,6 @@ const Input = styled("input")({
 export default function UploadMultiButton({
   value,
   onChange,
-  id,
   name,
   error,
   helperText,
