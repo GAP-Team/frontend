@@ -72,7 +72,7 @@ const CustomDocumentation = ({
               </Grid>
               <Grid item xs={4}>
                 <FormControlLabel
-                  value={DocumentChoice.SEND_EMAIL}
+                  value={DocumentChoice.PER_EMAIL}
                   control={<Radio />}
                   label="Per email versenden"
                 />
