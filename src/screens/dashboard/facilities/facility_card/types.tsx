@@ -1,3 +1,4 @@
+import { Document } from "@/typings/types";
 export interface Check {
   lastCheckDate: Date;
   nextCheckInYearNumber: number;
@@ -25,13 +26,7 @@ export interface Facility {
   buildingId: string;
   check: Check;
   maintenance: Maintenance;
-  document: [
-    {
-      name: string;
-      key: string;
-      documentType: string;
-    },
-  ];
+  documents: Document[];
   documentUploadType: string;
   serverLink: string;
   tenderIds: string[];

@@ -31,7 +31,7 @@ import { fetchBuildings } from "@/lib/features/buildingSlice";
 import GProgressStepper from "@/components/stepper/GProgressStepper";
 import { addFacilityValidationSchema } from "@/utils/ValidationSchema";
 import { getFacilityById } from "@/lib/features/facilitySlice";
-import { getTenderById } from "@/lib/features/tenderSlice";
+import dayjs from "dayjs";
 
 interface NewFacilityProps {
   facilityId?: string;
@@ -42,7 +42,7 @@ const NewFacility: React.FC<NewFacilityProps> = ({facilityId}): JSX.Element => {
   const appDispatch = useAppDispatch();
   const user = useSelector(currentUser);
   const facility = useAppSelector(getFacilityById(facilityId));
-  
+
   const steps: ActiveStepItem[] = [
     {
       id: 0,
@@ -206,30 +206,30 @@ const NewFacility: React.FC<NewFacilityProps> = ({facilityId}): JSX.Element => {
   };
 
   const initialValues: AddFacilityFormValues = {
-    name: "",
-    facilityType: "",
-    subcategory: "",
-    isPublishAutomatically: false,
-    publishAutomaticallyInMonths: 0,
-    isReminderEnabled: false,
-    emailNotificationList: ["", ""],
-    selectedBuilding: "",
-    documentChoice: "Jetzt hochladen Empfohlen",
+    name: facility?.name || "",
+    facilityType: facility?.facilityType || "",
+    subcategory: facility?.subcategory || "",
+    isPublishAutomatically: facility?.check?.isPublishAutomatically || false,
+    publishAutomaticallyInMonths: facility?.check?.publishAutomaticallyInMonth ||  0,
+    isReminderEnabled:  false,
+    emailNotificationList: facility?.check?.emailNotificationList || ["", ""],
+    selectedBuilding: facility?.buildingId ||  "",
+    documentChoice: facility?.documentUploadType ||  "Jetzt hochladen Empfohlen",
     checkReports: [],
-    floorplanDocs: [],
-    otherDocs: [],
-    serverLink: "",
-    lastMaintenanceDate: null,
-    nextMaintenanceInMonth: 0,
-    isPublishMaintenanceAutomatically: false,
-    publishMaintenanceAutomaticallyInMonth: 0,
-    maintenanceReminderInMonth: 0,
-    maintenanceEmailNotificationList: ["", ""],
-    isMaintenanceEmailNotificationEnable: false,
-    lastCheckDate: null,
-    nextCheckInYearNumber: 0,
-    reminderInMonth: 0,
-    isEmailNotificationEnable: false,
+    floorplanDocs:  [],
+    otherDocs:  [],
+    serverLink: facility?.serverLink ||  "",
+    lastMaintenanceDate: dayjs(facility?.maintenance?.lastMaintenanceDate) ||  null,
+    nextMaintenanceInMonth: facility?.maintenance?.nextMaintenanceInMonth ||  0,
+    isPublishMaintenanceAutomatically: facility?.maintenance?.isPublishAutomatically ||  false,
+    publishMaintenanceAutomaticallyInMonth: facility?.maintenance?.publishAutomaticallyInMonth ||  0,
+    maintenanceReminderInMonth: facility?.maintenance?.reminderInMonth ||  0,
+    maintenanceEmailNotificationList: facility?.maintenance?.emailNotificationList || ["", ""],
+    isMaintenanceEmailNotificationEnable: facility?.maintenance?.isEmailNotificationEnable ||  false,
+    lastCheckDate: dayjs(facility?.check?.lastCheckDate) ||  null,
+    nextCheckInYearNumber: facility?.check?.nextCheckInYearNumber ||  0,
+    reminderInMonth: facility?.check?.reminderInMonth ||  0,
+    isEmailNotificationEnable: facility?.check?.isEmailNotificationEnable ||  false,
   };
 
   const formOrSuccessContent = isSubmitted ? (
