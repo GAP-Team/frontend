@@ -32,10 +32,10 @@ import GProgressStepper from "@/components/stepper/GProgressStepper";
 import { addFacilityValidationSchema } from "@/utils/ValidationSchema";
 
 interface NewFacilityProps {
-  facilityId: string;
+  facilityId?: string;
 }
 
-const NewFacility: React.FC<NewFacilityProps> = ({}): JSX.Element => {
+const NewFacility: React.FC<NewFacilityProps> = ({facilityId}): JSX.Element => {
   const router = useRouter();
   const appDispatch = useAppDispatch();
   const user = useSelector(currentUser);
