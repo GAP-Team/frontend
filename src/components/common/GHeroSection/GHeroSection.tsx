@@ -6,44 +6,96 @@ import { FaCheck } from "react-icons/fa";
 import { FaArrowRightLong } from "react-icons/fa6";
 import GNavbar from "@/components/navigation/GNavbar/GNavbar";
 import {
-  FormControl,
-  Checkbox,
-  Autocomplete,
-  TextField,
-  Typography,
+  Box,
+  Chip,
+  Menu,
+  List,
   Button,
+  Checkbox,
+  MenuItem,
+  Collapse,
+  TextField,
+  FormControl,
+  ListItemText,
+  InputAdornment,
+  ListItemButton,
 } from "@mui/material";
 import {
   germanStates,
   listOfTrades,
   listOfOrderTypes,
 } from "@/utils/Constants";
-import { CheckBoxOutlineBlank, CheckBox } from "@mui/icons-material";
-import heroBackgroundPicture from "../../../../public/images/hero6.jpg";
+import CloseIcon from "@mui/icons-material/Close";
+import ExpandLess from "@mui/icons-material/ExpandLess";
+import ExpandMore from "@mui/icons-material/ExpandMore";
 import CustomSelect from "@/components/drop_down/CustomSelect";
-
-interface Option {
-  label: string;
-  category: string;
-}
-const facilityFlatOptions: Option[] = listOfTrades.flatMap(
-  ({ category, items }) => items.map((item) => ({ category, label: item }))
-);
-const orderFlatOptions: Option[] = listOfOrderTypes.flatMap(
-  ({ category, items }) => items.map((item) => ({ category, label: item }))
-);
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import heroBackgroundPicture from "../../../../public/images/hero6.jpg";
 
 const HeroSection = (): JSX.Element => {
   const [selectedState, setSelectedState] = useState<string>("");
-  const [selectedTenderType, setSelectedTenderType] = useState<Option[]>([]);
-  const [selectedFacilities, setSelectedFacilities] = useState<Option[]>([]);
 
-  const handleFacilityChange = (_event: any, newValue: Option[]): void => {
-    setSelectedFacilities(newValue);
+  const [selectedFacilities, setSelectedFacilities] = useState<string[]>([]);
+  const [facilityAnchorEl, setFacilityAnchorEl] =
+    useState<HTMLDivElement | null>(null);
+  const [facilityExpanded, setFacilityExpanded] = useState<{
+    [key: string]: boolean;
+  }>({});
+
+  const [selectedTenderType, setSelectedTenderType] = useState<string>("");
+  const [tenderTypeAnchorEl, setTenderTypeAnchorEl] =
+    useState<HTMLDivElement | null>(null);
+  const [tenderTypeExpanded, setTenderTypeExpanded] = useState<{
+    [key: string]: boolean;
+  }>({});
+
+  // Facility handles
+  const handleClickFacilitySelect = (
+    event: React.MouseEvent<HTMLDivElement>
+  ): void => {
+    setFacilityAnchorEl(event.currentTarget);
   };
 
-  const handleTenderTypeChange = (_event: any, newValue: Option[]): void => {
-    setSelectedTenderType(newValue);
+  const handleFacilityOptionsClose = (): void => {
+    setFacilityAnchorEl(null);
+  };
+
+  const handleFacilityOptionsExpand = (category: string): void => {
+    setFacilityExpanded((prev) => ({ ...prev, [category]: !prev[category] }));
+  };
+
+  const handleFacilityOptionSelect = (item: string): void => {
+    setSelectedFacilities((prev) =>
+      prev.includes(item)
+        ? prev.filter((selected) => selected !== item)
+        : [...prev, item]
+    );
+  };
+
+  const handleFacilityOptionDeselect = (item: string): void => {
+    setSelectedFacilities((prev) =>
+      prev.filter((selected) => selected !== item)
+    );
+  };
+
+  // Tender Type handles
+  const handleClickTenderTypeSelect = (
+    event: React.MouseEvent<HTMLDivElement>
+  ): void => {
+    setTenderTypeAnchorEl(event.currentTarget);
+  };
+
+  const handleTenderTypeOptionsClose = (): void => {
+    setTenderTypeAnchorEl(null);
+  };
+
+  const handleTenderTypeOptionsExpand = (category: string): void => {
+    setTenderTypeExpanded((prev) => ({ ...prev, [category]: !prev[category] }));
+  };
+
+  const handleTenderTypeOptionSelect = (item: string): void => {
+    setSelectedTenderType(item);
+    setTenderTypeAnchorEl(null);
   };
 
   return (
@@ -96,32 +148,84 @@ const HeroSection = (): JSX.Element => {
                           >
                             Wählen Sie ein Anlagentyp aus:
                           </label>
-                          <Autocomplete
-                            multiple
-                            disablePortal
-                            options={facilityFlatOptions}
-                            groupBy={(option) => option.category}
-                            getOptionLabel={(option) => option.category}
-                            renderInput={(params) => (
-                              <TextField {...params} label="Anlagentyp" />
-                            )}
-                            disableCloseOnSelect
-                            onChange={handleFacilityChange}
-                            value={selectedFacilities}
-                            sx={{ width: 300 }}
-                            renderOption={(props, option, { selected }) => (
-                              <li {...props}>
-                                <Checkbox
-                                  icon={
-                                    <CheckBoxOutlineBlank fontSize="small" />
-                                  }
-                                  checkedIcon={<CheckBox fontSize="small" />}
-                                  checked={selected}
-                                />
-                                <Typography>{option.label}</Typography>
-                              </li>
-                            )}
+                          <TextField
+                            label="Anlagentyp"
+                            onClick={handleClickFacilitySelect}
+                            InputProps={{
+                              readOnly: true,
+                              endAdornment: (
+                                <InputAdornment position="start">
+                                  <ArrowDropDownIcon />
+                                </InputAdornment>
+                              ),
+                            }}
                           />
+                          <Menu
+                            anchorEl={facilityAnchorEl}
+                            open={Boolean(facilityAnchorEl)}
+                            onClose={handleFacilityOptionsClose}
+                          >
+                            {listOfTrades.map((trade) => (
+                              <div key={trade.category}>
+                                <ListItemButton
+                                  onClick={() =>
+                                    handleFacilityOptionsExpand(trade.category)
+                                  }
+                                >
+                                  <ListItemText primary={trade.category} />
+                                  {facilityExpanded[trade.category] ? (
+                                    <ExpandLess />
+                                  ) : (
+                                    <ExpandMore />
+                                  )}
+                                </ListItemButton>
+                                <Collapse
+                                  in={facilityExpanded[trade.category]}
+                                  timeout="auto"
+                                  unmountOnExit
+                                >
+                                  <List disablePadding>
+                                    {trade.items.map((item) => (
+                                      <MenuItem
+                                        key={item}
+                                        onClick={() =>
+                                          handleFacilityOptionSelect(item)
+                                        }
+                                      >
+                                        <Checkbox
+                                          checked={selectedFacilities.includes(
+                                            item
+                                          )}
+                                        />
+                                        <ListItemText primary={item} />
+                                      </MenuItem>
+                                    ))}
+                                  </List>
+                                </Collapse>
+                              </div>
+                            ))}
+                          </Menu>
+                          {selectedFacilities.length > 0 && (
+                            <Box
+                              sx={{
+                                display: "flex",
+                                gap: 1,
+                                flexWrap: "wrap",
+                                mt: 2,
+                              }}
+                            >
+                              {selectedFacilities.map((item) => (
+                                <Chip
+                                  key={item}
+                                  label={item}
+                                  onDelete={() =>
+                                    handleFacilityOptionDeselect(item)
+                                  }
+                                  deleteIcon={<CloseIcon />}
+                                />
+                              ))}
+                            </Box>
+                          )}
                         </FormControl>
                       </div>
 
@@ -133,32 +237,63 @@ const HeroSection = (): JSX.Element => {
                           >
                             Wählen Sie ein Auftragstyp aus:
                           </label>
-                          <Autocomplete
-                            multiple
-                            disablePortal
-                            options={orderFlatOptions}
-                            groupBy={(option) => option.category}
-                            getOptionLabel={(option) => option.category}
-                            renderInput={(params) => (
-                              <TextField {...params} label="Auftragstypen" />
-                            )}
-                            disableCloseOnSelect
-                            onChange={handleTenderTypeChange}
+
+                          <TextField
+                            label="Auftragstypen"
+                            onClick={handleClickTenderTypeSelect}
+                            InputProps={{
+                              readOnly: true,
+                              endAdornment: (
+                                <InputAdornment position="start">
+                                  <ArrowDropDownIcon />
+                                </InputAdornment>
+                              ),
+                            }}
                             value={selectedTenderType}
-                            sx={{ width: 300 }}
-                            renderOption={(props, option, { selected }) => (
-                              <li {...props}>
-                                <Checkbox
-                                  icon={
-                                    <CheckBoxOutlineBlank fontSize="small" />
-                                  }
-                                  checkedIcon={<CheckBox fontSize="small" />}
-                                  checked={selected}
-                                />
-                                <Typography>{option.label}</Typography>
-                              </li>
-                            )}
                           />
+                          <Menu
+                            anchorEl={tenderTypeAnchorEl}
+                            open={Boolean(tenderTypeAnchorEl)}
+                            onClose={handleTenderTypeOptionsClose}
+                          >
+                            {listOfOrderTypes.map((trade) => (
+                              <div key={trade.category}>
+                                <ListItemButton
+                                  onClick={() =>
+                                    handleTenderTypeOptionsExpand(
+                                      trade.category
+                                    )
+                                  }
+                                >
+                                  <ListItemText primary={trade.category} />
+                                  {tenderTypeExpanded[trade.category] ? (
+                                    <ExpandLess />
+                                  ) : (
+                                    <ExpandMore />
+                                  )}
+                                </ListItemButton>
+                                <Collapse
+                                  in={tenderTypeExpanded[trade.category]}
+                                  timeout="auto"
+                                  unmountOnExit
+                                >
+                                  <List disablePadding>
+                                    {trade.items.map((item) => (
+                                      <MenuItem
+                                        key={item}
+                                        onClick={() =>
+                                          handleTenderTypeOptionSelect(item)
+                                        }
+                                      >
+                                        {/* <Checkbox checked={selectedTenderType} /> */}
+                                        <ListItemText primary={item} />
+                                      </MenuItem>
+                                    ))}
+                                  </List>
+                                </Collapse>
+                              </div>
+                            ))}
+                          </Menu>
                         </FormControl>
                       </div>
 
