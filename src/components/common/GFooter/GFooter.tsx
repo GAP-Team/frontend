@@ -9,7 +9,7 @@ function GFooter(): JSX.Element {
           <div className="w-full mt-10">
             <div className="grid w-full justify-evenly sm:flex sm:justify-evenly md:flex md:grid-cols-1">
               <GapLogo />
-              <div className="grid grid-cols-2 gap-8 sm:mt-4 sm:grid-cols-4 sm:gap-6">
+              <div className="grid grid-cols-2 gap-8 sm:mt-5 sm:grid-cols-5 sm:gap-6">
                 <div>
                   <Typography style={styles.footerMenuLabel} variant="h6">
                     Über GAP
@@ -61,6 +61,14 @@ function GFooter(): JSX.Element {
                   >
                     Aufträge finden
                   </Link>
+                  <br />
+                  <Link
+                    href="/still-employed-become-a-service-provider"
+                    style={styles.footerMenuText}
+                    underline="hover"
+                  >
+                    Noch angestellt, Dienstleister werden
+                  </Link>
                 </div>
                 <div>
                   <Typography style={styles.footerMenuLabel} variant="h6">
@@ -72,6 +80,34 @@ function GFooter(): JSX.Element {
                     underline="hover"
                   >
                     Kostenlose Angebote einholen
+                  </Link>
+                </div>
+                <div>
+                  <Typography style={styles.footerMenuLabel} variant="h6">
+                    Rechtliches
+                  </Typography>
+                  <Link
+                    href="/agb"
+                    style={styles.footerMenuText}
+                    underline="hover"
+                  >
+                    AGB
+                  </Link>
+                  <br />
+                  <Link
+                    href="/data-security"
+                    style={styles.footerMenuText}
+                    underline="hover"
+                  >
+                    Datenschutz
+                  </Link>
+                  <br />
+                  <Link
+                    href="/impressum"
+                    style={styles.footerMenuText}
+                    underline="hover"
+                  >
+                    Impressum
                   </Link>
                 </div>
               </div>
