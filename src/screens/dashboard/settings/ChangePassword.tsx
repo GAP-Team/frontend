@@ -72,10 +72,16 @@ const ChangePassword = (): JSX.Element => {
     },
   });
 
-  const togglePasswordVisibility = (type: string): void => {
-    if (type === "current") setShowPassword((prevState) => !prevState);
-    if (type === "new") setShowNewPassword((prevState) => !prevState);
-    if (type === "confirm") setShowConfirmPassword((prevState) => !prevState);
+  const togglePasswordVisibility = (
+    type: "current" | "new" | "confirm"
+  ): void => {
+    const toggleMap = {
+      current: setShowPassword,
+      new: setShowNewPassword,
+      confirm: setShowConfirmPassword,
+    };
+
+    toggleMap[type]?.((prevState) => !prevState);
   };
 
   return (
