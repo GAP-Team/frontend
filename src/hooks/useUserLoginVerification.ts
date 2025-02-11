@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { checkIsLoggedIn, getIsUserVerified } from "@/utils/helperJWT";
 
-export const useUserLoginVerification = (): {
+export const useLogin = (): {
   isLoggedIn: boolean;
   isUserVerified: boolean;
 } => {
