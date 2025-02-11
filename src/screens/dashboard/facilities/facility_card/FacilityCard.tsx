@@ -9,6 +9,7 @@ import Divider from "@mui/material/Divider";
 import { useRouter } from "next/navigation";
 import { BsClockFill } from "react-icons/bs";
 import { useAppSelector } from "@/lib/hooks";
+import { DOCUMENT_TYPE } from "@/utils/enums";
 import Typography from "@mui/material/Typography";
 import ActionMenu from "@/components/common/ActionMenu";
 import SectionTitle from "@/components/label/SectionTitle";
@@ -92,17 +93,17 @@ const FacilityCard: React.FC<FacilityCardProps> = ({ facility }) => {
           <>
             <DocumentList
               title={"Berichte"}
-              documentType={"BERICHTE PRÜFEN"}
+              documentType={DOCUMENT_TYPE.CHECK_REPORTS}
               documents={facility?.documents}
             />
             <DocumentList
               title={"Grundrisse"}
-              documentType={"GRUNDRISSE"}
+              documentType={DOCUMENT_TYPE.FLOOR_PLANS}
               documents={facility?.documents}
             />
             <DocumentList
               title={"Sonstige Dokumente"}
-              documentType={"SONSTIGE"}
+              documentType={DOCUMENT_TYPE.OTHER}
               documents={facility?.documents}
             />
           </>
