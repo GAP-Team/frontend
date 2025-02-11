@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import Badge from "../../badge/GBadge";
 import { FaCheck } from "react-icons/fa";
-import { Dropdown, DropdownItem, Button } from "flowbite-react";
-import GNavbar from "@/components/navigation/GNavbar/GNavbar";
 import { FaArrowRightLong } from "react-icons/fa6";
+import { Dropdown, DropdownItem, Button } from "flowbite-react";
 import {
   germanStates,
   listOfOrderTypes,
@@ -30,7 +29,6 @@ const HeroSection = (): JSX.Element => {
   return (
     <>
       <section className="bg-white w-full dark:bg-gray-900">
-        <GNavbar />
         <div className="relative">
           <Image
             src={heroBackgroundPicture}
