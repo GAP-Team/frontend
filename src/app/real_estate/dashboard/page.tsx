@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 
 import Dashboard from "@/screens/dashboard/Dashboard";
 import { fetchTenders } from "@/lib/features/tenderSlice";
-import { useUserLoginVerification } from "@/hooks/useUserLoginVerification";
+import { useLogin } from "@/hooks/useUserLoginVerification";
 import NewsPanel from "@/screens/dashboard/real_estate_user/communication_panel/NewsPanel";
 import TendersPanel from "@/screens/dashboard/real_estate_user/tenders_panel/TendersPanel";
 import OverviewPanel from "@/screens/dashboard/real_estate_user/overview_panel/OverviewPanel";
@@ -13,7 +13,7 @@ import ApplicationsPanel from "@/screens/dashboard/real_estate_user/applications
 export default function RealEstateDashboardPage(): JSX.Element {
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.user);
-  const { isLoggedIn, isUserVerified } = useUserLoginVerification();
+  const { isLoggedIn, isUserVerified } = useLogin();
 
   useEffect(() => {
     if (user?.id) {
