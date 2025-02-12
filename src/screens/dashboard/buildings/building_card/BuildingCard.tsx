@@ -17,6 +17,7 @@ import { Building } from "./types";
 import facilityAPIs from "@/api/facility";
 import buildingAPIs from "@/api/building";
 import DocumentList from "./DocumentList ";
+import { DOCUMENT_TYPE } from "@/utils/enums";
 import ActionMenu from "@/components/common/ActionMenu";
 import { scrollBarStyles } from "@/components/scrollbar/Scrollbar";
 import {
@@ -128,17 +129,17 @@ const BuildingCard: React.FC<BuildingCardProps> = ({ building }) => {
           <>
             <DocumentList
               title={"Bauunterlagen"}
-              documentType={"BAUUNTERLAGEN"}
+              documentType={DOCUMENT_TYPE.CONSTRUCTION_DOCUMENTS}
               documents={building?.documents}
             />
             <DocumentList
               title={"Grundrisse"}
-              documentType={"GRUNDRISSE"}
+              documentType={DOCUMENT_TYPE.FLOOR_PLANS}
               documents={building?.documents}
             />
             <DocumentList
               title={"Sonstige Dokumente"}
-              documentType={"SONSTIGE"}
+              documentType={DOCUMENT_TYPE.OTHER}
               documents={building?.documents}
             />
           </>

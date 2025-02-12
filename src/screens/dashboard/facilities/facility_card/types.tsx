@@ -25,7 +25,7 @@ export interface Facility {
   buildingId: string;
   check: Check;
   maintenance: Maintenance;
-  document: [
+  documents: [
     {
       name: string;
       key: string;
