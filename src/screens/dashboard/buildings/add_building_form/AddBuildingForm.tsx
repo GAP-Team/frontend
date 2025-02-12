@@ -33,7 +33,7 @@ const AddBuildingForm = ({
   const typeOfBtn = activeStep.id + 1 >= steps.length ? "submit" : "button";
 
   const handleRoute = (): void => {
-    router.push("/real_estate/buildings");
+    router.push("/real-estate/buildings");
   };
 
   const formOrSuccessContent = isBeyondLastStep ? (
@@ -60,7 +60,7 @@ const AddBuildingForm = ({
           />
         </Grid>
         <Grid item>
-          <Link href="/real_estate/buildings">
+          <Link href="/real-estate/buildings">
             <IconButton sx={{ marginLeft: "auto" }} size="medium">
               <CgClose color="red" />
             </IconButton>

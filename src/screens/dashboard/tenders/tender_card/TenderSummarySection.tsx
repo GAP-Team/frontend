@@ -66,11 +66,11 @@ const TenderSummarySection: React.FC<TenderSummarySectionProps> = ({
   ].filter((item) => item.value);
 
   const editHandler = (): void => {
-    router.push(`/real_estate/tenders/edit/${tender?.id}`);
+    router.push(`/real-estate/tenders/edit/${tender?.id}`);
   };
 
   const backHandler = (): void => {
-    router.push("/real_estate/tenders");
+    router.push("/real-estate/tenders");
   };
 
   return (

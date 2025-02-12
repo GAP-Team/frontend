@@ -71,9 +71,9 @@ export default function GAppBar(): JSX.Element {
     setActiveMenuItem(menuItem);
     handleClose();
     if (menuItem === "Mein Profil") {
-      router.push("/real_estate/settings/user_profile");
+      router.push("/real-estate/settings/user_profile");
     } else if (menuItem === "Unternehmens Profil") {
-      router.push("/real_estate/settings/company_profile");
+      router.push("/real-estate/settings/company_profile");
     }
   };
 

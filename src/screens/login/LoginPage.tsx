@@ -49,7 +49,7 @@ const LoginPage = (): JSX.Element => {
             });
           }
 
-          router.push("/real_estate/dashboard");
+          router.push("/real-estate/dashboard");
         }
       } catch (error: any) {
         setLoginError(

@@ -17,7 +17,7 @@ const sidebarItems: SidebarItem[] = [
     id: 0,
     icon: LuLayoutDashboard,
     text: "Dashboard",
-    url: "/real_estate/dashboard",
+    url: "/real-estate/dashboard",
   },
   {
     id: 1,
@@ -27,12 +27,12 @@ const sidebarItems: SidebarItem[] = [
       {
         id: 10,
         text: "Alle Ausschreibungen",
-        url: "/real_estate/tenders",
+        url: "/real-estate/tenders",
       },
       {
         id: 11,
         text: "Ausschreibung hinzufügen",
-        url: "/real_estate/tenders/add",
+        url: "/real-estate/tenders/add",
       },
     ],
   },
@@ -44,12 +44,12 @@ const sidebarItems: SidebarItem[] = [
       {
         id: 20,
         text: "Alle Anlagen",
-        url: "/real_estate/facilities",
+        url: "/real-estate/facilities",
       },
       {
         id: 21,
         text: "Anlage hinzufügen",
-        url: "/real_estate/facilities/add",
+        url: "/real-estate/facilities/add",
       },
     ],
   },
@@ -61,19 +61,19 @@ const sidebarItems: SidebarItem[] = [
       {
         id: 30,
         text: "Alle Gebäude",
-        url: "/real_estate/buildings",
+        url: "/real-estate/buildings",
       },
       {
         id: 31,
         text: "Gebäude hinzufügen",
-        url: "/real_estate/buildings/add",
+        url: "/real-estate/buildings/add",
       },
     ],
   },
   {
     id: 4,
     icon: TbPigMoney,
-    url: "/real_estate/cost_savings",
+    url: "/real-estate/cost_savings",
     text: "Kosteneinsparung",
   },
 ];

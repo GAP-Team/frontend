@@ -74,7 +74,7 @@ const BuildingCard: React.FC<BuildingCardProps> = ({ building }) => {
   };
 
   const handleRedirect = (redirect: string): void => {
-    router.push(`/real_estate/${redirect}`);
+    router.push(`/real-estate/${redirect}`);
   };
 
   return (
@@ -88,7 +88,7 @@ const BuildingCard: React.FC<BuildingCardProps> = ({ building }) => {
         </Box>
         <ActionMenu
           itemId={building?.id}
-          onEdit={(id) => router.push(`/real_estate/buildings/edit/${id}`)}
+          onEdit={(id) => router.push(`/real-estate/buildings/edit/${id}`)}
           onDelete={(id) => deleteBuilding(id)}
           messege={delMsg}
         />

@@ -12,16 +12,16 @@ import Typography from "@mui/material/Typography";
 import PageTitle from "@/components/label/PageTitle";
 
 const menuItems = [
-  { label: "Mein Profil", href: "/real_estate/settings/user_profile" },
+  { label: "Mein Profil", href: "/real-estate/settings/user_profile" },
   {
     label: "Unternehmens Informationen",
-    href: "/real_estate/settings/company_profile",
+    href: "/real-estate/settings/company_profile",
   },
-  { label: "E-Mail ändern", href: "/real_estate/settings/email_change" },
-  { label: "Passwort ändern", href: "/real_estate/settings/password_change" },
+  { label: "E-Mail ändern", href: "/real-estate/settings/email_change" },
+  { label: "Passwort ändern", href: "/real-estate/settings/password_change" },
   {
     label: "Account löschen",
-    href: "/real_estate/settings/delete_account",
+    href: "/real-estate/settings/delete_account",
     style: { color: "red" },
   },
 ];

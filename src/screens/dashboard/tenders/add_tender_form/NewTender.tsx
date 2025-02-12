@@ -153,7 +153,7 @@ const NewTender: React.FC<NewTenderProps> = ({ id }): JSX.Element => {
     if (activeStep.id > 0) {
       setActiveStep(steps[activeStep.id - 1]);
     } else {
-      router.push("/real_estate/dashboard");
+      router.push("/real-estate/dashboard");
     }
   };
 
@@ -183,7 +183,7 @@ const NewTender: React.FC<NewTenderProps> = ({ id }): JSX.Element => {
       }
       secondaryDescription="Du kannst Ihre Ausschreibung in der Ausschreibung-übersicht sehen und bearbeiten."
       buttonLabel="Schließen"
-      redirectUrl="/real_estate/tenders"
+      redirectUrl="/real-estate/tenders"
     />
   ) : (
     <>
@@ -196,7 +196,7 @@ const NewTender: React.FC<NewTenderProps> = ({ id }): JSX.Element => {
           />
         </Grid>
         <Grid item>
-          <Link href="/real_estate/tenders" type="button">
+          <Link href="/real-estate/tenders" type="button">
             <IconButton sx={{ marginLeft: "auto" }} size="medium">
               <CgClose color="red" />
             </IconButton>

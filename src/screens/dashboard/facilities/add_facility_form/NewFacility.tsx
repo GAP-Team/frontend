@@ -96,7 +96,7 @@ const NewFacility: React.FC<NewFacilityProps> = ({}): JSX.Element => {
     if (activeStep.id > 0) {
       setActiveStep(steps[activeStep.id - 1]);
     } else {
-      router.push("/real_estate/dashboard");
+      router.push("/real-estate/dashboard");
     }
   };
 
@@ -235,7 +235,7 @@ const NewFacility: React.FC<NewFacilityProps> = ({}): JSX.Element => {
       primaryDescription="Anlage wurde erfolgreich angelegt"
       secondaryDescription="Du kannst Ihre Anlage in der Anlagen-übersicht sehen und bearbeiten."
       buttonLabel="Schließen"
-      redirectUrl="/real_estate/facilities"
+      redirectUrl="/real-estate/facilities"
     />
   ) : (
     <>
@@ -248,7 +248,7 @@ const NewFacility: React.FC<NewFacilityProps> = ({}): JSX.Element => {
           />
         </Grid>
         <Grid item>
-          <Link href="/real_estate/facilities" type="button">
+          <Link href="/real-estate/facilities" type="button">
             <IconButton sx={{ marginLeft: "auto" }} size="medium">
               <CgClose color="red" />
             </IconButton>

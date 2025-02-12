@@ -53,7 +53,7 @@ const BuildingOverview: React.FC = () => {
         alt="No Building/Objekt"
         buttonLabel="Objekt anlegen"
         title="Noch keine Objekte angelegt"
-        buttonLink="/real_estate/buildings/add"
+        buttonLink="/real-estate/buildings/add"
         description="Du hast noch keine Objekte angelegt, wenn Du Deine Objekte erstellt hast findest Du sie hier."
       />
     );

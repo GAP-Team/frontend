@@ -41,7 +41,7 @@ const Facilities = (): JSX.Element => {
       alt="No Facility"
       buttonLabel="Anlage anlegen"
       title="Noch keine Anlagen angelegt"
-      buttonLink="/real_estate/facilities/add"
+      buttonLink="/real-estate/facilities/add"
       description="Du hast noch keine Anlagen angelegt, wenn Du Deine Anlagen erstellt hast findest Du sie hier."
     />
   );

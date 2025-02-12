@@ -27,7 +27,7 @@ const HeaderSection: React.FC<HeaderSectionProps> = ({
           <SectionTitle
             text={overviewText}
             sx={styles.overviewSection}
-            href="/real_estate/tenders"
+            href="/real-estate/tenders"
           />
         )}
       </Box>

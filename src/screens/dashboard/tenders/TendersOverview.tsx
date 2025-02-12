@@ -43,7 +43,7 @@ const TendersOverview: React.FC = () => {
         image={addTenderSrc}
         title="Erstelle eine neue Ausschreibung."
         buttonLabel="Ausschreibung erstellen"
-        buttonLink="/real_estate/tenders/add"
+        buttonLink="/real-estate/tenders/add"
       />
     );
   })();

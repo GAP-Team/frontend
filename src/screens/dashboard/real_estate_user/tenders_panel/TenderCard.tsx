@@ -39,7 +39,7 @@ const TenderCard: React.FC<TenderCardProps> = ({
   const router = useRouter();
   const dispatch = useAppDispatch();
   const handleClick = (): void => {
-    router.push(`/real_estate/tenders/${tender.id}`);
+    router.push(`/real-estate/tenders/${tender.id}`);
   };
 
   const chipStyles = getTenderStatusStyle[tender?.status];
@@ -86,7 +86,7 @@ const TenderCard: React.FC<TenderCardProps> = ({
         {checkUrgency(tender?.urgency)}
         <ActionMenu
           itemId={tender?.id}
-          onEdit={(id) => router.push(`/real_estate/tenders/edit/${id}`)}
+          onEdit={(id) => router.push(`/real-estate/tenders/edit/${id}`)}
           onDelete={handleDeleteTender}
           messege={"Sind Sie sicher, dass Sie dieses Element löschen möchten?"}
         />

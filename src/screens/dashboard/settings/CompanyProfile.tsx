@@ -413,7 +413,7 @@ const CompanyProfile = (): JSX.Element => {
             <Grid item>
               <Button
                 variant="outlined"
-                onClick={() => router.push("/real_estate/dashboard")}
+                onClick={() => router.push("/real-estate/dashboard")}
               >
                 Abbrechen
               </Button>
