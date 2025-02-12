@@ -11,6 +11,48 @@ export const getTenderStatusStyle: {
   },
 };
 
+export const calculateStrength = (password: string): Promise<number> => {
+  let score = 0;
+  if (password.length >= 8) score++;
+  if (/[A-Z]/.test(password)) score++;
+  if (/[a-z]/.test(password)) score++;
+  if (/[0-9]/.test(password)) score++;
+  if (/[!@#$%^&*(),.?":{}|<>]/.test(password)) score++;
+  return Promise.resolve(score);
+};
+
+export const getPasswordStrengthLabel = (passwordStrength: number): string => {
+  switch (passwordStrength) {
+    case 1:
+    case 2:
+      return "Schwach";
+    case 3:
+      return "Medium";
+    case 4:
+      return "Stark";
+    case 5:
+      return "Sehr Stark";
+    default:
+      return "Sehr Schwach";
+  }
+};
+
+export const getPasswordStrengthColor = (passwordStrength: number): string => {
+  switch (passwordStrength) {
+    case 1:
+    case 2:
+      return "red";
+    case 3:
+      return "orange";
+    case 4:
+      return "green";
+    case 5:
+      return "darkgreen";
+    default:
+      return "gray";
+  }
+};
+
 export const truncateLabel = (label: string, maxLength = 20): string => {
   return label.length > maxLength
     ? label.substring(0, maxLength) + "..."

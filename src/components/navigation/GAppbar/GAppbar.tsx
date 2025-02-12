@@ -74,6 +74,10 @@ export default function GAppBar(): JSX.Element {
       router.push("/real_estate/settings/user_profile");
     } else if (menuItem === "Unternehmens Profil") {
       router.push("/real_estate/settings/company_profile");
+    } else if (menuItem === "E-Mail ändern") {
+      router.push("/real_estate/settings/email_change");
+    } else if (menuItem === "Passwort ändern") {
+      router.push("/real_estate/settings/password_change");
     }
   };
 
