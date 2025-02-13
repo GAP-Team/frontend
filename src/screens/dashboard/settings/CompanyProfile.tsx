@@ -61,14 +61,14 @@ const CompanyProfile = (): JSX.Element => {
       const requestData = {
         company: {
           name: values.companyName,
-          phonenumber: values.phonenumber,
+          phonenumber: Number(values.phonenumber),
           address: {
-            zip: values.zip,
+            zip: Number(values.zip),
             city: values.city,
             state: values.state,
             street: values.street,
             country: values.country,
-            houseNo: values.houseNumber,
+            houseNo: Number(values.houseNumber),
           },
           business: {
             businessType: user?.company?.business?.businessType,

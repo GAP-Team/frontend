@@ -1,5 +1,4 @@
 "use client";
-import bcrypt from "bcryptjs";
 import Cookies from "js-cookie";
 import React, { useState } from "react";
 import Link from "@mui/material/Link";
@@ -158,12 +157,10 @@ const RegistrationRealState = (): JSX.Element => {
         },
       };
 
-      const hashedPassword = await bcrypt.hash(values.password, 10);
-
       const arrangedDataObj = {
         firstName: values.firstName,
         lastName: values.lastName,
-        password: hashedPassword,
+        password: values.password,
         email: values.email,
         role: values.role,
         company: companyObj,
