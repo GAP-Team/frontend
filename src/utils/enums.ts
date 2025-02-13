@@ -27,6 +27,13 @@ export enum TenderStatusEnum {
   REVIEW_REQUIRED = "REVIEW_REQUIRED",
 }
 
+export enum DOCUMENT_TYPE {
+  CHECK_REPORTS = "BERICHTE PRÜFEN",
+  FLOOR_PLANS = "GRUNDRISSE",
+  OTHER = "SONSTIGE",
+  CONSTRUCTION_DOCUMENTS = "BAUUNTERLAGEN",
+}
+
 export enum DocumentChoice {
   UPLOAD_NOW = "Jetzt hochladen Empfohlen",
   NO_DOCUMENTS = "Keine Dokumente vorhanden",

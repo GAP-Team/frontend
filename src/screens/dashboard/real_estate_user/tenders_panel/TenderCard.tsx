@@ -76,14 +76,13 @@ const TenderCard: React.FC<TenderCardProps> = ({
   };
 
   return (
-    <Paper
-      sx={styles.card}
-      elevation={4}
-      style={{ cursor: "pointer" }}
-      onClick={handleClick}
-    >
+    <Paper sx={styles.card} elevation={4} style={{ cursor: "pointer" }}>
       <Box sx={styles.header}>
-        <Chip label={chipStyles?.title} sx={{ ...chipStyles }} />
+        <Chip
+          label={chipStyles?.title}
+          sx={{ ...chipStyles }}
+          onClick={handleClick}
+        />
         {checkUrgency(tender?.urgency)}
         <ActionMenu
           itemId={tender?.id}
@@ -92,13 +91,13 @@ const TenderCard: React.FC<TenderCardProps> = ({
           messege={"Sind Sie sicher, dass Sie dieses Element löschen möchten?"}
         />
       </Box>
-      <Box sx={styles.location}>
+      <Box sx={styles.location} onClick={handleClick}>
         <SectionTitle
           text={`Angebote: 0`}
           sx={{ fontWeight: 400, py: "0.75rem" }}
         />
       </Box>
-      <Box>
+      <Box onClick={handleClick}>
         <Typography variant="h6" sx={styles.title}>
           {tender?.tenderType}
         </Typography>

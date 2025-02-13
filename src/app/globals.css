@@ -162,3 +162,8 @@ h4 {
   line-height: 1.2;
   font-weight: 700;
 }
+
+.mui-1xxhmhi-MuiListSubheader-root-MuiAutocomplete-groupLabel {
+  font-size: 1.2rem !important;
+  font-weight: bold !important;
+}
