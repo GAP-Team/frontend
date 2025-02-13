@@ -35,6 +35,7 @@ const FacilityCard: React.FC<FacilityCardProps> = ({ facility }) => {
   const isFacilityActive = useAppSelector(
     checkActiveTenderForFacility(facility?.id)
   );
+  const noOfTenders = facility?.tenderIds?.length;
   const chipStyles = statusStyles[status] || statusStyles["aktiv"];
 
   const checkUrgency = (): string => {
@@ -87,7 +88,7 @@ const FacilityCard: React.FC<FacilityCardProps> = ({ facility }) => {
           itemId={facility?.id}
           onEdit={(id) => router.push(`/real_estate/facility/edit/${id}`)}
           onDelete={handleDeleteFacility}
-          messege={"Sind Sie sicher, dass Sie dieses Element löschen möchten?"}
+          messege={`Sind Sie sicher, dass Sie dieses Element${noOfTenders ? ` und die zugehörigen ${noOfTenders} Ausschreibungen` : ''} löschen möchten?`}
         />
       </Box>
       <SectionTitle
