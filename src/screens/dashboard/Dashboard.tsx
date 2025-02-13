@@ -62,7 +62,7 @@ const Dashboard: React.FC<DashboardProps> = ({ overrideComponent }) => {
           id: 21,
           text: "Anlage hinzufügen",
           url: "facilities/add",
-          component: <NewFacility facilityId="" />,
+          component: <NewFacility />,
         },
       ],
     },

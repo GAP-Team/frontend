@@ -29,7 +29,7 @@ import GProgressStepper from "@/components/stepper/GProgressStepper";
 import { TENDER_FORM } from "@/utils/enums";
 import {
   createTender,
-  selectTenderById,
+  getTenderById,
   updateTender,
 } from "@/lib/features/tenderSlice";
 
@@ -37,7 +37,7 @@ const NewTender: React.FC<NewTenderProps> = ({ id }): JSX.Element => {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const tender = useAppSelector((state) =>
-    id ? selectTenderById(id)(state) : null
+    id ? getTenderById(id)(state) : null
   );
   const steps: ActiveStepItem[] = [
     {
