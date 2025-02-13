@@ -38,7 +38,7 @@ const Facilities = (): JSX.Element => {
 
   const onFilterCriteriaChange = async (
     city: string,
-    federalState: string,
+    state: string,
     facilityType: string
   ): Promise<void> => {
     await dispatch(
