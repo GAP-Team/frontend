@@ -1,3 +1,4 @@
+import { Document } from "@/typings/types";
 import { Dayjs } from "dayjs";
 export interface Check {
   lastCheckDate: Dayjs | null;
@@ -26,7 +27,7 @@ export interface Facility {
   buildingId: string;
   check: Check;
   maintenance: Maintenance;
-  documents: File[];
+  documents: Document[];
   documentUploadType: string;
   serverLink: string;
   tenderIds: string[];
