@@ -42,7 +42,7 @@ const Facilities = (): JSX.Element => {
     facilityType: string
   ): Promise<void> => {
     await dispatch(
-      getFacilitiesByUser(user?.id, city, federalState, facilityType)
+      getFacilitiesByUser(user?.id, city, state, facilityType)
     ).unwrap();
   };
 
