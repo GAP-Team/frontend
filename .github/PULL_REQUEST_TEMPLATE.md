@@ -17,5 +17,3 @@
 - [ ] New feature **works as expected** (manual testing completed).
 - [ ] Edge cases are **considered and handled** (e.g., invalid inputs, error states).
 - [ ] No **breaking changes** for existing functionality.
-
-
