@@ -275,8 +275,8 @@ const NewFacility: React.FC<NewFacilityProps> = ({
     publishMaintenanceAutomaticallyInMonth:
       facility?.maintenance?.publishAutomaticallyInMonth || 0,
     maintenanceReminderInMonth: facility?.maintenance?.reminderInMonth || 0,
-    maintenanceEmailNotificationList:
-      facility?.maintenance?.emailNotificationList || [],
+    maintenanceEmailNotificationList: facility?.maintenance
+      ?.emailNotificationList || ["", ""],
     isMaintenanceEmailNotificationEnable:
       facility?.maintenance?.isEmailNotificationEnable || false,
     lastCheckDate: facility?.check?.lastCheckDate
