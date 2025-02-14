@@ -1,7 +1,7 @@
 "use client";
 import { Grid } from "@mui/material";
 import LandingPage from "@/screens/landing_page/LandingPage";
-import RealEstatePandingPage from "@/screens/real_estate_landing_page/RealEstatePandingPage";
+import RealEstateLandingPage from "@/screens/real_estate_landing_page/RealEstateLandingPage";
 import LandingPageLayout from "@/screens/landingpage_layout/LandingPageLayout";
 
 export default function Home(): JSX.Element {
@@ -9,7 +9,7 @@ export default function Home(): JSX.Element {
     <main className="flex min-h-screen flex-col items-center bg-white justify-between">
       <LandingPageLayout>
         <Grid className="gap-20" sx={styles.pageContainer}>
-          <RealEstatePandingPage />
+          <RealEstateLandingPage />
         </Grid>
       </LandingPageLayout>
     </main>

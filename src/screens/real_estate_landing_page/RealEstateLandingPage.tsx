@@ -1,6 +1,6 @@
 import HeroSection from "@/components/real_estate_landing_page_components/HeroSection";
 
-const RealEstatePandingPage = () => {
+const RealEstateLandingPage = () => {
 
     return (
         <HeroSection />
@@ -8,4 +8,4 @@ const RealEstatePandingPage = () => {
     
 }
 
-export default RealEstatePandingPage;
+export default RealEstateLandingPage;
