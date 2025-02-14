@@ -4,7 +4,7 @@ import { FiFileText } from "react-icons/fi";
 import Typography from "@mui/material/Typography";
 import { CircularProgress, Divider } from "@mui/material";
 import s3APIs from "@/api/s3";
-import { Document } from "./types";
+import { Document } from "@/typings/types";
 
 interface DocumentListProps {
   title: string;

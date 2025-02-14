@@ -1,36 +1,105 @@
+"use client";
+import Image from "next/image";
 import React, { useState } from "react";
 import Badge from "../../badge/GBadge";
 import { FaCheck } from "react-icons/fa";
-import { Dropdown, DropdownItem, Button } from "flowbite-react";
-import GNavbar from "@/components/navigation/GNavbar/GNavbar";
 import { FaArrowRightLong } from "react-icons/fa6";
 import {
+  Box,
+  Chip,
+  Menu,
+  List,
+  Button,
+  Checkbox,
+  MenuItem,
+  Collapse,
+  TextField,
+  FormControl,
+  ListItemText,
+  InputAdornment,
+  ListItemButton,
+} from "@mui/material";
+import {
   germanStates,
-  listOfOrderTypes,
   listOfTrades,
+  listOfOrderTypes,
 } from "@/utils/Constants";
+import CloseIcon from "@mui/icons-material/Close";
+import ExpandLess from "@mui/icons-material/ExpandLess";
+import ExpandMore from "@mui/icons-material/ExpandMore";
+import CustomSelect from "@/components/drop_down/CustomSelect";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import heroBackgroundPicture from "../../../../public/images/hero6.jpg";
-import Image from "next/image";
-import { MenuItem, Checkbox, ListItemText } from "@mui/material";
-import { truncateLabel } from "@/utils/utils";
 
 const HeroSection = (): JSX.Element => {
+  const [selectedState, setSelectedState] = useState<string>("");
+
   const [selectedFacilities, setSelectedFacilities] = useState<string[]>([]);
-  const [selectedOrderType, setSelectedOrderType] = useState("Auftragstypen");
-  const [selectedState, setSelectedState] = useState("Bundesländer");
+  const [facilityAnchorEl, setFacilityAnchorEl] =
+    useState<HTMLDivElement | null>(null);
+  const [facilityExpanded, setFacilityExpanded] = useState<{
+    [key: string]: boolean;
+  }>({});
 
-  const truncatedOrderType = truncateLabel(selectedOrderType);
+  const [selectedTenderType, setSelectedTenderType] = useState<string>("");
+  const [tenderTypeAnchorEl, setTenderTypeAnchorEl] =
+    useState<HTMLDivElement | null>(null);
+  const [tenderTypeExpanded, setTenderTypeExpanded] = useState<{
+    [key: string]: boolean;
+  }>({});
 
-  const handleFacilityChange = (item: string): void => {
+  // Facility handles
+  const handleClickFacilitySelect = (
+    event: React.MouseEvent<HTMLDivElement>
+  ): void => {
+    setFacilityAnchorEl(event.currentTarget);
+  };
+
+  const handleFacilityOptionsClose = (): void => {
+    setFacilityAnchorEl(null);
+  };
+
+  const handleFacilityOptionsExpand = (category: string): void => {
+    setFacilityExpanded((prev) => ({ ...prev, [category]: !prev[category] }));
+  };
+
+  const handleFacilityOptionSelect = (item: string): void => {
     setSelectedFacilities((prev) =>
-      prev.includes(item) ? prev.filter((i) => i !== item) : [...prev, item]
+      prev.includes(item)
+        ? prev.filter((selected) => selected !== item)
+        : [...prev, item]
     );
+  };
+
+  const handleFacilityOptionDeselect = (item: string): void => {
+    setSelectedFacilities((prev) =>
+      prev.filter((selected) => selected !== item)
+    );
+  };
+
+  // Tender Type handles
+  const handleClickTenderTypeSelect = (
+    event: React.MouseEvent<HTMLDivElement>
+  ): void => {
+    setTenderTypeAnchorEl(event.currentTarget);
+  };
+
+  const handleTenderTypeOptionsClose = (): void => {
+    setTenderTypeAnchorEl(null);
+  };
+
+  const handleTenderTypeOptionsExpand = (category: string): void => {
+    setTenderTypeExpanded((prev) => ({ ...prev, [category]: !prev[category] }));
+  };
+
+  const handleTenderTypeOptionSelect = (item: string): void => {
+    setSelectedTenderType(item);
+    setTenderTypeAnchorEl(null);
   };
 
   return (
     <>
       <section className="bg-white w-full dark:bg-gray-900">
-        <GNavbar />
         <div className="relative">
           <Image
             src={heroBackgroundPicture}
@@ -51,6 +120,7 @@ const HeroSection = (): JSX.Element => {
           <div className="relative bg-gray-900 bg-opacity-0 h-[800px]">
             <div className="px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20">
               <div className="flex flex-col items-center justify-center">
+                {/* Query Section Start */}
                 <div className="w-full xl:mb-0 xl:px-16">
                   <div className="bg-white bg-opacity-90 rounded-xl shadow-2xl p-4 sm:p-7 md:p-10">
                     <div className="flex justify-center flex-col items-center text-center pb-5 px-4 md:px-5">
@@ -69,43 +139,55 @@ const HeroSection = (): JSX.Element => {
                     </div>
                     <form className="flex flex-col justify-center text-center pt-10 pb-4 md:flex-row">
                       <div className="flex flex-col w-full px-2 sm:px-4 md:w-1/3">
-                        <label
-                          htmlFor="craft"
-                          className="text-sm font-medium text-gray-700"
-                        >
-                          Wählen Sie ein Anlagentyp aus:
-                        </label>
-                        <Dropdown
-                          label={
-                            selectedFacilities.length > 0
-                              ? truncateLabel(selectedFacilities[0])
-                              : "Anlagentyp"
-                          }
-                          size="lg"
-                          color="gray"
-                          style={{
-                            width: "90%",
-                            alignSelf: "center",
-                            margin: 2,
-                          }}
-                        >
-                          <div className="max-h-60 overflow-y-auto">
-                            {listOfTrades.map((category, index) => (
-                              <React.Fragment key={index}>
-                                {category.category ? (
-                                  <Dropdown
-                                    label={category.category}
-                                    size="md"
-                                    placement="right"
-                                    style={{ width: "300px" }}
-                                    color="gray"
-                                  >
-                                    {category.items.map((item, itemIndex) => (
+                        <FormControl sx={{ m: 1, minWidth: 120 }}>
+                          <label
+                            htmlFor="craft"
+                            className="text-sm font-medium text-gray-700 mb-4"
+                          >
+                            Wählen Sie ein Anlagentyp aus:
+                          </label>
+                          <TextField
+                            label="Anlagentyp"
+                            onClick={handleClickFacilitySelect}
+                            InputProps={{
+                              readOnly: true,
+                              endAdornment: (
+                                <InputAdornment position="start">
+                                  <ArrowDropDownIcon />
+                                </InputAdornment>
+                              ),
+                            }}
+                          />
+                          <Menu
+                            anchorEl={facilityAnchorEl}
+                            open={Boolean(facilityAnchorEl)}
+                            onClose={handleFacilityOptionsClose}
+                          >
+                            {listOfTrades.map((trade) => (
+                              <div key={trade.category}>
+                                <ListItemButton
+                                  onClick={() =>
+                                    handleFacilityOptionsExpand(trade.category)
+                                  }
+                                >
+                                  <ListItemText primary={trade.category} />
+                                  {facilityExpanded[trade.category] ? (
+                                    <ExpandLess />
+                                  ) : (
+                                    <ExpandMore />
+                                  )}
+                                </ListItemButton>
+                                <Collapse
+                                  in={facilityExpanded[trade.category]}
+                                  timeout="auto"
+                                  unmountOnExit
+                                >
+                                  <List disablePadding>
+                                    {trade.items.map((item) => (
                                       <MenuItem
-                                        key={itemIndex}
-                                        value={item}
-                                        onChange={() =>
-                                          handleFacilityChange(item)
+                                        key={item}
+                                        onClick={() =>
+                                          handleFacilityOptionSelect(item)
                                         }
                                       >
                                         <Checkbox
@@ -116,116 +198,134 @@ const HeroSection = (): JSX.Element => {
                                         <ListItemText primary={item} />
                                       </MenuItem>
                                     ))}
-                                  </Dropdown>
-                                ) : (
-                                  category.items.map((item, itemIndex) => (
-                                    <MenuItem key={itemIndex} value={item}>
-                                      <Checkbox
-                                        checked={category.items.includes(item)}
-                                      />
-                                      <ListItemText primary={item} />
-                                    </MenuItem>
-                                  ))
-                                )}
-                              </React.Fragment>
+                                  </List>
+                                </Collapse>
+                              </div>
                             ))}
-                          </div>
-                        </Dropdown>
+                          </Menu>
+                          {selectedFacilities.length > 0 && (
+                            <Box
+                              sx={{
+                                display: "flex",
+                                gap: 1,
+                                flexWrap: "wrap",
+                                mt: 2,
+                              }}
+                            >
+                              {selectedFacilities.map((item) => (
+                                <Chip
+                                  key={item}
+                                  label={item}
+                                  onDelete={() =>
+                                    handleFacilityOptionDeselect(item)
+                                  }
+                                  deleteIcon={<CloseIcon />}
+                                />
+                              ))}
+                            </Box>
+                          )}
+                        </FormControl>
                       </div>
 
                       <div className="flex flex-col w-full px-2 sm:px-4 md:w-1/3">
-                        <label
-                          htmlFor="type"
-                          className="text-sm font-medium text-gray-700"
-                        >
-                          Wählen Sie ein Auftragstyp aus:
-                        </label>
-                        <Dropdown
-                          label={truncatedOrderType}
-                          size="lg"
-                          style={{
-                            width: "90%",
-                            alignSelf: "center",
-                            margin: 2,
-                            overflow: "hidden",
-                            textOverflow: "ellipsis",
-                            whiteSpace: "nowrap",
-                            maxWidth: "100%",
-                          }}
-                          color="gray"
-                        >
-                          {listOfOrderTypes.map((category, index) => (
-                            <React.Fragment key={index}>
-                              {category.category ? (
-                                <Dropdown
-                                  label={category.category}
-                                  size="md"
-                                  placement="right"
-                                  style={{ width: "300px" }}
-                                  color="gray"
+                        <FormControl sx={{ m: 1, minWidth: 120 }}>
+                          <label
+                            htmlFor="craft"
+                            className="text-sm font-medium text-gray-700 mb-4"
+                          >
+                            Wählen Sie ein Auftragstyp aus:
+                          </label>
+
+                          <TextField
+                            label="Auftragstypen"
+                            onClick={handleClickTenderTypeSelect}
+                            InputProps={{
+                              readOnly: true,
+                              endAdornment: (
+                                <InputAdornment position="start">
+                                  <ArrowDropDownIcon />
+                                </InputAdornment>
+                              ),
+                            }}
+                            value={selectedTenderType}
+                          />
+                          <Menu
+                            anchorEl={tenderTypeAnchorEl}
+                            open={Boolean(tenderTypeAnchorEl)}
+                            onClose={handleTenderTypeOptionsClose}
+                          >
+                            {listOfOrderTypes.map((trade) => (
+                              <div key={trade.category}>
+                                <ListItemButton
+                                  onClick={() =>
+                                    handleTenderTypeOptionsExpand(
+                                      trade.category
+                                    )
+                                  }
                                 >
-                                  {category.items.map((item, itemIndex) => (
-                                    <DropdownItem
-                                      onClick={() => setSelectedOrderType(item)}
-                                      key={itemIndex}
-                                      style={{ width: "max-content" }}
-                                    >
-                                      {item}
-                                    </DropdownItem>
-                                  ))}
-                                </Dropdown>
-                              ) : (
-                                category.items.map((item, itemIndex) => (
-                                  <DropdownItem
-                                    onClick={() => setSelectedOrderType(item)}
-                                    key={itemIndex}
-                                  >
-                                    {item}
-                                  </DropdownItem>
-                                ))
-                              )}
-                            </React.Fragment>
-                          ))}
-                        </Dropdown>
+                                  <ListItemText primary={trade.category} />
+                                  {tenderTypeExpanded[trade.category] ? (
+                                    <ExpandLess />
+                                  ) : (
+                                    <ExpandMore />
+                                  )}
+                                </ListItemButton>
+                                <Collapse
+                                  in={tenderTypeExpanded[trade.category]}
+                                  timeout="auto"
+                                  unmountOnExit
+                                >
+                                  <List disablePadding>
+                                    {trade.items.map((item) => (
+                                      <MenuItem
+                                        key={item}
+                                        onClick={() =>
+                                          handleTenderTypeOptionSelect(item)
+                                        }
+                                      >
+                                        {/* <Checkbox checked={selectedTenderType} /> */}
+                                        <ListItemText primary={item} />
+                                      </MenuItem>
+                                    ))}
+                                  </List>
+                                </Collapse>
+                              </div>
+                            ))}
+                          </Menu>
+                        </FormControl>
                       </div>
 
                       <div className="flex flex-col w-full px-2 sm:px-4 md:w-1/3">
-                        <label
-                          htmlFor="type"
-                          className="text-sm font-medium text-gray-700"
-                        >
-                          Wählen Sie ein Bundesland aus:
-                        </label>
-                        <Dropdown
-                          label={selectedState}
-                          size="lg"
-                          style={{
-                            width: "90%",
-                            alignSelf: "center",
-                            margin: 2,
-                          }}
-                          color="gray"
-                        >
-                          <div className="relative w-90% self-center m-2 max-h-60 overflow-y-auto">
-                            {germanStates.map((item, ind) => (
-                              <DropdownItem
-                                onClick={() => setSelectedState(item.label)}
-                                key={ind}
-                                style={{ width: "max-content" }}
-                              >
-                                {item.label}
-                              </DropdownItem>
-                            ))}
-                          </div>
-                        </Dropdown>
+                        <FormControl sx={{ m: 1, minWidth: 120 }}>
+                          <label
+                            htmlFor="type"
+                            className="text-sm font-medium text-gray-700 mb-4"
+                          >
+                            Wählen Sie ein Bundesland aus:
+                          </label>
+                          <CustomSelect
+                            label={"Bundesländer"}
+                            name={"bundesländer"}
+                            onChange={(newValue) =>
+                              setSelectedState(newValue?.target?.value)
+                            }
+                            options={germanStates}
+                            value={selectedState || ""}
+                          />
+                        </FormControl>
                       </div>
                     </form>
                     <div className="flex justify-center items-center">
                       <Button
-                        as="a"
                         href="#"
-                        className="mt-10 text-lg bg-[#005e99] hover:bg-[#0071b8] rounded-lg"
-                        size="xl"
+                        size="large"
+                        component="a"
+                        style={styles.querySubmitButton}
+                        className="mt-10 rounded-lg"
+                        sx={{
+                          textTransform: "none",
+                          whiteSpace: "pre",
+                        }}
                       >
                         Jetzt Auftrag Finden
                         <FaArrowRightLong className="ml-2 h-5 w-5" />
@@ -253,6 +353,7 @@ const HeroSection = (): JSX.Element => {
                     </div>
                   </div>
                 </div>
+                {/* Query Section End */}
               </div>
             </div>
           </div>
@@ -263,3 +364,18 @@ const HeroSection = (): JSX.Element => {
 };
 
 export default HeroSection;
+
+const styles = {
+  querySubmitButton: {
+    background: "#005e99",
+    color: "#FFFFFF",
+    padding: "0.8rem",
+    paddingRight: "1.7rem",
+    paddingLeft: "1.7rem",
+    borderRadius: 7,
+    fontSize: "small",
+    "&:hover": {
+      background: "#0071b8",
+    },
+  },
+};

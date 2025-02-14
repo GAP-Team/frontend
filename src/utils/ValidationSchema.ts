@@ -3,6 +3,8 @@ import * as yup from "yup";
 const EMAIL_REGEX =
   /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
+const NAME_REGEX = /^[\p{L}\s'-]+$/u;
+
 export const loginValidationSchema = yup.object({
   email: yup
     .string()
@@ -13,8 +15,24 @@ export const loginValidationSchema = yup.object({
 
 export const registrationValidationSchema = yup
   .object({
-    firstName: yup.string().required("Vorname ist erforderlich"),
-    lastName: yup.string().required("Nachname ist erforderlich"),
+    firstName: yup
+      .string()
+      .required("Vorname ist erforderlich")
+      .min(2, "Vorname muss mindestens 2 Zeichen lang sein")
+      .max(50, "Vorname darf maximal 50 Zeichen lang sein")
+      .matches(
+        NAME_REGEX,
+        "Name darf nur Buchstaben, Leerzeichen, Bindestriche und Apostrophe enthalten"
+      ),
+    lastName: yup
+      .string()
+      .required("Nachname ist erforderlich")
+      .min(2, "Nachname muss mindestens 2 Zeichen lang sein")
+      .max(50, "Nachname darf maximal 50 Zeichen lang sein")
+      .matches(
+        NAME_REGEX,
+        "Name darf nur Buchstaben, Leerzeichen, Bindestriche und Apostrophe enthalten"
+      ),
     email: yup
       .string()
       .matches(EMAIL_REGEX, "Eingabe einer gültigen E-Mail")
@@ -329,14 +347,8 @@ export const addFacilityValidationSchema = [
 ];
 
 export const UserProfileSchema = yup.object({
-  firstName: yup
-    .string()
-    .matches(/^[A-Za-z]+$/, "Vorname darf nur Buchstaben enthalten")
-    .required("Vorname ist erforderlich"),
-  lastName: yup
-    .string()
-    .matches(/^[A-Za-z]+$/, "Nachname darf nur Buchstaben enthalten")
-    .required("Nachname ist erforderlich"),
+  firstName: registrationValidationSchema.fields.firstName,
+  lastName: registrationValidationSchema.fields.lastName,
   position: yup
     .string()
     .matches(/^[A-Za-z]+$/, "Beruf darf nur Buchstaben enthalten"),
@@ -344,6 +356,25 @@ export const UserProfileSchema = yup.object({
 
 export const EmailChangeSchema = yup.object({
   email: registrationValidationSchema.fields.email,
+});
+
+export const passwordChangeSchema = yup.object({
+  currentPassword: yup.string().required("Current Passwort ist erforderlich"),
+  newPassword: yup
+    .string()
+    .required("New Passwort ist erforderlich")
+    .min(8, "Das Current Passwort sollte mindestens 8 Zeichen lang sein")
+    .matches(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+      "Das Passwort muss mindestens einen Groß- und einen Kleinbuchstaben, eine Zahl und ein Sonderzeichen enthalten"
+    ),
+  confirmPassword: yup
+    .string()
+    .oneOf(
+      [yup.ref("newPassword"), undefined],
+      "Passwörter müssen übereinstimmen"
+    )
+    .required("Passwort bestätigen ist erforderlich"),
 });
 
 export const CompanyProfileSchema = yup.object({

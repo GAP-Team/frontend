@@ -1,10 +1,11 @@
 "use client";
 import { Item } from "@/utils/Constants";
-import { MenuItem, Select } from "@mui/material";
+import { MenuItem, InputLabel, Select, FormControl } from "@mui/material";
 
 interface CustomSelectProps {
   name: string;
   value: string;
+  label?: string;
   options: Item[];
   onChange: (selectedItem: any) => void;
 }
@@ -12,20 +13,29 @@ interface CustomSelectProps {
 const CustomSelect = ({
   name,
   value,
+  label,
   options,
   onChange,
 }: CustomSelectProps): JSX.Element => {
   return (
-    <Select name={name} value={value} onChange={onChange}>
-      {options?.length > 0 &&
-        options?.map((option: Item, index: number) => {
-          return (
-            <MenuItem key={index} value={option?.value}>
-              {option?.label}
-            </MenuItem>
-          );
-        })}
-    </Select>
+    <FormControl fullWidth>
+      <InputLabel id="custom-select">{label}</InputLabel>
+      <Select
+        name={name}
+        value={value}
+        onChange={onChange}
+        labelId="custom-select"
+      >
+        {options?.length > 0 &&
+          options?.map((option: Item, index: number) => {
+            return (
+              <MenuItem key={index} value={option?.value}>
+                {option?.label}
+              </MenuItem>
+            );
+          })}
+      </Select>
+    </FormControl>
   );
 };
 
