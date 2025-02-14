@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction } from "react";
 import { Dayjs } from "dayjs";
+import { Document } from "@/typings/types";
 
 export interface AddFacilityFormValues {
   name: string;
@@ -11,9 +12,9 @@ export interface AddFacilityFormValues {
   emailNotificationList: string[];
   selectedBuilding: string;
   documentChoice: string;
-  checkReports: File[];
-  floorplanDocs: File[];
-  otherDocs: File[];
+  checkReports: Document[];
+  floorplanDocs: Document[];
+  otherDocs: Document[];
   serverLink: string;
   lastMaintenanceDate: Dayjs | null;
   nextMaintenanceInMonth: number;

@@ -1,7 +1,7 @@
 "use client";
 import React, { memo } from "react";
 import { useAppSelector } from "@/lib/hooks";
-import { selectTenderById } from "@/lib/features/tenderSlice";
+import { getTenderById } from "@/lib/features/tenderSlice";
 import Grid from "@mui/material/Grid";
 import TenderTitleBar from "./TenderTitleBar";
 import Paper from "@mui/material/Paper";
@@ -15,7 +15,7 @@ interface TenderDetailsProps {
 
 const TenderDetails: React.FC<TenderDetailsProps> = ({ tenderId }) => {
   // Fetch tender details by ID
-  const tender = useAppSelector(selectTenderById(tenderId));
+  const tender = useAppSelector(getTenderById(tenderId));
   const { facilities } = useAppSelector((state) => state.facility);
   const subcategory = facilities.find(
     (facility: Facility) => facility.id === tender?.facility?.id

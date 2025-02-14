@@ -29,15 +29,16 @@ import GProgressStepper from "@/components/stepper/GProgressStepper";
 import { TENDER_FORM } from "@/utils/enums";
 import {
   createTender,
-  selectTenderById,
+  getTenderById,
   updateTender,
 } from "@/lib/features/tenderSlice";
+import { ROUTES } from "@/utils/routes";
 
 const NewTender: React.FC<NewTenderProps> = ({ id }): JSX.Element => {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const tender = useAppSelector((state) =>
-    id ? selectTenderById(id)(state) : null
+    id ? getTenderById(id)(state) : null
   );
   const steps: ActiveStepItem[] = [
     {
@@ -153,7 +154,7 @@ const NewTender: React.FC<NewTenderProps> = ({ id }): JSX.Element => {
     if (activeStep.id > 0) {
       setActiveStep(steps[activeStep.id - 1]);
     } else {
-      router.push("/real-estate/dashboard");
+      router.push(ROUTES.REAL_ESTATE.DASHBOARD);
     }
   };
 
@@ -183,7 +184,7 @@ const NewTender: React.FC<NewTenderProps> = ({ id }): JSX.Element => {
       }
       secondaryDescription="Du kannst Ihre Ausschreibung in der Ausschreibung-übersicht sehen und bearbeiten."
       buttonLabel="Schließen"
-      redirectUrl="/real-estate/tenders"
+      redirectUrl={ROUTES.REAL_ESTATE.TENDER.TENDERS}
     />
   ) : (
     <>
@@ -196,7 +197,7 @@ const NewTender: React.FC<NewTenderProps> = ({ id }): JSX.Element => {
           />
         </Grid>
         <Grid item>
-          <Link href="/real-estate/tenders" type="button">
+          <Link href={ROUTES.REAL_ESTATE.TENDER.TENDERS} type="button">
             <IconButton sx={{ marginLeft: "auto" }} size="medium">
               <CgClose color="red" />
             </IconButton>

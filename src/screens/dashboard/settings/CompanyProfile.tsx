@@ -19,6 +19,7 @@ import Select from "@mui/material/Select";
 import { showSnackbar } from "@/components/root-snackbar";
 import { updateUserProfile } from "@/lib/features/userSlice";
 import { useRouter } from "next/navigation";
+import { ROUTES } from "@/utils/routes";
 
 const CompanyProfile = (): JSX.Element => {
   const dispatch = useAppDispatch();
@@ -413,7 +414,7 @@ const CompanyProfile = (): JSX.Element => {
             <Grid item>
               <Button
                 variant="outlined"
-                onClick={() => router.push("/real-estate/dashboard")}
+                onClick={() => router.push(ROUTES.REAL_ESTATE.DASHBOARD)}
               >
                 Abbrechen
               </Button>

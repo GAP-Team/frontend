@@ -21,6 +21,7 @@ import HeroBanner from "../../components/common/InfoBanner";
 import { loginValidationSchema } from "@/utils/ValidationSchema";
 import { setAccessToken, setIsUserVerified } from "@/utils/helperJWT";
 import userAPIs from "@/api/user";
+import { ROUTES } from "@/utils/routes";
 
 const LoginPage = (): JSX.Element => {
   const router = useRouter();
@@ -49,7 +50,7 @@ const LoginPage = (): JSX.Element => {
             });
           }
 
-          router.push("/real-estate/dashboard");
+          router.push(ROUTES.REAL_ESTATE.DASHBOARD);
         }
       } catch (error: any) {
         setLoginError(

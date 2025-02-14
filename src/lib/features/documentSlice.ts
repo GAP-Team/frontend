@@ -1,14 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 import { RootState } from "../store";
+import { Document } from "@/typings/types";
 
-interface DocumentState {
-  key: string;
-  name: string;
-  documentType: string;
-}
-
-const initialState: DocumentState = {
+const initialState: Document = {
   key: "",
   name: "",
   documentType: "",

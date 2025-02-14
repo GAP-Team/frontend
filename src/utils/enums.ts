@@ -33,3 +33,11 @@ export enum DOCUMENT_TYPE {
   OTHER = "SONSTIGE",
   CONSTRUCTION_DOCUMENTS = "BAUUNTERLAGEN",
 }
+
+export enum DocumentChoice {
+  UPLOAD_NOW = "Jetzt hochladen Empfohlen",
+  NO_DOCUMENTS = "Keine Dokumente vorhanden",
+  PER_EMAIL = "Per email versenden",
+  SERVER_LINK = "Server verküpfung",
+  ON_SITE = "Dokumente vor Ort zur Verfügung stellen",
+}

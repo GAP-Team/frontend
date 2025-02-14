@@ -11,13 +11,14 @@ import Sidebar, {
   SubItem,
   SidebarItem,
 } from "@/components/navigation/GSidebar/SideBar";
+import { ROUTES } from "@/utils/routes";
 
 const sidebarItems: SidebarItem[] = [
   {
     id: 0,
     icon: LuLayoutDashboard,
     text: "Dashboard",
-    url: "/real-estate/dashboard",
+    url: ROUTES.REAL_ESTATE.DASHBOARD,
   },
   {
     id: 1,
@@ -27,12 +28,12 @@ const sidebarItems: SidebarItem[] = [
       {
         id: 10,
         text: "Alle Ausschreibungen",
-        url: "/real-estate/tenders",
+        url: ROUTES.REAL_ESTATE.TENDER.TENDERS,
       },
       {
         id: 11,
         text: "Ausschreibung hinzufügen",
-        url: "/real-estate/tenders/add",
+        url: ROUTES.REAL_ESTATE.TENDER.ADD_TENDER,
       },
     ],
   },
@@ -44,12 +45,12 @@ const sidebarItems: SidebarItem[] = [
       {
         id: 20,
         text: "Alle Anlagen",
-        url: "/real-estate/facilities",
+        url: ROUTES.REAL_ESTATE.FACILITY.FACILITIES,
       },
       {
         id: 21,
         text: "Anlage hinzufügen",
-        url: "/real-estate/facilities/add",
+        url: ROUTES.REAL_ESTATE.FACILITY.ADD_FACILITY,
       },
     ],
   },
@@ -61,19 +62,19 @@ const sidebarItems: SidebarItem[] = [
       {
         id: 30,
         text: "Alle Gebäude",
-        url: "/real-estate/buildings",
+        url: ROUTES.REAL_ESTATE.BUILDING.BUILDINGS,
       },
       {
         id: 31,
         text: "Gebäude hinzufügen",
-        url: "/real-estate/buildings/add",
+        url: ROUTES.REAL_ESTATE.BUILDING.ADD_BUILDING,
       },
     ],
   },
   {
     id: 4,
     icon: TbPigMoney,
-    url: "/real-estate/cost_savings",
+    url: ROUTES.REAL_ESTATE.COST_SAVING,
     text: "Kosteneinsparung",
   },
 ];

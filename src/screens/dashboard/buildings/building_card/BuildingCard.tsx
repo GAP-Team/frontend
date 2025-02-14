@@ -14,6 +14,7 @@ import Typography from "@mui/material/Typography";
 import { IoExtensionPuzzleOutline } from "react-icons/io5";
 
 import { Building } from "./types";
+import { ROUTES } from "@/utils/routes";
 import facilityAPIs from "@/api/facility";
 import buildingAPIs from "@/api/building";
 import DocumentList from "./DocumentList ";
@@ -88,7 +89,9 @@ const BuildingCard: React.FC<BuildingCardProps> = ({ building }) => {
         </Box>
         <ActionMenu
           itemId={building?.id}
-          onEdit={(id) => router.push(`/real-estate/buildings/edit/${id}`)}
+          onEdit={(id) =>
+            router.push(ROUTES.REAL_ESTATE.BUILDING.EDIT_BUILDING(id))
+          }
           onDelete={(id) => deleteBuilding(id)}
           messege={delMsg}
         />

@@ -24,6 +24,7 @@ import { currentUser } from "@/lib/features/userSlice";
 import SettingsIcon from "@mui/icons-material/Settings";
 import NotificationItem from "./NotficationItem";
 import { notifications } from "@/utils/Constants";
+import { ROUTES } from "@/utils/routes";
 
 export default function GAppBar(): JSX.Element {
   const router = useRouter();
@@ -71,9 +72,13 @@ export default function GAppBar(): JSX.Element {
     setActiveMenuItem(menuItem);
     handleClose();
     if (menuItem === "Mein Profil") {
-      router.push("/real-estate/settings/user_profile");
+      router.push(ROUTES.SETTINGS.USER_PROFILE);
     } else if (menuItem === "Unternehmens Profil") {
-      router.push("/real-estate/settings/company_profile");
+      router.push(ROUTES.SETTINGS.COMPANY_PROFILE);
+    } else if (menuItem === "E-Mail ändern") {
+      router.push(ROUTES.SETTINGS.EMAIL_CHANGE);
+    } else if (menuItem === "Passwort ändern") {
+      router.push(ROUTES.SETTINGS.PASSWORD_CHANGE);
     }
   };
 

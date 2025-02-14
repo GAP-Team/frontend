@@ -358,6 +358,25 @@ export const EmailChangeSchema = yup.object({
   email: registrationValidationSchema.fields.email,
 });
 
+export const passwordChangeSchema = yup.object({
+  currentPassword: yup.string().required("Current Passwort ist erforderlich"),
+  newPassword: yup
+    .string()
+    .required("New Passwort ist erforderlich")
+    .min(8, "Das Current Passwort sollte mindestens 8 Zeichen lang sein")
+    .matches(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+      "Das Passwort muss mindestens einen Groß- und einen Kleinbuchstaben, eine Zahl und ein Sonderzeichen enthalten"
+    ),
+  confirmPassword: yup
+    .string()
+    .oneOf(
+      [yup.ref("newPassword"), undefined],
+      "Passwörter müssen übereinstimmen"
+    )
+    .required("Passwort bestätigen ist erforderlich"),
+});
+
 export const CompanyProfileSchema = yup.object({
   companyName: registrationValidationSchema.fields.company,
   street: registrationValidationSchema.fields.street,

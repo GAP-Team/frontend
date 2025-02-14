@@ -1,3 +1,4 @@
+import { ROUTES } from "@/utils/routes";
 import { GapLogo } from "@/components/logo/GapLogo";
 import { Box, Typography, Grid, Link } from "@mui/material";
 
@@ -75,7 +76,7 @@ function GFooter(): JSX.Element {
                     Als Immobilienbesitzer
                   </Typography>
                   <Link
-                    href=" /real-estate "
+                    href={ROUTES.REAL_ESTATE_HOME}
                     style={styles.footerMenuText}
                     underline="hover"
                   >

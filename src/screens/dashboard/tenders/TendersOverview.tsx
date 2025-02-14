@@ -10,6 +10,7 @@ import { useSelector } from "react-redux";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { fetchTenders } from "@/lib/features/tenderSlice";
 import { BuildingTenders } from "./tender_card/types";
+import { ROUTES } from "@/utils/routes";
 
 const TendersOverview: React.FC = () => {
   const user = useSelector(currentUser);
@@ -43,7 +44,7 @@ const TendersOverview: React.FC = () => {
         image={addTenderSrc}
         title="Erstelle eine neue Ausschreibung."
         buttonLabel="Ausschreibung erstellen"
-        buttonLink="/real-estate/tenders/add"
+        buttonLink={ROUTES.REAL_ESTATE.TENDER.ADD_TENDER}
       />
     );
   })();

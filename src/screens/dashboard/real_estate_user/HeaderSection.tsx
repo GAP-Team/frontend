@@ -1,5 +1,6 @@
 import React from "react";
 import Box from "@mui/material/Box";
+import { ROUTES } from "@/utils/routes";
 import SectionTitle from "@/components/label/SectionTitle"; // Ensure this import path is correct
 import DividerDecorator from "@/components/divider/DividerDecorator"; // Ensure this import path is correct
 
@@ -27,7 +28,7 @@ const HeaderSection: React.FC<HeaderSectionProps> = ({
           <SectionTitle
             text={overviewText}
             sx={styles.overviewSection}
-            href="/real-estate/tenders"
+            href={ROUTES.REAL_ESTATE.TENDER.TENDERS}
           />
         )}
       </Box>

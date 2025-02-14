@@ -10,6 +10,7 @@ import LabelText from "@/components/label/LabelText";
 import { Tender } from "./types";
 import { TENDER_FORM } from "@/utils/enums";
 import { useAppSelector } from "@/lib/hooks";
+import { ROUTES } from "@/utils/routes";
 import { Facility } from "../../facilities/facility_card/types";
 
 interface TenderSummarySectionProps {
@@ -66,11 +67,11 @@ const TenderSummarySection: React.FC<TenderSummarySectionProps> = ({
   ].filter((item) => item.value);
 
   const editHandler = (): void => {
-    router.push(`/real-estate/tenders/edit/${tender?.id}`);
+    router.push(ROUTES.REAL_ESTATE.TENDER.EDIT_TENDER(tender?.id));
   };
 
   const backHandler = (): void => {
-    router.push("/real-estate/tenders");
+    router.push(ROUTES.REAL_ESTATE.TENDER.TENDERS);
   };
 
   return (

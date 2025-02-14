@@ -1,21 +1,23 @@
+import { Document } from "@/typings/types";
+import { Dayjs } from "dayjs";
 export interface Check {
-  lastCheckDate: Date;
+  lastCheckDate: Dayjs | null;
   nextCheckInYearNumber: number;
   isPublishAutomatically: boolean;
   publishAutomaticallyInMonth: number;
   reminderInMonth: number;
   isEmailNotificationEnable: boolean;
-  emailNotificationList: [];
+  emailNotificationList: string[];
 }
 
 export interface Maintenance {
-  lastMaintenanceDate: Date;
+  lastMaintenanceDate: Dayjs | null;
   nextMaintenanceInMonth: number;
   isPublishAutomatically: boolean;
   publishAutomaticallyInMonth: number;
   reminderInMonth: number;
   isEmailNotificationEnable: boolean;
-  emailNotificationList: [];
+  emailNotificationList: string[];
 }
 export interface Facility {
   id: string;
@@ -25,13 +27,7 @@ export interface Facility {
   buildingId: string;
   check: Check;
   maintenance: Maintenance;
-  documents: [
-    {
-      name: string;
-      key: string;
-      documentType: string;
-    },
-  ];
+  documents: Document[];
   documentUploadType: string;
   serverLink: string;
   tenderIds: string[];
