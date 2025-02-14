@@ -266,7 +266,7 @@ const NewFacility: React.FC<NewFacilityProps> = ({
         (doc: any) => doc.documentType === DocumentTypes.SONSTIGE
       ) || [],
     serverLink: facility?.serverLink || "",
-    lastMaintenanceDate: facility?.maintenance?.lastMaintenanceDate 
+    lastMaintenanceDate: facility?.maintenance?.lastMaintenanceDate
       ? dayjs(facility.maintenance.lastMaintenanceDate)
       : null,
     nextMaintenanceInMonth: facility?.maintenance?.nextMaintenanceInMonth || 0,
@@ -275,11 +275,13 @@ const NewFacility: React.FC<NewFacilityProps> = ({
     publishMaintenanceAutomaticallyInMonth:
       facility?.maintenance?.publishAutomaticallyInMonth || 0,
     maintenanceReminderInMonth: facility?.maintenance?.reminderInMonth || 0,
-    maintenanceEmailNotificationList: facility?.maintenance
-      ?.emailNotificationList || [],
+    maintenanceEmailNotificationList:
+      facility?.maintenance?.emailNotificationList || [],
     isMaintenanceEmailNotificationEnable:
       facility?.maintenance?.isEmailNotificationEnable || false,
-    lastCheckDate: facility?.check?.lastCheckDate ? dayjs(facility?.check?.lastCheckDate) : null,
+    lastCheckDate: facility?.check?.lastCheckDate
+      ? dayjs(facility?.check?.lastCheckDate)
+      : null,
     nextCheckInYearNumber: facility?.check?.nextCheckInYearNumber || 0,
     reminderInMonth: facility?.check?.reminderInMonth || 0,
     isEmailNotificationEnable:
