@@ -36,9 +36,9 @@ const OverviewPanel = (): JSX.Element => {
 
   const getDaysRemaining = (facilityId: string): number => {
     const facility = facilities.find((f: Facility) => f.id === facilityId);
-    const lastCheckDate = dayjs(facility.check?.lastCheckDate);
+    const lastCheckDate = dayjs(facility?.check?.lastCheckDate);
     const nextCheckDate = lastCheckDate.add(
-      Number(facility.check?.nextCheckInYearNumber),
+      Number(facility?.check?.nextCheckInYearNumber),
       "year"
     );
     return nextCheckDate.diff(dayjs(), "days");
@@ -68,7 +68,7 @@ const OverviewPanel = (): JSX.Element => {
       );
       if (
         !facility?.check?.lastCheckDate ||
-        facility.check.nextCheckInYearNumber === 0
+        facility?.check.nextCheckInYearNumber === 0
       ) {
         return null;
       }
