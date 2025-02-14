@@ -72,13 +72,13 @@ export default function GAppBar(): JSX.Element {
     setActiveMenuItem(menuItem);
     handleClose();
     if (menuItem === "Mein Profil") {
-      router.push(ROUTES.SETTINGS.USER_PROFILE);
+      router.push(ROUTES.REAL_ESTATE.SETTINGS.USER_PROFILE);
     } else if (menuItem === "Unternehmens Profil") {
-      router.push(ROUTES.SETTINGS.COMPANY_PROFILE);
+      router.push(ROUTES.REAL_ESTATE.SETTINGS.COMPANY_PROFILE);
     } else if (menuItem === "E-Mail ändern") {
-      router.push(ROUTES.SETTINGS.EMAIL_CHANGE);
+      router.push(ROUTES.REAL_ESTATE.SETTINGS.EMAIL_CHANGE);
     } else if (menuItem === "Passwort ändern") {
-      router.push(ROUTES.SETTINGS.PASSWORD_CHANGE);
+      router.push(ROUTES.REAL_ESTATE.SETTINGS.PASSWORD_CHANGE);
     }
   };
 

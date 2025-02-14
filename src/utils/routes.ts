@@ -3,13 +3,6 @@ export const ROUTES = {
   REAL_ESTATE_HOME: "/real-estate",
   LOGIN: "/login",
   REGISTER: "/register",
-  SETTINGS: {
-    USER_PROFILE: "/real-estate/settings/user-profile",
-    COMPANY_PROFILE: "/real-estate/settings/company-profile",
-    EMAIL_CHANGE: "/real-estate/settings/email-change",
-    PASSWORD_CHANGE: "/real-estate/settings/password-change",
-    DELETE_ACCOUNT: "/real-estate/settings/delete-account",
-  },
   REAL_ESTATE: {
     DASHBOARD: "/real-estate/dashboard",
     BUILDING: {
@@ -29,6 +22,13 @@ export const ROUTES = {
       EDIT_TENDER: (id?: string) => `/real-estate/tender/edit/${id}`,
     },
     COST_SAVING: "/real-estate/cost-saving",
+    SETTINGS: {
+      USER_PROFILE: "/real-estate/settings/user-profile",
+      COMPANY_PROFILE: "/real-estate/settings/company-profile",
+      EMAIL_CHANGE: "/real-estate/settings/email-change",
+      PASSWORD_CHANGE: "/real-estate/settings/password-change",
+      DELETE_ACCOUNT: "/real-estate/settings/delete-account",
+    },
   },
   SERVICE_PROVIDER: {
     DASHBOARD: "/service-provider/dashboard",

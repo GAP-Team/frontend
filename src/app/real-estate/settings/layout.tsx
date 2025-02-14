@@ -13,16 +13,19 @@ import PageTitle from "@/components/label/PageTitle";
 import { ROUTES } from "@/utils/routes";
 
 const menuItems = [
-  { label: "Mein Profil", href: ROUTES.SETTINGS.USER_PROFILE },
+  { label: "Mein Profil", href: ROUTES.REAL_ESTATE.SETTINGS.USER_PROFILE },
   {
     label: "Unternehmens Informationen",
-    href: ROUTES.SETTINGS.COMPANY_PROFILE,
+    href: ROUTES.REAL_ESTATE.SETTINGS.COMPANY_PROFILE,
   },
-  { label: "E-Mail ändern", href: ROUTES.SETTINGS.EMAIL_CHANGE },
-  { label: "Passwort ändern", href: ROUTES.SETTINGS.PASSWORD_CHANGE },
+  { label: "E-Mail ändern", href: ROUTES.REAL_ESTATE.SETTINGS.EMAIL_CHANGE },
+  {
+    label: "Passwort ändern",
+    href: ROUTES.REAL_ESTATE.SETTINGS.PASSWORD_CHANGE,
+  },
   {
     label: "Account löschen",
-    href: ROUTES.SETTINGS.DELETE_ACCOUNT,
+    href: ROUTES.REAL_ESTATE.SETTINGS.DELETE_ACCOUNT,
     style: { color: "red" },
   },
 ];
