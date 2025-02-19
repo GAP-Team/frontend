@@ -1,8 +1,7 @@
 "use client";
 import { Grid } from "@mui/material";
-import LandingPage from "@/screens/landing_page/LandingPage";
-import RealEstateLandingPage from "@/screens/real_estate_landing_page/RealEstateLandingPage";
 import LandingPageLayout from "@/screens/landingpage_layout/LandingPageLayout";
+import RealEstateLandingPage from "@/screens/real_estate_landing_page/RealEstateLandingPage";
 
 export default function Home(): JSX.Element {
   return (
