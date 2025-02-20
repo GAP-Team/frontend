@@ -320,7 +320,10 @@ const NewFacility: React.FC<NewFacilityProps> = ({
   return (
     <Grid container component="main">
       <Grid item xs={12} md={12} lg={12} sx={{ backgroundColor: "#F9FAFA" }}>
-        <PageTitle title="Neue Anlage erstellen" sx={{ ml: "1.5rem" }} />
+        <PageTitle
+          title={facility ? "Anlage Bearbeiten" : "Neue Anlage erstellen"}
+          sx={{ ml: "1.5rem" }}
+        />
         <Formik
           initialValues={initialValues}
           validationSchema={addFacilityValidationSchema[activeStep?.id]}
