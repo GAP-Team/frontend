@@ -86,7 +86,7 @@ const FacilityCard: React.FC<FacilityCardProps> = ({ facility }) => {
       <Box sx={styles.actionMenu}>
         <ActionMenu
           itemId={facility?.id}
-          onEdit={(id) => router.push(`/real_estate/facility/edit/${id}`)}
+          onEdit={(id) => router.push(`/real_estate/facilities/edit/${id}`)}
           onDelete={handleDeleteFacility}
           messege={`Sind Sie sicher, dass Sie dieses Element${noOfTenders ? ` und die zugehörigen ${noOfTenders} Ausschreibungen` : ""} löschen möchten?`}
         />
