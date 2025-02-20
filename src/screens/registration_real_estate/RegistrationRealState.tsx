@@ -17,7 +17,7 @@ import {
 import userAPIs from "@/api/user";
 import { RegistrationFormValues } from "./types";
 
-import { BUSINESS_TYPE } from "@/utils/enums";
+import { BUSINESS_TYPE, DOCUMENT_TYPE } from "@/utils/enums";
 import PageTitle from "@/components/label/PageTitle";
 import { handleUploadDoc } from "@/utils/uploadToS3";
 import BackButton from "@/components/button/BackButton";
@@ -193,45 +193,43 @@ const RegistrationRealState = (): JSX.Element => {
   };
 
   const uploadAllDocuments = async (
-    values: any,
+    values: RegistrationFormValues,
     type: string
   ): Promise<void> => {
-    const docObj: any[] = [];
-    const allFiles: any[] = [];
+    try {
+      const { 
+        approvalDocumentFile, 
+        landRegisterEntryDocumentFile, 
+        businessRegistrationDocumentFile 
+      } = values;
 
-    if (
-      values?.approvalDocumentFile ||
-      values?.landRegisterEntryDocumentFile ||
-      values?.businessRegistrationDocumentFile
-    ) {
-      if (type === BUSINESS_TYPE.BUSINESS) {
-        const selectedBusinessRegFiles =
-          values?.businessRegistrationDocumentFile;
-
-        const fdFileDocUpload = await handleUploadDoc(selectedBusinessRegFiles);
-        docObj.push(fdFileDocUpload);
-
-        onSubmit(values, docObj);
-      } else {
-        const selectedApprovalDocsFiles = values?.approvalDocumentFile;
-        const selectedLandRegDocsFiles = values?.landRegisterEntryDocumentFile;
-
-        allFiles.push(selectedApprovalDocsFiles, selectedLandRegDocsFiles);
-
-        let itemsProcessed = 0;
-
-        allFiles.forEach(async (file, index, array) => {
-          const fdFileDocUpload = await handleUploadDoc(file);
-          docObj.push(fdFileDocUpload);
-          itemsProcessed++;
-
-          if (itemsProcessed === array.length) {
-            onSubmit(values, docObj);
-          }
-        });
+      if (!approvalDocumentFile && !landRegisterEntryDocumentFile && !businessRegistrationDocumentFile) {
+        await onSubmit(values, []);
+        return;
       }
-    } else {
-      onSubmit(values, []);
+
+      const docObj: File[] = [];
+
+      if (type === BUSINESS_TYPE.BUSINESS) {
+        if (businessRegistrationDocumentFile) {
+          const file = await handleUploadDoc(businessRegistrationDocumentFile);
+          docObj.push({...file, documentType: DOCUMENT_TYPE.BUSINESS_REGISTRATION});
+        }
+      } else if (type === BUSINESS_TYPE.PRIVATE) {
+        if (landRegisterEntryDocumentFile) {
+          const file = await handleUploadDoc(landRegisterEntryDocumentFile);
+          docObj.push({...file, documentType: DOCUMENT_TYPE.LAND_REGISTER_ENTRY});
+        }
+        if(approvalDocumentFile) {
+          const file = await handleUploadDoc(approvalDocumentFile);
+          docObj.push({...file, documentType: DOCUMENT_TYPE.APPROVAL_DOC});
+        }
+      }
+
+      await onSubmit(values, docObj);
+    } catch (error) {
+      console.error('Error uploading documents:', error);
+      throw error;
     }
   };
 
