@@ -182,7 +182,10 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
 
     await uploadDocuments(values.otherDocs, DOCUMENT_TYPE.OTHER);
     await uploadDocuments(values.floorplanDocs, DOCUMENT_TYPE.FLOOR_PLANS);
-    await uploadDocuments(values.constructionDocs, DOCUMENT_TYPE.CONSTRUCTION_DOCUMENTS);
+    await uploadDocuments(
+      values.constructionDocs,
+      DOCUMENT_TYPE.CONSTRUCTION_DOCUMENTS
+    );
 
     const status = await handleSubmit(values, docObjList);
 

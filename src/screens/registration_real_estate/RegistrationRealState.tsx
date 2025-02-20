@@ -197,13 +197,17 @@ const RegistrationRealState = (): JSX.Element => {
     type: string
   ): Promise<void> => {
     try {
-      const { 
-        approvalDocumentFile, 
-        landRegisterEntryDocumentFile, 
-        businessRegistrationDocumentFile 
+      const {
+        approvalDocumentFile,
+        landRegisterEntryDocumentFile,
+        businessRegistrationDocumentFile,
       } = values;
 
-      if (!approvalDocumentFile && !landRegisterEntryDocumentFile && !businessRegistrationDocumentFile) {
+      if (
+        !approvalDocumentFile &&
+        !landRegisterEntryDocumentFile &&
+        !businessRegistrationDocumentFile
+      ) {
         await onSubmit(values, []);
         return;
       }
@@ -213,22 +217,28 @@ const RegistrationRealState = (): JSX.Element => {
       if (type === BUSINESS_TYPE.BUSINESS) {
         if (businessRegistrationDocumentFile) {
           const file = await handleUploadDoc(businessRegistrationDocumentFile);
-          docObj.push({...file, documentType: DOCUMENT_TYPE.BUSINESS_REGISTRATION});
+          docObj.push({
+            ...file,
+            documentType: DOCUMENT_TYPE.BUSINESS_REGISTRATION,
+          });
         }
       } else if (type === BUSINESS_TYPE.PRIVATE) {
         if (landRegisterEntryDocumentFile) {
           const file = await handleUploadDoc(landRegisterEntryDocumentFile);
-          docObj.push({...file, documentType: DOCUMENT_TYPE.LAND_REGISTER_ENTRY});
+          docObj.push({
+            ...file,
+            documentType: DOCUMENT_TYPE.LAND_REGISTER_ENTRY,
+          });
         }
-        if(approvalDocumentFile) {
+        if (approvalDocumentFile) {
           const file = await handleUploadDoc(approvalDocumentFile);
-          docObj.push({...file, documentType: DOCUMENT_TYPE.APPROVAL_DOC});
+          docObj.push({ ...file, documentType: DOCUMENT_TYPE.APPROVAL_DOC });
         }
       }
 
       await onSubmit(values, docObj);
     } catch (error) {
-      console.error('Error uploading documents:', error);
+      console.error("Error uploading documents:", error);
       throw error;
     }
   };
