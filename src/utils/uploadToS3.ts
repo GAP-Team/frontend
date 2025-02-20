@@ -1,9 +1,7 @@
 import s3APIs from "@/api/s3";
 
-export const handleUploadDoc = async (ev: any): Promise<any> => {
+export const handleUploadDoc = async (file: any): Promise<any> => {
   try {
-    const file = ev?.target?.files[0];
-
     const formData = new FormData();
     formData.append("file", file);
 
@@ -33,5 +31,14 @@ export const handleUploadMultipleDoc = async (ev: any): Promise<any> => {
     }
   } catch (error) {
     console.log("Multiple upload file erroe: ", error);
+  }
+};
+
+export const handleDeleteDoc = async (fileKey: string): Promise<boolean> => {
+  try {
+    const res = await s3APIs.delete(fileKey);
+    return res?.data || false;
+  } catch {
+    return false;
   }
 };

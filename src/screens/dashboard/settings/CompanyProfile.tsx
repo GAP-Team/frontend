@@ -19,6 +19,10 @@ import Select from "@mui/material/Select";
 import { showSnackbar } from "@/components/root-snackbar";
 import { updateUserProfile } from "@/lib/features/userSlice";
 import { useRouter } from "next/navigation";
+import { BUSINESS_TYPE, DOCUMENT_TYPE } from "@/utils/enums";
+import UploadButton from "@/components/button/UploadButton";
+import { handleDeleteDoc, handleUploadDoc } from "@/utils/uploadToS3";
+import { Document } from "@/typings/types";
 
 const CompanyProfile = (): JSX.Element => {
   const dispatch = useAppDispatch();
@@ -36,6 +40,15 @@ const CompanyProfile = (): JSX.Element => {
       city: user?.company?.address?.city,
       phonenumber: user?.company?.phonenumber,
       registrationNumber: user?.company?.business?.registrationNumber,
+      businessRegistrationFile: user?.company?.business?.documents?.find(
+        (doc: any) => doc.documentType === DOCUMENT_TYPE.BUSINESS_REGISTRATION
+      ),
+      landRegistryFile: user?.company?.business?.documents?.find(
+        (doc: any) => doc.documentType === DOCUMENT_TYPE.LAND_REGISTER_ENTRY
+      ),
+      approvalFile: user?.company?.business?.documents?.find(
+        (doc: any) => doc.documentType === DOCUMENT_TYPE.APPROVAL_DOC
+      ),
       // legalForm: "GmbH",
     },
     validationSchema: CompanyProfileSchema,
@@ -43,7 +56,10 @@ const CompanyProfile = (): JSX.Element => {
       const changedFields = Object.entries(values).reduce<
         Record<string, string>
       >((acc, [key, value]) => {
-        if (value !== formik.initialValues[key as keyof typeof values]) {
+        if (
+          String(value) !==
+          String(formik.initialValues[key as keyof typeof values])
+        ) {
           acc[key] = value;
         }
         return acc;
@@ -73,9 +89,70 @@ const CompanyProfile = (): JSX.Element => {
           business: {
             businessType: user?.company?.business?.businessType,
             registrationNumber: values.registrationNumber,
+            documents: user?.company?.business?.documents || [],
           },
         },
       };
+      // Delete old files and upload new ones if changed
+      const updatedDocs: any[] = [];
+
+      if (formik.values.businessRegistrationFile instanceof File) {
+        const existingDoc = user?.company?.business?.documents?.find(
+          (doc: Document) =>
+            doc.documentType === DOCUMENT_TYPE.BUSINESS_REGISTRATION
+        );
+        if (existingDoc?.key) {
+          await handleDeleteDoc(existingDoc.key);
+        }
+        const uploadedFile = await handleUploadDoc(
+          formik.values.businessRegistrationFile
+        );
+        if (uploadedFile) {
+          updatedDocs.push({
+            documentType: DOCUMENT_TYPE.BUSINESS_REGISTRATION,
+            ...uploadedFile,
+          });
+        }
+      }
+
+      if (formik.values.landRegistryFile instanceof File) {
+        const existingDoc = user?.company?.business?.documents?.find(
+          (doc: Document) =>
+            doc.documentType === DOCUMENT_TYPE.LAND_REGISTER_ENTRY
+        );
+        if (existingDoc?.key) {
+          await handleDeleteDoc(existingDoc.key);
+        }
+        const uploadedFile = await handleUploadDoc(
+          formik.values.landRegistryFile
+        );
+        if (uploadedFile) {
+          updatedDocs.push({
+            documentType: DOCUMENT_TYPE.LAND_REGISTER_ENTRY,
+            ...uploadedFile,
+          });
+        }
+      }
+
+      if (formik.values.approvalFile instanceof File) {
+        const existingDoc = user?.company?.business?.documents?.find(
+          (doc: Document) => doc.documentType === DOCUMENT_TYPE.APPROVAL_DOC
+        );
+        if (existingDoc?.key) {
+          await handleDeleteDoc(existingDoc.key);
+        }
+        const uploadedFile = await handleUploadDoc(formik.values.approvalFile);
+        if (uploadedFile) {
+          updatedDocs.push({
+            documentType: DOCUMENT_TYPE.APPROVAL_DOC,
+            ...uploadedFile,
+          });
+        }
+      }
+
+      if (updatedDocs.length > 0) {
+        requestData.company.business.documents = updatedDocs;
+      }
 
       try {
         await dispatch(
@@ -292,24 +369,112 @@ const CompanyProfile = (): JSX.Element => {
         </Grid>
 
         {/* Gewerbeanmeldung */}
-        <Grid item xs={12} sm={6}>
-          <Typography variant="subtitle1" sx={styles.sectionTitle}>
-            Gewerbeanmeldung
-          </Typography>
-          <Typography
-            variant="body2"
-            color="textSecondary"
-            sx={styles.sectionDescription}
-          >
-            Fotoscan Ihrer Gewerbeanmeldung.
-          </Typography>
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <Button variant="outlined" component="label">
-            Hochladen
-            <input type="file" hidden />
-          </Button>
-        </Grid>
+        {user?.company?.business?.businessType === BUSINESS_TYPE.BUSINESS && (
+          <Grid item xs={12} sm={6}>
+            <Typography variant="subtitle1" sx={styles.sectionTitle}>
+              Gewerbeanmeldung
+            </Typography>
+            <Typography
+              variant="body2"
+              color="textSecondary"
+              sx={styles.sectionDescription}
+            >
+              Fotoscan Ihrer Gewerbeanmeldung.
+            </Typography>
+          </Grid>
+        )}
+        {/* Gewerbeanmeldung  Und Genehmigungsunterlagen */}
+        {user?.company?.business?.businessType === BUSINESS_TYPE.PRIVATE && (
+          <Grid item xs={12} sm={6}>
+            <Typography variant="subtitle1" sx={styles.sectionTitle}>
+              Grundbucheintrag Und Genehmigungsunterlagen
+            </Typography>
+            <Typography
+              variant="body2"
+              color="textSecondary"
+              sx={styles.sectionDescription}
+            >
+              Fotoscan Ihres Grundbucheintrags und Genehmigungsunterlagen.
+            </Typography>
+          </Grid>
+        )}
+
+        {user?.company?.business?.businessType === BUSINESS_TYPE.BUSINESS && (
+          <Grid item xs={12} sm={6}>
+            <UploadButton
+              name="businessRegistrationFile"
+              value={formik.values.businessRegistrationFile?.name}
+              onChange={(ev: any) => {
+                const file = ev.target.files[0];
+                formik.setFieldValue("businessRegistrationFile", file);
+              }}
+              error={
+                formik.touched.businessRegistrationFile &&
+                Boolean(formik.errors.businessRegistrationFile)
+              }
+              helperText={
+                formik.touched.businessRegistrationFile &&
+                formik.errors.businessRegistrationFile?.toString()
+              }
+            />
+          </Grid>
+        )}
+        {user?.company?.business?.businessType === BUSINESS_TYPE.PRIVATE && (
+          <>
+            <Grid item xs={12} sm={3}>
+              <Typography
+                variant="body2"
+                color="textSecondary"
+                sx={styles.sectionDescription}
+              >
+                Grundbucheintrags.
+              </Typography>
+              <UploadButton
+                id="landRegistryFile"
+                name="landRegistryFile"
+                value={formik.values.landRegistryFile?.name || ""}
+                onChange={(ev: any) => {
+                  const file = ev.target.files[0];
+                  formik.setFieldValue("landRegistryFile", file);
+                }}
+                error={
+                  formik.touched.landRegistryFile &&
+                  Boolean(formik.errors.landRegistryFile)
+                }
+                helperText={
+                  formik.touched.landRegistryFile &&
+                  formik.errors.landRegistryFile?.toString()
+                }
+              />
+            </Grid>
+
+            <Grid item xs={12} sm={3}>
+              <Typography
+                variant="body2"
+                color="textSecondary"
+                sx={styles.sectionDescription}
+              >
+                Genehmigungsunterlagen.
+              </Typography>
+              <UploadButton
+                name="approvalFile"
+                value={formik.values.approvalFile?.name}
+                onChange={(ev: any) => {
+                  const file = ev.target.files[0];
+                  formik.setFieldValue("approvalFile", file);
+                }}
+                error={
+                  formik.touched.approvalFile &&
+                  Boolean(formik.errors.approvalFile)
+                }
+                helperText={
+                  formik.touched.approvalFile &&
+                  formik.errors.approvalFile?.toString()
+                }
+              />
+            </Grid>
+          </>
+        )}
 
         <Grid item xs={12}>
           <Divider />
@@ -345,36 +510,40 @@ const CompanyProfile = (): JSX.Element => {
           />
         </Grid>
 
-        <Grid item xs={12} sm={3}>
-          <Typography variant="subtitle1" sx={styles.sectionTitle}>
-            Handelsregisternummer
-          </Typography>
-          <Typography
-            variant="body2"
-            color="textSecondary"
-            sx={styles.sectionDescription}
-          >
-            Dies wird Ihre Handelsregisternummer sein.
-          </Typography>
-        </Grid>
-        <Grid item xs={12} sm={3}>
-          <GTextInput
-            id="registrationNumber"
-            name="registrationNumber"
-            value={formik.values.registrationNumber}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            error={
-              formik.touched.registrationNumber &&
-              Boolean(formik.errors.registrationNumber)
-            }
-            helperText={
-              formik.touched.registrationNumber &&
-              formik.errors.registrationNumber?.toString()
-            }
-          />
-        </Grid>
-
+        {/* Handelsregisternummer */}
+        {user?.company?.business?.businessType === BUSINESS_TYPE.BUSINESS && (
+          <>
+            <Grid item xs={12} sm={3}>
+              <Typography variant="subtitle1" sx={styles.sectionTitle}>
+                Handelsregisternummer
+              </Typography>
+              <Typography
+                variant="body2"
+                color="textSecondary"
+                sx={styles.sectionDescription}
+              >
+                Dies wird Ihre Handelsregisternummer sein.
+              </Typography>
+            </Grid>
+            <Grid item xs={12} sm={3}>
+              <GTextInput
+                id="registrationNumber"
+                name="registrationNumber"
+                value={formik.values.registrationNumber}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={
+                  formik.touched.registrationNumber &&
+                  Boolean(formik.errors.registrationNumber)
+                }
+                helperText={
+                  formik.touched.registrationNumber &&
+                  formik.errors.registrationNumber?.toString()
+                }
+              />
+            </Grid>
+          </>
+        )}
         <Grid item xs={12}>
           <Divider />
         </Grid>
