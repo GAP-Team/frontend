@@ -14,12 +14,12 @@ import Typography from "@mui/material/Typography";
 import { IoExtensionPuzzleOutline } from "react-icons/io5";
 
 import { Building } from "./types";
-import { ROUTES } from "@/utils/routes";
 import facilityAPIs from "@/api/facility";
 import buildingAPIs from "@/api/building";
 import DocumentList from "./DocumentList ";
 import { DOCUMENT_TYPE } from "@/utils/enums";
 import ActionMenu from "@/components/common/ActionMenu";
+import { ROUTES, REAL_ESTATE_BASE } from "@/utils/routes";
 import { scrollBarStyles } from "@/components/scrollbar/Scrollbar";
 import {
   getUserBuildings,
@@ -75,7 +75,7 @@ const BuildingCard: React.FC<BuildingCardProps> = ({ building }) => {
   };
 
   const handleRedirect = (redirect: string): void => {
-    router.push(`/real-estate/${redirect}`);
+    router.push(`${REAL_ESTATE_BASE}/${redirect}`);
   };
 
   return (

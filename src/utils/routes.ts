@@ -1,36 +1,39 @@
+export const REAL_ESTATE_BASE = "/real-estate";
+export const SERVICE_PROVIDER_BASE = "/service-provider";
+
 export const ROUTES = {
-  SERVICE_PROVIDER_HOME: "/",
-  REAL_ESTATE_HOME: "/real-estate",
+  SERVICE_PROVIDER_HOME: "/", // This is the default route
+
   LOGIN: "/login",
   REGISTER: "/register",
   REAL_ESTATE: {
-    DASHBOARD: "/real-estate/dashboard",
+    DASHBOARD: `${REAL_ESTATE_BASE}/dashboard`,
     BUILDING: {
-      BUILDINGS: "/real-estate/buildings",
-      ADD_BUILDING: "/real-estate/building/add",
-      EDIT_BUILDING: (id: string) => `/real-estate/building/edit/${id}`,
+      BUILDINGS: `${REAL_ESTATE_BASE}/buildings`,
+      ADD_BUILDING: `${REAL_ESTATE_BASE}/building/add`,
+      EDIT_BUILDING: (id: string) => `${REAL_ESTATE_BASE}/building/edit/${id}`,
     },
     FACILITY: {
-      FACILITIES: "/real-estate/facilities",
-      ADD_FACILITY: "/real-estate/facility/add",
-      EDIT_FACILITY: (id: string) => `/real-estate/facility/edit/${id}`,
+      FACILITIES: `${REAL_ESTATE_BASE}/facilities`,
+      ADD_FACILITY: `${REAL_ESTATE_BASE}/facility/add`,
+      EDIT_FACILITY: (id: string) => `${REAL_ESTATE_BASE}/facility/edit/${id}`,
     },
     TENDER: {
-      TENDERS: "/real-estate/tenders",
-      TENDER_DETAILS: (id: string) => `/real-estate/tenders//${id}`,
-      ADD_TENDER: "/real-estate/tender/add",
-      EDIT_TENDER: (id?: string) => `/real-estate/tender/edit/${id}`,
+      TENDERS: `${REAL_ESTATE_BASE}/tenders`,
+      TENDER_DETAILS: (id: string) => `${REAL_ESTATE_BASE}/tenders//${id}`,
+      ADD_TENDER: `${REAL_ESTATE_BASE}/tender/add`,
+      EDIT_TENDER: (id?: string) => `${REAL_ESTATE_BASE}/tender/edit/${id}`,
     },
-    COST_SAVING: "/real-estate/cost-saving",
+    COST_SAVING: `${REAL_ESTATE_BASE}/cost-saving`,
     SETTINGS: {
-      USER_PROFILE: "/real-estate/settings/user-profile",
-      COMPANY_PROFILE: "/real-estate/settings/company-profile",
-      EMAIL_CHANGE: "/real-estate/settings/email-change",
-      PASSWORD_CHANGE: "/real-estate/settings/password-change",
-      DELETE_ACCOUNT: "/real-estate/settings/delete-account",
+      USER_PROFILE: `${REAL_ESTATE_BASE}/settings/user-profile`,
+      COMPANY_PROFILE: `${REAL_ESTATE_BASE}/settings/company-profile`,
+      EMAIL_CHANGE: `${REAL_ESTATE_BASE}/settings/email-change`,
+      PASSWORD_CHANGE: `${REAL_ESTATE_BASE}/settings/password-change`,
+      DELETE_ACCOUNT: `${REAL_ESTATE_BASE}/settings/delete-account`,
     },
   },
   SERVICE_PROVIDER: {
-    DASHBOARD: "/service-provider/dashboard",
+    DASHBOARD: `${SERVICE_PROVIDER_BASE}/dashboard`,
   },
 };
