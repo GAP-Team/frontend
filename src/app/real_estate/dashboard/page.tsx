@@ -25,12 +25,12 @@ export default function RealEstateDashboardPage(): JSX.Element {
     <>
       {isLoggedIn && isUserVerified && (
         <>
-          <Dashboard
-            NewsPanel={<NewsPanel />}
-            OverviewPanel={<OverviewPanel />}
-            TendersPanel={<TendersPanel />}
-            ApplicationsPanel={<ApplicationsPanel />}
-          />
+          <Dashboard>
+            <OverviewPanel slot="overview" />
+            <TendersPanel slot="tenders" />
+            <ApplicationsPanel slot="applications" />
+            <NewsPanel slot="news" />
+          </Dashboard>
         </>
       )}
     </>

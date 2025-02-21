@@ -1,38 +1,43 @@
 "use client";
-import React, { memo } from "react";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
+import React, { memo, ReactElement, Children } from "react";
 
 interface DashboardProps {
-  NewsPanel?: React.ReactElement;
-  TendersPanel?: React.ReactElement;
-  OverviewPanel?: React.ReactElement;
-  ApplicationsPanel?: React.ReactElement;
+  children?: React.ReactNode;
 }
 
-const Dashboard: React.FC<DashboardProps> = ({
-  OverviewPanel,
-  TendersPanel,
-  ApplicationsPanel,
-  NewsPanel,
-}) => {
+const Dashboard: React.FC<DashboardProps> = ({ children }) => {
+  const getChildBySlot = (slotName: string): ReactElement | undefined => {
+    return Children.toArray(children).find(
+      (child) =>
+        React.isValidElement(child) && (child.props as any)?.slot === slotName
+    ) as ReactElement | undefined;
+  };
+
   return (
     <Grid container spacing={2} sx={styles.mainContainer} columns={16}>
       <Grid item xs={3}>
-        <Paper sx={styles.coloredPaper}>{OverviewPanel && OverviewPanel}</Paper>
+        <Paper sx={styles.coloredPaper}>
+          {getChildBySlot("overview") || "Overview Panel"}
+        </Paper>
       </Grid>
       <Grid item xs={13}>
         <Grid container spacing={2} columns={16}>
           <Grid item xs={16}>
-            <Paper sx={styles.topPaper}>{TendersPanel && TendersPanel}</Paper>
+            <Paper sx={styles.topPaper}>
+              {getChildBySlot("tenders") || "Tenders Panel"}
+            </Paper>
           </Grid>
           <Grid item xs={9}>
             <Paper sx={styles.bottomLeftPaper}>
-              {ApplicationsPanel && ApplicationsPanel}
+              {getChildBySlot("applications") || "Applications Panel"}
             </Paper>
           </Grid>
           <Grid item xs={7}>
-            <Paper sx={styles.bottomRightPaper}>{NewsPanel && NewsPanel}</Paper>
+            <Paper sx={styles.bottomRightPaper}>
+              {getChildBySlot("news") || "News Panel"}
+            </Paper>
           </Grid>
         </Grid>
       </Grid>
