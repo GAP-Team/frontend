@@ -13,8 +13,9 @@ import dayjs from "dayjs";
 import { Facility } from "../../facilities/facility_card/types";
 import { Building } from "../../buildings/building_card/types";
 import { truncateLabel } from "@/utils/utils";
+import { DashboardComponentsProps } from "@/utils/Constants";
 
-const OverviewPanel = (): JSX.Element => {
+const OverviewPanel: React.FC<DashboardComponentsProps> = (): JSX.Element => {
   const tenders = useAppSelector((state) => state.tender.tenderList);
   const facilities = useAppSelector((state) => state.facility.facilities);
   const buildings = useAppSelector((state) => state.building.buildings);

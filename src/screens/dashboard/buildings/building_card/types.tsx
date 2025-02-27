@@ -1,4 +1,5 @@
 // types.ts
+import { Document } from "@/typings/types";
 export interface Building {
   id: string;
   buildingName: string;
@@ -26,10 +27,4 @@ export interface PropertyFilterProps {
     facilityType: string
   ) => void;
   title: string;
-}
-
-export interface Document {
-  key: string;
-  name: string;
-  documentType: string;
 }

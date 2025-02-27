@@ -1,8 +1,10 @@
 import React from "react";
-import TitleSection from "../../label/title-section";
-import Badge from "../../badge/GBadge";
-import { AuftrafSvg, AngebotSvg, SolutionSvg } from "../../svg/function-svg";
 import Link from "next/link";
+
+import Badge from "../../badge/GBadge";
+import classes from "./GFunctionSection.module.scss";
+import TitleSection from "../../label/title-section";
+import { AuftrafSvg, AngebotSvg, SolutionSvg } from "../../svg/function-svg";
 
 const GFunctionSection = (): JSX.Element => {
   return (
@@ -83,14 +85,24 @@ const ServiceStep = ({
 }): JSX.Element => {
   return (
     <div className="w-full md:w-auto md:flex-1 p-4 max-w-screen-xl">
-      <div className="card bg-base-100 border border-black shadow-xl hover:shadow-2xl transition-shadow duration-300">
-        <figure className="px-10 pt-10">{icon}</figure>
-        <div className="card-body">
-          <h2 className="card-title">{title}</h2>
-          <p>{subtitle}</p>
+      <div
+        className={`"bg-base-100 border border-black shadow-xl hover:shadow-2xl transition-shadow duration-300" ${classes.card}`}
+      >
+        <figure className="px-10 pt-10">
+          <div style={styles.iconHolder}>{icon}</div>
+        </figure>
+        <div className={`${classes.card_body}`}>
+          <h2 className={`${classes.card_title}`}>{title}</h2>
+          <p className={`${classes.card_subtitle}`}>{subtitle}</p>
         </div>
       </div>
     </div>
   );
 };
 export default GFunctionSection;
+
+const styles = {
+  iconHolder: {
+    maxWidth: "3.5rem",
+  },
+};

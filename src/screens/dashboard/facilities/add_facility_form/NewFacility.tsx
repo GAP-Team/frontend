@@ -7,12 +7,11 @@ import {
 import Link from "next/link";
 import Grid from "@mui/material/Grid";
 import { CgClose } from "react-icons/cg";
-import facilityAPIs from "@/api/facility";
 import { useSelector } from "react-redux";
 import { IconButton } from "@mui/material";
 import FacilityCheck from "./FacilityCheck";
 import { useRouter } from "next/navigation";
-import { useAppDispatch } from "@/lib/hooks";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { Formik, FormikHelpers } from "formik";
 import AddFacilityForm from "./AddFacilityForm";
 import FacilitySummary from "./FacilitySummary";
@@ -30,17 +29,26 @@ import { handleUploadMultipleDoc } from "@/utils/uploadToS3";
 import { fetchBuildings } from "@/lib/features/buildingSlice";
 import GProgressStepper from "@/components/stepper/GProgressStepper";
 import { addFacilityValidationSchema } from "@/utils/ValidationSchema";
+import {
+  createFacility,
+  getFacilityById,
+  updateFacility,
+} from "@/lib/features/facilitySlice";
+import { DocumentChoice } from "@/utils/enums";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 dayjs.extend(utc);
 interface NewFacilityProps {
-  facilityId: string;
+  facilityId?: string;
 }
 
-const NewFacility: React.FC<NewFacilityProps> = ({}): JSX.Element => {
+const NewFacility: React.FC<NewFacilityProps> = ({
+  facilityId,
+}): JSX.Element => {
   const router = useRouter();
-  const appDispatch = useAppDispatch();
+  const dispatch = useAppDispatch();
   const user = useSelector(currentUser);
+  const facility = useAppSelector(getFacilityById(facilityId));
 
   const steps: ActiveStepItem[] = [
     {
@@ -55,7 +63,6 @@ const NewFacility: React.FC<NewFacilityProps> = ({}): JSX.Element => {
   ];
 
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [loading, setLoading] = useState<boolean>(false);
   const [activeStep, setActiveStep] = useState<ActiveStepItem>(steps[0]);
 
   const StepComponent = steps[activeStep.id]
@@ -74,7 +81,7 @@ const NewFacility: React.FC<NewFacilityProps> = ({}): JSX.Element => {
       federalState: "",
       facilityType: "",
     };
-    appDispatch(fetchBuildings(query));
+    dispatch(fetchBuildings(query));
   };
 
   const handleNext = async (
@@ -150,50 +157,84 @@ const NewFacility: React.FC<NewFacilityProps> = ({}): JSX.Element => {
       serverLink: values?.serverLink,
     };
 
-    const createFacilityResponse = await facilityAPIs.create(facilityData);
-
-    if (createFacilityResponse?.data?.id) {
-      appDispatch(
-        showSnackbar({
-          type: "success",
-          message: "Anlage erfolgreich hinzugefügt!",
-        })
-      );
+    if (facility) {
+      try {
+        await dispatch(
+          updateFacility({ facilityId: facility?.id, data: facilityData })
+        ).unwrap();
+        dispatch(
+          showSnackbar({
+            type: "success",
+            message: "Die Anlage wurde erfolgreich aktualisiert!",
+          })
+        );
+        return true;
+      } catch {
+        dispatch(
+          showSnackbar({
+            type: "error",
+            message:
+              "Die Anlage konnte nicht aktualisiert werden. Bitte überprüfen Sie die Eingabedaten und versuchen Sie es erneut",
+          })
+        );
+        return false;
+      }
+    } else {
+      try {
+        await dispatch(createFacility(facilityData)).unwrap();
+        dispatch(
+          showSnackbar({
+            type: "success",
+            message: "Die Anlage wurde erfolgreich hinzugefügt!",
+          })
+        );
+        return true;
+      } catch {
+        dispatch(
+          showSnackbar({
+            type: "error",
+            message:
+              "Anlage konnte nicht hinzugefügt werden. Bitte überprüfen Sie die Eingabedaten und versuchen Sie es erneut",
+          })
+        );
+        return false;
+      }
     }
-
-    return true;
   };
 
   const uploadAllDocuments = async (
     values: AddFacilityFormValues
   ): Promise<boolean> => {
-    setLoading(true);
-    const docObjList: any[] = [];
+    // If document choice is NO_DOCUMENTS, pass empty array
+    if (values.documentChoice === DocumentChoice.NO_DOCUMENTS) {
+      return await saveFacilityData(values, []);
+    }
 
-    const uploadDocuments = async (
-      files: File[],
-      docType: string
-    ): Promise<void> => {
-      for (const file of files) {
-        if (file.hasOwnProperty("documentType")) {
-          docObjList.push(file);
-        } else {
-          const uploadedDoc = await handleUploadMultipleDoc(file);
-          uploadedDoc.documentType = docType;
-          docObjList.push(uploadedDoc);
-        }
-      }
-    };
-
-    await uploadDocuments(values.otherDocs, DocumentTypes.SONSTIGE);
-    await uploadDocuments(values.floorplanDocs, DocumentTypes.GRUNDRISSE);
-    await uploadDocuments(values.checkReports, DocumentTypes.BERICHTE);
+    const docTypes = [
+      { files: values.otherDocs, type: DocumentTypes.SONSTIGE },
+      { files: values.floorplanDocs, type: DocumentTypes.GRUNDRISSE },
+      { files: values.checkReports, type: DocumentTypes.BERICHTE },
+    ];
 
     try {
+      const docObjList = await Promise.all(
+        docTypes.flatMap(async ({ files, type }) => {
+          return Promise.all(
+            files.map(async (file) => {
+              if ("documentType" in file) {
+                return file;
+              }
+              const uploadedDoc = await handleUploadMultipleDoc(file);
+              return { ...uploadedDoc, documentType: type };
+            })
+          );
+        })
+      ).then((results) => results.flat());
+
       await saveFacilityData(values, docObjList);
       return true;
     } catch {
-      appDispatch(
+      dispatch(
         showSnackbar({
           type: "error",
           message:
@@ -201,45 +242,64 @@ const NewFacility: React.FC<NewFacilityProps> = ({}): JSX.Element => {
         })
       );
       return false;
-    } finally {
-      setLoading(false);
     }
   };
 
   const initialValues: AddFacilityFormValues = {
-    name: "",
-    facilityType: "",
-    subcategory: "",
-    isPublishAutomatically: false,
-    publishAutomaticallyInMonths: 0,
+    name: facility?.name || "",
+    facilityType: facility?.facilityType || "",
+    subcategory: facility?.subcategory || "",
+    isPublishAutomatically: facility?.check?.isPublishAutomatically || false,
+    publishAutomaticallyInMonths:
+      facility?.check?.publishAutomaticallyInMonth || 0,
     isReminderEnabled: false,
-    emailNotificationList: ["", ""],
-    selectedBuilding: "",
-    documentChoice: "Jetzt hochladen Empfohlen",
-    checkReports: [],
-    floorplanDocs: [],
-    otherDocs: [],
-    serverLink: "",
-    lastMaintenanceDate: null,
-    nextMaintenanceInMonth: 0,
-    isPublishMaintenanceAutomatically: false,
-    publishMaintenanceAutomaticallyInMonth: 0,
-    maintenanceReminderInMonth: 0,
-    maintenanceEmailNotificationList: ["", ""],
-    isMaintenanceEmailNotificationEnable: false,
-    lastCheckDate: null,
-    nextCheckInYearNumber: 0,
-    reminderInMonth: 0,
-    isEmailNotificationEnable: false,
+    emailNotificationList: facility?.check?.emailNotificationList || ["", ""],
+    selectedBuilding: facility?.buildingId || "",
+    documentChoice: facility?.documentUploadType || DocumentChoice.UPLOAD_NOW,
+    checkReports:
+      facility?.documents?.filter(
+        (doc: any) => doc.documentType === DocumentTypes.BERICHTE
+      ) || [],
+    floorplanDocs:
+      facility?.documents?.filter(
+        (doc: any) => doc.documentType === DocumentTypes.GRUNDRISSE
+      ) || [],
+    otherDocs:
+      facility?.documents?.filter(
+        (doc: any) => doc.documentType === DocumentTypes.SONSTIGE
+      ) || [],
+    serverLink: facility?.serverLink || "",
+    lastMaintenanceDate:
+      (facility && dayjs(facility?.maintenance?.lastMaintenanceDate)) || null,
+    nextMaintenanceInMonth: facility?.maintenance?.nextMaintenanceInMonth || 0,
+    isPublishMaintenanceAutomatically:
+      facility?.maintenance?.isPublishAutomatically || false,
+    publishMaintenanceAutomaticallyInMonth:
+      facility?.maintenance?.publishAutomaticallyInMonth || 0,
+    maintenanceReminderInMonth: facility?.maintenance?.reminderInMonth || 0,
+    maintenanceEmailNotificationList: facility?.maintenance
+      ?.emailNotificationList || ["", ""],
+    isMaintenanceEmailNotificationEnable:
+      facility?.maintenance?.isEmailNotificationEnable || false,
+    lastCheckDate: (facility && dayjs(facility?.check?.lastCheckDate)) || null,
+    nextCheckInYearNumber: facility?.check?.nextCheckInYearNumber || 0,
+    reminderInMonth: facility?.check?.reminderInMonth || 0,
+    isEmailNotificationEnable:
+      facility?.check?.isEmailNotificationEnable || false,
   };
 
   const formOrSuccessContent = isSubmitted ? (
     <SuccessPage
-      title="Anlage ist Online!"
-      primaryDescription="Anlage wurde erfolgreich angelegt"
-      secondaryDescription="Du kannst Ihre Anlage in der Anlagen-übersicht sehen und bearbeiten."
-      buttonLabel="Schließen"
-      redirectUrl="/real_estate/facilities"
+      title={facility ? "Anlage aktualisiert!" : "Anlage angelegt!"}
+      primaryDescription={
+        facility
+          ? "Anlage wurde erfolgreich aktualisiert"
+          : "Anlage wurde erfolgreich angelegt"
+      }
+      {...(!facility && {
+        buttonLabel: "Schließen",
+        redirectUrl: "/real_estate/facilities",
+      })}
     />
   ) : (
     <>
@@ -252,7 +312,7 @@ const NewFacility: React.FC<NewFacilityProps> = ({}): JSX.Element => {
           />
         </Grid>
         <Grid item>
-          <Link href="/real_estate/facilities" type="button">
+          <Link href="/real_estate/facilities</Grid>" type="button">
             <IconButton sx={{ marginLeft: "auto" }} size="medium">
               <CgClose color="red" />
             </IconButton>
@@ -268,7 +328,10 @@ const NewFacility: React.FC<NewFacilityProps> = ({}): JSX.Element => {
   return (
     <Grid container component="main">
       <Grid item xs={12} md={12} lg={12} sx={{ backgroundColor: "#F9FAFA" }}>
-        <PageTitle title="Neue Anlage erstellen" sx={{ ml: "1.5rem" }} />
+        <PageTitle
+          title={facility ? "Anlage Bearbeiten" : "Neue Anlage erstellen"}
+          sx={{ ml: "1.5rem" }}
+        />
         <Formik
           initialValues={initialValues}
           validationSchema={addFacilityValidationSchema[activeStep?.id]}
@@ -285,7 +348,6 @@ const NewFacility: React.FC<NewFacilityProps> = ({}): JSX.Element => {
                 isSubmitting={isSubmitting}
                 isBeyondLastStep={isSubmitted}
                 formOrSuccessContent={formOrSuccessContent}
-                loading={loading}
               />
             </Grid>
           )}

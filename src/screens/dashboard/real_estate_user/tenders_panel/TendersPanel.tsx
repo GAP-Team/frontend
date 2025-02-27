@@ -1,9 +1,10 @@
-import TenderCardList from "./TenderCardList";
-import HeaderSection from "../HeaderSection";
-import { currentTenderNumbers } from "@/lib/features/tenderSlice";
 import { useSelector } from "react-redux";
+import HeaderSection from "../HeaderSection";
+import TenderCardList from "./TenderCardList";
+import { DashboardComponentsProps } from "@/utils/Constants";
+import { currentTenderNumbers } from "@/lib/features/tenderSlice";
 
-const TendersPanel = (): JSX.Element => {
+const TendersPanel: React.FC<DashboardComponentsProps> = (): JSX.Element => {
   const tenderNumbers = useSelector(currentTenderNumbers);
 
   return (

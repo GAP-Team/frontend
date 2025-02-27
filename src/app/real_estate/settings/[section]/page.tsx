@@ -1,7 +1,7 @@
-import CompanyProfile from "@/screens/dashboard/settings/CompanyProfile";
 import UserProfile from "@/screens/dashboard/settings/UserProfile";
 import EmailChange from "@/screens/dashboard/settings/EmailChange";
-import React from "react";
+import CompanyProfile from "@/screens/dashboard/settings/CompanyProfile";
+import ChangePassword from "@/screens/dashboard/settings/ChangePassword";
 
 export default function SectionPage({
   params,
@@ -18,6 +18,8 @@ export default function SectionPage({
         return <CompanyProfile />;
       case "email_change":
         return <EmailChange />;
+      case "password_change":
+        return <ChangePassword />;
     }
   };
 
