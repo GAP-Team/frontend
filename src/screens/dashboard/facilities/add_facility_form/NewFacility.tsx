@@ -287,11 +287,16 @@ const NewFacility: React.FC<NewFacilityProps> = ({
 
   const formOrSuccessContent = isSubmitted ? (
     <SuccessPage
-      title="Anlage ist Online!"
-      primaryDescription="Anlage wurde erfolgreich angelegt"
-      secondaryDescription="Du kannst Ihre Anlage in der Anlagen-übersicht sehen und bearbeiten."
-      buttonLabel="Schließen"
-      redirectUrl="/real_estate/facilities"
+      title={facility ? "Anlage aktualisiert!" : "Anlage angelegt!"}
+      primaryDescription={
+        facility
+          ? "Anlage wurde erfolgreich aktualisiert"
+          : "Anlage wurde erfolgreich angelegt"
+      }
+      {...(!facility && {
+        buttonLabel: "Schließen",
+        redirectUrl: "/real_estate/facilities",
+      })}
     />
   ) : (
     <>
@@ -304,7 +309,7 @@ const NewFacility: React.FC<NewFacilityProps> = ({
           />
         </Grid>
         <Grid item>
-          <Link href="/real_estate/facilities" type="button">
+          <Link href="/real_estate/facilities</Grid>" type="button">
             <IconButton sx={{ marginLeft: "auto" }} size="medium">
               <CgClose color="red" />
             </IconButton>
