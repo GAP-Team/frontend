@@ -15,7 +15,6 @@ import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { Formik, FormikHelpers } from "formik";
 import AddFacilityForm from "./AddFacilityForm";
 import FacilitySummary from "./FacilitySummary";
-import { DocumentTypes } from "@/utils/Constants";
 import React, { useEffect, useState } from "react";
 import PageTitle from "@/components/label/PageTitle";
 import { currentUser } from "@/lib/features/userSlice";
@@ -35,7 +34,7 @@ import {
   updateFacility,
 } from "@/lib/features/facilitySlice";
 import dayjs from "dayjs";
-import { DocumentChoice } from "@/utils/enums";
+import { DOCUMENT_TYPE, DocumentChoice } from "@/utils/enums";
 
 interface NewFacilityProps {
   facilityId?: string;
@@ -208,9 +207,9 @@ const NewFacility: React.FC<NewFacilityProps> = ({
     }
 
     const docTypes = [
-      { files: values.otherDocs, type: DocumentTypes.SONSTIGE },
-      { files: values.floorplanDocs, type: DocumentTypes.GRUNDRISSE },
-      { files: values.checkReports, type: DocumentTypes.BERICHTE },
+      { files: values.otherDocs, type: DOCUMENT_TYPE.OTHER },
+      { files: values.floorplanDocs, type: DOCUMENT_TYPE.FLOOR_PLANS },
+      { files: values.checkReports, type: DOCUMENT_TYPE.CHECK_REPORTS },
     ];
 
     try {
@@ -255,15 +254,15 @@ const NewFacility: React.FC<NewFacilityProps> = ({
     documentChoice: facility?.documentUploadType || DocumentChoice.UPLOAD_NOW,
     checkReports:
       facility?.documents?.filter(
-        (doc: any) => doc.documentType === DocumentTypes.BERICHTE
+        (doc: any) => doc.documentType === DOCUMENT_TYPE.CHECK_REPORTS
       ) || [],
     floorplanDocs:
       facility?.documents?.filter(
-        (doc: any) => doc.documentType === DocumentTypes.GRUNDRISSE
+        (doc: any) => doc.documentType === DOCUMENT_TYPE.FLOOR_PLANS
       ) || [],
     otherDocs:
       facility?.documents?.filter(
-        (doc: any) => doc.documentType === DocumentTypes.SONSTIGE
+        (doc: any) => doc.documentType === DOCUMENT_TYPE.OTHER
       ) || [],
     serverLink: facility?.serverLink || "",
     lastMaintenanceDate:

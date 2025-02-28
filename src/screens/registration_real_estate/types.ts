@@ -18,4 +18,7 @@ export interface RegistrationFormValues {
   approvalDocument: string | null;
   businessRegistrationDocument: string | null;
   landRegisterEntryDocument: string | null;
+  approvalDocumentFile?: File;
+  landRegisterEntryDocumentFile?: File;
+  businessRegistrationDocumentFile?: File;
 }
