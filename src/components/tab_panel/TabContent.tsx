@@ -29,18 +29,6 @@ const TabContent: React.FC<TabContentProps> = ({
                   </p>
                 </div>
               ))}
-              {/* <div className="grid-cols-1 flex flex-row">
-                                <DoneIcon
-                                    fontSize="large"
-                                    style={{ color: "#00d8af" }}
-                                />
-                                <p
-                                    className="text-lg font-normal"
-                                    style={styles.featureText}
-                                >
-                                    Simply Dummy Text
-                                </p>
-                            </div> */}
               <div className="pt-12">
                 <RoundButton
                   text="Zum Immobilienmanagement"

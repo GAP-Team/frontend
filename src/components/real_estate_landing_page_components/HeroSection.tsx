@@ -131,7 +131,6 @@ const HeroSection = (): JSX.Element => {
             </div>
           </div>
         </div>
-        {/* <Divider /> */}
       </section>
     </>
   );
