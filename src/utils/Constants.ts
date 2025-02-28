@@ -418,13 +418,6 @@ export const tenderTypesListSV = [
   },
 ];
 
-export const DocumentTypes = {
-  SONSTIGE: "SONSTIGE",
-  GRUNDRISSE: "GRUNDRISSE",
-  BAUUNTERLAGEN: "BAUUNTERLAGEN",
-  BERICHTE: "BERICHTE PRÜFEN",
-};
-
 export const jobItemListInCostPage = [
   {
     facilityType: "Brandschutzprüfung inkl. Reparatur",
