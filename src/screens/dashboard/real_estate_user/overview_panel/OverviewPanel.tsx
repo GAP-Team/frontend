@@ -69,7 +69,7 @@ const OverviewPanel: React.FC<DashboardComponentsProps> = (): JSX.Element => {
       );
       if (
         !facility?.check?.lastCheckDate ||
-        facility.check.nextCheckInYearNumber === 0
+        facility?.check.nextCheckInYearNumber === 0
       ) {
         return null;
       }
