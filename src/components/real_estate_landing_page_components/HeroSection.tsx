@@ -23,11 +23,11 @@ const HeroSection = (): JSX.Element => {
             </h1>
             <p className="text-lg font-semibold max-w-4xl mx-auto">
               Lorem ipsum dolor sit amet consectetur adipiscing elit. Eaque sed
-              tenetur rem quam nihil dolorum <br />
+              tenetur rem quam nihil <br />
               expedita maxime nisi recusandae sequi magni culpa fuga accusamus
               eveniet fugiat ipsum ab.
             </p>
-            <div className="flex flex-col grid-cols-2 py-1 ml-20">
+            <div className="flex flex-col grid-cols-2 py-1">
               <div className="flex flex-row gap-5 sm:gap-7 md:gap-10 lg:gap-20 mt-14 justify-between lg:justify-start">
                 <div className="grid-cols-2 flex flex-row">
                   <div className="w-full text-center">
@@ -166,6 +166,6 @@ const styles = {
     marginLeft: "1rem",
   },
   heroFeatureText: {
-    fontSize: "25px",
+    fontSize: "22px",
   },
 };
