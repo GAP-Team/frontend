@@ -658,7 +658,7 @@ export interface TabsTypes {
   index: string;
 }
 
-export const REAL_ESTATE_LANDING_PAGE_TABS = [
+export const RealEstateLandingPageTabs = [
   { label: "Dashboard", index: "0" },
   { label: "Kosteneinsparung", index: "1" },
   { label: "Ausschreibungsübersicht", index: "2" },

@@ -2,7 +2,7 @@ import { useState } from "react";
 import RoundButton from "../button/RoundButton";
 import TabContent from "../tab_panel/TabContent";
 import CustomTabPanel from "../tab_panel/CustomTabPanel";
-import { REAL_ESTATE_LANDING_PAGE_TABS } from "@/utils/Constants";
+import { RealEstateLandingPageTabs } from "@/utils/Constants";
 
 import TenderImage from "../../../public/images/tenders.png";
 import BuildingImage from "../../../public/images/buildings.png";
@@ -53,7 +53,7 @@ const FeatureSection = (): JSX.Element => {
           </div>
           <div className="w-full text-center pr-28">
             <CustomTabPanel
-              tabs={REAL_ESTATE_LANDING_PAGE_TABS}
+              tabs={RealEstateLandingPageTabs}
               handleTabSelection={handleTabSelection}
             />
             {currentTabIndex === "0" && (
