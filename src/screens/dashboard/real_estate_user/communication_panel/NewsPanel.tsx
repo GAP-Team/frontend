@@ -1,10 +1,10 @@
 import React from "react";
-import HeaderSection from "../HeaderSection";
 import NewsList from "./NewsList";
-import { news } from "@/utils/Constants";
+import HeaderSection from "../HeaderSection";
+import { news, DashboardComponentsProps } from "@/utils/Constants";
 import ScrollableSection from "../../../../components/common/ScrollableSection";
 
-const NewsPanel = (): JSX.Element => {
+const NewsPanel: React.FC<DashboardComponentsProps> = (): JSX.Element => {
   return (
     <ScrollableSection>
       <HeaderSection

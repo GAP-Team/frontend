@@ -15,7 +15,6 @@ import { useRouter } from "next/navigation";
 import { Formik, FormikHelpers } from "formik";
 import AddFacilityForm from "./AddFacilityForm";
 import FacilitySummary from "./FacilitySummary";
-import { DocumentTypes } from "@/utils/Constants";
 import React, { useEffect, useState } from "react";
 import PageTitle from "@/components/label/PageTitle";
 import { currentUser } from "@/lib/features/userSlice";
@@ -36,7 +35,7 @@ import {
   updateFacility,
 } from "@/lib/features/facilitySlice";
 import dayjs from "dayjs";
-import { DocumentChoice } from "@/utils/enums";
+import { DOCUMENT_TYPE, DocumentChoice } from "@/utils/enums";
 
 interface NewFacilityProps {
   facilityId?: string;
@@ -209,9 +208,9 @@ const NewFacility: React.FC<NewFacilityProps> = ({
     }
 
     const docTypes = [
-      { files: values.otherDocs, type: DocumentTypes.SONSTIGE },
-      { files: values.floorplanDocs, type: DocumentTypes.GRUNDRISSE },
-      { files: values.checkReports, type: DocumentTypes.BERICHTE },
+      { files: values.otherDocs, type: DOCUMENT_TYPE.OTHER },
+      { files: values.floorplanDocs, type: DOCUMENT_TYPE.FLOOR_PLANS },
+      { files: values.checkReports, type: DOCUMENT_TYPE.CHECK_REPORTS },
     ];
 
     try {
@@ -256,19 +255,20 @@ const NewFacility: React.FC<NewFacilityProps> = ({
     documentChoice: facility?.documentUploadType || DocumentChoice.UPLOAD_NOW,
     checkReports:
       facility?.documents?.filter(
-        (doc: any) => doc.documentType === DocumentTypes.BERICHTE
+        (doc: any) => doc.documentType === DOCUMENT_TYPE.CHECK_REPORTS
       ) || [],
     floorplanDocs:
       facility?.documents?.filter(
-        (doc: any) => doc.documentType === DocumentTypes.GRUNDRISSE
+        (doc: any) => doc.documentType === DOCUMENT_TYPE.FLOOR_PLANS
       ) || [],
     otherDocs:
       facility?.documents?.filter(
-        (doc: any) => doc.documentType === DocumentTypes.SONSTIGE
+        (doc: any) => doc.documentType === DOCUMENT_TYPE.OTHER
       ) || [],
     serverLink: facility?.serverLink || "",
-    lastMaintenanceDate:
-      (facility && dayjs(facility?.maintenance?.lastMaintenanceDate)) || null,
+    lastMaintenanceDate: facility?.maintenance?.lastMaintenanceDate
+      ? dayjs(facility.maintenance.lastMaintenanceDate)
+      : null,
     nextMaintenanceInMonth: facility?.maintenance?.nextMaintenanceInMonth || 0,
     isPublishMaintenanceAutomatically:
       facility?.maintenance?.isPublishAutomatically || false,
@@ -279,7 +279,9 @@ const NewFacility: React.FC<NewFacilityProps> = ({
       ?.emailNotificationList || ["", ""],
     isMaintenanceEmailNotificationEnable:
       facility?.maintenance?.isEmailNotificationEnable || false,
-    lastCheckDate: (facility && dayjs(facility?.check?.lastCheckDate)) || null,
+    lastCheckDate: facility?.check?.lastCheckDate
+      ? dayjs(facility?.check?.lastCheckDate)
+      : null,
     nextCheckInYearNumber: facility?.check?.nextCheckInYearNumber || 0,
     reminderInMonth: facility?.check?.reminderInMonth || 0,
     isEmailNotificationEnable:
@@ -288,11 +290,16 @@ const NewFacility: React.FC<NewFacilityProps> = ({
 
   const formOrSuccessContent = isSubmitted ? (
     <SuccessPage
-      title="Anlage ist Online!"
-      primaryDescription="Anlage wurde erfolgreich angelegt"
-      secondaryDescription="Du kannst Ihre Anlage in der Anlagen-übersicht sehen und bearbeiten."
-      buttonLabel="Schließen"
-      redirectUrl={ROUTES.REAL_ESTATE.FACILITY.FACILITIES}
+      title={facility ? "Anlage aktualisiert!" : "Anlage angelegt!"}
+      primaryDescription={
+        facility
+          ? "Anlage wurde erfolgreich aktualisiert"
+          : "Anlage wurde erfolgreich angelegt"
+      }
+      {...(!facility && {
+        buttonLabel: "Schließen",
+        redirectUrl: "/real_estate/facilities",
+      })}
     />
   ) : (
     <>
@@ -321,7 +328,10 @@ const NewFacility: React.FC<NewFacilityProps> = ({
   return (
     <Grid container component="main">
       <Grid item xs={12} md={12} lg={12} sx={{ backgroundColor: "#F9FAFA" }}>
-        <PageTitle title="Neue Anlage erstellen" sx={{ ml: "1.5rem" }} />
+        <PageTitle
+          title={facility ? "Anlage Bearbeiten" : "Neue Anlage erstellen"}
+          sx={{ ml: "1.5rem" }}
+        />
         <Formik
           initialValues={initialValues}
           validationSchema={addFacilityValidationSchema[activeStep?.id]}

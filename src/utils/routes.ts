@@ -10,27 +10,28 @@ export const ROUTES = {
     DASHBOARD: `${REAL_ESTATE_BASE}/dashboard`,
     BUILDING: {
       BUILDINGS: `${REAL_ESTATE_BASE}/buildings`,
-      ADD_BUILDING: `${REAL_ESTATE_BASE}/building/add`,
-      EDIT_BUILDING: (id: string) => `${REAL_ESTATE_BASE}/building/edit/${id}`,
+      ADD_BUILDING: `${REAL_ESTATE_BASE}/buildings/add`,
+      EDIT_BUILDING: (id: string) => `${REAL_ESTATE_BASE}/buildings/edit/${id}`,
     },
     FACILITY: {
       FACILITIES: `${REAL_ESTATE_BASE}/facilities`,
-      ADD_FACILITY: `${REAL_ESTATE_BASE}/facility/add`,
-      EDIT_FACILITY: (id: string) => `${REAL_ESTATE_BASE}/facility/edit/${id}`,
+      ADD_FACILITY: `${REAL_ESTATE_BASE}/facilities/add`,
+      EDIT_FACILITY: (id: string) =>
+        `${REAL_ESTATE_BASE}/facilities/edit/${id}`,
     },
     TENDER: {
       TENDERS: `${REAL_ESTATE_BASE}/tenders`,
+      ADD_TENDER: `${REAL_ESTATE_BASE}/tenders/add`,
       TENDER_DETAILS: (id: string) => `${REAL_ESTATE_BASE}/tenders//${id}`,
-      ADD_TENDER: `${REAL_ESTATE_BASE}/tender/add`,
-      EDIT_TENDER: (id?: string) => `${REAL_ESTATE_BASE}/tender/edit/${id}`,
+      EDIT_TENDER: (id?: string) => `${REAL_ESTATE_BASE}/tenders/edit/${id}`,
     },
-    COST_SAVING: `${REAL_ESTATE_BASE}/cost-saving`,
+    COST_SAVING: `${REAL_ESTATE_BASE}/cost-savings`,
     SETTINGS: {
       USER_PROFILE: `${REAL_ESTATE_BASE}/settings/user-profile`,
-      COMPANY_PROFILE: `${REAL_ESTATE_BASE}/settings/company-profile`,
       EMAIL_CHANGE: `${REAL_ESTATE_BASE}/settings/email-change`,
-      PASSWORD_CHANGE: `${REAL_ESTATE_BASE}/settings/password-change`,
       DELETE_ACCOUNT: `${REAL_ESTATE_BASE}/settings/delete-account`,
+      COMPANY_PROFILE: `${REAL_ESTATE_BASE}/settings/company-profile`,
+      PASSWORD_CHANGE: `${REAL_ESTATE_BASE}/settings/password-change`,
     },
   },
   SERVICE_PROVIDER: {

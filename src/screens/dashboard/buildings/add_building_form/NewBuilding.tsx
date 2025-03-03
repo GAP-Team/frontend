@@ -22,12 +22,12 @@ import BuildingSummary from "./BuildingSummary";
 import PageTitle from "@/components/label/PageTitle";
 import BuildingInformation from "./BuildingInformation";
 import BuildingDocumentation from "./BuildingDocumentation";
-import { DocumentTypes } from "@/utils/Constants";
 import { handleUploadMultipleDoc } from "@/utils/uploadToS3";
 import { addObjektFormSchema } from "@/utils/ValidationSchema";
 import { useAppDispatch } from "@/lib/hooks";
 import { showSnackbar } from "@/components/root-snackbar";
 import { getUserBuildings } from "@/lib/features/buildingSlice";
+import { DOCUMENT_TYPE } from "@/utils/enums";
 
 const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
   const router = useRouter();
@@ -87,15 +87,15 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
       "Jetzt hochladen Empfohlen",
     constructionDocs:
       selectedBuildingDetails?.documents?.filter(
-        (doc: any) => doc.documentType === "BAUUNTERLAGEN"
+        (doc: any) => doc.documentType === DOCUMENT_TYPE.CONSTRUCTION_DOCUMENTS
       ) || [],
     floorplanDocs:
       selectedBuildingDetails?.documents?.filter(
-        (doc: any) => doc.documentType === "GRUNDRISSE"
+        (doc: any) => doc.documentType === DOCUMENT_TYPE.FLOOR_PLANS
       ) || [],
     otherDocs:
       selectedBuildingDetails?.documents?.filter(
-        (doc: any) => doc.documentType === "SONSTIGE"
+        (doc: any) => doc.documentType === DOCUMENT_TYPE.OTHER
       ) || [],
 
     serverLink: selectedBuildingDetails?.serverLink || "",
@@ -181,9 +181,12 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
       }
     };
 
-    await uploadDocuments(values.otherDocs, DocumentTypes.SONSTIGE);
-    await uploadDocuments(values.floorplanDocs, DocumentTypes.GRUNDRISSE);
-    await uploadDocuments(values.constructionDocs, DocumentTypes.BAUUNTERLAGEN);
+    await uploadDocuments(values.otherDocs, DOCUMENT_TYPE.OTHER);
+    await uploadDocuments(values.floorplanDocs, DOCUMENT_TYPE.FLOOR_PLANS);
+    await uploadDocuments(
+      values.constructionDocs,
+      DOCUMENT_TYPE.CONSTRUCTION_DOCUMENTS
+    );
 
     const status = await handleSubmit(values, docObjList);
 

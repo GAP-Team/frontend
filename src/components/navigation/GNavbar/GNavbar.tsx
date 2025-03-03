@@ -81,10 +81,6 @@ const GNavbar = (): JSX.Element => {
                   font-semibold 
                   duration-300 
                   transform lg:mx-8 
-                  dark:text-gray-200 
-                  dark:hover:text-blue-400 
-                  hover:text-[#005e99]
-                  ${pathname === item.path && "bg-yellow-500"}
                 `}
                 style={
                   pathname === item.path

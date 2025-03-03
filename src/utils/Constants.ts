@@ -157,6 +157,10 @@ export interface Item {
   value: string;
 }
 
+export interface DashboardComponentsProps {
+  slot?: string;
+}
+
 export interface Documentation {
   documentChoice: string;
   constructionDocs: File[];
@@ -413,13 +417,6 @@ export const tenderTypesListSV = [
     value: "Wassergefährdete Stoffe - AwsV Prüfung",
   },
 ];
-
-export const DocumentTypes = {
-  SONSTIGE: "SONSTIGE",
-  GRUNDRISSE: "GRUNDRISSE",
-  BAUUNTERLAGEN: "BAUUNTERLAGEN",
-  BERICHTE: "BERICHTE PRÜFEN",
-};
 
 export const jobItemListInCostPage = [
   {

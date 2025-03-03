@@ -143,7 +143,7 @@ const UserProfile = (): JSX.Element => {
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
-            label="Position"
+            label="Beruf"
             name="position"
             value={formik.values.position}
             onChange={formik.handleChange}

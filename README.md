@@ -6,7 +6,7 @@ A Next.js 14 project with App Router, ready to power GAP with the latest feature
 
 - **Next.js App Router** for efficient routing and server-side rendering.
 - **SEO Optimization** using Next.js's Metadata for better search engine visibility.
-- **Tailwind CSS + Daisy + Flowbite** for styling the **landing page**.
+- **Tailwind CSS + MUI** for styling the **landing page**.
 - **MUI (Material-UI) Library** for building modern, responsive dashboards.
 
 ## Project Conventions:

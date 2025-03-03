@@ -1,10 +1,12 @@
 import React from "react";
 import HeaderSection from "../HeaderSection";
 import ApplicationList from "./ApplicationList";
-import { applications } from "@/utils/Constants";
+import { applications, DashboardComponentsProps } from "@/utils/Constants";
 import ScrollableSection from "../../../../components/common/ScrollableSection";
 
-const ApplicationsPanel = (): JSX.Element => {
+const ApplicationsPanel: React.FC<
+  DashboardComponentsProps
+> = (): JSX.Element => {
   return (
     <>
       <ScrollableSection>

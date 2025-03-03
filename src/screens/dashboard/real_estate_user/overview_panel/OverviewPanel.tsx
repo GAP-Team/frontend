@@ -13,8 +13,9 @@ import dayjs from "dayjs";
 import { Facility } from "../../facilities/facility_card/types";
 import { Building } from "../../buildings/building_card/types";
 import { truncateLabel } from "@/utils/utils";
+import { DashboardComponentsProps } from "@/utils/Constants";
 
-const OverviewPanel = (): JSX.Element => {
+const OverviewPanel: React.FC<DashboardComponentsProps> = (): JSX.Element => {
   const tenders = useAppSelector((state) => state.tender.tenderList);
   const facilities = useAppSelector((state) => state.facility.facilities);
   const buildings = useAppSelector((state) => state.building.buildings);
@@ -36,9 +37,9 @@ const OverviewPanel = (): JSX.Element => {
 
   const getDaysRemaining = (facilityId: string): number => {
     const facility = facilities.find((f: Facility) => f.id === facilityId);
-    const lastCheckDate = dayjs(facility.check?.lastCheckDate);
+    const lastCheckDate = dayjs(facility?.check?.lastCheckDate);
     const nextCheckDate = lastCheckDate.add(
-      Number(facility.check?.nextCheckInYearNumber),
+      Number(facility?.check?.nextCheckInYearNumber),
       "year"
     );
     return nextCheckDate.diff(dayjs(), "days");
@@ -68,7 +69,7 @@ const OverviewPanel = (): JSX.Element => {
       );
       if (
         !facility?.check?.lastCheckDate ||
-        facility.check.nextCheckInYearNumber === 0
+        facility?.check.nextCheckInYearNumber === 0
       ) {
         return null;
       }

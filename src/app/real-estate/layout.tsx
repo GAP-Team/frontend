@@ -1,17 +1,13 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import Box from "@mui/material/Box";
 import { CgNotes } from "react-icons/cg";
 import { TbPigMoney } from "react-icons/tb";
-import { useRouter, usePathname } from "next/navigation";
+import React, { useEffect, useState } from "react";
 import { LuLayoutDashboard } from "react-icons/lu";
+import { useRouter, usePathname } from "next/navigation";
 import { MdOutlineDoorSliding, MdOutlineAddHomeWork } from "react-icons/md";
-import GAppbar from "@/components/navigation/GAppbar/GAppbar";
-import Sidebar, {
-  SubItem,
-  SidebarItem,
-} from "@/components/navigation/GSidebar/SideBar";
+import { SubItem, SidebarItem } from "@/components/navigation/GSidebar/SideBar";
 import { ROUTES } from "@/utils/routes";
+import Layout from "@/screens/dashboard/Layout";
 
 const sidebarItems: SidebarItem[] = [
   {
@@ -113,32 +109,14 @@ const RealStateUserLayout: React.FC<any> = ({ children }) => {
   };
 
   return (
-    <Box sx={styles.main}>
-      <Sidebar
-        selected={selected}
-        items={sidebarItems}
-        setSelected={handleRedirect}
-      />
-      <Box sx={styles.contentContainer}>
-        <GAppbar />
-        {children}
-      </Box>
-    </Box>
+    <Layout
+      sidebarItems={sidebarItems}
+      selected={selected}
+      setSelected={handleRedirect}
+    >
+      {children}
+    </Layout>
   );
 };
 
 export default RealStateUserLayout;
-
-const styles = {
-  main: {
-    display: "flex",
-    minHeight: "100vh",
-    backgroundColor: "#F1F3F4",
-  },
-  contentContainer: {
-    display: "flex",
-    flexDirection: "column",
-    flex: 1,
-    minHeight: "100vh",
-  },
-};

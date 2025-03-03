@@ -1,4 +1,5 @@
 import { REAL_ESTATE_BASE } from "@/utils/routes";
+import Divider from "@mui/material/Divider";
 import { GapLogo } from "@/components/logo/GapLogo";
 import { Box, Typography, Grid, Link } from "@mui/material";
 
@@ -113,7 +114,7 @@ function GFooter(): JSX.Element {
                 </div>
               </div>
             </div>
-            <hr className="w-4/5 h-px mx-auto my-2 bg-gray-600 border-0 rounded md:my-10 dark:bg-gray-100" />
+            <Divider sx={styles.divider} />
             <div className="w-full flex items-center justify-around">
               <Grid
                 item
@@ -156,5 +157,15 @@ const styles = {
   },
   copyrightHolder: {
     color: "#8D999C",
+  },
+  divider: {
+    width: "auto",
+    marginRight: "5rem",
+    marginLeft: "5rem",
+    textAlign: "center",
+    marginTop: "6px",
+    marginBottom: "15px",
+    height: "1px",
+    bgcolor: "#475a60",
   },
 };
