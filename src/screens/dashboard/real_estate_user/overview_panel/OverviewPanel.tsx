@@ -9,11 +9,11 @@ import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { Tender } from "../../tenders/tender_card/types";
 import { TenderStatusEnum } from "@/utils/enums";
 import { getFacilitiesByUser } from "@/lib/features/facilitySlice";
-import dayjs from "dayjs";
 import { Facility } from "../../facilities/facility_card/types";
 import { Building } from "../../buildings/building_card/types";
 import { truncateLabel } from "@/utils/utils";
 import { DashboardComponentsProps } from "@/utils/Constants";
+import { getFacilityCheckTimeRemaining } from "../../facilities/utils";
 
 const OverviewPanel: React.FC<DashboardComponentsProps> = (): JSX.Element => {
   const tenders = useAppSelector((state) => state.tender.tenderList);
@@ -35,34 +35,25 @@ const OverviewPanel: React.FC<DashboardComponentsProps> = (): JSX.Element => {
     }
   }, [user?.id, dispatch]);
 
-  const getDaysRemaining = (facilityId: string): number => {
-    const facility = facilities.find((f: Facility) => f.id === facilityId);
-    const lastCheckDate = dayjs(facility?.check?.lastCheckDate);
-    const nextCheckDate = lastCheckDate.add(
-      Number(facility?.check?.nextCheckInYearNumber),
-      "year"
-    );
-    return nextCheckDate.diff(dayjs(), "days");
-  };
-
   const tendersDueSoon = tenders?.filter((tender: Tender) => {
+    const facility = facilities.find(
+      (f: Facility) => f.id === tender.facility?.id
+    );
     return (
-      getDaysRemaining(tender.facility?.id) < 183 &&
-      getDaysRemaining(tender.facility?.id) > 0
+      getFacilityCheckTimeRemaining(facility, "days") < 183 &&
+      getFacilityCheckTimeRemaining(facility, "days") > 0
     );
   });
 
-  const tendersExceedingDays = tenders?.filter(
-    (tender: Tender) => getDaysRemaining(tender.facility?.id) <= 0
-  );
+  const tendersExceedingDays = tenders?.filter((tender: Tender) => {
+    const facility = facilities.find(
+      (f: Facility) => f.id === tender.facility?.id
+    );
+    return getFacilityCheckTimeRemaining(facility, "days") <= 0;
+  });
 
   const renderTenderCards = (tendersList: Tender[]): React.ReactNode =>
     tendersList?.map((tender, index) => {
-      const daysRemaining = getDaysRemaining(tender.facility?.id);
-      const buildingAddress = buildings.find(
-        (b: Building) => b.id === tender.building?.id
-      )?.address;
-
       // Check if facility has a check date and and then only show the card
       const facility = facilities.find(
         (f: Facility) => f.id === tender.facility?.id
@@ -73,6 +64,10 @@ const OverviewPanel: React.FC<DashboardComponentsProps> = (): JSX.Element => {
       ) {
         return null;
       }
+      const daysRemaining = getFacilityCheckTimeRemaining(facility, "days");
+      const buildingAddress = buildings.find(
+        (b: Building) => b.id === tender.building?.id
+      )?.address;
 
       return (
         <ProjectCard

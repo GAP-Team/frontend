@@ -18,6 +18,10 @@ import DocumentList from "../../buildings/building_card/DocumentList ";
 import { checkActiveTenderForFacility } from "@/lib/features/tenderSlice";
 import { showSnackbar } from "@/components/root-snackbar";
 import { deleteFacility } from "@/lib/features/facilitySlice";
+import {
+  getFacilityCheckTimeRemaining,
+  getFacilityMaintenanceTimeRemaining,
+} from "../utils";
 
 interface FacilityCardProps {
   facility: Facility;
@@ -39,12 +43,22 @@ const FacilityCard: React.FC<FacilityCardProps> = ({ facility }) => {
   const chipStyles = statusStyles[status] || statusStyles["aktiv"];
 
   const checkUrgency = (): string => {
-    const monthsUntilCheck = facility.check.nextCheckInYearNumber * 12;
+    const monthsUntilCheck = getFacilityCheckTimeRemaining(facility, "months");
+    const daysUntilMaintenance = getFacilityMaintenanceTimeRemaining(
+      facility,
+      "days"
+    );
 
-    if (monthsUntilCheck > 6 && monthsUntilCheck < 12) {
-      return "orange";
-    } else if (monthsUntilCheck < 2) {
+    // Check if either maintenance or check is overdue (negative values)
+    if (monthsUntilCheck < 0 || daysUntilMaintenance < 0) {
       return "red";
+    }
+    // Warning for upcoming check or maintenance
+    if (monthsUntilCheck > 0 && monthsUntilCheck < 6) {
+      return "orange";
+    }
+    if (daysUntilMaintenance > 0 && daysUntilMaintenance < 30) {
+      return "orange";
     }
     return "";
   };
@@ -101,10 +115,10 @@ const FacilityCard: React.FC<FacilityCardProps> = ({ facility }) => {
       <Box sx={styles.tags}></Box>
       <Divider sx={styles.divider} orientation="horizontal" />
       <Typography variant="body2" sx={styles.subText}>
-        Prüfung in: {facility.check.nextCheckInYearNumber * 12} Monaten
+        {`Prüfung in: ${getFacilityCheckTimeRemaining(facility, "months")}`}
       </Typography>
       <Typography variant="body2" sx={styles.subText}>
-        Wartung in: {facility.maintenance.nextMaintenanceInMonth * 30} Tagen
+        {`Wartung in: ${getFacilityMaintenanceTimeRemaining(facility, "days")}`}
       </Typography>
       <Divider sx={styles.divider} orientation="horizontal" />
       <List sx={{ ...styles.listContainer }}>
