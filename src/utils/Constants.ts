@@ -649,3 +649,11 @@ export const notifications: Notification[] = [
     status: "danger",
   },
 ];
+
+export interface ContactFormProps {
+  firstName: string;
+  lastName: string;
+  phoneNumber: string;
+  email: string;
+  message: string;
+}

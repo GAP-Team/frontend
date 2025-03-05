@@ -386,3 +386,24 @@ export const CompanyProfileSchema = yup.object({
   phonenumber: registrationValidationSchema.fields.telephone,
   registrationNumber: registrationValidationSchema.fields.registrationNumber,
 });
+
+export const ContactFormSchema = yup.object({
+  firstName: yup.string().required("Vorname ist erforderlich."),
+  lastName: yup.string().required("Nachname ist erforderlich."),
+  email: yup
+    .string()
+    .matches(EMAIL_REGEX, "Ungültige Email")
+    .required("Email ist erforderlich."),
+  phoneNumber: yup
+    .string()
+    .required("Telefonnummer ist erforderlich.")
+    .test(
+      "is-valid-phone",
+      "Telefonnummer muss eine gültige Nummer sein.",
+      (value) => !value || /^\d+$/.test(value)
+    ),
+  message: yup.string().required("Nachricht ist erforderlich."),
+  agree: yup
+    .boolean()
+    .oneOf([true], "Sie müssen die Datenschutzbestimmungen akzeptieren"),
+});
