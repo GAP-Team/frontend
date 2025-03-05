@@ -30,6 +30,14 @@ function GFooter(): JSX.Element {
                   >
                     Über uns
                   </Link>
+                  <br />
+                  <Link
+                    href="/contact-us"
+                    style={styles.footerMenuText}
+                    underline="hover"
+                  >
+                    Kontaktieren Sie uns
+                  </Link>
                 </div>
                 <div>
                   <Typography style={styles.footerMenuLabel} variant="h6">
