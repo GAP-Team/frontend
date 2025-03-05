@@ -100,7 +100,6 @@ const HeroSection = (): JSX.Element => {
             <div className="flex flex-row gap-5 sm:gap-7 md:gap-10 lg:gap-20 mt-14 justify-center lg:justify-start">
               <Button
                 component="a"
-                href="/login"
                 className="block px-5 py-2 mt-4 text-center rounded-lg text-md"
                 size="small"
                 style={styles.registerButton}
