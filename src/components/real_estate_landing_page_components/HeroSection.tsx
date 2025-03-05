@@ -154,7 +154,7 @@ const styles = {
     borderRadius: 7,
     fontSize: "1.5rem",
     "&:hover": {
-      background: "###17ABA9",
+      background: "#17ABA9",
     },
   },
   heroTextHolder: {
