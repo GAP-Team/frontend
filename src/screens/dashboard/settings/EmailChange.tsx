@@ -20,6 +20,7 @@ const EmailChange = (): JSX.Element => {
   const formik = useFormik({
     initialValues: {
       email: user?.email,
+      password: "",
     },
     validationSchema: EmailChangeSchema,
     onSubmit: async (values) => {
@@ -79,6 +80,21 @@ const EmailChange = (): JSX.Element => {
             error={formik.touched.email && Boolean(formik.errors.email)}
             helperText={formik.touched.email && formik.errors.email?.toString()}
             fullWidth
+          />
+          <TextField
+            fullWidth
+            name="password"
+            type="password"
+            autoComplete="off"
+            label="Current Passwort"
+            onBlur={formik.handleBlur}
+            style={{ marginTop: "1rem" }}
+            value={formik.values.password}
+            onChange={formik.handleChange}
+            error={formik.touched.password && Boolean(formik.errors.password)}
+            helperText={
+              formik.touched.password && formik.errors.password?.toString()
+            }
           />
         </Grid>
         <Grid item xs={12}>
