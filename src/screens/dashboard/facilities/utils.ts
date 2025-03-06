@@ -3,7 +3,7 @@ import { Facility } from "./facility_card/types";
 
 export const getFacilityCheckTimeRemaining = (
   facility: Facility | undefined,
-  unit: "days" | "months" | "years" = "days"
+  unit: "days" | "months" | "years" = "months"
 ): number => {
   if (
     !facility?.check?.lastCheckDate ||
