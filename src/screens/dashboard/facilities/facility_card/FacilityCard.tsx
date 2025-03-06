@@ -118,7 +118,7 @@ const FacilityCard: React.FC<FacilityCardProps> = ({ facility }) => {
         {`Prüfung in: ${getFacilityCheckTimeRemaining(facility, "months")} Monate`}
       </Typography>
       <Typography variant="body2" sx={styles.subText}>
-        {`Wartung in: ${getFacilityMaintenanceTimeRemaining(facility, "days")}`}
+        {`Wartung in: ${getFacilityMaintenanceTimeRemaining(facility, "days")} Tage`}
       </Typography>
       <Divider sx={styles.divider} orientation="horizontal" />
       <List sx={{ ...styles.listContainer }}>
