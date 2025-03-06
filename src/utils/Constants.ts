@@ -649,3 +649,15 @@ export const notifications: Notification[] = [
     status: "danger",
   },
 ];
+
+export interface TabsTypes {
+  label: string;
+  index: string;
+}
+
+export const RealEstateLandingPageTabs = [
+  { label: "Dashboard", index: "0" },
+  { label: "Kosteneinsparung", index: "1" },
+  { label: "Ausschreibungsübersicht", index: "2" },
+  { label: "Objektübersicht", index: "3" },
+];
