@@ -32,6 +32,7 @@ import {
   getTenderById,
   updateTender,
 } from "@/lib/features/tenderSlice";
+import { ROUTES } from "@/utils/routes";
 import utc from "dayjs/plugin/utc";
 dayjs.extend(utc);
 
@@ -155,7 +156,7 @@ const NewTender: React.FC<NewTenderProps> = ({ id }): JSX.Element => {
     if (activeStep.id > 0) {
       setActiveStep(steps[activeStep.id - 1]);
     } else {
-      router.push("/real_estate/dashboard");
+      router.push(ROUTES.REAL_ESTATE.DASHBOARD);
     }
   };
 
@@ -185,7 +186,7 @@ const NewTender: React.FC<NewTenderProps> = ({ id }): JSX.Element => {
       }
       secondaryDescription="Du kannst Ihre Ausschreibung in der Ausschreibung-übersicht sehen und bearbeiten."
       buttonLabel="Schließen"
-      redirectUrl="/real_estate/tenders"
+      redirectUrl={ROUTES.REAL_ESTATE.TENDER.TENDERS}
     />
   ) : (
     <>
@@ -198,7 +199,7 @@ const NewTender: React.FC<NewTenderProps> = ({ id }): JSX.Element => {
           />
         </Grid>
         <Grid item>
-          <Link href="/real_estate/tenders" type="button">
+          <Link href={ROUTES.REAL_ESTATE.TENDER.TENDERS} type="button">
             <IconButton sx={{ marginLeft: "auto" }} size="medium">
               <CgClose color="red" />
             </IconButton>

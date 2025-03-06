@@ -3,6 +3,7 @@ import Box from "@mui/material/Box";
 import Chip from "@mui/material/Chip";
 import Icon from "@mui/material/Icon";
 import Paper from "@mui/material/Paper";
+import { ROUTES } from "@/utils/routes";
 import { useRouter } from "next/navigation";
 import Divider from "@mui/material/Divider";
 import { BsClockFill } from "react-icons/bs";
@@ -39,7 +40,7 @@ const TenderCard: React.FC<TenderCardProps> = ({
   const router = useRouter();
   const dispatch = useAppDispatch();
   const handleClick = (): void => {
-    router.push(`/real_estate/tenders/${tender.id}`);
+    router.push(ROUTES.REAL_ESTATE.TENDER.TENDER_DETAILS(tender.id));
   };
 
   const chipStyles = getTenderStatusStyle[tender?.status];
@@ -86,7 +87,9 @@ const TenderCard: React.FC<TenderCardProps> = ({
         {checkUrgency(tender?.urgency)}
         <ActionMenu
           itemId={tender?.id}
-          onEdit={(id) => router.push(`/real_estate/tenders/edit/${id}`)}
+          onEdit={(id) =>
+            router.push(ROUTES.REAL_ESTATE.TENDER.EDIT_TENDER(id))
+          }
           onDelete={handleDeleteTender}
           messege={"Sind Sie sicher, dass Sie dieses Element löschen möchten?"}
         />

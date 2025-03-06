@@ -6,6 +6,7 @@ import { FiMenu } from "react-icons/fi";
 import { Lalezar } from "next/font/google";
 import { usePathname } from "next/navigation";
 import { FaArrowRightToBracket } from "react-icons/fa6";
+import { ROUTES, REAL_ESTATE_BASE } from "@/utils/routes";
 import gapLogo from "../../../../public/icons/gap-logo.svg";
 
 const lalezar = Lalezar({ subsets: ["latin"], weight: ["400"] });
@@ -15,8 +16,8 @@ const GNavbar = (): JSX.Element => {
   const [isOpen, setIsOpen] = useState(false);
 
   const menuItems = [
-    { name: "Als Dienstleister", path: "/" },
-    { name: "Als Immobilienbetreiber", path: "/real-estate" },
+    { name: "Als Dienstleister", path: ROUTES.SERVICE_PROVIDER_HOME },
+    { name: "Als Immobilienbetreiber", path: REAL_ESTATE_BASE },
   ];
 
   return (

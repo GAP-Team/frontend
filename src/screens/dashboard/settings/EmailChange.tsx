@@ -3,15 +3,16 @@
 import React from "react";
 import { useFormik } from "formik";
 import Grid from "@mui/material/Grid";
-import Typography from "@mui/material/Typography";
+import { ROUTES } from "@/utils/routes";
 import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
+import { useRouter } from "next/navigation";
 import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
 import { EmailChangeSchema } from "@/utils/ValidationSchema";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { updateUserProfile } from "@/lib/features/userSlice";
 import { showSnackbar } from "@/components/root-snackbar";
-import { useRouter } from "next/navigation";
 
 const EmailChange = (): JSX.Element => {
   const dispatch = useAppDispatch();
@@ -91,7 +92,7 @@ const EmailChange = (): JSX.Element => {
             <Grid item>
               <Button
                 variant="outlined"
-                onClick={() => router.push("/real_estate/dashboard")}
+                onClick={() => router.push(ROUTES.REAL_ESTATE.DASHBOARD)}
               >
                 Abbrechen
               </Button>

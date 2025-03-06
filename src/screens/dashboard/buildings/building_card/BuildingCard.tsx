@@ -19,6 +19,7 @@ import buildingAPIs from "@/api/building";
 import DocumentList from "./DocumentList ";
 import { DOCUMENT_TYPE } from "@/utils/enums";
 import ActionMenu from "@/components/common/ActionMenu";
+import { ROUTES, REAL_ESTATE_BASE } from "@/utils/routes";
 import { scrollBarStyles } from "@/components/scrollbar/Scrollbar";
 import {
   getUserBuildings,
@@ -74,7 +75,7 @@ const BuildingCard: React.FC<BuildingCardProps> = ({ building }) => {
   };
 
   const handleRedirect = (redirect: string): void => {
-    router.push(`/real_estate/${redirect}`);
+    router.push(`${REAL_ESTATE_BASE}/${redirect}`);
   };
 
   return (
@@ -88,7 +89,9 @@ const BuildingCard: React.FC<BuildingCardProps> = ({ building }) => {
         </Box>
         <ActionMenu
           itemId={building?.id}
-          onEdit={(id) => router.push(`/real_estate/buildings/edit/${id}`)}
+          onEdit={(id) =>
+            router.push(ROUTES.REAL_ESTATE.BUILDING.EDIT_BUILDING(id))
+          }
           onDelete={(id) => deleteBuilding(id)}
           messege={delMsg}
         />

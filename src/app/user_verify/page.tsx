@@ -1,7 +1,8 @@
 "use client";
 import Cookies from "js-cookie";
-import { useSelector } from "react-redux";
 import { useState } from "react";
+import { ROUTES } from "@/utils/routes";
+import { useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 import { currentUser } from "@/lib/features/userSlice";
 import GNavbar from "@/components/navigation/GNavbar/GNavbar";
@@ -14,7 +15,7 @@ export default function UserMailVerification(): JSX.Element {
 
   const postVerificationAction = (): void => {
     setIsUserVerified(true);
-    router.push("/real_estate/dashboard");
+    router.push(ROUTES.REAL_ESTATE.DASHBOARD);
     Cookies.set("isVerified", "true");
   };
 

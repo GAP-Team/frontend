@@ -4,6 +4,7 @@ import Box from "@mui/material/Box";
 import Chip from "@mui/material/Chip";
 import Icon from "@mui/material/Icon";
 import List from "@mui/material/List";
+import { ROUTES } from "@/utils/routes";
 import Paper from "@mui/material/Paper";
 import Divider from "@mui/material/Divider";
 import { useRouter } from "next/navigation";
@@ -86,8 +87,10 @@ const FacilityCard: React.FC<FacilityCardProps> = ({ facility }) => {
       <Box sx={styles.actionMenu}>
         <ActionMenu
           itemId={facility?.id}
-          onEdit={(id) => router.push(`/real_estate/facilities/edit/${id}`)}
           onDelete={handleDeleteFacility}
+          onEdit={(id) =>
+            router.push(ROUTES.REAL_ESTATE.FACILITY.EDIT_FACILITY(id))
+          }
           messege={`Sind Sie sicher, dass Sie dieses Element${noOfTenders ? ` und die zugehörigen ${noOfTenders} Ausschreibungen` : ""} löschen möchten?`}
         />
       </Box>

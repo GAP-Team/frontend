@@ -10,6 +10,7 @@ import { currentUser } from "@/lib/features/userSlice";
 import { useSelector } from "react-redux";
 import { fetchBuildings } from "@/lib/features/buildingSlice";
 import { Building } from "../buildings/building_card/types";
+import { ROUTES } from "@/utils/routes";
 import { getFacilitiesByUser } from "@/lib/features/facilitySlice";
 import { Facility } from "./facility_card/types";
 
@@ -58,7 +59,7 @@ const Facilities = (): JSX.Element => {
       alt="No Facility"
       buttonLabel="Anlage anlegen"
       title="Noch keine Anlagen angelegt"
-      buttonLink="/real_estate/facilities/add"
+      buttonLink={ROUTES.REAL_ESTATE.FACILITY.ADD_FACILITY}
       description="Du hast noch keine Anlagen angelegt, wenn Du Deine Anlagen erstellt hast findest Du sie hier."
     />
   );
