@@ -6,12 +6,12 @@ import {
 } from "./types";
 import Link from "next/link";
 import Grid from "@mui/material/Grid";
+import { ROUTES } from "@/utils/routes";
 import { CgClose } from "react-icons/cg";
 import { useSelector } from "react-redux";
 import { IconButton } from "@mui/material";
 import FacilityCheck from "./FacilityCheck";
 import { useRouter } from "next/navigation";
-import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { Formik, FormikHelpers } from "formik";
 import AddFacilityForm from "./AddFacilityForm";
 import FacilitySummary from "./FacilitySummary";
@@ -24,6 +24,7 @@ import SuccessPage from "@/components/common/SuccessPage";
 import { showSnackbar } from "@/components/root-snackbar";
 import SectionTitle from "@/components/label/SectionTitle";
 import FacilityDocumentation from "./FacilityDocumentation";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { handleUploadMultipleDoc } from "@/utils/uploadToS3";
 import { fetchBuildings } from "@/lib/features/buildingSlice";
 import GProgressStepper from "@/components/stepper/GProgressStepper";
@@ -33,9 +34,11 @@ import {
   getFacilityById,
   updateFacility,
 } from "@/lib/features/facilitySlice";
-import dayjs from "dayjs";
 import { DOCUMENT_TYPE, DocumentChoice } from "@/utils/enums";
-
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+import { Facility } from "../facility_card/types";
+dayjs.extend(utc);
 interface NewFacilityProps {
   facilityId?: string;
 }
@@ -103,7 +106,7 @@ const NewFacility: React.FC<NewFacilityProps> = ({
     if (activeStep.id > 0) {
       setActiveStep(steps[activeStep.id - 1]);
     } else {
-      router.push("/real_estate/dashboard");
+      router.push(ROUTES.REAL_ESTATE.DASHBOARD);
     }
   };
 
@@ -111,13 +114,15 @@ const NewFacility: React.FC<NewFacilityProps> = ({
     values: AddFacilityFormValues,
     docObjList: any[] = []
   ): Promise<boolean> => {
-    let facilityData = {
+    let facilityData: Partial<Facility> = {
       name: values?.name,
       facilityType: values?.facilityType,
       subcategory: values?.subcategory,
       buildingId: values?.selectedBuilding,
       check: {
-        lastCheckDate: values?.lastCheckDate,
+        lastCheckDate: values?.lastCheckDate
+          ? dayjs(values.lastCheckDate.utc(true).format("YYYY-MM-DD"))
+          : null,
         nextCheckInYearNumber: values?.nextCheckInYearNumber,
         isPublishAutomatically: values?.isPublishAutomatically,
         publishAutomaticallyInMonth: Number(
@@ -132,7 +137,9 @@ const NewFacility: React.FC<NewFacilityProps> = ({
           : [],
       },
       maintenance: {
-        lastMaintenanceDate: values?.lastMaintenanceDate,
+        lastMaintenanceDate: values?.lastMaintenanceDate
+          ? dayjs(values?.lastMaintenanceDate?.utc(true).format("YYYY-MM-DD"))
+          : null,
         nextMaintenanceInMonth: values?.nextMaintenanceInMonth,
         isPublishAutomatically: values?.isPublishMaintenanceAutomatically,
         publishAutomaticallyInMonth: Number(
@@ -311,7 +318,7 @@ const NewFacility: React.FC<NewFacilityProps> = ({
           />
         </Grid>
         <Grid item>
-          <Link href="/real_estate/facilities</Grid>" type="button">
+          <Link href={ROUTES.REAL_ESTATE.FACILITY.FACILITIES} type="button">
             <IconButton sx={{ marginLeft: "auto" }} size="medium">
               <CgClose color="red" />
             </IconButton>

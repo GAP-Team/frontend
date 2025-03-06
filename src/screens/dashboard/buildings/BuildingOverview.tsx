@@ -1,13 +1,14 @@
 // Buildings.tsx
 "use client";
 import Box from "@mui/material/Box";
+import { ROUTES } from "@/utils/routes";
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useAppDispatch } from "@/lib/hooks";
-import BuildingContainer from "./building_card/BuildingContainer";
 import { currentUser } from "@/lib/features/userSlice";
 import addObjSrc from "@/../public/icons/add_building.svg";
 import NoContentPage from "@/components/common/NoContentPage";
+import BuildingContainer from "./building_card/BuildingContainer";
 import PropertyFilterPanel from "@/components/filter/PropertyFilterPanel";
 import { fetchBuildings, getUserBuildings } from "@/lib/features/buildingSlice";
 
@@ -53,7 +54,7 @@ const BuildingOverview: React.FC = () => {
         alt="No Building/Objekt"
         buttonLabel="Objekt anlegen"
         title="Noch keine Objekte angelegt"
-        buttonLink="/real_estate/buildings/add"
+        buttonLink={ROUTES.REAL_ESTATE.BUILDING.ADD_BUILDING}
         description="Du hast noch keine Objekte angelegt, wenn Du Deine Objekte erstellt hast findest Du sie hier."
       />
     );

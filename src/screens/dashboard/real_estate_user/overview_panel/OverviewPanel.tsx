@@ -56,11 +56,11 @@ const OverviewPanel: React.FC<DashboardComponentsProps> = (): JSX.Element => {
     tendersList?.map((tender, index) => {
       // Check if facility has a check date and and then only show the card
       const facility = facilities.find(
-        (f: Facility) => f.id === tender.facility?.id
+        (f: Facility) => f.id === tender?.facility?.id
       );
       if (
         !facility?.check?.lastCheckDate ||
-        facility?.check.nextCheckInYearNumber === 0
+        facility?.check?.nextCheckInYearNumber === 0
       ) {
         return null;
       }

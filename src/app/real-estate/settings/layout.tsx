@@ -10,18 +10,22 @@ import ListItemText from "@mui/material/ListItemText";
 import Divider from "@mui/material/Divider";
 import Typography from "@mui/material/Typography";
 import PageTitle from "@/components/label/PageTitle";
+import { ROUTES } from "@/utils/routes";
 
 const menuItems = [
-  { label: "Mein Profil", href: "/real_estate/settings/user_profile" },
+  { label: "Mein Profil", href: ROUTES.REAL_ESTATE.SETTINGS.USER_PROFILE },
   {
     label: "Unternehmens Informationen",
-    href: "/real_estate/settings/company_profile",
+    href: ROUTES.REAL_ESTATE.SETTINGS.COMPANY_PROFILE,
   },
-  { label: "E-Mail ändern", href: "/real_estate/settings/email_change" },
-  { label: "Passwort ändern", href: "/real_estate/settings/password_change" },
+  { label: "E-Mail ändern", href: ROUTES.REAL_ESTATE.SETTINGS.EMAIL_CHANGE },
+  {
+    label: "Passwort ändern",
+    href: ROUTES.REAL_ESTATE.SETTINGS.PASSWORD_CHANGE,
+  },
   {
     label: "Account löschen",
-    href: "/real_estate/settings/delete_account",
+    href: ROUTES.REAL_ESTATE.SETTINGS.DELETE_ACCOUNT,
     style: { color: "red" },
   },
 ];
