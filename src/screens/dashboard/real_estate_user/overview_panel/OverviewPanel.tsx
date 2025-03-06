@@ -66,7 +66,7 @@ const OverviewPanel: React.FC<DashboardComponentsProps> = (): JSX.Element => {
       }
       const daysRemaining = getFacilityCheckTimeRemaining(facility, "days");
       const buildingAddress = buildings.find(
-        (b: Building) => b.id === tender.building?.id
+        (building: Building) => building.id === tender.building?.id
       )?.address;
 
       return (
