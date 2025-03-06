@@ -33,6 +33,8 @@ import {
   updateTender,
 } from "@/lib/features/tenderSlice";
 import { ROUTES } from "@/utils/routes";
+import utc from "dayjs/plugin/utc";
+dayjs.extend(utc);
 
 const NewTender: React.FC<NewTenderProps> = ({ id }): JSX.Element => {
   const router = useRouter();
@@ -94,9 +96,9 @@ const NewTender: React.FC<NewTenderProps> = ({ id }): JSX.Element => {
     let tenderData = {
       building: buildingObj,
       facility: facilityObj,
-      toDate: values?.toDate,
+      toDate: values?.toDate?.utc(true).format("YYYY-MM-DD"),
       urgency: values?.urgency,
-      fromDate: values?.fromDate,
+      fromDate: values?.fromDate?.utc(true).format("YYYY-MM-DD"),
       clientName: values?.clientName,
       tenderForm: values?.tenderForm,
       tenderType: values?.tenderType,

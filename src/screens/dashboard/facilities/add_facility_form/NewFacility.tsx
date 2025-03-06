@@ -34,9 +34,11 @@ import {
   getFacilityById,
   updateFacility,
 } from "@/lib/features/facilitySlice";
-import dayjs from "dayjs";
 import { DOCUMENT_TYPE, DocumentChoice } from "@/utils/enums";
-
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+import { Facility } from "../facility_card/types";
+dayjs.extend(utc);
 interface NewFacilityProps {
   facilityId?: string;
 }
@@ -112,13 +114,15 @@ const NewFacility: React.FC<NewFacilityProps> = ({
     values: AddFacilityFormValues,
     docObjList: any[] = []
   ): Promise<boolean> => {
-    let facilityData = {
+    let facilityData: Partial<Facility> = {
       name: values?.name,
       facilityType: values?.facilityType,
       subcategory: values?.subcategory,
       buildingId: values?.selectedBuilding,
       check: {
-        lastCheckDate: values?.lastCheckDate,
+        lastCheckDate: values?.lastCheckDate
+          ? dayjs(values.lastCheckDate.utc(true).format("YYYY-MM-DD"))
+          : null,
         nextCheckInYearNumber: values?.nextCheckInYearNumber,
         isPublishAutomatically: values?.isPublishAutomatically,
         publishAutomaticallyInMonth: Number(
@@ -133,7 +137,9 @@ const NewFacility: React.FC<NewFacilityProps> = ({
           : [],
       },
       maintenance: {
-        lastMaintenanceDate: values?.lastMaintenanceDate,
+        lastMaintenanceDate: values?.lastMaintenanceDate
+          ? dayjs(values?.lastMaintenanceDate?.utc(true).format("YYYY-MM-DD"))
+          : null,
         nextMaintenanceInMonth: values?.nextMaintenanceInMonth,
         isPublishAutomatically: values?.isPublishMaintenanceAutomatically,
         publishAutomaticallyInMonth: Number(
