@@ -23,6 +23,7 @@ import { BUSINESS_TYPE, DOCUMENT_TYPE } from "@/utils/enums";
 import UploadButton from "@/components/button/UploadButton";
 import { handleDeleteDoc, handleUploadDoc } from "@/utils/uploadToS3";
 import { Document } from "@/typings/types";
+import { ROUTES } from "@/utils/routes";
 
 const CompanyProfile = (): JSX.Element => {
   const dispatch = useAppDispatch();
@@ -582,7 +583,7 @@ const CompanyProfile = (): JSX.Element => {
             <Grid item>
               <Button
                 variant="outlined"
-                onClick={() => router.push("/real_estate/dashboard")}
+                onClick={() => router.push(ROUTES.REAL_ESTATE.DASHBOARD)}
               >
                 Abbrechen
               </Button>

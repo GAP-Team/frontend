@@ -356,6 +356,7 @@ export const UserProfileSchema = yup.object({
 
 export const EmailChangeSchema = yup.object({
   email: registrationValidationSchema.fields.email,
+  password: yup.string().required("Current Passwort ist erforderlich"),
 });
 
 export const passwordChangeSchema = yup.object({

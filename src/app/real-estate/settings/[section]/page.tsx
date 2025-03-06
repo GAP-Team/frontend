@@ -12,13 +12,13 @@ export default function SectionPage({
 
   const renderSection = (): React.ReactNode => {
     switch (section) {
-      case "user_profile":
+      case "user-profile":
         return <UserProfile />;
-      case "company_profile":
+      case "company-profile":
         return <CompanyProfile />;
-      case "email_change":
+      case "email-change":
         return <EmailChange />;
-      case "password_change":
+      case "password-change":
         return <ChangePassword />;
     }
   };

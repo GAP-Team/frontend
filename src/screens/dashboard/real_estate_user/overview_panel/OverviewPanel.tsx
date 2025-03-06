@@ -13,8 +13,9 @@ import dayjs from "dayjs";
 import { Facility } from "../../facilities/facility_card/types";
 import { Building } from "../../buildings/building_card/types";
 import { truncateLabel } from "@/utils/utils";
+import { DashboardComponentsProps } from "@/utils/Constants";
 
-const OverviewPanel = (): JSX.Element => {
+const OverviewPanel: React.FC<DashboardComponentsProps> = (): JSX.Element => {
   const tenders = useAppSelector((state) => state.tender.tenderList);
   const facilities = useAppSelector((state) => state.facility.facilities);
   const buildings = useAppSelector((state) => state.building.buildings);
@@ -36,9 +37,9 @@ const OverviewPanel = (): JSX.Element => {
 
   const getDaysRemaining = (facilityId: string): number => {
     const facility = facilities.find((f: Facility) => f.id === facilityId);
-    const lastCheckDate = dayjs(facility.check?.lastCheckDate);
+    const lastCheckDate = dayjs(facility?.check?.lastCheckDate);
     const nextCheckDate = lastCheckDate.add(
-      Number(facility.check?.nextCheckInYearNumber),
+      Number(facility?.check?.nextCheckInYearNumber),
       "year"
     );
     return nextCheckDate.diff(dayjs(), "days");
@@ -46,13 +47,13 @@ const OverviewPanel = (): JSX.Element => {
 
   const tendersDueSoon = tenders?.filter((tender: Tender) => {
     return (
-      getDaysRemaining(tender.facility?.id) < 183 &&
-      getDaysRemaining(tender.facility?.id) > 0
+      getDaysRemaining(tender?.facility?.id) < 183 &&
+      getDaysRemaining(tender?.facility?.id) > 0
     );
   });
 
   const tendersExceedingDays = tenders?.filter(
-    (tender: Tender) => getDaysRemaining(tender.facility?.id) <= 0
+    (tender: Tender) => getDaysRemaining(tender?.facility?.id) <= 0
   );
 
   const renderTenderCards = (tendersList: Tender[]): React.ReactNode =>
@@ -64,11 +65,11 @@ const OverviewPanel = (): JSX.Element => {
 
       // Check if facility has a check date and and then only show the card
       const facility = facilities.find(
-        (f: Facility) => f.id === tender.facility?.id
+        (f: Facility) => f.id === tender?.facility?.id
       );
       if (
         !facility?.check?.lastCheckDate ||
-        facility.check.nextCheckInYearNumber === 0
+        facility?.check?.nextCheckInYearNumber === 0
       ) {
         return null;
       }

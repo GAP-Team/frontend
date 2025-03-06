@@ -15,6 +15,7 @@ import {
 import { SubmitFormFunction } from "@/typings/types";
 import { currentUser } from "@/lib/features/userSlice";
 
+import { ROUTES } from "@/utils/routes";
 import AddBuildingForm from "./AddBuildingForm";
 import BuildingAddress from "./BuildingAddress";
 import BuildingSummary from "./BuildingSummary";
@@ -155,7 +156,7 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
     if (activeStep.id > 0) {
       setActiveStep(steps[activeStep.id - 1]);
     } else {
-      router.push("/real_estate/dashboard");
+      router.push(ROUTES.REAL_ESTATE.DASHBOARD);
     }
   };
 

@@ -157,6 +157,10 @@ export interface Item {
   value: string;
 }
 
+export interface DashboardComponentsProps {
+  slot?: string;
+}
+
 export interface Documentation {
   documentChoice: string;
   constructionDocs: File[];

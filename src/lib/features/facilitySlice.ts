@@ -51,6 +51,15 @@ const getFacilitiesByUserId = createAsyncThunk(
   }
 );
 
+// Delete facility
+export const deleteFacility = createAsyncThunk(
+  "facility/deleteFacility",
+  async (facilityId: string) => {
+    await facilityAPIs.delete(facilityId);
+    return facilityId;
+  }
+);
+
 export const getFacilitiesByUser = (
   userId: string,
   city?: string,
@@ -129,6 +138,22 @@ const FacilitySlice = createSlice({
       .addCase(getFacilitiesByUserId.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message || "Failed to fetch user facilities";
+      })
+      // delete facility reducers
+      .addCase(deleteFacility.fulfilled, (state, action) => {
+        state.facilities = state.facilities.filter(
+          (facility) => facility.id !== action.payload
+        );
+        state.loading = false;
+        state.error = null;
+      })
+      .addCase(deleteFacility.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(deleteFacility.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message || "Failed to delete facility";
       })
 
       // Update Facility

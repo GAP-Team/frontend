@@ -4,11 +4,12 @@ import Box from "@mui/material/Box";
 import Chip from "@mui/material/Chip";
 import Icon from "@mui/material/Icon";
 import List from "@mui/material/List";
+import { ROUTES } from "@/utils/routes";
 import Paper from "@mui/material/Paper";
 import Divider from "@mui/material/Divider";
 import { useRouter } from "next/navigation";
 import { BsClockFill } from "react-icons/bs";
-import { useAppSelector } from "@/lib/hooks";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { DOCUMENT_TYPE } from "@/utils/enums";
 import Typography from "@mui/material/Typography";
 import ActionMenu from "@/components/common/ActionMenu";
@@ -16,6 +17,8 @@ import SectionTitle from "@/components/label/SectionTitle";
 import { scrollBarStyles } from "@/components/scrollbar/Scrollbar";
 import DocumentList from "../../buildings/building_card/DocumentList ";
 import { checkActiveTenderForFacility } from "@/lib/features/tenderSlice";
+import { showSnackbar } from "@/components/root-snackbar";
+import { deleteFacility } from "@/lib/features/facilitySlice";
 
 interface FacilityCardProps {
   facility: Facility;
@@ -29,9 +32,11 @@ const statusStyles: { [key: string]: { bgcolor: string; color: string } } = {
 const FacilityCard: React.FC<FacilityCardProps> = ({ facility }) => {
   const handleClick = (): void => {};
   const router = useRouter();
+  const dispatch = useAppDispatch();
   const isFacilityActive = useAppSelector(
     checkActiveTenderForFacility(facility?.id)
   );
+  const noOfTenders = facility?.tenderIds?.length;
   const chipStyles = statusStyles[status] || statusStyles["aktiv"];
 
   const checkUrgency = (): string => {
@@ -45,8 +50,23 @@ const FacilityCard: React.FC<FacilityCardProps> = ({ facility }) => {
     return "";
   };
 
-  const deleteFacility = (id: string): void => {
-    throw new Error("Function not implemented." + id);
+  const handleDeleteFacility = async (facilityId: string): Promise<void> => {
+    try {
+      await dispatch(deleteFacility(facilityId)).unwrap();
+      dispatch(
+        showSnackbar({
+          type: "success",
+          message: "Die Anlage wurden erfolgreich gelöscht!",
+        })
+      );
+    } catch {
+      dispatch(
+        showSnackbar({
+          type: "error",
+          message: "Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut.",
+        })
+      );
+    }
   };
 
   return (
@@ -67,9 +87,11 @@ const FacilityCard: React.FC<FacilityCardProps> = ({ facility }) => {
       <Box sx={styles.actionMenu}>
         <ActionMenu
           itemId={facility?.id}
-          onEdit={(id) => router.push(`/real_estate/facilities/edit/${id}`)}
-          onDelete={(id) => deleteFacility(id)}
-          messege={"dummy delete message"}
+          onDelete={handleDeleteFacility}
+          onEdit={(id) =>
+            router.push(ROUTES.REAL_ESTATE.FACILITY.EDIT_FACILITY(id))
+          }
+          messege={`Sind Sie sicher, dass Sie dieses Element${noOfTenders ? ` und die zugehörigen ${noOfTenders} Ausschreibungen` : ""} löschen möchten?`}
         />
       </Box>
       <SectionTitle

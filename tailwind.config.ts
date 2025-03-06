@@ -7,7 +7,6 @@ const config: Config = {
     "./src/sections/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/typings/**/*.{js,ts,jsx,tsx,mdx}",
-    "node_modules/flowbite-react/lib/esm/**/*.js",
   ],
   safelist: [{ pattern: /(bg|text|border)-./ }],
   theme: {
@@ -52,19 +51,6 @@ const config: Config = {
       },
     },
   },
-  plugins: [require("daisyui"), require("flowbite/plugin")],
-  daisyui: {
-    themes: [
-      {
-        winter: {
-          ...require("daisyui/src/theming/themes")["winter"],
-          primary: "#22A7F1", // default primary color
-          secondary: "#FF4D4D", //default secondry color
-          "base-content": "#1E3137", //default color of content
-          "base-100": "white", //default color of the blank page or the bg color
-        },
-      },
-    ],
-  },
+  plugins: [],
 };
 export default config;

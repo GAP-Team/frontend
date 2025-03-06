@@ -3,15 +3,16 @@
 import React from "react";
 import { useFormik } from "formik";
 import Grid from "@mui/material/Grid";
-import Typography from "@mui/material/Typography";
+import { ROUTES } from "@/utils/routes";
 import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
+import { useRouter } from "next/navigation";
 import TextField from "@mui/material/TextField";
-import { useAppSelector, useAppDispatch } from "@/lib/hooks";
+import Typography from "@mui/material/Typography";
 import { showSnackbar } from "@/components/root-snackbar";
+import { useAppSelector, useAppDispatch } from "@/lib/hooks";
 import { updateUserProfile } from "@/lib/features/userSlice";
 import { UserProfileSchema } from "@/utils/ValidationSchema";
-import { useRouter } from "next/navigation";
 
 const UserProfile = (): JSX.Element => {
   const dispatch = useAppDispatch();
@@ -142,7 +143,7 @@ const UserProfile = (): JSX.Element => {
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
-            label="Position"
+            label="Beruf"
             name="position"
             value={formik.values.position}
             onChange={formik.handleChange}
@@ -164,7 +165,7 @@ const UserProfile = (): JSX.Element => {
             <Grid item>
               <Button
                 variant="outlined"
-                onClick={() => router.push("/real_estate/dashboard")}
+                onClick={() => router.push(ROUTES.REAL_ESTATE.DASHBOARD)}
               >
                 Abbrechen
               </Button>
