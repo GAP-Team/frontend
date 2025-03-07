@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { Button, Divider } from "@mui/material";
+import { Button } from "@mui/material";
 import TaskAltIcon from "@mui/icons-material/TaskAlt";
 import RocketLaunchIcon from "@mui/icons-material/RocketLaunch";
 import QuestionAnswerIcon from "@mui/icons-material/QuestionAnswer";
@@ -23,11 +23,11 @@ const HeroSection = (): JSX.Element => {
             </h1>
             <p className="text-lg font-semibold max-w-4xl mx-auto">
               Lorem ipsum dolor sit amet consectetur adipiscing elit. Eaque sed
-              tenetur rem quam nihil dolorum <br />
+              tenetur rem quam nihil <br />
               expedita maxime nisi recusandae sequi magni culpa fuga accusamus
               eveniet fugiat ipsum ab.
             </p>
-            <div className="flex flex-col grid-cols-2 py-1 ml-20">
+            <div className="flex flex-col grid-cols-2 py-1">
               <div className="flex flex-row gap-5 sm:gap-7 md:gap-10 lg:gap-20 mt-14 justify-between lg:justify-start">
                 <div className="grid-cols-2 flex flex-row">
                   <div className="w-full text-center">
@@ -100,7 +100,6 @@ const HeroSection = (): JSX.Element => {
             <div className="flex flex-row gap-5 sm:gap-7 md:gap-10 lg:gap-20 mt-14 justify-center lg:justify-start">
               <Button
                 component="a"
-                href="/login"
                 className="block px-5 py-2 mt-4 text-center rounded-lg text-md"
                 size="small"
                 style={styles.registerButton}
@@ -131,7 +130,6 @@ const HeroSection = (): JSX.Element => {
             </div>
           </div>
         </div>
-        <Divider />
       </section>
     </>
   );
@@ -154,7 +152,7 @@ const styles = {
     borderRadius: 7,
     fontSize: "1.5rem",
     "&:hover": {
-      background: "###17ABA9",
+      background: "#17ABA9",
     },
   },
   heroTextHolder: {
@@ -166,6 +164,6 @@ const styles = {
     marginLeft: "1rem",
   },
   heroFeatureText: {
-    fontSize: "25px",
+    fontSize: "22px",
   },
 };

@@ -356,6 +356,7 @@ export const UserProfileSchema = yup.object({
 
 export const EmailChangeSchema = yup.object({
   email: registrationValidationSchema.fields.email,
+  password: yup.string().required("Current Passwort ist erforderlich"),
 });
 
 export const passwordChangeSchema = yup.object({
@@ -388,20 +389,10 @@ export const CompanyProfileSchema = yup.object({
 });
 
 export const ContactFormSchema = yup.object({
-  firstName: yup.string().required("Vorname ist erforderlich."),
-  lastName: yup.string().required("Nachname ist erforderlich."),
-  email: yup
-    .string()
-    .matches(EMAIL_REGEX, "Ungültige Email")
-    .required("Email ist erforderlich."),
-  phoneNumber: yup
-    .string()
-    .required("Telefonnummer ist erforderlich.")
-    .test(
-      "is-valid-phone",
-      "Telefonnummer muss eine gültige Nummer sein.",
-      (value) => !value || /^\d+$/.test(value)
-    ),
+  firstName: registrationValidationSchema.fields.firstName,
+  lastName: registrationValidationSchema.fields.lastName,
+  email: registrationValidationSchema.fields.email,
+  phoneNumber: registrationValidationSchema.fields.telephone,
   message: yup.string().required("Nachricht ist erforderlich."),
   agree: yup
     .boolean()

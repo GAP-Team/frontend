@@ -47,13 +47,13 @@ const OverviewPanel: React.FC<DashboardComponentsProps> = (): JSX.Element => {
 
   const tendersDueSoon = tenders?.filter((tender: Tender) => {
     return (
-      getDaysRemaining(tender.facility?.id) < 183 &&
-      getDaysRemaining(tender.facility?.id) > 0
+      getDaysRemaining(tender?.facility?.id) < 183 &&
+      getDaysRemaining(tender?.facility?.id) > 0
     );
   });
 
   const tendersExceedingDays = tenders?.filter(
-    (tender: Tender) => getDaysRemaining(tender.facility?.id) <= 0
+    (tender: Tender) => getDaysRemaining(tender?.facility?.id) <= 0
   );
 
   const renderTenderCards = (tendersList: Tender[]): React.ReactNode =>
@@ -65,11 +65,11 @@ const OverviewPanel: React.FC<DashboardComponentsProps> = (): JSX.Element => {
 
       // Check if facility has a check date and and then only show the card
       const facility = facilities.find(
-        (f: Facility) => f.id === tender.facility?.id
+        (f: Facility) => f.id === tender?.facility?.id
       );
       if (
         !facility?.check?.lastCheckDate ||
-        facility?.check.nextCheckInYearNumber === 0
+        facility?.check?.nextCheckInYearNumber === 0
       ) {
         return null;
       }

@@ -3,11 +3,12 @@ import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import { CgClose } from "react-icons/cg";
 import { useFormikContext } from "formik";
-import { IconButton, Typography } from "@mui/material";
 import { useRouter } from "next/navigation";
 import Divider from "@mui/material/Divider";
+import { IconButton, Typography } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
 
+import { ROUTES } from "@/utils/routes";
 import { AddBuildingFormValues } from "./types";
 import GButton from "@/components/button/GButton";
 import { AddComponentFormProps } from "../../types";
@@ -33,7 +34,7 @@ const AddBuildingForm = ({
   const typeOfBtn = activeStep.id + 1 >= steps.length ? "submit" : "button";
 
   const handleRoute = (): void => {
-    router.push("/real_estate/buildings");
+    router.push(ROUTES.REAL_ESTATE.BUILDING.BUILDINGS);
   };
 
   const formOrSuccessContent = isBeyondLastStep ? (
@@ -60,7 +61,7 @@ const AddBuildingForm = ({
           />
         </Grid>
         <Grid item>
-          <Link href="/real_estate/buildings">
+          <Link href={ROUTES.REAL_ESTATE.BUILDING.BUILDINGS}>
             <IconButton sx={{ marginLeft: "auto" }} size="medium">
               <CgClose color="red" />
             </IconButton>

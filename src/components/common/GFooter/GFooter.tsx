@@ -1,3 +1,4 @@
+import { REAL_ESTATE_BASE } from "@/utils/routes";
 import Divider from "@mui/material/Divider";
 import { GapLogo } from "@/components/logo/GapLogo";
 import { Box, Typography, Grid, Link } from "@mui/material";
@@ -84,7 +85,7 @@ function GFooter(): JSX.Element {
                     Als Immobilienbesitzer
                   </Typography>
                   <Link
-                    href=" /real-estate "
+                    href={REAL_ESTATE_BASE}
                     style={styles.footerMenuText}
                     underline="hover"
                   >
