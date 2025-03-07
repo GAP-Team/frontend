@@ -97,6 +97,12 @@ const HeroSection = (): JSX.Element => {
     setTenderTypeAnchorEl(null);
   };
 
+  const handleSearch = (): void => {
+    console.log("Selected State: => ", selectedState);
+    console.log("Selected Facilities: => ", selectedFacilities);
+    console.log("Selected Tender Type: => ", selectedTenderType);
+  }
+
   return (
     <>
       <section className="bg-white w-full dark:bg-gray-900">
@@ -138,6 +144,8 @@ const HeroSection = (): JSX.Element => {
                       </p>
                     </div>
                     <form className="flex flex-col justify-center text-center pt-10 pb-4 md:flex-row">
+
+                      {/* Facility Type Section */}
                       <div className="flex flex-col w-full px-2 sm:px-4 md:w-1/3">
                         <FormControl sx={{ m: 1, minWidth: 120 }}>
                           <label
@@ -226,7 +234,8 @@ const HeroSection = (): JSX.Element => {
                           )}
                         </FormControl>
                       </div>
-
+                      
+                      {/* Tender Type Section */}
                       <div className="flex flex-col w-full px-2 sm:px-4 md:w-1/3">
                         <FormControl sx={{ m: 1, minWidth: 120 }}>
                           <label
@@ -295,6 +304,7 @@ const HeroSection = (): JSX.Element => {
                         </FormControl>
                       </div>
 
+                      {/* State Secton */}
                       <div className="flex flex-col w-full px-2 sm:px-4 md:w-1/3">
                         <FormControl sx={{ m: 1, minWidth: 120 }}>
                           <label
@@ -315,6 +325,8 @@ const HeroSection = (): JSX.Element => {
                         </FormControl>
                       </div>
                     </form>
+
+                    {/* Button Section */}
                     <div className="flex justify-center items-center">
                       <Button
                         href="#"
@@ -326,11 +338,13 @@ const HeroSection = (): JSX.Element => {
                           textTransform: "none",
                           whiteSpace: "pre",
                         }}
+                        onClick={handleSearch}
                       >
                         Jetzt Auftrag Finden
                         <FaArrowRightLong className="ml-2 h-5 w-5" />
                       </Button>
                     </div>
+
                     <div className="flex justify-center items-center pt-6 gap-4 px-4">
                       <div className="flex items-center">
                         <FaCheck />
