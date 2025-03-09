@@ -16,6 +16,7 @@ import SectionTitle from "@/components/label/SectionTitle";
 import { USER_ROLE, BUSINESS_TYPE } from "@/utils/enums";
 import GProgressStepper from "@/components/stepper/GProgressStepper";
 import CircularProgress from "@mui/material/CircularProgress";
+import BasicInfoServiceProvider from "../service_provider/BasicInfoServiceProvider";
 
 interface RegistrationFormProps {
   activeStep: number;
@@ -92,7 +93,7 @@ const RegistrationForm = ({
       label: "Immobilienbetreiber",
       content: <BasicInformation formik={formik} />,
     },
-    { label: "Dienstleister", content: <></> },
+    { label: "Dienstleister", content: <BasicInfoServiceProvider formik={formik} /> },
   ];
   const registertabs = [
     { label: "Gewerbeperson", content: <ComercialPerson formik={formik} /> },

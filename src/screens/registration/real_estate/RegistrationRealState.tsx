@@ -13,9 +13,9 @@ import {
   SetTouchedFunction,
   SubmitFormFunction,
   ValidateFormFunction,
-} from "../../typings/types";
+} from "../../../typings/types";
 import userAPIs from "@/api/user";
-import { RegistrationFormValues } from "./types";
+import { RegistrationFormValues } from "../types";
 
 import { BUSINESS_TYPE, DOCUMENT_TYPE } from "@/utils/enums";
 import PageTitle from "@/components/label/PageTitle";
