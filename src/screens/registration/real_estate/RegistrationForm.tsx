@@ -17,6 +17,8 @@ import { USER_ROLE, BUSINESS_TYPE } from "@/utils/enums";
 import GProgressStepper from "@/components/stepper/GProgressStepper";
 import CircularProgress from "@mui/material/CircularProgress";
 import BasicInfoServiceProvider from "../service_provider/BasicInfoServiceProvider";
+import { RegistrationFormValues } from "../types";
+import ExpertiseServiceProvider from "../service_provider/ExpertiseServiceProvider";
 
 interface RegistrationFormProps {
   activeStep: number;
@@ -33,7 +35,7 @@ const RegistrationForm = ({
   handleNext,
   setActiveStep,
 }: RegistrationFormProps): JSX.Element => {
-  const formik = useFormikContext();
+  const formik = useFormikContext<RegistrationFormValues>();
   const [personTypeTab, setPersonTyp] = React.useState(0);
   const [stakeholderTyp, setStakeholderTyp] = React.useState(0);
 
@@ -93,7 +95,10 @@ const RegistrationForm = ({
       label: "Immobilienbetreiber",
       content: <BasicInformation formik={formik} />,
     },
-    { label: "Dienstleister", content: <BasicInfoServiceProvider formik={formik} /> },
+    {
+      label: "Dienstleister",
+      content: <BasicInfoServiceProvider formik={formik} />,
+    },
   ];
   const registertabs = [
     { label: "Gewerbeperson", content: <ComercialPerson formik={formik} /> },
@@ -109,7 +114,7 @@ const RegistrationForm = ({
           color="inherit"
           href="/"
         >
-          Schritt {activeStep + 1}/ 4
+          Schritt {activeStep + 1}/ {steps.length}
         </Link>
 
         <GStepper activeStep={activeStep} steps={steps} />
@@ -134,14 +139,23 @@ const RegistrationForm = ({
             />
           )}
           {activeStep === 1 && <CompanyAddress formik={formik} />}
-          {activeStep === 2 && (
-            <GTab
-              tabs={registertabs}
-              tabvalue={personTypeTab}
-              handleChange={handlePersonTabChange}
-            />
-          )}
-          {activeStep === 3 && (
+          {activeStep === 2 &&
+            formik?.values?.role === USER_ROLE.REAL_ESTATE_OWNER && (
+              <GTab
+                tabs={registertabs}
+                tabvalue={personTypeTab}
+                handleChange={handlePersonTabChange}
+              />
+            )}
+          {activeStep === 2 &&
+            formik?.values?.role === USER_ROLE.SERVICE_PROVIDER && (
+              <ComercialPerson formik={formik} />
+            )}
+          {activeStep === 3 &&
+            formik?.values?.role === USER_ROLE.SERVICE_PROVIDER && (
+              <ExpertiseServiceProvider formik={formik} />
+            )}
+          {steps[activeStep] === "Zusammenfassung" && (
             <SummaryRegistration setActiveStep={setActiveStep} />
           )}
         </div>

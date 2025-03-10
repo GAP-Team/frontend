@@ -649,3 +649,30 @@ export const notifications: Notification[] = [
     status: "danger",
   },
 ];
+
+export const numOfEmployeesOptions = [
+  {
+    label: "1-5",
+    value: "1-5",
+  },
+  {
+    label: "5-10",
+    value: "5-10",
+  },
+  {
+    label: "10-50",
+    value: "10-50",
+  },
+  {
+    label: "50-100",
+    value: "50-100",
+  },
+  {
+    label: "100-500",
+    value: "100-500",
+  },
+  {
+    label: "1000",
+    value: "1000",
+  },
+];
