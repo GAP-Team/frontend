@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { Button, Divider } from "@mui/material";
+import { Button } from "@mui/material";
 import TaskAltIcon from "@mui/icons-material/TaskAlt";
 import RocketLaunchIcon from "@mui/icons-material/RocketLaunch";
 import QuestionAnswerIcon from "@mui/icons-material/QuestionAnswer";
@@ -130,7 +130,6 @@ const HeroSection = (): JSX.Element => {
             </div>
           </div>
         </div>
-        <Divider />
       </section>
     </>
   );
