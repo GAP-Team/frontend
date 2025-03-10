@@ -3,7 +3,7 @@ import Cookies from "js-cookie";
 import React, { useState } from "react";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
-import { Formik, Form } from "formik";
+import { Formik, Form, FormikHelpers } from "formik";
 import { useRouter } from "next/navigation";
 import Snackbar from "@mui/material/Snackbar";
 import RegistrationForm from "./RegistrationForm";
@@ -19,7 +19,6 @@ import BackButton from "@/components/button/BackButton";
 import InfoBanner from "@/components/common/InfoBanner";
 import EmailVerification from "@/components/email/EmailVerification";
 import { registrationValidationSchema } from "@/utils/ValidationSchema";
-import { FormikHelpers } from "formik";
 import { numOfEmployeesOptions } from "@/utils/Constants";
 export function getSteps(role?: string): string[] {
   if (role === USER_ROLE.SERVICE_PROVIDER) {
