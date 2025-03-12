@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
-import React, { useState } from "react";
 import Badge from "../../badge/GBadge";
+import React, { useState } from "react";
 import { FaCheck } from "react-icons/fa";
 import { FaArrowRightLong } from "react-icons/fa6";
 import {
@@ -24,7 +24,9 @@ import {
   listOfTrades,
   listOfOrderTypes,
 } from "@/utils/Constants";
+import { useRouter } from "next/navigation";
 import CloseIcon from "@mui/icons-material/Close";
+import { SERVICE_PROVIDER_BASE } from "@/utils/routes";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import CustomSelect from "@/components/drop_down/CustomSelect";
@@ -32,6 +34,8 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import heroBackgroundPicture from "../../../../public/images/hero6.jpg";
 
 const HeroSection = (): JSX.Element => {
+  const router = useRouter();
+
   const [selectedState, setSelectedState] = useState<string>("");
 
   const [selectedFacilities, setSelectedFacilities] = useState<string[]>([]);
@@ -101,7 +105,8 @@ const HeroSection = (): JSX.Element => {
     console.log("Selected State: => ", selectedState);
     console.log("Selected Facilities: => ", selectedFacilities);
     console.log("Selected Tender Type: => ", selectedTenderType);
-  }
+    router.push(`${window.location.origin}/${SERVICE_PROVIDER_BASE}/result`);
+  };
 
   return (
     <>
@@ -144,7 +149,6 @@ const HeroSection = (): JSX.Element => {
                       </p>
                     </div>
                     <form className="flex flex-col justify-center text-center pt-10 pb-4 md:flex-row">
-
                       {/* Facility Type Section */}
                       <div className="flex flex-col w-full px-2 sm:px-4 md:w-1/3">
                         <FormControl sx={{ m: 1, minWidth: 120 }}>
@@ -234,7 +238,7 @@ const HeroSection = (): JSX.Element => {
                           )}
                         </FormControl>
                       </div>
-                      
+
                       {/* Tender Type Section */}
                       <div className="flex flex-col w-full px-2 sm:px-4 md:w-1/3">
                         <FormControl sx={{ m: 1, minWidth: 120 }}>
@@ -329,9 +333,9 @@ const HeroSection = (): JSX.Element => {
                     {/* Button Section */}
                     <div className="flex justify-center items-center">
                       <Button
-                        href="#"
+                        // href="#"
                         size="large"
-                        component="a"
+                        component="button"
                         style={styles.querySubmitButton}
                         className="mt-10 rounded-lg"
                         sx={{
