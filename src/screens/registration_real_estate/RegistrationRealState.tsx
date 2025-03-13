@@ -238,7 +238,6 @@ const RegistrationRealState = (): JSX.Element => {
 
       await onSubmit(values, docObj);
     } catch (error) {
-      console.error("Error uploading documents:", error);
       throw error;
     }
   };
