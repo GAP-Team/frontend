@@ -108,15 +108,23 @@ const RealStateUserLayout: React.FC<any> = ({ children }) => {
     }
   };
 
-  return (
-    <Layout
-      sidebarItems={sidebarItems}
-      selected={selected}
-      setSelected={handleRedirect}
-    >
-      {children}
-    </Layout>
-  );
+  const getLayout = (route: string): JSX.Element => {
+    if (route.startsWith("/real-estate/")) {
+      return (
+        <Layout
+          sidebarItems={sidebarItems}
+          selected={selected}
+          setSelected={handleRedirect}
+        >
+          {children}
+        </Layout>
+      );
+    } else {
+      return <>{children}</>;
+    }
+  };
+
+  return getLayout(pathname);
 };
 
 export default RealStateUserLayout;
