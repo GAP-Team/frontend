@@ -68,10 +68,13 @@ const OverviewPanel: React.FC<DashboardComponentsProps> = (): JSX.Element => {
 
   const renderFacilityCards = (
     facilityList: Facility[],
-    warning: boolean = false
+    warning: boolean = false,
+    isMaintenanceCheck: boolean = false
   ): React.ReactNode =>
     facilityList?.map((facility, index) => {
-      const daysRemaining = getFacilityCheckTimeRemaining(facility, "days");
+      const daysRemaining = isMaintenanceCheck
+        ? getFacilityMaintenanceTimeRemaining(facility, "days")
+        : getFacilityCheckTimeRemaining(facility, "days");
 
       const buildingAddress = buildings.find(
         (building: Building) => building.id === facility.buildingId
@@ -109,14 +112,14 @@ const OverviewPanel: React.FC<DashboardComponentsProps> = (): JSX.Element => {
         text="Bald fällig"
         sx={{ color: "white", lineHeight: "1rem", mt: "2.5rem" }}
       />
-      {renderFacilityCards(facilitiesCheckDueSoon, true)}
-      {renderFacilityCards(facilitiesMaintenanceDueSoon, true)}
+      {renderFacilityCards(facilitiesCheckDueSoon, true, false)}
+      {renderFacilityCards(facilitiesMaintenanceDueSoon, true, true)}
       <SectionTitle
         text="Frist abgelaufen"
         sx={{ color: "white", lineHeight: "1rem", mt: "2.5rem" }}
       />
-      {renderFacilityCards(facilitiesCheckExceedingDays)}
-      {renderFacilityCards(facilitiesMaintenanceExceedingDays)}
+      {renderFacilityCards(facilitiesCheckExceedingDays, false, false)}
+      {renderFacilityCards(facilitiesMaintenanceExceedingDays, false, true)}
     </>
   );
 };
