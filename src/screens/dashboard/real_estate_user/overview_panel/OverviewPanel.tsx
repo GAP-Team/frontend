@@ -17,6 +17,7 @@ import {
   getFacilityCheckTimeRemaining,
   getFacilityMaintenanceTimeRemaining,
 } from "../../facilities/utils";
+import GButton from "@/components/button/GButton";
 
 const OverviewPanel: React.FC<DashboardComponentsProps> = (): JSX.Element => {
   const tenders = useAppSelector((state) => state.tender.tenderList);
@@ -24,6 +25,7 @@ const OverviewPanel: React.FC<DashboardComponentsProps> = (): JSX.Element => {
   const buildings = useAppSelector((state) => state.building.buildings);
   const user = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
+  const [activeFilter, setActiveFilter] = React.useState<'check' | 'maintenance'>('check');
 
   const openTenders = tenders?.filter(
     (tender: Tender) => tender.status === TenderStatusEnum.OPEN
@@ -108,18 +110,32 @@ const OverviewPanel: React.FC<DashboardComponentsProps> = (): JSX.Element => {
         <Divider orientation="vertical" flexItem sx={styles.dividerStats} />
         <StatisticsItem number={activeTender} text="laufende Ausschreibungen" />
       </Box>
+      <Box sx={{ display: 'flex', gap: 2, mt: 2 }}>
+        <GButton
+          variant={activeFilter === 'check' ? 'contained' : 'outlined'}
+          onClick={() => setActiveFilter('check')}
+        >
+          Prüfung
+        </GButton>
+        <GButton
+          variant={activeFilter === 'maintenance' ? 'contained' : 'outlined'}
+          onClick={() => setActiveFilter('maintenance')}
+        >
+          Wartung
+        </GButton>
+      </Box>
       <SectionTitle
         text="Bald fällig"
         sx={{ color: "white", lineHeight: "1rem", mt: "2.5rem" }}
       />
-      {renderFacilityCards(facilitiesCheckDueSoon, true, false)}
-      {renderFacilityCards(facilitiesMaintenanceDueSoon, true, true)}
+      {activeFilter === 'check' && renderFacilityCards(facilitiesCheckDueSoon, true, false)}
+      {activeFilter === 'maintenance' && renderFacilityCards(facilitiesMaintenanceDueSoon, true, true)}
       <SectionTitle
         text="Frist abgelaufen"
         sx={{ color: "white", lineHeight: "1rem", mt: "2.5rem" }}
       />
-      {renderFacilityCards(facilitiesCheckExceedingDays, false, false)}
-      {renderFacilityCards(facilitiesMaintenanceExceedingDays, false, true)}
+      {activeFilter === 'check' && renderFacilityCards(facilitiesCheckExceedingDays, false, false)}
+      {activeFilter === 'maintenance' && renderFacilityCards(facilitiesMaintenanceExceedingDays, false, true)}
     </>
   );
 };
