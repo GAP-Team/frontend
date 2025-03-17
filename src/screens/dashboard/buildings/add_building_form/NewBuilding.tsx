@@ -134,19 +134,46 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
       if (nextStepId < steps.length) {
         setActiveStep(steps[nextStepId]);
       } else {
-        const uploadSuccess = await uploadAllDocuments(values);
+        const filteredStateBuildings = userBuildingDetails?.filter(
+          (building: SelectedBuildingData) =>
+            building.address.state === values?.state
+        );
+        const filteredStateCityBuildings = filteredStateBuildings?.filter(
+          (building: SelectedBuildingData) =>
+            building.address.city === values?.city
+        );
+        const filteredStateCityZipBuildings =
+          filteredStateCityBuildings?.filter(
+            (building: SelectedBuildingData) =>
+              Number(building.address.zip) === Number(values.zip)
+          );
+        const filteredStateCityZipStreetBuildings =
+          filteredStateCityZipBuildings?.filter(
+            (building: SelectedBuildingData) =>
+              building.address.street === values?.street
+          );
+        const filteredStateCityZipStreetHouseNumberBuildings =
+          filteredStateCityZipStreetBuildings?.filter(
+            (building: SelectedBuildingData) =>
+              Number(building.address.houseNumber) ===
+              Number(values?.houseNumber)
+          );
 
-        if (uploadSuccess) {
-          setLoading(false);
-          setActiveStep({ ...activeStep, id: nextStepId });
-        } else {
+        if (filteredStateCityZipStreetHouseNumberBuildings.length > 0) {
           appdispatch(
             showSnackbar({
               type: "error",
               message:
-                "Gebäude konnte nicht hinzugefügt oder bearbeitet werden. Bitte versuchen Sie es erneut!",
+                "An der gleichen Adresse ist bereits ein Gebäude angelegt, bitte prüfen Sie die Gebäudeadresse !",
             })
           );
+        } else {
+          const uploadSuccess = await uploadAllDocuments(values);
+
+          if (uploadSuccess) {
+            setLoading(false);
+            setActiveStep({ ...activeStep, id: nextStepId });
+          }
         }
       }
     }
