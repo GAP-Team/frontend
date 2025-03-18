@@ -135,7 +135,7 @@ const FacilityCard: React.FC<FacilityCardProps> = ({ facility }) => {
         />
         <DetailItem
           label="Nächste Prüfung in"
-          value={`${facility.check.nextCheckInYearNumber} Jahre`}
+          value={`${getFacilityCheckTimeRemaining(facility, "months")} Monate`}
         />
         <DetailItem
           label="Automatische Veröffentlichung"
@@ -172,7 +172,7 @@ const FacilityCard: React.FC<FacilityCardProps> = ({ facility }) => {
         />
         <DetailItem
           label="Nächste Wartung in"
-          value={`${facility.maintenance.nextMaintenanceInMonth} Monate`}
+          value={`${getFacilityMaintenanceTimeRemaining(facility, "days")} Tage`}
         />
         <DetailItem
           label="Automatische Veröffentlichung"
