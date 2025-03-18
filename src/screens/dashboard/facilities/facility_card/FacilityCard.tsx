@@ -118,40 +118,43 @@ const FacilityCard: React.FC<FacilityCardProps> = ({ facility }) => {
       <Typography variant="h6" sx={styles.title}>
         {facility.facilityType}
       </Typography>
-      <Box sx={styles.tags}/>
+      <Box sx={styles.tags} />
       <Divider sx={styles.divider} orientation="horizontal" />
       <SummaryCard>
-      <DetailItem label="Unterkategorie" value={facility.subcategory} />
+        <DetailItem label="Unterkategorie" value={facility.subcategory} />
         {/* Check Information */}
         <Typography variant="subtitle2" sx={{ ...styles.sectionTitle, mt: 1 }}>
           Prüfung
         </Typography>
-        <DetailItem 
-          label="Letzte Prüfung" 
-          value={dayjs(facility.check.lastCheckDate)?.format("DD.MM.YYYY") || "Nicht verfügbar"}
+        <DetailItem
+          label="Letzte Prüfung"
+          value={
+            dayjs(facility.check.lastCheckDate)?.format("DD.MM.YYYY") ||
+            "Nicht verfügbar"
+          }
         />
-        <DetailItem 
-          label="Nächste Prüfung in" 
+        <DetailItem
+          label="Nächste Prüfung in"
           value={`${facility.check.nextCheckInYearNumber} Jahre`}
         />
-        <DetailItem 
-          label="Automatische Veröffentlichung" 
+        <DetailItem
+          label="Automatische Veröffentlichung"
           value={facility.check.isPublishAutomatically ? "Ja" : "Nein"}
         />
-        <DetailItem 
-          label="Veröffentlichung in" 
+        <DetailItem
+          label="Veröffentlichung in"
           value={`${facility.check.publishAutomaticallyInMonth} Monate`}
         />
-        <DetailItem 
-          label="Erinnerung in" 
+        <DetailItem
+          label="Erinnerung in"
           value={`${facility.check.reminderInMonth} Monate`}
         />
-        <DetailItem 
-          label="E-Mail Benachrichtigung" 
+        <DetailItem
+          label="E-Mail Benachrichtigung"
           value={facility.check.isEmailNotificationEnable ? "Ja" : "Nein"}
         />
-        <DetailItem 
-          label="E-Mail Liste" 
+        <DetailItem
+          label="E-Mail Liste"
           value={facility.check.emailNotificationList.join(", ") || "Keine"}
         />
 
@@ -159,33 +162,39 @@ const FacilityCard: React.FC<FacilityCardProps> = ({ facility }) => {
         <Typography variant="subtitle2" sx={{ ...styles.sectionTitle, mt: 1 }}>
           Wartung
         </Typography>
-        <DetailItem 
-          label="Letzte Wartung" 
-          value={dayjs(facility.maintenance.lastMaintenanceDate)?.format("DD.MM.YYYY") || "Nicht verfügbar"}
+        <DetailItem
+          label="Letzte Wartung"
+          value={
+            dayjs(facility.maintenance.lastMaintenanceDate)?.format(
+              "DD.MM.YYYY"
+            ) || "Nicht verfügbar"
+          }
         />
-        <DetailItem 
-          label="Nächste Wartung in" 
+        <DetailItem
+          label="Nächste Wartung in"
           value={`${facility.maintenance.nextMaintenanceInMonth} Monate`}
         />
-        <DetailItem 
-          label="Automatische Veröffentlichung" 
+        <DetailItem
+          label="Automatische Veröffentlichung"
           value={facility.maintenance.isPublishAutomatically ? "Ja" : "Nein"}
         />
-        <DetailItem 
-          label="Veröffentlichung in" 
+        <DetailItem
+          label="Veröffentlichung in"
           value={`${facility.maintenance.publishAutomaticallyInMonth} Monate`}
         />
-        <DetailItem 
-          label="Erinnerung in" 
+        <DetailItem
+          label="Erinnerung in"
           value={`${facility.maintenance.reminderInMonth} Monate`}
         />
-        <DetailItem 
-          label="E-Mail Benachrichtigung" 
+        <DetailItem
+          label="E-Mail Benachrichtigung"
           value={facility.maintenance.isEmailNotificationEnable ? "Ja" : "Nein"}
         />
-        <DetailItem 
-          label="E-Mail Liste" 
-          value={facility.maintenance.emailNotificationList.join(", ") || "Keine"}
+        <DetailItem
+          label="E-Mail Liste"
+          value={
+            facility.maintenance.emailNotificationList.join(", ") || "Keine"
+          }
         />
       </SummaryCard>
 
