@@ -258,17 +258,28 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
   };
 
   const saveBuildingData = async (data: any): Promise<boolean> => {
-    const createBuildingResponse = await buildingAPIs.create(data);
-    if (createBuildingResponse?.data?.id) {
+    try {
+      const createBuildingResponse = await buildingAPIs.create(data);
+      if (createBuildingResponse?.data?.id) {
+        appdispatch(
+          showSnackbar({
+            type: "success",
+            message: "Gebäude erfolgreich hinzugefügt!",
+          })
+        );
+
+        return true;
+      } else {
+        return false;
+      }
+    } catch (error) {
+      console.error("Error create building: ", error);
       appdispatch(
         showSnackbar({
-          type: "success",
-          message: "Gebäude erfolgreich hinzugefügt!",
+          type: "error",
+          message: "Gebäude nicht erstellt. Versuchen Sie es später erneut.",
         })
       );
-
-      return true;
-    } else {
       return false;
     }
   };
@@ -278,20 +289,32 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
       throw new Error("Building edit failed");
     }
 
-    const updateBuildingResponse = await buildingAPIs.update(
-      selectedBuildingDetails?.id,
-      data
-    );
-    if (updateBuildingResponse?.data?.id) {
+    try {
+      const updateBuildingResponse = await buildingAPIs.update(
+        selectedBuildingDetails?.id,
+        data
+      );
+      if (updateBuildingResponse?.data?.id) {
+        appdispatch(
+          showSnackbar({
+            type: "success",
+            message: "Gebäude erfolgreich aktualisiert!",
+          })
+        );
+
+        return true;
+      } else {
+        return false;
+      }
+    } catch (error) {
+      console.error("Error update building: ", error);
       appdispatch(
         showSnackbar({
-          type: "success",
-          message: "Gebäude erfolgreich aktualisiert!",
+          type: "error",
+          message:
+            "Das Gebäude ist nicht aktualisiert. Versuchen Sie es später erneut.",
         })
       );
-
-      return true;
-    } else {
       return false;
     }
   };
