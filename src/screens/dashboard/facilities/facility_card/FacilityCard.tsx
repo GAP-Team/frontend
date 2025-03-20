@@ -232,7 +232,7 @@ const styles = {
     p: "1.25rem",
     borderRadius: "0.5rem",
     maxWidth: "20rem", // Adjust the width as needed
-    height: "21rem",
+    height: "35rem",
     flexShrink: 0,
     overflow: "auto",
     mb: "0.35rem",
