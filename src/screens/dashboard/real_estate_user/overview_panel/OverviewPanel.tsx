@@ -83,7 +83,7 @@ const OverviewPanel: React.FC<DashboardComponentsProps> = (): JSX.Element => {
       return (
         <ProjectCard
           key={index}
-          address={`${buildingAddress?.street} - ${buildingAddress?.city}, ${buildingAddress?.state}`}
+          address={`${buildingAddress?.street} - ${buildingAddress?.city}`}
           code={truncateLabel(facility?.subcategory, 10)}
           daysRemaining={daysRemaining}
           text={daysRemaining >= 0 ? "Tage" : "Tage übrig"}
