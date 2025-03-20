@@ -134,32 +134,20 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
       if (nextStepId < steps.length) {
         setActiveStep(steps[nextStepId]);
       } else {
-        const filteredStateBuildings = userBuildingDetails?.filter(
-          (building: SelectedBuildingData) =>
-            building.address.state === values?.state
-        );
-        const filteredStateCityBuildings = filteredStateBuildings?.filter(
-          (building: SelectedBuildingData) =>
-            building.address.city === values?.city
-        );
-        const filteredStateCityZipBuildings =
-          filteredStateCityBuildings?.filter(
-            (building: SelectedBuildingData) =>
-              Number(building.address.zip) === Number(values.zip)
-          );
-        const filteredStateCityZipStreetBuildings =
-          filteredStateCityZipBuildings?.filter(
-            (building: SelectedBuildingData) =>
-              building.address.street === values?.street
-          );
-        const filteredStateCityZipStreetHouseNumberBuildings =
-          filteredStateCityZipStreetBuildings?.filter(
-            (building: SelectedBuildingData) =>
-              Number(building.address.houseNumber) ===
-              Number(values?.houseNumber)
-          );
+        // Extract address values for comparison
+        const { state, city, zip, street, houseNumber } = values;
 
-        if (filteredStateCityZipStreetHouseNumberBuildings.length > 0) {
+        // Check for existing building at the same address
+        const isBuildingExist: boolean = userBuildingDetails?.some(
+          (building: SelectedBuildingData) =>
+            building.address.state === state &&
+            building.address.city === city &&
+            Number(building.address.zip) === Number(zip) &&
+            building.address.street === street &&
+            Number(building.address.houseNumber) === Number(houseNumber)
+        );
+
+        if (isBuildingExist) {
           appdispatch(
             showSnackbar({
               type: "error",
