@@ -12,7 +12,11 @@ import { getFacilitiesByUser } from "@/lib/features/facilitySlice";
 import { Facility } from "../../facilities/facility_card/types";
 import { Building } from "../../buildings/building_card/types";
 import { truncateLabel } from "@/utils/utils";
-import { DashboardComponentsProps, CHECK_DUE_SOON_DAYS, MAINTENANCE_DUE_SOON_DAYS } from "@/utils/Constants";
+import {
+  DashboardComponentsProps,
+  CHECK_DUE_SOON_DAYS,
+  MAINTENANCE_DUE_SOON_DAYS,
+} from "@/utils/Constants";
 import {
   getFacilityCheckTimeRemaining,
   getFacilityMaintenanceTimeRemaining,
@@ -54,7 +58,8 @@ const OverviewPanel: React.FC<DashboardComponentsProps> = (): JSX.Element => {
   const facilitiesMaintenanceDueSoon = facilities?.filter(
     (facility: Facility) => {
       return (
-        getFacilityMaintenanceTimeRemaining(facility, "days") < MAINTENANCE_DUE_SOON_DAYS &&
+        getFacilityMaintenanceTimeRemaining(facility, "days") <
+          MAINTENANCE_DUE_SOON_DAYS &&
         getFacilityMaintenanceTimeRemaining(facility, "days") > 0
       );
     }
@@ -86,7 +91,13 @@ const OverviewPanel: React.FC<DashboardComponentsProps> = (): JSX.Element => {
           address={`${buildingAddress?.street} - ${buildingAddress?.city}`}
           code={truncateLabel(facility?.subcategory, 10)}
           daysRemaining={daysRemaining}
-          text={daysRemaining >= 0 ? "Tage" : warning ? "Tage übrig" : `vor ${daysRemaining} Tagen abgelaufen`}
+          text={
+            daysRemaining >= 0
+              ? "Tage"
+              : warning
+                ? "Tage übrig"
+                : `vor ${daysRemaining} Tagen abgelaufen`
+          }
           warning={warning}
         />
       );
