@@ -302,10 +302,8 @@ const NewFacility: React.FC<NewFacilityProps> = ({
           ? "Anlage wurde erfolgreich aktualisiert"
           : "Anlage wurde erfolgreich angelegt"
       }
-      {...(!facility && {
-        buttonLabel: "Schließen",
-        redirectUrl: "/real_estate/facilities",
-      })}
+      buttonLabel={"Schließen"}
+      redirectUrl={ROUTES.REAL_ESTATE.FACILITY.FACILITIES}
     />
   ) : (
     <>
