@@ -26,7 +26,7 @@ const ContactSection = (): JSX.Element => {
             color="primary"
             sx={styles.heading}
           >
-            Vielen Dank für Ihr Interesse an SPIE!
+            Vielen Dank für Ihr Interesse an GAP!
           </Typography>
           <Typography variant="body1" sx={styles.description}>
             Wir als GAP (Gesetzliche Anlagen Prüfung) streben danach, &apos;

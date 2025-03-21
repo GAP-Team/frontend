@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useFormik } from "formik";
 import { ContactFormProps } from "@/utils/Constants";
 import GTextInput from "@/components/input/GTextInput";
@@ -6,6 +7,8 @@ import LabelWithAsterisk from "@/components/label/LabelWithAsterisk";
 import { Grid, Typography, Checkbox, Button } from "@mui/material";
 
 const ContactForm = (): JSX.Element => {
+  const [isAgreed, setIsAgreed] = useState<boolean>(false);
+
   const initialValues: ContactFormProps = {
     email: "",
     message: "",
@@ -126,7 +129,10 @@ const ContactForm = (): JSX.Element => {
           <Grid>
             <LabelWithAsterisk>Datenschutz</LabelWithAsterisk>
             <Grid sx={styles.textFieldContainer}>
-              <Checkbox name="agree" />
+              <Checkbox
+                name="agree"
+                onChange={(e) => setIsAgreed(e.target.checked)}
+              />
               <Typography variant="body1" sx={styles.agreeDescription}>
                 Ich willige ein, dass meine Kontaktdaten an alle in der
                 Datenschutzerklärung genannten <br />
@@ -138,6 +144,7 @@ const ContactForm = (): JSX.Element => {
             <Button
               size="small"
               type="submit"
+              disabled={!isAgreed}
               component="button"
               sx={styles.submitButton}
               className="block px-5 py-2 mt-4 text-center rounded-lg text-md"
@@ -193,8 +200,14 @@ const styles = {
     textTransform: "none",
     whiteSpace: "pre",
     marginTop: "5rem",
+    cursor: "pointer",
     "&:hover": {
       background: "#eb5959",
+    },
+    "&:disabled": {
+      color: "#FFFFFF",
+      background: "#ffd1d1",
+      cursor: "not-allowed",
     },
   },
   heroTextHolder: {
