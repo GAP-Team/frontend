@@ -92,11 +92,11 @@ const OverviewPanel: React.FC<DashboardComponentsProps> = (): JSX.Element => {
           code={truncateLabel(facility?.subcategory, 10)}
           daysRemaining={daysRemaining}
           text={
-            daysRemaining >= 0
-              ? "Tage"
+            daysRemaining > 1 && warning
+              ? "Tage übrig"
               : warning
-                ? "Tage übrig"
-                : `vor ${daysRemaining} Tagen abgelaufen`
+                ? "Tage"
+                : "Tagen abgelaufen"
           }
           warning={warning}
         />
