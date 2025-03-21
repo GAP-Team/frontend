@@ -23,7 +23,6 @@ const DetailedTenderCard: React.FC<DashboardComponentsProps> = () => {
         <Typography variant="h6" sx={styles.address}>
           HE, Frankfurt am Main
         </Typography>
-        {/* <Divider sx={styles.divider} orientation="horizontal" /> */}
         <Typography variant="body2" sx={styles.title}>
           Feuerlöschanlagen
         </Typography>

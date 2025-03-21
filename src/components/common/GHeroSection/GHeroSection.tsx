@@ -102,9 +102,6 @@ const HeroSection = (): JSX.Element => {
   };
 
   const handleSearch = (): void => {
-    console.log("Selected State: => ", selectedState);
-    console.log("Selected Facilities: => ", selectedFacilities);
-    console.log("Selected Tender Type: => ", selectedTenderType);
     router.push(`${window.location.origin}/${SERVICE_PROVIDER_BASE}/result`);
   };
 
@@ -333,7 +330,6 @@ const HeroSection = (): JSX.Element => {
                     {/* Button Section */}
                     <div className="flex justify-center items-center">
                       <Button
-                        // href="#"
                         size="large"
                         component="button"
                         style={styles.querySubmitButton}

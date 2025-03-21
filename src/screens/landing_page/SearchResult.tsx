@@ -41,7 +41,6 @@ export default SearchResult;
 const styles = {
   filterSection: {
     width: "25%",
-    // background: "red",
     marginRight: "0.5rem",
     borderRadius: "0.5rem",
     border: "1px #FFF solid",
