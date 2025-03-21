@@ -103,7 +103,7 @@ const RegistrationRealState = (): JSX.Element => {
     landRegisterEntryDocument: "",
     personalIdDocument: "",
     businessType: "",
-    numOfEmployees: numOfEmployeesOptions[3].value,
+    numOfEmployees: numOfEmployeesOptions[0].value,
     manufacturerExperience: "",
     qualificationDocs: [],
   };
