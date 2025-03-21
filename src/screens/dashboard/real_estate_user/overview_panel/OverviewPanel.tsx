@@ -96,7 +96,7 @@ const OverviewPanel: React.FC<DashboardComponentsProps> = (): JSX.Element => {
               ? "Tage übrig"
               : warning
                 ? "Tage"
-                : "Tagen abgelaufen"
+                : "Tage abgelaufen"
           }
           warning={warning}
         />
