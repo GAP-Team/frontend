@@ -152,7 +152,7 @@ const RegistrationRealState = (): JSX.Element => {
         ...(values.role === USER_ROLE.SERVICE_PROVIDER && {
           manufacturerExperience: values.manufacturerExperience,
           numOfEmployees: values.numOfEmployees,
-          qualificationDocuments: qualificationDocuments
+          qualificationDocuments: qualificationDocuments,
         }),
       };
 
@@ -230,7 +230,7 @@ const RegistrationRealState = (): JSX.Element => {
         const file = await handleUploadDoc(personalIdDocumentFile);
         docObj.push({ ...file, documentType: DOCUMENT_TYPE.PERSONAL_ID });
       }
-     
+
       await onSubmit(values, docObj);
       return true;
     } catch (error) {
