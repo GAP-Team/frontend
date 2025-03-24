@@ -132,6 +132,16 @@ const RegistrationRealState = (): JSX.Element => {
         },
       };
 
+      const qualificationDocuments: Document[] = [];
+      if (values.qualificationDocs && values.qualificationDocs.length > 0) {
+        for (const qualificationDoc of values.qualificationDocs) {
+          const file = await handleUploadDoc(qualificationDoc);
+          qualificationDocuments.push({
+            ...file,
+            documentType: DOCUMENT_TYPE.QUALIFICATION_DOCUMENTS,
+          });
+        }
+      }
       const arrangedDataObj = {
         firstName: values.firstName,
         lastName: values.lastName,
@@ -142,10 +152,7 @@ const RegistrationRealState = (): JSX.Element => {
         ...(values.role === USER_ROLE.SERVICE_PROVIDER && {
           manufacturerExperience: values.manufacturerExperience,
           numOfEmployees: values.numOfEmployees,
-          qualificationDocs: docObj.filter(
-            (doc: Document) =>
-              doc.documentType === DOCUMENT_TYPE.QUALIFICATION_DOCUMENTS
-          ),
+          qualificationDocuments: qualificationDocuments
         }),
       };
 
@@ -223,15 +230,7 @@ const RegistrationRealState = (): JSX.Element => {
         const file = await handleUploadDoc(personalIdDocumentFile);
         docObj.push({ ...file, documentType: DOCUMENT_TYPE.PERSONAL_ID });
       }
-      if (qualificationDocs && qualificationDocs.length > 0) {
-        for (const qualificationDoc of qualificationDocs) {
-          const file = await handleUploadDoc(qualificationDoc);
-          docObj.push({
-            ...file,
-            documentType: DOCUMENT_TYPE.QUALIFICATION_DOCUMENTS,
-          });
-        }
-      }
+     
       await onSubmit(values, docObj);
       return true;
     } catch (error) {
