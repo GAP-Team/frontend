@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 import { RootState } from "../store";
 import userAPIs from "@/api/user";
+import { Document } from "@/typings/types";
 
 interface Company {
   name: string;
@@ -21,12 +22,9 @@ interface UserAddress {
 export interface UserBusiness {
   businessType: string;
   registrationNumber: string;
-  documents: Documents[];
+  documents: Document[];
 }
-export interface Documents {
-  name: string;
-  key: string;
-}
+
 interface UserState {
   id: string;
   role: string;

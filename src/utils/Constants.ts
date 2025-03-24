@@ -661,3 +661,6 @@ export const RealEstateLandingPageTabs = [
   { label: "Ausschreibungsübersicht", index: "2" },
   { label: "Objektübersicht", index: "3" },
 ];
+
+export const CHECK_DUE_SOON_DAYS = 183;
+export const MAINTENANCE_DUE_SOON_DAYS = 15;

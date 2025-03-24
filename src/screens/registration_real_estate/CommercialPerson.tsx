@@ -7,7 +7,7 @@ import UploadButton from "@/components/button/UploadButton";
 const ComercialPerson = ({ formik }: any): JSX.Element => {
   const setUploadDoc = (ev: any): void => {
     const file = ev.target.files[0];
-    formik.setFieldValue("businessRegistrationDocumentFile", ev);
+    formik.setFieldValue("businessRegistrationDocumentFile", file);
     formik.setFieldValue("businessRegistrationDocument", file.name);
   };
 
