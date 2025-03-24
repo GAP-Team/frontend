@@ -4,12 +4,12 @@ import UploadButton from "@/components/button/UploadButton";
 
 const PrivatePerson = ({ formik }: any): JSX.Element => {
   const setUploadApprvDoc = (ev: any): void => {
-    formik.setFieldValue("approvalDocumentFile", ev);
+    formik.setFieldValue("approvalDocumentFile", ev?.target.files[0]);
     formik.setFieldValue("approvalDocument", ev?.target.files[0].name);
   };
 
   const setUploadLandDoc = (ev: any): void => {
-    formik.setFieldValue("landRegisterEntryDocumentFile", ev);
+    formik.setFieldValue("landRegisterEntryDocumentFile", ev?.target.files[0]);
     formik.setFieldValue("landRegisterEntryDocument", ev?.target.files[0].name);
   };
 

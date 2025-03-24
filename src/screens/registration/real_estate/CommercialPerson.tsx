@@ -8,7 +8,7 @@ import { USER_ROLE } from "@/utils/enums";
 const ComercialPerson = ({ formik }: any): JSX.Element => {
   const setUploadDoc = (ev: any): void => {
     const file = ev.target.files[0];
-    formik.setFieldValue("businessRegistrationDocumentFile", ev);
+    formik.setFieldValue("businessRegistrationDocumentFile", file);
     formik.setFieldValue("businessRegistrationDocument", file.name);
   };
 

@@ -36,5 +36,8 @@ export const ROUTES = {
   },
   SERVICE_PROVIDER: {
     DASHBOARD: `${SERVICE_PROVIDER_BASE}/dashboard`,
+    TENDERS: `${SERVICE_PROVIDER_BASE}/tenders`,
+    ORDERS: `${SERVICE_PROVIDER_BASE}/orders`,
+    NEWS: `${SERVICE_PROVIDER_BASE}/news`,
   },
 };

@@ -1,37 +1,38 @@
 "use client";
 import { BiTask } from "react-icons/bi";
+import { ROUTES } from "@/utils/routes";
 import { CgNotes } from "react-icons/cg";
 import { useEffect, useState } from "react";
 import { BsEnvelope } from "react-icons/bs";
 import Layout from "@/screens/dashboard/Layout";
-import { SubItem, SidebarItem } from "@/components/navigation/GSidebar/SideBar";
 import { LuLayoutDashboard } from "react-icons/lu";
 import { useRouter, usePathname } from "next/navigation";
+import { SubItem, SidebarItem } from "@/components/navigation/GSidebar/SideBar";
 
 const sidebarItems: SidebarItem[] = [
   {
     id: 0,
     icon: LuLayoutDashboard,
     text: "Dashboard",
-    url: "/service_provider/dashboard",
+    url: ROUTES.SERVICE_PROVIDER.DASHBOARD,
   },
   {
     id: 1,
     icon: CgNotes,
     text: "Ausschreibungen",
-    url: "/service_provider/tenders",
+    url: ROUTES.SERVICE_PROVIDER.TENDERS,
   },
   {
     id: 2,
     icon: BiTask,
     text: "Aufträge",
-    url: "/service_provider/orders",
+    url: ROUTES.SERVICE_PROVIDER.ORDERS,
   },
   {
     id: 3,
     icon: BsEnvelope,
     text: "Nachrichten",
-    url: "/service_provider/news",
+    url: ROUTES.SERVICE_PROVIDER.NEWS,
   },
 ];
 

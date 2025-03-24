@@ -9,11 +9,18 @@ import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { Tender } from "../../tenders/tender_card/types";
 import { TenderStatusEnum } from "@/utils/enums";
 import { getFacilitiesByUser } from "@/lib/features/facilitySlice";
-import dayjs from "dayjs";
 import { Facility } from "../../facilities/facility_card/types";
 import { Building } from "../../buildings/building_card/types";
 import { truncateLabel } from "@/utils/utils";
-import { DashboardComponentsProps } from "@/utils/Constants";
+import {
+  DashboardComponentsProps,
+  CHECK_DUE_SOON_DAYS,
+  MAINTENANCE_DUE_SOON_DAYS,
+} from "@/utils/Constants";
+import {
+  getFacilityCheckTimeRemaining,
+  getFacilityMaintenanceTimeRemaining,
+} from "../../facilities/utils";
 
 const OverviewPanel: React.FC<DashboardComponentsProps> = (): JSX.Element => {
   const tenders = useAppSelector((state) => state.tender.tenderList);
@@ -35,52 +42,63 @@ const OverviewPanel: React.FC<DashboardComponentsProps> = (): JSX.Element => {
     }
   }, [user?.id, dispatch]);
 
-  const getDaysRemaining = (facilityId: string): number => {
-    const facility = facilities.find((f: Facility) => f.id === facilityId);
-    const lastCheckDate = dayjs(facility?.check?.lastCheckDate);
-    const nextCheckDate = lastCheckDate.add(
-      Number(facility?.check?.nextCheckInYearNumber),
-      "year"
-    );
-    return nextCheckDate.diff(dayjs(), "days");
-  };
-
-  const tendersDueSoon = tenders?.filter((tender: Tender) => {
+  const facilitiesCheckDueSoon = facilities?.filter((facility: Facility) => {
     return (
-      getDaysRemaining(tender?.facility?.id) < 183 &&
-      getDaysRemaining(tender?.facility?.id) > 0
+      getFacilityCheckTimeRemaining(facility, "days") < CHECK_DUE_SOON_DAYS &&
+      getFacilityCheckTimeRemaining(facility, "days") > 0
     );
   });
 
-  const tendersExceedingDays = tenders?.filter(
-    (tender: Tender) => getDaysRemaining(tender?.facility?.id) <= 0
+  const facilitiesCheckExceedingDays = facilities?.filter(
+    (facility: Facility) => {
+      return getFacilityCheckTimeRemaining(facility, "days") <= 0;
+    }
   );
 
-  const renderTenderCards = (tendersList: Tender[]): React.ReactNode =>
-    tendersList?.map((tender, index) => {
-      const daysRemaining = getDaysRemaining(tender.facility?.id);
-      const buildingAddress = buildings.find(
-        (b: Building) => b.id === tender.building?.id
-      )?.address;
-
-      // Check if facility has a check date and and then only show the card
-      const facility = facilities.find(
-        (f: Facility) => f.id === tender?.facility?.id
+  const facilitiesMaintenanceDueSoon = facilities?.filter(
+    (facility: Facility) => {
+      return (
+        getFacilityMaintenanceTimeRemaining(facility, "days") <
+          MAINTENANCE_DUE_SOON_DAYS &&
+        getFacilityMaintenanceTimeRemaining(facility, "days") > 0
       );
-      if (
-        !facility?.check?.lastCheckDate ||
-        facility?.check?.nextCheckInYearNumber === 0
-      ) {
-        return null;
-      }
+    }
+  );
+
+  const facilitiesMaintenanceExceedingDays = facilities?.filter(
+    (facility: Facility) => {
+      return getFacilityMaintenanceTimeRemaining(facility, "days") <= 0;
+    }
+  );
+
+  const renderFacilityCards = (
+    facilityList: Facility[],
+    warning: boolean = false,
+    isMaintenanceCheck: boolean = false
+  ): React.ReactNode =>
+    facilityList?.map((facility, index) => {
+      const daysRemaining = isMaintenanceCheck
+        ? getFacilityMaintenanceTimeRemaining(facility, "days")
+        : getFacilityCheckTimeRemaining(facility, "days");
+
+      const buildingAddress = buildings.find(
+        (building: Building) => building.id === facility.buildingId
+      )?.address;
 
       return (
         <ProjectCard
           key={index}
-          address={`${buildingAddress?.street} - ${buildingAddress?.city}, ${buildingAddress?.state}`}
-          code={truncateLabel(tender?.tenderType, 10)}
+          address={`${buildingAddress?.street} - ${buildingAddress?.city}`}
+          code={truncateLabel(facility?.subcategory, 10)}
           daysRemaining={daysRemaining}
-          text={daysRemaining >= 0 ? "Tage" : "Tage übrig"}
+          text={
+            daysRemaining > 1 && warning
+              ? "Tage übrig"
+              : warning
+                ? "Tage"
+                : "Tage abgelaufen"
+          }
+          warning={warning}
         />
       );
     });
@@ -105,13 +123,14 @@ const OverviewPanel: React.FC<DashboardComponentsProps> = (): JSX.Element => {
         text="Bald fällig"
         sx={{ color: "white", lineHeight: "1rem", mt: "2.5rem" }}
       />
-      {renderTenderCards(tendersDueSoon)}
-
+      {renderFacilityCards(facilitiesCheckDueSoon, true, false)}
+      {renderFacilityCards(facilitiesMaintenanceDueSoon, true, true)}
       <SectionTitle
         text="Frist abgelaufen"
         sx={{ color: "white", lineHeight: "1rem", mt: "2.5rem" }}
       />
-      {renderTenderCards(tendersExceedingDays)}
+      {renderFacilityCards(facilitiesCheckExceedingDays, false, false)}
+      {renderFacilityCards(facilitiesMaintenanceExceedingDays, false, true)}
     </>
   );
 };
