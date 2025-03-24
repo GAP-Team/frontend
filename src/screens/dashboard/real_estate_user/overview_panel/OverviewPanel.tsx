@@ -29,7 +29,9 @@ const OverviewPanel: React.FC<DashboardComponentsProps> = (): JSX.Element => {
   const buildings = useAppSelector((state) => state.building.buildings);
   const user = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
-  const [activeFilter, setActiveFilter] = React.useState<'check' | 'maintenance'>('check');
+  const [activeFilter, setActiveFilter] = React.useState<
+    "check" | "maintenance"
+  >("check");
 
   const openTenders = tenders?.filter(
     (tender: Tender) => tender.status === TenderStatusEnum.OPEN
@@ -121,16 +123,16 @@ const OverviewPanel: React.FC<DashboardComponentsProps> = (): JSX.Element => {
         <Divider orientation="vertical" flexItem sx={styles.dividerStats} />
         <StatisticsItem number={activeTender} text="laufende Ausschreibungen" />
       </Box>
-      <Box sx={{ display: 'flex', gap: 2, mt: 2 }}>
+      <Box sx={{ display: "flex", gap: 2, mt: 2 }}>
         <GButton
-          variant={activeFilter === 'check' ? 'contained' : 'outlined'}
-          onClick={() => setActiveFilter('check')}
+          variant={activeFilter === "check" ? "contained" : "outlined"}
+          onClick={() => setActiveFilter("check")}
         >
           Prüfung
         </GButton>
         <GButton
-          variant={activeFilter === 'maintenance' ? 'contained' : 'outlined'}
-          onClick={() => setActiveFilter('maintenance')}
+          variant={activeFilter === "maintenance" ? "contained" : "outlined"}
+          onClick={() => setActiveFilter("maintenance")}
         >
           Wartung
         </GButton>
@@ -139,14 +141,18 @@ const OverviewPanel: React.FC<DashboardComponentsProps> = (): JSX.Element => {
         text="Bald fällig"
         sx={{ color: "white", lineHeight: "1rem", mt: "2.5rem" }}
       />
-      {activeFilter === 'check' && renderFacilityCards(facilitiesCheckDueSoon, true, false)}
-      {activeFilter === 'maintenance' && renderFacilityCards(facilitiesMaintenanceDueSoon, true, true)}
+      {activeFilter === "check" &&
+        renderFacilityCards(facilitiesCheckDueSoon, true, false)}
+      {activeFilter === "maintenance" &&
+        renderFacilityCards(facilitiesMaintenanceDueSoon, true, true)}
       <SectionTitle
         text="Frist abgelaufen"
         sx={{ color: "white", lineHeight: "1rem", mt: "2.5rem" }}
       />
-      {activeFilter === 'check' && renderFacilityCards(facilitiesCheckExceedingDays, false, false)}
-      {activeFilter === 'maintenance' && renderFacilityCards(facilitiesMaintenanceExceedingDays, false, true)}
+      {activeFilter === "check" &&
+        renderFacilityCards(facilitiesCheckExceedingDays, false, false)}
+      {activeFilter === "maintenance" &&
+        renderFacilityCards(facilitiesMaintenanceExceedingDays, false, true)}
     </>
   );
 };
