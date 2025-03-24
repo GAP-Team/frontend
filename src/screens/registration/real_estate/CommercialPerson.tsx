@@ -73,7 +73,10 @@ const ComercialPerson = ({ formik }: any): JSX.Element => {
               id="personalIdDocument"
               name="personalIdDocument"
               onChange={(ev: any) => {
-                formik.setFieldValue("personalIdDocumentFile", ev);
+                formik.setFieldValue(
+                  "personalIdDocumentFile",
+                  ev?.target?.files[0]
+                );
                 formik.setFieldValue(
                   "personalIdDocument",
                   ev?.target?.files[0]?.name

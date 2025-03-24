@@ -12,7 +12,7 @@ import MuiAlert, { AlertProps } from "@mui/material/Alert";
 import userAPIs from "@/api/user";
 import { RegistrationFormValues } from "../types";
 
-import { BUSINESS_TYPE, DOCUMENT_TYPE, USER_ROLE } from "@/utils/enums";
+import { DOCUMENT_TYPE, USER_ROLE } from "@/utils/enums";
 import PageTitle from "@/components/label/PageTitle";
 import { handleUploadDoc } from "@/utils/uploadToS3";
 import BackButton from "@/components/button/BackButton";
@@ -20,6 +20,7 @@ import InfoBanner from "@/components/common/InfoBanner";
 import EmailVerification from "@/components/email/EmailVerification";
 import { registrationValidationSchema } from "@/utils/ValidationSchema";
 import { numOfEmployeesOptions } from "@/utils/Constants";
+import { Document } from "@/typings/types";
 export function getSteps(role?: string): string[] {
   if (role === USER_ROLE.SERVICE_PROVIDER) {
     return [
@@ -63,7 +64,7 @@ const RegistrationRealState = (): JSX.Element => {
     setSteps(currentSteps);
 
     if (activeStep === steps.length - 1) {
-      const saveData = await uploadAllDocuments(values, values?.businessType);
+      const saveData = await uploadAllDocuments(values);
       if (saveData) {
         actions.setSubmitting(false);
       }
@@ -138,6 +139,14 @@ const RegistrationRealState = (): JSX.Element => {
         email: values.email,
         role: values.role,
         company: companyObj,
+        ...(values.role === USER_ROLE.SERVICE_PROVIDER && {
+          manufacturerExperience: values.manufacturerExperience,
+          numOfEmployees: values.numOfEmployees,
+          qualificationDocs: docObj.filter(
+            (doc: Document) =>
+              doc.documentType === DOCUMENT_TYPE.QUALIFICATION_DOCUMENTS
+          ),
+        }),
       };
 
       const res = await userAPIs.register(arrangedDataObj);
@@ -167,20 +176,23 @@ const RegistrationRealState = (): JSX.Element => {
   };
 
   const uploadAllDocuments = async (
-    values: RegistrationFormValues,
-    type: string
+    values: RegistrationFormValues
   ): Promise<boolean> => {
     try {
       const {
         approvalDocumentFile,
         landRegisterEntryDocumentFile,
         businessRegistrationDocumentFile,
+        personalIdDocumentFile,
+        qualificationDocs,
       } = values;
 
       if (
         !approvalDocumentFile &&
         !landRegisterEntryDocumentFile &&
-        !businessRegistrationDocumentFile
+        !businessRegistrationDocumentFile &&
+        !personalIdDocumentFile &&
+        !qualificationDocs
       ) {
         await onSubmit(values, []);
         return true;
@@ -188,28 +200,38 @@ const RegistrationRealState = (): JSX.Element => {
 
       const docObj: File[] = [];
 
-      if (type === BUSINESS_TYPE.BUSINESS) {
-        if (businessRegistrationDocumentFile) {
-          const file = await handleUploadDoc(businessRegistrationDocumentFile);
-          docObj.push({
-            ...file,
-            documentType: DOCUMENT_TYPE.BUSINESS_REGISTRATION,
-          });
-        }
-      } else if (type === BUSINESS_TYPE.PRIVATE) {
-        if (landRegisterEntryDocumentFile) {
-          const file = await handleUploadDoc(landRegisterEntryDocumentFile);
-          docObj.push({
-            ...file,
-            documentType: DOCUMENT_TYPE.LAND_REGISTER_ENTRY,
-          });
-        }
-        if (approvalDocumentFile) {
-          const file = await handleUploadDoc(approvalDocumentFile);
-          docObj.push({ ...file, documentType: DOCUMENT_TYPE.APPROVAL_DOC });
-        }
+      if (businessRegistrationDocumentFile) {
+        const file = await handleUploadDoc(businessRegistrationDocumentFile);
+        docObj.push({
+          ...file,
+          documentType: DOCUMENT_TYPE.BUSINESS_REGISTRATION,
+        });
       }
 
+      if (landRegisterEntryDocumentFile) {
+        const file = await handleUploadDoc(landRegisterEntryDocumentFile);
+        docObj.push({
+          ...file,
+          documentType: DOCUMENT_TYPE.LAND_REGISTER_ENTRY,
+        });
+      }
+      if (approvalDocumentFile) {
+        const file = await handleUploadDoc(approvalDocumentFile);
+        docObj.push({ ...file, documentType: DOCUMENT_TYPE.APPROVAL_DOC });
+      }
+      if (personalIdDocumentFile) {
+        const file = await handleUploadDoc(personalIdDocumentFile);
+        docObj.push({ ...file, documentType: DOCUMENT_TYPE.PERSONAL_ID });
+      }
+      if (qualificationDocs && qualificationDocs.length > 0) {
+        for (const qualificationDoc of qualificationDocs) {
+          const file = await handleUploadDoc(qualificationDoc);
+          docObj.push({
+            ...file,
+            documentType: DOCUMENT_TYPE.QUALIFICATION_DOCUMENTS,
+          });
+        }
+      }
       await onSubmit(values, docObj);
       return true;
     } catch (error) {

@@ -16,7 +16,6 @@ import SectionTitle from "@/components/label/SectionTitle";
 import { USER_ROLE, BUSINESS_TYPE } from "@/utils/enums";
 import GProgressStepper from "@/components/stepper/GProgressStepper";
 import CircularProgress from "@mui/material/CircularProgress";
-import BasicInfoServiceProvider from "../service_provider/BasicInfoServiceProvider";
 import { RegistrationFormValues } from "../types";
 import ExpertiseServiceProvider from "../service_provider/ExpertiseServiceProvider";
 
@@ -97,7 +96,7 @@ const RegistrationForm = ({
     },
     {
       label: "Dienstleister",
-      content: <BasicInfoServiceProvider formik={formik} />,
+      content: <BasicInformation formik={formik} />,
     },
   ];
   const registertabs = [

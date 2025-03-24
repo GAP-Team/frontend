@@ -1,5 +1,4 @@
 import * as yup from "yup";
-import { USER_ROLE } from "./enums";
 
 const EMAIL_REGEX =
   /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -38,26 +37,19 @@ export const registrationValidationSchema = [
       .string()
       .matches(EMAIL_REGEX, "Eingabe einer gültigen E-Mail")
       .required("E-Mail ist erforderlich"),
-    password: yup.string().when("role", {
-      is: USER_ROLE.SERVICE_PROVIDER,
-      then: (schema) => schema,
-      otherwise: (schema) =>
-        schema
-          .required("Passwort ist erforderlich")
-          .min(8, "Das Passwort sollte mindestens 8 Zeichen lang sein")
-          .matches(
-            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-            "Das Passwort muss Groß- und Kleinbuchstaben, eine Ziffer und ein Sonderzeichen enthalten"
-          ),
-    }),
-    confirmPassword: yup.string().when("role", {
-      is: USER_ROLE.SERVICE_PROVIDER,
-      then: (schema) => schema,
-      otherwise: (schema) =>
-        schema
-          .oneOf([yup.ref("password")], "Passwörter müssen übereinstimmen")
-          .required("Passwort bestätigen ist erforderlich"),
-    }),
+    password: yup
+      .string()
+      .required("Passwort ist erforderlich")
+      .min(8, "Das Passwort sollte mindestens 8 Zeichen lang sein")
+      .matches(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+        "Das Passwort muss Groß- und Kleinbuchstaben, eine Ziffer und ein Sonderzeichen enthalten"
+      ),
+    confirmPassword: yup
+      .string()
+      .oneOf([yup.ref("password")], "Passwörter müssen übereinstimmen")
+      .required("Passwort bestätigen ist erforderlich"),
+
     telephone: yup
       .string()
       .required("Telefonnummer ist erforderlich")
@@ -403,10 +395,7 @@ export const passwordChangeSchema = yup.object({
     ),
   confirmPassword: yup
     .string()
-    .oneOf(
-      [yup.ref("newPassword"), undefined],
-      "Passwörter müssen übereinstimmen"
-    )
+    .oneOf([yup.ref("newPassword")], "Passwörter müssen übereinstimmen")
     .required("Passwort bestätigen ist erforderlich"),
 });
 
