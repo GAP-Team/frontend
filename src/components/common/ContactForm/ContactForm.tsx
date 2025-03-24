@@ -21,8 +21,8 @@ const ContactForm = (): JSX.Element => {
     initialValues: initialValues,
     validationSchema: ContactFormSchema,
 
-    onSubmit: async (values) => {
-      console.log("values: => ", values);
+    onSubmit: async (/*values*/) => {
+      // On submit logic here, uncomment the values parameter if you need the form values
     },
   });
 
