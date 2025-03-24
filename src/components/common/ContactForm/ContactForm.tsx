@@ -22,7 +22,7 @@ const ContactForm = (): JSX.Element => {
     validationSchema: ContactFormSchema,
 
     onSubmit: async (/*values*/) => {
-      // On submit logic here, uncomment the values parameter if you need the form values
+      // On submit logic here, uncomment the values parameter if you need the form values here
     },
   });
 
