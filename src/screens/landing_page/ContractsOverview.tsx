@@ -5,7 +5,7 @@ import SideFilterPanel from "../../components/search/SideFilterPanel";
 
 const result = 8;
 
-const SearchResult = (): JSX.Element => {
+const ContractsOverview = (): JSX.Element => {
   return (
     <section className="bg-#E0E0E0 w-full px-3 py-5">
       <div className="mb-4 mr-8">
@@ -36,7 +36,7 @@ const SearchResult = (): JSX.Element => {
   );
 };
 
-export default SearchResult;
+export default ContractsOverview;
 
 const styles = {
   filterSection: {

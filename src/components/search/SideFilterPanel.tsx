@@ -6,15 +6,7 @@ import SideFilterPanelOptions from "./SideFilterPanelOptions";
 
 const SideFilterPanel = (): JSX.Element => {
   return (
-    <Box
-      sx={{
-        p: 2,
-        boxShadow: 1,
-        width: "100%",
-        borderRadius: 2,
-        bgcolor: "background.paper",
-      }}
-    >
+    <Box sx={styles.mainContainer}>
       <div className="flex flex-row justify-between">
         <Typography variant="h6" fontWeight="bold">
           Filters
@@ -33,11 +25,19 @@ const SideFilterPanel = (): JSX.Element => {
         title={contactFiltersOption.auftragstyp.title}
         options={contactFiltersOption.auftragstyp.options}
       />
-      <GButton href="#" color="error">
-        Filter löschen
-      </GButton>
+      <GButton href="#">Filter löschen</GButton>
     </Box>
   );
 };
 
 export default SideFilterPanel;
+
+const styles = {
+  mainContainer: {
+    p: 2,
+    boxShadow: 1,
+    width: "100%",
+    borderRadius: 2,
+    bgcolor: "background.paper",
+  },
+};

@@ -1,5 +1,5 @@
-import SearchResult from "@/screens/landing_page/SearchResult";
+import ContractsOverview from "@/screens/landing_page/ContractsOverview";
 
 export default function SearchResultPage(): JSX.Element {
-  return <SearchResult />;
+  return <ContractsOverview />;
 }

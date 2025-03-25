@@ -5,7 +5,7 @@ const TopFilter = (): JSX.Element => {
   return (
     <Container maxWidth={false} sx={styles.container}>
       <Typography variant="h6" sx={styles.typography}>
-        Alle Jobs
+        Alle Aufträge
       </Typography>
     </Container>
   );

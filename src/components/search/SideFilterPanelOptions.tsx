@@ -33,13 +33,7 @@ const SideFilterPanelOptions: React.FC<SideFilterPanelOptionsProps> = ({
   return (
     <>
       <Box key={title} sx={{ mt: 2 }}>
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
+        <Box sx={styles.panelHeadSection}>
           <Typography variant="subtitle1" fontWeight="bold">
             {title}
           </Typography>
@@ -62,16 +56,7 @@ const SideFilterPanelOptions: React.FC<SideFilterPanelOptionsProps> = ({
             size="small"
             onClick={() => setShowAllBundesland(!showAllBundesland)}
           >
-            <Typography
-              sx={{
-                ml: 1,
-                mt: 1,
-                cursor: "pointer",
-                fontSize: "0.875rem",
-                color: "primary.main",
-                "&:hover": { textDecoration: "underline" },
-              }}
-            >
+            <Typography sx={styles.buttonText}>
               {showAllBundesland ? "Show Less" : "Show All"}
             </Typography>
           </Button>
@@ -83,3 +68,19 @@ const SideFilterPanelOptions: React.FC<SideFilterPanelOptionsProps> = ({
 };
 
 export default SideFilterPanelOptions;
+
+const styles = {
+  panelHeadSection: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  buttonText: {
+    ml: 1,
+    mt: 1,
+    cursor: "pointer",
+    fontSize: "0.875rem",
+    color: "primary.main",
+    "&:hover": { textDecoration: "underline" },
+  },
+};
