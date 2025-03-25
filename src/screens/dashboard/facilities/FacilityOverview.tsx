@@ -70,7 +70,13 @@ const FacilityOverview: React.FC<FacilitiesProps> = ({
         );
       }
     }
-  }, [user?.id, dispatch, building?.city, building?.federalState, facility?.facilityType]);
+  }, [
+    user?.id,
+    dispatch,
+    building?.city,
+    building?.federalState,
+    facility?.facilityType,
+  ]);
 
   const onFilterCriteriaChange = useCallback(
     async (
