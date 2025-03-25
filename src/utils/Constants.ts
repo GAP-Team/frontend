@@ -691,3 +691,5 @@ export const contactFiltersOption = {
     options: ["Wartung", "Installation", "Reparatur", "Prüfung", "Fire"],
   },
 };
+export const CHECK_DUE_SOON_DAYS = 183;
+export const MAINTENANCE_DUE_SOON_DAYS = 15;

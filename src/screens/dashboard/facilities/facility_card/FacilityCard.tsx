@@ -23,6 +23,10 @@ import {
   getFacilityCheckTimeRemaining,
   getFacilityMaintenanceTimeRemaining,
 } from "../utils";
+import {
+  CHECK_DUE_SOON_DAYS,
+  MAINTENANCE_DUE_SOON_DAYS,
+} from "@/utils/Constants";
 import dayjs from "dayjs";
 import DetailItem from "@/components/common/DetailItem";
 import SummaryCard from "@/components/summary/SummaryCard";
@@ -58,10 +62,16 @@ const FacilityCard: React.FC<FacilityCardProps> = ({ facility }) => {
       return "red";
     }
     // Warning for upcoming check or maintenance
-    if (monthsUntilCheck > 0 && monthsUntilCheck < 6) {
+    if (
+      monthsUntilCheck > 0 &&
+      monthsUntilCheck < Math.floor(CHECK_DUE_SOON_DAYS / 30)
+    ) {
       return "orange";
     }
-    if (daysUntilMaintenance > 0 && daysUntilMaintenance < 30) {
+    if (
+      daysUntilMaintenance > 0 &&
+      daysUntilMaintenance < MAINTENANCE_DUE_SOON_DAYS
+    ) {
       return "orange";
     }
     return "";

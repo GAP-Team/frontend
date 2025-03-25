@@ -1,12 +1,14 @@
 import React from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
+import WarningIcon from "@mui/icons-material/Warning";
 
 interface ProjectCardProps {
   code: string;
   address: string;
   daysRemaining: number;
   text?: string;
+  warning?: boolean;
 }
 
 const ProjectCard: React.FC<ProjectCardProps> = ({
@@ -14,6 +16,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
   address,
   daysRemaining,
   text,
+  warning = false,
 }) => {
   return (
     <Box sx={styles.card}>
@@ -26,6 +29,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
         </Typography>
       </Box>
       <Box sx={styles.daysRemaining}>
+        {warning && <WarningIcon sx={{ color: "warning.main", mb: 1 }} />}
         <Typography variant="h5" component="div" sx={styles.daysNumber}>
           {daysRemaining}
         </Typography>
