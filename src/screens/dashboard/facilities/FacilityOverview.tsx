@@ -13,41 +13,19 @@ import { Building } from "../buildings/building_card/types";
 import { ROUTES } from "@/utils/routes";
 import { getFacilitiesByUser } from "@/lib/features/facilitySlice";
 import { Facility } from "./facility_card/types";
+import { useSearchParams } from "next/navigation";
 
-interface FacilitiesProps {
-  facilityId?: string;
-}
-
-const FacilityOverview: React.FC<FacilitiesProps> = ({
-  facilityId,
-}): JSX.Element => {
+const FacilityOverview: React.FC = (): JSX.Element => {
   const user = useSelector(currentUser);
   const dispatch = useAppDispatch();
   const { buildings } = useAppSelector((state) => state.building);
   const facilities = useAppSelector((state) => state.facility.facilities);
+  const searchParams = useSearchParams();
 
-  const filteredBuildings = useMemo(
-    () =>
-      buildings.filter((building: Building) =>
-        facilities.some(
-          (facility: Facility) => facility.buildingId === building.id
-        )
-      ),
-    [buildings, facilities]
-  );
-
-  const facility = useMemo(
-    () => facilities.find((facility: Facility) => facility.id === facilityId),
-    [facilities, facilityId]
-  );
-
-  const building = useMemo(
-    () =>
-      buildings.find(
-        (building: Building) => building.id === facility?.buildingId
-      ),
-    [buildings, facility]
-  );
+  const city = searchParams.get("city");
+  const state = searchParams.get("state");
+  const facilityType = searchParams.get("facilityType");
+  const facilityId = searchParams.get("facilityId");
 
   useEffect(() => {
     if (user?.id) {
@@ -59,24 +37,14 @@ const FacilityOverview: React.FC<FacilitiesProps> = ({
           facilityType: "",
         })
       );
-      if (building && facility) {
-        dispatch(
-          getFacilitiesByUser(
-            user.id,
-            building.city,
-            building.federalState,
-            facility.facilityType
-          )
-        );
-      }
     }
-  }, [
-    user?.id,
-    dispatch,
-    building?.city,
-    building?.federalState,
-    facility?.facilityType,
-  ]);
+  }, [user?.id, dispatch]);
+
+  useEffect(() => {
+    if (user?.id && buildings.length > 0 && city && state && facilityType) {
+      dispatch(getFacilitiesByUser(user.id, city, state, facilityType));
+    }
+  }, [user?.id, buildings, city, state, facilityType, dispatch]);
 
   const onFilterCriteriaChange = useCallback(
     async (
@@ -89,6 +57,23 @@ const FacilityOverview: React.FC<FacilitiesProps> = ({
       ).unwrap();
     },
     [dispatch, user?.id]
+  );
+
+  const filteredFacilities = useMemo(() => {
+    if (facilityId) {
+      return facilities.filter((f: Facility) => f.id === facilityId);
+    }
+    return facilities;
+  }, [facilities, facilityId]);
+
+  const filteredBuildings = useMemo(
+    () =>
+      buildings.filter((building: Building) =>
+        filteredFacilities.some(
+          (facility: Facility) => facility.buildingId === building.id
+        )
+      ),
+    [buildings, filteredFacilities]
   );
 
   const hasFacilities = useMemo(
