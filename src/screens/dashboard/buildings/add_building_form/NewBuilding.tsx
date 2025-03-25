@@ -152,7 +152,7 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
             showSnackbar({
               type: "error",
               message:
-                "An der gleichen Adresse ist bereits ein Gebäude angelegt, bitte prüfen Sie die Gebäudeadresse !",
+                "Unter dieser Adresse ist bereits ein Gebäude angelegt. Bitte überprüfen Sie die Gebäudeadresse!",
             })
           );
         } else {
@@ -277,7 +277,8 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
       appdispatch(
         showSnackbar({
           type: "error",
-          message: "Gebäude nicht erstellt. Versuchen Sie es später erneut.",
+          message:
+            "Gebäude konnte nicht erstellt werden. Bitte versuchen Sie es später erneut.",
         })
       );
       return false;
