@@ -21,8 +21,10 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
   onClick,
 }) => {
   return (
-    <Box sx={[styles.card, { cursor: onClick ? 'pointer' : 'default' }]}
-      onClick={onClick}>
+    <Box
+      sx={[styles.card, { cursor: onClick ? "pointer" : "default" }]}
+      onClick={onClick}
+    >
       <Box sx={styles.content}>
         <Typography variant="subtitle1" sx={styles.nameAndAddress}>
           {code}

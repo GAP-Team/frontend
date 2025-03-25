@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import SectionTitle from "@/components/label/SectionTitle";
 import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
@@ -74,7 +74,7 @@ const OverviewPanel: React.FC<DashboardComponentsProps> = (): JSX.Element => {
     }
   );
 
-  const handleFacilityClick = (facility: Facility) => {
+  const handleFacilityClick = (facility: Facility): void => {
     router.push(`${ROUTES.REAL_ESTATE.FACILITY.FACILITIES}?id=${facility.id}`);
   };
 
