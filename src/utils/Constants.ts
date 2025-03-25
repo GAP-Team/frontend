@@ -661,3 +661,33 @@ export const RealEstateLandingPageTabs = [
   { label: "Ausschreibungsübersicht", index: "2" },
   { label: "Objektübersicht", index: "3" },
 ];
+
+export const contactFiltersOption = {
+  bundesland: {
+    title: "Bundesland",
+    options: [
+      "Bayern",
+      "Hessen",
+      "Sachsen",
+      "Thüringen",
+      "Baden-Württemberg",
+      "Schleswig-Holstein",
+      "Nordrhein-Westfalen",
+      "Mecklenburg-Vorpommern",
+    ],
+  },
+  anlagentyp: {
+    title: "Anlagentyp",
+    options: [
+      "Anlagentyp 1",
+      "Anlagentyp 2",
+      "Anlagentyp 3",
+      "Anlagentyp 4",
+      "Anlagentyp 5",
+    ],
+  },
+  auftragstyp: {
+    title: "Auftragstyp",
+    options: ["Wartung", "Installation", "Reparatur", "Prüfung", "Fire"],
+  },
+};

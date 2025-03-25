@@ -1,7 +1,7 @@
 "use client";
 import Dashboard from "@/screens/dashboard/Dashboard";
 import { useLogin } from "@/hooks/useUserLoginVerification";
-import DetailedTenderCard from "@/components/tender_card/DetailedTenderCard";
+import ContractCard from "@/components/tender_card/ContractCard";
 
 export default function ServiceProviderDashboardPage(): JSX.Element {
   const { isLoggedIn, isUserVerified } = useLogin();
@@ -11,7 +11,7 @@ export default function ServiceProviderDashboardPage(): JSX.Element {
       {isLoggedIn && isUserVerified && (
         <>
           <Dashboard>
-            <DetailedTenderCard slot="tenders" />
+            <ContractCard />
           </Dashboard>
         </>
       )}

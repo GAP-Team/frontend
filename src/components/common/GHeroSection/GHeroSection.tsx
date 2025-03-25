@@ -305,7 +305,7 @@ const HeroSection = (): JSX.Element => {
                         </FormControl>
                       </div>
 
-                      {/* State Secton */}
+                      {/* State Section */}
                       <div className="flex flex-col w-full px-2 sm:px-4 md:w-1/3">
                         <FormControl sx={{ m: 1, minWidth: 120 }}>
                           <label

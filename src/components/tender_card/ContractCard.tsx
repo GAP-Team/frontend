@@ -2,12 +2,11 @@ import React from "react";
 import Box from "@mui/material/Box";
 import Chip from "@mui/material/Chip";
 import Paper from "@mui/material/Paper";
+import GButton from "../button/GButton";
 import { Typography } from "@mui/material";
 import SectionTitle from "../label/SectionTitle";
-import { DashboardComponentsProps } from "@/utils/Constants";
-import GButton from "../button/GButton";
 
-const DetailedTenderCard: React.FC<DashboardComponentsProps> = () => {
+const ContractCard = (): JSX.Element => {
   return (
     <Paper sx={styles.card} elevation={4} style={{ cursor: "pointer" }}>
       <Box sx={styles.header}>
@@ -41,7 +40,7 @@ const DetailedTenderCard: React.FC<DashboardComponentsProps> = () => {
   );
 };
 
-export default DetailedTenderCard;
+export default ContractCard;
 
 const styles = {
   card: {

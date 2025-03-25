@@ -1,7 +1,7 @@
 import { Grid } from "@mui/material";
 import TopFilter from "./TopFilterPanel";
-import SideFilterPanel from "./SideFilterPanel";
-import DetailedTenderCard from "@/components/tender_card/DetailedTenderCard";
+import ContractCard from "@/components/tender_card/ContractCard";
+import SideFilterPanel from "../../components/search/SideFilterPanel";
 
 const result = 8;
 
@@ -26,7 +26,7 @@ const SearchResult = (): JSX.Element => {
           >
             {Array.from({ length: result }).map((_, index) => (
               <Grid item key={index}>
-                <DetailedTenderCard key={index} />
+                <ContractCard key={index} />
               </Grid>
             ))}
           </Grid>
