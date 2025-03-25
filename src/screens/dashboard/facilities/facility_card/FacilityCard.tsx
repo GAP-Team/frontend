@@ -45,7 +45,7 @@ const FacilityCard: React.FC<FacilityCardProps> = ({ facility }) => {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const isFacilityActive = useAppSelector(
-    checkActiveTenderForFacility(facility?.id)
+    (state) => checkActiveTenderForFacility(facility?.id)(state)
   );
   const noOfTenders = facility?.tenderIds?.length;
   const chipStyles = statusStyles[status] || statusStyles["aktiv"];

@@ -59,16 +59,18 @@ const FacilityOverview: React.FC<FacilitiesProps> = ({
           facilityType: "",
         })
       );
-      dispatch(
-        getFacilitiesByUser(
-          user.id,
-          building?.city || "",
-          building?.federalState || "",
-          facility?.facilityType || ""
-        )
-      );
+      if (building && facility) {
+        dispatch(
+          getFacilitiesByUser(
+            user.id,
+            building.city,
+            building.federalState,
+            facility.facilityType
+          )
+        );
+      }
     }
-  }, [user?.id, dispatch, building, facility]);
+  }, [user?.id, dispatch, building?.city, building?.federalState, facility?.facilityType]);
 
   const onFilterCriteriaChange = useCallback(
     async (
