@@ -4,5 +4,5 @@ type Props = {
 };
 
 export default function FacilitiesPage({ searchParams }: Props): JSX.Element {
-  return <FacilityOverview facilityId={searchParams.id} />;
+  return <FacilityOverview />;
 }
