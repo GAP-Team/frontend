@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useFormik } from "formik";
-import { ContactFormProps } from "@/utils/Constants";
+import { ContactFormProps } from "./types";
 import GTextInput from "@/components/input/GTextInput";
 import { ContactFormSchema } from "@/utils/ValidationSchema";
 import LabelWithAsterisk from "@/components/label/LabelWithAsterisk";

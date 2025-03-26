@@ -650,13 +650,6 @@ export const notifications: Notification[] = [
   },
 ];
 
-export interface ContactFormProps {
-  firstName: string;
-  lastName: string;
-  phoneNumber: string;
-  email: string;
-  message: string;
-}
 export const numOfEmployeesOptions = [
   {
     label: "1-5",
