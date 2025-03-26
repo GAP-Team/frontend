@@ -145,7 +145,7 @@ const FacilityCard: React.FC<FacilityCardProps> = ({ facility }) => {
         />
         <DetailItem
           label="Nächste Prüfung in"
-          value={`${getFacilityCheckTimeRemaining(facility, "months")} Monate`}
+          value={`${getFacilityCheckTimeRemaining(facility, "months")} Monat(e)`}
         />
         <DetailItem
           label="Automatische Veröffentlichung"
@@ -153,11 +153,11 @@ const FacilityCard: React.FC<FacilityCardProps> = ({ facility }) => {
         />
         <DetailItem
           label="Veröffentlichung in"
-          value={`${facility.check.publishAutomaticallyInMonth} Monate`}
+          value={`${facility.check.publishAutomaticallyInMonth} Monat(e)`}
         />
         <DetailItem
           label="Erinnerung in"
-          value={`${facility.check.reminderInMonth} Monate`}
+          value={`${facility.check.reminderInMonth} Monat(e)`}
         />
         <DetailItem
           label="E-Mail Benachrichtigung"
@@ -182,7 +182,7 @@ const FacilityCard: React.FC<FacilityCardProps> = ({ facility }) => {
         />
         <DetailItem
           label="Nächste Wartung in"
-          value={`${getFacilityMaintenanceTimeRemaining(facility, "days")} Tage`}
+          value={`${getFacilityMaintenanceTimeRemaining(facility, "days")} Tag(e)`}
         />
         <DetailItem
           label="Automatische Veröffentlichung"
@@ -190,11 +190,11 @@ const FacilityCard: React.FC<FacilityCardProps> = ({ facility }) => {
         />
         <DetailItem
           label="Veröffentlichung in"
-          value={`${facility.maintenance.publishAutomaticallyInMonth} Monate`}
+          value={`${facility.maintenance.publishAutomaticallyInMonth} Monat(e)`}
         />
         <DetailItem
           label="Erinnerung in"
-          value={`${facility.maintenance.reminderInMonth} Monate`}
+          value={`${facility.maintenance.reminderInMonth} Monat(e)`}
         />
         <DetailItem
           label="E-Mail Benachrichtigung"
