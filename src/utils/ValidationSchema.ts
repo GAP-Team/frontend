@@ -412,10 +412,14 @@ export const CompanyProfileSchema = yup.object({
 });
 
 export const ContactFormSchema = yup.object({
-  firstName: registrationValidationSchema.fields.firstName,
-  lastName: registrationValidationSchema.fields.lastName,
-  email: registrationValidationSchema.fields.email,
-  phoneNumber: registrationValidationSchema.fields.telephone,
+  firstName: (registrationValidationSchema[0] as yup.ObjectSchema<any>).fields
+    .firstName,
+  lastName: (registrationValidationSchema[0] as yup.ObjectSchema<any>).fields
+    .lastName,
+  email: (registrationValidationSchema[0] as yup.ObjectSchema<any>).fields
+    .email,
+  phoneNumber: (registrationValidationSchema[0] as yup.ObjectSchema<any>).fields
+    .telephone,
   message: yup.string().required("Nachricht ist erforderlich."),
   agree: yup
     .boolean()
