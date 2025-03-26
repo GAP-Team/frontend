@@ -1,6 +1,6 @@
 import { Grid } from "@mui/material";
 import TopFilter from "./TopFilterPanel";
-import ContractCard from "@/components/tender_card/ContractCard";
+import ContractCard from "@/components/card/ContractCard";
 import SideFilterPanel from "../../components/search/SideFilterPanel";
 
 const result = 8;
