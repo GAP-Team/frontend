@@ -21,7 +21,7 @@ const SideFilterPanelOptions: React.FC<SideFilterPanelOptionsProps> = ({
   title,
   options,
 }) => {
-  const [showAllStates, setShowAllStates] = useState(false);
+  const [showAllOptions, setShowAllOptions] = useState(false);
   const [openSections, setOpenSections] = useState<Record<string, boolean>>(
     options.reduce((acc) => ({ ...acc, [title]: true }), {})
   );
@@ -43,7 +43,7 @@ const SideFilterPanelOptions: React.FC<SideFilterPanelOptionsProps> = ({
         </Box>
         <Collapse in={openSections[title]}>
           {options
-            .slice(0, showAllStates ? options.length : 4)
+            .slice(0, showAllOptions ? options.length : 4)
             .map((option, index) => (
               <FormControlLabel
                 key={index}
@@ -52,9 +52,12 @@ const SideFilterPanelOptions: React.FC<SideFilterPanelOptionsProps> = ({
                 sx={{ display: "block", ml: 1 }}
               />
             ))}
-          <Button size="small" onClick={() => setShowAllStates(!showAllStates)}>
+          <Button
+            size="small"
+            onClick={() => setShowAllOptions(!showAllOptions)}
+          >
             <Typography sx={styles.buttonText}>
-              {showAllStates ? "weniger sehen" : "Mehr sehen"}
+              {showAllOptions ? "weniger sehen" : "Mehr sehen"}
             </Typography>
           </Button>
         </Collapse>
