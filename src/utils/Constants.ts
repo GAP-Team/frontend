@@ -650,6 +650,33 @@ export const notifications: Notification[] = [
   },
 ];
 
+export const numOfEmployeesOptions = [
+  {
+    label: "1-5",
+    value: "1-5",
+  },
+  {
+    label: "5-10",
+    value: "5-10",
+  },
+  {
+    label: "10-50",
+    value: "10-50",
+  },
+  {
+    label: "50-100",
+    value: "50-100",
+  },
+  {
+    label: "100-500",
+    value: "100-500",
+  },
+  {
+    label: "1000",
+    value: "1000",
+  },
+];
+
 export interface TabsTypes {
   label: string;
   index: string;
@@ -661,3 +688,6 @@ export const RealEstateLandingPageTabs = [
   { label: "Ausschreibungsübersicht", index: "2" },
   { label: "Objektübersicht", index: "3" },
 ];
+
+export const CHECK_DUE_SOON_DAYS = 183;
+export const MAINTENANCE_DUE_SOON_DAYS = 15;

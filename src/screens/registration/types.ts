@@ -15,10 +15,17 @@ export interface RegistrationFormValues {
   confirmPassword: string;
   businessType: string;
   registrationNumber: string;
+  manufacturerExperience?: string;
   approvalDocument: string | null;
   businessRegistrationDocument: string | null;
   landRegisterEntryDocument: string | null;
+  personalIdDocument: string | null;
+
   approvalDocumentFile?: File;
-  landRegisterEntryDocumentFile?: File;
   businessRegistrationDocumentFile?: File;
+  landRegisterEntryDocumentFile?: File;
+  personalIdDocumentFile?: File;
+
+  numOfEmployees: string;
+  qualificationDocs: File[];
 }
