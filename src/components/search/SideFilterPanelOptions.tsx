@@ -21,7 +21,7 @@ const SideFilterPanelOptions: React.FC<SideFilterPanelOptionsProps> = ({
   title,
   options,
 }) => {
-  const [showAllBundesland, setShowAllBundesland] = useState(false);
+  const [showAllStates, setShowAllStates] = useState(false);
   const [openSections, setOpenSections] = useState<Record<string, boolean>>(
     options.reduce((acc) => ({ ...acc, [title]: true }), {})
   );
@@ -43,7 +43,7 @@ const SideFilterPanelOptions: React.FC<SideFilterPanelOptionsProps> = ({
         </Box>
         <Collapse in={openSections[title]}>
           {options
-            .slice(0, showAllBundesland ? options.length : 4)
+            .slice(0, showAllStates ? options.length : 4)
             .map((option, index) => (
               <FormControlLabel
                 key={index}
@@ -52,12 +52,9 @@ const SideFilterPanelOptions: React.FC<SideFilterPanelOptionsProps> = ({
                 sx={{ display: "block", ml: 1 }}
               />
             ))}
-          <Button
-            size="small"
-            onClick={() => setShowAllBundesland(!showAllBundesland)}
-          >
+          <Button size="small" onClick={() => setShowAllStates(!showAllStates)}>
             <Typography sx={styles.buttonText}>
-              {showAllBundesland ? "weniger sehen" : "Mehr sehen"}
+              {showAllStates ? "weniger sehen" : "Mehr sehen"}
             </Typography>
           </Button>
         </Collapse>
