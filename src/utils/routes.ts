@@ -39,5 +39,6 @@ export const ROUTES = {
     TENDERS: `${SERVICE_PROVIDER_BASE}/tenders`,
     ORDERS: `${SERVICE_PROVIDER_BASE}/orders`,
     NEWS: `${SERVICE_PROVIDER_BASE}/news`,
+    CONTRACTS: `${SERVICE_PROVIDER_BASE}/contracts`,
   },
 };

@@ -57,7 +57,7 @@ const SideFilterPanelOptions: React.FC<SideFilterPanelOptionsProps> = ({
             onClick={() => setShowAllBundesland(!showAllBundesland)}
           >
             <Typography sx={styles.buttonText}>
-              {showAllBundesland ? "Show Less" : "Show All"}
+              {showAllBundesland ? "weniger sehen" : "Mehr sehen"}
             </Typography>
           </Button>
         </Collapse>

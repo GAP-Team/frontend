@@ -26,7 +26,7 @@ import {
 } from "@/utils/Constants";
 import { useRouter } from "next/navigation";
 import CloseIcon from "@mui/icons-material/Close";
-import { SERVICE_PROVIDER_BASE } from "@/utils/routes";
+import { ROUTES } from "@/utils/routes";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import CustomSelect from "@/components/drop_down/CustomSelect";
@@ -102,7 +102,9 @@ const HeroSection = (): JSX.Element => {
   };
 
   const handleSearch = (): void => {
-    router.push(`${window.location.origin}/${SERVICE_PROVIDER_BASE}/result`);
+    router.push(
+      `${window.location.origin}/${ROUTES.SERVICE_PROVIDER.CONTRACTS}`
+    );
   };
 
   return (

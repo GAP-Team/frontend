@@ -14,16 +14,16 @@ const SideFilterPanel = (): JSX.Element => {
         <GButton href="#">Filter</GButton>
       </div>
       <SideFilterPanelOptions
-        title={contactFiltersOption.bundesland.title}
-        options={contactFiltersOption.bundesland.options}
+        title={contactFiltersOption.state.title}
+        options={contactFiltersOption.state.options}
       />
       <SideFilterPanelOptions
-        title={contactFiltersOption.anlagentyp.title}
-        options={contactFiltersOption.anlagentyp.options}
+        title={contactFiltersOption.facilityType.title}
+        options={contactFiltersOption.facilityType.options}
       />
       <SideFilterPanelOptions
-        title={contactFiltersOption.auftragstyp.title}
-        options={contactFiltersOption.auftragstyp.options}
+        title={contactFiltersOption.tenderType.title}
+        options={contactFiltersOption.tenderType.options}
       />
       <GButton href="#">Filter löschen</GButton>
     </Box>

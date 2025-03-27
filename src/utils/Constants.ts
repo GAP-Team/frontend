@@ -690,7 +690,7 @@ export const RealEstateLandingPageTabs = [
 ];
 
 export const contactFiltersOption = {
-  bundesland: {
+  state: {
     title: "Bundesland",
     options: [
       "Bayern",
@@ -703,7 +703,7 @@ export const contactFiltersOption = {
       "Mecklenburg-Vorpommern",
     ],
   },
-  anlagentyp: {
+  facilityType: {
     title: "Anlagentyp",
     options: [
       "Anlagentyp 1",
@@ -713,7 +713,7 @@ export const contactFiltersOption = {
       "Anlagentyp 5",
     ],
   },
-  auftragstyp: {
+  tenderType: {
     title: "Auftragstyp",
     options: ["Wartung", "Installation", "Reparatur", "Prüfung", "Fire"],
   },
