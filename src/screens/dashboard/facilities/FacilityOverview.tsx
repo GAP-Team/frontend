@@ -1,7 +1,7 @@
 "use client";
 import { Box } from "@mui/system";
 import PropertyFilterPanel from "@/components/filter/PropertyFilterPanel";
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo, useCallback } from "react";
 import addObjSrc from "@/../public/icons/add_building.svg";
 import NoContentPage from "@/components/common/NoContentPage";
 import FacilityContainer from "./facility_card/FacilityContainer";
@@ -13,42 +13,75 @@ import { Building } from "../buildings/building_card/types";
 import { ROUTES } from "@/utils/routes";
 import { getFacilitiesByUser } from "@/lib/features/facilitySlice";
 import { Facility } from "./facility_card/types";
+import { useSearchParams } from "next/navigation";
 
-const Facilities = (): JSX.Element => {
+const FacilityOverview: React.FC = (): JSX.Element => {
   const user = useSelector(currentUser);
   const dispatch = useAppDispatch();
   const { buildings } = useAppSelector((state) => state.building);
   const facilities = useAppSelector((state) => state.facility.facilities);
-  const filteredBuildings = buildings.filter((building: Building) =>
-    facilities.some((facility: Facility) => facility.buildingId === building.id)
-  );
+  const searchParams = useSearchParams();
+
+  const city = searchParams.get("city");
+  const state = searchParams.get("state");
+  const facilityType = searchParams.get("facilityType");
+  const facilityId = searchParams.get("facilityId");
 
   useEffect(() => {
     if (user?.id) {
       dispatch(
         fetchBuildings({
-          userId: user?.id,
+          userId: user.id,
           city: "",
           federalState: "",
           facilityType: "",
         })
       );
-      dispatch(getFacilitiesByUser(user?.id));
     }
   }, [user?.id, dispatch]);
 
-  const onFilterCriteriaChange = async (
-    city: string,
-    state: string,
-    facilityType: string
-  ): Promise<void> => {
-    await dispatch(
-      getFacilitiesByUser(user?.id, city, state, facilityType)
-    ).unwrap();
-  };
+  useEffect(() => {
+    if (user?.id && buildings.length > 0 && city && state && facilityType) {
+      dispatch(getFacilitiesByUser(user.id, city, state, facilityType));
+    }
+  }, [user?.id, buildings, city, state, facilityType, dispatch]);
 
-  const hasFacilities = filteredBuildings?.some(
-    (building: Building) => building?.facilityIds?.length > 0
+  const onFilterCriteriaChange = useCallback(
+    async (
+      city: string,
+      state: string,
+      facilityType: string
+    ): Promise<void> => {
+      await dispatch(
+        getFacilitiesByUser(user?.id, city, state, facilityType)
+      ).unwrap();
+    },
+    [dispatch, user?.id]
+  );
+
+  const filteredFacilities = useMemo(() => {
+    if (facilityId) {
+      return facilities.filter((f: Facility) => f.id === facilityId);
+    }
+    return facilities;
+  }, [facilities, facilityId]);
+
+  const filteredBuildings = useMemo(
+    () =>
+      buildings.filter((building: Building) =>
+        filteredFacilities.some(
+          (facility: Facility) => facility.buildingId === building.id
+        )
+      ),
+    [buildings, filteredFacilities]
+  );
+
+  const hasFacilities = useMemo(
+    () =>
+      filteredBuildings?.some(
+        (building: Building) => building?.facilityIds?.length > 0
+      ),
+    [filteredBuildings]
   );
 
   const facilityContent = hasFacilities ? (
@@ -84,4 +117,4 @@ const styles = {
   },
 };
 
-export default Facilities;
+export default FacilityOverview;

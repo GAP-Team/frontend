@@ -1,3 +1,4 @@
+"use client";
 import React, { useEffect } from "react";
 import SectionTitle from "@/components/label/SectionTitle";
 import Box from "@mui/material/Box";
@@ -10,7 +11,7 @@ import { Tender } from "../../tenders/tender_card/types";
 import { TenderStatusEnum } from "@/utils/enums";
 import { getFacilitiesByUser } from "@/lib/features/facilitySlice";
 import { Facility } from "../../facilities/facility_card/types";
-import { Building } from "../../buildings/building_card/types";
+import { Building, BuildingAddress } from "../../buildings/building_card/types";
 import { truncateLabel } from "@/utils/utils";
 import {
   DashboardComponentsProps,
@@ -22,6 +23,9 @@ import {
   getFacilityMaintenanceTimeRemaining,
 } from "../../facilities/utils";
 import GButton from "@/components/button/GButton";
+import { ROUTES } from "@/utils/routes";
+import { useRouter } from "next/navigation";
+
 
 const OverviewPanel: React.FC<DashboardComponentsProps> = (): JSX.Element => {
   const tenders = useAppSelector((state) => state.tender.tenderList);
@@ -32,6 +36,8 @@ const OverviewPanel: React.FC<DashboardComponentsProps> = (): JSX.Element => {
   const [activeFilter, setActiveFilter] = React.useState<
     "check" | "maintenance"
   >("check");
+  const router = useRouter();
+
 
   const openTenders = tenders?.filter(
     (tender: Tender) => tender.status === TenderStatusEnum.OPEN
@@ -75,6 +81,22 @@ const OverviewPanel: React.FC<DashboardComponentsProps> = (): JSX.Element => {
     }
   );
 
+  const handleCardClick = (
+    facility: Facility,
+    address: BuildingAddress
+  ): void => {
+    const queryParams = new URLSearchParams({
+      facilityId: facility.id,
+      city: address.city,
+      state: address.state,
+      facilityType: facility.facilityType,
+    });
+
+    router.push(
+      `${ROUTES.REAL_ESTATE.FACILITY.FACILITIES}?${queryParams.toString()}`
+    );
+  };
+
   const renderFacilityCards = (
     facilityList: Facility[],
     warning: boolean = false,
@@ -97,12 +119,13 @@ const OverviewPanel: React.FC<DashboardComponentsProps> = (): JSX.Element => {
           daysRemaining={daysRemaining}
           text={
             daysRemaining > 1 && warning
-              ? "Tage übrig"
+              ? "Tag(e) übrig"
               : warning
-                ? "Tage"
-                : "Tage abgelaufen"
+                ? "Tag(e) übrig"
+                : "Tag(e) abgelaufen"
           }
           warning={warning}
+          onClick={() => handleCardClick(facility, buildingAddress)}
         />
       );
     });

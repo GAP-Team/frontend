@@ -3,6 +3,7 @@ import Grid from "@mui/material/Grid";
 import { useFormikContext } from "formik";
 
 import SummarySection, { Detail } from "@/components/summary/SummarySection";
+import { USER_ROLE } from "@/utils/enums";
 interface SummaryRegistrationProps {
   setActiveStep: (num: number) => void;
 }
@@ -56,6 +57,28 @@ const SummaryRegistration = ({
       label: "Handelregister Nummer",
       value: values.registrationNumber,
     },
+    values.personalIdDocument && {
+      label: "Personalausweis",
+      value: values.personalIdDocument,
+    },
+  ].filter(Boolean);
+
+  const updatedExpertise: Detail[] = [
+    values.numOfEmployees && {
+      label: "Anzahl der Mitarbeiter",
+      value: values.numOfEmployees,
+    },
+    values.manufacturerExperience && {
+      label: "Herstellerfahrung",
+      value: values.manufacturerExperience,
+    },
+    values.qualificationDocs && {
+      label: "Fach Qualifikation",
+      value: values.qualificationDocs.map(
+        (doc: any, index: number) =>
+          `${doc.name}${values.qualificationDocs.length !== index + 1 ? `, ` : ""}`
+      ),
+    },
   ].filter(Boolean);
 
   return (
@@ -70,7 +93,7 @@ const SummaryRegistration = ({
             setActiveStep={() => setActiveStep(0)}
           />
         </Grid>
-        <Grid item xs={12}>
+        <Grid item xs={12} sm={6}>
           <SummarySection
             title="ADRESSE DER FIRMA"
             details={updatedAddress}
@@ -83,6 +106,15 @@ const SummaryRegistration = ({
               title="GEWERBEANMELDUNG"
               details={updatedBusinessRegistration}
               setActiveStep={() => setActiveStep(2)}
+            />
+          </Grid>
+        )}
+        {values.role === USER_ROLE.SERVICE_PROVIDER && (
+          <Grid item xs={12}>
+            <SummarySection
+              title="FACHKENNTNISSE"
+              details={updatedExpertise}
+              setActiveStep={() => setActiveStep(3)}
             />
           </Grid>
         )}

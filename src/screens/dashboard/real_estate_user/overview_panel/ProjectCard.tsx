@@ -9,6 +9,7 @@ interface ProjectCardProps {
   daysRemaining: number;
   text?: string;
   warning?: boolean;
+  onClick?: () => void;
 }
 
 const ProjectCard: React.FC<ProjectCardProps> = ({
@@ -17,9 +18,13 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
   daysRemaining,
   text,
   warning = false,
+  onClick,
 }) => {
   return (
-    <Box sx={styles.card}>
+    <Box
+      sx={[styles.card, { cursor: onClick ? "pointer" : "default" }]}
+      onClick={onClick}
+    >
       <Box sx={styles.content}>
         <Typography variant="subtitle1" sx={styles.nameAndAddress}>
           {code}
