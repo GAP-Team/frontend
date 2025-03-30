@@ -26,7 +26,6 @@ import GButton from "@/components/button/GButton";
 import { ROUTES } from "@/utils/routes";
 import { useRouter } from "next/navigation";
 
-
 const OverviewPanel: React.FC<DashboardComponentsProps> = (): JSX.Element => {
   const tenders = useAppSelector((state) => state.tender.tenderList);
   const facilities = useAppSelector((state) => state.facility.facilities);
@@ -37,7 +36,6 @@ const OverviewPanel: React.FC<DashboardComponentsProps> = (): JSX.Element => {
     "check" | "maintenance"
   >("check");
   const router = useRouter();
-
 
   const openTenders = tenders?.filter(
     (tender: Tender) => tender.status === TenderStatusEnum.OPEN
