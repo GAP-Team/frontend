@@ -421,3 +421,18 @@ export const CompanyProfileSchema = yup.object({
   phonenumber: BasicInfoRegistrationSchema.fields.telephone,
   registrationNumber: yup.string(),
 });
+
+export const ContactFormSchema = yup.object({
+  firstName: (registrationValidationSchema[0] as yup.ObjectSchema<any>).fields
+    .firstName,
+  lastName: (registrationValidationSchema[0] as yup.ObjectSchema<any>).fields
+    .lastName,
+  email: (registrationValidationSchema[0] as yup.ObjectSchema<any>).fields
+    .email,
+  phoneNumber: (registrationValidationSchema[0] as yup.ObjectSchema<any>).fields
+    .telephone,
+  message: yup.string().required("Nachricht ist erforderlich."),
+  agree: yup
+    .boolean()
+    .oneOf([true], "Sie müssen die Datenschutzbestimmungen akzeptieren"),
+});
