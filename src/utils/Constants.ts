@@ -689,5 +689,34 @@ export const RealEstateLandingPageTabs = [
   { label: "Objektübersicht", index: "3" },
 ];
 
+export const contactFiltersOption = {
+  state: {
+    title: "Bundesland",
+    options: [
+      "Bayern",
+      "Hessen",
+      "Sachsen",
+      "Thüringen",
+      "Baden-Württemberg",
+      "Schleswig-Holstein",
+      "Nordrhein-Westfalen",
+      "Mecklenburg-Vorpommern",
+    ],
+  },
+  facilityType: {
+    title: "Anlagentyp",
+    options: [
+      "Anlagentyp 1",
+      "Anlagentyp 2",
+      "Anlagentyp 3",
+      "Anlagentyp 4",
+      "Anlagentyp 5",
+    ],
+  },
+  tenderType: {
+    title: "Auftragstyp",
+    options: ["Wartung", "Installation", "Reparatur", "Prüfung", "Fire"],
+  },
+};
 export const CHECK_DUE_SOON_DAYS = 183;
 export const MAINTENANCE_DUE_SOON_DAYS = 15;

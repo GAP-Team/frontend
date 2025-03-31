@@ -1,4 +1,5 @@
 import * as yup from "yup";
+import { USER_ROLE } from "./enums";
 
 const EMAIL_REGEX =
   /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -58,6 +59,7 @@ export const registrationValidationSchema = [
         "Telefonnummer muss nur Zahlen enthalten und zwischen 10 und 14 Ziffern lang sein"
       ),
     company: yup.string().required("Firmenname ist erforderlich"),
+    role: yup.string(),
   }),
   yup.object({
     state: yup.string().required("Bundesland ist erforderlich"),
@@ -118,13 +120,22 @@ export const registrationValidationSchema = [
   yup.object({
     numOfEmployees: yup
       .string()
-      .required("Anzahl der Mitarbeiter ist erforderlich"),
+      .when("role", (role, schema) =>
+        role[0] === USER_ROLE.SERVICE_PROVIDER.toString()
+          ? schema.required("Anzahl der Mitarbeiter ist erforderlich")
+          : schema.notRequired()
+      ),
     manufacturerExperience: yup.string(),
     qualificationDocs: yup
       .array()
-      .of(yup.mixed())
-      .min(1, "Mindestens ein Qualifikationsdokument ist erforderlich")
-      .required("Qualifikationsdokumente sind erforderlich"),
+      .when("role", (role, schema) =>
+        role[0] === USER_ROLE.SERVICE_PROVIDER.toString()
+          ? schema
+              .of(yup.mixed())
+              .min(1, "Mindestens ein Qualifikationsdokument ist erforderlich")
+              .required("Qualifikationsdokumente sind erforderlich")
+          : schema.notRequired()
+      ),
   }),
 ];
 
@@ -409,4 +420,19 @@ export const CompanyProfileSchema = yup.object({
   city: AddressRegistrationSchema.fields.city,
   phonenumber: BasicInfoRegistrationSchema.fields.telephone,
   registrationNumber: yup.string(),
+});
+
+export const ContactFormSchema = yup.object({
+  firstName: (registrationValidationSchema[0] as yup.ObjectSchema<any>).fields
+    .firstName,
+  lastName: (registrationValidationSchema[0] as yup.ObjectSchema<any>).fields
+    .lastName,
+  email: (registrationValidationSchema[0] as yup.ObjectSchema<any>).fields
+    .email,
+  phoneNumber: (registrationValidationSchema[0] as yup.ObjectSchema<any>).fields
+    .telephone,
+  message: yup.string().required("Nachricht ist erforderlich."),
+  agree: yup
+    .boolean()
+    .oneOf([true], "Sie müssen die Datenschutzbestimmungen akzeptieren"),
 });

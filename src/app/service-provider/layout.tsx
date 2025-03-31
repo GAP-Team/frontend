@@ -20,19 +20,19 @@ const sidebarItems: SidebarItem[] = [
     id: 1,
     icon: CgNotes,
     text: "Ausschreibungen",
-    url: ROUTES.SERVICE_PROVIDER.TENDERS,
+    url: ROUTES.SERVICE_PROVIDER.CONTRACTS,
   },
   {
     id: 2,
     icon: BiTask,
     text: "Aufträge",
-    url: ROUTES.SERVICE_PROVIDER.ORDERS,
+    url: ROUTES.SERVICE_PROVIDER.APPLICATIONS,
   },
   {
     id: 3,
     icon: BsEnvelope,
     text: "Nachrichten",
-    url: ROUTES.SERVICE_PROVIDER.NEWS,
+    url: ROUTES.SERVICE_PROVIDER.MESSAGES,
   },
 ];
 
