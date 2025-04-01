@@ -4,33 +4,36 @@ import Link from "next/link";
 import Badge from "../../badge/GBadge";
 import classes from "./GFunctionSection.module.scss";
 import TitleSection from "../../label/title-section";
-import { AuftrafSvg, AngebotSvg, SolutionSvg } from "../../svg/function-svg";
+import { ContractSvgIcon } from "../../../../public/svg/ContractSvgIcon";
+import { SolutionSvgIcon } from "../../../../public/svg/SolutionSvgIcon";
+import { RegisterSvgIcon } from "../../../../public/svg/RegisterSvgIcon";
+
 
 const GFunctionSection = (): JSX.Element => {
   return (
     <div className="mx-auto p-5 flex flex-col justify-center items-center">
       <TitleSection
-        title="So funktioniert GAP"
-        subtitle="Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dicta maxime, maiores reiciendis fuga animi, quidem similique perspiciatis neque doloremque ut veniam modi earum non iste assumenda voluptates impedit velit debitis, voluptas aspernatur dolore incidunt pariatur beatae?"
+        title="So funktioniert GAP für Dienstleister"
+        subtitle="Mit GAP finden Sie gezielt passende Aufträge von Immobilienbetreibern – digital, einfach und ohne Umwege."
         badge={<Badge title="In 3 Schritten zum Erfolg" color="#ffeecc" />}
       />
       <div className="flex flex-wrap justify-center md:justify-between items-center max-w-screen-xl">
         <ServiceStep
-          title="Auftrag beschreiben"
-          subtitle="Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dicta maxime, maiores reiciendis fuga animi, quidem"
-          icon={<AuftrafSvg className="inline-block  w-10 h-10 stroke-2" />}
+          title="Profil anlegen & Qualifikationen angeben"
+          subtitle="Erstellen Sie Ihr Unternehmensprofil in wenigen Minuten und hinterlegen Sie Ihre Gewerke und Leistungen."
+          icon={<RegisterSvgIcon className="inline-block  w-10 h-10 stroke-2" />}
         />
         <IconSeparator />
         <ServiceStep
-          title="Auftrag beschreiben"
-          subtitle="Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dicta maxime, maiores reiciendis fuga animi, quidem"
-          icon={<AngebotSvg className="inline-block w-10 h-10 stroke-2" />}
+          title="Passende Aufträge erhalten"
+          subtitle="Sobald ein Immobilienbetreiber einen Auftrag in Ihrem Bereich ausschreibt, werden Sie automatisch informiert."
+          icon={<ContractSvgIcon className="inline-block  w-10 h-10 stroke-2" />}
         />
         <IconSeparator />
         <ServiceStep
-          title="Auftrag beschreiben"
-          subtitle="Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dicta maxime, maiores reiciendis fuga animi, quidem"
-          icon={<SolutionSvg className="inline-block  w-10 h-10 stroke-2" />}
+          title="Angebote abgeben & Kunden gewinnen"
+          subtitle="Geben Sie direkt ein Angebot ab – ganz ohne Vermittler. Sie entscheiden, welche Aufträge Sie annehmen möchten."
+          icon={<SolutionSvgIcon className="inline-block  w-10 h-10 stroke-2" />}
         />
       </div>
       <Link
@@ -38,7 +41,7 @@ const GFunctionSection = (): JSX.Element => {
         type="button"
         href="/login"
       >
-        Jetzt Loslegen{" "}
+        Jetzt loslegen und Auftrag sichern
         <span className="ml-2 text-lg font-bold text-white ">{"->"}</span>
       </Link>
     </div>
