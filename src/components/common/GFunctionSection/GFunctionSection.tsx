@@ -8,7 +8,6 @@ import { ContractSvgIcon } from "../../../../public/svg/ContractSvgIcon";
 import { SolutionSvgIcon } from "../../../../public/svg/SolutionSvgIcon";
 import { RegisterSvgIcon } from "../../../../public/svg/RegisterSvgIcon";
 
-
 const GFunctionSection = (): JSX.Element => {
   return (
     <div className="mx-auto p-5 flex flex-col justify-center items-center">
@@ -21,19 +20,25 @@ const GFunctionSection = (): JSX.Element => {
         <ServiceStep
           title="Profil anlegen & Qualifikationen angeben"
           subtitle="Erstellen Sie Ihr Unternehmensprofil in wenigen Minuten und hinterlegen Sie Ihre Gewerke und Leistungen."
-          icon={<RegisterSvgIcon className="inline-block  w-10 h-10 stroke-2" />}
+          icon={
+            <RegisterSvgIcon className="inline-block  w-10 h-10 stroke-2" />
+          }
         />
         <IconSeparator />
         <ServiceStep
           title="Passende Aufträge erhalten"
           subtitle="Sobald ein Immobilienbetreiber einen Auftrag in Ihrem Bereich ausschreibt, werden Sie automatisch informiert."
-          icon={<ContractSvgIcon className="inline-block  w-10 h-10 stroke-2" />}
+          icon={
+            <ContractSvgIcon className="inline-block  w-10 h-10 stroke-2" />
+          }
         />
         <IconSeparator />
         <ServiceStep
           title="Angebote abgeben & Kunden gewinnen"
           subtitle="Geben Sie direkt ein Angebot ab – ganz ohne Vermittler. Sie entscheiden, welche Aufträge Sie annehmen möchten."
-          icon={<SolutionSvgIcon className="inline-block  w-10 h-10 stroke-2" />}
+          icon={
+            <SolutionSvgIcon className="inline-block  w-10 h-10 stroke-2" />
+          }
         />
       </div>
       <Link

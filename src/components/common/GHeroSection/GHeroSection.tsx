@@ -139,11 +139,14 @@ const HeroSection = (): JSX.Element => {
                         color="#d0ede8"
                       />
                       <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold my-5">
-                      Sie sind Experte – wir haben die passenden Aufträge!
+                        Sie sind Experte – wir haben die passenden Aufträge!
                       </h1>
                       <p className="text-base sm:text-lg md:text-xl font-normal max-w-xl sm:max-w-2xl md:max-w-4xl mx-auto py-2">
-                      Ob Sachverständiger, Technikerin, Handwerksbetrieb oder Prüfstelle:
-GAP bringt Sie direkt mit Immobilienbetreibern zusammen, die qualifizierte Fachbetriebe für gesetzlich vorgeschriebene Prüfungen und Wartungen suchen.
+                        Ob Sachverständiger, Technikerin, Handwerksbetrieb oder
+                        Prüfstelle: GAP bringt Sie direkt mit
+                        Immobilienbetreibern zusammen, die qualifizierte
+                        Fachbetriebe für gesetzlich vorgeschriebene Prüfungen
+                        und Wartungen suchen.
                       </p>
                     </div>
                     <form className="flex flex-col justify-center text-center pt-10 pb-4 md:flex-row">

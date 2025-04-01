@@ -13,7 +13,7 @@ import { DoorSvgIcon } from "../../../../public/svg/DoorSvgIcon";
 import { GasSvgIcon } from "../../../../public/svg/GasSvgIcon";
 import { CoolingSvgIcon } from "../../../../public/svg/CoolingSvgIcon";
 import TitleSection from "../../label/title-section";
-import {FeatureCard} from "./../../card/FeatureCard";
+import { FeatureCard } from "./../../card/FeatureCard";
 
 const GFeatures = (): JSX.Element => {
   return (
@@ -24,7 +24,7 @@ const GFeatures = (): JSX.Element => {
         badge={<GBadge title="Jetzt direkt loslegen" color="#ccdfeb" />}
       />
       <div className="grid grid-cols-2 sm:grid-cols-3  lg:grid-cols-6 gap-4 sm:px-16 mb-8">
-        <FeatureCard title="Aufzugsanlagen" icon={<AufzugSvgIcon/>} />
+        <FeatureCard title="Aufzugsanlagen" icon={<AufzugSvgIcon />} />
         <FeatureCard title="Brandmeldeanlagen" icon={<BmaSvgIcon />} />
         <FeatureCard title="Sprinkleranlagen" icon={<SprinklerSvgIcon />} />
         <FeatureCard
@@ -44,11 +44,13 @@ const GFeatures = (): JSX.Element => {
         />
         <FeatureCard title="Tür- und Toranlagen" icon={<DoorSvgIcon />} />
         <FeatureCard title="Gasleitungen" icon={<GasSvgIcon />} />
-        <FeatureCard title="Kälte- und Klimatechnik" icon={<CoolingSvgIcon />} />
+        <FeatureCard
+          title="Kälte- und Klimatechnik"
+          icon={<CoolingSvgIcon />}
+        />
       </div>
     </div>
   );
 };
-
 
 export default GFeatures;

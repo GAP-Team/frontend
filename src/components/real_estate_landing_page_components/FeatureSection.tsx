@@ -23,21 +23,21 @@ const FeatureSection = (): JSX.Element => {
     "Bündelung von Prüfaufträgen zur Kostenreduktion",
     "Transparente Angebote von zertifizierten Dienstleistern",
     "Effiziente Prozesse – weniger Aufwand, weniger Kosten",
-    "Reduktion von Bußgeldern durch fristgerechte Prüfungen"
+    "Reduktion von Bußgeldern durch fristgerechte Prüfungen",
   ];
 
   const tenderFeatures = [
     "Individuelle Ausschreibungen für Prüf- und Wartungsleistungen",
     "Vergleich von Dienstleister-Angeboten",
     "Kommunikation & Beauftragung direkt über die Plattform",
-    "Faire Vergabeprozesse – transparent & DSGVO-konform"
+    "Faire Vergabeprozesse – transparent & DSGVO-konform",
   ];
 
   const buildingFeatures = [
     "Zentrale Verwaltung aller Immobilien und Einheiten",
     "Intelligente Verknüpfung von Objekt- & Anlagendaten",
     "Import bestehender Excel-Daten per Klick",
-    " Strukturierte Dokumentation & Protokollarchiv"
+    " Strukturierte Dokumentation & Protokollarchiv",
   ];
 
   const handleTabSelection = (tabIndex: string): void => {
@@ -53,10 +53,12 @@ const FeatureSection = (): JSX.Element => {
             style={styles.titleHolder}
           >
             <h1 className="text-4xl font-bold my-5">
-            Unsere Funktionen – Jetzt entdecken
+              Unsere Funktionen – Jetzt entdecken
             </h1>
             <p className="text-lg font-semibold max-w-4xl mx-auto pb-4">
-            GAP bietet Dir alles, was Du für die rechtssichere Verwaltung Deiner Immobilien brauchst. Spare Zeit, reduziere Kosten und vertraue auf geprüfte Qualität.
+              GAP bietet Dir alles, was Du für die rechtssichere Verwaltung
+              Deiner Immobilien brauchst. Spare Zeit, reduziere Kosten und
+              vertraue auf geprüfte Qualität.
             </p>
             <RoundButton
               text="Jetzt kostenlos starten"

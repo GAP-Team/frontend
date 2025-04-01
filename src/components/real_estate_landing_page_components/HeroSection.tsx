@@ -18,10 +18,13 @@ const HeroSection = (): JSX.Element => {
           >
             <p style={styles.heroSubtitle}>Wir sind GAP</p>
             <h1 className="text-4xl font-bold my-5">
-            Deine digitale Lösung für gesetzeskonforme Immobilienverwaltung
+              Deine digitale Lösung für gesetzeskonforme Immobilienverwaltung
             </h1>
             <p className="text-lg font-semibold max-w-4xl mx-auto">
-            Die smarte Plattform für Immobilienbetreiber: Verwalte Deine Objekte und prüfe alle technischen Anlagen rechtssicher und effizient – mit zertifizierten Dienstleistern aus unserem Netzwerk.
+              Die smarte Plattform für Immobilienbetreiber: Verwalte Deine
+              Objekte und prüfe alle technischen Anlagen rechtssicher und
+              effizient – mit zertifizierten Dienstleistern aus unserem
+              Netzwerk.
             </p>
             <div className="flex flex-col grid-cols-2 py-1">
               <div className="flex flex-row gap-5 sm:gap-7 md:gap-10 lg:gap-20 mt-14 justify-between lg:justify-start">

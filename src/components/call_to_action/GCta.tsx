@@ -13,11 +13,13 @@ const GCta = (): JSX.Element => {
               </span>
             </div>
             <h2 className="text-xxl">
-            GAP ist Ihr Partner für gesetzliche Anlagenprüfung!
+              GAP ist Ihr Partner für gesetzliche Anlagenprüfung!
             </h2>
             <div className="text-component margin-top-md">
               <p className="line-height-lg">
-              Wir sind Ihre Plattform für rechtssichere Prüfungen und Wartungen. GAP vereinfacht Prozesse, spart Zeit und verbindet Sie mit erfahrenen Dienstleistern.
+                Wir sind Ihre Plattform für rechtssichere Prüfungen und
+                Wartungen. GAP vereinfacht Prozesse, spart Zeit und verbindet
+                Sie mit erfahrenen Dienstleistern.
               </p>
             </div>
             <div className="margin-top-sm">
