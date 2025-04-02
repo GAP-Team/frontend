@@ -174,7 +174,7 @@ const RegistrationRealState = (): JSX.Element => {
     } catch (error: any) {
       if (
         error.response &&
-        error.response?.data?.error === "User already exists"
+        error.response?.data?.message === "User already exists"
       ) {
         setOpenSnackbar(true);
         setActiveStep(0);
