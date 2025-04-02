@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import {
+  Grid,
   Accordion,
   Container,
   Typography,
@@ -7,6 +8,7 @@ import {
   AccordionDetails,
 } from "@mui/material";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
+import RoundButton from "@/components/button/RoundButton";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 
 const faqs = [
@@ -81,6 +83,17 @@ const FAQSection = (): JSX.Element => {
               </Accordion>
             ))}
           </Container>
+          <Grid sx={styles.buttonHolder}>
+            <Typography style={styles.buttonLable}>
+              Deine Frage ist nicht dabei?
+            </Typography>
+            <RoundButton
+              text="Jetzt kontakt anufnehmen"
+              color="#FFFFFF"
+              hoverColor="rgb(86 78 78)"
+              borderColor="rgb(86 78 78)"
+            />
+          </Grid>
         </div>
       </div>
     </div>
@@ -105,5 +118,18 @@ const styles = {
   normal: {
     fontWeigt: "bold",
     color: "#646464",
+  },
+  buttonLable: {
+    marginTop: "2rem",
+    fontSize: "1.2rem",
+    fontWeight: "bold",
+    marginBottom: "2rem",
+  },
+  buttonHolder: {
+    display: "flex",
+    marginTop: "2rem",
+    alignItems: "center",
+    flexDirection: "column",
+    justifyContent: "center",
   },
 };
