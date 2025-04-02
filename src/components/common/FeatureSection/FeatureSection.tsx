@@ -12,11 +12,32 @@ import CostSavingImage from "../../../../public/images/cost-saving.png";
 const FeatureSection = (): JSX.Element => {
   const [currentTabIndex, setCurrentTabIndex] = useState<string>("0");
 
-  const features = [
-    "Simply Dummy Text",
-    "Simply Dummy Text",
-    "Simply Dummy Text",
-    "Simply Dummy Text",
+  const DashboardFeatures = [
+    "Übersicht aller Objekte und Anlagen",
+    "Anstehende Prüfungen und Fristen im Blick",
+    "Echtzeit-Status der Prüfberichte",
+    "Einfache Aufgabenverteilung im Team",
+  ];
+
+  const SavingFeatures = [
+    "Bündelung von Prüfaufträgen zur Kostenreduktion",
+    "Transparente Angebote von zertifizierten Dienstleistern",
+    "Effiziente Prozesse – weniger Aufwand, weniger Kosten",
+    "Reduktion von Bußgeldern durch fristgerechte Prüfungen",
+  ];
+
+  const tenderFeatures = [
+    "Individuelle Ausschreibungen für Prüf- und Wartungsleistungen",
+    "Vergleich von Dienstleister-Angeboten",
+    "Kommunikation & Beauftragung direkt über die Plattform",
+    "Faire Vergabeprozesse – transparent & DSGVO-konform",
+  ];
+
+  const buildingFeatures = [
+    "Zentrale Verwaltung aller Immobilien und Einheiten",
+    "Intelligente Verknüpfung von Objekt- & Anlagendaten",
+    "Import bestehender Excel-Daten per Klick",
+    " Strukturierte Dokumentation & Protokollarchiv",
   ];
 
   const handleTabSelection = (tabIndex: string): void => {
@@ -32,13 +53,12 @@ const FeatureSection = (): JSX.Element => {
             style={styles.titleHolder}
           >
             <h1 className="text-4xl font-bold my-5">
-              Unsere Funktionen - Jetzt entdecken
+              Unsere Funktionen – Jetzt entdecken
             </h1>
             <p className="text-lg font-semibold max-w-4xl mx-auto pb-4">
-              Unsere Software bietet Dir alle Funktionen, die Du für die
-              tägliche Verwaltung Deiner Immobilien benötigst. Überzeuge Dich
-              selbst und profitiere von einer professionellen Software, zum
-              günstigen Preis!
+              GAP bietet Dir alles, was Du für die rechtssichere Verwaltung
+              Deiner Immobilien brauchst. Spare Zeit, reduziere Kosten und
+              vertraue auf geprüfte Qualität.
             </p>
             <RoundButton
               text="Jetzt kostenlos starten"
@@ -59,28 +79,28 @@ const FeatureSection = (): JSX.Element => {
             {currentTabIndex === "0" && (
               <TabContent
                 title="Dashboard"
-                features={features}
+                features={DashboardFeatures}
                 image={DashboardImage}
               />
             )}
             {currentTabIndex === "1" && (
               <TabContent
                 title="Kosteneinsparung"
-                features={features}
+                features={SavingFeatures}
                 image={CostSavingImage}
               />
             )}
             {currentTabIndex === "2" && (
               <TabContent
                 title="Ausschreibungsübersicht"
-                features={features}
+                features={tenderFeatures}
                 image={TenderImage}
               />
             )}
             {currentTabIndex === "3" && (
               <TabContent
                 title="Objektübersicht"
-                features={features}
+                features={buildingFeatures}
                 image={BuildingImage}
               />
             )}

@@ -31,12 +31,15 @@ const ContactSection = (): JSX.Element => {
             Vielen Dank für Ihr Interesse an GAP!
           </Typography>
           <Typography variant="body1" sx={styles.description}>
-            Wir als GAP (Gesetzliche Anlagen Prüfung) streben danach, &apos;
-            best in class &apos; zu sein – bei unseren Ergebnissen und bei den
-            Dienstleistungen für unsere Kunden. Wir sind nah am operativen
-            Geschäft, nah an unseren Kunden, nah an unseren Teams. Sie suchen
-            einen starken Partner an Ihrer Seite oder haben Fragen? Wir freuen
-            uns auf Ihre Nachricht!
+            Als GAP (Gesetzliche Anlagen Prüfung) setzen wir neue Maßstäbe für
+            die digitale Immobilienverwaltung. Unser Ziel: &quot;Best in
+            Class&quot; bei Effizienz, Rechtssicherheit und Servicequalität. Wir
+            arbeiten nah an unseren Kunden und vermitteln zertifizierte Experten
+            für gesetzlich vorgeschriebene Prüfungen.
+          </Typography>
+          <Typography variant="body1" sx={styles.description}>
+            Sie möchten mehr erfahren oder ein individuelles Beratungsgespräch
+            vereinbaren? Schreiben Sie uns!
           </Typography>
           <ContactForm />
         </Container>
