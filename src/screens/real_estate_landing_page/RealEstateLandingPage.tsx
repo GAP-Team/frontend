@@ -1,5 +1,5 @@
-import HeroSection from "@/components/real_estate_landing_page_components/HeroSection";
-import FeatureSection from "@/components/real_estate_landing_page_components/FeatureSection";
+import HeroSection from "@/components/common/HeroSection/HeroSection";
+import FeatureSection from "@/components/common/FeatureSection/FeatureSection";
 
 const RealEstateLandingPage = (): JSX.Element => {
   return (

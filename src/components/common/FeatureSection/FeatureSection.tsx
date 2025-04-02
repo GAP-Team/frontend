@@ -1,7 +1,7 @@
 import { useState } from "react";
-import RoundButton from "../button/RoundButton";
-import TabContent from "../tab_panel/TabContent";
-import CustomTabPanel from "../tab_panel/CustomTabPanel";
+import RoundButton from "../../button/RoundButton";
+import TabContent from "../../tab_panel/TabContent";
+import CustomTabPanel from "../../tab_panel/CustomTabPanel";
 import { RealEstateLandingPageTabs } from "@/utils/Constants";
 
 import TenderImage from "../../../public/images/tenders.png";
