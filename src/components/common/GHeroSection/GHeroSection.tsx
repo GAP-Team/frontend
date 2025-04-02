@@ -139,12 +139,14 @@ const HeroSection = (): JSX.Element => {
                         color="#d0ede8"
                       />
                       <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold my-5">
-                        Unternehmen gesucht?
+                        Sie sind Experte – wir haben die passenden Aufträge!
                       </h1>
                       <p className="text-base sm:text-lg md:text-xl font-normal max-w-xl sm:max-w-2xl md:max-w-4xl mx-auto py-2">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Ipsa, rem neque doloribus impedit explicabo minus
-                        laborum cupiditate atque esse consectetur.
+                        Ob Sachverständiger, Technikerin, Handwerksbetrieb oder
+                        Prüfstelle: GAP bringt Sie direkt mit
+                        Immobilienbetreibern zusammen, die qualifizierte
+                        Fachbetriebe für gesetzlich vorgeschriebene Prüfungen
+                        und Wartungen suchen.
                       </p>
                     </div>
                     <form className="flex flex-col justify-center text-center pt-10 pb-4 md:flex-row">
@@ -354,7 +356,7 @@ const HeroSection = (): JSX.Element => {
                           htmlFor="free-signup"
                           className="ml-2 block text-sm md:text-md text-gray-900"
                         >
-                          Kostenlos anmelden
+                          Kostenlos registrieren
                         </label>
                       </div>
                       <div className="flex items-center">
@@ -364,6 +366,15 @@ const HeroSection = (): JSX.Element => {
                           className="ml-2 block text-sm md:text-md text-gray-900"
                         >
                           Unverbindlich testen
+                        </label>
+                      </div>
+                      <div className="flex items-center">
+                        <FaCheck />
+                        <label
+                          htmlFor="test-without-commitment"
+                          className="ml-2 block text-sm md:text-md text-gray-900"
+                        >
+                          Direkt loslegen
                         </label>
                       </div>
                     </div>
