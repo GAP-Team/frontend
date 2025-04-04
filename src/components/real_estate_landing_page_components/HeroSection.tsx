@@ -26,8 +26,8 @@ const HeroSection = (): JSX.Element => {
               effizient – mit zertifizierten Dienstleistern aus unserem
               Netzwerk.
             </p>
-            <div className="flex flex-row grid-cols-2 py-1">
-              <div className="flex flex-col gap-5 sm:gap-7 md:gap-10 lg:gap-20 mt-14 justify-between lg:justify-start">
+            <div className="flex flex-row justify-between grid-cols-2 py-1">
+              <div className="flex flex-col gap-5 sm:gap-7 md:gap-10 lg:gap-20 mt-14">
                 <div className="grid-cols-2 flex flex-row">
                   <div className="w-2/12">
                     <TaskAltIcon
@@ -62,7 +62,7 @@ const HeroSection = (): JSX.Element => {
                   </div>
                 </div>
               </div>
-              <div className="flex flex-col gap-5 sm:gap-7 md:gap-10 lg:gap-20 mt-14 justify-between lg:justify-start">
+              <div className="flex flex-col gap-5 sm:gap-7 md:gap-10 lg:gap-20 mt-14">
                 <div className="grid-cols-2 flex flex-row">
                   <div className="w-2/12">
                     <QuestionAnswerIcon
