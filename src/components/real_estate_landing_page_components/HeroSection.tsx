@@ -9,7 +9,7 @@ import AccessTimeFilledIcon from "@mui/icons-material/AccessTimeFilled";
 const HeroSection = (): JSX.Element => {
   return (
     <>
-      <section className="bg-white w-full py-5">
+      <section className="bg-white w-full py-5 pt-20">
         <div className="relative grid grid-cols-2 mb-8 pl-32">
           {/* Hero Text Section */}
           <div
