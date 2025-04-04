@@ -26,10 +26,10 @@ const HeroSection = (): JSX.Element => {
               effizient – mit zertifizierten Dienstleistern aus unserem
               Netzwerk.
             </p>
-            <div className="flex flex-col grid-cols-2 py-1">
-              <div className="flex flex-row gap-5 sm:gap-7 md:gap-10 lg:gap-20 mt-14 justify-between lg:justify-start">
+            <div className="flex flex-row grid-cols-2 py-1">
+              <div className="flex flex-col gap-5 sm:gap-7 md:gap-10 lg:gap-20 mt-14 justify-between lg:justify-start">
                 <div className="grid-cols-2 flex flex-row">
-                  <div className="w-full">
+                  <div className="w-2/12">
                     <TaskAltIcon
                       fontSize="large"
                       style={{ color: "#00d8af" }}
@@ -44,26 +44,9 @@ const HeroSection = (): JSX.Element => {
                     </p>
                   </div>
                 </div>
+
                 <div className="grid-cols-2 flex flex-row">
-                  <div className="w-full">
-                    <QuestionAnswerIcon
-                      fontSize="large"
-                      style={{ color: "#00d8af" }}
-                    />
-                  </div>
-                  <div className="w-full min-w-60">
-                    <p
-                      className="text-sm font-normal max-w-4xl mx-auto"
-                      style={styles.heroFeatureText}
-                    >
-                      Automatisierte Prüfplanung nach gesetzlichen Fristen
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div className="flex flex-row gap-5 sm:gap-7 md:gap-10 lg:gap-20 mt-14 justify-between lg:justify-start">
-                <div className="grid-cols-2 flex flex-row">
-                  <div className="w-full">
+                  <div className="w-2/12">
                     <AccessTimeFilledIcon
                       fontSize="large"
                       style={{ color: "#00d8af" }}
@@ -78,8 +61,27 @@ const HeroSection = (): JSX.Element => {
                     </p>
                   </div>
                 </div>
+              </div>
+              <div className="flex flex-col gap-5 sm:gap-7 md:gap-10 lg:gap-20 mt-14 justify-between lg:justify-start">
                 <div className="grid-cols-2 flex flex-row">
-                  <div className="w-full">
+                  <div className="w-2/12">
+                    <QuestionAnswerIcon
+                      fontSize="large"
+                      style={{ color: "#00d8af" }}
+                    />
+                  </div>
+                  <div className="w-full min-w-60">
+                    <p
+                      className="text-sm font-normal max-w-4xl mx-auto"
+                      style={styles.heroFeatureText}
+                    >
+                      Automatisierte Prüfplanung nach gesetzlichen Fristen
+                    </p>
+                  </div>
+                </div>
+
+                <div className="grid-cols-2 flex flex-row">
+                  <div className="w-2/12">
                     <RocketLaunchIcon
                       fontSize="large"
                       style={{ color: "#00d8af" }}
@@ -164,5 +166,6 @@ const styles = {
   },
   heroFeatureText: {
     fontSize: "22px",
+    lineHeight: "1.6rem",
   },
 };
