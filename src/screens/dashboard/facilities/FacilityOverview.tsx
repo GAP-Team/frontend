@@ -37,6 +37,7 @@ const FacilityOverview: React.FC = (): JSX.Element => {
           facilityType: "",
         })
       );
+      dispatch(getFacilitiesByUser(user.id));
     }
   }, [user?.id, dispatch]);
 
