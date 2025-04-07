@@ -46,7 +46,7 @@ export default function RealEstateOwnerTypes(): JSX.Element {
             <AccountBalanceIcon sx={{ fontSize: 40, color: "black" }} />
             <CardContent>
               <Typography variant="h6" style={styles.cardHeading}>
-                Für Investoren
+                Für Immobelienbetriber
               </Typography>
               <Typography variant="body2" style={styles.cardDescription}>
                 Smartes Finanzmanagement zur Rendite-Optimierung.
