@@ -32,7 +32,7 @@ export default function RealEstateOwnerTypes(): JSX.Element {
                 Für Vermieter
               </Typography>
               <Typography variant="body2" style={styles.cardDescription}>
-                Einfachere und sichere Verwaltung Deiner Immobilien.
+           Einfache und sichere Verwaltung Ihrer Anlagen in Immobilien.
               </Typography>
             </CardContent>
           </RoleCard>
