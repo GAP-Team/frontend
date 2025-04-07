@@ -89,7 +89,7 @@ const styles = {
     minHeight: "20rem",
     textAlign: "center",
     paddingTop: "5rem",
-    curser: "pointer",
+    cursor: "pointer",
   },
   cardHeading: {
     fontSize: "1.3rem",
