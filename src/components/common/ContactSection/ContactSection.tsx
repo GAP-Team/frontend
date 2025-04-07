@@ -1,6 +1,7 @@
 "use client";
 import ContactForm from "../ContactForm/ContactForm";
 import { Box, Container, Typography } from "@mui/material";
+import FAQSection from "@/components/common/FaqSection/FaqSection";
 
 const ContactSection = (): JSX.Element => {
   return (
@@ -17,7 +18,8 @@ const ContactSection = (): JSX.Element => {
             Kontakt
           </Typography>
         </Box>
-
+        {/* FAQ Section */}
+        <FAQSection />
         {/* Content Section */}
         <Container maxWidth="md" sx={styles.innerContainer}>
           <Typography

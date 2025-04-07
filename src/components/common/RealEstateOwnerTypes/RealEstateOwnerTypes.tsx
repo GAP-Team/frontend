@@ -1,10 +1,63 @@
 "use client";
-
-import { Card, CardContent, CardActions, Button, Typography, Grid } from "@mui/material";
+import { styled } from "@mui/material/styles";
 import HomeIcon from "@mui/icons-material/Home";
 import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
-import GroupsIcon from "@mui/icons-material/Groups";
-import { styled } from "@mui/material/styles";
+import { Card, CardContent, Typography, Grid } from "@mui/material";
+
+export default function RealEstateOwnerTypes(): JSX.Element {
+  return (
+    <Grid sx={styles.container}>
+      <Typography variant="h4" gutterBottom style={styles.heading}>
+        Eine umfassende Plattform für alle Immobilienbesitzer
+      </Typography>
+      <Typography variant="subtitle1" gutterBottom style={styles.subheading}>
+        Effizientes Immobilienmanagement für jede Anforderung – alles in einer
+        Cloud!
+      </Typography>
+
+      <Grid
+        container
+        spacing={3}
+        justifyContent="center"
+        style={{ marginTop: 30 }}
+      >
+        {/* Vermieter Card */}
+        <Grid item xs={12} sm={6} md={6}>
+          <RoleCard
+            sx={[styles.card, { border: "5px, solid", borderColor: "#00A7A7" }]}
+          >
+            <HomeIcon sx={{ fontSize: 40, color: "#00A7A7" }} />
+            <CardContent>
+              <Typography variant="h6" style={styles.cardHeading}>
+                Für Vermieter
+              </Typography>
+              <Typography variant="body2" style={styles.cardDescription}>
+                Einfachere und sichere Verwaltung Deiner Immobilien.
+              </Typography>
+            </CardContent>
+          </RoleCard>
+        </Grid>
+
+        {/* Investoren Card */}
+        <Grid item xs={12} sm={6} md={6}>
+          <RoleCard
+            sx={[styles.card, { border: "5px, solid", borderColor: "black" }]}
+          >
+            <AccountBalanceIcon sx={{ fontSize: 40, color: "black" }} />
+            <CardContent>
+              <Typography variant="h6" style={styles.cardHeading}>
+                Für Investoren
+              </Typography>
+              <Typography variant="body2" style={styles.cardDescription}>
+                Smartes Finanzmanagement zur Rendite-Optimierung.
+              </Typography>
+            </CardContent>
+          </RoleCard>
+        </Grid>
+      </Grid>
+    </Grid>
+  );
+}
 
 const RoleCard = styled(Card)(({ theme }) => ({
   textAlign: "center",
@@ -18,101 +71,32 @@ const RoleCard = styled(Card)(({ theme }) => ({
   },
 }));
 
-const SelectedButton = styled(Button)({
-  marginTop: 10,
-  padding: "10px 20px",
-  borderRadius: 20,
-  fontWeight: "bold",
-});
-
-export default function RealEstateOwnerTypes() {
-  return (
-    <div style={{ textAlign: "center", padding: "40px 20px" }}>
-      <Typography variant="h4" gutterBottom>
-        Eine umfassende Plattform für alle Immobilienbesitzer
-      </Typography>
-      <Typography variant="subtitle1" gutterBottom>
-        Effizientes Immobilienmanagement für jede Anforderung – alles in einer Cloud!
-      </Typography>
-
-      <Grid container spacing={3} justifyContent="center" style={{ marginTop: 30 }}>
-        {/* Vermieter Card */}
-        <Grid item xs={12} sm={6} md={4}>
-          <RoleCard sx={{ borderColor: "#00A7A7" }}>
-            <HomeIcon sx={{ fontSize: 40, color: "#00A7A7" }} />
-            <CardContent>
-              <Typography variant="h6">Für Vermieter</Typography>
-              <Typography variant="body2">
-                Einfachere und sichere Verwaltung Deiner Immobilien.
-              </Typography>
-            </CardContent>
-            <CardActions>
-              <SelectedButton variant="contained" style={{ backgroundColor: "#00A7A7" }}>
-                Ich bin Vermieter
-              </SelectedButton>
-            </CardActions>
-          </RoleCard>
-        </Grid>
-
-        {/* Investoren Card */}
-        <Grid item xs={12} sm={6} md={4}>
-          <RoleCard>
-            <AccountBalanceIcon sx={{ fontSize: 40, color: "black" }} />
-            <CardContent>
-              <Typography variant="h6">Für Investoren</Typography>
-              <Typography variant="body2">
-                Smartes Finanzmanagement zur Rendite-Optimierung.
-              </Typography>
-            </CardContent>
-            <CardActions>
-              <SelectedButton variant="contained" style={{ backgroundColor: "black" }}>
-                Ich bin Investor
-              </SelectedButton>
-            </CardActions>
-          </RoleCard>
-        </Grid>
-
-        {/* Hausverwalter Card (with red cross effect) */}
-        <Grid item xs={12} sm={6} md={4}>
-          <RoleCard sx={{ borderColor: "#75327E", position: "relative" }}>
-            <GroupsIcon sx={{ fontSize: 40, color: "#75327E" }} />
-            <CardContent>
-              <Typography variant="h6">Für Hausverwalter</Typography>
-              <Typography variant="body2">
-                Professionelle Software für die gewerbliche Verwaltung.
-              </Typography>
-            </CardContent>
-            <CardActions>
-              <SelectedButton variant="contained" style={{ backgroundColor: "#75327E" }}>
-                Ich bin Hausverwalter
-              </SelectedButton>
-            </CardActions>
-            {/* Red Cross Overlay */}
-            <div
-              style={{
-                position: "absolute",
-                top: 0,
-                left: 0,
-                width: "100%",
-                height: "100%",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <svg
-                width="100%"
-                height="100%"
-                viewBox="0 0 100 100"
-                style={{ position: "absolute", pointerEvents: "none" }}
-              >
-                <line x1="10" y1="10" x2="90" y2="90" stroke="red" strokeWidth="4" />
-                <line x1="90" y1="10" x2="10" y2="90" stroke="red" strokeWidth="4" />
-              </svg>
-            </div>
-          </RoleCard>
-        </Grid>
-      </Grid>
-    </div>
-  );
-}
+const styles = {
+  container: {
+    textAlign: "center",
+    padding: "40px 20px",
+  },
+  heading: {
+    fontSize: "2rem",
+    fontWeight: "bold",
+    marginBottom: "20px",
+  },
+  subheading: {
+    fontSize: "1.2rem",
+    marginBottom: "30px",
+  },
+  card: {
+    minHeight: "20rem",
+    textAlign: "center",
+    paddingTop: "5rem",
+    curser: "pointer",
+  },
+  cardHeading: {
+    fontSize: "1.3rem",
+    fontWeight: "bold",
+    marginBottom: "10px",
+  },
+  cardDescription: {
+    fontSize: "1.1rem",
+  },
+};

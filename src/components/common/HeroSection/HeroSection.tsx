@@ -1,9 +1,10 @@
 import Image from "next/image";
 import { Button } from "@mui/material";
+import Divider from "@mui/material/Divider";
 import TaskAltIcon from "@mui/icons-material/TaskAlt";
 import RocketLaunchIcon from "@mui/icons-material/RocketLaunch";
 import QuestionAnswerIcon from "@mui/icons-material/QuestionAnswer";
-import heroBackgroundPicture from "../../../public/images/hero6.jpg";
+import heroBackgroundPicture from "../../../../public/images/hero6.jpg";
 import AccessTimeFilledIcon from "@mui/icons-material/AccessTimeFilled";
 
 const HeroSection = (): JSX.Element => {
@@ -130,6 +131,7 @@ const HeroSection = (): JSX.Element => {
           </div>
         </div>
       </section>
+      <Divider sx={styles.divider} />
     </>
   );
 };
@@ -164,5 +166,8 @@ const styles = {
   },
   heroFeatureText: {
     fontSize: "22px",
+  },
+  divider: {
+    mb: 2,
   },
 };
