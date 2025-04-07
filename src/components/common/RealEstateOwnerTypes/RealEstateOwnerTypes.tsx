@@ -41,7 +41,7 @@ export default function RealEstateOwnerTypes(): JSX.Element {
         {/* Investoren Card */}
         <Grid item xs={12} sm={6} md={6}>
           <RoleCard
-            sx={[styles.card, { border: "5px, solid", borderColor: "black" }]}
+            sx={[styles.card, { border: "5px solid", borderColor: "black" }]}
           >
             <AccountBalanceIcon sx={{ fontSize: 40, color: "black" }} />
             <CardContent>
