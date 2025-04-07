@@ -1,13 +1,13 @@
 import { useState } from "react";
-import RoundButton from "../button/RoundButton";
-import TabContent from "../tab_panel/TabContent";
-import CustomTabPanel from "../tab_panel/CustomTabPanel";
+import RoundButton from "../../button/RoundButton";
+import TabContent from "../../tab_panel/TabContent";
+import CustomTabPanel from "../../tab_panel/CustomTabPanel";
 import { RealEstateLandingPageTabs } from "@/utils/Constants";
 
-import TenderImage from "../../../public/images/tenders.png";
-import BuildingImage from "../../../public/images/buildings.png";
-import DashboardImage from "../../../public/images/dashboard.png";
-import CostSavingImage from "../../../public/images/cost-saving.png";
+import TenderImage from "../../../../public/images/tenders.png";
+import BuildingImage from "../../../../public/images/buildings.png";
+import DashboardImage from "../../../../public/images/dashboard.png";
+import CostSavingImage from "../../../../public/images/cost-saving.png";
 
 const FeatureSection = (): JSX.Element => {
   const [currentTabIndex, setCurrentTabIndex] = useState<string>("0");
