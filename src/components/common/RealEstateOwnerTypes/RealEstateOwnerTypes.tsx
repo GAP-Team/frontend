@@ -11,7 +11,7 @@ export default function RealEstateOwnerTypes(): JSX.Element {
         Eine umfassende Plattform für alle Immobilienbesitzer
       </Typography>
       <Typography variant="subtitle1" gutterBottom style={styles.subheading}>
-        Effizientes Immobilienmanagement für jede Anforderung – alles in einer
+        Effizientes Anlagenmanagement für jede Anforderung – alles in einer
         Cloud!
       </Typography>
 
