@@ -24,7 +24,7 @@ export default function RealEstateOwnerTypes(): JSX.Element {
         {/* Vermieter Card */}
         <Grid item xs={12} sm={6} md={6}>
           <RoleCard
-            sx={[styles.card, { border: "5px, solid", borderColor: "#00A7A7" }]}
+            sx={[styles.card, { border: "5px solid", borderColor: "#00A7A7" }]}
           >
             <HomeIcon sx={{ fontSize: 40, color: "#00A7A7" }} />
             <CardContent>
