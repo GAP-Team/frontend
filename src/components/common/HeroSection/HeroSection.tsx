@@ -3,7 +3,7 @@ import { Button } from "@mui/material";
 import TaskAltIcon from "@mui/icons-material/TaskAlt";
 import RocketLaunchIcon from "@mui/icons-material/RocketLaunch";
 import QuestionAnswerIcon from "@mui/icons-material/QuestionAnswer";
-import heroBackgroundPicture from "../../../public/images/hero6.jpg";
+import heroBackgroundPicture from "../../../../public/images/hero6.jpg";
 import AccessTimeFilledIcon from "@mui/icons-material/AccessTimeFilled";
 
 const HeroSection = (): JSX.Element => {

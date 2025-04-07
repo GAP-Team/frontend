@@ -118,24 +118,22 @@ export const registrationValidationSchema = [
       }
     ),
   yup.object({
-    numOfEmployees: yup
-      .string()
-      .when("role", (role, schema) =>
-        role[0] === USER_ROLE.SERVICE_PROVIDER.toString()
-          ? schema.required("Anzahl der Mitarbeiter ist erforderlich")
-          : schema.notRequired()
-      ),
+    numOfEmployees: yup.string().when("role", {
+      is: USER_ROLE.SERVICE_PROVIDER,
+      then: (schema) =>
+        schema.required("Anzahl der Mitarbeiter ist erforderlich"),
+      otherwise: (schema) => schema.notRequired(),
+    }),
     manufacturerExperience: yup.string(),
-    qualificationDocs: yup
-      .array()
-      .when("role", (role, schema) =>
-        role[0] === USER_ROLE.SERVICE_PROVIDER.toString()
-          ? schema
-              .of(yup.mixed())
-              .min(1, "Mindestens ein Qualifikationsdokument ist erforderlich")
-              .required("Qualifikationsdokumente sind erforderlich")
-          : schema.notRequired()
-      ),
+    qualificationDocs: yup.array().when("role", {
+      is: USER_ROLE.SERVICE_PROVIDER,
+      then: (schema) =>
+        schema
+          .of(yup.mixed())
+          .min(1, "Mindestens ein Qualifikationsdokument ist erforderlich")
+          .required("Qualifikationsdokumente sind erforderlich"),
+      otherwise: (schema) => schema.notRequired(),
+    }),
   }),
 ];
 

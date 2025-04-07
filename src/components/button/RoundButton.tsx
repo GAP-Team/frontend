@@ -2,18 +2,25 @@ interface RoundButtonProps {
   text?: string;
   color?: string;
   hoverColor?: string;
+  borderColor?: string;
 }
 
 const RoundButton: React.FC<RoundButtonProps> = ({
   text,
   color,
   hoverColor,
+  borderColor,
 }): JSX.Element => {
   return (
     <>
       <button
         className={`text-white font-bold px-4 rounded-full py-3`}
-        style={{ ...styles.button, backgroundColor: color, color: hoverColor }}
+        style={{
+          ...styles.button,
+          backgroundColor: color,
+          color: hoverColor,
+          borderColor: borderColor,
+        }}
       >
         {text}
       </button>
@@ -31,6 +38,5 @@ const styles = {
     fontSize: "1.25rem",
     borderRadius: "9999px",
     padding: "0.5rem 2rem",
-    borderColor: "#17ABA9",
   },
 };
