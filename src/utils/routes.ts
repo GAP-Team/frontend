@@ -6,6 +6,7 @@ export const ROUTES = {
 
   LOGIN: "/login",
   REGISTER: "/register",
+  CONTACT_US: "/contact-us",
   REAL_ESTATE: {
     DASHBOARD: `${REAL_ESTATE_BASE}/dashboard`,
     BUILDING: {
