@@ -5,7 +5,7 @@ export const ROUTES = {
   SERVICE_PROVIDER_HOME: "/", // This is the default route
 
   LOGIN: "/login",
-  REGISTER: "/register",
+  REGISTER: "/registration",
   REAL_ESTATE: {
     DASHBOARD: `${REAL_ESTATE_BASE}/dashboard`,
     BUILDING: {
