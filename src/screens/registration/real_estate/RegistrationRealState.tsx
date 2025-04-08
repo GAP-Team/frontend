@@ -3,29 +3,34 @@ import Cookies from "js-cookie";
 import React, { useState } from "react";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
-import { Formik, Form } from "formik";
+import { Formik, Form, FormikHelpers } from "formik";
 import { useRouter } from "next/navigation";
 import Snackbar from "@mui/material/Snackbar";
 import RegistrationForm from "./RegistrationForm";
 import Typography from "@mui/material/Typography";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
-import {
-  SetTouchedFunction,
-  SubmitFormFunction,
-  ValidateFormFunction,
-} from "../../typings/types";
 import userAPIs from "@/api/user";
-import { RegistrationFormValues } from "./types";
+import { RegistrationFormValues } from "../types";
 
-import { BUSINESS_TYPE, DOCUMENT_TYPE } from "@/utils/enums";
+import { DOCUMENT_TYPE, USER_ROLE } from "@/utils/enums";
 import PageTitle from "@/components/label/PageTitle";
 import { handleUploadDoc } from "@/utils/uploadToS3";
 import BackButton from "@/components/button/BackButton";
 import InfoBanner from "@/components/common/InfoBanner";
 import EmailVerification from "@/components/email/EmailVerification";
 import { registrationValidationSchema } from "@/utils/ValidationSchema";
-
-function getSteps(): string[] {
+import { numOfEmployeesOptions } from "@/utils/Constants";
+import { Document } from "@/typings/types";
+export function getSteps(role?: string): string[] {
+  if (role === USER_ROLE.SERVICE_PROVIDER) {
+    return [
+      "Grundinformation",
+      "Adresse der Firma",
+      "Gewerbeanmeldung",
+      "Fachkenntnisse",
+      "Zusammenfassung",
+    ];
+  }
   return [
     "Grundinformation",
     "Adresse der Firma",
@@ -41,7 +46,6 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>((props, ref) => {
 Alert.displayName = "Alert";
 
 const RegistrationRealState = (): JSX.Element => {
-  const steps = getSteps();
   const router = useRouter();
 
   const [newUserId, setNewUserId] = useState("");
@@ -53,58 +57,24 @@ const RegistrationRealState = (): JSX.Element => {
     useState<boolean>(false);
 
   const handleNext = async (
-    validateForm: ValidateFormFunction,
-    setTouched: SetTouchedFunction,
-    submitForm: SubmitFormFunction
+    values: RegistrationFormValues,
+    actions: FormikHelpers<RegistrationFormValues>
   ): Promise<void> => {
-    const fieldsPerStep: { [key: number]: string[] } = {
-      0: [
-        "firstName",
-        "lastName",
-        "email",
-        "password",
-        "confirmPassword",
-        "telephone",
-        "company",
-        "role",
-      ],
-      1: ["state", "street", "houseNo", "zip", "city"],
-      2: [
-        "registrationNumber",
-        "businessRegistrationDocument",
-        "landRegisterEntryDocument",
-        "approvalDocument",
-      ],
-    };
+    const currentSteps = getSteps(values.role);
+    setSteps(currentSteps);
 
-    const fieldsToValidate = fieldsPerStep[activeStep];
-
-    const touchedUpdates = fieldsToValidate?.reduce(
-      (acc, field) => ({
-        ...acc,
-        [field]: true,
-      }),
-      {}
-    );
-    setTouched(touchedUpdates);
-
-    const formErrors = await validateForm();
-
-    const isCurrentStepValid =
-      !fieldsToValidate ||
-      fieldsToValidate?.every((field) => !formErrors[field]);
-
-    if (isCurrentStepValid) {
-      if (activeStep === steps.length - 1) {
-        submitForm();
-      } else {
-        setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    if (activeStep === steps.length - 1) {
+      const saveData = await uploadAllDocuments(values);
+      if (saveData) {
+        actions.setSubmitting(false);
       }
+    } else {
+      setActiveStep((prevActiveStep) => prevActiveStep + 1);
     }
   };
 
   const handleBack = (): void => {
-    if (activeStep > 3) {
+    if (activeStep === steps.length - 1) {
       setActiveStep(0);
     } else if (activeStep > 0) {
       setActiveStep((prevActiveStep) => prevActiveStep - 1);
@@ -132,8 +102,13 @@ const RegistrationRealState = (): JSX.Element => {
     registrationNumber: "",
     businessRegistrationDocument: "",
     landRegisterEntryDocument: "",
+    personalIdDocument: "",
     businessType: "",
+    numOfEmployees: numOfEmployeesOptions[0].value,
+    manufacturerExperience: "",
+    qualificationDocs: [],
   };
+  const [steps, setSteps] = useState<string[]>(getSteps());
 
   const onSubmit = async (values: any, docObj: any): Promise<void> => {
     try {
@@ -157,6 +132,16 @@ const RegistrationRealState = (): JSX.Element => {
         },
       };
 
+      const qualificationDocuments: Document[] = [];
+      if (values.qualificationDocs && values.qualificationDocs.length > 0) {
+        for (const qualificationDoc of values.qualificationDocs) {
+          const file = await handleUploadDoc(qualificationDoc);
+          qualificationDocuments.push({
+            ...file,
+            documentType: DOCUMENT_TYPE.QUALIFICATION_DOCUMENTS,
+          });
+        }
+      }
       const arrangedDataObj = {
         firstName: values.firstName,
         lastName: values.lastName,
@@ -164,6 +149,11 @@ const RegistrationRealState = (): JSX.Element => {
         email: values.email,
         role: values.role,
         company: companyObj,
+        ...(values.role === USER_ROLE.SERVICE_PROVIDER && {
+          manufacturerExperience: values.manufacturerExperience,
+          numOfEmployees: values.numOfEmployees,
+          qualificationDocuments: qualificationDocuments,
+        }),
       };
 
       const res = await userAPIs.register(arrangedDataObj);
@@ -184,7 +174,7 @@ const RegistrationRealState = (): JSX.Element => {
     } catch (error: any) {
       if (
         error.response &&
-        error.response?.data?.error === "User already exists"
+        error.response?.data?.message === "User already exists"
       ) {
         setOpenSnackbar(true);
         setActiveStep(0);
@@ -193,52 +183,57 @@ const RegistrationRealState = (): JSX.Element => {
   };
 
   const uploadAllDocuments = async (
-    values: RegistrationFormValues,
-    type: string
-  ): Promise<void> => {
+    values: RegistrationFormValues
+  ): Promise<boolean> => {
     try {
       const {
         approvalDocumentFile,
         landRegisterEntryDocumentFile,
         businessRegistrationDocumentFile,
+        personalIdDocumentFile,
+        qualificationDocs,
       } = values;
 
       if (
         !approvalDocumentFile &&
         !landRegisterEntryDocumentFile &&
-        !businessRegistrationDocumentFile
+        !businessRegistrationDocumentFile &&
+        !personalIdDocumentFile &&
+        !qualificationDocs
       ) {
         await onSubmit(values, []);
-        return;
+        return true;
       }
 
       const docObj: File[] = [];
 
-      if (type === BUSINESS_TYPE.BUSINESS) {
-        if (businessRegistrationDocumentFile) {
-          const file = await handleUploadDoc(businessRegistrationDocumentFile);
-          docObj.push({
-            ...file,
-            documentType: DOCUMENT_TYPE.BUSINESS_REGISTRATION,
-          });
-        }
-      } else if (type === BUSINESS_TYPE.PRIVATE) {
-        if (landRegisterEntryDocumentFile) {
-          const file = await handleUploadDoc(landRegisterEntryDocumentFile);
-          docObj.push({
-            ...file,
-            documentType: DOCUMENT_TYPE.LAND_REGISTER_ENTRY,
-          });
-        }
-        if (approvalDocumentFile) {
-          const file = await handleUploadDoc(approvalDocumentFile);
-          docObj.push({ ...file, documentType: DOCUMENT_TYPE.APPROVAL_DOC });
-        }
+      if (businessRegistrationDocumentFile) {
+        const file = await handleUploadDoc(businessRegistrationDocumentFile);
+        docObj.push({
+          ...file,
+          documentType: DOCUMENT_TYPE.BUSINESS_REGISTRATION,
+        });
+      }
+
+      if (landRegisterEntryDocumentFile) {
+        const file = await handleUploadDoc(landRegisterEntryDocumentFile);
+        docObj.push({
+          ...file,
+          documentType: DOCUMENT_TYPE.LAND_REGISTER_ENTRY,
+        });
+      }
+      if (approvalDocumentFile) {
+        const file = await handleUploadDoc(approvalDocumentFile);
+        docObj.push({ ...file, documentType: DOCUMENT_TYPE.APPROVAL_DOC });
+      }
+      if (personalIdDocumentFile) {
+        const file = await handleUploadDoc(personalIdDocumentFile);
+        docObj.push({ ...file, documentType: DOCUMENT_TYPE.PERSONAL_ID });
       }
 
       await onSubmit(values, docObj);
+      return true;
     } catch (error) {
-      console.error("Error uploading documents:", error);
       throw error;
     }
   };
@@ -276,13 +271,11 @@ const RegistrationRealState = (): JSX.Element => {
         <PageTitle title="Registrierung" />
         <Formik
           initialValues={initialValues}
-          validationSchema={registrationValidationSchema}
-          onSubmit={async (values) => {
-            await uploadAllDocuments(values, values?.businessType);
-          }}
+          validationSchema={registrationValidationSchema[activeStep]}
+          onSubmit={handleNext}
           enableReinitialize
         >
-          {({ validateForm, setTouched, submitForm }) => (
+          {({ handleSubmit }) => (
             <Form>
               <Grid sx={styles.form}>
                 {activeStep < steps.length ? (
@@ -290,9 +283,7 @@ const RegistrationRealState = (): JSX.Element => {
                     activeStep={activeStep}
                     steps={steps}
                     handleBack={handleBack}
-                    handleNext={() =>
-                      handleNext(validateForm, setTouched, submitForm)
-                    }
+                    handleNext={handleSubmit}
                     setActiveStep={setActiveStep}
                   />
                 ) : (

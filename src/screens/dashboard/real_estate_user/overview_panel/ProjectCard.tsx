@@ -1,12 +1,15 @@
 import React from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
+import WarningIcon from "@mui/icons-material/Warning";
 
 interface ProjectCardProps {
   code: string;
   address: string;
   daysRemaining: number;
   text?: string;
+  warning?: boolean;
+  onClick?: () => void;
 }
 
 const ProjectCard: React.FC<ProjectCardProps> = ({
@@ -14,9 +17,14 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
   address,
   daysRemaining,
   text,
+  warning = false,
+  onClick,
 }) => {
   return (
-    <Box sx={styles.card}>
+    <Box
+      sx={[styles.card, { cursor: onClick ? "pointer" : "default" }]}
+      onClick={onClick}
+    >
       <Box sx={styles.content}>
         <Typography variant="subtitle1" sx={styles.nameAndAddress}>
           {code}
@@ -26,6 +34,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
         </Typography>
       </Box>
       <Box sx={styles.daysRemaining}>
+        {warning && <WarningIcon sx={{ color: "warning.main", mb: 1 }} />}
         <Typography variant="h5" component="div" sx={styles.daysNumber}>
           {daysRemaining}
         </Typography>

@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
-import React, { useState } from "react";
 import Badge from "../../badge/GBadge";
+import React, { useState } from "react";
 import { FaCheck } from "react-icons/fa";
 import { FaArrowRightLong } from "react-icons/fa6";
 import {
@@ -24,7 +24,9 @@ import {
   listOfTrades,
   listOfOrderTypes,
 } from "@/utils/Constants";
+import { useRouter } from "next/navigation";
 import CloseIcon from "@mui/icons-material/Close";
+import { ROUTES } from "@/utils/routes";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import CustomSelect from "@/components/drop_down/CustomSelect";
@@ -32,6 +34,8 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import heroBackgroundPicture from "../../../../public/images/hero6.jpg";
 
 const HeroSection = (): JSX.Element => {
+  const router = useRouter();
+
   const [selectedState, setSelectedState] = useState<string>("");
 
   const [selectedFacilities, setSelectedFacilities] = useState<string[]>([]);
@@ -97,6 +101,12 @@ const HeroSection = (): JSX.Element => {
     setTenderTypeAnchorEl(null);
   };
 
+  const handleSearch = (): void => {
+    router.push(
+      `${window.location.origin}/${ROUTES.SERVICE_PROVIDER.CONTRACTS}`
+    );
+  };
+
   return (
     <>
       <section className="bg-white w-full dark:bg-gray-900">
@@ -129,15 +139,18 @@ const HeroSection = (): JSX.Element => {
                         color="#d0ede8"
                       />
                       <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold my-5">
-                        Unternehmen gesucht?
+                        Sie sind Experte – wir haben die passenden Aufträge!
                       </h1>
                       <p className="text-base sm:text-lg md:text-xl font-normal max-w-xl sm:max-w-2xl md:max-w-4xl mx-auto py-2">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Ipsa, rem neque doloribus impedit explicabo minus
-                        laborum cupiditate atque esse consectetur.
+                        Ob Sachverständiger, Technikerin, Handwerksbetrieb oder
+                        Prüfstelle: GAP bringt Sie direkt mit
+                        Immobilienbetreibern zusammen, die qualifizierte
+                        Fachbetriebe für gesetzlich vorgeschriebene Prüfungen
+                        und Wartungen suchen.
                       </p>
                     </div>
                     <form className="flex flex-col justify-center text-center pt-10 pb-4 md:flex-row">
+                      {/* Facility Type Section */}
                       <div className="flex flex-col w-full px-2 sm:px-4 md:w-1/3">
                         <FormControl sx={{ m: 1, minWidth: 120 }}>
                           <label
@@ -227,6 +240,7 @@ const HeroSection = (): JSX.Element => {
                         </FormControl>
                       </div>
 
+                      {/* Tender Type Section */}
                       <div className="flex flex-col w-full px-2 sm:px-4 md:w-1/3">
                         <FormControl sx={{ m: 1, minWidth: 120 }}>
                           <label
@@ -295,6 +309,7 @@ const HeroSection = (): JSX.Element => {
                         </FormControl>
                       </div>
 
+                      {/* State Section */}
                       <div className="flex flex-col w-full px-2 sm:px-4 md:w-1/3">
                         <FormControl sx={{ m: 1, minWidth: 120 }}>
                           <label
@@ -315,22 +330,25 @@ const HeroSection = (): JSX.Element => {
                         </FormControl>
                       </div>
                     </form>
+
+                    {/* Button Section */}
                     <div className="flex justify-center items-center">
                       <Button
-                        href="#"
                         size="large"
-                        component="a"
+                        component="button"
                         style={styles.querySubmitButton}
                         className="mt-10 rounded-lg"
                         sx={{
                           textTransform: "none",
                           whiteSpace: "pre",
                         }}
+                        onClick={handleSearch}
                       >
                         Jetzt Auftrag Finden
                         <FaArrowRightLong className="ml-2 h-5 w-5" />
                       </Button>
                     </div>
+
                     <div className="flex justify-center items-center pt-6 gap-4 px-4">
                       <div className="flex items-center">
                         <FaCheck />
@@ -338,7 +356,7 @@ const HeroSection = (): JSX.Element => {
                           htmlFor="free-signup"
                           className="ml-2 block text-sm md:text-md text-gray-900"
                         >
-                          Kostenlos anmelden
+                          Kostenlos registrieren
                         </label>
                       </div>
                       <div className="flex items-center">
@@ -348,6 +366,15 @@ const HeroSection = (): JSX.Element => {
                           className="ml-2 block text-sm md:text-md text-gray-900"
                         >
                           Unverbindlich testen
+                        </label>
+                      </div>
+                      <div className="flex items-center">
+                        <FaCheck />
+                        <label
+                          htmlFor="test-without-commitment"
+                          className="ml-2 block text-sm md:text-md text-gray-900"
+                        >
+                          Direkt loslegen
                         </label>
                       </div>
                     </div>

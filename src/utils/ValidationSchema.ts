@@ -1,4 +1,5 @@
 import * as yup from "yup";
+import { USER_ROLE } from "./enums";
 
 const EMAIL_REGEX =
   /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -13,8 +14,8 @@ export const loginValidationSchema = yup.object({
   password: yup.string().required("Passwort ist erforderlich"),
 });
 
-export const registrationValidationSchema = yup
-  .object({
+export const registrationValidationSchema = [
+  yup.object({
     firstName: yup
       .string()
       .required("Vorname ist erforderlich")
@@ -49,6 +50,7 @@ export const registrationValidationSchema = yup
       .string()
       .oneOf([yup.ref("password")], "Passwörter müssen übereinstimmen")
       .required("Passwort bestätigen ist erforderlich"),
+
     telephone: yup
       .string()
       .required("Telefonnummer ist erforderlich")
@@ -57,6 +59,9 @@ export const registrationValidationSchema = yup
         "Telefonnummer muss nur Zahlen enthalten und zwischen 10 und 14 Ziffern lang sein"
       ),
     company: yup.string().required("Firmenname ist erforderlich"),
+    role: yup.string(),
+  }),
+  yup.object({
     state: yup.string().required("Bundesland ist erforderlich"),
     street: yup.string().required("Straßenname ist erforderlich"),
     houseNo: yup
@@ -73,39 +78,64 @@ export const registrationValidationSchema = yup
         "Postleitzahl muss zwischen 4 und 5 Ziffern lang sein"
       ),
     city: yup.string().required("Stadt ist erforderlich"),
-    registrationNumber: yup.string(),
-    businessRegistrationDocument: yup.string(),
-    approvalDocument: yup.string(),
-    landRegisterEntryDocument: yup.string(),
-  })
-  .test(
-    "documentRequirement",
-    "Either business registration doc, registration number, approval document, or land register entry document is required.",
-    function (values) {
-      const {
-        businessRegistrationDocument: businessregistrationDocument,
-        registrationNumber,
-        approvalDocument: approvalDocument,
-        landRegisterEntryDocument: landRegisterEntryDocument,
-      } = values;
+  }),
+  yup
+    .object({
+      registrationNumber: yup.string(),
+      businessRegistrationDocument: yup.string(),
+      approvalDocument: yup.string(),
+      landRegisterEntryDocument: yup.string(),
+      personalIdDocument: yup.string(),
+    })
+    .test(
+      "documentRequirement",
+      "Either business registration doc, registration number, approval document, or land register entry document is required.",
+      function (values) {
+        const {
+          businessRegistrationDocument: businessregistrationDocument,
+          registrationNumber,
+          approvalDocument: approvalDocument,
+          landRegisterEntryDocument: landRegisterEntryDocument,
+          personalIdDocument,
+        } = values;
 
-      // If any of the four fields is nonempty, return true
-      if (
-        businessregistrationDocument ||
-        registrationNumber ||
-        approvalDocument ||
-        landRegisterEntryDocument
-      ) {
-        return true;
+        // If any of the four fields is nonempty, return true
+        if (
+          businessregistrationDocument ||
+          registrationNumber ||
+          approvalDocument ||
+          landRegisterEntryDocument ||
+          personalIdDocument
+        ) {
+          return true;
+        }
+        // If none of the fields are nonempty, return an error
+        return this.createError({
+          path: "registrationNumber",
+          message:
+            "Entweder Dokumente oder eine Registrierungsnummer sind erforderlich.",
+        });
       }
-      // If none of the fields are nonempty, return an error
-      return this.createError({
-        path: "registrationNumber",
-        message:
-          "Entweder Dokumente oder eine Registrierungsnummer sind erforderlich.",
-      });
-    }
-  );
+    ),
+  yup.object({
+    numOfEmployees: yup.string().when("role", {
+      is: USER_ROLE.SERVICE_PROVIDER,
+      then: (schema) =>
+        schema.required("Anzahl der Mitarbeiter ist erforderlich"),
+      otherwise: (schema) => schema.notRequired(),
+    }),
+    manufacturerExperience: yup.string(),
+    qualificationDocs: yup.array().when("role", {
+      is: USER_ROLE.SERVICE_PROVIDER,
+      then: (schema) =>
+        schema
+          .of(yup.mixed())
+          .min(1, "Mindestens ein Qualifikationsdokument ist erforderlich")
+          .required("Qualifikationsdokumente sind erforderlich"),
+      otherwise: (schema) => schema.notRequired(),
+    }),
+  }),
+];
 
 export const addObjektFormSchema = yup
   .object()
@@ -346,16 +376,19 @@ export const addFacilityValidationSchema = [
     ),
 ];
 
+const BasicInfoRegistrationSchema =
+  registrationValidationSchema[0] as yup.ObjectSchema<any>;
+
 export const UserProfileSchema = yup.object({
-  firstName: registrationValidationSchema.fields.firstName,
-  lastName: registrationValidationSchema.fields.lastName,
+  firstName: BasicInfoRegistrationSchema.fields.firstName,
+  lastName: BasicInfoRegistrationSchema.fields.lastName,
   position: yup
     .string()
     .matches(/^[A-Za-z]+$/, "Beruf darf nur Buchstaben enthalten"),
 });
 
 export const EmailChangeSchema = yup.object({
-  email: registrationValidationSchema.fields.email,
+  email: BasicInfoRegistrationSchema.fields.email,
   password: yup.string().required("Current Passwort ist erforderlich"),
 });
 
@@ -371,19 +404,33 @@ export const passwordChangeSchema = yup.object({
     ),
   confirmPassword: yup
     .string()
-    .oneOf(
-      [yup.ref("newPassword"), undefined],
-      "Passwörter müssen übereinstimmen"
-    )
+    .oneOf([yup.ref("newPassword")], "Passwörter müssen übereinstimmen")
     .required("Passwort bestätigen ist erforderlich"),
 });
 
+const AddressRegistrationSchema =
+  registrationValidationSchema[1] as yup.ObjectSchema<any>;
 export const CompanyProfileSchema = yup.object({
-  companyName: registrationValidationSchema.fields.company,
-  street: registrationValidationSchema.fields.street,
-  houseNumber: registrationValidationSchema.fields.houseNo,
-  zip: registrationValidationSchema.fields.zip,
-  city: registrationValidationSchema.fields.city,
-  phonenumber: registrationValidationSchema.fields.telephone,
-  registrationNumber: registrationValidationSchema.fields.registrationNumber,
+  companyName: BasicInfoRegistrationSchema.fields.company,
+  street: AddressRegistrationSchema.fields.street,
+  houseNumber: AddressRegistrationSchema.fields.houseNo,
+  zip: AddressRegistrationSchema.fields.zip,
+  city: AddressRegistrationSchema.fields.city,
+  phonenumber: BasicInfoRegistrationSchema.fields.telephone,
+  registrationNumber: yup.string(),
+});
+
+export const ContactFormSchema = yup.object({
+  firstName: (registrationValidationSchema[0] as yup.ObjectSchema<any>).fields
+    .firstName,
+  lastName: (registrationValidationSchema[0] as yup.ObjectSchema<any>).fields
+    .lastName,
+  email: (registrationValidationSchema[0] as yup.ObjectSchema<any>).fields
+    .email,
+  phoneNumber: (registrationValidationSchema[0] as yup.ObjectSchema<any>).fields
+    .telephone,
+  message: yup.string().required("Nachricht ist erforderlich."),
+  agree: yup
+    .boolean()
+    .oneOf([true], "Sie müssen die Datenschutzbestimmungen akzeptieren"),
 });

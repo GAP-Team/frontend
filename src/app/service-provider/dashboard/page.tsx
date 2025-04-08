@@ -9,7 +9,7 @@ export default function ServiceProviderDashboardPage(): JSX.Element {
     <>
       {isLoggedIn && isUserVerified && (
         <>
-          <Dashboard>{/* Place the dashboard components here */}</Dashboard>
+          <Dashboard></Dashboard>
         </>
       )}
     </>

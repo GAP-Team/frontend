@@ -11,8 +11,8 @@ interface GStatSectionProps {
 }
 
 const GStatSection: React.FC<GStatSectionProps> = ({
-  title = "GAP ist Ihr Partner für Anlagen Prüfung!",
-  subtitle = "Lorem ipsum dolor sit amet consectetur adipiscing elit. Eaque sed tenetur rem quam nihil dolorum expedita maxime nisi recusandae sequi magni culpa fuga accusamus eveniet fugiat ipsum ab consequuntur.",
+  title = "GAP ist Ihr Partner für gesetzliche Anlagenprüfung!",
+  subtitle = "Wir sind Ihre Plattform für rechtssichere Prüfungen und Wartungen. GAP vereinfacht Prozesse, spart Zeit und verbindet Sie mit erfahrenen Dienstleistern.",
   badge = <GBadge title="Darum GAP" color="#ccdfeb" />,
 }) => {
   return (
@@ -47,28 +47,28 @@ const GStatSection: React.FC<GStatSectionProps> = ({
           <div className={classes.diamond_grid__item}>
             <img
               className={classes.diamond_grid__img}
-              src="https://source.unsplash.com/random/300x300?water"
+              src="/images/hero6.jpg"
               alt="Image description"
             />
           </div>
           <div className={classes.diamond_grid__item}>
             <img
               className={classes.diamond_grid__img}
-              src="https://source.unsplash.com/random/300x300?flower"
+              src="/images/hero6.jpg"
               alt="Image description"
             />
           </div>
           <div className={classes.diamond_grid__item}>
             <img
               className={classes.diamond_grid__img}
-              src="https://source.unsplash.com/random/300x300?office"
+              src="/images/hero6.jpg"
               alt="Image description"
             />
           </div>
           <div className={classes.diamond_grid__item}>
             <img
               className={classes.diamond_grid__img}
-              src="https://source.unsplash.com/random/300x300?building"
+              src="/images/hero6.jpg"
               alt="Image description"
             />
           </div>

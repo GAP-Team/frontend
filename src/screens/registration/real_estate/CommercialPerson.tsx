@@ -3,11 +3,12 @@ import { Grid, Typography } from "@mui/material";
 
 import GTextInput from "@/components/input/GTextInput";
 import UploadButton from "@/components/button/UploadButton";
+import { USER_ROLE } from "@/utils/enums";
 
 const ComercialPerson = ({ formik }: any): JSX.Element => {
   const setUploadDoc = (ev: any): void => {
     const file = ev.target.files[0];
-    formik.setFieldValue("businessRegistrationDocumentFile", ev);
+    formik.setFieldValue("businessRegistrationDocumentFile", file);
     formik.setFieldValue("businessRegistrationDocument", file.name);
   };
 
@@ -57,6 +58,35 @@ const ComercialPerson = ({ formik }: any): JSX.Element => {
           }
         />
       </Grid>
+      {formik?.values?.role === USER_ROLE.SERVICE_PROVIDER && (
+        <>
+          <Grid item xs={12} sm={12}>
+            <Typography variant="gsub" color="gray.500">
+              OR
+            </Typography>
+          </Grid>
+          <Grid item xs={12} sm={12}>
+            <Typography variant="gsub" color="gray.500">
+              PERSONALAUSWEIS
+            </Typography>
+            <UploadButton
+              id="personalIdDocument"
+              name="personalIdDocument"
+              onChange={(ev: any) => {
+                formik.setFieldValue(
+                  "personalIdDocumentFile",
+                  ev?.target?.files[0]
+                );
+                formik.setFieldValue(
+                  "personalIdDocument",
+                  ev?.target?.files[0]?.name
+                );
+              }}
+              value={formik.values.personalIdDocument}
+            />
+          </Grid>
+        </>
+      )}
     </Grid>
   );
 };

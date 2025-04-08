@@ -1,3 +1,4 @@
+"use client";
 import React, { useEffect } from "react";
 import SectionTitle from "@/components/label/SectionTitle";
 import Box from "@mui/material/Box";
@@ -10,10 +11,20 @@ import { Tender } from "../../tenders/tender_card/types";
 import { TenderStatusEnum } from "@/utils/enums";
 import { getFacilitiesByUser } from "@/lib/features/facilitySlice";
 import { Facility } from "../../facilities/facility_card/types";
-import { Building } from "../../buildings/building_card/types";
+import { Building, BuildingAddress } from "../../buildings/building_card/types";
 import { truncateLabel } from "@/utils/utils";
-import { DashboardComponentsProps } from "@/utils/Constants";
-import { getFacilityCheckTimeRemaining } from "../../facilities/utils";
+import {
+  DashboardComponentsProps,
+  CHECK_DUE_SOON_DAYS,
+  MAINTENANCE_DUE_SOON_DAYS,
+} from "@/utils/Constants";
+import {
+  getFacilityCheckTimeRemaining,
+  getFacilityMaintenanceTimeRemaining,
+} from "../../facilities/utils";
+import GButton from "@/components/button/GButton";
+import { ROUTES } from "@/utils/routes";
+import { useRouter } from "next/navigation";
 
 const OverviewPanel: React.FC<DashboardComponentsProps> = (): JSX.Element => {
   const tenders = useAppSelector((state) => state.tender.tenderList);
@@ -21,6 +32,10 @@ const OverviewPanel: React.FC<DashboardComponentsProps> = (): JSX.Element => {
   const buildings = useAppSelector((state) => state.building.buildings);
   const user = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
+  const [activeFilter, setActiveFilter] = React.useState<
+    "check" | "maintenance"
+  >("check");
+  const router = useRouter();
 
   const openTenders = tenders?.filter(
     (tender: Tender) => tender.status === TenderStatusEnum.OPEN
@@ -35,47 +50,80 @@ const OverviewPanel: React.FC<DashboardComponentsProps> = (): JSX.Element => {
     }
   }, [user?.id, dispatch]);
 
-  const tendersDueSoon = tenders?.filter((tender: Tender) => {
-    const facility = facilities.find(
-      (f: Facility) => f.id === tender.facility?.id
-    );
+  const facilitiesCheckDueSoon = facilities?.filter((facility: Facility) => {
     return (
-      getFacilityCheckTimeRemaining(facility, "days") < 183 &&
+      getFacilityCheckTimeRemaining(facility, "days") < CHECK_DUE_SOON_DAYS &&
       getFacilityCheckTimeRemaining(facility, "days") > 0
     );
   });
 
-  const tendersExceedingDays = tenders?.filter((tender: Tender) => {
-    const facility = facilities.find(
-      (f: Facility) => f.id === tender.facility?.id
-    );
-    return getFacilityCheckTimeRemaining(facility, "days") <= 0;
-  });
+  const facilitiesCheckExceedingDays = facilities?.filter(
+    (facility: Facility) => {
+      return getFacilityCheckTimeRemaining(facility, "days") <= 0;
+    }
+  );
 
-  const renderTenderCards = (tendersList: Tender[]): React.ReactNode =>
-    tendersList?.map((tender, index) => {
-      // Check if facility has a check date and and then only show the card
-      const facility = facilities.find(
-        (f: Facility) => f.id === tender?.facility?.id
+  const facilitiesMaintenanceDueSoon = facilities?.filter(
+    (facility: Facility) => {
+      return (
+        getFacilityMaintenanceTimeRemaining(facility, "days") <
+          MAINTENANCE_DUE_SOON_DAYS &&
+        getFacilityMaintenanceTimeRemaining(facility, "days") > 0
       );
-      if (
-        !facility?.check?.lastCheckDate ||
-        facility?.check?.nextCheckInYearNumber === 0
-      ) {
-        return null;
-      }
-      const daysRemaining = getFacilityCheckTimeRemaining(facility, "days");
+    }
+  );
+
+  const facilitiesMaintenanceExceedingDays = facilities?.filter(
+    (facility: Facility) => {
+      return getFacilityMaintenanceTimeRemaining(facility, "days") <= 0;
+    }
+  );
+
+  const handleCardClick = (
+    facility: Facility,
+    address: BuildingAddress
+  ): void => {
+    const queryParams = new URLSearchParams({
+      facilityId: facility.id,
+      city: address.city,
+      state: address.state,
+      facilityType: facility.facilityType,
+    });
+
+    router.push(
+      `${ROUTES.REAL_ESTATE.FACILITY.FACILITIES}?${queryParams.toString()}`
+    );
+  };
+
+  const renderFacilityCards = (
+    facilityList: Facility[],
+    warning: boolean = false,
+    isMaintenanceCheck: boolean = false
+  ): React.ReactNode =>
+    facilityList?.map((facility, index) => {
+      const daysRemaining = isMaintenanceCheck
+        ? getFacilityMaintenanceTimeRemaining(facility, "days")
+        : getFacilityCheckTimeRemaining(facility, "days");
+
       const buildingAddress = buildings.find(
-        (building: Building) => building.id === tender.building?.id
+        (building: Building) => building.id === facility.buildingId
       )?.address;
 
       return (
         <ProjectCard
           key={index}
-          address={`${buildingAddress?.street} - ${buildingAddress?.city}, ${buildingAddress?.state}`}
-          code={truncateLabel(tender?.tenderType, 10)}
+          address={`${buildingAddress?.street} - ${buildingAddress?.city}`}
+          code={truncateLabel(facility?.subcategory, 10)}
           daysRemaining={daysRemaining}
-          text={daysRemaining >= 0 ? "Tage" : "Tage übrig"}
+          text={
+            daysRemaining > 1 && warning
+              ? "Tag(e) übrig"
+              : warning
+                ? "Tag(e) übrig"
+                : "Tag(e) abgelaufen"
+          }
+          warning={warning}
+          onClick={() => handleCardClick(facility, buildingAddress)}
         />
       );
     });
@@ -96,17 +144,36 @@ const OverviewPanel: React.FC<DashboardComponentsProps> = (): JSX.Element => {
         <Divider orientation="vertical" flexItem sx={styles.dividerStats} />
         <StatisticsItem number={activeTender} text="laufende Ausschreibungen" />
       </Box>
+      <Box sx={{ display: "flex", gap: 2, mt: 2 }}>
+        <GButton
+          variant={activeFilter === "check" ? "contained" : "outlined"}
+          onClick={() => setActiveFilter("check")}
+        >
+          Prüfung
+        </GButton>
+        <GButton
+          variant={activeFilter === "maintenance" ? "contained" : "outlined"}
+          onClick={() => setActiveFilter("maintenance")}
+        >
+          Wartung
+        </GButton>
+      </Box>
       <SectionTitle
         text="Bald fällig"
         sx={{ color: "white", lineHeight: "1rem", mt: "2.5rem" }}
       />
-      {renderTenderCards(tendersDueSoon)}
-
+      {activeFilter === "check" &&
+        renderFacilityCards(facilitiesCheckDueSoon, true, false)}
+      {activeFilter === "maintenance" &&
+        renderFacilityCards(facilitiesMaintenanceDueSoon, true, true)}
       <SectionTitle
         text="Frist abgelaufen"
         sx={{ color: "white", lineHeight: "1rem", mt: "2.5rem" }}
       />
-      {renderTenderCards(tendersExceedingDays)}
+      {activeFilter === "check" &&
+        renderFacilityCards(facilitiesCheckExceedingDays, false, false)}
+      {activeFilter === "maintenance" &&
+        renderFacilityCards(facilitiesMaintenanceExceedingDays, false, true)}
     </>
   );
 };
