@@ -6,14 +6,16 @@ import { Card, CardContent, Typography, Grid } from "@mui/material";
 
 export default function RealEstateOwnerTypes(): JSX.Element {
   return (
-    <Grid sx={styles.container}>
-      <Typography variant="h4" gutterBottom style={styles.heading}>
-        Eine umfassende Plattform für alle Immobilienbesitzer
-      </Typography>
-      <Typography variant="subtitle1" gutterBottom style={styles.subheading}>
-        Effizientes Anlagenmanagement für jede Anforderung – alles in einer
-        Cloud!
-      </Typography>
+    <Grid sx={styles.container} xs={12} sm={12} md={12} lg={12}>
+      <Grid xs={12} sm={12} md={12} lg={12}>
+        <Typography variant="h4" gutterBottom style={styles.heading}>
+          Eine umfassende Plattform für alle Immobilienbesitzer
+        </Typography>
+        <Typography variant="subtitle1" gutterBottom style={styles.subheading}>
+          Effizientes Anlagenmanagement für jede Anforderung – alles in einer
+          Cloud!
+        </Typography>
+      </Grid>
 
       <Grid
         container
@@ -21,25 +23,8 @@ export default function RealEstateOwnerTypes(): JSX.Element {
         justifyContent="center"
         style={{ marginTop: 30 }}
       >
-        {/* Vermieter Card */}
-        <Grid item xs={12} sm={6} md={6}>
-          <RoleCard
-            sx={[styles.card, { border: "5px solid", borderColor: "#00A7A7" }]}
-          >
-            <HomeIcon sx={{ fontSize: 40, color: "#00A7A7" }} />
-            <CardContent>
-              <Typography variant="h6" style={styles.cardHeading}>
-                Für Vermieter
-              </Typography>
-              <Typography variant="body2" style={styles.cardDescription}>
-           Einfache und sichere Verwaltung Ihrer Anlagen in Immobilien.
-              </Typography>
-            </CardContent>
-          </RoleCard>
-        </Grid>
-
         {/* Investoren Card */}
-        <Grid item xs={12} sm={6} md={6}>
+        <Grid item xs={12} sm={12} md={6} lg={6}>
           <RoleCard
             sx={[styles.card, { border: "5px solid", borderColor: "black" }]}
           >
@@ -50,6 +35,23 @@ export default function RealEstateOwnerTypes(): JSX.Element {
               </Typography>
               <Typography variant="body2" style={styles.cardDescription}>
                 Smartes Finanzmanagement zur Rendite-Optimierung.
+              </Typography>
+            </CardContent>
+          </RoleCard>
+        </Grid>
+
+        {/* Vermieter Card */}
+        <Grid item xs={12} sm={12} md={6} lg={6}>
+          <RoleCard
+            sx={[styles.card, { border: "5px solid", borderColor: "#00A7A7" }]}
+          >
+            <HomeIcon sx={{ fontSize: 40, color: "#00A7A7" }} />
+            <CardContent>
+              <Typography variant="h6" style={styles.cardHeading}>
+                Für Vermieter
+              </Typography>
+              <Typography variant="body2" style={styles.cardDescription}>
+                Einfache und sichere Verwaltung Ihrer Anlagen in Immobilien.
               </Typography>
             </CardContent>
           </RoleCard>
