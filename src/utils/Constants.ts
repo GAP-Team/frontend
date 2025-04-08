@@ -1,4 +1,7 @@
 import { Notification } from "@/components/navigation/GAppbar/types";
+import TenderImage from "../../public/images/tenders.png";
+import OfficeImage from "../../public/images/office.jpg";
+
 
 export const listOfTrades = [
   {
@@ -720,3 +723,36 @@ export const contactFiltersOption = {
 };
 export const CHECK_DUE_SOON_DAYS = 183;
 export const MAINTENANCE_DUE_SOON_DAYS = 15;
+
+export const articles = [
+  {
+    date: "08. April 2025",
+    category: "Steuern",
+    title:
+      "Der § 6b EStG – Ein Steuervorteil für gewerbliche Immobilieninvestoren",
+    excerpt:
+      "Wer mit dem Gedanken spielt, ein Grundstück zu verkaufen, stößt früher oder später auf §...",
+    image: OfficeImage,
+    author: "Sudipto",
+  },
+  {
+    date: "08. April 2025",
+    category: "Immobilien",
+    title:
+      "Vermietete Wohnung geerbt: Rechte, Pflichten und steuerliche Vorteile",
+    excerpt:
+      "Es gibt sicher Schlimmeres, als eine gut vermietete Wohnung zu erben. Doch auch wenn das...",
+    image: OfficeImage,
+    author: "Sudipto",
+  },
+  {
+    date: "08. April 2025",
+    category: "Mietvertrag",
+    title:
+      "Temperatur in der Wohnung: Wie warm darf oder muss die Mietwohnung sein?",
+    excerpt:
+      "Darfst Du als Vermieter hier Vorgaben machen und welche Rechte und Pflichten haben Deine Mieter...",
+    image: OfficeImage,
+    author: "Sudipto",
+  },
+];

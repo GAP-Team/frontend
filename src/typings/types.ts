@@ -1,3 +1,5 @@
+import { StaticImageData } from "next/image";
+
 export interface FormErrors {
   [key: string]: string;
 }
@@ -10,4 +12,15 @@ export interface Document {
   key: string;
   name: string;
   documentType?: string;
+}
+
+export interface BlogCardProps {
+  article: {
+    date: string;
+    title: string;
+    author: string;
+    excerpt: string;
+    category: string;
+    image: StaticImageData;
+  }
 }
