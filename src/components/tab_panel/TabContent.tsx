@@ -1,6 +1,8 @@
+import { useRouter } from "next/navigation";
 import DoneIcon from "@mui/icons-material/Done";
 import Image, { StaticImageData } from "next/image";
 
+import { ROUTES } from "@/utils/routes";
 import RoundButton from "../button/RoundButton";
 
 interface TabContentProps {
@@ -11,9 +13,15 @@ interface TabContentProps {
 
 const TabContent: React.FC<TabContentProps> = ({
   title,
-  features,
   image,
+  features,
 }): JSX.Element => {
+  const router = useRouter();
+
+  const handleOnClick = (): void => {
+    router.push(ROUTES.LOGIN);
+  };
+
   return (
     <>
       <div className="relative flex flex-row justify-between mb-8 pt-20">
@@ -34,6 +42,7 @@ const TabContent: React.FC<TabContentProps> = ({
                   text="Zum Immobilienmanagement"
                   color="#17ABA9"
                   hoverColor="#FFFFFF"
+                  handleOnClick={handleOnClick}
                 />
               </div>
             </div>
