@@ -40,4 +40,17 @@ export const ROUTES = {
     MESSAGES: `${SERVICE_PROVIDER_BASE}/messages`,
     CONTRACTS: `${SERVICE_PROVIDER_BASE}/contracts`,
   },
+  BLOGS: {
+    BLOGS: "/blogs",
+    BLOG_DETAILS: (slug: string) => `/blogs/${slug}`,
+  },
+  FAQ: "/faq",
+  AGB: "/agb",
+  ABOUT: "/about-us",
+  SUPPORT: "/support",
+  CONTACT: "/contact-us",
+  IMPRESSUM: "/impressum",
+  OUR_SERVICE: "/our-service",
+  DATA_SECURITY: "/data-security",
+  BECAME_SERVICE_PROVIDER: "/still-employed-become-a-service-provider",
 };

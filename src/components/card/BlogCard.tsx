@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { ROUTES } from "@/utils/routes";
 import { BlogProps } from "@/typings/types";
 import { Person } from "@mui/icons-material";
 import { Typography, Box, Chip, Card, CardContent } from "@mui/material";
@@ -7,7 +8,7 @@ const BlogCard: React.FC<{ article: BlogProps }> = ({
   article,
 }): JSX.Element => {
   const handleClick = (slug: string): void => {
-    window.location.href = `/blogs/${slug}`;
+    window.location.href = ROUTES.BLOGS.BLOG_DETAILS(slug);
   };
 
   return (
