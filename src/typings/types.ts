@@ -14,13 +14,12 @@ export interface Document {
   documentType?: string;
 }
 
-export interface BlogCardProps {
-  article: {
-    date: string;
-    title: string;
-    author: string;
-    excerpt: string;
-    category: string;
-    image: StaticImageData;
-  }
+export interface BlogProps {
+  date: string;
+  slug: string;
+  title: string;
+  author: string;
+  excerpt: string;
+  category: string;
+  image: StaticImageData;
 }

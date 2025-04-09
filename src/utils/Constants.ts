@@ -1,7 +1,5 @@
 import { Notification } from "@/components/navigation/GAppbar/types";
-import TenderImage from "../../public/images/tenders.png";
 import OfficeImage from "../../public/images/office.jpg";
-
 
 export const listOfTrades = [
   {
@@ -728,30 +726,30 @@ export const articles = [
   {
     date: "08. April 2025",
     category: "Steuern",
-    title:
-      "Der § 6b EStG – Ein Steuervorteil für gewerbliche Immobilieninvestoren",
+    title: "What is GAP ?",
+    slug: "what-is-gap",
     excerpt:
-      "Wer mit dem Gedanken spielt, ein Grundstück zu verkaufen, stößt früher oder später auf §...",
+      "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
     image: OfficeImage,
     author: "Sudipto",
   },
   {
     date: "08. April 2025",
     category: "Immobilien",
-    title:
-      "Vermietete Wohnung geerbt: Rechte, Pflichten und steuerliche Vorteile",
+    title: "How to calculate the tax on the sale of a property?",
+    slug: "how-to-calculate-tax",
     excerpt:
-      "Es gibt sicher Schlimmeres, als eine gut vermietete Wohnung zu erben. Doch auch wenn das...",
+      "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
     image: OfficeImage,
     author: "Sudipto",
   },
   {
     date: "08. April 2025",
     category: "Mietvertrag",
-    title:
-      "Temperatur in der Wohnung: Wie warm darf oder muss die Mietwohnung sein?",
+    title: "Warum Lorem Ipsum?",
+    slug: "warum-lorem-ipsum",
     excerpt:
-      "Darfst Du als Vermieter hier Vorgaben machen und welche Rechte und Pflichten haben Deine Mieter...",
+      "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
     image: OfficeImage,
     author: "Sudipto",
   },
