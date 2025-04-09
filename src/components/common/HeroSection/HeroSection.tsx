@@ -12,7 +12,7 @@ const HeroSection = (): JSX.Element => {
   const router = useRouter();
 
   const handleOnClick = (): void => {
-    router.push(ROUTES.REGISTER);
+    router.push(ROUTES.REGISTRATION);
   };
 
   return (
