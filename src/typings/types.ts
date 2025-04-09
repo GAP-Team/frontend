@@ -11,3 +11,8 @@ export interface Document {
   name: string;
   documentType?: string;
 }
+export interface ContractSearchProps {
+  state: string;
+  tender: string;
+  facilities: string[];
+}
