@@ -30,6 +30,7 @@ import {
 import dayjs from "dayjs";
 import DetailItem from "@/components/common/DetailItem";
 import SummaryCard from "@/components/summary/SummaryCard";
+import { Grid } from "@mui/material";
 
 interface FacilityCardProps {
   facility: Facility;
@@ -103,24 +104,26 @@ const FacilityCard: React.FC<FacilityCardProps> = ({ facility }) => {
       onClick={handleClick}
       style={{ cursor: "pointer" }}
     >
-      <Box sx={styles.header}>
-        {isFacilityActive && <Chip label={"aktiv"} sx={{ ...chipStyles }} />}
-        {checkUrgency() && (
-          <Icon sx={{ color: checkUrgency() }}>
-            <BsClockFill />
-          </Icon>
-        )}
-      </Box>
-      <Box sx={styles.actionMenu}>
-        <ActionMenu
-          itemId={facility?.id}
-          onDelete={handleDeleteFacility}
-          onEdit={(id) =>
-            router.push(ROUTES.REAL_ESTATE.FACILITY.EDIT_FACILITY(id))
-          }
-          messege={`Sind Sie sicher, dass Sie dieses Element${noOfTenders ? ` und die zugehörigen ${noOfTenders} Ausschreibungen` : ""} löschen möchten?`}
-        />
-      </Box>
+      <Grid sx={styles.topHeader}>
+        <Box sx={styles.header}>
+          {isFacilityActive && <Chip label={"aktiv"} sx={{ ...chipStyles }} />}
+          {checkUrgency() && (
+            <Icon sx={{ color: checkUrgency() }}>
+              <BsClockFill />
+            </Icon>
+          )}
+        </Box>
+        <Box sx={styles.actionMenu}>
+          <ActionMenu
+            itemId={facility?.id}
+            onDelete={handleDeleteFacility}
+            onEdit={(id) =>
+              router.push(ROUTES.REAL_ESTATE.FACILITY.EDIT_FACILITY(id))
+            }
+            messege={`Sind Sie sicher, dass Sie dieses Element${noOfTenders ? ` und die zugehörigen ${noOfTenders} Ausschreibungen` : ""} löschen möchten?`}
+          />
+        </Box>
+      </Grid>
       <SectionTitle
         text={facility.name}
         sx={{ fontWeight: 400, py: "0.75rem" }}
@@ -247,6 +250,12 @@ const styles = {
     overflow: "auto",
     mb: "0.35rem",
     cursor: "pointer",
+  },
+  topHeader: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    mb: "0.5rem",
   },
   header: {
     display: "flex",
