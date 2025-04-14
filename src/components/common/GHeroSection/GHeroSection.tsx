@@ -43,12 +43,13 @@ const HeroSection = (): JSX.Element => {
   const router = useRouter();
   const appdispatch = useAppDispatch();
 
-  const [selectedFacilities, setSelectedFacilities] = useState<string[]>([]);
   const [facilityAnchorEl, setFacilityAnchorEl] =
     useState<HTMLDivElement | null>(null);
   const [facilityExpanded, setFacilityExpanded] = useState<{
     [key: string]: boolean;
   }>({});
+  const [selectedFacilitySubcategories, setSelectedFacilitySubcategories] =
+    useState<string[]>([]);
 
   const [selectedTenderType, setSelectedTenderType] = useState<string>("");
   const [tenderTypeAnchorEl, setTenderTypeAnchorEl] =
@@ -100,26 +101,28 @@ const HeroSection = (): JSX.Element => {
   };
 
   const handleFacilityOptionsSelectFilter = (item: string): string[] => {
-    return selectedFacilities.includes(item)
-      ? selectedFacilities.filter((selected) => selected !== item)
-      : [...selectedFacilities, item];
+    return selectedFacilitySubcategories.includes(item)
+      ? selectedFacilitySubcategories.filter((selected) => selected !== item)
+      : [...selectedFacilitySubcategories, item];
   };
 
   const handleFacilityOptionSelect = (item: string): void => {
     const facilitySubcategories = handleFacilityOptionsSelectFilter(item);
 
-    setSelectedFacilities(facilitySubcategories);
-    formik.setFieldValue("facilitySubcategories ", facilitySubcategories);
+    setSelectedFacilitySubcategories(facilitySubcategories);
+    formik.setFieldValue("facilitySubcategories", facilitySubcategories);
   };
 
   const handleFacilityOptionsDeselectFilter = (item: string): string[] => {
-    return selectedFacilities.filter((selected) => selected !== item);
+    return selectedFacilitySubcategories.filter(
+      (selected) => selected !== item
+    );
   };
 
   const handleFacilityOptionDeselect = (item: string): void => {
     const facilitiesAfterDeselect = handleFacilityOptionsDeselectFilter(item);
 
-    setSelectedFacilities(facilitiesAfterDeselect);
+    setSelectedFacilitySubcategories(facilitiesAfterDeselect);
     formik.setFieldValue("facilitySubcategories", facilitiesAfterDeselect);
   };
 
@@ -254,7 +257,7 @@ const HeroSection = (): JSX.Element => {
                                           }
                                         >
                                           <Checkbox
-                                            checked={selectedFacilities.includes(
+                                            checked={selectedFacilitySubcategories.includes(
                                               item
                                             )}
                                           />
@@ -266,7 +269,7 @@ const HeroSection = (): JSX.Element => {
                                 </div>
                               ))}
                             </Menu>
-                            {selectedFacilities.length > 0 && (
+                            {selectedFacilitySubcategories.length > 0 && (
                               <Box
                                 sx={{
                                   display: "flex",
@@ -275,7 +278,7 @@ const HeroSection = (): JSX.Element => {
                                   mt: 2,
                                 }}
                               >
-                                {selectedFacilities.map((item) => (
+                                {selectedFacilitySubcategories.map((item) => (
                                   <Chip
                                     key={item}
                                     label={item}
