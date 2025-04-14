@@ -437,8 +437,8 @@ export const ContactFormSchema = yup.object({
 
 export const ContractSearchSchema = yup.object({
   state: yup.string().required("Bundesland ist erforderlich"),
-  tender: yup.string().required("Auftragstyp ist erforderlich"),
-  facilities: yup
+  tenderType: yup.string().required("Auftragstyp ist erforderlich"),
+  facilitySubcategories: yup
     .array()
     .of(yup.string())
     .min(1, "Bitte wählen Sie mindestens eine Anlage aus"),

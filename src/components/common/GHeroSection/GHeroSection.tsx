@@ -28,10 +28,12 @@ import {
 import { useFormik } from "formik";
 import { ROUTES } from "@/utils/routes";
 import { useRouter } from "next/navigation";
+import { useAppDispatch } from "@/lib/hooks";
 import CloseIcon from "@mui/icons-material/Close";
 import { ContractSearchProps } from "@/typings/types";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
+import { showSnackbar } from "@/components/root-snackbar";
 import CustomSelect from "@/components/drop_down/CustomSelect";
 import { ContractSearchSchema } from "@/utils/ValidationSchema";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
@@ -39,6 +41,7 @@ import heroBackgroundPicture from "../../../../public/images/hero6.jpg";
 
 const HeroSection = (): JSX.Element => {
   const router = useRouter();
+  const appdispatch = useAppDispatch();
 
   const [selectedFacilities, setSelectedFacilities] = useState<string[]>([]);
   const [facilityAnchorEl, setFacilityAnchorEl] =
@@ -56,8 +59,8 @@ const HeroSection = (): JSX.Element => {
 
   const initialValues: ContractSearchProps = {
     state: "",
-    tender: "",
-    facilities: [],
+    tenderType: "",
+    facilitySubcategories: [],
   };
 
   const formik = useFormik({
@@ -71,6 +74,12 @@ const HeroSection = (): JSX.Element => {
         );
       } catch (error) {
         console.error(error);
+        appdispatch(
+          showSnackbar({
+            type: "error",
+            message: "Abfragevalidierung fehlgeschlagen!",
+          })
+        );
       }
     },
   });
@@ -97,10 +106,10 @@ const HeroSection = (): JSX.Element => {
   };
 
   const handleFacilityOptionSelect = (item: string): void => {
-    const facilities = handleFacilityOptionsSelectFilter(item);
+    const facilitySubcategories = handleFacilityOptionsSelectFilter(item);
 
-    setSelectedFacilities(facilities);
-    formik.setFieldValue("facilities", facilities);
+    setSelectedFacilities(facilitySubcategories);
+    formik.setFieldValue("facilitySubcategories ", facilitySubcategories);
   };
 
   const handleFacilityOptionsDeselectFilter = (item: string): string[] => {
@@ -111,7 +120,7 @@ const HeroSection = (): JSX.Element => {
     const facilitiesAfterDeselect = handleFacilityOptionsDeselectFilter(item);
 
     setSelectedFacilities(facilitiesAfterDeselect);
-    formik.setFieldValue("facilities", facilitiesAfterDeselect);
+    formik.setFieldValue("facilitySubcategories", facilitiesAfterDeselect);
   };
 
   // Tender Type handles
@@ -132,7 +141,7 @@ const HeroSection = (): JSX.Element => {
   const handleTenderTypeOptionSelect = (item: string): void => {
     setSelectedTenderType(item);
     setTenderTypeAnchorEl(null);
-    formik.setFieldValue("tender", item);
+    formik.setFieldValue("tenderType", item);
   };
 
   return (
@@ -180,7 +189,7 @@ const HeroSection = (): JSX.Element => {
 
                     <form onSubmit={formik.handleSubmit}>
                       <Grid className="flex flex-col justify-center text-center pt-10 pb-4 md:flex-row">
-                        {/* Facility Type Section */}
+                        {/* Facility Subcategory Section */}
                         <div className="flex flex-col w-full px-2 sm:px-4 md:w-1/3">
                           <FormControl sx={{ m: 1, minWidth: 120 }}>
                             <label
@@ -201,14 +210,13 @@ const HeroSection = (): JSX.Element => {
                                 ),
                               }}
                               onBlur={formik?.handleBlur}
-                              // onChange={formik?.handleChange}
                               error={
-                                formik?.touched?.facilities &&
-                                Boolean(formik?.errors?.facilities)
+                                formik?.touched?.facilitySubcategories &&
+                                Boolean(formik?.errors?.facilitySubcategories)
                               }
                               helperText={
-                                formik?.touched?.facilities &&
-                                formik?.errors?.facilities
+                                formik?.touched?.facilitySubcategories &&
+                                formik?.errors?.facilitySubcategories
                               }
                             />
                             <Menu
@@ -309,12 +317,12 @@ const HeroSection = (): JSX.Element => {
                               onBlur={formik?.handleBlur}
                               onChange={formik?.handleChange}
                               error={
-                                formik?.touched?.tender &&
-                                Boolean(formik?.errors?.tender)
+                                formik?.touched?.tenderType &&
+                                Boolean(formik?.errors?.tenderType)
                               }
                               helperText={
-                                formik?.touched?.tender &&
-                                formik?.errors?.tender
+                                formik?.touched?.tenderType &&
+                                formik?.errors?.tenderType
                               }
                             />
                             <Menu
@@ -399,7 +407,6 @@ const HeroSection = (): JSX.Element => {
                             textTransform: "none",
                             whiteSpace: "pre",
                           }}
-                          // onClick={}
                         >
                           Jetzt Auftrag Finden
                           <FaArrowRightLong className="ml-2 h-5 w-5" />

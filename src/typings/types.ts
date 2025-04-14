@@ -13,6 +13,6 @@ export interface Document {
 }
 export interface ContractSearchProps {
   state: string;
-  tender: string;
-  facilities: string[];
+  tenderType: string;
+  facilitySubcategories: string[];
 }
