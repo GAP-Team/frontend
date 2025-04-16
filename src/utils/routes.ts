@@ -2,7 +2,7 @@ export const REAL_ESTATE_BASE = "/real-estate";
 export const SERVICE_PROVIDER_BASE = "/service-provider";
 
 export const ROUTES = {
-  SERVICE_PROVIDER_HOME: "/", 
+  SERVICE_PROVIDER_HOME: "/",
   LOGIN: "/login",
   CONTACT_US: "/contact-us",
   REGISTRATION: "/registration",
