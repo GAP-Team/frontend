@@ -134,19 +134,34 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
       if (nextStepId < steps.length) {
         setActiveStep(steps[nextStepId]);
       } else {
-        const uploadSuccess = await uploadAllDocuments(values);
+        // Extract address values for comparison
+        const { state, city, zip, street, houseNumber } = values;
 
-        if (uploadSuccess) {
-          setLoading(false);
-          setActiveStep({ ...activeStep, id: nextStepId });
-        } else {
+        // Check for existing building at the same address
+        const isBuildingExist: boolean = userBuildingDetails?.some(
+          (building: SelectedBuildingData) =>
+            building.address.state === state &&
+            building.address.city === city &&
+            Number(building.address.zip) === Number(zip) &&
+            building.address.street === street &&
+            Number(building.address.houseNumber) === Number(houseNumber)
+        );
+
+        if (isBuildingExist) {
           appdispatch(
             showSnackbar({
               type: "error",
               message:
-                "Gebäude konnte nicht hinzugefügt oder bearbeitet werden. Bitte versuchen Sie es erneut!",
+                "Unter dieser Adresse ist bereits ein Gebäude angelegt. Bitte überprüfen Sie die Gebäudeadresse!",
             })
           );
+        } else {
+          const uploadSuccess = await uploadAllDocuments(values);
+
+          if (uploadSuccess) {
+            setLoading(false);
+            setActiveStep({ ...activeStep, id: nextStepId });
+          }
         }
       }
     }
@@ -243,17 +258,29 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
   };
 
   const saveBuildingData = async (data: any): Promise<boolean> => {
-    const createBuildingResponse = await buildingAPIs.create(data);
-    if (createBuildingResponse?.data?.id) {
+    try {
+      const createBuildingResponse = await buildingAPIs.create(data);
+      if (createBuildingResponse?.data?.id) {
+        appdispatch(
+          showSnackbar({
+            type: "success",
+            message: "Gebäude erfolgreich hinzugefügt!",
+          })
+        );
+
+        return true;
+      } else {
+        return false;
+      }
+    } catch (error) {
+      console.error("Error create building: ", error);
       appdispatch(
         showSnackbar({
-          type: "success",
-          message: "Gebäude erfolgreich hinzugefügt!",
+          type: "error",
+          message:
+            "Gebäude konnte nicht erstellt werden. Bitte versuchen Sie es später erneut.",
         })
       );
-
-      return true;
-    } else {
       return false;
     }
   };
@@ -263,20 +290,32 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
       throw new Error("Building edit failed");
     }
 
-    const updateBuildingResponse = await buildingAPIs.update(
-      selectedBuildingDetails?.id,
-      data
-    );
-    if (updateBuildingResponse?.data?.id) {
+    try {
+      const updateBuildingResponse = await buildingAPIs.update(
+        selectedBuildingDetails?.id,
+        data
+      );
+      if (updateBuildingResponse?.data?.id) {
+        appdispatch(
+          showSnackbar({
+            type: "success",
+            message: "Gebäude erfolgreich aktualisiert!",
+          })
+        );
+
+        return true;
+      } else {
+        return false;
+      }
+    } catch (error) {
+      console.error("Error update building: ", error);
       appdispatch(
         showSnackbar({
-          type: "success",
-          message: "Gebäude erfolgreich aktualisiert!",
+          type: "error",
+          message:
+            "Das Gebäude ist nicht aktualisiert. Versuchen Sie es später erneut.",
         })
       );
-
-      return true;
-    } else {
       return false;
     }
   };

@@ -3,6 +3,7 @@ interface RoundButtonProps {
   color?: string;
   hoverColor?: string;
   borderColor?: string;
+  handleOnClick?: () => void;
 }
 
 const RoundButton: React.FC<RoundButtonProps> = ({
@@ -10,6 +11,7 @@ const RoundButton: React.FC<RoundButtonProps> = ({
   color,
   hoverColor,
   borderColor,
+  handleOnClick,
 }): JSX.Element => {
   return (
     <>
@@ -21,6 +23,7 @@ const RoundButton: React.FC<RoundButtonProps> = ({
           color: hoverColor,
           borderColor: borderColor,
         }}
+        onClick={handleOnClick}
       >
         {text}
       </button>
