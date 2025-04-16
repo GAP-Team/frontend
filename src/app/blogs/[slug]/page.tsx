@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 import { BlogProps } from "@/typings/types";
 import { articles } from "@/utils/Constants";
-import BlogDetail from "@/components/common/BlogDetails/BlogDetails";
+import BlogDetails from "@/components/common/BlogDetails/BlogDetails";
 import LandingPageLayout from "@/screens/landingpage_layout/LandingPageLayout";
 
 export default function Blogs(): JSX.Element {
@@ -30,7 +30,7 @@ export default function Blogs(): JSX.Element {
     <main className="flex min-h-screen flex-col items-center bg-white justify-between">
       <LandingPageLayout>
         <Grid className="gap-20" sx={styles.pageContainer}>
-          <BlogDetail article={blog} />
+          <BlogDetails article={blog} />
         </Grid>
       </LandingPageLayout>
     </main>

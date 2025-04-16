@@ -2,7 +2,7 @@ import Image from "next/image";
 import { BlogProps } from "@/typings/types";
 import { Box, Typography, Container, Divider } from "@mui/material";
 
-const BlogDetail: React.FC<{ article: BlogProps }> = ({
+const BlogDetails: React.FC<{ article: BlogProps }> = ({
   article,
 }): JSX.Element => {
   return (
@@ -67,7 +67,7 @@ const BlogDetail: React.FC<{ article: BlogProps }> = ({
   );
 };
 
-export default BlogDetail;
+export default BlogDetails;
 
 const styles = {
   headingBox: {
