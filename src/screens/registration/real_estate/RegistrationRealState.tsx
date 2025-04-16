@@ -21,6 +21,7 @@ import EmailVerification from "@/components/email/EmailVerification";
 import { registrationValidationSchema } from "@/utils/ValidationSchema";
 import { numOfEmployeesOptions } from "@/utils/Constants";
 import { Document } from "@/typings/types";
+import { ROUTES } from "@/utils/routes";
 export function getSteps(role?: string): string[] {
   if (role === USER_ROLE.SERVICE_PROVIDER) {
     return [
@@ -304,7 +305,7 @@ const RegistrationRealState = (): JSX.Element => {
 
         <Typography sx={styles.helpText}>
           Hilfe?{" "}
-          <Link href="#" color="#1E3137" fontWeight="bold">
+          <Link href={ROUTES.CONTACT_US} color="#1E3137" fontWeight="bold">
             Kontakt Support
           </Link>
         </Typography>
