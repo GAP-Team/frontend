@@ -27,7 +27,7 @@ const ContactForm = (): JSX.Element => {
 
     onSubmit: async (values) => {
       const response = await userAPIs.contactUs(values);
-      if (response?.status === 200) {
+      if (response?.data?.status === 200) {
         dispatch(
           showSnackbar({
             type: "success",
@@ -44,7 +44,6 @@ const ContactForm = (): JSX.Element => {
           })
         );
       }
-      // On submit logic here, uncomment the values parameter if you need the form values here
     },
   });
 
