@@ -41,6 +41,7 @@ const userAPIs = {
     api.get(
       `/users/${userId}/facilities?city=${city}&state=${state}&facilityType=${facilityType}`
     ),
+  contactUs: (data: any): any => api.post("/emails/contact", data),
 };
 
 export default userAPIs;

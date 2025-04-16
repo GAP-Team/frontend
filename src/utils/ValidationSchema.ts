@@ -430,7 +430,7 @@ export const ContactFormSchema = yup.object({
   phoneNumber: (registrationValidationSchema[0] as yup.ObjectSchema<any>).fields
     .telephone,
   message: yup.string().required("Nachricht ist erforderlich."),
-  agree: yup
+  dataPrivacyAccepted: yup
     .boolean()
     .oneOf([true], "Sie müssen die Datenschutzbestimmungen akzeptieren"),
 });

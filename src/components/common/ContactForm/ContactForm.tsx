@@ -1,12 +1,16 @@
 import { useState } from "react";
+import userAPIs from "@/api/user";
 import { useFormik } from "formik";
 import { ContactFormProps } from "./types";
+import { useAppDispatch } from "@/lib/hooks";
 import GTextInput from "@/components/input/GTextInput";
+import { showSnackbar } from "@/components/root-snackbar";
 import { ContactFormSchema } from "@/utils/ValidationSchema";
-import LabelWithAsterisk from "@/components/label/LabelWithAsterisk";
 import { Grid, Typography, Checkbox, Button } from "@mui/material";
+import LabelWithAsterisk from "@/components/label/LabelWithAsterisk";
 
 const ContactForm = (): JSX.Element => {
+  const dispatch = useAppDispatch();
   const [isAgreed, setIsAgreed] = useState<boolean>(false);
 
   const initialValues: ContactFormProps = {
@@ -21,7 +25,25 @@ const ContactForm = (): JSX.Element => {
     initialValues: initialValues,
     validationSchema: ContactFormSchema,
 
-    onSubmit: async (/*values*/) => {
+    onSubmit: async (values) => {
+      const response = await userAPIs.contactUs(values);
+      if (response?.status === 200) {
+        dispatch(
+          showSnackbar({
+            type: "success",
+            message:
+              "E-Mail gesendet.! Danke für Ihre Kontaktaufnahme. Wir werden uns bald bei Ihnen melden.",
+          })
+        );
+      } else {
+        dispatch(
+          showSnackbar({
+            type: "error",
+            message:
+              "Das Senden der E-Mail ist fehlgeschlagen. Versuchen Sie es später erneut.!",
+          })
+        );
+      }
       // On submit logic here, uncomment the values parameter if you need the form values here
     },
   });
@@ -130,8 +152,14 @@ const ContactForm = (): JSX.Element => {
             <LabelWithAsterisk>Datenschutz</LabelWithAsterisk>
             <Grid sx={styles.textFieldContainer}>
               <Checkbox
-                name="agree"
-                onChange={(e) => setIsAgreed(e.target.checked)}
+                name="dataPrivacyAccepted"
+                onChange={(e) => {
+                  setIsAgreed(e.target.checked);
+                  formik?.setFieldValue(
+                    "dataPrivacyAccepted",
+                    e.target.checked
+                  );
+                }}
               />
               <Typography variant="body1" sx={styles.agreeDescription}>
                 Ich willige ein, dass meine Kontaktdaten an alle in der
