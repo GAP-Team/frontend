@@ -1,4 +1,3 @@
-import { useState } from "react";
 import userAPIs from "@/api/user";
 import { useFormik } from "formik";
 import { ContactFormProps } from "./types";
@@ -11,7 +10,6 @@ import LabelWithAsterisk from "@/components/label/LabelWithAsterisk";
 
 const ContactForm = (): JSX.Element => {
   const dispatch = useAppDispatch();
-  const [isAgreed, setIsAgreed] = useState<boolean>(false);
 
   const initialValues: ContactFormProps = {
     email: "",
@@ -19,6 +17,7 @@ const ContactForm = (): JSX.Element => {
     lastName: "",
     firstName: "",
     phoneNumber: "",
+    dataPrivacyAccepted: false,
   };
 
   const formik = useFormik({
@@ -28,6 +27,7 @@ const ContactForm = (): JSX.Element => {
     onSubmit: async (values) => {
       const response = await userAPIs.contactUs(values);
       if (response?.data?.status === 200) {
+        formik?.resetForm();
         dispatch(
           showSnackbar({
             type: "success",
@@ -153,12 +153,12 @@ const ContactForm = (): JSX.Element => {
               <Checkbox
                 name="dataPrivacyAccepted"
                 onChange={(e) => {
-                  setIsAgreed(e.target.checked);
                   formik?.setFieldValue(
                     "dataPrivacyAccepted",
                     e.target.checked
                   );
                 }}
+                checked={formik?.values?.dataPrivacyAccepted}
               />
               <Typography variant="body1" sx={styles.agreeDescription}>
                 Ich willige ein, dass meine Kontaktdaten an alle in der
@@ -171,7 +171,7 @@ const ContactForm = (): JSX.Element => {
             <Button
               size="small"
               type="submit"
-              disabled={!isAgreed}
+              disabled={!formik?.values?.dataPrivacyAccepted}
               component="button"
               sx={styles.submitButton}
               className="block px-5 py-2 mt-4 text-center rounded-lg text-md"

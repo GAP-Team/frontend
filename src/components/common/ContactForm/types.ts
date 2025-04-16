@@ -4,4 +4,5 @@ export interface ContactFormProps {
   phoneNumber: string;
   email: string;
   message: string;
+  dataPrivacyAccepted: boolean;
 }
