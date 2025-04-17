@@ -35,6 +35,7 @@ interface UserState {
   buildingIds: string[];
   manufacturerExperience: string;
   position: string;
+  isActive: boolean;
 }
 
 interface ChangePassword {
@@ -69,6 +70,7 @@ const initialState: UserState = {
   buildingIds: [],
   manufacturerExperience: "",
   position: "",
+  isActive: false,
 };
 
 export const updateUserProfile = createAsyncThunk(
