@@ -2,6 +2,7 @@ import Image from "next/image";
 import { Button } from "@mui/material";
 import { ROUTES } from "@/utils/routes";
 import { useRouter } from "next/navigation";
+import Divider from "@mui/material/Divider";
 import TaskAltIcon from "@mui/icons-material/TaskAlt";
 import RocketLaunchIcon from "@mui/icons-material/RocketLaunch";
 import QuestionAnswerIcon from "@mui/icons-material/QuestionAnswer";
@@ -141,6 +142,7 @@ const HeroSection = (): JSX.Element => {
           </div>
         </div>
       </section>
+      <Divider sx={styles.divider} />
     </>
   );
 };
@@ -176,5 +178,8 @@ const styles = {
   heroFeatureText: {
     fontSize: "22px",
     lineHeight: "1.6rem",
+  },
+  divider: {
+    mb: 2,
   },
 };
