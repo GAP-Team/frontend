@@ -25,7 +25,7 @@ function GFooter(): JSX.Element {
                   </Link>{" "}
                   <br />
                   <Link
-                    href={ROUTES.ABOUT}
+                    href={ROUTES.ABOUT_US}
                     style={styles.footerMenuText}
                     underline="hover"
                   >
@@ -33,7 +33,7 @@ function GFooter(): JSX.Element {
                   </Link>
                   <br />
                   <Link
-                    href={ROUTES.CONTACT}
+                    href={ROUTES.CONTACT_US}
                     style={styles.footerMenuText}
                     underline="hover"
                   >
@@ -73,7 +73,7 @@ function GFooter(): JSX.Element {
                   </Link>
                   <br />
                   <Link
-                    href={ROUTES.SERVICE_PROVIDER.DASHBOARD}
+                    href={ROUTES.SERVICE_PROVIDER_JOURNEY}
                     style={styles.footerMenuText}
                     underline="hover"
                   >
