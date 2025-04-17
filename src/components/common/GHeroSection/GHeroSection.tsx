@@ -69,9 +69,11 @@ const HeroSection = (): JSX.Element => {
     validationSchema: ContractSearchSchema,
     onSubmit: async (values) => {
       try {
-        console.info("Form values:", values);
+        const tenderTypeString = encodeURIComponent(JSON.stringify(values.tenderType));
+        const facilitySubcategoriesString = encodeURIComponent(JSON.stringify(values.facilitySubcategories));
+        console.log("URL: => ", `${ROUTES.SERVICE_PROVIDER.CONTRACTS}?state=${values.state}&tenderType=${values.tenderType}&facilitySubcategories=${values?.facilitySubcategories?.join(',')}`);
         router.push(
-          `${window.location.origin}/${ROUTES.SERVICE_PROVIDER.CONTRACTS}`
+          `${ROUTES.SERVICE_PROVIDER.CONTRACTS}?state=${values.state}&tenderType=${values.tenderType}&facilitySubcategories=${values?.facilitySubcategories?.join(',')}`
         );
       } catch (error) {
         console.error(error);
