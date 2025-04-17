@@ -40,4 +40,5 @@ export const ROUTES = {
     MESSAGES: `${SERVICE_PROVIDER_BASE}/messages`,
     CONTRACTS: `${SERVICE_PROVIDER_BASE}/contracts`,
   },
+  FUNCTIONS: "/functions",
 };
