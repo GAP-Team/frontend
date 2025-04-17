@@ -2,10 +2,9 @@ export const REAL_ESTATE_BASE = "/real-estate";
 export const SERVICE_PROVIDER_BASE = "/service-provider";
 
 export const ROUTES = {
-  SERVICE_PROVIDER_HOME: "/", // This is the default route
-
+  SERVICE_PROVIDER_HOME: "/",
   LOGIN: "/login",
-  REGISTER: "/register",
+  REGISTRATION: "/registration",
   REAL_ESTATE: {
     DASHBOARD: `${REAL_ESTATE_BASE}/dashboard`,
     BUILDING: {
@@ -53,4 +52,5 @@ export const ROUTES = {
   OUR_SERVICE: "/our-service",
   DATA_SECURITY: "/data-security",
   SERVICE_PROVIDER_JOURNEY: "/still-employed-become-a-service-provider",
+  FUNCTIONS: "/functions",
 };

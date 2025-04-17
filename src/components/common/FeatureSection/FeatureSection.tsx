@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { ROUTES } from "@/utils/routes";
+import { useRouter } from "next/navigation";
 import RoundButton from "../../button/RoundButton";
 import TabContent from "../../tab_panel/TabContent";
 import CustomTabPanel from "../../tab_panel/CustomTabPanel";
@@ -10,6 +12,7 @@ import DashboardImage from "../../../../public/images/dashboard.png";
 import CostSavingImage from "../../../../public/images/cost-saving.png";
 
 const FeatureSection = (): JSX.Element => {
+  const router = useRouter();
   const [currentTabIndex, setCurrentTabIndex] = useState<string>("0");
 
   const DashboardFeatures = [
@@ -44,6 +47,10 @@ const FeatureSection = (): JSX.Element => {
     setCurrentTabIndex(tabIndex);
   };
 
+  const handleOnClick = (route: string): void => {
+    router.push(route);
+  };
+
   return (
     <>
       <div className="w-full mx-auto p-5 flex flex-col">
@@ -64,11 +71,13 @@ const FeatureSection = (): JSX.Element => {
               text="Jetzt kostenlos starten"
               color="#17ABA9"
               hoverColor="#FFFFFF"
+              handleOnClick={() => handleOnClick(ROUTES.REGISTRATION)}
             />
             <RoundButton
               text="Funktionen entdecken"
               color="#FFFFFF"
               hoverColor="#17ABA9"
+              handleOnClick={() => handleOnClick(ROUTES.FUNCTIONS)}
             />
           </div>
           <div className="w-full text-center pr-28">
