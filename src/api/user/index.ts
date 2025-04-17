@@ -7,8 +7,6 @@ const userAPIs = {
   verifyEmailToken: (data: any): any =>
     api.post("/users/verify-user-token", data),
   updateUser: (id: string, data: any): any => api.put(`/users/${id}`, data),
-  sendVerificationEmail: (data: any): any =>
-    api.post("/emails/send-verificaiton-email", data),
   getFilterCreteria: (id: string): any =>
     api.get(`/users/${id}/filter-criteria`),
   getBuildings: (
@@ -41,7 +39,6 @@ const userAPIs = {
     api.get(
       `/users/${userId}/facilities?city=${city}&state=${state}&facilityType=${facilityType}`
     ),
-  contactUs: (data: any): any => api.post("/emails/contact", data),
 };
 
 export default userAPIs;

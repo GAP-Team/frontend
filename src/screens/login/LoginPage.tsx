@@ -20,7 +20,7 @@ import { GapLogo } from "@/components/logo/GapLogo";
 import HeroBanner from "../../components/common/InfoBanner";
 import { loginValidationSchema } from "@/utils/ValidationSchema";
 import { setAccessToken, setIsUserVerified } from "@/utils/helperJWT";
-import userAPIs from "@/api/user";
+import emailAPIs from "@/api/email";
 import { ROUTES } from "@/utils/routes";
 import { USER_ROLE } from "@/utils/enums";
 
@@ -46,7 +46,7 @@ const LoginPage = (): JSX.Element => {
           setAccessToken(res.data.access_token);
           setIsUserVerified(res.data.user?.isVerified);
           if (!res.data.user?.isVerified) {
-            await userAPIs.sendVerificationEmail({
+            await emailAPIs.sendVerificationEmail({
               email: res.data?.user.email,
             });
           }

@@ -21,6 +21,8 @@ import EmailVerification from "@/components/email/EmailVerification";
 import { registrationValidationSchema } from "@/utils/ValidationSchema";
 import { numOfEmployeesOptions } from "@/utils/Constants";
 import { Document } from "@/typings/types";
+import emailAPIs from "@/api/email";
+
 export function getSteps(role?: string): string[] {
   if (role === USER_ROLE.SERVICE_PROVIDER) {
     return [
@@ -165,7 +167,7 @@ const RegistrationRealState = (): JSX.Element => {
         setNewUserName(res?.data?.firstName);
 
         const sendEmailQuery = { email: values.email };
-        const sendStatus = await userAPIs.sendVerificationEmail(sendEmailQuery);
+        const sendStatus = await emailAPIs.sendVerificationEmail(sendEmailQuery);
 
         if (sendStatus.status === 201) {
           setIsVerificationEmailSent(true);

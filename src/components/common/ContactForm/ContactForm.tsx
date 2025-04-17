@@ -1,5 +1,5 @@
-import userAPIs from "@/api/user";
 import { useFormik } from "formik";
+import emailAPIs from "@/api/email";
 import { ContactFormProps } from "./types";
 import { useAppDispatch } from "@/lib/hooks";
 import GTextInput from "@/components/input/GTextInput";
@@ -16,7 +16,7 @@ const ContactForm = (): JSX.Element => {
     message: "",
     lastName: "",
     firstName: "",
-    phoneNumber: "",
+    phoneNumber: 0,
     dataPrivacyAccepted: false,
   };
 
@@ -25,14 +25,14 @@ const ContactForm = (): JSX.Element => {
     validationSchema: ContactFormSchema,
 
     onSubmit: async (values) => {
-      const response = await userAPIs.contactUs(values);
-      if (response?.data?.status === 200) {
+      const response = await emailAPIs.contactUs(values);
+      if (response?.data?.status === 201) {
         formik?.resetForm();
         dispatch(
           showSnackbar({
             type: "success",
             message:
-              "E-Mail gesendet.! Danke für Ihre Kontaktaufnahme. Wir werden uns bald bei Ihnen melden.",
+              "Vielen Dank für Ihre Nachricht. Ihre E-Mail wurde erfolgreich gesendet. Wir melden uns in Kürze bei Ihnen.",
           })
         );
       } else {
@@ -40,7 +40,7 @@ const ContactForm = (): JSX.Element => {
           showSnackbar({
             type: "error",
             message:
-              "Das Senden der E-Mail ist fehlgeschlagen. Versuchen Sie es später erneut.!",
+              "Leider konnte Ihre E-Mail nicht gesendet werden. Versuchen Sie es bitte später noch einmal.",
           })
         );
       }
@@ -101,6 +101,7 @@ const ContactForm = (): JSX.Element => {
               <GTextInput
                 id="phoneNumber"
                 name="phoneNumber"
+                type="number"
                 value={formik?.values?.phoneNumber}
                 onChange={formik?.handleChange}
                 onBlur={formik?.handleBlur}
