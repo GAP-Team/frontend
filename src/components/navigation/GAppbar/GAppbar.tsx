@@ -25,6 +25,8 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import NotificationItem from "./NotficationItem";
 import { notifications } from "@/utils/Constants";
 import { ROUTES } from "@/utils/routes";
+import Button from "@mui/material/Button";
+import { FaArrowRightToBracket } from "react-icons/fa6";
 
 export default function GAppBar(): JSX.Element {
   const router = useRouter();
@@ -97,152 +99,170 @@ export default function GAppBar(): JSX.Element {
       <Box sx={{ flexGrow: 1, display: "flex", justifyContent: "center" }}>
         <GSearch />
       </Box>
-
-      <Box sx={styles.userSection}>
-        <IconButton
-          size="large"
-          aria-label="show new notifications"
-          color="inherit"
-          onClick={handleNotificationClick}
-        >
-          <Badge badgeContent={notifications.length} color="error">
-            <NotificationsIcon sx={styles.notificationIcon} />
-          </Badge>
-        </IconButton>
-        <Popover
-          open={notificationOpen}
-          anchorEl={notificationAnchorEl}
-          onClose={handleClose}
-          anchorOrigin={{
-            vertical: "bottom",
-            horizontal: "right",
-          }}
-          transformOrigin={{
-            vertical: "top",
-            horizontal: "right",
-          }}
-          PaperProps={{ sx: { borderRadius: "0.5rem", maxWidth: 350 } }}
-        >
-          {/* Sticky Header */}
-          <Box sx={styles.notificationHeader}>
-            <Typography variant="bodylsb">Notifications</Typography>
-            <IconButton>
-              <SettingsIcon />
+      {user?.firstName ? (
+        <>
+          <Box sx={styles.userSection}>
+            <IconButton
+              size="large"
+              aria-label="show new notifications"
+              color="inherit"
+              onClick={handleNotificationClick}
+            >
+              <Badge badgeContent={notifications.length} color="error">
+                <NotificationsIcon sx={styles.notificationIcon} />
+              </Badge>
             </IconButton>
-          </Box>
-          {/* Notification List */}
-          <List sx={{ maxHeight: 600, overflow: "auto" }}>
-            {notifications.map((notification, index) => (
-              <NotificationItem key={index} notification={notification} />
-            ))}
-          </List>
-        </Popover>
+            <Popover
+              open={notificationOpen}
+              anchorEl={notificationAnchorEl}
+              onClose={handleClose}
+              anchorOrigin={{
+                vertical: "bottom",
+                horizontal: "right",
+              }}
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+              PaperProps={{ sx: { borderRadius: "0.5rem", maxWidth: 350 } }}
+            >
+              {/* Sticky Header */}
+              <Box sx={styles.notificationHeader}>
+                <Typography variant="bodylsb">Notifications</Typography>
+                <IconButton>
+                  <SettingsIcon />
+                </IconButton>
+              </Box>
+              {/* Notification List */}
+              <List sx={{ maxHeight: 600, overflow: "auto" }}>
+                {notifications.map((notification, index) => (
+                  <NotificationItem key={index} notification={notification} />
+                ))}
+              </List>
+            </Popover>
 
-        <Box sx={styles.userControls} onClick={handleProfileMenuOpen}>
-          <AccountCircle sx={styles.accountIcon} />
-          <Typography sx={styles.userName} suppressHydrationWarning>
-            {`${user?.firstName} ${user?.lastName}`}
-          </Typography>
-          <ArrowDropDownIcon sx={styles.dropDownIcon} />
-        </Box>
-      </Box>
-      <Menu
-        anchorEl={anchorEl}
-        id="account-menu"
-        open={open}
-        onClose={handleClose}
-        PaperProps={{
-          elevation: 0,
-          sx: { ...menuStyles, borderRadius: "6px", width: "260px" },
-        }}
-        transformOrigin={{ horizontal: "right", vertical: "top" }}
-        anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
-      >
-        <MenuItem
-          onClick={() => handleMenuItemClick("Mein Profil")}
-          sx={{
-            ...menuItemStyles.menuItem,
-            ...(activeMenuItem === "Mein Profil" &&
-              menuItemStyles.activeMenuItem),
-          }}
-        >
-          <ListItemIcon>
-            <AccountCircle
+            <Box sx={styles.userControls} onClick={handleProfileMenuOpen}>
+              <AccountCircle sx={styles.accountIcon} />
+              <Typography sx={styles.userName} suppressHydrationWarning>
+                {`${user?.firstName} ${user?.lastName}`}
+              </Typography>
+              <ArrowDropDownIcon sx={styles.dropDownIcon} />
+            </Box>
+          </Box>
+          <Menu
+            anchorEl={anchorEl}
+            id="account-menu"
+            open={open}
+            onClose={handleClose}
+            PaperProps={{
+              elevation: 0,
+              sx: { ...menuStyles, borderRadius: "6px", width: "260px" },
+            }}
+            transformOrigin={{ horizontal: "right", vertical: "top" }}
+            anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+          >
+            <MenuItem
+              onClick={() => handleMenuItemClick("Mein Profil")}
               sx={{
-                ...menuItemStyles.iconStyle,
+                ...menuItemStyles.menuItem,
                 ...(activeMenuItem === "Mein Profil" &&
-                  menuItemStyles.activeIconStyle),
+                  menuItemStyles.activeMenuItem),
               }}
-            />
-          </ListItemIcon>
-          Mein Profil
-        </MenuItem>
-        <MenuItem
-          onClick={() => handleMenuItemClick("Unternehmens Profil")}
-          sx={{
-            ...menuItemStyles.menuItem,
-            ...(activeMenuItem === "Unternehmens Profil" &&
-              menuItemStyles.activeMenuItem),
-          }}
-        >
-          <ListItemIcon>
-            <Business
+            >
+              <ListItemIcon>
+                <AccountCircle
+                  sx={{
+                    ...menuItemStyles.iconStyle,
+                    ...(activeMenuItem === "Mein Profil" &&
+                      menuItemStyles.activeIconStyle),
+                  }}
+                />
+              </ListItemIcon>
+              Mein Profil
+            </MenuItem>
+            <MenuItem
+              onClick={() => handleMenuItemClick("Unternehmens Profil")}
               sx={{
-                ...menuItemStyles.iconStyle,
+                ...menuItemStyles.menuItem,
                 ...(activeMenuItem === "Unternehmens Profil" &&
-                  menuItemStyles.activeIconStyle),
+                  menuItemStyles.activeMenuItem),
               }}
-            />
-          </ListItemIcon>
-          Unternehmens Profil
-        </MenuItem>
-        <Divider />
-        <MenuItem
-          onClick={() => handleMenuItemClick("E-Mail ändern")}
-          sx={{
-            ...menuItemStyles.menuItem,
-            ...(activeMenuItem === "E-Mail ändern" &&
-              menuItemStyles.activeMenuItem),
-          }}
-        >
-          <ListItemIcon>
-            <Email
+            >
+              <ListItemIcon>
+                <Business
+                  sx={{
+                    ...menuItemStyles.iconStyle,
+                    ...(activeMenuItem === "Unternehmens Profil" &&
+                      menuItemStyles.activeIconStyle),
+                  }}
+                />
+              </ListItemIcon>
+              Unternehmens Profil
+            </MenuItem>
+            <Divider />
+            <MenuItem
+              onClick={() => handleMenuItemClick("E-Mail ändern")}
               sx={{
-                ...menuItemStyles.iconStyle,
+                ...menuItemStyles.menuItem,
                 ...(activeMenuItem === "E-Mail ändern" &&
-                  menuItemStyles.activeIconStyle),
+                  menuItemStyles.activeMenuItem),
               }}
-            />
-          </ListItemIcon>
-          E-Mail ändern
-        </MenuItem>
-        <MenuItem
-          onClick={() => handleMenuItemClick("Passwort ändern")}
+            >
+              <ListItemIcon>
+                <Email
+                  sx={{
+                    ...menuItemStyles.iconStyle,
+                    ...(activeMenuItem === "E-Mail ändern" &&
+                      menuItemStyles.activeIconStyle),
+                  }}
+                />
+              </ListItemIcon>
+              E-Mail ändern
+            </MenuItem>
+            <MenuItem
+              onClick={() => handleMenuItemClick("Passwort ändern")}
+              sx={{
+                ...menuItemStyles.menuItem,
+                ...(activeMenuItem === "Passwort ändern" &&
+                  menuItemStyles.activeMenuItem),
+              }}
+            >
+              <ListItemIcon>
+                <Lock
+                  sx={{
+                    ...menuItemStyles.iconStyle,
+                    ...(activeMenuItem === "Passwort ändern" &&
+                      menuItemStyles.activeIconStyle),
+                  }}
+                />
+              </ListItemIcon>
+              Passwort ändern
+            </MenuItem>
+            <Divider />
+            <MenuItem onClick={handleLogout} sx={menuItemStyles.logoutMenu}>
+              <ListItemIcon>
+                <MdOutlineLogout color="#eb4444" size={"1.25rem"} />
+              </ListItemIcon>
+              Abmelden
+            </MenuItem>
+          </Menu>
+        </>
+      ) : (
+        <Button
+          component="a"
+          href="/login"
+          className="block px-5 py-2 mt-4 text-center rounded-lg text-md"
+          size="small"
+          style={styles.loginButton}
           sx={{
-            ...menuItemStyles.menuItem,
-            ...(activeMenuItem === "Passwort ändern" &&
-              menuItemStyles.activeMenuItem),
+            textTransform: "none",
+            whiteSpace: "pre",
           }}
         >
-          <ListItemIcon>
-            <Lock
-              sx={{
-                ...menuItemStyles.iconStyle,
-                ...(activeMenuItem === "Passwort ändern" &&
-                  menuItemStyles.activeIconStyle),
-              }}
-            />
-          </ListItemIcon>
-          Passwort ändern
-        </MenuItem>
-        <Divider />
-        <MenuItem onClick={handleLogout} sx={menuItemStyles.logoutMenu}>
-          <ListItemIcon>
-            <MdOutlineLogout color="#eb4444" size={"1.25rem"} />
-          </ListItemIcon>
-          Abmelden
-        </MenuItem>
-      </Menu>
+          <FaArrowRightToBracket className="mr-2 h-5 w-5" />
+          Anmeldung / Registrieren
+        </Button>
+      )}
     </Toolbar>
   );
 }
@@ -292,6 +312,17 @@ const styles = {
     top: 0,
     backgroundColor: "white",
     zIndex: 1,
+  },
+  loginButton: {
+    background: "#005e99",
+    color: "#FFFFFF",
+    padding: "0.7rem",
+    paddingRight: "1.7rem",
+    paddingLeft: "1.7rem",
+    borderRadius: 7,
+    "&:hover": {
+      background: "#0071b8",
+    },
   },
 };
 
