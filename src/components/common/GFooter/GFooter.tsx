@@ -1,6 +1,6 @@
-import { REAL_ESTATE_BASE } from "@/utils/routes";
 import Divider from "@mui/material/Divider";
 import { GapLogo } from "@/components/logo/GapLogo";
+import { ROUTES, REAL_ESTATE_BASE } from "@/utils/routes";
 import { Box, Typography, Grid, Link } from "@mui/material";
 
 function GFooter(): JSX.Element {
@@ -17,7 +17,7 @@ function GFooter(): JSX.Element {
                     Über GAP
                   </Typography>
                   <Link
-                    href="/blogs"
+                    href={ROUTES.BLOGS.BLOGS}
                     style={styles.footerMenuText}
                     underline="hover"
                   >
@@ -25,7 +25,7 @@ function GFooter(): JSX.Element {
                   </Link>{" "}
                   <br />
                   <Link
-                    href="/about-us"
+                    href={ROUTES.ABOUT_US}
                     style={styles.footerMenuText}
                     underline="hover"
                   >
@@ -33,7 +33,7 @@ function GFooter(): JSX.Element {
                   </Link>
                   <br />
                   <Link
-                    href="/contact-us"
+                    href={ROUTES.CONTACT_US}
                     style={styles.footerMenuText}
                     underline="hover"
                   >
@@ -45,7 +45,7 @@ function GFooter(): JSX.Element {
                     Unser Service
                   </Typography>
                   <Link
-                    href="/our-service"
+                    href={ROUTES.OUR_SERVICE}
                     style={styles.footerMenuText}
                     underline="hover"
                   >
@@ -53,7 +53,7 @@ function GFooter(): JSX.Element {
                   </Link>{" "}
                   <br />
                   <Link
-                    href="/support"
+                    href={ROUTES.SUPPORT}
                     style={styles.footerMenuText}
                     underline="hover"
                   >
@@ -65,7 +65,7 @@ function GFooter(): JSX.Element {
                     Als Dienstleister
                   </Typography>
                   <Link
-                    href="/"
+                    href={ROUTES.SERVICE_PROVIDER_HOME}
                     style={styles.footerMenuText}
                     underline="hover"
                   >
@@ -73,7 +73,7 @@ function GFooter(): JSX.Element {
                   </Link>
                   <br />
                   <Link
-                    href="/still-employed-become-a-service-provider"
+                    href={ROUTES.SERVICE_PROVIDER_JOURNEY}
                     style={styles.footerMenuText}
                     underline="hover"
                   >
@@ -97,7 +97,7 @@ function GFooter(): JSX.Element {
                     Rechtliches
                   </Typography>
                   <Link
-                    href="/agb"
+                    href={ROUTES.AGB}
                     style={styles.footerMenuText}
                     underline="hover"
                   >
@@ -105,7 +105,7 @@ function GFooter(): JSX.Element {
                   </Link>
                   <br />
                   <Link
-                    href="/data-security"
+                    href={ROUTES.DATA_SECURITY}
                     style={styles.footerMenuText}
                     underline="hover"
                   >
@@ -113,7 +113,7 @@ function GFooter(): JSX.Element {
                   </Link>
                   <br />
                   <Link
-                    href="/impressum"
+                    href={ROUTES.IMPRESSUM}
                     style={styles.footerMenuText}
                     underline="hover"
                   >
