@@ -28,12 +28,10 @@ import {
 import { useFormik } from "formik";
 import { ROUTES } from "@/utils/routes";
 import { useRouter } from "next/navigation";
-import { useAppDispatch } from "@/lib/hooks";
 import CloseIcon from "@mui/icons-material/Close";
 import { ContractSearchProps } from "@/typings/types";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
-import { showSnackbar } from "@/components/root-snackbar";
 import CustomSelect from "@/components/drop_down/CustomSelect";
 import { ContractSearchSchema } from "@/utils/ValidationSchema";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
@@ -41,7 +39,6 @@ import heroBackgroundPicture from "../../../../public/images/hero6.jpg";
 
 const HeroSection = (): JSX.Element => {
   const router = useRouter();
-  const appdispatch = useAppDispatch();
 
   const [facilityAnchorEl, setFacilityAnchorEl] =
     useState<HTMLDivElement | null>(null);
@@ -68,22 +65,13 @@ const HeroSection = (): JSX.Element => {
     initialValues: initialValues,
     validationSchema: ContractSearchSchema,
     onSubmit: async (values) => {
-      try {
-        const tenderTypeString = encodeURIComponent(JSON.stringify(values.tenderType));
-        const facilitySubcategoriesString = encodeURIComponent(JSON.stringify(values.facilitySubcategories));
-        console.log("URL: => ", `${ROUTES.SERVICE_PROVIDER.CONTRACTS}?state=${values.state}&tenderType=${values.tenderType}&facilitySubcategories=${values?.facilitySubcategories?.join(',')}`);
-        router.push(
-          `${ROUTES.SERVICE_PROVIDER.CONTRACTS}?state=${values.state}&tenderType=${values.tenderType}&facilitySubcategories=${values?.facilitySubcategories?.join(',')}`
-        );
-      } catch (error) {
-        console.error(error);
-        appdispatch(
-          showSnackbar({
-            type: "error",
-            message: "Abfragevalidierung fehlgeschlagen!",
-          })
-        );
-      }
+      const url = `
+        ${ROUTES.SERVICE_PROVIDER.CONTRACTS}
+        ?facilitySubcategories=${values?.facilitySubcategories?.join(",")}
+        &tenderType=${values.tenderType}
+        &state=${values.state}
+      `;
+      router.push(url);
     },
   });
 

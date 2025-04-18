@@ -1,41 +1,18 @@
 "use client";
 import { Grid } from "@mui/material";
-import { ROUTES } from "@/utils/routes";
 import TopFilter from "./TopFilterPanel";
-import { useEffect, useState } from "react";
-import { useSearchParams } from 'next/navigation';
+// import { useSearchParams } from 'next/navigation';
 import ContractCard from "@/components/card/ContractCard";
 import SideFilterPanel from "../../components/search/SideFilterPanel";
-import { log } from "console";
 
 const result = 8;
 
 const ContractsOverview = (): JSX.Element => {
-
-  const searchParams = useSearchParams();
-  const arrayParam = searchParams.get(ROUTES.SERVICE_PROVIDER.CONTRACTS);
-  const arrayElements = arrayParam ? arrayParam.split(',') : [];
-  console.log("Array Elements:", arrayElements);
-
-  const [arrayData, setArrayData] = useState<any[]>([]);
-
-  /*useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    console.log("Params:", params);
-    const data = params.get("data");
-    console.log("Data:", data);
-    if (data) {
-      try {
-        const parsed = JSON.parse(decodeURIComponent(data));
-        console.log("Array Data:", parsed);
-        if (Array.isArray(parsed)) {
-          setArrayData(parsed);
-        }
-      } catch (err) {
-        console.error("Invalid array data", err);
-      }
-    }
-  }, []);*/
+  /*const searchParams = useSearchParams();
+  const state = searchParams.get('state');
+  const tenderType = searchParams.get('tenderType');
+  const facilitySubcategoriesInString = searchParams.getAll('facilitySubcategories');
+  const facilitySubcategories = facilitySubcategoriesInString[0].split(',');*/
 
   return (
     <section className="bg-#E0E0E0 w-full px-3 py-5">
