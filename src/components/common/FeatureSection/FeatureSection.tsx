@@ -77,6 +77,7 @@ const FeatureSection = (): JSX.Element => {
               text="Funktionen entdecken"
               color="#FFFFFF"
               hoverColor="#17ABA9"
+              handleOnClick={() => handleOnClick(ROUTES.FUNCTIONS)}
             />
           </div>
           <div className="w-full text-center pr-28">
