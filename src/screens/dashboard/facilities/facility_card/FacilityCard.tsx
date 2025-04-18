@@ -30,7 +30,7 @@ import {
 import dayjs from "dayjs";
 import DetailItem from "@/components/common/DetailItem";
 import SummaryCard from "@/components/summary/SummaryCard";
-import { Grid } from "@mui/material";
+import Grid from "@mui/material/Grid";
 
 interface FacilityCardProps {
   facility: Facility;
