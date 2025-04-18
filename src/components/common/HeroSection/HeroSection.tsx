@@ -1,5 +1,8 @@
 import Image from "next/image";
 import { Button } from "@mui/material";
+import { ROUTES } from "@/utils/routes";
+import { useRouter } from "next/navigation";
+import Divider from "@mui/material/Divider";
 import TaskAltIcon from "@mui/icons-material/TaskAlt";
 import RocketLaunchIcon from "@mui/icons-material/RocketLaunch";
 import QuestionAnswerIcon from "@mui/icons-material/QuestionAnswer";
@@ -7,6 +10,12 @@ import heroBackgroundPicture from "../../../../public/images/hero6.jpg";
 import AccessTimeFilledIcon from "@mui/icons-material/AccessTimeFilled";
 
 const HeroSection = (): JSX.Element => {
+  const router = useRouter();
+
+  const handleOnClick = (): void => {
+    router.push(ROUTES.REGISTRATION);
+  };
+
   return (
     <>
       <section className="bg-white w-full py-5 pt-20">
@@ -109,6 +118,7 @@ const HeroSection = (): JSX.Element => {
                   whiteSpace: "pre",
                   fontSize: "15px",
                 }}
+                onClick={handleOnClick}
               >
                 Kostenlos Testen
               </Button>
@@ -132,6 +142,7 @@ const HeroSection = (): JSX.Element => {
           </div>
         </div>
       </section>
+      <Divider sx={styles.divider} />
     </>
   );
 };
@@ -167,5 +178,8 @@ const styles = {
   heroFeatureText: {
     fontSize: "22px",
     lineHeight: "1.6rem",
+  },
+  divider: {
+    mb: 2,
   },
 };

@@ -90,7 +90,12 @@ const LoginPage = (): JSX.Element => {
       </Grid>
       <Grid item xs={12} md={6} lg={6} component={Paper}>
         <Box sx={styles.formContainer}>
-          <GapLogo color="#0D1F4E" size="sm" />
+          <Box
+            onClick={() => router.push(ROUTES.SERVICE_PROVIDER_HOME)}
+            sx={{ cursor: "pointer" }}
+          >
+            <GapLogo color="#0D1F4E" size="sm" />
+          </Box>
           <Box sx={styles.formBox}>
             <Grid container sx={{ mb: "2rem", color: "#1E3137" }}>
               <Grid item xs>
