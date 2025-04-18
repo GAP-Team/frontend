@@ -16,7 +16,7 @@ const ContactForm = (): JSX.Element => {
     message: "",
     lastName: "",
     firstName: "",
-    phoneNumber: 0,
+    phoneNumber: null,
     dataPrivacyAccepted: false,
   };
 
@@ -101,7 +101,6 @@ const ContactForm = (): JSX.Element => {
               <GTextInput
                 id="phoneNumber"
                 name="phoneNumber"
-                type="number"
                 value={formik?.values?.phoneNumber}
                 onChange={formik?.handleChange}
                 onBlur={formik?.handleBlur}

@@ -22,6 +22,7 @@ import { registrationValidationSchema } from "@/utils/ValidationSchema";
 import { numOfEmployeesOptions } from "@/utils/Constants";
 import { Document } from "@/typings/types";
 import emailAPIs from "@/api/email";
+import { ROUTES } from "@/utils/routes";
 
 export function getSteps(role?: string): string[] {
   if (role === USER_ROLE.SERVICE_PROVIDER) {
@@ -167,7 +168,8 @@ const RegistrationRealState = (): JSX.Element => {
         setNewUserName(res?.data?.firstName);
 
         const sendEmailQuery = { email: values.email };
-        const sendStatus = await emailAPIs.sendVerificationEmail(sendEmailQuery);
+        const sendStatus =
+          await emailAPIs.sendVerificationEmail(sendEmailQuery);
 
         if (sendStatus.status === 201) {
           setIsVerificationEmailSent(true);
@@ -306,7 +308,7 @@ const RegistrationRealState = (): JSX.Element => {
 
         <Typography sx={styles.helpText}>
           Hilfe?{" "}
-          <Link href="#" color="#1E3137" fontWeight="bold">
+          <Link href={ROUTES.CONTACT_US} color="#1E3137" fontWeight="bold">
             Kontakt Support
           </Link>
         </Typography>
