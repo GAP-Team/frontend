@@ -1,7 +1,7 @@
 export interface ContactFormProps {
   firstName: string;
   lastName: string;
-  phoneNumber: number | null;
+  phoneNumber: string;
   email: string;
   message: string;
   dataPrivacyAccepted: boolean;

@@ -14,7 +14,7 @@ interface PhoneInputProps {
   onBlur?:
     | FocusEventHandler<HTMLInputElement | HTMLTextAreaElement>
     | undefined;
-  helperText?: string;
+  helperText?: string | boolean;
 }
 
 const PhoneInput: React.FC<PhoneInputProps> = ({
