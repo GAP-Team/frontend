@@ -1,19 +1,12 @@
 "use client";
 import { Grid } from "@mui/material";
 import TopFilter from "./TopFilterPanel";
-// import { useSearchParams } from 'next/navigation';
 import ContractCard from "@/components/card/ContractCard";
 import SideFilterPanel from "../../components/search/SideFilterPanel";
 
 const result = 8;
 
 const ContractsOverview = (): JSX.Element => {
-  /*const searchParams = useSearchParams();
-  const state = searchParams.get('state');
-  const tenderType = searchParams.get('tenderType');
-  const facilitySubcategoriesInString = searchParams.getAll('facilitySubcategories');
-  const facilitySubcategories = facilitySubcategoriesInString[0].split(',');*/
-
   return (
     <section className="bg-#E0E0E0 w-full px-3 py-5">
       <div className="mb-4 mr-8">

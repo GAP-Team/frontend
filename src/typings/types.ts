@@ -1,3 +1,5 @@
+import { StaticImageData } from "next/image";
+
 export interface FormErrors {
   [key: string]: string;
 }
@@ -15,4 +17,13 @@ export interface ContractSearchProps {
   state: string;
   tenderType: string;
   facilitySubcategories: string[];
+}
+export interface BlogProps {
+  date: string;
+  slug: string;
+  title: string;
+  author: string;
+  excerpt: string;
+  category: string;
+  image: StaticImageData;
 }
