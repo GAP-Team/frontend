@@ -60,9 +60,9 @@ const FacilitySummary = ({
       value: values.isPublishCheckAutomatically ? "Ja" : "Nein",
     },
     values.isPublishCheckAutomatically &&
-      values.publishAutomaticallyInMonths && {
+      values.publishAutomaticallyInMonth && {
         label: "Automatisch veröffentlichen in",
-        value: `${values.publishAutomaticallyInMonths} Monat(e)`,
+        value: `${values.publishAutomaticallyInMonth} Monat(e)`,
       },
     values.reminderInMonth !== 0
       ? {

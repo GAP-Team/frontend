@@ -127,7 +127,7 @@ const NewFacility: React.FC<NewFacilityProps> = ({
         nextCheckInYearNumber: values?.nextCheckInYearNumber,
         isPublishAutomatically: values?.isPublishCheckAutomatically,
         publishAutomaticallyInMonth: values?.isPublishCheckAutomatically
-          ? Number(values?.publishAutomaticallyInMonths)
+          ? Number(values?.publishAutomaticallyInMonth)
           : 0,
         reminderInMonth: values?.reminderInMonth,
         isEmailNotificationEnable: values?.isEmailNotificationEnable,
@@ -255,7 +255,7 @@ const NewFacility: React.FC<NewFacilityProps> = ({
     subcategory: facility?.subcategory || "",
     isPublishCheckAutomatically:
       facility?.check?.isPublishAutomatically || false,
-    publishAutomaticallyInMonths:
+    publishAutomaticallyInMonth:
       facility?.check?.publishAutomaticallyInMonth || 0,
     isReminderEnabled: false,
     emailNotificationList: facility?.check?.emailNotificationList || ["", ""],

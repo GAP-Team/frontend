@@ -106,9 +106,9 @@ const FacilityCheck = (): JSX.Element => {
             {formik?.values?.isPublishCheckAutomatically && (
               <FormControl sx={style.conditionalBorder}>
                 <RadioGroup
-                  id="publishAutomaticallyInMonths"
-                  name="publishAutomaticallyInMonths"
-                  value={formik?.values?.publishAutomaticallyInMonths}
+                  id="publishAutomaticallyInMonth"
+                  name="publishAutomaticallyInMonth"
+                  value={formik?.values?.publishAutomaticallyInMonth}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                 >
