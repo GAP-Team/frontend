@@ -27,12 +27,11 @@ import { notifications } from "@/utils/Constants";
 import { ROUTES } from "@/utils/routes";
 import Button from "@mui/material/Button";
 import { FaArrowRightToBracket } from "react-icons/fa6";
-import { useLogin } from "@/hooks/useUserLoginVerification";
+import { checkIsLoggedIn } from "@/utils/helperJWT";
 
 export default function GAppbar(): JSX.Element {
   const router = useRouter();
   const user = useSelector(currentUser);
-  const { isLoggedIn } = useLogin();
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [notificationAnchorEl, setNotificationAnchorEl] =
@@ -101,7 +100,7 @@ export default function GAppbar(): JSX.Element {
       <Box sx={{ flexGrow: 1, display: "flex", justifyContent: "center" }}>
         <GSearch />
       </Box>
-      {isLoggedIn ? (
+      {checkIsLoggedIn() ? (
         <>
           <Box sx={styles.userSection}>
             <IconButton
