@@ -1,4 +1,5 @@
 import { Notification } from "@/components/navigation/GAppbar/types";
+import OfficeImage from "../../public/images/office.jpg";
 
 export const listOfTrades = [
   {
@@ -720,3 +721,36 @@ export const contactFiltersOption = {
 };
 export const CHECK_DUE_SOON_DAYS = 183;
 export const MAINTENANCE_DUE_SOON_DAYS = 15;
+
+export const articles = [
+  {
+    date: "08. April 2025",
+    category: "Steuern",
+    title: "What is GAP ?",
+    slug: "what-is-gap",
+    excerpt:
+      "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
+    image: OfficeImage,
+    author: "Sudipto",
+  },
+  {
+    date: "08. April 2025",
+    category: "Immobilien",
+    title: "How to calculate the tax on the sale of a property?",
+    slug: "how-to-calculate-tax",
+    excerpt:
+      "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
+    image: OfficeImage,
+    author: "Sudipto",
+  },
+  {
+    date: "08. April 2025",
+    category: "Mietvertrag",
+    title: "Warum Lorem Ipsum?",
+    slug: "warum-lorem-ipsum",
+    excerpt:
+      "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
+    image: OfficeImage,
+    author: "Sudipto",
+  },
+];

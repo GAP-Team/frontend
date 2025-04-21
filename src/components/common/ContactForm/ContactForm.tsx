@@ -1,28 +1,49 @@
-import { useState } from "react";
 import { useFormik } from "formik";
+import emailAPIs from "@/api/email";
 import { ContactFormProps } from "./types";
+import { useAppDispatch } from "@/lib/hooks";
 import GTextInput from "@/components/input/GTextInput";
+import { showSnackbar } from "@/components/root-snackbar";
 import { ContactFormSchema } from "@/utils/ValidationSchema";
-import LabelWithAsterisk from "@/components/label/LabelWithAsterisk";
 import { Grid, Typography, Checkbox, Button } from "@mui/material";
+import LabelWithAsterisk from "@/components/label/LabelWithAsterisk";
 
 const ContactForm = (): JSX.Element => {
-  const [isAgreed, setIsAgreed] = useState<boolean>(false);
+  const dispatch = useAppDispatch();
 
   const initialValues: ContactFormProps = {
     email: "",
     message: "",
     lastName: "",
     firstName: "",
-    phoneNumber: "",
+    phoneNumber: null,
+    dataPrivacyAccepted: false,
   };
 
   const formik = useFormik({
     initialValues: initialValues,
     validationSchema: ContactFormSchema,
 
-    onSubmit: async (/*values*/) => {
-      // On submit logic here, uncomment the values parameter if you need the form values here
+    onSubmit: async (values) => {
+      const response = await emailAPIs.contactUs(values);
+      if (response?.data?.status === 201) {
+        formik?.resetForm();
+        dispatch(
+          showSnackbar({
+            type: "success",
+            message:
+              "Vielen Dank für Ihre Nachricht. Ihre E-Mail wurde erfolgreich gesendet. Wir melden uns in Kürze bei Ihnen.",
+          })
+        );
+      } else {
+        dispatch(
+          showSnackbar({
+            type: "error",
+            message:
+              "Leider konnte Ihre E-Mail nicht gesendet werden. Versuchen Sie es bitte später noch einmal.",
+          })
+        );
+      }
     },
   });
 
@@ -130,8 +151,14 @@ const ContactForm = (): JSX.Element => {
             <LabelWithAsterisk>Datenschutz</LabelWithAsterisk>
             <Grid sx={styles.textFieldContainer}>
               <Checkbox
-                name="agree"
-                onChange={(e) => setIsAgreed(e.target.checked)}
+                name="dataPrivacyAccepted"
+                onChange={(e) => {
+                  formik?.setFieldValue(
+                    "dataPrivacyAccepted",
+                    e.target.checked
+                  );
+                }}
+                checked={formik?.values?.dataPrivacyAccepted}
               />
               <Typography variant="body1" sx={styles.agreeDescription}>
                 Ich willige ein, dass meine Kontaktdaten an alle in der
@@ -144,7 +171,7 @@ const ContactForm = (): JSX.Element => {
             <Button
               size="small"
               type="submit"
-              disabled={!isAgreed}
+              disabled={!formik?.values?.dataPrivacyAccepted}
               component="button"
               sx={styles.submitButton}
               className="block px-5 py-2 mt-4 text-center rounded-lg text-md"

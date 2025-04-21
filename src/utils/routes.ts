@@ -4,7 +4,6 @@ export const SERVICE_PROVIDER_BASE = "/service-provider";
 export const ROUTES = {
   SERVICE_PROVIDER_HOME: "/",
   LOGIN: "/login",
-  CONTACT_US: "/contact-us",
   REGISTRATION: "/registration",
   REAL_ESTATE: {
     DASHBOARD: `${REAL_ESTATE_BASE}/dashboard`,
@@ -40,5 +39,18 @@ export const ROUTES = {
     MESSAGES: `${SERVICE_PROVIDER_BASE}/messages`,
     CONTRACTS: `${SERVICE_PROVIDER_BASE}/contracts`,
   },
+  BLOGS: {
+    BLOGS: "/blogs",
+    BLOG_DETAILS: (slug: string) => `/blogs/${slug}`,
+  },
+  FAQ: "/faq",
+  AGB: "/agb",
+  SUPPORT: "/support",
+  ABOUT_US: "/about-us",
+  IMPRESSUM: "/impressum",
+  CONTACT_US: "/contact-us",
+  OUR_SERVICE: "/our-service",
+  DATA_SECURITY: "/data-security",
+  SERVICE_PROVIDER_JOURNEY: "/still-employed-become-a-service-provider",
   FUNCTIONS: "/functions",
 };
