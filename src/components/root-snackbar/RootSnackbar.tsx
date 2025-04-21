@@ -3,15 +3,23 @@ import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import React, { ReactElement } from "react";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
-
 import { hidesnackbar } from "@/lib/features/snackbarSlice";
+import { AlertTitle } from "@mui/material";
 
 export const RootSnackbar = (): ReactElement => {
   const dispatch = useAppDispatch();
-  const { message, type } = useAppSelector((state) => state.snackbar);
+  const { message, title, type, persistent, vertical, horizontal } =
+    useAppSelector((state) => state.snackbar);
 
   let open = true;
-  const handleOnClose = (): void => {
+
+  const handleOnClose = (
+    event: React.SyntheticEvent | Event,
+    reason?: string
+  ): void => {
+    if (persistent && reason === "clickaway") {
+      return;
+    }
     dispatch(hidesnackbar());
   };
 
@@ -20,9 +28,12 @@ export const RootSnackbar = (): ReactElement => {
   return (
     <Snackbar
       open={open}
-      autoHideDuration={6000}
+      autoHideDuration={persistent ? null : 6000}
       onClose={handleOnClose}
-      anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+      anchorOrigin={{
+        vertical: vertical || "bottom",
+        horizontal: horizontal || "center",
+      }}
     >
       <Alert
         onClose={handleOnClose}
@@ -30,6 +41,7 @@ export const RootSnackbar = (): ReactElement => {
         variant="filled"
         severity={type}
       >
+        {title && <AlertTitle>{title}</AlertTitle>}
         {message}
       </Alert>
     </Snackbar>
