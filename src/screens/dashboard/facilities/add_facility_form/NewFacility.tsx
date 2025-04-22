@@ -125,10 +125,10 @@ const NewFacility: React.FC<NewFacilityProps> = ({
           ? dayjs(values.lastCheckDate.utc(true).format("YYYY-MM-DD"))
           : null,
         nextCheckInYearNumber: values?.nextCheckInYearNumber,
-        isPublishAutomatically: values?.isPublishAutomatically,
-        publishAutomaticallyInMonth: Number(
-          values?.publishAutomaticallyInMonths
-        ),
+        isPublishAutomatically: values?.isPublishCheckAutomatically,
+        publishAutomaticallyInMonth: values?.isPublishCheckAutomatically
+          ? Number(values?.publishAutomaticallyInMonth)
+          : 0,
         reminderInMonth: values?.reminderInMonth,
         isEmailNotificationEnable: values?.isEmailNotificationEnable,
         emailNotificationList: values?.isEmailNotificationEnable
@@ -143,9 +143,9 @@ const NewFacility: React.FC<NewFacilityProps> = ({
           : null,
         nextMaintenanceInMonth: values?.nextMaintenanceInMonth,
         isPublishAutomatically: values?.isPublishMaintenanceAutomatically,
-        publishAutomaticallyInMonth: Number(
-          values?.publishMaintenanceAutomaticallyInMonth
-        ),
+        publishAutomaticallyInMonth: values?.isPublishMaintenanceAutomatically
+          ? Number(values?.publishMaintenanceAutomaticallyInMonth)
+          : 0,
         reminderInMonth: values?.maintenanceReminderInMonth,
         isEmailNotificationEnable: values?.isMaintenanceEmailNotificationEnable,
         emailNotificationList: values?.isMaintenanceEmailNotificationEnable
@@ -253,8 +253,9 @@ const NewFacility: React.FC<NewFacilityProps> = ({
     name: facility?.name || "",
     facilityType: facility?.facilityType || "",
     subcategory: facility?.subcategory || "",
-    isPublishAutomatically: facility?.check?.isPublishAutomatically || false,
-    publishAutomaticallyInMonths:
+    isPublishCheckAutomatically:
+      facility?.check?.isPublishAutomatically || false,
+    publishAutomaticallyInMonth:
       facility?.check?.publishAutomaticallyInMonth || 0,
     isReminderEnabled: false,
     emailNotificationList: facility?.check?.emailNotificationList || ["", ""],
