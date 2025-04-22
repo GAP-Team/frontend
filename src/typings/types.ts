@@ -13,7 +13,11 @@ export interface Document {
   name: string;
   documentType?: string;
 }
-
+export interface ContractSearchProps {
+  state: string;
+  tenderType: string;
+  facilitySubcategories: string[];
+}
 export interface BlogProps {
   date: string;
   slug: string;

@@ -434,3 +434,12 @@ export const ContactFormSchema = yup.object({
     .boolean()
     .oneOf([true], "Sie müssen die Datenschutzbestimmungen akzeptieren"),
 });
+
+export const ContractSearchSchema = yup.object({
+  state: yup.string().required("Bundesland ist erforderlich"),
+  tenderType: yup.string().required("Auftragstyp ist erforderlich"),
+  facilitySubcategories: yup
+    .array()
+    .of(yup.string())
+    .min(1, "Bitte wählen Sie mindestens eine Anlage aus"),
+});
