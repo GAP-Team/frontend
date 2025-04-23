@@ -7,7 +7,16 @@ import Sidebar, {
 import GAppbar from "@/components/navigation/GAppbar/GAppbar";
 import Box from "@mui/material/Box";
 import { useAppSelector } from "@/lib/hooks";
-import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Typography, useMediaQuery, useTheme } from "@mui/material";
+import {
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Button,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 
 interface LayoutProps {
   sidebarItems: SidebarItem[];
@@ -25,13 +34,13 @@ const Layout: React.FC<LayoutProps> = ({
   const { isActive } = useAppSelector((state) => state.user);
   const [open, setOpen] = useState(false);
   const theme = useTheme();
-  const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
+  const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
 
   useEffect(() => {
     setOpen(!isActive);
   }, [isActive]);
 
-  const handleClose = () => {
+  const handleClose = (): void => {
     setOpen(false);
   };
 
@@ -46,7 +55,7 @@ const Layout: React.FC<LayoutProps> = ({
         <GAppbar />
         {children}
       </Box>
-      
+
       <Dialog
         fullScreen={fullScreen}
         open={open}
@@ -58,13 +67,15 @@ const Layout: React.FC<LayoutProps> = ({
         </DialogTitle>
         <DialogContent>
           <Typography>
-          Die Verifizierung Ihres Unternehmens kann etwas Zeit in Anspruch nehmen. Sie erhalten eine Benachrichtigung, sobald die Prüfung abgeschlossen ist.
+            Die Verifizierung Ihres Unternehmens kann etwas Zeit in Anspruch
+            nehmen. Sie erhalten eine Benachrichtigung, sobald die Prüfung
+            abgeschlossen ist.
           </Typography>
         </DialogContent>
         <DialogActions>
-            <Button onClick={handleClose} color="primary">
-             Schließen
-            </Button>
+          <Button onClick={handleClose} color="primary">
+            Schließen
+          </Button>
         </DialogActions>
       </Dialog>
     </Box>
