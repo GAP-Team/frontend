@@ -47,10 +47,10 @@ export const ROUTES = {
   AGB: "/agb",
   SUPPORT: "/support",
   ABOUT_US: "/about-us",
+  FUNCTIONS: "/functions",
   IMPRESSUM: "/impressum",
   CONTACT_US: "/contact-us",
   OUR_SERVICE: "/our-service",
   DATA_SECURITY: "/data-security",
   SERVICE_PROVIDER_JOURNEY: "/still-employed-become-a-service-provider",
-  FUNCTIONS: "/functions",
 };

@@ -1,3 +1,4 @@
+"use client";
 import { Grid } from "@mui/material";
 import TopFilter from "./TopFilterPanel";
 import ContractCard from "@/components/card/ContractCard";

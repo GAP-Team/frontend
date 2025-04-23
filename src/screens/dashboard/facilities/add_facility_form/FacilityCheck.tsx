@@ -89,21 +89,26 @@ const FacilityCheck = (): JSX.Element => {
             <FormControlLabel
               control={
                 <Checkbox
-                  id="isPublishAutomatically"
-                  name="isPublishAutomatically"
+                  id="isPublishCheckAutomatically"
+                  name="isPublishCheckAutomatically"
                   onBlur={formik?.handleBlur}
-                  onChange={formik?.handleChange}
-                  checked={formik?.values?.isPublishAutomatically}
+                  onChange={(e) =>
+                    formik?.setFieldValue(
+                      "isPublishCheckAutomatically",
+                      e?.target?.checked
+                    )
+                  }
+                  checked={formik?.values?.isPublishCheckAutomatically}
                 />
               }
               label="aktivieren"
             />
-            {formik?.values?.isPublishAutomatically && (
+            {formik?.values?.isPublishCheckAutomatically && (
               <FormControl sx={style.conditionalBorder}>
                 <RadioGroup
-                  id="publishAutomaticallyInMonths"
-                  name="publishAutomaticallyInMonths"
-                  value={formik?.values?.publishAutomaticallyInMonths}
+                  id="publishAutomaticallyInMonth"
+                  name="publishAutomaticallyInMonth"
+                  value={formik?.values?.publishAutomaticallyInMonth}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                 >
