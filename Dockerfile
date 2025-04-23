@@ -17,7 +17,7 @@
     RUN npm run build
     
     # --- Production Image (lean) ---
-    FROM node:20-alpine AS runner
+    FROM node:20-slim AS runner
     WORKDIR /app
     
     # Copy only production deps
@@ -27,7 +27,7 @@
     # Copy build output and runtime code
     COPY --from=builder /app/public ./public
     COPY --from=builder /app/.next ./.next
-    COPY --from=builder /app/next.config.js ./next.config.mjs
+    COPY --from=builder /app/next.config.mjs ./next.config.mjs
     COPY --from=builder /app/src ./src
     COPY --from=builder /app/tsconfig.json ./tsconfig.json
     
