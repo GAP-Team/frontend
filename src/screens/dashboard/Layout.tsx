@@ -1,12 +1,13 @@
-import React, { ReactNode, useEffect } from "react";
+"use client";
+import React, { ReactNode, useEffect, useState } from "react";
 import Sidebar, {
   SubItem,
   SidebarItem,
 } from "@/components/navigation/GSidebar/SideBar";
 import GAppbar from "@/components/navigation/GAppbar/GAppbar";
 import Box from "@mui/material/Box";
-import { useAppDispatch, useAppSelector } from "@/lib/hooks";
-import { showSnackbar } from "@/components/root-snackbar";
+import { useAppSelector } from "@/lib/hooks";
+import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Typography, useMediaQuery, useTheme } from "@mui/material";
 
 interface LayoutProps {
   sidebarItems: SidebarItem[];
@@ -21,23 +22,18 @@ const Layout: React.FC<LayoutProps> = ({
   setSelected,
   children,
 }) => {
-  const dispatch = useAppDispatch();
   const { isActive } = useAppSelector((state) => state.user);
+  const [open, setOpen] = useState(false);
+  const theme = useTheme();
+  const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
 
   useEffect(() => {
-    if (!isActive) {
-      dispatch(
-        showSnackbar({
-          type: "warning",
-          title: "Wir prüfen aktuell Ihre Unternehmensdaten.",
-          message:
-            "Die Verifizierung Ihres Unternehmens kann etwas Zeit in Anspruch nehmen. Sie erhalten eine Benachrichtigung, sobald die Prüfung abgeschlossen ist.",
-          persistent: true,
-          vertical: "top",
-        })
-      );
-    }
-  }, [isActive, dispatch]);
+    setOpen(!isActive);
+  }, [isActive]);
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   return (
     <Box sx={{ display: "flex", backgroundColor: "#F1F3F4" }}>
@@ -50,6 +46,27 @@ const Layout: React.FC<LayoutProps> = ({
         <GAppbar />
         {children}
       </Box>
+      
+      <Dialog
+        fullScreen={fullScreen}
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="inactive-account-dialog"
+      >
+        <DialogTitle id="inactive-account-dialog">
+          Wir prüfen aktuell Ihre Unternehmensdaten.
+        </DialogTitle>
+        <DialogContent>
+          <Typography>
+          Die Verifizierung Ihres Unternehmens kann etwas Zeit in Anspruch nehmen. Sie erhalten eine Benachrichtigung, sobald die Prüfung abgeschlossen ist.
+          </Typography>
+        </DialogContent>
+        <DialogActions>
+            <Button onClick={handleClose} color="primary">
+             Schließen
+            </Button>
+        </DialogActions>
+      </Dialog>
     </Box>
   );
 };
