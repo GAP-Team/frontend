@@ -64,7 +64,7 @@ export default function RealEstateOwnerTypes(): JSX.Element {
                     fontSize: { xs: "1.1rem", md: "1.3rem" },
                   }}
                 >
-                  Für Immobelienbetriber
+                  Für Immobilienbetreiber
                 </Typography>
                 <Typography
                   variant="body2"
