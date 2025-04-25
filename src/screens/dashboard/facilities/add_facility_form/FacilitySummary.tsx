@@ -55,14 +55,14 @@ const FacilitySummary = ({
       label: "Nächste Prüfung in",
       value: `${values.nextCheckInYearNumber} Jahr(e)`,
     },
-    values.isPublishAutomatically && {
+    values.isPublishCheckAutomatically && {
       label: "Automatisch Veröffentlichen",
-      value: values.isPublishAutomatically ? "Ja" : "Nein",
+      value: values.isPublishCheckAutomatically ? "Ja" : "Nein",
     },
-    values.isPublishAutomatically &&
-      values.publishAutomaticallyInMonths && {
+    values.isPublishCheckAutomatically &&
+      values.publishAutomaticallyInMonth && {
         label: "Automatisch veröffentlichen in",
-        value: `${values.publishAutomaticallyInMonths} Monat(e)`,
+        value: `${values.publishAutomaticallyInMonth} Monat(e)`,
       },
     values.reminderInMonth !== 0
       ? {

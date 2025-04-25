@@ -284,7 +284,7 @@ export const addFacilityValidationSchema = [
   yup.object({
     lastCheckDate: yup.date().nullable(),
     nextCheckInYearNumber: yup.number(),
-    isPublishAutomatically: yup.boolean(),
+    isPublishCheckAutomatically: yup.boolean(),
     publishAutomaticallyInMonth: yup.number(),
     reminderInMonth: yup.number(),
     isEmailNotificationEnable: yup.boolean(),
@@ -433,4 +433,13 @@ export const ContactFormSchema = yup.object({
   dataPrivacyAccepted: yup
     .boolean()
     .oneOf([true], "Sie müssen die Datenschutzbestimmungen akzeptieren"),
+});
+
+export const ContractSearchSchema = yup.object({
+  state: yup.string().required("Bundesland ist erforderlich"),
+  tenderType: yup.string().required("Auftragstyp ist erforderlich"),
+  facilitySubcategories: yup
+    .array()
+    .of(yup.string())
+    .min(1, "Bitte wählen Sie mindestens eine Anlage aus"),
 });
