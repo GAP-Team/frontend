@@ -7,6 +7,7 @@ import { showSnackbar } from "@/components/root-snackbar";
 import { ContactFormSchema } from "@/utils/ValidationSchema";
 import { Grid, Typography, Checkbox, Button } from "@mui/material";
 import LabelWithAsterisk from "@/components/label/LabelWithAsterisk";
+import PhoneInput from "@/components/input/GPhoneInput";
 
 const ContactForm = (): JSX.Element => {
   const dispatch = useAppDispatch();
@@ -16,7 +17,7 @@ const ContactForm = (): JSX.Element => {
     message: "",
     lastName: "",
     firstName: "",
-    phoneNumber: null,
+    phoneNumber: "",
     dataPrivacyAccepted: false,
   };
 
@@ -25,7 +26,16 @@ const ContactForm = (): JSX.Element => {
     validationSchema: ContactFormSchema,
 
     onSubmit: async (values) => {
-      const response = await emailAPIs.contactUs(values);
+      const formData = {
+        firstName: values?.firstName,
+        lastName: values?.lastName,
+        email: values?.email,
+        phoneNumber: Number(values?.phoneNumber),
+        message: values?.message,
+        dataPrivacyAccepted: values?.dataPrivacyAccepted,
+      };
+
+      const response = await emailAPIs.contactUs(formData);
       if (response?.data?.status === 201) {
         formik?.resetForm();
         dispatch(
@@ -98,18 +108,18 @@ const ContactForm = (): JSX.Element => {
           <Grid sx={styles.textFieldContainer}>
             <Grid sx={styles.textFieldHolder}>
               <LabelWithAsterisk>Telefonnummer</LabelWithAsterisk>
-              <GTextInput
+              <PhoneInput
                 id="phoneNumber"
                 name="phoneNumber"
-                value={formik?.values?.phoneNumber}
-                onChange={formik?.handleChange}
-                onBlur={formik?.handleBlur}
-                helperText={
-                  formik?.touched?.phoneNumber && formik?.errors?.phoneNumber
-                }
+                value={formik.values.phoneNumber}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
                 error={
-                  formik?.touched?.phoneNumber &&
-                  Boolean(formik?.errors?.phoneNumber)
+                  formik.touched.phoneNumber &&
+                  Boolean(formik.errors.phoneNumber)
+                }
+                helperText={
+                  formik.touched.phoneNumber && formik.errors.phoneNumber
                 }
               />
             </Grid>
