@@ -1,12 +1,53 @@
 "use client";
 import { Grid } from "@mui/material";
+import tenderAPIs from "@/api/tender";
 import TopFilter from "./TopFilterPanel";
+import { Contract } from "@/typings/types";
+import { useEffect, useState } from "react";
+import { useAppDispatch } from "@/lib/hooks";
 import ContractCard from "@/components/card/ContractCard";
+import { showSnackbar } from "@/components/root-snackbar";
 import SideFilterPanel from "../../components/search/SideFilterPanel";
 
-const result = 8;
-
 const ContractsOverview = (): JSX.Element => {
+  const appdispatch = useAppDispatch();
+  const [contracts, setContracts] = useState<Contract[]>([]);
+
+  useEffect(() => {
+    const searchParams = new URLSearchParams(window.location.search);
+    const state = searchParams.get("state") || "";
+    const tenderType = searchParams.getAll("tenderType") || [];
+    const facilitySubcategories =
+      searchParams.get("facilitySubcategories") || "";
+
+    fetchContracts(state, tenderType, facilitySubcategories);
+  }, []);
+
+  const fetchContracts = async (
+    state: string,
+    tenderType: string[],
+    facilitySubcategories: string
+  ): Promise<void> => {
+    try {
+      const response = await tenderAPIs.getAllContracts(
+        state,
+        tenderType,
+        facilitySubcategories
+      );
+
+      setContracts(response.data);
+    } catch (error) {
+      appdispatch(
+        showSnackbar({
+          type: "success",
+          message:
+            "Etwas ist schiefgelaufen. Versuchen Sie es später noch einmal!",
+        })
+      );
+      console.error("Error fetching contracts:", error);
+    }
+  };
+
   return (
     <section className="bg-#E0E0E0 w-full px-3 py-5">
       <div className="mb-4 mr-8">
@@ -25,9 +66,9 @@ const ContractsOverview = (): JSX.Element => {
             spacing={"1.25rem"}
             sx={{ overflow: "auto", flexGrow: 1 }}
           >
-            {Array.from({ length: result }).map((_, index) => (
-              <Grid item key={index}>
-                <ContractCard key={index} />
+            {contracts.map((contract, index) => (
+              <Grid item key={index} sx={styles.innerContainer}>
+                <ContractCard contractDeatails={contract} />
               </Grid>
             ))}
           </Grid>
@@ -48,5 +89,15 @@ const styles = {
   },
   resultSection: {
     width: "75%",
+  },
+  innerContainer: {
+    display: "flex",
+    flexDirection: "row",
+    flexWrap: "wrap",
+    // justifyContent: "space-between",
+    // alignItems: "center",
+    padding: "0.5rem",
+    marginBottom: "1rem",
+    width: "100%",
   },
 };

@@ -3,46 +3,74 @@ import Box from "@mui/material/Box";
 import Chip from "@mui/material/Chip";
 import Paper from "@mui/material/Paper";
 import GButton from "../button/GButton";
+import { Contract } from "@/typings/types";
 import { Typography } from "@mui/material";
 import SectionTitle from "../label/SectionTitle";
 
-const ContractCard = (): JSX.Element => {
-  return (
-    <Paper sx={styles.card} elevation={4} style={{ cursor: "pointer" }}>
-      <Box sx={styles.header}>
-        <Chip label={"Reparatur"} sx={styles.cardTypeTitle} />
-      </Box>
-      <Box sx={styles.location}>
-        <SectionTitle
-          text={`Angebote: 0 (bis 10.03.2025)`}
-          sx={styles.timeSection}
-        />
-      </Box>
-      <Box>
-        <Typography variant="h6" sx={styles.address}>
-          HE, Frankfurt am Main
-        </Typography>
-        <Typography variant="body2" sx={styles.title}>
-          Feuerlöschanlagen
-        </Typography>
-        <Typography variant="body2" sx={{ pl: 2, marginBottom: "1.5rem" }}>
-          {`--> Sprinkleranlage`}
-        </Typography>
-        <Typography variant="body2" sx={styles.bottomTitle}>
-          Eröffnungstermin
-        </Typography>
+interface ContractCardProps {
+  contractDeatails: Contract;
+}
 
-        <GButton style={styles.button} href="#">
-          Mehr anzeigen
-        </GButton>
-      </Box>
-    </Paper>
+const ContractCard = ({ contractDeatails }: ContractCardProps): JSX.Element => {
+  return (
+    <>
+      {contractDeatails?.facilities?.map((facility, index) =>
+        facility?.contracts?.map((contract) => {
+          return (
+            <Paper
+              sx={styles.card}
+              elevation={4}
+              style={styles.innerContainer}
+              key={index}
+            >
+              <Box sx={styles.header}>
+                <Chip label={contract?.tenderType} sx={styles.cardTypeTitle} />
+              </Box>
+              <Box sx={styles.location}>
+                <SectionTitle
+                  sx={styles.timeSection}
+                  text={`Angebote: 0 ${contract?.toDate ? `(bis ${new Date(contract?.toDate).toLocaleDateString()})` : ""}`}
+                />
+              </Box>
+              <Box>
+                <Typography variant="h6" sx={styles.address}>
+                  {contractDeatails?.buildingAddress?.state}
+                </Typography>
+                <Typography variant="body2" sx={styles.title}>
+                  {facility?.facilityType}
+                </Typography>
+                <Typography
+                  variant="body2"
+                  sx={{ pl: 2, marginBottom: "1.5rem" }}
+                >
+                  {`--> ${facility?.subcategory}`}
+                </Typography>
+                <Typography variant="body2" sx={styles.bottomTitle}>
+                  {contract?.status}
+                </Typography>
+
+                <GButton
+                  style={styles.button}
+                  href={`/contracts/${contract?.id}`}
+                >
+                  Mehr Anzeigen
+                </GButton>
+              </Box>
+            </Paper>
+          );
+        })
+      )}
+    </>
   );
 };
 
 export default ContractCard;
 
 const styles = {
+  innerContainer: {
+    cursor: "pointer",
+    marginRight: "0.5rem",
+  },
   card: {
     p: "1.25rem",
     borderRadius: "0.5rem",

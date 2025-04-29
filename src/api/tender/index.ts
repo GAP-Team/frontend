@@ -6,6 +6,14 @@ const tenderAPIs = {
   delete: (tenderId: string): any => api.delete(`/tenders/${tenderId}`),
   update: (tenderId: string, tenderData: any): any =>
     api.put(`/tenders/${tenderId}`, tenderData),
+  getAllContracts: (
+    state: string,
+    tenderTypes: string[],
+    subcategory: string
+  ): any =>
+    api.get(
+      `/tenders?state=${state}&subcategory=${subcategory}&tenderTypes=${tenderTypes}`
+    ),
 };
 
 export default tenderAPIs;

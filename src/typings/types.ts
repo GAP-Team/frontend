@@ -1,4 +1,6 @@
 import { StaticImageData } from "next/image";
+import { Tender } from "@/screens/dashboard/tenders/tender_card/types";
+import { BuildingAddress } from "@/screens/dashboard/buildings/building_card/types";
 
 export interface FormErrors {
   [key: string]: string;
@@ -26,4 +28,21 @@ export interface BlogProps {
   excerpt: string;
   category: string;
   image: StaticImageData;
+}
+
+interface ContatctFacility {
+  facilityType: string;
+  facilityId: string;
+  facilityName: string;
+  subcategory: string;
+  facilityDocuments: Document[];
+  contracts: Tender[];
+}
+
+export interface Contract {
+  buildingAddress: BuildingAddress;
+  buildingName: string;
+  buildingId: string;
+  buildingsDocuments: Document[];
+  facilities: ContatctFacility[];
 }
