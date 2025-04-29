@@ -30,7 +30,7 @@ export interface BlogProps {
   image: StaticImageData;
 }
 
-interface ContatctFacility {
+interface ContractFacility {
   facilityType: string;
   facilityId: string;
   facilityName: string;
@@ -44,5 +44,5 @@ export interface Contract {
   buildingName: string;
   buildingId: string;
   buildingsDocuments: Document[];
-  facilities: ContatctFacility[];
+  facilities: ContractFacility[];
 }
