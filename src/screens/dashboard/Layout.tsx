@@ -8,6 +8,7 @@ import GAppbar from "@/components/navigation/GAppbar/GAppbar";
 import Box from "@mui/material/Box";
 import { useAppSelector } from "@/lib/hooks";
 import InactiveAccountDialog from "./InactiveAccountDialog";
+import Cookies from "js-cookie";
 
 interface LayoutProps {
   sidebarItems: SidebarItem[];
@@ -26,7 +27,11 @@ const Layout: React.FC<LayoutProps> = ({
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    setOpen(!isActive);
+    const hasTokenInCookies = !!Cookies.get("access_token");
+    const hasTokenInLocalStorage = !!localStorage.getItem("access_token");
+    // Only show dialog if user is inactive AND has a token
+    const hasToken = hasTokenInCookies || hasTokenInLocalStorage;
+    setOpen(!isActive && hasToken);
   }, [isActive]);
 
   const handleClose = (): void => {
