@@ -13,29 +13,30 @@ const GFunctionSection = (): JSX.Element => {
     <div className="mx-auto p-5 flex flex-col justify-center items-center">
       <TitleSection
         title="So funktioniert GAP für Dienstleister"
-        subtitle="Mit GAP finden Sie gezielt passende Aufträge von Immobilienbetreibern – digital, einfach und ohne Umwege."
+        subtitle="Mit GAP finden Sie gezielt passende Aufträge von Immobilienbetreibern – digital, einfach und ganz in Ihrer Nähe."
         badge={<Badge title="In 3 Schritten zum Erfolg" color="#ffeecc" />}
       />
       <div className="flex flex-wrap justify-center md:justify-between items-center max-w-screen-xl">
         <ServiceStep
           title="Profil anlegen & Qualifikationen angeben"
-          subtitle="Erstellen Sie Ihr Unternehmensprofil in wenigen Minuten und hinterlegen Sie Ihre Gewerke und Leistungen."
+          subtitle="Erstellen Sie Ihr Unternehmensprofil in wenigen Minuten – und zeigen Sie, was Sie können: Hinterlegen Sie Ihre Fachkompetenzen, damit Sie gezielt gefunden und beauftragt werden."
           icon={
             <RegisterSvgIcon className="inline-block  w-10 h-10 stroke-2" />
           }
         />
         <IconSeparator />
         <ServiceStep
-          title="Passende Aufträge erhalten"
-          subtitle="Sobald ein Immobilienbetreiber einen Auftrag in Ihrem Bereich ausschreibt, werden Sie automatisch informiert."
+          title="Keine Aufträge verpassen"
+          subtitle="wir benachrichtigen Sie automatisch, sobald etwas Passendes ausgeschrieben wird."
           icon={
             <ContractSvgIcon className="inline-block  w-10 h-10 stroke-2" />
           }
         />
         <IconSeparator />
         <ServiceStep
-          title="Angebote abgeben & Kunden gewinnen"
-          subtitle="Geben Sie direkt ein Angebot ab – ganz ohne Vermittler. Sie entscheiden, welche Aufträge Sie annehmen möchten."
+          title="Neue Aufträge – direkt zu Ihnen. "
+          subtitle="Reichen Sie Ihr Angebot unkompliziert und direkt ein. 
+Sie entscheiden selbst, welche Aufträge zu Ihnen passen – und welche Sie annehmen möchten."
           icon={
             <SolutionSvgIcon className="inline-block  w-10 h-10 stroke-2" />
           }
