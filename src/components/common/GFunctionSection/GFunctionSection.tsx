@@ -35,8 +35,12 @@ const GFunctionSection = (): JSX.Element => {
         <IconSeparator />
         <ServiceStep
           title="Neue Aufträge – direkt zu Ihnen."
-          subtitle="Reichen Sie Ihr Angebot unkompliziert und direkt ein. 
-Sie entscheiden selbst, welche Aufträge zu Ihnen passen – und welche Sie annehmen möchten."
+          subtitle={
+            <>
+              Reichen Sie Ihr Angebot unkompliziert und direkt ein. <br />
+              Sie entscheiden selbst, welche Aufträge zu Ihnen passen – und welche Sie annehmen möchten.
+            </>
+          }
           icon={
             <SolutionSvgIcon className="inline-block  w-10 h-10 stroke-2" />
           }
