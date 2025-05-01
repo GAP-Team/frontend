@@ -8,9 +8,19 @@ if (isServer) {
     format: format.combine(
       format.colorize(),
       format.timestamp(),
-      format.printf(({ timestamp, level, message }) => {
-        return `[${timestamp}] ${level}: ${message}`;
-      })
+      format.printf(
+        ({
+          timestamp,
+          level,
+          message,
+        }: {
+          timestamp: string;
+          level: string;
+          message: string;
+        }) => {
+          return `[${timestamp}] ${level}: ${message}`;
+        }
+      )
     ),
     transports: [
       new transports.Console(), // Logs to the server console
