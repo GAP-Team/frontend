@@ -34,7 +34,7 @@ const GFunctionSection = (): JSX.Element => {
         />
         <IconSeparator />
         <ServiceStep
-          title="Neue Aufträge – direkt zu Ihnen. "
+          title="Neue Aufträge – direkt zu Ihnen."
           subtitle="Reichen Sie Ihr Angebot unkompliziert und direkt ein. 
 Sie entscheiden selbst, welche Aufträge zu Ihnen passen – und welche Sie annehmen möchten."
           icon={
