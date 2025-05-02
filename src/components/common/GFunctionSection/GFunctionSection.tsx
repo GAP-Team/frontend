@@ -38,7 +38,8 @@ const GFunctionSection = (): JSX.Element => {
           subtitle={
             <>
               Reichen Sie Ihr Angebot unkompliziert und direkt ein. <br />
-              Sie entscheiden selbst, welche Aufträge zu Ihnen passen – und welche Sie annehmen möchten.
+              Sie entscheiden selbst, welche Aufträge zu Ihnen passen – und
+              welche Sie annehmen möchten.
             </>
           }
           icon={
