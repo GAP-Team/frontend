@@ -55,10 +55,10 @@ const FeatureSection = (): JSX.Element => {
   return (
     <Box
       className="w-full"
-      sx={{ 
-        px: { xs: 2, sm: 4, md: 6, lg: 8 }, 
+      sx={{
+        px: { xs: 2, sm: 4, md: 6, lg: 8 },
         py: { xs: 4, md: 5 },
-        overflow: 'hidden' 
+        overflow: "hidden",
       }}
     >
       <Box className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">

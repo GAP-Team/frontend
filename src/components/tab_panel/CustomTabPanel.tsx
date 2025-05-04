@@ -37,13 +37,17 @@ const CustomTabPanel: React.FC<CustomTabPanelProps> = ({
   }
 
   return (
-    <Box sx={{ 
-      width: "100%", 
-      marginTop: { xs: "1rem", md: "2rem" }, 
-      display: "inline-block" 
-    }}>
+    <Box
+      sx={{
+        width: "100%",
+        marginTop: { xs: "1rem", md: "2rem" },
+        display: "inline-block",
+      }}
+    >
       <TabContext value={tab}>
-        <Box sx={{ borderBottom: 1, borderColor: "divider", overflowX: "auto" }}>
+        <Box
+          sx={{ borderBottom: 1, borderColor: "divider", overflowX: "auto" }}
+        >
           <TabList
             onChange={handleChange}
             aria-label="feature tabs"
@@ -66,7 +70,7 @@ const CustomTabPanel: React.FC<CustomTabPanelProps> = ({
               "& .Mui-selected": {
                 color: "black",
                 borderBottom: "5px solid #17ABA9",
-              }
+              },
             }}
           >
             {tabs.map((tab, index) => (

@@ -27,17 +27,17 @@ const TabContent: React.FC<TabContentProps> = ({
 
   return (
     <Box className="relative flex flex-col md:flex-row justify-between mb-8 pt-6 md:pt-20">
-      <Box 
-        className="text-center md:text-left w-full md:w-[45%] order-2 md:order-1 mt-6 md:mt-0"
-      >
+      <Box className="text-center md:text-left w-full md:w-[45%] order-2 md:order-1 mt-6 md:mt-0">
         <Box className="flex flex-col">
           <Box className="flex flex-col justify-between lg:justify-start">
-            <p className="text-xl md:text-2xl font-extrabold mb-4 md:mb-5">{title}</p>
+            <p className="text-xl md:text-2xl font-extrabold mb-4 md:mb-5">
+              {title}
+            </p>
             {features.map((feature, index) => (
               <Box className="flex flex-row items-start mb-2" key={index}>
-                <DoneIcon 
-                  fontSize={isMobile ? "medium" : "large"} 
-                  style={{ color: "#00d8af", flexShrink: 0, marginTop: "4px" }} 
+                <DoneIcon
+                  fontSize={isMobile ? "medium" : "large"}
+                  style={{ color: "#00d8af", flexShrink: 0, marginTop: "4px" }}
                 />
                 <p className="text-base md:text-lg font-semibold md:font-bold ml-2 md:ml-4 text-left">
                   {feature}
@@ -56,10 +56,8 @@ const TabContent: React.FC<TabContentProps> = ({
         </Box>
       </Box>
 
-      <Box
-        className="w-full md:w-[55%] text-center order-1 md:order-2"
-      >
-        <Box 
+      <Box className="w-full md:w-[55%] text-center order-1 md:order-2">
+        <Box
           className="w-full md:w-[95%] mx-auto"
           sx={{
             borderRadius: "1rem",
