@@ -8,7 +8,7 @@ import GAppbar from "@/components/navigation/GAppbar/GAppbar";
 import Box from "@mui/material/Box";
 import { useAppSelector } from "@/lib/hooks";
 import InactiveAccountDialog from "./InactiveAccountDialog";
-import Cookies from "js-cookie";
+import { checkIsLoggedIn } from "@/utils/helperJWT";
 
 interface LayoutProps {
   sidebarItems: SidebarItem[];
@@ -27,11 +27,7 @@ const Layout: React.FC<LayoutProps> = ({
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    const hasTokenInCookies = !!Cookies.get("access_token");
-    const hasTokenInLocalStorage = !!localStorage.getItem("access_token");
-    // Only show dialog if user is inactive AND has a token
-    const hasToken = hasTokenInCookies || hasTokenInLocalStorage;
-    setOpen(!isActive && hasToken);
+    setOpen(!isActive && checkIsLoggedIn());
   }, [isActive]);
 
   const handleClose = (): void => {
@@ -50,7 +46,15 @@ const Layout: React.FC<LayoutProps> = ({
         {children}
       </Box>
 
-      <InactiveAccountDialog open={open} handleClose={handleClose} />
+      <InactiveAccountDialog
+        title={"Wir prüfen aktuell Ihre Unternehmensdaten."}
+        content=" Die Verifizierung Ihres Unternehmens kann etwas Zeit in Anspruch
+          nehmen. Sie erhalten eine Benachrichtigung, sobald die Prüfung
+          abgeschlossen ist."
+        buttonText="Schließen"
+        open={open}
+        handleClose={handleClose}
+      />
     </Box>
   );
 };

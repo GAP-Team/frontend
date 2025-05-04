@@ -12,35 +12,30 @@ import {
 interface InactiveAccountDialogProps {
   open: boolean;
   handleClose: () => void;
+  title: string;
+  content: string;
+  buttonText?: string;
 }
 
 const InactiveAccountDialog: React.FC<InactiveAccountDialogProps> = ({
   open,
   handleClose,
+  title,
+  content,
+  buttonText = "Schließen",
 }) => {
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
 
   return (
-    <Dialog
-      fullScreen={fullScreen}
-      open={open}
-      onClose={handleClose}
-      aria-labelledby="inactive-account-dialog"
-    >
-      <DialogTitle id="inactive-account-dialog">
-        Wir prüfen aktuell Ihre Unternehmensdaten.
-      </DialogTitle>
+    <Dialog fullScreen={fullScreen} open={open} onClose={handleClose}>
+      <DialogTitle>{title}</DialogTitle>
       <DialogContent>
-        <Typography>
-          Die Verifizierung Ihres Unternehmens kann etwas Zeit in Anspruch
-          nehmen. Sie erhalten eine Benachrichtigung, sobald die Prüfung
-          abgeschlossen ist.
-        </Typography>
+        <Typography>{content}</Typography>
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose} color="primary">
-          Schließen
+          {buttonText}
         </Button>
       </DialogActions>
     </Dialog>
