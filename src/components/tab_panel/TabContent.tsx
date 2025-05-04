@@ -1,6 +1,7 @@
 import { useRouter } from "next/navigation";
 import DoneIcon from "@mui/icons-material/Done";
 import Image, { StaticImageData } from "next/image";
+import { Box, useMediaQuery, useTheme } from "@mui/material";
 
 import { ROUTES } from "@/utils/routes";
 import RoundButton from "../button/RoundButton";
@@ -17,82 +18,65 @@ const TabContent: React.FC<TabContentProps> = ({
   features,
 }): JSX.Element => {
   const router = useRouter();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   const handleOnClick = (): void => {
     router.push(ROUTES.LOGIN);
   };
 
   return (
-    <>
-      <div className="relative flex flex-row justify-between mb-8 pt-20">
-        <div className="text-center xl:text-left " style={styles.contentDiv}>
-          <div className="flex flex-col grid-cols-1">
-            <div className="flex flex-col justify-between lg:justify-start">
-              <p style={styles.tabSubtitle}>{title}</p>
-              {features.map((feature, index) => (
-                <div className="grid-cols-1 flex flex-row" key={index}>
-                  <DoneIcon fontSize="large" style={{ color: "#00d8af" }} />
-                  <p className="text-lg font-normal" style={styles.featureText}>
-                    {feature}
-                  </p>
-                </div>
-              ))}
-              <div className="pt-12">
-                <RoundButton
-                  text="Zum Immobilienmanagement"
-                  color="#17ABA9"
-                  hoverColor="#FFFFFF"
-                  handleOnClick={handleOnClick}
+    <Box className="relative flex flex-col md:flex-row justify-between mb-8 pt-6 md:pt-20">
+      <Box 
+        className="text-center md:text-left w-full md:w-[45%] order-2 md:order-1 mt-6 md:mt-0"
+      >
+        <Box className="flex flex-col">
+          <Box className="flex flex-col justify-between lg:justify-start">
+            <p className="text-xl md:text-2xl font-extrabold mb-4 md:mb-5">{title}</p>
+            {features.map((feature, index) => (
+              <Box className="flex flex-row items-start mb-2" key={index}>
+                <DoneIcon 
+                  fontSize={isMobile ? "medium" : "large"} 
+                  style={{ color: "#00d8af", flexShrink: 0, marginTop: "4px" }} 
                 />
-              </div>
-            </div>
-          </div>
-        </div>
-        <div
-          className="w-full text-center xl:text-left "
-          style={styles.imageDiv}
+                <p className="text-base md:text-lg font-semibold md:font-bold ml-2 md:ml-4 text-left">
+                  {feature}
+                </p>
+              </Box>
+            ))}
+            <Box className="pt-6 md:pt-12 flex justify-center md:justify-start">
+              <RoundButton
+                text="Zum Immobilienmanagement"
+                color="#17ABA9"
+                hoverColor="#FFFFFF"
+                handleOnClick={handleOnClick}
+              />
+            </Box>
+          </Box>
+        </Box>
+      </Box>
+
+      <Box
+        className="w-full md:w-[55%] text-center order-1 md:order-2"
+      >
+        <Box 
+          className="w-full md:w-[95%] mx-auto"
+          sx={{
+            borderRadius: "1rem",
+            boxShadow: "0 8px 12px rgba(0, 0, 0, 0.15)",
+            overflow: "hidden",
+          }}
         >
-          <div style={styles.imageHolder}>
-            <Image
-              alt="Feature Image"
-              layout="responsive"
-              src={image}
-              style={styles.image}
-            />
-          </div>
-        </div>
-      </div>
-    </>
+          <Image
+            alt="Feature Image"
+            layout="responsive"
+            src={image}
+            style={{ borderRadius: "0.5rem" }}
+          />
+        </Box>
+      </Box>
+    </Box>
   );
 };
 
 export default TabContent;
-
-const styles = {
-  tabSubtitle: {
-    fontWeight: "900",
-    fontSize: "1.5rem",
-    marginBottom: "1.25rem",
-  },
-  contentDiv: {
-    width: "45%",
-  },
-  imageDiv: {
-    width: "55%",
-  },
-  imageHolder: {
-    width: "95%",
-    height: "auto",
-    borderRadius: "2rem",
-    boxShadow:
-      "0 16px 15px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
-  },
-  image: {
-    borderRadius: "0.8rem",
-  },
-  featureText: {
-    fontSize: "20px",
-    fontWeight: "700",
-    marginLeft: "1rem",
-  },
-};

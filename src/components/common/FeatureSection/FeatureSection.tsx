@@ -55,19 +55,23 @@ const FeatureSection = (): JSX.Element => {
   return (
     <Box
       className="w-full"
-      sx={{ px: { xs: 2, sm: 4, md: 6, lg: 8 }, py: { xs: 3, md: 5 } }}
+      sx={{ 
+        px: { xs: 2, sm: 4, md: 6, lg: 8 }, 
+        py: { xs: 4, md: 5 },
+        overflow: 'hidden' 
+      }}
     >
-      <Box className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <Box className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
         <Box className="text-center lg:text-left">
-          <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold my-3 md:my-5">
+          <h1 className="text-xl md:text-2xl lg:text-4xl font-bold my-3 md:my-5">
             Unsere Funktionen – Jetzt entdecken
           </h1>
-          <p className="text-base md:text-lg font-semibold max-w-4xl mx-auto lg:mx-0 pb-4">
+          <p className="text-sm md:text-base lg:text-lg font-semibold max-w-4xl mx-auto lg:mx-0 pb-4">
             GAP bietet Dir alles, was Du für die rechtssichere Verwaltung Deiner
             Immobilien brauchst. Spare Zeit, reduziere Kosten und vertraue auf
             geprüfte Qualität.
           </p>
-          <Box className="flex flex-col sm:flex-row justify-center lg:justify-start gap-4 mt-4">
+          <Box className="flex flex-col sm:flex-row justify-center lg:justify-start gap-3 sm:gap-4 mt-4">
             <RoundButton
               text="Jetzt kostenlos starten"
               color="#17ABA9"
@@ -83,39 +87,41 @@ const FeatureSection = (): JSX.Element => {
           </Box>
         </Box>
 
-        <Box className="w-full text-center">
+        <Box className="w-full text-center mt-6 lg:mt-0">
           <CustomTabPanel
             tabs={RealEstateLandingPageTabs}
             handleTabSelection={handleTabSelection}
           />
-          {currentTabIndex === "0" && (
-            <TabContent
-              title="Dashboard"
-              features={DashboardFeatures}
-              image={DashboardImage}
-            />
-          )}
-          {currentTabIndex === "1" && (
-            <TabContent
-              title="Kosteneinsparung"
-              features={SavingFeatures}
-              image={CostSavingImage}
-            />
-          )}
-          {currentTabIndex === "2" && (
-            <TabContent
-              title="Ausschreibungsübersicht"
-              features={tenderFeatures}
-              image={TenderImage}
-            />
-          )}
-          {currentTabIndex === "3" && (
-            <TabContent
-              title="Objektübersicht"
-              features={buildingFeatures}
-              image={BuildingImage}
-            />
-          )}
+          <Box sx={{ mt: { xs: 2, md: 0 } }}>
+            {currentTabIndex === "0" && (
+              <TabContent
+                title="Dashboard"
+                features={DashboardFeatures}
+                image={DashboardImage}
+              />
+            )}
+            {currentTabIndex === "1" && (
+              <TabContent
+                title="Kosteneinsparung"
+                features={SavingFeatures}
+                image={CostSavingImage}
+              />
+            )}
+            {currentTabIndex === "2" && (
+              <TabContent
+                title="Ausschreibungsübersicht"
+                features={tenderFeatures}
+                image={TenderImage}
+              />
+            )}
+            {currentTabIndex === "3" && (
+              <TabContent
+                title="Objektübersicht"
+                features={buildingFeatures}
+                image={BuildingImage}
+              />
+            )}
+          </Box>
         </Box>
       </Box>
     </Box>
