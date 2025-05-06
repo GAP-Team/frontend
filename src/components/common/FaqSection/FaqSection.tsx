@@ -10,29 +10,7 @@ import {
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import RoundButton from "@/components/button/RoundButton";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
-
-const faqs = [
-  {
-    question: "Was ist immocloud?",
-    answer:
-      "immocloud ist eine Plattform zur digitalen Immobilienverwaltung. Sie ist für Immobilienbesitzer und Hausverwaltungen konzipiert, die eine effiziente Verwaltung ihres Bestandes anstreben. Dabei verfolgen wir das Ziel, der Verwaltung die Komplexität zu nehmen und Immobilienbesitzern als digitaler Assistent zur Seite zu stehen.",
-  },
-  {
-    question: "Welche Funktionen bietet mir immocloud?",
-    answer:
-      "immocloud bietet eine Vielzahl an Funktionen für eine effiziente Immobilienverwaltung.",
-  },
-  {
-    question: "Wie wechsle ich zu immocloud?",
-    answer:
-      "Der Wechsel zu immocloud ist einfach und schnell. Sie können Ihre bestehenden Daten importieren und sofort loslegen.",
-  },
-  {
-    question: "Gibt es technische Voraussetzungen?",
-    answer:
-      "Ja, immocloud erfordert einen aktuellen Webbrowser und eine Internetverbindung.",
-  },
-];
+import { FAQs } from "@/utils/Constants";
 
 interface FAQSectionProps {
   customerType: string;
@@ -54,7 +32,7 @@ const FAQSection = ({ customerType }: FAQSectionProps): JSX.Element => {
             <Typography variant="h4" align="center" gutterBottom>
               Häufige Fragen von {customerType}
             </Typography>
-            {faqs.map((faq, index) => (
+            {FAQs.map((faq, index) => (
               <Accordion
                 key={index}
                 expanded={expanded === index}
