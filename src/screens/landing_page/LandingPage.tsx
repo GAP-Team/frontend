@@ -3,6 +3,7 @@ import HeroSection from "@/components/common/GHeroSection/GHeroSection";
 import GStatSection from "@/components/common/GStatSection/GStatSection";
 import GOfferSection from "@/components/common/GOfferSection/GOfferSection";
 import GFunctionSection from "@/components/common/GFunctionSection/GFunctionSection";
+import BolgsOverview from "@/components/common/BolgsOverview/BolgsOverview";
 
 export default function LandingPage(): JSX.Element {
   return (
@@ -11,6 +12,7 @@ export default function LandingPage(): JSX.Element {
       <GFunctionSection />
       <GOfferSection />
       <GFeatures />
+      <BolgsOverview />
       <GStatSection />
     </>
   );
