@@ -56,8 +56,8 @@ const HeroSection = (): JSX.Element => {
   }>({});
 
   const initialValues: ContractSearchProps = {
-    state: "",
-    tenderType: "",
+    state: [],
+    tenderType: [],
     facilitySubcategories: [],
   };
 
@@ -65,7 +65,7 @@ const HeroSection = (): JSX.Element => {
     initialValues: initialValues,
     validationSchema: ContractSearchSchema,
     onSubmit: async (values) => {
-      const url = `${ROUTES.SERVICE_PROVIDER.CONTRACTS}?facilitySubcategories=${values?.facilitySubcategories?.join(",")}&tenderType=${values.tenderType}&state=${values.state}`;
+      const url = `${ROUTES.SERVICE_PROVIDER.CONTRACTS}?facilitySubcategories=${values?.facilitySubcategories?.join(",")}&tenderType=${values?.tenderType?.join(",")}&state=${values?.state?.join(",")}`;
       router.push(url);
     },
   });
@@ -371,7 +371,7 @@ const HeroSection = (): JSX.Element => {
                               name="state"
                               label={"Bundesländer"}
                               options={germanStates}
-                              value={formik?.values?.state}
+                              value={formik?.values?.state[0]}
                               onChange={formik?.handleChange}
                             />
                             {formik?.touched?.state && (

@@ -15,22 +15,22 @@ const ContractsOverview = (): JSX.Element => {
 
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
-    const state = searchParams.get("state") || "";
+    const states = searchParams.getAll("states") || [];
     const tenderType = searchParams.getAll("tenderType") || [];
     const facilitySubcategories =
-      searchParams.get("facilitySubcategories") || "";
+      searchParams.getAll("facilitySubcategories") || [];
 
-    fetchContracts(state, tenderType, facilitySubcategories);
+    fetchContracts(states, tenderType, facilitySubcategories);
   }, []);
 
   const fetchContracts = async (
-    state: string,
+    states: string[],
     tenderType: string[],
-    facilitySubcategories: string
+    facilitySubcategories: string[]
   ): Promise<void> => {
     try {
       const response = await tenderAPIs.getAllContracts(
-        state,
+        states,
         tenderType,
         facilitySubcategories
       );
