@@ -34,7 +34,11 @@ const faqs = [
   },
 ];
 
-const FAQSection = (): JSX.Element => {
+interface FAQSectionProps {
+  customerType: string;
+}
+
+const FAQSection = ({ customerType }: FAQSectionProps): JSX.Element => {
   const [expanded, setExpanded] = useState<number | null>(null);
 
   const handleChange =
@@ -48,7 +52,7 @@ const FAQSection = (): JSX.Element => {
         <div className="w-full font-medium">
           <Container maxWidth="xl">
             <Typography variant="h4" align="center" gutterBottom>
-              Häufige Fragen
+              Häufige Fragen von {customerType}
             </Typography>
             {faqs.map((faq, index) => (
               <Accordion
