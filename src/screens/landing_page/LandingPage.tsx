@@ -3,7 +3,7 @@ import HeroSection from "@/components/common/GHeroSection/GHeroSection";
 import GStatSection from "@/components/common/GStatSection/GStatSection";
 import GOfferSection from "@/components/common/GOfferSection/GOfferSection";
 import GFunctionSection from "@/components/common/GFunctionSection/GFunctionSection";
-import BlogsOverview from "@/components/common/BolgsOverview/BolgsOverview";
+import BlogsOverview from "@/components/common/BlogsOverview/BlogsOverview";
 
 export default function LandingPage(): JSX.Element {
   return (
