@@ -1,6 +1,6 @@
 "use client";
 import { Grid } from "@mui/material";
-import BolgsOverview from "@/components/common/BolgsOverview/BolgsOverview";
+import BlogsOverview from "@/components/common/BolgsOverview/BolgsOverview";
 import LandingPageLayout from "@/screens/landingpage_layout/LandingPageLayout";
 
 export default function Blogs(): JSX.Element {
@@ -8,7 +8,7 @@ export default function Blogs(): JSX.Element {
     <main className="flex min-h-screen flex-col items-center bg-white justify-between">
       <LandingPageLayout>
         <Grid className="gap-20" sx={styles.pageContainer}>
-          <BolgsOverview />
+          <BlogsOverview />
         </Grid>
       </LandingPageLayout>
     </main>
