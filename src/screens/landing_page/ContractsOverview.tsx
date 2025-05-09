@@ -16,22 +16,22 @@ const ContractsOverview = (): JSX.Element => {
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
     const states = searchParams.getAll("states") || [];
-    const tenderType = searchParams.getAll("tenderType") || [];
+    const tenderTypes = searchParams.getAll("tenderTypes") || [];
     const facilitySubcategories =
       searchParams.getAll("facilitySubcategories") || [];
 
-    fetchContracts(states, tenderType, facilitySubcategories);
+    fetchContracts(states, tenderTypes, facilitySubcategories);
   }, []);
 
   const fetchContracts = async (
     states: string[],
-    tenderType: string[],
+    tenderTypes: string[],
     facilitySubcategories: string[]
   ): Promise<void> => {
     try {
       const response = await tenderAPIs.getAllContracts(
         states,
-        tenderType,
+        tenderTypes,
         facilitySubcategories
       );
 
@@ -66,11 +66,9 @@ const ContractsOverview = (): JSX.Element => {
             spacing={"1.25rem"}
             sx={{ overflow: "auto", flexGrow: 1 }}
           >
-            {contracts.map((contract, index) => (
-              <Grid item key={index} sx={styles.innerContainer}>
-                <ContractCard contractDeatails={contract} />
-              </Grid>
-            ))}
+            <Grid item sx={styles.innerContainer}>
+              <ContractCard contracts={contracts} />
+            </Grid>
           </Grid>
         </div>
       </div>

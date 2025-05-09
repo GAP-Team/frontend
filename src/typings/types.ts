@@ -1,6 +1,4 @@
 import { StaticImageData } from "next/image";
-import { Tender } from "@/screens/dashboard/tenders/tender_card/types";
-import { BuildingAddress } from "@/screens/dashboard/buildings/building_card/types";
 
 export interface FormErrors {
   [key: string]: string;
@@ -16,8 +14,8 @@ export interface Document {
   documentType?: string;
 }
 export interface ContractSearchProps {
-  state: string[];
-  tenderType: string[];
+  states: string[];
+  tenderTypes: string[];
   facilitySubcategories: string[];
 }
 export interface BlogProps {
@@ -30,19 +28,14 @@ export interface BlogProps {
   image: StaticImageData;
 }
 
-interface ContractFacility {
-  facilityType: string;
-  facilityId: string;
-  facilityName: string;
-  subcategory: string;
-  facilityDocuments: Document[];
-  contracts: Tender[];
-}
-
 export interface Contract {
-  buildingAddress: BuildingAddress;
-  buildingName: string;
-  buildingId: string;
-  buildingsDocuments: Document[];
-  facilities: ContractFacility[];
+  city: string;
+  facilityType: string;
+  fromDate: string;
+  state: string;
+  subcategory: string;
+  tenderId: string;
+  tenderType: string;
+  toDate: string;
+  urgency: string;
 }

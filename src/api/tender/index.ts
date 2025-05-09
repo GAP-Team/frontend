@@ -7,12 +7,12 @@ const tenderAPIs = {
   update: (tenderId: string, tenderData: any): any =>
     api.put(`/tenders/${tenderId}`, tenderData),
   getAllContracts: (
-    state: string[],
+    states: string[],
     tenderTypes: string[],
-    subcategory: string[]
+    subcategories: string[]
   ): any =>
     api.get(
-      `/tenders?state=${state}&subcategory=${subcategory}&tenderTypes=${tenderTypes}`
+      `/tenders?states=${states}&subcategories=${subcategories}&tenderTypes=${tenderTypes}`
     ),
 };
 

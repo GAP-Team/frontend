@@ -8,58 +8,56 @@ import { Typography } from "@mui/material";
 import SectionTitle from "../label/SectionTitle";
 
 interface ContractCardProps {
-  contractDeatails: Contract;
+  contracts: Contract[];
 }
 
-const ContractCard = ({ contractDeatails }: ContractCardProps): JSX.Element => {
+const ContractCard = ({ contracts }: ContractCardProps): JSX.Element => {
   return (
     <>
-      {contractDeatails?.facilities?.map((facility, index) =>
-        facility?.contracts?.map((contract) => {
-          return (
-            <Paper
-              sx={styles.card}
-              elevation={4}
-              style={styles.innerContainer}
-              key={index}
-            >
-              <Box sx={styles.header}>
-                <Chip label={contract?.tenderType} sx={styles.cardTypeTitle} />
-              </Box>
-              <Box sx={styles.location}>
-                <SectionTitle
-                  sx={styles.timeSection}
-                  text={`Angebote: 0 ${contract?.toDate ? `(bis ${new Date(contract?.toDate).toLocaleDateString()})` : ""}`}
-                />
-              </Box>
-              <Box>
-                <Typography variant="h6" sx={styles.address}>
-                  {contractDeatails?.buildingAddress?.state}
-                </Typography>
-                <Typography variant="body2" sx={styles.title}>
-                  {facility?.facilityType}
-                </Typography>
-                <Typography
-                  variant="body2"
-                  sx={{ pl: 2, marginBottom: "1.5rem" }}
-                >
-                  {`--> ${facility?.subcategory}`}
-                </Typography>
-                <Typography variant="body2" sx={styles.bottomTitle}>
-                  {contract?.status}
-                </Typography>
+      {contracts?.map((contract, index) => {
+        return (
+          <Paper
+            sx={styles.card}
+            elevation={4}
+            style={styles.innerContainer}
+            key={index}
+          >
+            <Box sx={styles.header}>
+              <Chip label={contract?.tenderType} sx={styles.cardTypeTitle} />
+            </Box>
+            <Box sx={styles.location}>
+              <SectionTitle
+                sx={styles.timeSection}
+                text={`Angebote: 0 ${contract?.toDate ? `(bis ${new Date(contract?.toDate).toLocaleDateString()})` : ""}`}
+              />
+            </Box>
+            <Box>
+              <Typography variant="h6" sx={styles.address}>
+                {contract?.state}
+              </Typography>
+              <Typography variant="body2" sx={styles.title}>
+                {contract?.facilityType}
+              </Typography>
+              <Typography
+                variant="body2"
+                sx={{ pl: 2, marginBottom: "1.5rem" }}
+              >
+                {`--> ${contract?.subcategory}`}
+              </Typography>
+              <Typography variant="body2" sx={styles.bottomTitle}>
+                {contract?.urgency}
+              </Typography>
 
-                <GButton
-                  style={styles.button}
-                  href={`/contracts/${contract?.id}`}
-                >
-                  Mehr Anzeigen
-                </GButton>
-              </Box>
-            </Paper>
-          );
-        })
-      )}
+              <GButton
+                style={styles.button}
+                href={`/contracts/${contract?.tenderId}`}
+              >
+                Mehr Anzeigen
+              </GButton>
+            </Box>
+          </Paper>
+        );
+      })}
     </>
   );
 };
