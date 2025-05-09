@@ -61,17 +61,17 @@ const FeatureSection = (): JSX.Element => {
         overflow: "hidden",
       }}
     >
-      <Box className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
-        <Box className="text-center lg:text-left">
+      <Box className="flex flex-col gap-6 lg:gap-8">
+        <Box className="text-center">
           <h1 className="text-xl md:text-2xl lg:text-4xl font-bold my-3 md:my-5">
             Unsere Funktionen – Jetzt entdecken
           </h1>
-          <p className="text-sm md:text-base lg:text-lg font-semibold max-w-4xl mx-auto lg:mx-0 pb-4">
+          <p className="text-sm md:text-base lg:text-lg font-semibold max-w-4xl mx-auto pb-4">
             GAP bietet Dir alles, was Du für die rechtssichere Verwaltung Deiner
             Immobilien brauchst. Spare Zeit, reduziere Kosten und vertraue auf
             geprüfte Qualität.
           </p>
-          <Box className="flex flex-col sm:flex-row justify-center lg:justify-start gap-3 sm:gap-4 mt-4">
+          <Box className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4 mt-4">
             <RoundButton
               text="Jetzt kostenlos starten"
               color="#17ABA9"
@@ -87,7 +87,8 @@ const FeatureSection = (): JSX.Element => {
           </Box>
         </Box>
 
-        <Box className="w-full text-center mt-6 lg:mt-0">
+        {/* Tab content section - now always centered */}
+        <Box className="w-full text-center mt-2">
           <CustomTabPanel
             tabs={RealEstateLandingPageTabs}
             handleTabSelection={handleTabSelection}
