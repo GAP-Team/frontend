@@ -1,5 +1,5 @@
 import { RootState } from "../store";
-import tenderAPIs from "@/api/tender";
+import contractAPIs from "@/api/contarct";
 import { Contract } from "@/typings/types";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
@@ -26,7 +26,7 @@ export const fetchContracts = createAsyncThunk(
     tenderTypes: string[];
     facilitySubcategories: string[];
   }) => {
-    const response = await tenderAPIs.getAllContracts(
+    const response = await contractAPIs.getAllContracts(
       states,
       tenderTypes,
       facilitySubcategories
