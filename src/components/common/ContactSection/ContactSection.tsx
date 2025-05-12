@@ -19,7 +19,8 @@ const ContactSection = (): JSX.Element => {
           </Typography>
         </Box>
         {/* FAQ Section */}
-        <FAQSection />
+        <FAQSection customerType="Dienstleister" />
+        <FAQSection customerType="Immobilienbetreiber" />
         {/* Content Section */}
         <Container maxWidth="md" sx={styles.innerContainer}>
           <Typography
