@@ -1,17 +1,17 @@
 "use client";
+import { useEffect } from "react";
 import { Grid } from "@mui/material";
-import tenderAPIs from "@/api/tender";
 import TopFilter from "./TopFilterPanel";
-import { Contract } from "@/typings/types";
-import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { useAppDispatch } from "@/lib/hooks";
 import ContractCard from "@/components/card/ContractCard";
 import { showSnackbar } from "@/components/root-snackbar";
 import SideFilterPanel from "../../components/search/SideFilterPanel";
+import { getAllContracts, fetchContracts } from "@/lib/features/contractSlice";
 
 const ContractsOverview = (): JSX.Element => {
   const appdispatch = useAppDispatch();
-  const [contracts, setContracts] = useState<Contract[]>([]);
+  const contracts = useSelector(getAllContracts);
 
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
@@ -20,22 +20,22 @@ const ContractsOverview = (): JSX.Element => {
     const facilitySubcategories =
       searchParams.getAll("facilitySubcategories") || [];
 
-    fetchContracts(states, tenderTypes, facilitySubcategories);
+    getContracts(states, tenderTypes, facilitySubcategories);
   }, []);
 
-  const fetchContracts = async (
+  const getContracts = async (
     states: string[],
     tenderTypes: string[],
     facilitySubcategories: string[]
   ): Promise<void> => {
     try {
-      const response = await tenderAPIs.getAllContracts(
-        states,
-        tenderTypes,
-        facilitySubcategories
-      );
-
-      setContracts(response.data);
+      await appdispatch(
+        fetchContracts({
+          states: states,
+          tenderTypes: tenderTypes,
+          facilitySubcategories: facilitySubcategories,
+        })
+      ).unwrap();
     } catch (error) {
       appdispatch(
         showSnackbar({
