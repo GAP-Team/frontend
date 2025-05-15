@@ -29,8 +29,9 @@
 }
 
 .diamond_grid__img {
-  -o-object-fit: cover;
+  height: inherit;
   object-fit: cover;
+  -o-object-fit: cover;
   -webkit-transform: scale(1.414) rotate(45deg);
   transform: scale(1.414) rotate(45deg);
 }

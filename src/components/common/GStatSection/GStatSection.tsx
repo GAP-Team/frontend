@@ -1,5 +1,5 @@
+import Image from "next/image";
 import { ReactNode } from "react";
-import Image from "next/legacy/image";
 import { Button } from "@mui/material";
 import GBadge from "@/components/badge/GBadge";
 import classes from "./GStatSection.module.scss";
