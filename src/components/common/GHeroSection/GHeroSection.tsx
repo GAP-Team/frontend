@@ -22,8 +22,8 @@ import {
 } from "@mui/material";
 import {
   germanStates,
-  listOfTrades,
-  listOfOrderTypes,
+  listOfTenderTypes,
+  listOfFacilitySubcategories,
 } from "@/utils/Constants";
 import { useFormik } from "formik";
 import { ROUTES } from "@/utils/routes";
@@ -250,47 +250,59 @@ const HeroSection = (): JSX.Element => {
                               open={Boolean(facilityAnchorEl)}
                               onClose={handleFacilityOptionsClose}
                             >
-                              {listOfTrades.map((trade) => (
-                                <div key={trade.category}>
-                                  <ListItemButton
-                                    onClick={() =>
-                                      handleFacilityOptionsExpand(
-                                        trade.category
-                                      )
-                                    }
-                                  >
-                                    <ListItemText primary={trade.category} />
-                                    {facilityExpanded[trade.category] ? (
-                                      <ExpandLess />
-                                    ) : (
-                                      <ExpandMore />
-                                    )}
-                                  </ListItemButton>
-                                  <Collapse
-                                    in={facilityExpanded[trade.category]}
-                                    timeout="auto"
-                                    unmountOnExit
-                                  >
-                                    <List disablePadding>
-                                      {trade.items.map((item) => (
-                                        <MenuItem
-                                          key={item}
-                                          onClick={() =>
-                                            handleFacilityOptionSelect(item)
-                                          }
-                                        >
-                                          <Checkbox
-                                            checked={selectedFacilitySubcategories.includes(
-                                              item
-                                            )}
-                                          />
-                                          <ListItemText primary={item} />
-                                        </MenuItem>
-                                      ))}
-                                    </List>
-                                  </Collapse>
-                                </div>
-                              ))}
+                              {listOfFacilitySubcategories.map(
+                                (facilitySubcategories) => (
+                                  <div key={facilitySubcategories.category}>
+                                    <ListItemButton
+                                      onClick={() =>
+                                        handleFacilityOptionsExpand(
+                                          facilitySubcategories.category
+                                        )
+                                      }
+                                    >
+                                      <ListItemText
+                                        primary={facilitySubcategories.category}
+                                      />
+                                      {facilityExpanded[
+                                        facilitySubcategories.category
+                                      ] ? (
+                                        <ExpandLess />
+                                      ) : (
+                                        <ExpandMore />
+                                      )}
+                                    </ListItemButton>
+                                    <Collapse
+                                      in={
+                                        facilityExpanded[
+                                          facilitySubcategories.category
+                                        ]
+                                      }
+                                      timeout="auto"
+                                      unmountOnExit
+                                    >
+                                      <List disablePadding>
+                                        {facilitySubcategories.items.map(
+                                          (item) => (
+                                            <MenuItem
+                                              key={item}
+                                              onClick={() =>
+                                                handleFacilityOptionSelect(item)
+                                              }
+                                            >
+                                              <Checkbox
+                                                checked={selectedFacilitySubcategories.includes(
+                                                  item
+                                                )}
+                                              />
+                                              <ListItemText primary={item} />
+                                            </MenuItem>
+                                          )
+                                        )}
+                                      </List>
+                                    </Collapse>
+                                  </div>
+                                )
+                              )}
                             </Menu>
                             {selectedFacilitySubcategories.length > 0 && (
                               <Box
@@ -354,31 +366,35 @@ const HeroSection = (): JSX.Element => {
                               open={Boolean(tenderTypeAnchorEl)}
                               onClose={handleTenderTypeOptionsClose}
                             >
-                              {listOfOrderTypes.map((orderTypes) => (
-                                <div key={orderTypes.category}>
+                              {listOfTenderTypes.map((tenderTypes) => (
+                                <div key={tenderTypes.category}>
                                   <ListItemButton
                                     onClick={() =>
                                       handleTenderTypeOptionsExpand(
-                                        orderTypes.category
+                                        tenderTypes.category
                                       )
                                     }
                                   >
                                     <ListItemText
-                                      primary={orderTypes.category}
+                                      primary={tenderTypes.category}
                                     />
-                                    {tenderTypeExpanded[orderTypes.category] ? (
+                                    {tenderTypeExpanded[
+                                      tenderTypes.category
+                                    ] ? (
                                       <ExpandLess />
                                     ) : (
                                       <ExpandMore />
                                     )}
                                   </ListItemButton>
                                   <Collapse
-                                    in={tenderTypeExpanded[orderTypes.category]}
+                                    in={
+                                      tenderTypeExpanded[tenderTypes.category]
+                                    }
                                     timeout="auto"
                                     unmountOnExit
                                   >
                                     <List disablePadding>
-                                      {orderTypes.items.map((item) => (
+                                      {tenderTypes.items.map((item) => (
                                         <MenuItem
                                           key={item}
                                           onClick={() =>
