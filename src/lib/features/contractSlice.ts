@@ -1,5 +1,5 @@
 import { RootState } from "../store";
-import contractAPIs from "@/api/contarct";
+import contractAPIs from "@/api/contract";
 import { Contract } from "@/typings/types";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 

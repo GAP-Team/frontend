@@ -30,12 +30,12 @@ export interface BlogProps {
 
 export interface Contract {
   city: string;
-  facilityType: string;
-  fromDate: string;
   state: string;
   subcategory: string;
+  facilityType: string;
   tenderId: string;
   tenderType: string;
-  toDate: string;
   urgency: string;
+  fromDate: string;
+  toDate: string;
 }

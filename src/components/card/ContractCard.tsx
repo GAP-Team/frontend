@@ -33,7 +33,7 @@ const ContractCard = ({ contracts }: ContractCardProps): JSX.Element => {
             </Box>
             <Box>
               <Typography variant="h6" sx={styles.address}>
-                {contract?.state}
+                {`${contract?.city}, ${contract?.state}`}
               </Typography>
               <Typography variant="body2" sx={styles.title}>
                 {contract?.facilityType}

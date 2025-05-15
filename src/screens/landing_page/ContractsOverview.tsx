@@ -36,15 +36,14 @@ const ContractsOverview = (): JSX.Element => {
           facilitySubcategories: facilitySubcategories,
         })
       ).unwrap();
-    } catch (error) {
+    } catch {
       appdispatch(
         showSnackbar({
-          type: "success",
+          type: "error",
           message:
             "Etwas ist schiefgelaufen. Versuchen Sie es später noch einmal!",
         })
       );
-      console.error("Error fetching contracts:", error);
     }
   };
 
