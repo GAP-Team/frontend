@@ -754,3 +754,26 @@ export const articles = [
     author: "Sudipto",
   },
 ];
+
+export const FAQs = [
+  {
+    question: "Was ist immocloud?",
+    answer:
+      "immocloud ist eine Plattform zur digitalen Immobilienverwaltung. Sie ist für Immobilienbesitzer und Hausverwaltungen konzipiert, die eine effiziente Verwaltung ihres Bestandes anstreben. Dabei verfolgen wir das Ziel, der Verwaltung die Komplexität zu nehmen und Immobilienbesitzern als digitaler Assistent zur Seite zu stehen.",
+  },
+  {
+    question: "Welche Funktionen bietet mir immocloud?",
+    answer:
+      "immocloud bietet eine Vielzahl an Funktionen für eine effiziente Immobilienverwaltung.",
+  },
+  {
+    question: "Wie wechsle ich zu immocloud?",
+    answer:
+      "Der Wechsel zu immocloud ist einfach und schnell. Sie können Ihre bestehenden Daten importieren und sofort loslegen.",
+  },
+  {
+    question: "Gibt es technische Voraussetzungen?",
+    answer:
+      "Ja, immocloud erfordert einen aktuellen Webbrowser und eine Internetverbindung.",
+  },
+];

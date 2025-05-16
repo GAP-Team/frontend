@@ -13,11 +13,12 @@ const ContactForm = (): JSX.Element => {
   const dispatch = useAppDispatch();
 
   const initialValues: ContactFormProps = {
-    email: "",
-    message: "",
-    lastName: "",
     firstName: "",
+    lastName: "",
+    email: "",
     phoneNumber: "",
+    subject: "",
+    message: "",
     dataPrivacyAccepted: false,
   };
 
@@ -31,6 +32,7 @@ const ContactForm = (): JSX.Element => {
         lastName: values?.lastName,
         email: values?.email,
         phoneNumber: Number(values?.phoneNumber),
+        subject: values?.subject,
         message: values?.message,
         dataPrivacyAccepted: values?.dataPrivacyAccepted,
       };
@@ -135,6 +137,20 @@ const ContactForm = (): JSX.Element => {
                 error={formik?.touched?.email && Boolean(formik?.errors?.email)}
               />
             </Grid>
+          </Grid>
+          <Grid sx={styles.textFieldHolder}>
+            <LabelWithAsterisk>Betreff</LabelWithAsterisk>
+            <GTextInput
+              id="subject"
+              name="subject"
+              value={formik?.values?.subject}
+              onChange={formik?.handleChange}
+              onBlur={formik?.handleBlur}
+              helperText={formik?.touched?.subject && formik?.errors?.subject}
+              error={
+                formik?.touched?.subject && Boolean(formik?.errors?.subject)
+              }
+            />
           </Grid>
           <Grid sx={styles.textFieldHolder}>
             <LabelWithAsterisk>Nachricht</LabelWithAsterisk>

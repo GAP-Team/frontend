@@ -3,7 +3,7 @@ import { Box, Grid } from "@mui/material";
 import { articles } from "@/utils/Constants";
 import BlogCard from "@/components/card/BlogCard";
 
-const BolgsOverview = (): JSX.Element => {
+const BlogsOverview = (): JSX.Element => {
   return (
     <>
       <Box sx={styles.box}>
@@ -22,7 +22,7 @@ const BolgsOverview = (): JSX.Element => {
   );
 };
 
-export default BolgsOverview;
+export default BlogsOverview;
 
 const styles = {
   box: {
