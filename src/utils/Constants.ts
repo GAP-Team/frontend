@@ -1,7 +1,7 @@
 import { Notification } from "@/components/navigation/GAppbar/types";
 import OfficeImage from "../../public/images/office.jpg";
 
-export const listOfTrades = [
+export const listOfFacilitySubcategories = [
   {
     category: "Brandwache",
     items: ["Brandwache"],
@@ -128,7 +128,7 @@ export const listOfTrades = [
   },
 ];
 
-export const listOfOrderTypes = [
+export const listOfTenderTypes = [
   {
     category: "Unterteilung Auftragstypen (Ingenieurdienstleistungen)",
     items: [

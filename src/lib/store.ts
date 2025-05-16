@@ -9,6 +9,7 @@ import buildingReducer from "./features/buildingSlice";
 import snackbarReducer from "./features/snackbarSlice";
 import tenderReducer from "./features/tenderSlice";
 import facilityReducer from "./features/facilitySlice";
+import contractSlice from "./features/contractSlice";
 
 const rootReducer = combineReducers({
   user: userReducer,
@@ -16,6 +17,7 @@ const rootReducer = combineReducers({
   tender: tenderReducer,
   building: buildingReducer,
   facility: facilityReducer,
+  contract: contractSlice,
 });
 
 const persistConfig = {
