@@ -22,7 +22,7 @@ const BlogsOverview = (): JSX.Element => {
   );
 };
 
-export default BlogsOverview;
+export default BlogsOverview; 
 
 const styles = {
   box: {
