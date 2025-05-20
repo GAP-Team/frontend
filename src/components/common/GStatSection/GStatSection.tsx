@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { ReactNode } from "react";
 import { Button } from "@mui/material";
 import GBadge from "@/components/badge/GBadge";
@@ -44,34 +45,21 @@ const GStatSection: React.FC<GStatSectionProps> = ({
       </div>
       <div className={`hidden 2xl:block ${classes.diamond_container}`}>
         <div className={classes.diamond_grid__inner}>
-          <div className={classes.diamond_grid__item}>
-            <img
-              className={classes.diamond_grid__img}
-              src="/images/hero6.jpg"
-              alt="Image description"
-            />
-          </div>
-          <div className={classes.diamond_grid__item}>
-            <img
-              className={classes.diamond_grid__img}
-              src="/images/hero6.jpg"
-              alt="Image description"
-            />
-          </div>
-          <div className={classes.diamond_grid__item}>
-            <img
-              className={classes.diamond_grid__img}
-              src="/images/hero6.jpg"
-              alt="Image description"
-            />
-          </div>
-          <div className={classes.diamond_grid__item}>
-            <img
-              className={classes.diamond_grid__img}
-              src="/images/hero6.jpg"
-              alt="Image description"
-            />
-          </div>
+          {[...Array(4)].map((_, i) => (
+            <div
+              className={classes.diamond_grid__item}
+              style={styles.imageHolder}
+              key={i}
+            >
+              <Image
+                width={300}
+                height={300}
+                src="/images/hero6.jpg"
+                alt="Image description"
+                className={classes.diamond_grid__img}
+              />
+            </div>
+          ))}
         </div>
       </div>
     </div>
@@ -92,5 +80,9 @@ const styles = {
     "&:hover": {
       background: "#0071b8",
     },
+  },
+  imageHolder: {
+    width: "300px",
+    height: "300px",
   },
 };
