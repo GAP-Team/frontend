@@ -69,7 +69,7 @@ const DeleteAccount = (): JSX.Element => {
     <Grid container spacing={4}>
       <Grid item xs={12} sm={6}>
         <Typography variant="subtitle1" sx={styles.sectionTitle}>
-          Delete Account
+          Konto löschen
         </Typography>
         <Typography
           variant="body2"

@@ -108,8 +108,8 @@ const userSlice = createSlice({
     builder.addCase(updateUserProfile.fulfilled, (state, action) => {
       return { ...state, ...action.payload };
     });
-    builder.addCase(deleteUser.fulfilled, (state, action) => {
-      return { ...state, ...action.payload };
+    builder.addCase(deleteUser.fulfilled, () => {
+      return initialState;
     });
   },
 });
