@@ -10,7 +10,7 @@ import { FormControl, MenuItem, Select } from "@mui/material";
 import { Item } from "../../types";
 import { AddFacilityFormValues } from "./types";
 import GTextInput from "@/components/input/GTextInput";
-import { listOfTrades } from "@/utils/Constants";
+import { listOfFacilitySubcategories } from "@/utils/Constants";
 import GTextSelector from "@/components/input/GTextSelector";
 import { getUserBuildings } from "@/lib/features/buildingSlice";
 import LabelWithAsterisk from "@/components/label/LabelWithAsterisk";
@@ -31,7 +31,7 @@ const FacilityInformation = (): JSX.Element => {
   );
   const [subCategoryOptions, setSubCategoryOptions] = useState<Item[]>([]);
 
-  const facilityTypeOptions = listOfTrades.map((trade) => ({
+  const facilityTypeOptions = listOfFacilitySubcategories.map((trade) => ({
     label: trade.category,
     value: trade.category,
   }));
@@ -44,7 +44,7 @@ const FacilityInformation = (): JSX.Element => {
     );
 
     if (selectedItem) {
-      const selectedTrade = listOfTrades.find(
+      const selectedTrade = listOfFacilitySubcategories.find(
         (trade) => trade.category === selectedItem.value
       );
       if (selectedTrade) {
