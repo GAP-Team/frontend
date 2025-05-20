@@ -35,7 +35,7 @@ const SupportCenterSection = (): JSX.Element => {
             fontWeight="bold"
             gutterBottom
           >
-            Bei Fragen zu immocloud <br />
+            Bei Fragen zu GAP <br />
             helfen wir Dir gerne weiter!
           </Typography>
 
@@ -46,7 +46,7 @@ const SupportCenterSection = (): JSX.Element => {
             </Typography>
             <Typography>Schreib uns eine E-Mail an:</Typography>
             <Link href="mailto:info@immocloud.de" sx={styles.textColor}>
-              info@immocloud.de
+              info@gap-pruefen.de
             </Link>
           </Box>
 
@@ -56,8 +56,8 @@ const SupportCenterSection = (): JSX.Element => {
               Webinare
             </Typography>
             <Typography>
-              Wir bieten Dir kostenfreie Webinare an. Unsere immocloud Experten
-              zeigen Dir in 30 Minuten alles, was Du zu immocloud wissen musst:
+              Wir bieten Dir kostenfreie Webinare an. Unsere GAP Experten zeigen
+              Dir in 30 Minuten alles, was Du zu GAP wissen musst:
             </Typography>
             <Link href="#" sx={styles.textColor}>
               Mehr zu den Webinaren
@@ -72,8 +72,8 @@ const SupportCenterSection = (): JSX.Element => {
             <Typography>
               Ruf uns montags bis freitags von 9 bis 17 Uhr an:
             </Typography>
-            <Link href="tel:021197537490" sx={styles.textColor}>
-              0211 / 975 374 90
+            <Link href="tel:0211xxxxxxxx" sx={styles.textColor}>
+              0211 / xxx xxx xx
             </Link>
           </Box>
 
@@ -84,11 +84,12 @@ const SupportCenterSection = (): JSX.Element => {
             </Typography>
             <Typography>Schreib uns per WhatsApp unter:</Typography>
             <Link
-              href="https://wa.me/4915792396242"
+              href="https://wa.me/xxxxxxxx"
               sx={styles.textColor}
               target="_blank"
+              rel="noopener noreferrer"
             >
-              0157 92396242
+              0157 xxx xxx xx
             </Link>
           </Box>
         </Grid>
@@ -100,7 +101,7 @@ const SupportCenterSection = (): JSX.Element => {
               width={800}
               height={600}
               style={styles.image}
-              alt="Immocloud Support"
+              alt="GAP Support"
               src="/images/hero6.jpg"
             />
           </Box>
