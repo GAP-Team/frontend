@@ -1,3 +1,5 @@
+import Cookies from "js-cookie";
+
 export const getTenderStatusStyle: {
   [key: string]: { bgcolor: string; color: string; title: string };
 } = {
@@ -57,4 +59,10 @@ export const truncateLabel = (label: string, maxLength = 20): string => {
   return label.length > maxLength
     ? label.substring(0, maxLength) + "..."
     : label;
+};
+
+export const ClearLocalStorage = (): void => {
+  Cookies.remove("access_token");
+  Cookies.remove("isVerified");
+  localStorage.clear();
 };

@@ -1,5 +1,6 @@
 "use client";
-import Cookies from "js-cookie";
+
+import { useFormik } from "formik";
 import Grid from "@mui/material/Grid";
 import React, { useState } from "react";
 import { ROUTES } from "@/utils/routes";
@@ -17,7 +18,9 @@ import {
   DialogContent,
   DialogContentText,
 } from "@mui/material";
+import { ClearLocalStorage } from "@/utils/utils";
 import { deleteUser } from "@/lib/features/userSlice";
+import { DeleteAccountSchema } from "@/utils/ValidationSchema";
 
 const DeleteAccount = (): JSX.Element => {
   const router = useRouter();
@@ -25,45 +28,45 @@ const DeleteAccount = (): JSX.Element => {
   const user = useAppSelector((state) => state.user);
 
   const [open, setOpen] = useState(false);
-  const [password, setPassword] = useState("");
 
-  const handleDelete = async (): Promise<void> => {
-    if (password === "") {
+  const handleDelete = async (password: string): Promise<void> => {
+    try {
+      await dispatch(
+        deleteUser({
+          id: user.id,
+          currentPassword: password,
+        })
+      ).unwrap();
+
+      ClearLocalStorage();
+      router.push(ROUTES.LOGIN);
+
+      dispatch(
+        showSnackbar({
+          type: "success",
+          message: "Das Benutzerkonto wurde erfolgreich gelöscht.",
+        })
+      );
+    } catch {
       dispatch(
         showSnackbar({
           type: "error",
-          message: "Passwort erforderlich. Bitte geben Sie Ihr Passwort ein.",
+          message:
+            "Das Löschen des Benutzerkontos ist fehlgeschlagen. Versuchen Sie es später erneut.",
         })
       );
-    } else {
-      try {
-        await dispatch(
-          deleteUser({
-            id: user.id,
-            currentPassword: password,
-          })
-        ).unwrap();
-        dispatch(
-          showSnackbar({
-            type: "success",
-            message: "Das Benutzerkonto wurde erfolgreich gelöscht.",
-          })
-        );
-        Cookies.remove("access_token");
-        Cookies.remove("isVerified");
-        localStorage.clear();
-        router.push(ROUTES.LOGIN);
-      } catch {
-        dispatch(
-          showSnackbar({
-            type: "error",
-            message:
-              "Das Löschen des Benutzerkontos ist fehlgeschlagen. Versuchen Sie es später erneut.",
-          })
-        );
-      }
     }
   };
+
+  const formik = useFormik({
+    initialValues: {
+      password: "",
+    },
+    validationSchema: DeleteAccountSchema,
+    onSubmit: async (values) => {
+      handleDelete(values.password);
+    },
+  });
 
   return (
     <Grid container spacing={4}>
@@ -105,28 +108,36 @@ const DeleteAccount = (): JSX.Element => {
 
       <Dialog open={open} onClose={() => setOpen(false)}>
         <DialogTitle>Bestätigung erforderlich</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            Bitte geben Sie Ihr Passwort ein, um die Löschung Ihres Kontos zu
-            bestätigen.
-          </DialogContentText>
-          <TextField
-            autoFocus
-            margin="dense"
-            label="Passwort"
-            type="password"
-            fullWidth
-            variant="standard"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setOpen(false)}>Abbrechen</Button>
-          <Button color="error" onClick={handleDelete}>
-            Löschen
-          </Button>
-        </DialogActions>
+        <form onSubmit={formik.handleSubmit}>
+          <DialogContent>
+            <DialogContentText>
+              Bitte geben Sie Ihr Passwort ein, um die Löschung Ihres Kontos zu
+              bestätigen.
+            </DialogContentText>
+            <TextField
+              autoFocus
+              fullWidth
+              id="password"
+              margin="dense"
+              name="password"
+              type="password"
+              label="Passwort"
+              variant="standard"
+              value={formik.values.password}
+              onChange={formik.handleChange}
+              helperText={formik?.touched?.password && formik?.errors?.password}
+              error={
+                formik?.touched?.password && Boolean(formik?.errors?.password)
+              }
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={() => setOpen(false)}>Abbrechen</Button>
+            <Button color="error" type="submit">
+              Löschen
+            </Button>
+          </DialogActions>
+        </form>
       </Dialog>
     </Grid>
   );
