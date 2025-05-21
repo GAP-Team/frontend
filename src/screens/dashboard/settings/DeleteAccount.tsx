@@ -42,7 +42,7 @@ const DeleteAccount = (): JSX.Element => {
             id: user.id,
             currentPassword: password,
           })
-        );
+        ).unwrap();
         dispatch(
           showSnackbar({
             type: "success",
