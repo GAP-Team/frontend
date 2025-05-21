@@ -24,6 +24,7 @@ import UploadButton from "@/components/button/UploadButton";
 import { handleDeleteDoc, handleUploadDoc } from "@/utils/uploadToS3";
 import { Document } from "@/typings/types";
 import { ROUTES } from "@/utils/routes";
+import Image from "next/image";
 
 const CompanyProfile = (): JSX.Element => {
   const dispatch = useAppDispatch();
@@ -229,9 +230,10 @@ const CompanyProfile = (): JSX.Element => {
         <Grid item xs={12} sm={3} justifyItems={"right"}>
           <Button variant="text" component="label" style={styles.logoContainer}>
             {formik.values.logo ? (
-              <img
-                src={formik.values.logo}
+              <Image
                 alt="Logo"
+                layout="fill"
+                src={formik.values.logo}
                 style={styles.logoImage}
               />
             ) : (

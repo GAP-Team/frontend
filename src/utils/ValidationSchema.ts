@@ -212,7 +212,7 @@ export const addObjektFormSchema = yup
     }
   );
 
-export const newContactSchema = yup.object().shape({
+export const ContactPersonSchema = yup.object().shape({
   firstName: yup.string().required("Vorname ist erforderlich."),
   lastName: yup.string().required("Nachname ist erforderlich."),
   email: yup
@@ -429,6 +429,7 @@ export const ContactFormSchema = yup.object({
     .email,
   phoneNumber: (registrationValidationSchema[0] as yup.ObjectSchema<any>).fields
     .telephone,
+  subject: yup.string().required("Betreff ist erforderlich."),
   message: yup.string().required("Nachricht ist erforderlich."),
   dataPrivacyAccepted: yup
     .boolean()
@@ -436,8 +437,11 @@ export const ContactFormSchema = yup.object({
 });
 
 export const ContractSearchSchema = yup.object({
-  state: yup.string().required("Bundesland ist erforderlich"),
-  tenderType: yup.string().required("Auftragstyp ist erforderlich"),
+  states: yup.array().of(yup.string()).min(1, "Bundesland ist erforderlich"),
+  tenderTypes: yup
+    .array()
+    .of(yup.string())
+    .min(1, "Auftragstyp ist erforderlich"),
   facilitySubcategories: yup
     .array()
     .of(yup.string())
