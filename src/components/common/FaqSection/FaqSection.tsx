@@ -51,7 +51,6 @@ const FAQSection = ({ customerType }: FAQSectionProps): JSX.Element => {
               }}
             >
               Häufige Fragen von {customerType}
-
             </Typography>
             {FAQs.map((faq, index) => (
               <Accordion
