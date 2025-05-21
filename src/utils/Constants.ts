@@ -1,7 +1,7 @@
 import { Notification } from "@/components/navigation/GAppbar/types";
 import OfficeImage from "../../public/images/office.jpg";
 
-export const listOfTrades = [
+export const listOfFacilitySubcategories = [
   {
     category: "Brandwache",
     items: ["Brandwache"],
@@ -128,7 +128,7 @@ export const listOfTrades = [
   },
 ];
 
-export const listOfOrderTypes = [
+export const listOfTenderTypes = [
   {
     category: "Unterteilung Auftragstypen (Ingenieurdienstleistungen)",
     items: [
@@ -752,5 +752,28 @@ export const articles = [
       "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
     image: OfficeImage,
     author: "Sudipto",
+  },
+];
+
+export const FAQs = [
+  {
+    question: "Was ist immocloud?",
+    answer:
+      "immocloud ist eine Plattform zur digitalen Immobilienverwaltung. Sie ist für Immobilienbesitzer und Hausverwaltungen konzipiert, die eine effiziente Verwaltung ihres Bestandes anstreben. Dabei verfolgen wir das Ziel, der Verwaltung die Komplexität zu nehmen und Immobilienbesitzern als digitaler Assistent zur Seite zu stehen.",
+  },
+  {
+    question: "Welche Funktionen bietet mir immocloud?",
+    answer:
+      "immocloud bietet eine Vielzahl an Funktionen für eine effiziente Immobilienverwaltung.",
+  },
+  {
+    question: "Wie wechsle ich zu immocloud?",
+    answer:
+      "Der Wechsel zu immocloud ist einfach und schnell. Sie können Ihre bestehenden Daten importieren und sofort loslegen.",
+  },
+  {
+    question: "Gibt es technische Voraussetzungen?",
+    answer:
+      "Ja, immocloud erfordert einen aktuellen Webbrowser und eine Internetverbindung.",
   },
 ];

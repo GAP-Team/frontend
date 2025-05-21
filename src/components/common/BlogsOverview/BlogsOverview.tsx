@@ -1,11 +1,15 @@
+import Badge from "../../badge/GBadge";
 import { Box, Grid } from "@mui/material";
 import { articles } from "@/utils/Constants";
 import BlogCard from "@/components/card/BlogCard";
 
-const BolgsOverview = (): JSX.Element => {
+const BlogsOverview = (): JSX.Element => {
   return (
     <>
       <Box sx={styles.box}>
+        <Grid sx={styles.batchHolder}>
+          <Badge color="#d0ede8" title="Unsere Blogs" />
+        </Grid>
         <Grid container spacing={4}>
           {articles.map((article, index) => (
             <Grid item xs={12} sm={12} md={6} lg={4} key={index}>
@@ -18,7 +22,7 @@ const BolgsOverview = (): JSX.Element => {
   );
 };
 
-export default BolgsOverview;
+export default BlogsOverview;
 
 const styles = {
   box: {
@@ -26,5 +30,11 @@ const styles = {
     paddingLeft: "10rem",
     paddingRight: "10rem",
     paddingBottom: "10rem",
+  },
+  batchHolder: {
+    display: "flex",
+    alignItems: "center",
+    marginBottom: "2rem",
+    justifyContent: "center",
   },
 };

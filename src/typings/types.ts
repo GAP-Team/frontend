@@ -14,8 +14,8 @@ export interface Document {
   documentType?: string;
 }
 export interface ContractSearchProps {
-  state: string;
-  tenderType: string;
+  states: string[];
+  tenderTypes: string[];
   facilitySubcategories: string[];
 }
 export interface BlogProps {
@@ -26,4 +26,16 @@ export interface BlogProps {
   excerpt: string;
   category: string;
   image: StaticImageData;
+}
+
+export interface Contract {
+  city: string;
+  state: string;
+  subcategory: string;
+  facilityType: string;
+  tenderId: string;
+  tenderType: string;
+  urgency: string;
+  fromDate: string;
+  toDate: string;
 }
