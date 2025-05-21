@@ -1,10 +1,25 @@
 "use client";
+import { useFormik } from "formik";
 import { Box, Typography } from "@mui/material";
 import GButton from "@/components/button/GButton";
-import { contactFiltersOption } from "@/utils/Constants";
+import { FilterPanelLabels } from "@/utils/enums";
+import { ContractSearchProps } from "@/typings/types";
 import SideFilterPanelOptions from "./SideFilterPanelOptions";
+import { contactFiltersOption, germanStates } from "@/utils/Constants";
 
 const SideFilterPanel = (): JSX.Element => {
+
+  const initialValues: ContractSearchProps = {
+    states: [],
+    tenderTypes: [],
+    facilitySubcategories: [],
+  };
+
+  const formik = useFormik({
+    initialValues: initialValues,
+    onSubmit: () => {},
+  });
+  
   return (
     <Box sx={styles.mainContainer}>
       <div className="flex flex-row justify-between">
@@ -13,19 +28,22 @@ const SideFilterPanel = (): JSX.Element => {
         </Typography>
         <GButton href="#">Filter</GButton>
       </div>
-      <SideFilterPanelOptions
-        title={contactFiltersOption.state.title}
-        options={contactFiltersOption.state.options}
-      />
-      <SideFilterPanelOptions
-        title={contactFiltersOption.facilityType.title}
-        options={contactFiltersOption.facilityType.options}
-      />
-      <SideFilterPanelOptions
-        title={contactFiltersOption.tenderType.title}
-        options={contactFiltersOption.tenderType.options}
-      />
-      <GButton href="#">Filter löschen</GButton>
+      <form onSubmit={formik.handleSubmit}>
+        <SideFilterPanelOptions
+          formik={formik}
+          options={germanStates}
+          title={FilterPanelLabels.STATE}
+        />
+        {/* <SideFilterPanelOptions
+          title={FilterPanelLabels.FACILITY_SUBCATEGORY}
+          options={contactFiltersOption.facilityType.options}
+        />
+        <SideFilterPanelOptions
+          title={FilterPanelLabels.TENDER_TYPE}
+          options={contactFiltersOption.tenderType.options}
+        /> */}
+        <GButton type="submit">Filter löschen</GButton>
+      </form>
     </Box>
   );
 };

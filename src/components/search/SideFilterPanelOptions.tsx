@@ -11,23 +11,33 @@ import {
   Typography,
   FormControlLabel,
 } from "@mui/material";
+import { Item } from "@/utils/Constants";
 
 interface SideFilterPanelOptionsProps {
   title: string;
-  options: string[];
+  options: Item[];
+  formik?: any;
 }
 
 const SideFilterPanelOptions: React.FC<SideFilterPanelOptionsProps> = ({
   title,
+  formik,
   options,
 }) => {
   const [showAllOptions, setShowAllOptions] = useState(false);
   const [openSections, setOpenSections] = useState<Record<string, boolean>>(
     options.reduce((acc) => ({ ...acc, [title]: true }), {})
   );
+  const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
 
   const toggleSection = (title: string): void => {
     setOpenSections((prev) => ({ ...prev, [title]: !prev[title] }));
+  };
+
+  const handleOnSelect = (option: Item): void => {
+    console.log("Selected option:", option);
+    const states = [];
+    formik?.values.states.include(option.value);
   };
 
   return (
@@ -47,11 +57,13 @@ const SideFilterPanelOptions: React.FC<SideFilterPanelOptionsProps> = ({
             .map((option, index) => (
               <FormControlLabel
                 key={index}
+                label={option.label}
                 control={<Checkbox />}
-                label={option}
-                sx={{ display: "block", ml: 1 }}
+                sx={styles.formControl}
+                onChange={() => handleOnSelect(option)}
               />
-            ))}
+            ))
+          }
           <Button
             size="small"
             onClick={() => setShowAllOptions(!showAllOptions)}
@@ -83,4 +95,8 @@ const styles = {
     color: "primary.main",
     "&:hover": { textDecoration: "underline" },
   },
+  formControl: {
+    display: "block", 
+    ml: 1
+  }
 };

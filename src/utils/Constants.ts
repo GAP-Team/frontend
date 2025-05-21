@@ -533,6 +533,7 @@ export const NextCheckOptions = [
     value: 6,
   },
 ];
+
 export const reminderOptions = [
   {
     label: "Keine",
@@ -555,6 +556,7 @@ export const reminderOptions = [
     value: 12,
   },
 ];
+
 export const autoPublishMonthsOptions = [
   {
     label: "12 Monate",
@@ -573,6 +575,7 @@ export const autoPublishMonthsOptions = [
     value: 3,
   },
 ];
+
 export const notifications: Notification[] = [
   {
     message: "You were chosen as a main provider for object G-302.",
@@ -719,6 +722,7 @@ export const contactFiltersOption = {
     options: ["Wartung", "Installation", "Reparatur", "Prüfung", "Fire"],
   },
 };
+
 export const CHECK_DUE_SOON_DAYS = 183;
 export const MAINTENANCE_DUE_SOON_DAYS = 15;
 

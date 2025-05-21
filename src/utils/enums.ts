@@ -46,3 +46,9 @@ export enum DocumentChoice {
   SERVER_LINK = "Server verküpfung",
   ON_SITE = "Dokumente vor Ort zur Verfügung stellen",
 }
+
+export enum FilterPanelLabels {
+  STATE = "Bundesland",
+  TENDER_TYPE = "Auftragstyp",
+  FACILITY_SUBCATEGORY = "Anlagentyp",
+}
