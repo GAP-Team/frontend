@@ -5,6 +5,7 @@ import RoundButton from "../../button/RoundButton";
 import TabContent from "../../tab_panel/TabContent";
 import CustomTabPanel from "../../tab_panel/CustomTabPanel";
 import { RealEstateLandingPageTabs } from "@/utils/Constants";
+import Box from "@mui/material/Box";
 
 import TenderImage from "../../../../public/images/tenders.png";
 import BuildingImage from "../../../../public/images/buildings.png";
@@ -40,7 +41,7 @@ const FeatureSection = (): JSX.Element => {
     "Zentrale Verwaltung aller Immobilien und Einheiten",
     "Intelligente Verknüpfung von Objekt- & Anlagendaten",
     "Import bestehender Excel-Daten per Klick",
-    " Strukturierte Dokumentation & Protokollarchiv",
+    "Strukturierte Dokumentation & Protokollarchiv",
   ];
 
   const handleTabSelection = (tabIndex: string): void => {
@@ -52,21 +53,25 @@ const FeatureSection = (): JSX.Element => {
   };
 
   return (
-    <>
-      <div className="w-full mx-auto p-5 flex flex-col">
-        <div className="relative grid mb-8 pl-32">
-          <div
-            className="w-full text-center xl:text-left "
-            style={styles.titleHolder}
-          >
-            <h1 className="text-4xl font-bold my-5">
-              Unsere Funktionen – Jetzt entdecken
-            </h1>
-            <p className="text-lg font-semibold max-w-4xl mx-auto pb-4">
-              GAP bietet Dir alles, was Du für die rechtssichere Verwaltung
-              Deiner Immobilien brauchst. Spare Zeit, reduziere Kosten und
-              vertraue auf geprüfte Qualität.
-            </p>
+    <Box
+      className="w-full"
+      sx={{
+        px: { xs: 2, sm: 4, md: 6, lg: 8 },
+        py: { xs: 4, md: 5 },
+        overflow: "hidden",
+      }}
+    >
+      <Box className="flex flex-col gap-6 lg:gap-8">
+        <Box className="text-center">
+          <h1 className="text-xl md:text-2xl lg:text-4xl font-bold my-3 md:my-5">
+            Unsere Funktionen – Jetzt entdecken
+          </h1>
+          <p className="text-sm md:text-base lg:text-lg font-semibold max-w-4xl mx-auto pb-4">
+            GAP bietet Dir alles, was Du für die rechtssichere Verwaltung Deiner
+            Immobilien brauchst. Spare Zeit, reduziere Kosten und vertraue auf
+            geprüfte Qualität.
+          </p>
+          <Box className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4 mt-4">
             <RoundButton
               text="Jetzt kostenlos starten"
               color="#17ABA9"
@@ -79,12 +84,16 @@ const FeatureSection = (): JSX.Element => {
               hoverColor="#17ABA9"
               handleOnClick={() => handleOnClick(ROUTES.FUNCTIONS)}
             />
-          </div>
-          <div className="w-full text-center pr-28">
-            <CustomTabPanel
-              tabs={RealEstateLandingPageTabs}
-              handleTabSelection={handleTabSelection}
-            />
+          </Box>
+        </Box>
+
+        {/* Tab content section - now always centered */}
+        <Box className="w-full text-center mt-2">
+          <CustomTabPanel
+            tabs={RealEstateLandingPageTabs}
+            handleTabSelection={handleTabSelection}
+          />
+          <Box sx={{ mt: { xs: 2, md: 0 } }}>
             {currentTabIndex === "0" && (
               <TabContent
                 title="Dashboard"
@@ -113,19 +122,11 @@ const FeatureSection = (): JSX.Element => {
                 image={BuildingImage}
               />
             )}
-          </div>
-        </div>
-      </div>
-    </>
+          </Box>
+        </Box>
+      </Box>
+    </Box>
   );
 };
 
 export default FeatureSection;
-
-const styles = {
-  titleHolder: {
-    width: "52rem",
-    // height: "35rem",
-    marginLeft: "1rem",
-  },
-};
