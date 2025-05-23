@@ -3,6 +3,8 @@ import Box from "@mui/material/Box";
 import Tab from "@mui/material/Tab";
 import TabList from "@mui/lab/TabList";
 import TabContext from "@mui/lab/TabContext";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 import { TabsTypes } from "@/utils/Constants";
 
@@ -16,6 +18,8 @@ const CustomTabPanel: React.FC<CustomTabPanelProps> = ({
   handleTabSelection,
 }): JSX.Element => {
   const [tab, setTab] = useState<string>("0");
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   const handleChange = (
     event: React.SyntheticEvent,
@@ -33,14 +37,40 @@ const CustomTabPanel: React.FC<CustomTabPanelProps> = ({
   }
 
   return (
-    <Box sx={styles.mainDiv}>
+    <Box
+      sx={{
+        width: "100%",
+        marginTop: { xs: "1rem", md: "2rem" },
+        display: "inline-block",
+      }}
+    >
       <TabContext value={tab}>
-        <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+        <Box
+          sx={{ borderBottom: 1, borderColor: "divider", overflowX: "auto" }}
+        >
           <TabList
             onChange={handleChange}
-            aria-label="lab API tabs example"
+            aria-label="feature tabs"
+            variant={isMobile ? "scrollable" : "standard"}
+            scrollButtons={isMobile ? "auto" : false}
+            allowScrollButtonsMobile
             sx={{
-              "& .MuiTab-root": styles.tab,
+              "& .MuiTab-root": {
+                width: { xs: "auto", sm: "80%" },
+                color: "black",
+                display: "flex",
+                flexWrap: "wrap",
+                fontWeight: "600",
+                fontSize: { xs: "0.9rem", sm: "1.1rem", md: "1.25rem" },
+                textTransform: "none",
+                justifyContent: { xs: "flex-start", sm: "space-evenly" },
+                minWidth: { xs: "100px", sm: "auto" },
+                padding: { xs: "6px 10px", sm: "12px 16px" },
+              },
+              "& .Mui-selected": {
+                color: "black",
+                borderBottom: "5px solid #17ABA9",
+              },
             }}
           >
             {tabs.map((tab, index) => (
@@ -49,9 +79,6 @@ const CustomTabPanel: React.FC<CustomTabPanelProps> = ({
                 label={tab.label}
                 value={tab?.index}
                 {...a11yProps(tab?.index)}
-                sx={{
-                  "&.Mui-selected": styles.selectedTab,
-                }}
               />
             ))}
           </TabList>
@@ -62,25 +89,3 @@ const CustomTabPanel: React.FC<CustomTabPanelProps> = ({
 };
 
 export default CustomTabPanel;
-
-const styles = {
-  mainDiv: {
-    width: "100%",
-    marginTop: "2rem",
-    display: "inline-block",
-  },
-  tab: {
-    width: "80%",
-    color: "black",
-    display: "flex",
-    flexWrap: "wrap",
-    fontWeight: "600",
-    fontSize: "1.25rem",
-    textTransform: "none",
-    justifyContent: "space-evenly",
-  },
-  selectedTab: {
-    color: "black",
-    borderBottom: "5px solid #17ABA9",
-  },
-};

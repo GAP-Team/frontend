@@ -5,12 +5,22 @@ import { useAppDispatch } from "@/lib/hooks";
 import GTextInput from "@/components/input/GTextInput";
 import { showSnackbar } from "@/components/root-snackbar";
 import { ContactFormSchema } from "@/utils/ValidationSchema";
-import { Grid, Typography, Checkbox, Button } from "@mui/material";
+import {
+  Grid,
+  Typography,
+  Checkbox,
+  Button,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import LabelWithAsterisk from "@/components/label/LabelWithAsterisk";
 import PhoneInput from "@/components/input/GPhoneInput";
 
 const ContactForm = (): JSX.Element => {
   const dispatch = useAppDispatch();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const isTablet = useMediaQuery(theme.breakpoints.down("md"));
 
   const initialValues: ContactFormProps = {
     firstName: "",
@@ -61,18 +71,42 @@ const ContactForm = (): JSX.Element => {
 
   return (
     <>
-      <form onSubmit={formik.handleSubmit} style={styles.form}>
+      <form
+        onSubmit={formik.handleSubmit}
+        style={{
+          ...styles.form,
+          paddingLeft: isMobile ? "0.25rem" : "1rem",
+          paddingRight: isMobile ? "0.25rem" : 0,
+        }}
+      >
         <Grid container spacing={2} sx={styles.formInnerContainer}>
           {/* Contact Form */}
-          <Typography variant="body1" sx={styles.formHeading}>
+          <Typography
+            variant="body1"
+            sx={{
+              ...styles.formHeading,
+              fontSize: isMobile ? "1rem" : isTablet ? "1.1rem" : "1.3rem",
+            }}
+          >
             BITTE FÜLLEN SIE DAS FOLGENDE KONTAKTFORMULAR AUS:
           </Typography>
-          <Typography variant="body1" sx={styles.formInformation}>
+          <Typography
+            variant="body1"
+            sx={{
+              ...styles.formInformation,
+              fontSize: isMobile ? "0.9rem" : "17px",
+            }}
+          >
             <span style={{ color: "red" }}>*</span> Pflichtfelder
           </Typography>
 
           {/* Form */}
-          <Grid sx={styles.textFieldContainer}>
+          <Grid
+            sx={{
+              ...styles.textFieldContainer,
+              flexDirection: isMobile ? "column" : "row",
+            }}
+          >
             <Grid sx={styles.textFieldHolder}>
               <LabelWithAsterisk>Vorname</LabelWithAsterisk>
               <GTextInput
@@ -107,7 +141,12 @@ const ContactForm = (): JSX.Element => {
               />
             </Grid>
           </Grid>
-          <Grid sx={styles.textFieldContainer}>
+          <Grid
+            sx={{
+              ...styles.textFieldContainer,
+              flexDirection: isMobile ? "column" : "row",
+            }}
+          >
             <Grid sx={styles.textFieldHolder}>
               <LabelWithAsterisk>Telefonnummer</LabelWithAsterisk>
               <PhoneInput
@@ -158,7 +197,7 @@ const ContactForm = (): JSX.Element => {
               id="message"
               placeholder="Bitte schreiben Sie hier Ihre Nachricht"
               multiline
-              rows={8}
+              rows={isMobile ? 6 : 8}
               variant="outlined"
               fullWidth
               name="message"
@@ -175,7 +214,12 @@ const ContactForm = (): JSX.Element => {
           {/* Send Button */}
           <Grid>
             <LabelWithAsterisk>Datenschutz</LabelWithAsterisk>
-            <Grid sx={styles.textFieldContainer}>
+            <Grid
+              sx={{
+                ...styles.textFieldContainer,
+                alignItems: "flex-start",
+              }}
+            >
               <Checkbox
                 name="dataPrivacyAccepted"
                 onChange={(e) => {
@@ -186,11 +230,17 @@ const ContactForm = (): JSX.Element => {
                 }}
                 checked={formik?.values?.dataPrivacyAccepted}
               />
-              <Typography variant="body1" sx={styles.agreeDescription}>
+              <Typography
+                variant="body1"
+                sx={{
+                  ...styles.agreeDescription,
+                  fontSize: isMobile ? "0.8rem" : "1rem",
+                }}
+              >
                 Ich willige ein, dass meine Kontaktdaten an alle in der
-                Datenschutzerklärung genannten <br />
+                Datenschutzerklärung genannten {isMobile ? "" : <br />}
                 Gesellschaften weitergeleitet wird. Meine Einwilligung kann ich
-                jederzeit ohne Angaben von <br />
+                jederzeit ohne Angaben von {isMobile ? "" : <br />}
                 Gründen widerrufen.
               </Typography>
             </Grid>
@@ -199,7 +249,14 @@ const ContactForm = (): JSX.Element => {
               type="submit"
               disabled={!formik?.values?.dataPrivacyAccepted}
               component="button"
-              sx={styles.submitButton}
+              sx={{
+                ...styles.submitButton,
+                fontSize: isMobile ? "1rem" : "1.2rem",
+                padding: isMobile ? "0.5rem" : "0.7rem",
+                paddingRight: isMobile ? "1.2rem" : "1.7rem",
+                paddingLeft: isMobile ? "1.2rem" : "1.7rem",
+                marginTop: isMobile ? "3rem" : "5rem",
+              }}
               className="block px-5 py-2 mt-4 text-center rounded-lg text-md"
             >
               Absenden
