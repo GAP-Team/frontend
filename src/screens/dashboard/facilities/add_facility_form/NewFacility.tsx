@@ -40,6 +40,7 @@ import utc from "dayjs/plugin/utc";
 import { Facility } from "../facility_card/types";
 
 dayjs.extend(utc);
+
 interface NewFacilityProps {
   facilityId?: string;
 }
@@ -53,11 +54,7 @@ const NewFacility: React.FC<NewFacilityProps> = ({
   const facility = useAppSelector(getFacilityById(facilityId));
 
   const steps: ActiveStepItem[] = [
-    {
-      id: 0,
-      stepName: "Anlageninformationen",
-      component: FacilityInformation,
-    },
+    { id: 0, stepName: "Anlageninformationen", component: FacilityInformation },
     { id: 1, stepName: "Prüfung", component: FacilityCheck },
     { id: 2, stepName: "Wartung", component: FacilityMaintenance },
     { id: 3, stepName: "Dokumente", component: FacilityDocumentation },
@@ -67,195 +64,13 @@ const NewFacility: React.FC<NewFacilityProps> = ({
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [activeStep, setActiveStep] = useState<ActiveStepItem>(steps[0]);
 
-  const StepComponent = steps[activeStep.id]
-    ?.component as React.ComponentType<StepComponentProps>;
-
-  useEffect(() => {
-    setActiveStep(steps[0]);
-    setIsSubmitted(false);
-    getUserBuildingDetails();
-  }, []);
-
-  const getUserBuildingDetails = async (): Promise<void> => {
-    const query = {
-      userId: user?.id,
-      city: "",
-      federalState: "",
-      facilityType: "",
-    };
-    dispatch(fetchBuildings(query));
-  };
-
-  const handleNext = async (
-    values: AddFacilityFormValues,
-    actions: FormikHelpers<AddFacilityFormValues>
-  ): Promise<void> => {
-    if (activeStep?.id === steps.length - 1) {
-      const saveStatus = await uploadAllDocuments(values);
-      if (saveStatus) {
-        setIsSubmitted(true);
-        actions.setSubmitting(false);
-      }
-    } else {
-      setActiveStep(steps[activeStep.id + 1]);
-      actions.setTouched({});
-      actions.setSubmitting(false);
-    }
-  };
-
-  const handleBack = (): void => {
-    if (activeStep.id > 0) {
-      setActiveStep(steps[activeStep.id - 1]);
-    } else {
-      router.push(ROUTES.REAL_ESTATE.DASHBOARD);
-    }
-  };
-
-  const saveFacilityData = async (
-    values: AddFacilityFormValues,
-    docObjList: any[] = []
-  ): Promise<boolean> => {
-    let facilityData: Partial<Facility> = {
-      name: values?.name,
-      facilityType: values?.facilityType,
-      subcategory: values?.subcategory,
-      buildingId: values?.selectedBuilding,
-      check: {
-        lastCheckDate: values?.lastCheckDate
-          ? dayjs(values.lastCheckDate.utc(true).format("YYYY-MM-DD"))
-          : null,
-        nextCheckInYearNumber: values?.nextCheckInYearNumber,
-        isPublishAutomatically: values?.isPublishCheckAutomatically,
-        publishAutomaticallyInMonth: values?.isPublishCheckAutomatically
-          ? Number(values?.publishAutomaticallyInMonth)
-          : 0,
-        reminderInMonth: values?.reminderInMonth,
-        isEmailNotificationEnable: values?.isEmailNotificationEnable,
-        emailNotificationList: values?.isEmailNotificationEnable
-          ? Array.isArray(values?.emailNotificationList)
-            ? values.emailNotificationList.filter((item) => item !== "")
-            : ["", ""]
-          : ["", ""],
-      },
-      maintenance: {
-        lastMaintenanceDate: values?.lastMaintenanceDate
-          ? dayjs(values?.lastMaintenanceDate?.utc(true).format("YYYY-MM-DD"))
-          : null,
-        nextMaintenanceInMonth: values?.nextMaintenanceInMonth,
-        isPublishAutomatically: values?.isPublishMaintenanceAutomatically,
-        publishAutomaticallyInMonth: values?.isPublishMaintenanceAutomatically
-          ? Number(values?.publishMaintenanceAutomaticallyInMonth)
-          : 0,
-        reminderInMonth: values?.maintenanceReminderInMonth,
-        isEmailNotificationEnable: values?.isMaintenanceEmailNotificationEnable,
-        emailNotificationList: values?.isMaintenanceEmailNotificationEnable
-          ? Array.isArray(values?.maintenanceEmailNotificationList)
-            ? values.maintenanceEmailNotificationList.filter(
-                (item) => item !== ""
-              )
-            : ["", ""]
-          : ["", ""],
-      },
-      documents: docObjList,
-      documentUploadType: values?.documentChoice,
-      serverLink: values?.serverLink,
-    };
-
-    if (facility) {
-      try {
-        await dispatch(
-          updateFacility({ facilityId: facility?.id, data: facilityData })
-        ).unwrap();
-        dispatch(
-          showSnackbar({
-            type: "success",
-            message: "Die Anlage wurde erfolgreich aktualisiert!",
-          })
-        );
-        return true;
-      } catch {
-        dispatch(
-          showSnackbar({
-            type: "error",
-            message:
-              "Die Anlage konnte nicht aktualisiert werden. Bitte überprüfen Sie die Eingabedaten und versuchen Sie es erneut",
-          })
-        );
-        return false;
-      }
-    } else {
-      try {
-        await dispatch(createFacility(facilityData)).unwrap();
-        dispatch(
-          showSnackbar({
-            type: "success",
-            message: "Die Anlage wurde erfolgreich hinzugefügt!",
-          })
-        );
-        return true;
-      } catch {
-        dispatch(
-          showSnackbar({
-            type: "error",
-            message:
-              "Anlage konnte nicht hinzugefügt werden. Bitte überprüfen Sie die Eingabedaten und versuchen Sie es erneut",
-          })
-        );
-        return false;
-      }
-    }
-  };
-
-  const uploadAllDocuments = async (
-    values: AddFacilityFormValues
-  ): Promise<boolean> => {
-    // If document choice is NO_DOCUMENTS, pass empty array
-    if (values.documentChoice === DocumentChoice.NO_DOCUMENTS) {
-      return await saveFacilityData(values, []);
-    }
-
-    const docTypes = [
-      { files: values.otherDocs, type: DOCUMENT_TYPE.OTHER },
-      { files: values.floorplanDocs, type: DOCUMENT_TYPE.FLOOR_PLANS },
-      { files: values.checkReports, type: DOCUMENT_TYPE.CHECK_REPORTS },
-    ];
-
-    try {
-      const docObjList = await Promise.all(
-        docTypes.flatMap(async ({ files, type }) => {
-          return Promise.all(
-            files.map(async (file) => {
-              if ("documentType" in file) {
-                return file;
-              }
-              const uploadedDoc = await handleUploadMultipleDoc(file);
-              return { ...uploadedDoc, documentType: type };
-            })
-          );
-        })
-      ).then((results) => results.flat());
-
-      await saveFacilityData(values, docObjList);
-      return true;
-    } catch {
-      dispatch(
-        showSnackbar({
-          type: "error",
-          message:
-            "Die Anlage konnte nicht hinzugefügt oder bearbeitet werden. Bitte versuchen Sie es erneut!",
-        })
-      );
-      return false;
-    }
-  };
-
-  const initialValues: AddFacilityFormValues = {
+  const getInitialFormValues = (): AddFacilityFormValues => ({
     name: facility?.name || "",
     facilityType: facility?.facilityType || "",
     subcategory: facility?.subcategory || "",
     isPublishCheckAutomatically:
       facility?.check?.isPublishAutomatically || false,
-    publishAutomaticallyInMonth:
+    publishCheckAutomaticallyInMonth:
       facility?.check?.publishAutomaticallyInMonth || 0,
     isReminderEnabled: false,
     emailNotificationList: facility?.check?.emailNotificationList || ["", ""],
@@ -294,7 +109,178 @@ const NewFacility: React.FC<NewFacilityProps> = ({
     reminderInMonth: facility?.check?.reminderInMonth || 0,
     isEmailNotificationEnable:
       facility?.check?.isEmailNotificationEnable || false,
+  });
+
+  const [formData, setFormData] = useState<AddFacilityFormValues>(() =>
+    getInitialFormValues()
+  );
+
+  useEffect(() => {
+    setActiveStep(steps[0]);
+    setIsSubmitted(false);
+    getUserBuildingDetails();
+  }, []);
+
+  const getUserBuildingDetails = async (): Promise<void> => {
+    const query = {
+      userId: user?.id,
+      city: "",
+      federalState: "",
+      facilityType: "",
+    };
+    dispatch(fetchBuildings(query));
   };
+
+  const handleNext = async (
+    values: AddFacilityFormValues,
+    actions: FormikHelpers<AddFacilityFormValues>
+  ): Promise<void> => {
+    const updatedValues = { ...formData, ...values };
+    setFormData(updatedValues);
+
+    if (activeStep?.id === steps.length - 1) {
+      const saveStatus = await uploadAllDocuments(updatedValues);
+      if (saveStatus) {
+        setIsSubmitted(true);
+        actions.setSubmitting(false);
+      }
+    } else {
+      setActiveStep(steps[activeStep.id + 1]);
+      actions.setTouched({});
+      actions.setSubmitting(false);
+    }
+  };
+
+  const handleBack = (): void => {
+    if (activeStep.id > 0) {
+      setActiveStep(steps[activeStep.id - 1]);
+    } else {
+      router.push(ROUTES.REAL_ESTATE.DASHBOARD);
+    }
+  };
+
+  const saveFacilityData = async (
+    values: AddFacilityFormValues,
+    docObjList: any[] = []
+  ): Promise<boolean> => {
+    const facilityData: Partial<Facility> = {
+      name: values?.name,
+      facilityType: values?.facilityType,
+      subcategory: values?.subcategory,
+      buildingId: values?.selectedBuilding,
+      check: {
+        lastCheckDate: values?.lastCheckDate
+          ? dayjs(values.lastCheckDate.utc(true).format("YYYY-MM-DD"))
+          : null,
+        nextCheckInYearNumber: values?.nextCheckInYearNumber,
+        isPublishAutomatically: values?.isPublishCheckAutomatically,
+        publishAutomaticallyInMonth: values?.isPublishCheckAutomatically
+          ? Number(values?.publishCheckAutomaticallyInMonth)
+          : 0,
+        reminderInMonth: values?.reminderInMonth,
+        isEmailNotificationEnable: values?.isEmailNotificationEnable,
+        emailNotificationList: values?.isEmailNotificationEnable
+          ? values.emailNotificationList?.filter((item) => item !== "") || [
+              "",
+              "",
+            ]
+          : ["", ""],
+      },
+      maintenance: {
+        lastMaintenanceDate: values?.lastMaintenanceDate
+          ? dayjs(values.lastMaintenanceDate.utc(true).format("YYYY-MM-DD"))
+          : null,
+        nextMaintenanceInMonth: values?.nextMaintenanceInMonth,
+        isPublishAutomatically: values?.isPublishMaintenanceAutomatically,
+        publishAutomaticallyInMonth: values?.isPublishMaintenanceAutomatically
+          ? Number(values?.publishMaintenanceAutomaticallyInMonth)
+          : 0,
+        reminderInMonth: values?.maintenanceReminderInMonth,
+        isEmailNotificationEnable: values?.isMaintenanceEmailNotificationEnable,
+        emailNotificationList: values?.isMaintenanceEmailNotificationEnable
+          ? values.maintenanceEmailNotificationList?.filter(
+              (item) => item !== ""
+            ) || ["", ""]
+          : ["", ""],
+      },
+      documents: docObjList,
+      documentUploadType: values?.documentChoice,
+      serverLink: values?.serverLink,
+    };
+
+    try {
+      if (facility) {
+        await dispatch(
+          updateFacility({ facilityId: facility.id, data: facilityData })
+        ).unwrap();
+        dispatch(
+          showSnackbar({
+            type: "success",
+            message: "Die Anlage wurde erfolgreich aktualisiert!",
+          })
+        );
+      } else {
+        await dispatch(createFacility(facilityData)).unwrap();
+        dispatch(
+          showSnackbar({
+            type: "success",
+            message: "Die Anlage wurde erfolgreich hinzugefügt!",
+          })
+        );
+      }
+      return true;
+    } catch {
+      dispatch(
+        showSnackbar({
+          type: "error",
+          message: facility
+            ? "Die Anlage konnte nicht aktualisiert werden. Bitte überprüfen Sie die Eingabedaten und versuchen Sie es erneut"
+            : "Anlage konnte nicht hinzugefügt werden. Bitte überprüfen Sie die Eingabedaten und versuchen Sie es erneut",
+        })
+      );
+      return false;
+    }
+  };
+
+  const uploadAllDocuments = async (
+    values: AddFacilityFormValues
+  ): Promise<boolean> => {
+    if (values.documentChoice === DocumentChoice.NO_DOCUMENTS) {
+      return await saveFacilityData(values, []);
+    }
+
+    const docTypes = [
+      { files: values.otherDocs, type: DOCUMENT_TYPE.OTHER },
+      { files: values.floorplanDocs, type: DOCUMENT_TYPE.FLOOR_PLANS },
+      { files: values.checkReports, type: DOCUMENT_TYPE.CHECK_REPORTS },
+    ];
+
+    try {
+      const docObjList = await Promise.all(
+        docTypes.flatMap(({ files, type }) =>
+          files.map(async (file) => {
+            if ("documentType" in file) return file;
+            const uploaded = await handleUploadMultipleDoc(file);
+            return { ...uploaded, documentType: type };
+          })
+        )
+      );
+      await saveFacilityData(values, docObjList);
+      return true;
+    } catch {
+      dispatch(
+        showSnackbar({
+          type: "error",
+          message:
+            "Die Anlage konnte nicht hinzugefügt oder bearbeitet werden. Bitte versuchen Sie es erneut!",
+        })
+      );
+      return false;
+    }
+  };
+
+  const StepComponent = steps[activeStep.id]
+    .component as React.ComponentType<StepComponentProps>;
 
   const formOrSuccessContent = isSubmitted ? (
     <SuccessPage
@@ -318,7 +304,7 @@ const NewFacility: React.FC<NewFacilityProps> = ({
           />
         </Grid>
         <Grid item>
-          <Link href={ROUTES.REAL_ESTATE.FACILITY.FACILITIES} type="button">
+          <Link href={ROUTES.REAL_ESTATE.FACILITY.FACILITIES}>
             <IconButton sx={{ marginLeft: "auto" }} size="medium">
               <CgClose color="red" />
             </IconButton>
@@ -339,8 +325,8 @@ const NewFacility: React.FC<NewFacilityProps> = ({
           sx={{ ml: "1.5rem" }}
         />
         <Formik
-          initialValues={initialValues}
-          validationSchema={addFacilityValidationSchema[activeStep?.id]}
+          initialValues={formData}
+          validationSchema={addFacilityValidationSchema[activeStep.id]}
           onSubmit={handleNext}
           enableReinitialize
         >
