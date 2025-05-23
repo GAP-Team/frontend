@@ -18,39 +18,56 @@ import {
   ListItemText,
   InputAdornment,
   ListItemButton,
+  Grid,
 } from "@mui/material";
 import {
   germanStates,
-  listOfTrades,
-  listOfOrderTypes,
+  listOfTenderTypes,
+  listOfFacilitySubcategories,
 } from "@/utils/Constants";
+import { useFormik } from "formik";
+import { ROUTES } from "@/utils/routes";
 import { useRouter } from "next/navigation";
 import CloseIcon from "@mui/icons-material/Close";
-import { ROUTES } from "@/utils/routes";
+import { ContractSearchProps } from "@/typings/types";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import CustomSelect from "@/components/drop_down/CustomSelect";
+import { ContractSearchSchema } from "@/utils/ValidationSchema";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import heroBackgroundPicture from "../../../../public/images/hero6.jpg";
 
 const HeroSection = (): JSX.Element => {
   const router = useRouter();
 
-  const [selectedState, setSelectedState] = useState<string>("");
-
-  const [selectedFacilities, setSelectedFacilities] = useState<string[]>([]);
   const [facilityAnchorEl, setFacilityAnchorEl] =
     useState<HTMLDivElement | null>(null);
   const [facilityExpanded, setFacilityExpanded] = useState<{
     [key: string]: boolean;
   }>({});
-
-  const [selectedTenderType, setSelectedTenderType] = useState<string>("");
+  const [selectedFacilitySubcategories, setSelectedFacilitySubcategories] =
+    useState<string[]>([]);
+  const [selectedTenderType, setSelectedTenderType] = useState<string[]>([]);
   const [tenderTypeAnchorEl, setTenderTypeAnchorEl] =
     useState<HTMLDivElement | null>(null);
   const [tenderTypeExpanded, setTenderTypeExpanded] = useState<{
     [key: string]: boolean;
   }>({});
+
+  const initialValues: ContractSearchProps = {
+    states: [],
+    tenderTypes: [],
+    facilitySubcategories: [],
+  };
+
+  const formik = useFormik({
+    initialValues: initialValues,
+    validationSchema: ContractSearchSchema,
+    onSubmit: async (values) => {
+      const url = `${ROUTES.SERVICE_PROVIDER.CONTRACTS}?facilitySubcategories=${values?.facilitySubcategories?.join(",")}&tenderTypes=${values?.tenderTypes?.join(",")}&states=${values?.states?.join(",")}`;
+      router.push(url);
+    },
+  });
 
   // Facility handles
   const handleClickFacilitySelect = (
@@ -67,18 +84,49 @@ const HeroSection = (): JSX.Element => {
     setFacilityExpanded((prev) => ({ ...prev, [category]: !prev[category] }));
   };
 
+  const handleOptionsSelectFilter = (item: string, type: string): string[] => {
+    if (type === "facilitySubcategories") {
+      return selectedFacilitySubcategories.includes(item)
+        ? selectedFacilitySubcategories.filter((selected) => selected !== item)
+        : [...selectedFacilitySubcategories, item];
+    } else {
+      return selectedTenderType.includes(item)
+        ? selectedTenderType.filter((selected) => selected !== item)
+        : [...selectedTenderType, item];
+    }
+  };
+
   const handleFacilityOptionSelect = (item: string): void => {
-    setSelectedFacilities((prev) =>
-      prev.includes(item)
-        ? prev.filter((selected) => selected !== item)
-        : [...prev, item]
+    const facilitySubcategories = handleOptionsSelectFilter(
+      item,
+      "facilitySubcategories"
     );
+
+    setSelectedFacilitySubcategories(facilitySubcategories);
+    formik.setFieldValue("facilitySubcategories", facilitySubcategories);
+  };
+
+  const handleOptionsDeselectFilter = (
+    item: string,
+    type: string
+  ): string[] => {
+    if (type) {
+      return selectedFacilitySubcategories.filter(
+        (selected) => selected !== item
+      );
+    } else {
+      return selectedTenderType.filter((selected) => selected !== item);
+    }
   };
 
   const handleFacilityOptionDeselect = (item: string): void => {
-    setSelectedFacilities((prev) =>
-      prev.filter((selected) => selected !== item)
+    const facilitiesAfterDeselect = handleOptionsDeselectFilter(
+      item,
+      "facilitySubcategories"
     );
+
+    setSelectedFacilitySubcategories(facilitiesAfterDeselect);
+    formik.setFieldValue("facilitySubcategories", facilitiesAfterDeselect);
   };
 
   // Tender Type handles
@@ -97,14 +145,27 @@ const HeroSection = (): JSX.Element => {
   };
 
   const handleTenderTypeOptionSelect = (item: string): void => {
-    setSelectedTenderType(item);
-    setTenderTypeAnchorEl(null);
+    const tenderTypes = handleOptionsSelectFilter(item, "tenderTypes");
+    setSelectedTenderType(tenderTypes);
+    formik.setFieldValue("tenderTypes", tenderTypes);
   };
 
-  const handleSearch = (): void => {
-    router.push(
-      `${window.location.origin}/${ROUTES.SERVICE_PROVIDER.CONTRACTS}`
+  const handleTenderTypesOptionDeselect = (item: string): void => {
+    const facilitiesAfterDeselect = handleOptionsDeselectFilter(
+      item,
+      "tenderTypes"
     );
+
+    setSelectedTenderType(facilitiesAfterDeselect);
+    formik.setFieldValue("tenderTypes", facilitiesAfterDeselect);
+  };
+
+  const handleSelectStates = (event: any): void => {
+    const states = [];
+    const value = event.target.value;
+
+    states.push(value);
+    formik.setFieldValue("states", states);
   };
 
   return (
@@ -139,215 +200,287 @@ const HeroSection = (): JSX.Element => {
                         color="#d0ede8"
                       />
                       <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold my-5">
-                        Sie sind Experte – wir haben die passenden Aufträge!
+                        Sie sind Experte – wir haben die passenden Aufträge.
                       </h1>
                       <p className="text-base sm:text-lg md:text-xl font-normal max-w-xl sm:max-w-2xl md:max-w-4xl mx-auto py-2">
                         Ob Sachverständiger, Technikerin, Handwerksbetrieb oder
-                        Prüfstelle: GAP bringt Sie direkt mit
-                        Immobilienbetreibern zusammen, die qualifizierte
-                        Fachbetriebe für gesetzlich vorgeschriebene Prüfungen
-                        und Wartungen suchen.
+                        Prüforganisation: GAP vermittelt Sie direkt mit
+                        Immobilienbetreibern, die qualifizierte Fachbetriebe für
+                        Beratungen sowie gesetzlich vorgeschriebene Prüfungen,
+                        Wartungen und Reparaturen im Bereich Brandschutz,
+                        Umweltschutz, Versicherungsschutz oder gemäß
+                        Betriebssicherheitsverordnung suchen.
                       </p>
                     </div>
-                    <form className="flex flex-col justify-center text-center pt-10 pb-4 md:flex-row">
-                      {/* Facility Type Section */}
-                      <div className="flex flex-col w-full px-2 sm:px-4 md:w-1/3">
-                        <FormControl sx={{ m: 1, minWidth: 120 }}>
-                          <label
-                            htmlFor="craft"
-                            className="text-sm font-medium text-gray-700 mb-4"
-                          >
-                            Wählen Sie ein Anlagentyp aus:
-                          </label>
-                          <TextField
-                            label="Anlagentyp"
-                            onClick={handleClickFacilitySelect}
-                            InputProps={{
-                              readOnly: true,
-                              endAdornment: (
-                                <InputAdornment position="start">
-                                  <ArrowDropDownIcon />
-                                </InputAdornment>
-                              ),
-                            }}
-                          />
-                          <Menu
-                            anchorEl={facilityAnchorEl}
-                            open={Boolean(facilityAnchorEl)}
-                            onClose={handleFacilityOptionsClose}
-                          >
-                            {listOfTrades.map((trade) => (
-                              <div key={trade.category}>
-                                <ListItemButton
-                                  onClick={() =>
-                                    handleFacilityOptionsExpand(trade.category)
-                                  }
-                                >
-                                  <ListItemText primary={trade.category} />
-                                  {facilityExpanded[trade.category] ? (
-                                    <ExpandLess />
-                                  ) : (
-                                    <ExpandMore />
-                                  )}
-                                </ListItemButton>
-                                <Collapse
-                                  in={facilityExpanded[trade.category]}
-                                  timeout="auto"
-                                  unmountOnExit
-                                >
-                                  <List disablePadding>
-                                    {trade.items.map((item) => (
-                                      <MenuItem
-                                        key={item}
-                                        onClick={() =>
-                                          handleFacilityOptionSelect(item)
-                                        }
-                                      >
-                                        <Checkbox
-                                          checked={selectedFacilities.includes(
-                                            item
-                                          )}
-                                        />
-                                        <ListItemText primary={item} />
-                                      </MenuItem>
-                                    ))}
-                                  </List>
-                                </Collapse>
-                              </div>
-                            ))}
-                          </Menu>
-                          {selectedFacilities.length > 0 && (
-                            <Box
-                              sx={{
-                                display: "flex",
-                                gap: 1,
-                                flexWrap: "wrap",
-                                mt: 2,
-                              }}
+
+                    <form onSubmit={formik.handleSubmit}>
+                      <Grid className="flex flex-col justify-center text-center pt-10 pb-4 md:flex-row">
+                        {/* Facility Subcategory Section */}
+                        <div className="flex flex-col w-full px-2 sm:px-4 md:w-1/3">
+                          <FormControl sx={{ m: 1, minWidth: 120 }}>
+                            <label
+                              htmlFor="craft"
+                              className="text-sm font-medium text-gray-700 mb-4"
                             >
-                              {selectedFacilities.map((item) => (
-                                <Chip
-                                  key={item}
-                                  label={item}
-                                  onDelete={() =>
-                                    handleFacilityOptionDeselect(item)
-                                  }
-                                  deleteIcon={<CloseIcon />}
-                                />
+                              Wählen Sie ein Anlagentyp aus:
+                            </label>
+                            <TextField
+                              label="Anlagentyp"
+                              onClick={handleClickFacilitySelect}
+                              InputProps={{
+                                readOnly: true,
+                                endAdornment: (
+                                  <InputAdornment position="start">
+                                    <ArrowDropDownIcon />
+                                  </InputAdornment>
+                                ),
+                              }}
+                              onBlur={formik?.handleBlur}
+                              error={
+                                formik?.touched?.facilitySubcategories &&
+                                Boolean(formik?.errors?.facilitySubcategories)
+                              }
+                              helperText={
+                                formik?.touched?.facilitySubcategories &&
+                                formik?.errors?.facilitySubcategories
+                              }
+                            />
+                            <Menu
+                              anchorEl={facilityAnchorEl}
+                              open={Boolean(facilityAnchorEl)}
+                              onClose={handleFacilityOptionsClose}
+                            >
+                              {listOfFacilitySubcategories.map(
+                                (facilitySubcategories) => (
+                                  <div key={facilitySubcategories.category}>
+                                    <ListItemButton
+                                      onClick={() =>
+                                        handleFacilityOptionsExpand(
+                                          facilitySubcategories.category
+                                        )
+                                      }
+                                    >
+                                      <ListItemText
+                                        primary={facilitySubcategories.category}
+                                      />
+                                      {facilityExpanded[
+                                        facilitySubcategories.category
+                                      ] ? (
+                                        <ExpandLess />
+                                      ) : (
+                                        <ExpandMore />
+                                      )}
+                                    </ListItemButton>
+                                    <Collapse
+                                      in={
+                                        facilityExpanded[
+                                          facilitySubcategories.category
+                                        ]
+                                      }
+                                      timeout="auto"
+                                      unmountOnExit
+                                    >
+                                      <List disablePadding>
+                                        {facilitySubcategories.items.map(
+                                          (item) => (
+                                            <MenuItem
+                                              key={item}
+                                              onClick={() =>
+                                                handleFacilityOptionSelect(item)
+                                              }
+                                            >
+                                              <Checkbox
+                                                checked={selectedFacilitySubcategories.includes(
+                                                  item
+                                                )}
+                                              />
+                                              <ListItemText primary={item} />
+                                            </MenuItem>
+                                          )
+                                        )}
+                                      </List>
+                                    </Collapse>
+                                  </div>
+                                )
+                              )}
+                            </Menu>
+                            {selectedFacilitySubcategories.length > 0 && (
+                              <Box
+                                sx={{
+                                  display: "flex",
+                                  gap: 1,
+                                  flexWrap: "wrap",
+                                  mt: 2,
+                                }}
+                              >
+                                {selectedFacilitySubcategories.map((item) => (
+                                  <Chip
+                                    key={item}
+                                    label={item}
+                                    onDelete={() =>
+                                      handleFacilityOptionDeselect(item)
+                                    }
+                                    deleteIcon={<CloseIcon />}
+                                  />
+                                ))}
+                              </Box>
+                            )}
+                          </FormControl>
+                        </div>
+
+                        {/* Tender Type Section */}
+                        <div className="flex flex-col w-full px-2 sm:px-4 md:w-1/3">
+                          <FormControl sx={{ m: 1, minWidth: 120 }}>
+                            <label
+                              htmlFor="craft"
+                              className="text-sm font-medium text-gray-700 mb-4"
+                            >
+                              Wählen Sie ein Auftragstyp aus:
+                            </label>
+
+                            <TextField
+                              label="Auftragstypen"
+                              onClick={handleClickTenderTypeSelect}
+                              InputProps={{
+                                readOnly: true,
+                                endAdornment: (
+                                  <InputAdornment position="start">
+                                    <ArrowDropDownIcon />
+                                  </InputAdornment>
+                                ),
+                              }}
+                              // value={selectedTenderType}
+                              onBlur={formik?.handleBlur}
+                              onChange={formik?.handleChange}
+                              error={
+                                formik?.touched?.tenderTypes &&
+                                Boolean(formik?.errors?.tenderTypes)
+                              }
+                              helperText={
+                                formik?.touched?.tenderTypes &&
+                                formik?.errors?.tenderTypes
+                              }
+                            />
+                            <Menu
+                              anchorEl={tenderTypeAnchorEl}
+                              open={Boolean(tenderTypeAnchorEl)}
+                              onClose={handleTenderTypeOptionsClose}
+                            >
+                              {listOfTenderTypes.map((tenderTypes) => (
+                                <div key={tenderTypes.category}>
+                                  <ListItemButton
+                                    onClick={() =>
+                                      handleTenderTypeOptionsExpand(
+                                        tenderTypes.category
+                                      )
+                                    }
+                                  >
+                                    <ListItemText
+                                      primary={tenderTypes.category}
+                                    />
+                                    {tenderTypeExpanded[
+                                      tenderTypes.category
+                                    ] ? (
+                                      <ExpandLess />
+                                    ) : (
+                                      <ExpandMore />
+                                    )}
+                                  </ListItemButton>
+                                  <Collapse
+                                    in={
+                                      tenderTypeExpanded[tenderTypes.category]
+                                    }
+                                    timeout="auto"
+                                    unmountOnExit
+                                  >
+                                    <List disablePadding>
+                                      {tenderTypes.items.map((item) => (
+                                        <MenuItem
+                                          key={item}
+                                          onClick={() =>
+                                            handleTenderTypeOptionSelect(item)
+                                          }
+                                        >
+                                          <Checkbox
+                                            checked={selectedTenderType.includes(
+                                              item
+                                            )}
+                                          />
+                                          <ListItemText primary={item} />
+                                        </MenuItem>
+                                      ))}
+                                    </List>
+                                  </Collapse>
+                                </div>
                               ))}
-                            </Box>
-                          )}
-                        </FormControl>
-                      </div>
+                            </Menu>
+                            {selectedTenderType.length > 0 && (
+                              <Box
+                                sx={{
+                                  display: "flex",
+                                  gap: 1,
+                                  flexWrap: "wrap",
+                                  mt: 2,
+                                }}
+                              >
+                                {selectedTenderType.map((item) => (
+                                  <Chip
+                                    key={item}
+                                    label={item}
+                                    onDelete={() =>
+                                      handleTenderTypesOptionDeselect(item)
+                                    }
+                                    deleteIcon={<CloseIcon />}
+                                  />
+                                ))}
+                              </Box>
+                            )}
+                          </FormControl>
+                        </div>
 
-                      {/* Tender Type Section */}
-                      <div className="flex flex-col w-full px-2 sm:px-4 md:w-1/3">
-                        <FormControl sx={{ m: 1, minWidth: 120 }}>
-                          <label
-                            htmlFor="craft"
-                            className="text-sm font-medium text-gray-700 mb-4"
-                          >
-                            Wählen Sie ein Auftragstyp aus:
-                          </label>
+                        {/* State Section */}
+                        <div className="flex flex-col w-full px-2 sm:px-4 md:w-1/3">
+                          <FormControl sx={{ m: 1, minWidth: 120 }}>
+                            <label
+                              htmlFor="type"
+                              className="text-sm font-medium text-gray-700 mb-4"
+                            >
+                              Wählen Sie ein Bundesland aus:
+                            </label>
+                            <CustomSelect
+                              name="state"
+                              label={"Bundesländer"}
+                              options={germanStates}
+                              value={formik?.values?.states[0]}
+                              onChange={(val) => handleSelectStates(val)}
+                            />
+                            {formik?.touched?.states && (
+                              <p style={styles.errorTexts}>
+                                {formik?.errors?.states}
+                              </p>
+                            )}
+                          </FormControl>
+                        </div>
+                      </Grid>
 
-                          <TextField
-                            label="Auftragstypen"
-                            onClick={handleClickTenderTypeSelect}
-                            InputProps={{
-                              readOnly: true,
-                              endAdornment: (
-                                <InputAdornment position="start">
-                                  <ArrowDropDownIcon />
-                                </InputAdornment>
-                              ),
-                            }}
-                            value={selectedTenderType}
-                          />
-                          <Menu
-                            anchorEl={tenderTypeAnchorEl}
-                            open={Boolean(tenderTypeAnchorEl)}
-                            onClose={handleTenderTypeOptionsClose}
-                          >
-                            {listOfOrderTypes.map((trade) => (
-                              <div key={trade.category}>
-                                <ListItemButton
-                                  onClick={() =>
-                                    handleTenderTypeOptionsExpand(
-                                      trade.category
-                                    )
-                                  }
-                                >
-                                  <ListItemText primary={trade.category} />
-                                  {tenderTypeExpanded[trade.category] ? (
-                                    <ExpandLess />
-                                  ) : (
-                                    <ExpandMore />
-                                  )}
-                                </ListItemButton>
-                                <Collapse
-                                  in={tenderTypeExpanded[trade.category]}
-                                  timeout="auto"
-                                  unmountOnExit
-                                >
-                                  <List disablePadding>
-                                    {trade.items.map((item) => (
-                                      <MenuItem
-                                        key={item}
-                                        onClick={() =>
-                                          handleTenderTypeOptionSelect(item)
-                                        }
-                                      >
-                                        {/* <Checkbox checked={selectedTenderType} /> */}
-                                        <ListItemText primary={item} />
-                                      </MenuItem>
-                                    ))}
-                                  </List>
-                                </Collapse>
-                              </div>
-                            ))}
-                          </Menu>
-                        </FormControl>
-                      </div>
-
-                      {/* State Section */}
-                      <div className="flex flex-col w-full px-2 sm:px-4 md:w-1/3">
-                        <FormControl sx={{ m: 1, minWidth: 120 }}>
-                          <label
-                            htmlFor="type"
-                            className="text-sm font-medium text-gray-700 mb-4"
-                          >
-                            Wählen Sie ein Bundesland aus:
-                          </label>
-                          <CustomSelect
-                            label={"Bundesländer"}
-                            name={"bundesländer"}
-                            onChange={(newValue) =>
-                              setSelectedState(newValue?.target?.value)
-                            }
-                            options={germanStates}
-                            value={selectedState || ""}
-                          />
-                        </FormControl>
+                      {/* Button Section */}
+                      <div className="flex justify-center items-center">
+                        <Button
+                          size="large"
+                          component="button"
+                          type="submit"
+                          style={styles.querySubmitButton}
+                          className="mt-10 rounded-lg"
+                          sx={{
+                            textTransform: "none",
+                            whiteSpace: "pre",
+                          }}
+                        >
+                          Jetzt Auftrag Finden
+                          <FaArrowRightLong className="ml-2 h-5 w-5" />
+                        </Button>
                       </div>
                     </form>
-
-                    {/* Button Section */}
-                    <div className="flex justify-center items-center">
-                      <Button
-                        size="large"
-                        component="button"
-                        style={styles.querySubmitButton}
-                        className="mt-10 rounded-lg"
-                        sx={{
-                          textTransform: "none",
-                          whiteSpace: "pre",
-                        }}
-                        onClick={handleSearch}
-                      >
-                        Jetzt Auftrag Finden
-                        <FaArrowRightLong className="ml-2 h-5 w-5" />
-                      </Button>
-                    </div>
 
                     <div className="flex justify-center items-center pt-6 gap-4 px-4">
                       <div className="flex items-center">
@@ -404,5 +537,10 @@ const styles = {
     "&:hover": {
       background: "#0071b8",
     },
+  },
+  errorTexts: {
+    color: "#d32f2f",
+    fontWeight: 400,
+    fontSize: "0.75rem",
   },
 };

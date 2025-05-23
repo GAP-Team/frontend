@@ -19,7 +19,8 @@ const ContactSection = (): JSX.Element => {
           </Typography>
         </Box>
         {/* FAQ Section */}
-        <FAQSection />
+        <FAQSection customerType="Dienstleister" />
+        <FAQSection customerType="Immobilienbetreiber" />
         {/* Content Section */}
         <Container maxWidth="md" sx={styles.innerContainer}>
           <Typography
@@ -58,9 +59,24 @@ const styles = {
     minHeight: "25rem",
   },
   title: {
-    fontSize: "5rem",
-    marginTop: "15rem",
-    marginLeft: "20rem",
+    fontSize: {
+      xs: "2.5rem",
+      sm: "3.5rem",
+      md: "4rem",
+      lg: "5rem",
+    },
+    marginTop: {
+      xs: "6rem",
+      sm: "10rem",
+      md: "12rem",
+      lg: "15rem",
+    },
+    marginLeft: {
+      xs: "2rem",
+      sm: "8rem",
+      md: "12rem",
+      lg: "20rem",
+    },
   },
   innerContainer: {
     marginTop: "5rem",

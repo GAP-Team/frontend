@@ -1,25 +1,36 @@
-# Use the official Node.js 20-alpine image as a base
-FROM node:20-alpine
-
-# Set the working directory
-WORKDIR /app
-
-# Copy package.json and package-lock.json
-COPY package*.json ./
-
-# Install dependencies
-RUN npm install
-
-# Copy the rest of your application code
-COPY . .
-COPY .env .env
-
-# Build the Next.js application
-RUN npm run build
-
-
-# Expose the port the app runs on
-EXPOSE 3000
-
-# Command to run the app
-CMD ["npm", "start"]
+# --- Base for dependency install ---
+    FROM node:20-alpine AS deps
+    WORKDIR /app
+    
+    # Install all deps incl. devDependencies
+    COPY package*.json ./
+    RUN npm ci
+    
+    # --- Build Stage ---
+    FROM deps AS builder
+    WORKDIR /app
+    COPY . .
+    
+    # Ensure tsconfig + aliases + env files available
+    COPY .env .env
+  
+    RUN npm run build
+    
+    # --- Production Image (lean) ---
+    FROM node:20-slim AS runner
+    WORKDIR /app
+    
+    # Copy only production deps
+    COPY package*.json ./
+    RUN npm ci --omit=dev
+    
+    # Copy build output and runtime code
+    COPY --from=builder /app/public ./public
+    COPY --from=builder /app/.next ./.next
+    COPY --from=builder /app/next.config.mjs ./next.config.mjs
+    COPY --from=builder /app/src ./src
+    COPY --from=builder /app/tsconfig.json ./tsconfig.json
+    
+    EXPOSE 3000
+    CMD ["npm", "start"]
+    

@@ -212,7 +212,7 @@ export const addObjektFormSchema = yup
     }
   );
 
-export const newContactSchema = yup.object().shape({
+export const ContactPersonSchema = yup.object().shape({
   firstName: yup.string().required("Vorname ist erforderlich."),
   lastName: yup.string().required("Nachname ist erforderlich."),
   email: yup
@@ -284,7 +284,7 @@ export const addFacilityValidationSchema = [
   yup.object({
     lastCheckDate: yup.date().nullable(),
     nextCheckInYearNumber: yup.number(),
-    isPublishAutomatically: yup.boolean(),
+    isPublishCheckAutomatically: yup.boolean(),
     publishAutomaticallyInMonth: yup.number(),
     reminderInMonth: yup.number(),
     isEmailNotificationEnable: yup.boolean(),
@@ -429,8 +429,21 @@ export const ContactFormSchema = yup.object({
     .email,
   phoneNumber: (registrationValidationSchema[0] as yup.ObjectSchema<any>).fields
     .telephone,
+  subject: yup.string().required("Betreff ist erforderlich."),
   message: yup.string().required("Nachricht ist erforderlich."),
-  agree: yup
+  dataPrivacyAccepted: yup
     .boolean()
     .oneOf([true], "Sie müssen die Datenschutzbestimmungen akzeptieren"),
+});
+
+export const ContractSearchSchema = yup.object({
+  states: yup.array().of(yup.string()).min(1, "Bundesland ist erforderlich"),
+  tenderTypes: yup
+    .array()
+    .of(yup.string())
+    .min(1, "Auftragstyp ist erforderlich"),
+  facilitySubcategories: yup
+    .array()
+    .of(yup.string())
+    .min(1, "Bitte wählen Sie mindestens eine Anlage aus"),
 });

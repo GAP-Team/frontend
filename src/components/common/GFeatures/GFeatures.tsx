@@ -19,8 +19,8 @@ const GFeatures = (): JSX.Element => {
   return (
     <div className="container mx-auto flex flex-col items-center justify-center">
       <TitleSection
-        title=" Einfach Gewerk auswählen und loslegen"
-        subtitle="Ob Aufzug, Brandmeldeanlage oder Lüftungssystem – GAP unterstützt alle relevanten Gewerke in der Anlagenprüfung."
+        title="Einfach Fachgebiet auswählen und starten."
+        subtitle="Ob Aufzug, Brandmeldeanlage oder Lüftungssystem – GAP unterstützt alle relevanten Gewerke bei Anlagenprüfung, Wartung, Beratung und Instandsetzung."
         badge={<GBadge title="Jetzt direkt loslegen" color="#ccdfeb" />}
       />
       <div className="grid grid-cols-2 sm:grid-cols-3  lg:grid-cols-6 gap-4 sm:px-16 mb-8">

@@ -8,9 +8,14 @@ import RocketLaunchIcon from "@mui/icons-material/RocketLaunch";
 import QuestionAnswerIcon from "@mui/icons-material/QuestionAnswer";
 import heroBackgroundPicture from "../../../../public/images/hero6.jpg";
 import AccessTimeFilledIcon from "@mui/icons-material/AccessTimeFilled";
+import Box from "@mui/material/Box";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 const HeroSection = (): JSX.Element => {
   const router = useRouter();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   const handleOnClick = (): void => {
     router.push(ROUTES.REGISTRATION);
@@ -18,129 +23,129 @@ const HeroSection = (): JSX.Element => {
 
   return (
     <>
-      <section className="bg-white w-full py-5 pt-20">
-        <div className="relative grid grid-cols-2 mb-8 pl-32">
+      <section className="bg-white w-full py-5 pt-10 md:pt-20">
+        <Box
+          className="grid grid-cols-1 md:grid-cols-2 mb-4 md:mb-8"
+          sx={{
+            px: { xs: 2, sm: 4, md: 6, lg: 8, xl: 10 },
+          }}
+        >
           {/* Hero Text Section */}
-          <div
-            className="w-full text-center xl:text-left "
-            style={styles.heroImageHolder}
-          >
+          <Box className="w-full text-center md:text-left mb-8 md:mb-0">
             <p style={styles.heroSubtitle}>Wir sind GAP</p>
-            <h1 className="text-4xl font-bold my-5">
+            <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold my-3 md:my-5">
               Deine digitale Lösung für gesetzeskonforme Immobilienverwaltung
             </h1>
-            <p className="text-lg font-semibold max-w-4xl mx-auto">
+            <p className="text-base md:text-lg font-semibold max-w-4xl">
               Die smarte Plattform für Immobilienbetreiber: Verwalte Deine
               Objekte und prüfe alle technischen Anlagen rechtssicher und
               effizient – mit zertifizierten Dienstleistern aus unserem
               Netzwerk.
             </p>
-            <div className="flex flex-row justify-between grid-cols-2 py-1">
-              <div className="flex flex-col gap-5 sm:gap-7 md:gap-10 lg:gap-20 mt-14">
-                <div className="grid-cols-2 flex flex-row">
-                  <div className="w-2/12">
+
+            <Box className="flex flex-col md:flex-row justify-between py-1 mt-8 md:mt-10">
+              <Box className="flex flex-col gap-5 md:gap-8 lg:gap-10">
+                <Box className="flex flex-row items-center">
+                  <Box className="mr-3">
                     <TaskAltIcon
-                      fontSize="large"
+                      fontSize={isMobile ? "medium" : "large"}
                       style={{ color: "#00d8af" }}
                     />
-                  </div>
-                  <div className="w-full min-w-60">
-                    <p
-                      className="text-sm font-normal max-w-4xl mx-auto"
-                      style={styles.heroFeatureText}
-                    >
+                  </Box>
+                  <Box>
+                    <p className="text-sm md:text-base lg:text-lg font-normal">
                       Einfache Verwaltung von Objekten & Anlagen
                     </p>
-                  </div>
-                </div>
+                  </Box>
+                </Box>
 
-                <div className="grid-cols-2 flex flex-row">
-                  <div className="w-2/12">
+                <Box className="flex flex-row items-center">
+                  <Box className="mr-3">
                     <AccessTimeFilledIcon
-                      fontSize="large"
+                      fontSize={isMobile ? "medium" : "large"}
                       style={{ color: "#00d8af" }}
                     />
-                  </div>
-                  <div className="w-full min-w-60">
-                    <p
-                      className="text-sm font-normal max-w-4xl mx-auto"
-                      style={styles.heroFeatureText}
-                    >
+                  </Box>
+                  <Box>
+                    <p className="text-sm md:text-base lg:text-lg font-normal">
                       Qualifizierte Handwerker & Sachverständige auf Knopfdruck
                     </p>
-                  </div>
-                </div>
-              </div>
-              <div className="flex flex-col gap-5 sm:gap-7 md:gap-10 lg:gap-20 mt-14">
-                <div className="grid-cols-2 flex flex-row">
-                  <div className="w-2/12">
+                  </Box>
+                </Box>
+              </Box>
+
+              <Box className="flex flex-col gap-5 md:gap-8 lg:gap-10 mt-5 md:mt-0">
+                <Box className="flex flex-row items-center">
+                  <Box className="mr-3">
                     <QuestionAnswerIcon
-                      fontSize="large"
+                      fontSize={isMobile ? "medium" : "large"}
                       style={{ color: "#00d8af" }}
                     />
-                  </div>
-                  <div className="w-full min-w-60">
-                    <p
-                      className="text-sm font-normal max-w-4xl mx-auto"
-                      style={styles.heroFeatureText}
-                    >
+                  </Box>
+                  <Box>
+                    <p className="text-sm md:text-base lg:text-lg font-normal">
                       Automatisierte Prüfplanung nach gesetzlichen Fristen
                     </p>
-                  </div>
-                </div>
+                  </Box>
+                </Box>
 
-                <div className="grid-cols-2 flex flex-row">
-                  <div className="w-2/12">
+                <Box className="flex flex-row items-center">
+                  <Box className="mr-3">
                     <RocketLaunchIcon
-                      fontSize="large"
+                      fontSize={isMobile ? "medium" : "large"}
                       style={{ color: "#00d8af" }}
                     />
-                  </div>
-                  <div className="w-full min-w-60">
-                    <p
-                      className="text-sm font-normal max-w-4xl mx-auto"
-                      style={styles.heroFeatureText}
-                    >
+                  </Box>
+                  <Box>
+                    <p className="text-sm md:text-base lg:text-lg font-normal">
                       Maximale Transparenz & Dokumentation
                     </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="flex flex-row gap-5 sm:gap-7 md:gap-10 lg:gap-20 mt-14 justify-center lg:justify-start">
+                  </Box>
+                </Box>
+              </Box>
+            </Box>
+
+            <Box className="flex justify-center md:justify-start mt-10">
               <Button
                 component="a"
-                className="block px-5 py-2 mt-4 text-center rounded-lg text-md"
-                size="small"
-                style={styles.registerButton}
+                size="large"
                 sx={{
-                  textTransform: "none",
-                  whiteSpace: "pre",
-                  fontSize: "15px",
+                  ...styles.registerButton,
+                  fontSize: {
+                    xs: "0.9rem",
+                    sm: "1rem",
+                    md: "1.2rem",
+                    lg: "1.5rem",
+                  },
+                  py: { xs: 1, sm: 1.5, md: 1.7 },
+                  px: { xs: 2, sm: 3, md: 4 },
                 }}
                 onClick={handleOnClick}
               >
                 Kostenlos Testen
               </Button>
-            </div>
-          </div>
+            </Box>
+          </Box>
+
           {/* Hero Image Section */}
-          <div className={` 2xl:block pb-20 `}>
-            <div style={styles.heroImageHolder}>
-              <Image
-                src={heroBackgroundPicture}
-                alt="Hero Section Image"
-                width={50}
-                height={10}
-                style={{
-                  width: "100px",
-                  height: "50px",
-                }}
-                layout="responsive"
-              />
-            </div>
-          </div>
-        </div>
+          <Box
+            className="hidden md:block"
+            sx={{
+              position: "relative",
+              height: { md: "25rem", lg: "35rem" },
+              width: "100%",
+            }}
+          >
+            <Image
+              src={heroBackgroundPicture}
+              alt="Hero Section Image"
+              fill
+              style={{ objectFit: "contain" }}
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              priority
+            />
+          </Box>
+        </Box>
       </section>
       <Divider sx={styles.divider} />
     </>
@@ -151,33 +156,18 @@ export default HeroSection;
 
 const styles = {
   heroSubtitle: {
-    fontSize: "1.5rem",
+    fontSize: "1.2rem",
     fontWeight: "600",
     color: "#00d8af",
   },
   registerButton: {
     background: "#00d8af",
     color: "#FFFFFF",
-    padding: "0.7rem",
-    paddingRight: "1.7rem",
-    paddingLeft: "1.7rem",
+    textTransform: "none",
     borderRadius: 7,
-    fontSize: "1.5rem",
     "&:hover": {
       background: "#17ABA9",
     },
-  },
-  heroTextHolder: {
-    marginLeft: "5rem",
-  },
-  heroImageHolder: {
-    width: "52rem",
-    height: "35rem",
-    marginLeft: "1rem",
-  },
-  heroFeatureText: {
-    fontSize: "22px",
-    lineHeight: "1.6rem",
   },
   divider: {
     mb: 2,

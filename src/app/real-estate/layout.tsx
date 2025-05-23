@@ -8,6 +8,7 @@ import { MdOutlineDoorSliding, MdOutlineAddHomeWork } from "react-icons/md";
 import { SubItem, SidebarItem } from "@/components/navigation/GSidebar/SideBar";
 import { ROUTES } from "@/utils/routes";
 import Layout from "@/screens/dashboard/Layout";
+import { Box } from "@mui/material";
 
 const sidebarItems: SidebarItem[] = [
   {
@@ -116,7 +117,7 @@ const RealStateUserLayout: React.FC<any> = ({ children }) => {
           selected={selected}
           setSelected={handleRedirect}
         >
-          {children}
+          <Box sx={{ width: "100%" }}>{children}</Box>
         </Layout>
       );
     } else {
