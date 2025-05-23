@@ -7,7 +7,7 @@ import Sidebar, {
 import GAppbar from "@/components/navigation/GAppbar/GAppbar";
 import Box from "@mui/material/Box";
 import { useAppSelector } from "@/lib/hooks";
-import InactiveAccountDialog from "./InactiveAccountDialog";
+import CustomDialog from "@/components/dialog/CustomDialog";
 import { checkIsLoggedIn } from "@/utils/helperJWT";
 
 interface LayoutProps {
@@ -46,7 +46,7 @@ const Layout: React.FC<LayoutProps> = ({
         {children}
       </Box>
 
-      <InactiveAccountDialog
+      <CustomDialog
         title={"Wir prüfen aktuell Ihre Unternehmensdaten."}
         content=" Die Verifizierung Ihres Unternehmens kann etwas Zeit in Anspruch
           nehmen. Sie erhalten eine Benachrichtigung, sobald die Prüfung

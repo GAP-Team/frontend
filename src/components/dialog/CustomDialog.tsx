@@ -9,7 +9,7 @@ import {
   useTheme,
 } from "@mui/material";
 
-interface InactiveAccountDialogProps {
+interface CustomDialogProps {
   open: boolean;
   handleClose: () => void;
   title: string;
@@ -17,7 +17,7 @@ interface InactiveAccountDialogProps {
   buttonText?: string;
 }
 
-const InactiveAccountDialog: React.FC<InactiveAccountDialogProps> = ({
+const CustomDialog: React.FC<CustomDialogProps> = ({
   open,
   handleClose,
   title,
@@ -42,4 +42,4 @@ const InactiveAccountDialog: React.FC<InactiveAccountDialogProps> = ({
   );
 };
 
-export default InactiveAccountDialog;
+export default CustomDialog;
