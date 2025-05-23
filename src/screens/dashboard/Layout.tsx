@@ -28,7 +28,7 @@ const Layout: React.FC<LayoutProps> = ({
 
   useEffect(() => {
     setOpen(!isActive && checkIsLoggedIn());
-  }, [isActive]);
+  }, [isActive, Cookies.get("access_token"), localStorage.getItem("access_token")]);
 
   const handleClose = (): void => {
     setOpen(false);
