@@ -1,13 +1,32 @@
 "use client";
+import { useEffect } from "react";
 import { useFormik } from "formik";
+import { ROUTES } from "@/utils/routes";
+import { useRouter } from "next/navigation";
 import { Box, Typography } from "@mui/material";
 import GButton from "@/components/button/GButton";
 import { FilterPanelLabels } from "@/utils/enums";
-import { ContractSearchProps } from "@/typings/types";
 import SideFilterPanelOptions from "./SideFilterPanelOptions";
-import { contactFiltersOption, germanStates } from "@/utils/Constants";
+import { ContractSearchProps, SideFilterPanelProps } from "@/typings/types";
+import {
+  listOfTenderTypes,
+  listOfGermanStates,
+  listOfFacilitySubcategories,
+} from "@/utils/Constants";
 
-const SideFilterPanel = (): JSX.Element => {
+const SideFilterPanel: React.FC<SideFilterPanelProps> = ({
+  states,
+  tenderTypes,
+  facilitySubcategories,
+  handleGetContracts,
+}): JSX.Element => {
+  const router = useRouter();
+
+  useEffect(() => {
+    formik.setFieldValue("states", states);
+    formik.setFieldValue("tenderTypes", tenderTypes);
+    formik.setFieldValue("facilitySubcategories", facilitySubcategories);
+  }, [states, tenderTypes, facilitySubcategories]);
 
   const initialValues: ContractSearchProps = {
     states: [],
@@ -17,32 +36,70 @@ const SideFilterPanel = (): JSX.Element => {
 
   const formik = useFormik({
     initialValues: initialValues,
-    onSubmit: () => {},
+    onSubmit: (values) => {
+      handleGetContracts(
+        values.states,
+        values.tenderTypes,
+        values.facilitySubcategories
+      );
+    },
   });
-  
+
+  const handleOnSelect = (selected: string[], field: string): void => {
+    let formikField = "";
+
+    switch (field) {
+      case FilterPanelLabels.STATE:
+        formikField = "states";
+        break;
+      case FilterPanelLabels.FACILITY_SUBCATEGORY:
+        formikField = "facilitySubcategories";
+        break;
+      default:
+        formikField = "tenderTypes";
+        break;
+    }
+
+    formik.setFieldValue(formikField, selected);
+  };
+
+  const handleOnReset = (): void => {
+    formik.setFieldValue("states", []);
+    formik.setFieldValue("tenderTypes", []);
+    formik.setFieldValue("facilitySubcategories", []);
+    handleGetContracts([], [], []);
+    const url = `${ROUTES.SERVICE_PROVIDER.CONTRACTS}?facilitySubcategories=${[].join(",")}&tenderTypes=${[].join(",")}&states=${[].join(",")}`;
+    router.push(url);
+  };
+
   return (
     <Box sx={styles.mainContainer}>
-      <div className="flex flex-row justify-between">
-        <Typography variant="h6" fontWeight="bold">
-          Filters
-        </Typography>
-        <GButton href="#">Filter</GButton>
-      </div>
       <form onSubmit={formik.handleSubmit}>
+        <div className="flex flex-row justify-between">
+          <Typography variant="h6" fontWeight="bold">
+            Filters
+          </Typography>
+          <GButton type="submit">Filter</GButton>
+        </div>
         <SideFilterPanelOptions
-          formik={formik}
-          options={germanStates}
+          options={listOfGermanStates}
+          onSelect={handleOnSelect}
           title={FilterPanelLabels.STATE}
-        />
-        {/* <SideFilterPanelOptions
-          title={FilterPanelLabels.FACILITY_SUBCATEGORY}
-          options={contactFiltersOption.facilityType.options}
+          preSelectedOptions={formik.values.states}
         />
         <SideFilterPanelOptions
+          onSelect={handleOnSelect}
+          options={listOfFacilitySubcategories}
+          title={FilterPanelLabels.FACILITY_SUBCATEGORY}
+          preSelectedOptions={formik.values.facilitySubcategories}
+        />
+        <SideFilterPanelOptions
+          onSelect={handleOnSelect}
+          options={listOfTenderTypes}
           title={FilterPanelLabels.TENDER_TYPE}
-          options={contactFiltersOption.tenderType.options}
-        /> */}
-        <GButton type="submit">Filter löschen</GButton>
+          preSelectedOptions={formik.values.tenderTypes}
+        />
+        <GButton onClick={handleOnReset}>Filter löschen</GButton>
       </form>
     </Box>
   );

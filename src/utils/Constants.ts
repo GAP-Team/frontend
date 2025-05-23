@@ -1,7 +1,8 @@
 import { Notification } from "@/components/navigation/GAppbar/types";
 import OfficeImage from "../../public/images/office.jpg";
+import { FilterOptionType } from "@/typings/types";
 
-export const listOfFacilitySubcategories = [
+export const listOfFacilitySubcategories: FilterOptionType[] = [
   {
     category: "Brandwache",
     items: ["Brandwache"],
@@ -128,7 +129,7 @@ export const listOfFacilitySubcategories = [
   },
 ];
 
-export const listOfTenderTypes = [
+export const listOfTenderTypes: FilterOptionType[] = [
   {
     category: "Unterteilung Auftragstypen (Ingenieurdienstleistungen)",
     items: [
@@ -149,6 +150,30 @@ export const listOfTenderTypes = [
       "Sachkundigenprüfung",
       "Instandsetzung/Reparatur",
       "Wartung",
+    ],
+  },
+];
+
+export const listOfGermanStates: FilterOptionType[] = [
+  {
+    category: "Staaten",
+    items: [
+      "Baden-Württemberg",
+      "Bayern",
+      "Berlin",
+      "Brandenburg",
+      "Bremen",
+      "Hamburg",
+      "Hessen",
+      "Niedersachsen",
+      "Mecklenburg-Vorpommern",
+      "Nordrhein-Westfalen",
+      "Rheinland-Pfalz",
+      "Saarland",
+      "Sachsen",
+      "Sachsen-Anhalt",
+      "Schleswig-Holstein",
+      "Thüringen",
     ],
   },
 ];
@@ -692,36 +717,6 @@ export const RealEstateLandingPageTabs = [
   { label: "Ausschreibungsübersicht", index: "2" },
   { label: "Objektübersicht", index: "3" },
 ];
-
-export const contactFiltersOption = {
-  state: {
-    title: "Bundesland",
-    options: [
-      "Bayern",
-      "Hessen",
-      "Sachsen",
-      "Thüringen",
-      "Baden-Württemberg",
-      "Schleswig-Holstein",
-      "Nordrhein-Westfalen",
-      "Mecklenburg-Vorpommern",
-    ],
-  },
-  facilityType: {
-    title: "Anlagentyp",
-    options: [
-      "Anlagentyp 1",
-      "Anlagentyp 2",
-      "Anlagentyp 3",
-      "Anlagentyp 4",
-      "Anlagentyp 5",
-    ],
-  },
-  tenderType: {
-    title: "Auftragstyp",
-    options: ["Wartung", "Installation", "Reparatur", "Prüfung", "Fire"],
-  },
-};
 
 export const CHECK_DUE_SOON_DAYS = 183;
 export const MAINTENANCE_DUE_SOON_DAYS = 15;
