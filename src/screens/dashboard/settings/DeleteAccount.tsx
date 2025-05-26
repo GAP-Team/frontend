@@ -18,7 +18,7 @@ import {
   DialogContent,
   DialogContentText,
 } from "@mui/material";
-import { ClearLocalStorage } from "@/utils/utils";
+import { clearLocalStorage } from "@/utils/utils";
 import { deleteUser } from "@/lib/features/userSlice";
 import { DeleteAccountSchema } from "@/utils/ValidationSchema";
 
