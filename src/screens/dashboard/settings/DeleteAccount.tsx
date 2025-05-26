@@ -38,7 +38,7 @@ const DeleteAccount = (): JSX.Element => {
         })
       ).unwrap();
 
-      ClearLocalStorage();
+      clearLocalStorage();
       router.push(ROUTES.LOGIN);
 
       dispatch(
