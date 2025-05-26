@@ -52,7 +52,7 @@ const DeleteAccount = (): JSX.Element => {
         showSnackbar({
           type: "error",
           message:
-            "Das Löschen des Benutzerkontos ist fehlgeschlagen. Versuchen Sie es später erneut.",
+            "Das Löschen des Benutzerkontos ist fehlgeschlagen. Versuchen Sie es später erneut – oder überprüfen Sie, ob das Passwort korrekt ist.",
         })
       );
     }
