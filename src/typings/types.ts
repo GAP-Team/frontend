@@ -39,3 +39,8 @@ export interface Contract {
   fromDate: string;
   toDate: string;
 }
+
+export interface TenderTypesOptionProps {
+  formik: any;
+  useType: string;
+}

@@ -7,12 +7,11 @@ import RadioGroup from "@mui/material/RadioGroup";
 import FormControl from "@mui/material/FormControl";
 import FormControlLabel from "@mui/material/FormControlLabel";
 
+import { TENDER_FORM } from "@/utils/enums";
 import { AddTenderFormValues } from "./types";
 import GTextInput from "@/components/input/GTextInput";
-import CustomSelect from "@/components/drop_down/CustomSelect";
 import LabelWithAsterisk from "@/components/label/LabelWithAsterisk";
-import { tenderTypesListHW, tenderTypesListSV } from "@/utils/Constants";
-import { TENDER_FORM } from "@/utils/enums";
+import TenderTypesOptions from "@/components/drop_down/TenderTypesOptions";
 
 const TenderInformation = (): JSX.Element => {
   const formik = useFormikContext<AddTenderFormValues>();
@@ -22,7 +21,6 @@ const TenderInformation = (): JSX.Element => {
   ): void => {
     const selectedForm = event.target.value;
     formik.setFieldValue("tenderForm", selectedForm);
-    formik.setFieldValue("tenderType", "");
   };
 
   return (
@@ -89,16 +87,7 @@ const TenderInformation = (): JSX.Element => {
         <Grid item xs={12}>
           <LabelWithAsterisk>AUSSCHREIBUNGSTYP</LabelWithAsterisk>
           <FormControl fullWidth>
-            <CustomSelect
-              name="tenderType"
-              options={
-                formik?.values?.tenderForm === TENDER_FORM.CRAFTSMAN
-                  ? tenderTypesListHW
-                  : tenderTypesListSV
-              }
-              onChange={formik?.handleChange}
-              value={formik?.values?.tenderType}
-            />
+            <TenderTypesOptions formik={formik} useType="single" />
             {formik?.touched?.tenderType && (
               <p style={styles.errorTexts}>{formik?.errors?.tenderType}</p>
             )}
