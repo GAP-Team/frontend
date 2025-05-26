@@ -61,7 +61,7 @@ export const truncateLabel = (label: string, maxLength = 20): string => {
     : label;
 };
 
-export const ClearLocalStorage = (): void => {
+export const clearLocalStorage = (): void => {
   Cookies.remove("access_token");
   Cookies.remove("isVerified");
   localStorage.clear();
