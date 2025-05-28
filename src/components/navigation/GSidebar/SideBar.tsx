@@ -11,6 +11,7 @@ import gapLogo from "../../../../public/icons/gap-logo.svg";
 import gapLogoFull from "../../../../public/icons/gapfull-logo.svg";
 import SidebarItemComponent from "./SidebarItemComponent";
 import { SubSidebarItem } from "./SubSidebarItem";
+import { ROUTES } from "@/utils/routes";
 
 export interface SubItem {
   id: number;
@@ -90,11 +91,17 @@ const DrawerLogo = ({
       width: open ? "100%" : "2rem",
       height: open ? "3rem" : "2rem",
       position: "relative",
+      cursor: "pointer",
     }}
+    onClick={handleClickRediret}
   >
     <Image src={src} fill alt="GAP logo" style={{ objectFit: "contain" }} />
   </div>
 );
+
+const handleClickRediret = (): void => {
+  window.location.href = ROUTES.SERVICE_PROVIDER_HOME;
+};
 
 const Sidebar: React.FC<SidebarProps> = ({ items, setSelected, selected }) => {
   const [open, setOpen] = React.useState(false);

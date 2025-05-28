@@ -756,23 +756,23 @@ export const articles = [
 
 export const FAQs = [
   {
-    question: "Was ist immocloud?",
+    question: "Was ist GAP?",
     answer:
-      "immocloud ist eine Plattform zur digitalen Immobilienverwaltung. Sie ist für Immobilienbesitzer und Hausverwaltungen konzipiert, die eine effiziente Verwaltung ihres Bestandes anstreben. Dabei verfolgen wir das Ziel, der Verwaltung die Komplexität zu nehmen und Immobilienbesitzern als digitaler Assistent zur Seite zu stehen.",
+      "GAP ist eine Plattform zur digitalen Immobilienverwaltung. Sie ist für Immobilienbesitzer und Hausverwaltungen konzipiert, die eine effiziente Verwaltung ihres Bestandes anstreben. Dabei verfolgen wir das Ziel, der Verwaltung die Komplexität zu nehmen und Immobilienbesitzern als digitaler Assistent zur Seite zu stehen.",
   },
   {
-    question: "Welche Funktionen bietet mir immocloud?",
+    question: "Welche Funktionen bietet mir GAP?",
     answer:
-      "immocloud bietet eine Vielzahl an Funktionen für eine effiziente Immobilienverwaltung.",
+      "GAP bietet eine Vielzahl an Funktionen für eine effiziente Immobilienverwaltung.",
   },
   {
-    question: "Wie wechsle ich zu immocloud?",
+    question: "Wie wechsle ich zu GAP?",
     answer:
-      "Der Wechsel zu immocloud ist einfach und schnell. Sie können Ihre bestehenden Daten importieren und sofort loslegen.",
+      "Der Wechsel zu GAP ist einfach und schnell. Sie können Ihre bestehenden Daten importieren und sofort loslegen.",
   },
   {
     question: "Gibt es technische Voraussetzungen?",
     answer:
-      "Ja, immocloud erfordert einen aktuellen Webbrowser und eine Internetverbindung.",
+      "Ja, GAP erfordert einen aktuellen Webbrowser und eine Internetverbindung.",
   },
 ];

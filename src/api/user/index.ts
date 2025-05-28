@@ -39,6 +39,8 @@ const userAPIs = {
     api.get(
       `/users/${userId}/facilities?city=${city}&state=${state}&facilityType=${facilityType}`
     ),
+  deleteUser: (id: string, currentPassword: string): any =>
+    api.delete(`/users/${id}`, { data: { currentPassword: currentPassword } }),
 };
 
 export default userAPIs;
