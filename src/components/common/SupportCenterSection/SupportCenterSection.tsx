@@ -45,7 +45,7 @@ const SupportCenterSection = (): JSX.Element => {
               E-Mail
             </Typography>
             <Typography>Schreib uns eine E-Mail an:</Typography>
-            <Link href="mailto:info@immocloud.de" sx={styles.textColor}>
+            <Link href="mailto:info@gap-pruefen.de" sx={styles.textColor}>
               info@gap-pruefen.de
             </Link>
           </Box>
