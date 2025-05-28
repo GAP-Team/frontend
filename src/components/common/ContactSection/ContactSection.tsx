@@ -1,9 +1,16 @@
 "use client";
+import { useRef } from "react";
 import ContactForm from "../ContactForm/ContactForm";
 import { Box, Container, Typography } from "@mui/material";
 import FAQSection from "@/components/common/FaqSection/FaqSection";
 
 const ContactSection = (): JSX.Element => {
+  const contactRef = useRef<HTMLDivElement | null>(null);
+
+  const handleScrollToContactForm = (): void => {
+    contactRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
     <section className="bg-white w-full mb-4 ">
       <Box>
@@ -19,31 +26,39 @@ const ContactSection = (): JSX.Element => {
           </Typography>
         </Box>
         {/* FAQ Section */}
-        <FAQSection customerType="Dienstleister" />
-        <FAQSection customerType="Immobilienbetreiber" />
+        <FAQSection
+          customerType="Dienstleister"
+          handleScroll={handleScrollToContactForm}
+        />
+        <FAQSection
+          customerType="Immobilienbetreiber"
+          handleScroll={handleScrollToContactForm}
+        />
         {/* Content Section */}
-        <Container maxWidth="md" sx={styles.innerContainer}>
-          <Typography
-            variant="h5"
-            fontWeight="bold"
-            color="primary"
-            sx={styles.heading}
-          >
-            Vielen Dank für Ihr Interesse an GAP!
-          </Typography>
-          <Typography variant="body1" sx={styles.description}>
-            Als GAP (Gesetzliche Anlagen Prüfung) setzen wir neue Maßstäbe für
-            die digitale Immobilienverwaltung. Unser Ziel: &quot;Best in
-            Class&quot; bei Effizienz, Rechtssicherheit und Servicequalität. Wir
-            arbeiten nah an unseren Kunden und vermitteln zertifizierte Experten
-            für gesetzlich vorgeschriebene Prüfungen.
-          </Typography>
-          <Typography variant="body1" sx={styles.description}>
-            Sie möchten mehr erfahren oder ein individuelles Beratungsgespräch
-            vereinbaren? Schreiben Sie uns!
-          </Typography>
-          <ContactForm />
-        </Container>
+        <section ref={contactRef} id="contact-content">
+          <Container maxWidth="md" sx={styles.innerContainer}>
+            <Typography
+              variant="h5"
+              fontWeight="bold"
+              color="primary"
+              sx={styles.heading}
+            >
+              Vielen Dank für Ihr Interesse an GAP!
+            </Typography>
+            <Typography variant="body1" sx={styles.description}>
+              Als GAP (Gesetzliche Anlagen Prüfung) setzen wir neue Maßstäbe für
+              die digitale Immobilienverwaltung. Unser Ziel: &quot;Best in
+              Class&quot; bei Effizienz, Rechtssicherheit und Servicequalität.
+              Wir arbeiten nah an unseren Kunden und vermitteln zertifizierte
+              Experten für gesetzlich vorgeschriebene Prüfungen.
+            </Typography>
+            <Typography variant="body1" sx={styles.description}>
+              Sie möchten mehr erfahren oder ein individuelles Beratungsgespräch
+              vereinbaren? Schreiben Sie uns!
+            </Typography>
+            <ContactForm />
+          </Container>
+        </section>
       </Box>
     </section>
   );
