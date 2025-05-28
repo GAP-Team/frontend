@@ -1,5 +1,6 @@
 import UserProfile from "@/screens/dashboard/settings/UserProfile";
 import EmailChange from "@/screens/dashboard/settings/EmailChange";
+import DeleteAccount from "@/screens/dashboard/settings/DeleteAccount";
 import CompanyProfile from "@/screens/dashboard/settings/CompanyProfile";
 import ChangePassword from "@/screens/dashboard/settings/ChangePassword";
 
@@ -20,6 +21,8 @@ export default function SectionPage({
         return <EmailChange />;
       case "password-change":
         return <ChangePassword />;
+      case "delete-account":
+        return <DeleteAccount />;
     }
   };
 
