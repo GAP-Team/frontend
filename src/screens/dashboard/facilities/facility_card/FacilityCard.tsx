@@ -166,10 +166,12 @@ const FacilityCard: React.FC<FacilityCardProps> = ({ facility }) => {
           label="E-Mail Benachrichtigung"
           value={facility.check.isEmailNotificationEnable ? "Ja" : "Nein"}
         />
-        <DetailItem
-          label="E-Mail Liste"
-          value={facility.check.emailNotificationList.join(", ") || "Keine"}
-        />
+        {facility.check.isEmailNotificationEnable && (
+          <DetailItem
+            label="E-Mail Liste"
+            value={facility.check.emailNotificationList.join(", ") || "Keine"}
+          />
+        )}
 
         {/* Maintenance Information */}
         <Typography variant="subtitle2" sx={{ ...styles.sectionTitle, mt: 1 }}>
@@ -203,12 +205,14 @@ const FacilityCard: React.FC<FacilityCardProps> = ({ facility }) => {
           label="E-Mail Benachrichtigung"
           value={facility.maintenance.isEmailNotificationEnable ? "Ja" : "Nein"}
         />
-        <DetailItem
-          label="E-Mail Liste"
-          value={
-            facility.maintenance.emailNotificationList.join(", ") || "Keine"
-          }
-        />
+        {facility.maintenance.isEmailNotificationEnable && (
+          <DetailItem
+            label="E-Mail Liste"
+            value={
+              facility.maintenance.emailNotificationList.join(", ") || "Keine"
+            }
+          />
+        )}
       </SummaryCard>
 
       {/* Document Section */}
