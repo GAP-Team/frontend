@@ -18,7 +18,7 @@ const SideFilterPanel: React.FC<SideFilterPanelProps> = ({
   states,
   tenderTypes,
   facilitySubcategories,
-  handleGetContracts,
+  handleSearchContracts,
 }): JSX.Element => {
   const router = useRouter();
 
@@ -37,7 +37,7 @@ const SideFilterPanel: React.FC<SideFilterPanelProps> = ({
   const formik = useFormik({
     initialValues: initialValues,
     onSubmit: (values) => {
-      handleGetContracts(
+      handleSearchContracts(
         values.states,
         values.tenderTypes,
         values.facilitySubcategories
@@ -67,7 +67,7 @@ const SideFilterPanel: React.FC<SideFilterPanelProps> = ({
     formik.setFieldValue("states", []);
     formik.setFieldValue("tenderTypes", []);
     formik.setFieldValue("facilitySubcategories", []);
-    handleGetContracts([], [], []);
+    handleSearchContracts([], [], []);
     const url = `${ROUTES.SERVICE_PROVIDER.CONTRACTS}?facilitySubcategories=${[].join(",")}&tenderTypes=${[].join(",")}&states=${[].join(",")}`;
     router.push(url);
   };

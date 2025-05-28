@@ -82,7 +82,7 @@ const ContractsOverview = (): JSX.Element => {
         <div style={styles.filterSection}>
           <SideFilterPanel
             states={preSelectedStates}
-            handleGetContracts={getContracts}
+            handleSearchContracts={getContracts}
             tenderTypes={preSelectedTenderTypes}
             facilitySubcategories={preSelectedFacilitySubcategories}
           />

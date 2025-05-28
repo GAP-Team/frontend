@@ -48,7 +48,7 @@ export interface SideFilterPanelProps {
   states: string[];
   tenderTypes: string[];
   facilitySubcategories: string[];
-  handleGetContracts: (
+  handleSearchContracts: (
     states: string[],
     tenderTypes: string[],
     facilitySubcategories: string[]

@@ -48,7 +48,7 @@ export enum DocumentChoice {
 }
 
 export enum FilterPanelLabels {
-  STATE = "Bundesländer",
+  STATE = "Bundesland",
   TENDER_TYPE = "Auftragstyp",
   FACILITY_SUBCATEGORY = "Anlagentyp",
 }
