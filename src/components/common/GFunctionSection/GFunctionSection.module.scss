@@ -12,6 +12,7 @@
 .card {
   display: flex;
   padding: 1rem;
+  min-height: 60vh;
   position: relative;
   flex-direction: column;
   border-radius: var(--rounded-box, 1rem /* 16px */);
