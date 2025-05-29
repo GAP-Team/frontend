@@ -1,10 +1,17 @@
+import Image from "next/image";
 import UserImage from "../../../../public/images/user.jpg";
-import { Box, Typography, Button, Stack, Avatar } from "@mui/material";
+import { Box, Typography, Button, Stack } from "@mui/material";
 
 const Testimonial = (): JSX.Element => {
   return (
     <Box sx={styles.testimonialContainer}>
-      <Avatar alt="User Image" sx={styles.avatar} src={UserImage.src} />
+      <Image
+        width={200}
+        height={200}
+        alt="User Image"
+        src={UserImage.src}
+        style={{ borderRadius: 4 }}
+      />
 
       <Box maxWidth={600}>
         <Typography color="#128e8c" fontWeight={500}>
