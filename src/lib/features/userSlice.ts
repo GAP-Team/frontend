@@ -88,6 +88,13 @@ export const updateUserPassword = createAsyncThunk(
     return response.data;
   }
 );
+export const deleteUser = createAsyncThunk(
+  "user/deleteUser",
+  async ({ id, currentPassword }: { id: string; currentPassword: string }) => {
+    const response = await userAPIs.deleteUser(id, currentPassword);
+    return response.data;
+  }
+);
 
 const userSlice = createSlice({
   name: "user",
@@ -99,6 +106,9 @@ const userSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(updateUserProfile.fulfilled, (state, action) => {
+      return { ...state, ...action.payload };
+    });
+    builder.addCase(deleteUser.fulfilled, (state, action) => {
       return { ...state, ...action.payload };
     });
   },

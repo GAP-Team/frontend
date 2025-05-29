@@ -447,3 +447,7 @@ export const ContractSearchSchema = yup.object({
     .of(yup.string())
     .min(1, "Bitte wählen Sie mindestens eine Anlage aus"),
 });
+
+export const DeleteAccountSchema = yup.object({
+  password: yup.string().required("Passwort ist erforderlich"),
+});
