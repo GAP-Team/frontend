@@ -133,7 +133,7 @@ const RegistrationForm = ({
           </div>
           <div className="flex flex-col" style={styles.userInfo}>
             <Typography variant="gsub" color="gray.500">
-              {`Wer sind Sie?: ${formik?.values?.role === USER_ROLE.REAL_ESTATE_OWNER ? "Immobilienbetreiber" : "Dienstleister"}`}
+              Wer sind Sie?
             </Typography>
           </div>
           {activeStep === 0 && (
