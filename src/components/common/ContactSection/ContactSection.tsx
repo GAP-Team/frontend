@@ -1,5 +1,5 @@
 "use client";
-import { useRef } from "react";
+import { useCallback, useRef } from "react";
 import ContactForm from "../ContactForm/ContactForm";
 import { Box, Container, Typography } from "@mui/material";
 import FAQSection from "@/components/common/FaqSection/FaqSection";
@@ -7,9 +7,9 @@ import FAQSection from "@/components/common/FaqSection/FaqSection";
 const ContactSection = (): JSX.Element => {
   const contactRef = useRef<HTMLDivElement | null>(null);
 
-  const handleScrollToContactForm = (): void => {
+  const handleScrollToContactForm = useCallback((): void => {
     contactRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
+  }, []);
 
   return (
     <section className="bg-white w-full mb-4 ">
@@ -28,11 +28,11 @@ const ContactSection = (): JSX.Element => {
         {/* FAQ Section */}
         <FAQSection
           customerType="Dienstleister"
-          handleScroll={handleScrollToContactForm}
+          onScrollToContact={handleScrollToContactForm}
         />
         <FAQSection
           customerType="Immobilienbetreiber"
-          handleScroll={handleScrollToContactForm}
+          onScrollToContact={handleScrollToContactForm}
         />
         {/* Content Section */}
         <section ref={contactRef} id="contact-content">
