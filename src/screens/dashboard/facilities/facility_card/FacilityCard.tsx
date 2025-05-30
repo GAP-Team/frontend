@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 import { Facility } from "./types";
 import Box from "@mui/material/Box";
 import Chip from "@mui/material/Chip";
@@ -136,10 +137,15 @@ const FacilityCard: React.FC<FacilityCardProps> = ({ facility }) => {
       <SummaryCard>
         <DetailItem label="Unterkategorie" value={facility.subcategory} />
         <div>
-          <DetailItem
-            label="Ausschreibungens"
-            value={facility.tenderIds.length}
-          />
+          <Link
+            style={{ textDecoration: "none" }}
+            href={ROUTES.REAL_ESTATE.TENDER.TENDERS}
+          >
+            <DetailItem
+              label="Ausschreibungens"
+              value={facility.tenderIds.length}
+            />
+          </Link>
         </div>
         {/* Check Information */}
         <Typography variant="subtitle2" sx={{ ...styles.sectionTitle, mt: 1 }}>
