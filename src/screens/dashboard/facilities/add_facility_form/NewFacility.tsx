@@ -256,7 +256,7 @@ const NewFacility: React.FC<NewFacilityProps> = ({
     isPublishCheckAutomatically:
       facility?.check?.isPublishAutomatically || false,
     publishAutomaticallyInMonth:
-      facility?.check?.publishAutomaticallyInMonth || 0,
+      facility?.check?.publishAutomaticallyInMonth || 3,
     isReminderEnabled: false,
     emailNotificationList: facility?.check?.emailNotificationList || ["", ""],
     selectedBuilding: facility?.buildingId || "",
@@ -281,7 +281,7 @@ const NewFacility: React.FC<NewFacilityProps> = ({
     isPublishMaintenanceAutomatically:
       facility?.maintenance?.isPublishAutomatically || false,
     publishMaintenanceAutomaticallyInMonth:
-      facility?.maintenance?.publishAutomaticallyInMonth || 0,
+      facility?.maintenance?.publishAutomaticallyInMonth || 3,
     maintenanceReminderInMonth: facility?.maintenance?.reminderInMonth || 0,
     maintenanceEmailNotificationList: facility?.maintenance
       ?.emailNotificationList || ["", ""],
