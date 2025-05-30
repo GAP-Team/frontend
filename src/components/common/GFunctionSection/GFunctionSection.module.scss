@@ -12,9 +12,10 @@
 .card {
   display: flex;
   padding: 1rem;
-  min-height: var(--card-min-height, 60vh);
+  cursor: pointer;
   position: relative;
   flex-direction: column;
+  min-height: var(--card-min-height, 60vh);
   border-radius: var(--rounded-box, 1rem /* 16px */);
 }
 .card:focus {
