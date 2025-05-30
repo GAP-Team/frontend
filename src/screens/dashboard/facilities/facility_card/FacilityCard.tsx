@@ -135,6 +135,12 @@ const FacilityCard: React.FC<FacilityCardProps> = ({ facility }) => {
       <Divider sx={styles.divider} orientation="horizontal" />
       <SummaryCard>
         <DetailItem label="Unterkategorie" value={facility.subcategory} />
+        <div>
+          <DetailItem
+            label="Ausschreibungens"
+            value={facility.tenderIds.length}
+          />
+        </div>
         {/* Check Information */}
         <Typography variant="subtitle2" sx={{ ...styles.sectionTitle, mt: 1 }}>
           Prüfung
