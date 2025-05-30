@@ -18,6 +18,7 @@ import GProgressStepper from "@/components/stepper/GProgressStepper";
 import CircularProgress from "@mui/material/CircularProgress";
 import { RegistrationFormValues } from "../types";
 import ExpertiseServiceProvider from "../service_provider/ExpertiseServiceProvider";
+import { Typography } from "@mui/material";
 
 interface RegistrationFormProps {
   activeStep: number;
@@ -130,6 +131,11 @@ const RegistrationForm = ({
               activeStep={activeStep}
             />
           </div>
+          <div className="flex flex-col" style={styles.userInfo}>
+            <Typography variant="gsub" color="gray.500">
+              Wer sind Sie?
+            </Typography>
+          </div>
           {activeStep === 0 && (
             <GTab
               tabs={basictabs}
@@ -191,6 +197,11 @@ const styles = {
     fontWeight: "600",
     alignItems: "center",
     color: "#A0ADB1",
+  },
+  userInfo: {
+    width: "auto",
+    padding: "0.50rem",
+    marginLeft: "1.5rem",
   },
   mainContent: {
     display: "flex",
