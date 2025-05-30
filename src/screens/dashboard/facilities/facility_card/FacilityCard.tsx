@@ -142,8 +142,8 @@ const FacilityCard: React.FC<FacilityCardProps> = ({ facility }) => {
             href={ROUTES.REAL_ESTATE.TENDER.TENDERS}
           >
             <DetailItem
-              label="Ausschreibungens"
               value={facility.tenderIds.length}
+              label="Anzahl der Ausschreibungen"
             />
           </Link>
         </div>
