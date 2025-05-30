@@ -17,7 +17,6 @@ import AddFacilityForm from "./AddFacilityForm";
 import FacilitySummary from "./FacilitySummary";
 import React, { useEffect, useState } from "react";
 import PageTitle from "@/components/label/PageTitle";
-import { currentUser } from "@/lib/features/userSlice";
 import FacilityMaintenance from "./FacilityMaintenance";
 import FacilityInformation from "./FacilityInformation";
 import SuccessPage from "@/components/common/SuccessPage";
@@ -27,6 +26,7 @@ import FacilityDocumentation from "./FacilityDocumentation";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { handleUploadMultipleDoc } from "@/utils/uploadToS3";
 import { fetchBuildings } from "@/lib/features/buildingSlice";
+import { currentUser, isUserActive } from "@/lib/features/userSlice";
 import GProgressStepper from "@/components/stepper/GProgressStepper";
 import { addFacilityValidationSchema } from "@/utils/ValidationSchema";
 import {
@@ -50,6 +50,7 @@ const NewFacility: React.FC<NewFacilityProps> = ({
   const router = useRouter();
   const dispatch = useAppDispatch();
   const user = useSelector(currentUser);
+  const checkActiveUser = useSelector(isUserActive);
   const facility = useAppSelector(getFacilityById(facilityId));
 
   const steps: ActiveStepItem[] = [
@@ -91,10 +92,20 @@ const NewFacility: React.FC<NewFacilityProps> = ({
     actions: FormikHelpers<AddFacilityFormValues>
   ): Promise<void> => {
     if (activeStep?.id === steps.length - 1) {
-      const saveStatus = await uploadAllDocuments(values);
-      if (saveStatus) {
-        setIsSubmitted(true);
-        actions.setSubmitting(false);
+      if (checkActiveUser) {
+        const saveStatus = await uploadAllDocuments(values);
+        if (saveStatus) {
+          setIsSubmitted(true);
+          actions.setSubmitting(false);
+        }
+      } else {
+        dispatch(
+          showSnackbar({
+            type: "error",
+            message:
+              "Bitte aktivieren Sie Ihr Konto, um diese Funktion zu nutzen.",
+          })
+        );
       }
     } else {
       setActiveStep(steps[activeStep.id + 1]);
