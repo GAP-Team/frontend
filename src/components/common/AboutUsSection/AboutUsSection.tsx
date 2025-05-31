@@ -37,7 +37,7 @@ const AboutUsSection = (): JSX.Element => {
                         Einfach, Sicher, Digital
                       </Typography>
                       <Typography variant="h3" style={styles.subHeadingText}>
-                        Wir sind immocloud
+                        Wir sind GAP
                       </Typography>
                     </div>
                   </div>
@@ -63,7 +63,7 @@ const AboutUsSection = (): JSX.Element => {
                 gutterBottom
                 style={styles.statSubHeadingText}
               >
-                immocloud in Zahlen
+                GAP in Zahlen
               </Typography>
             </Box>
 
