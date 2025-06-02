@@ -4,7 +4,7 @@ import { useTheme } from "@mui/material/styles";
 
 interface DetailItemProps {
   label: string;
-  value: string | number;
+  value: string;
 }
 
 const DetailItem: React.FC<DetailItemProps> = ({ label, value }) => {
