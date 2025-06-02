@@ -20,7 +20,11 @@ import {
   ListItemButton,
   Grid,
 } from "@mui/material";
-import { germanStates, listOfFacilitySubcategories } from "@/utils/Constants";
+import {
+  germanStates,
+  listOfTenderTypes,
+  listOfFacilitySubcategories,
+} from "@/utils/Constants";
 import { useFormik } from "formik";
 import { ROUTES } from "@/utils/routes";
 import { useRouter } from "next/navigation";
@@ -32,7 +36,6 @@ import CustomSelect from "@/components/drop_down/CustomSelect";
 import { ContractSearchSchema } from "@/utils/ValidationSchema";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import heroBackgroundPicture from "../../../../public/images/hero6.jpg";
-import TenderTypesOptions from "@/components/drop_down/TenderTypesOptions";
 
 const HeroSection = (): JSX.Element => {
   const router = useRouter();
@@ -44,6 +47,12 @@ const HeroSection = (): JSX.Element => {
   }>({});
   const [selectedFacilitySubcategories, setSelectedFacilitySubcategories] =
     useState<string[]>([]);
+  const [selectedTenderType, setSelectedTenderType] = useState<string[]>([]);
+  const [tenderTypeAnchorEl, setTenderTypeAnchorEl] =
+    useState<HTMLDivElement | null>(null);
+  const [tenderTypeExpanded, setTenderTypeExpanded] = useState<{
+    [key: string]: boolean;
+  }>({});
 
   const initialValues: ContractSearchProps = {
     states: [],
@@ -75,30 +84,80 @@ const HeroSection = (): JSX.Element => {
     setFacilityExpanded((prev) => ({ ...prev, [category]: !prev[category] }));
   };
 
-  const handleOptionsSelectFilter = (item: string): string[] => {
-    return selectedFacilitySubcategories.includes(item)
-      ? selectedFacilitySubcategories.filter((selected) => selected !== item)
-      : [...selectedFacilitySubcategories, item];
+  const handleOptionsSelectFilter = (item: string, type: string): string[] => {
+    if (type === "facilitySubcategories") {
+      return selectedFacilitySubcategories.includes(item)
+        ? selectedFacilitySubcategories.filter((selected) => selected !== item)
+        : [...selectedFacilitySubcategories, item];
+    } else {
+      return selectedTenderType.includes(item)
+        ? selectedTenderType.filter((selected) => selected !== item)
+        : [...selectedTenderType, item];
+    }
   };
 
   const handleFacilityOptionSelect = (item: string): void => {
-    const facilitySubcategories = handleOptionsSelectFilter(item);
+    const facilitySubcategories = handleOptionsSelectFilter(
+      item,
+      "facilitySubcategories"
+    );
 
     setSelectedFacilitySubcategories(facilitySubcategories);
     formik.setFieldValue("facilitySubcategories", facilitySubcategories);
   };
 
-  const handleOptionsDeselectFilter = (item: string): string[] => {
-    return selectedFacilitySubcategories.filter(
-      (selected) => selected !== item
-    );
+  const handleOptionsDeselectFilter = (
+    item: string,
+    type: string
+  ): string[] => {
+    if (type) {
+      return selectedFacilitySubcategories.filter(
+        (selected) => selected !== item
+      );
+    } else {
+      return selectedTenderType.filter((selected) => selected !== item);
+    }
   };
 
   const handleFacilityOptionDeselect = (item: string): void => {
-    const facilitiesAfterDeselect = handleOptionsDeselectFilter(item);
+    const facilitiesAfterDeselect = handleOptionsDeselectFilter(
+      item,
+      "facilitySubcategories"
+    );
 
     setSelectedFacilitySubcategories(facilitiesAfterDeselect);
     formik.setFieldValue("facilitySubcategories", facilitiesAfterDeselect);
+  };
+
+  // Tender Type handles
+  const handleClickTenderTypeSelect = (
+    event: React.MouseEvent<HTMLDivElement>
+  ): void => {
+    setTenderTypeAnchorEl(event.currentTarget);
+  };
+
+  const handleTenderTypeOptionsClose = (): void => {
+    setTenderTypeAnchorEl(null);
+  };
+
+  const handleTenderTypeOptionsExpand = (category: string): void => {
+    setTenderTypeExpanded((prev) => ({ ...prev, [category]: !prev[category] }));
+  };
+
+  const handleTenderTypeOptionSelect = (item: string): void => {
+    const tenderTypes = handleOptionsSelectFilter(item, "tenderTypes");
+    setSelectedTenderType(tenderTypes);
+    formik.setFieldValue("tenderTypes", tenderTypes);
+  };
+
+  const handleTenderTypesOptionDeselect = (item: string): void => {
+    const facilitiesAfterDeselect = handleOptionsDeselectFilter(
+      item,
+      "tenderTypes"
+    );
+
+    setSelectedTenderType(facilitiesAfterDeselect);
+    formik.setFieldValue("tenderTypes", facilitiesAfterDeselect);
   };
 
   const handleSelectStates = (event: any): void => {
@@ -278,10 +337,104 @@ const HeroSection = (): JSX.Element => {
                             >
                               Wählen Sie ein Auftragstyp aus:
                             </label>
-                            <TenderTypesOptions
-                              formik={formik}
-                              useType="multiple"
+
+                            <TextField
+                              label="Auftragstypen"
+                              onClick={handleClickTenderTypeSelect}
+                              InputProps={{
+                                readOnly: true,
+                                endAdornment: (
+                                  <InputAdornment position="start">
+                                    <ArrowDropDownIcon />
+                                  </InputAdornment>
+                                ),
+                              }}
+                              // value={selectedTenderType}
+                              onBlur={formik?.handleBlur}
+                              onChange={formik?.handleChange}
+                              error={
+                                formik?.touched?.tenderTypes &&
+                                Boolean(formik?.errors?.tenderTypes)
+                              }
+                              helperText={
+                                formik?.touched?.tenderTypes &&
+                                formik?.errors?.tenderTypes
+                              }
                             />
+                            <Menu
+                              anchorEl={tenderTypeAnchorEl}
+                              open={Boolean(tenderTypeAnchorEl)}
+                              onClose={handleTenderTypeOptionsClose}
+                            >
+                              {listOfTenderTypes.map((tenderTypes) => (
+                                <div key={tenderTypes.category}>
+                                  <ListItemButton
+                                    onClick={() =>
+                                      handleTenderTypeOptionsExpand(
+                                        tenderTypes.category
+                                      )
+                                    }
+                                  >
+                                    <ListItemText
+                                      primary={tenderTypes.category}
+                                    />
+                                    {tenderTypeExpanded[
+                                      tenderTypes.category
+                                    ] ? (
+                                      <ExpandLess />
+                                    ) : (
+                                      <ExpandMore />
+                                    )}
+                                  </ListItemButton>
+                                  <Collapse
+                                    in={
+                                      tenderTypeExpanded[tenderTypes.category]
+                                    }
+                                    timeout="auto"
+                                    unmountOnExit
+                                  >
+                                    <List disablePadding>
+                                      {tenderTypes.items.map((item) => (
+                                        <MenuItem
+                                          key={item}
+                                          onClick={() =>
+                                            handleTenderTypeOptionSelect(item)
+                                          }
+                                        >
+                                          <Checkbox
+                                            checked={selectedTenderType.includes(
+                                              item
+                                            )}
+                                          />
+                                          <ListItemText primary={item} />
+                                        </MenuItem>
+                                      ))}
+                                    </List>
+                                  </Collapse>
+                                </div>
+                              ))}
+                            </Menu>
+                            {selectedTenderType.length > 0 && (
+                              <Box
+                                sx={{
+                                  display: "flex",
+                                  gap: 1,
+                                  flexWrap: "wrap",
+                                  mt: 2,
+                                }}
+                              >
+                                {selectedTenderType.map((item) => (
+                                  <Chip
+                                    key={item}
+                                    label={item}
+                                    onDelete={() =>
+                                      handleTenderTypesOptionDeselect(item)
+                                    }
+                                    deleteIcon={<CloseIcon />}
+                                  />
+                                ))}
+                              </Box>
+                            )}
                           </FormControl>
                         </div>
 

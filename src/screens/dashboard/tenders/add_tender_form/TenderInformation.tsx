@@ -10,8 +10,9 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import { TENDER_FORM } from "@/utils/enums";
 import { AddTenderFormValues } from "./types";
 import GTextInput from "@/components/input/GTextInput";
+import CustomSelect from "@/components/drop_down/CustomSelect";
 import LabelWithAsterisk from "@/components/label/LabelWithAsterisk";
-import TenderTypesOptions from "@/components/drop_down/TenderTypesOptions";
+import { tenderTypesListHW, tenderTypesListSV } from "@/utils/Constants";
 
 const TenderInformation = (): JSX.Element => {
   const formik = useFormikContext<AddTenderFormValues>();
@@ -87,7 +88,16 @@ const TenderInformation = (): JSX.Element => {
         <Grid item xs={12}>
           <LabelWithAsterisk>AUSSCHREIBUNGSTYP</LabelWithAsterisk>
           <FormControl fullWidth>
-            <TenderTypesOptions formik={formik} useType="single" />
+            <CustomSelect
+              name="tenderType"
+              options={
+                formik?.values?.tenderForm === TENDER_FORM.CRAFTSMAN
+                  ? tenderTypesListHW
+                  : tenderTypesListSV
+              }
+              onChange={formik?.handleChange}
+              value={formik?.values?.tenderType}
+            />
             {formik?.touched?.tenderType && (
               <p style={styles.errorTexts}>{formik?.errors?.tenderType}</p>
             )}
