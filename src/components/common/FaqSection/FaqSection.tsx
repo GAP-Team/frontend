@@ -16,9 +16,13 @@ import { FAQs } from "@/utils/Constants";
 
 interface FAQSectionProps {
   customerType: string;
+  onScrollToContact: () => void;
 }
 
-const FAQSection = ({ customerType }: FAQSectionProps): JSX.Element => {
+const FAQSection = ({
+  customerType,
+  onScrollToContact,
+}: FAQSectionProps): JSX.Element => {
   const [expanded, setExpanded] = useState<number | null>(null);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
@@ -112,6 +116,7 @@ const FAQSection = ({ customerType }: FAQSectionProps): JSX.Element => {
               color="#FFFFFF"
               hoverColor="rgb(86 78 78)"
               borderColor="rgb(86 78 78)"
+              handleOnClick={onScrollToContact}
             />
           </Grid>
         </div>
