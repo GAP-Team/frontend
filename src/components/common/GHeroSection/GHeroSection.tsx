@@ -472,7 +472,7 @@ const HeroSection = (): JSX.Element => {
                               htmlFor="craft"
                               className="text-sm font-medium text-gray-700 mb-4"
                             >
-                              Wählen Sie ein Bundesländer aus:
+                              Wählen Sie Bundesländer aus:
                             </label>
                             <TextField
                               label="Bundesländer"
