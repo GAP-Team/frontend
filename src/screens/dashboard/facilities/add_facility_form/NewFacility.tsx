@@ -23,6 +23,7 @@ import FacilityInformation from "./FacilityInformation";
 import SuccessPage from "@/components/common/SuccessPage";
 import { showSnackbar } from "@/components/root-snackbar";
 import SectionTitle from "@/components/label/SectionTitle";
+import { DEFAULT_PUBLISH_MONTHS } from "@/utils/Constants";
 import FacilityDocumentation from "./FacilityDocumentation";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { handleUploadMultipleDoc } from "@/utils/uploadToS3";
@@ -256,7 +257,7 @@ const NewFacility: React.FC<NewFacilityProps> = ({
     isPublishCheckAutomatically:
       facility?.check?.isPublishAutomatically || false,
     publishAutomaticallyInMonth:
-      facility?.check?.publishAutomaticallyInMonth || 0,
+      facility?.check?.publishAutomaticallyInMonth || DEFAULT_PUBLISH_MONTHS,
     isReminderEnabled: false,
     emailNotificationList: facility?.check?.emailNotificationList || ["", ""],
     selectedBuilding: facility?.buildingId || "",
@@ -281,7 +282,8 @@ const NewFacility: React.FC<NewFacilityProps> = ({
     isPublishMaintenanceAutomatically:
       facility?.maintenance?.isPublishAutomatically || false,
     publishMaintenanceAutomaticallyInMonth:
-      facility?.maintenance?.publishAutomaticallyInMonth || 0,
+      facility?.maintenance?.publishAutomaticallyInMonth ||
+      DEFAULT_PUBLISH_MONTHS,
     maintenanceReminderInMonth: facility?.maintenance?.reminderInMonth || 0,
     maintenanceEmailNotificationList: facility?.maintenance
       ?.emailNotificationList || ["", ""],
