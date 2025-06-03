@@ -45,7 +45,7 @@ const GFunctionSection = (): JSX.Element => {
         />
       </div>
       <Link
-        className="mb-8 bg-[#ffb41f] hover:bg-yellow-400 font-bold text-white px-6 py-3 mt-12 rounded-lg shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+        className="mb-8 bg-[#ffb41f] hover:bg-yellow-400 font-bold text-white px-6 py-3 mt-12 rounded-lg shadow hover:shadow-lg outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
         type="button"
         href="/login"
       >

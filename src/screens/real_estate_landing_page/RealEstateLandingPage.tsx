@@ -1,7 +1,8 @@
+import { Box } from "@mui/material";
+import Testimonial from "@/components/common/Testimonial/Testimonial";
 import HeroSection from "@/components/common/HeroSection/HeroSection";
 import FeatureSection from "@/components/common/FeatureSection/FeatureSection";
 import RealEstateOwnerTypes from "@/components/common/RealEstateOwnerTypes/RealEstateOwnerTypes";
-import { Box } from "@mui/material";
 
 const RealEstateLandingPage = (): JSX.Element => {
   return (
@@ -9,6 +10,7 @@ const RealEstateLandingPage = (): JSX.Element => {
       <HeroSection />
       <RealEstateOwnerTypes />
       <FeatureSection />
+      <Testimonial />
     </Box>
   );
 };
