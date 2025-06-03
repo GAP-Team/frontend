@@ -78,6 +78,7 @@ const NewTender: React.FC<NewTenderProps> = ({ id }): JSX.Element => {
           actions.setSubmitting(false);
         }
       } else {
+        actions.setSubmitting(false);
         dispatch(
           showSnackbar({
             type: "error",

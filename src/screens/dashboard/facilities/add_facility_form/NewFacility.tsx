@@ -8,7 +8,6 @@ import Link from "next/link";
 import Grid from "@mui/material/Grid";
 import { ROUTES } from "@/utils/routes";
 import { CgClose } from "react-icons/cg";
-import { useSelector } from "react-redux";
 import { IconButton } from "@mui/material";
 import FacilityCheck from "./FacilityCheck";
 import { useRouter } from "next/navigation";
@@ -50,8 +49,8 @@ const NewFacility: React.FC<NewFacilityProps> = ({
 }): JSX.Element => {
   const router = useRouter();
   const dispatch = useAppDispatch();
-  const user = useSelector(currentUser);
-  const checkActiveUser = useSelector(isUserActive);
+  const user = useAppSelector(currentUser);
+  const checkActiveUser = useAppSelector(isUserActive);
   const facility = useAppSelector(getFacilityById(facilityId));
 
   const steps: ActiveStepItem[] = [
@@ -100,6 +99,7 @@ const NewFacility: React.FC<NewFacilityProps> = ({
           actions.setSubmitting(false);
         }
       } else {
+        actions.setSubmitting(false);
         dispatch(
           showSnackbar({
             type: "error",

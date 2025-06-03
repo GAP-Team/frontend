@@ -31,7 +31,7 @@ import { DOCUMENT_TYPE } from "@/utils/enums";
 
 const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
   const router = useRouter();
-  const appdispatch = useAppDispatch();
+  const appDispatch = useAppDispatch();
   const user = useSelector(currentUser);
   const checkActiveUser = useSelector(isUserActive);
   const userBuildingDetails = useSelector(getUserBuildings);
@@ -149,7 +149,7 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
         );
 
         if (isBuildingExist) {
-          appdispatch(
+          appDispatch(
             showSnackbar({
               type: "error",
               message:
@@ -214,7 +214,7 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
       }
     } else {
       setLoading(false);
-      appdispatch(
+      appDispatch(
         showSnackbar({
           type: "error",
           message:
@@ -274,7 +274,7 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
     try {
       const createBuildingResponse = await buildingAPIs.create(data);
       if (createBuildingResponse?.data?.id) {
-        appdispatch(
+        appDispatch(
           showSnackbar({
             type: "success",
             message: "Gebäude erfolgreich hinzugefügt!",
@@ -287,7 +287,7 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
       }
     } catch (error) {
       console.error("Error create building: ", error);
-      appdispatch(
+      appDispatch(
         showSnackbar({
           type: "error",
           message:
@@ -309,7 +309,7 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
         data
       );
       if (updateBuildingResponse?.data?.id) {
-        appdispatch(
+        appDispatch(
           showSnackbar({
             type: "success",
             message: "Gebäude erfolgreich aktualisiert!",
@@ -322,7 +322,7 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
       }
     } catch (error) {
       console.error("Error update building: ", error);
-      appdispatch(
+      appDispatch(
         showSnackbar({
           type: "error",
           message:
