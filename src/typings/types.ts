@@ -39,3 +39,25 @@ export interface Contract {
   fromDate: string;
   toDate: string;
 }
+
+export interface FilterOptionType {
+  category: string;
+  items: string[];
+}
+export interface SideFilterPanelProps {
+  states: string[];
+  tenderTypes: string[];
+  facilitySubcategories: string[];
+  handleSearchContracts: (
+    states: string[],
+    tenderTypes: string[],
+    facilitySubcategories: string[]
+  ) => void;
+}
+
+export interface SideFilterPanelOptionsProps {
+  title: string;
+  options: FilterOptionType[];
+  preSelectedOptions: string[];
+  onSelect: (selected: string[], field: string) => void;
+}
