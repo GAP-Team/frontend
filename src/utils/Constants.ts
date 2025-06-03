@@ -723,3 +723,5 @@ export const FAQs = [
       "Ja, GAP erfordert einen aktuellen Webbrowser und eine Internetverbindung.",
   },
 ];
+
+export const DEFAULT_PUBLISH_MONTHS = 3;
