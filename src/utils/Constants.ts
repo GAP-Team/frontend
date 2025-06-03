@@ -384,65 +384,11 @@ export const buildingTypesList = [
   { label: "Wohnhaus", value: "Wohnhaus" }, // Residential building
 ];
 
-export const tenderTypesListHW = [
-  { label: "Reperatur", value: "Reperatur" },
-  { label: "Wartung", value: "Wartung" },
-  { label: "Installation", value: "Installation" },
-  { label: "Prüfung", value: "Prüfung" },
-  { label: "SV Begleitung", value: "SV Begleitung" },
-  { label: "Beratung/Planprüfung", value: "Beratung/Planprüfung" },
-  { label: "Konzepterstellung BSK", value: "Konzepterstellung BSK" },
-  {
-    label: "Konzepterstellung Löschanlage",
-    value: "Konzepterstellung Löschanlage",
-  },
-  { label: "Brandwache", value: "Brandwache" },
-];
+const mapTenderTypeItems = (items: string[]): Item[] =>
+  items.map((item) => ({ label: item, value: item }));
 
-export const tenderTypesListSV = [
-  {
-    label: "Arbeitsstättenverordnung - Gesundheitsschutz der Beschäftigte",
-    value: "Arbeitsstättenverordnung - Gesundheitsschutz der Beschäftigte",
-  },
-  {
-    label:
-      "Betriebssicherheitsverordnung (ZÜS) - Sicherheit Maschinen und Anlagen",
-    value:
-      "Betriebssicherheitsverordnung (ZÜS) - Sicherheit Maschinen und Anlagen",
-  },
-  {
-    label: "Baurechtliche Prüfung - Gesetzlicher Brandschutz",
-    value: "Baurechtliche Prüfung - Gesetzlicher Brandschutz",
-  },
-  {
-    label: "DGUV - Deutsche Gesetzliche Unfallversicherung",
-    value: "DGUV - Deutsche Gesetzliche Unfallversicherung",
-  },
-  {
-    label: "Elektrische Anlagen - VDE 0105-100",
-    value: "Elektrische Anlagen - VDE 0105-100",
-  },
-  {
-    label: "Konzepterstellung - Brandschutzkonzept",
-    value: "Konzepterstellung - Brandschutzkonzept",
-  },
-  {
-    label: "Hygiene Prüfung Lüftung - VDI 6022",
-    value: "Hygiene Prüfung Lüftung - VDI 6022",
-  },
-  {
-    label: "Hygiene Prüfung Trinkwasser - VDI 6023",
-    value: "Hygiene Prüfung Trinkwasser - VDI 6023",
-  },
-  {
-    label: "Versicherungsprüfung - VdS Prüfung",
-    value: "Versicherungsprüfung - VdS Prüfung",
-  },
-  {
-    label: "Wassergefährdete Stoffe - AwsV Prüfung",
-    value: "Wassergefährdete Stoffe - AwsV Prüfung",
-  },
-];
+export const tenderTypesListSV = mapTenderTypeItems(listOfTenderTypes[0].items);
+export const tenderTypesListHW = mapTenderTypeItems(listOfTenderTypes[1].items);
 
 export const jobItemListInCostPage = [
   {
