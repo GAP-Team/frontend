@@ -7,12 +7,12 @@ import RadioGroup from "@mui/material/RadioGroup";
 import FormControl from "@mui/material/FormControl";
 import FormControlLabel from "@mui/material/FormControlLabel";
 
+import { TENDER_FORM } from "@/utils/enums";
 import { AddTenderFormValues } from "./types";
 import GTextInput from "@/components/input/GTextInput";
 import CustomSelect from "@/components/drop_down/CustomSelect";
 import LabelWithAsterisk from "@/components/label/LabelWithAsterisk";
 import { tenderTypesListHW, tenderTypesListSV } from "@/utils/Constants";
-import { TENDER_FORM } from "@/utils/enums";
 
 const TenderInformation = (): JSX.Element => {
   const formik = useFormikContext<AddTenderFormValues>();
@@ -22,7 +22,6 @@ const TenderInformation = (): JSX.Element => {
   ): void => {
     const selectedForm = event.target.value;
     formik.setFieldValue("tenderForm", selectedForm);
-    formik.setFieldValue("tenderType", "");
   };
 
   return (

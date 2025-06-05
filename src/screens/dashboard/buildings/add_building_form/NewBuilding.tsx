@@ -13,7 +13,7 @@ import {
   SelectedBuildingData,
 } from "./types";
 import { SubmitFormFunction } from "@/typings/types";
-import { currentUser } from "@/lib/features/userSlice";
+import { currentUser, isUserActive } from "@/lib/features/userSlice";
 
 import { ROUTES } from "@/utils/routes";
 import AddBuildingForm from "./AddBuildingForm";
@@ -31,8 +31,9 @@ import { DOCUMENT_TYPE } from "@/utils/enums";
 
 const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
   const router = useRouter();
-  const appdispatch = useAppDispatch();
+  const appDispatch = useAppDispatch();
   const user = useSelector(currentUser);
+  const checkActiveUser = useSelector(isUserActive);
   const userBuildingDetails = useSelector(getUserBuildings);
 
   const steps: ActiveStepItem[] = [
@@ -148,7 +149,7 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
         );
 
         if (isBuildingExist) {
-          appdispatch(
+          appDispatch(
             showSnackbar({
               type: "error",
               message:
@@ -178,36 +179,48 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
   const uploadAllDocuments = async (
     values: AddBuildingFormValues
   ): Promise<boolean> => {
-    setLoading(true);
-    const docObjList: any[] = [];
+    if (checkActiveUser) {
+      setLoading(true);
+      const docObjList: any[] = [];
 
-    const uploadDocuments = async (
-      files: File[],
-      docType: string
-    ): Promise<void> => {
-      for (const file of files) {
-        if (file.hasOwnProperty("documentType")) {
-          docObjList.push(file);
-        } else {
-          const uploadedDoc = await handleUploadMultipleDoc(file);
-          uploadedDoc.documentType = docType;
-          docObjList.push(uploadedDoc);
+      const uploadDocuments = async (
+        files: File[],
+        docType: string
+      ): Promise<void> => {
+        for (const file of files) {
+          if (file.hasOwnProperty("documentType")) {
+            docObjList.push(file);
+          } else {
+            const uploadedDoc = await handleUploadMultipleDoc(file);
+            uploadedDoc.documentType = docType;
+            docObjList.push(uploadedDoc);
+          }
         }
+      };
+
+      await uploadDocuments(values.otherDocs, DOCUMENT_TYPE.OTHER);
+      await uploadDocuments(values.floorplanDocs, DOCUMENT_TYPE.FLOOR_PLANS);
+      await uploadDocuments(
+        values.constructionDocs,
+        DOCUMENT_TYPE.CONSTRUCTION_DOCUMENTS
+      );
+
+      const status = await handleSubmit(values, docObjList);
+
+      if (status) {
+        return true;
+      } else {
+        return false;
       }
-    };
-
-    await uploadDocuments(values.otherDocs, DOCUMENT_TYPE.OTHER);
-    await uploadDocuments(values.floorplanDocs, DOCUMENT_TYPE.FLOOR_PLANS);
-    await uploadDocuments(
-      values.constructionDocs,
-      DOCUMENT_TYPE.CONSTRUCTION_DOCUMENTS
-    );
-
-    const status = await handleSubmit(values, docObjList);
-
-    if (status) {
-      return true;
     } else {
+      setLoading(false);
+      appDispatch(
+        showSnackbar({
+          type: "error",
+          message:
+            "Bitte aktivieren Sie Ihr Konto, um diese Funktion zu nutzen.",
+        })
+      );
       return false;
     }
   };
@@ -261,7 +274,7 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
     try {
       const createBuildingResponse = await buildingAPIs.create(data);
       if (createBuildingResponse?.data?.id) {
-        appdispatch(
+        appDispatch(
           showSnackbar({
             type: "success",
             message: "Gebäude erfolgreich hinzugefügt!",
@@ -274,7 +287,7 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
       }
     } catch (error) {
       console.error("Error create building: ", error);
-      appdispatch(
+      appDispatch(
         showSnackbar({
           type: "error",
           message:
@@ -296,7 +309,7 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
         data
       );
       if (updateBuildingResponse?.data?.id) {
-        appdispatch(
+        appDispatch(
           showSnackbar({
             type: "success",
             message: "Gebäude erfolgreich aktualisiert!",
@@ -309,7 +322,7 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
       }
     } catch (error) {
       console.error("Error update building: ", error);
-      appdispatch(
+      appDispatch(
         showSnackbar({
           type: "error",
           message:

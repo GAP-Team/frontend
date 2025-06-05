@@ -8,7 +8,6 @@ import Link from "next/link";
 import Grid from "@mui/material/Grid";
 import { ROUTES } from "@/utils/routes";
 import { CgClose } from "react-icons/cg";
-import { useSelector } from "react-redux";
 import { IconButton } from "@mui/material";
 import FacilityCheck from "./FacilityCheck";
 import { useRouter } from "next/navigation";
@@ -17,7 +16,6 @@ import AddFacilityForm from "./AddFacilityForm";
 import FacilitySummary from "./FacilitySummary";
 import React, { useEffect, useState } from "react";
 import PageTitle from "@/components/label/PageTitle";
-import { currentUser } from "@/lib/features/userSlice";
 import FacilityMaintenance from "./FacilityMaintenance";
 import FacilityInformation from "./FacilityInformation";
 import SuccessPage from "@/components/common/SuccessPage";
@@ -28,6 +26,7 @@ import FacilityDocumentation from "./FacilityDocumentation";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { handleUploadMultipleDoc } from "@/utils/uploadToS3";
 import { fetchBuildings } from "@/lib/features/buildingSlice";
+import { currentUser, isUserActive } from "@/lib/features/userSlice";
 import GProgressStepper from "@/components/stepper/GProgressStepper";
 import { addFacilityValidationSchema } from "@/utils/ValidationSchema";
 import {
@@ -50,7 +49,8 @@ const NewFacility: React.FC<NewFacilityProps> = ({
 }): JSX.Element => {
   const router = useRouter();
   const dispatch = useAppDispatch();
-  const user = useSelector(currentUser);
+  const user = useAppSelector(currentUser);
+  const checkActiveUser = useAppSelector(isUserActive);
   const facility = useAppSelector(getFacilityById(facilityId));
 
   const steps: ActiveStepItem[] = [
@@ -92,10 +92,21 @@ const NewFacility: React.FC<NewFacilityProps> = ({
     actions: FormikHelpers<AddFacilityFormValues>
   ): Promise<void> => {
     if (activeStep?.id === steps.length - 1) {
-      const saveStatus = await uploadAllDocuments(values);
-      if (saveStatus) {
-        setIsSubmitted(true);
+      if (checkActiveUser) {
+        const saveStatus = await uploadAllDocuments(values);
+        if (saveStatus) {
+          setIsSubmitted(true);
+          actions.setSubmitting(false);
+        }
+      } else {
         actions.setSubmitting(false);
+        dispatch(
+          showSnackbar({
+            type: "error",
+            message:
+              "Bitte aktivieren Sie Ihr Konto, um diese Funktion zu nutzen.",
+          })
+        );
       }
     } else {
       setActiveStep(steps[activeStep.id + 1]);

@@ -116,6 +116,7 @@ const userSlice = createSlice({
 
 export const { setUser } = userSlice.actions;
 
+export const isUserActive = (state: RootState): boolean => state.user.isActive;
 export const currentUser = (state: RootState): UserState => state.user;
 export const currentUserId = (state: RootState): string => state.user.id;
 export const currentUserEmail = (state: RootState): string => state.user.email;
