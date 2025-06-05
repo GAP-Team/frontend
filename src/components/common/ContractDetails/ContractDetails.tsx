@@ -4,7 +4,7 @@ import { USER_ROLE, DOCUMENT_TYPE } from "@/utils/enums";
 import { showSnackbar } from "@/components/root-snackbar";
 import { Box, Grid, Paper, Typography } from "@mui/material";
 import { useAppSelector, useAppDispatch } from "@/lib/hooks";
-import ContarctSummarySection from "./ContarctSummarySection";
+import ContractSummarySection from "./ContractSummarySection";
 import TenderTitleBar from "@/screens/dashboard/tenders/tender_card/TenderTitleBar";
 import {
   fetchContractById,
@@ -41,7 +41,7 @@ const ContractDetails: React.FC<ContractDetailsProps> = ({
     }
   };
 
-  const renderContent = (): JSX.Element => {
+  const renderRestrictionUI = (): JSX.Element => {
     if (user?.id) {
       if (user?.role !== USER_ROLE.SERVICE_PROVIDER) {
         return (
@@ -60,7 +60,7 @@ const ContractDetails: React.FC<ContractDetailsProps> = ({
   return (
     <>
       {user?.id && user?.role !== USER_ROLE.SERVICE_PROVIDER ? (
-        renderContent()
+        renderRestrictionUI()
       ) : (
         <Grid container component="main">
           <TenderTitleBar
@@ -78,7 +78,7 @@ const ContractDetails: React.FC<ContractDetailsProps> = ({
           >
             <Grid item xs={8}>
               <Paper sx={styles.summaryContainer}>
-                <ContarctSummarySection contract={contractDetails} />
+                <ContractSummarySection contract={contractDetails} />
               </Paper>
             </Grid>
             <Grid item xs={8}>

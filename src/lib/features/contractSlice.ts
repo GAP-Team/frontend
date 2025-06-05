@@ -4,14 +4,14 @@ import { Contract } from "@/typings/types";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 interface ContractState {
-  contract: Contract | null;
+  contract: Contract;
   contracts: Contract[];
   loading: boolean;
   error: string | null;
 }
 
 const initialState: ContractState = {
-  contract: null,
+  contract: {} as Contract,
   contracts: [],
   loading: false as boolean,
   error: null as string | null,
