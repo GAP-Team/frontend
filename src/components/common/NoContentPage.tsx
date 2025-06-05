@@ -8,7 +8,7 @@ interface NoContentPageProps {
   image: StaticImageData;
   alt: string;
   title: string;
-  buttonLabel: string;
+  buttonLabel?: string;
   buttonLink?: string;
   description?: string;
 }
@@ -37,9 +37,11 @@ const NoContentPage: React.FC<NoContentPageProps> = ({
       >
         {description}
       </Typography>
-      <GButton style={{ marginTop: "1rem" }} href={buttonLink}>
-        {buttonLabel}
-      </GButton>
+      {buttonLabel && (
+        <GButton style={{ marginTop: "1rem" }} href={buttonLink}>
+          {buttonLabel}
+        </GButton>
+      )}
     </Box>
   );
 };
