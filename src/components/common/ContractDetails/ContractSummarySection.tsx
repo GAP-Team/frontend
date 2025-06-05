@@ -10,11 +10,11 @@ import GButton from "@/components/button/GButton";
 import LabelText from "@/components/label/LabelText";
 import HeaderSection from "@/screens/dashboard/real_estate_user/HeaderSection";
 
-interface ContarctSummarySectionProps {
+interface ContractSummarySectionProps {
   contract?: Contract | null;
 }
 
-const ContarctSummarySection: React.FC<ContarctSummarySectionProps> = ({
+const ContractSummarySection: React.FC<ContractSummarySectionProps> = ({
   contract,
 }) => {
   const router = useRouter();
@@ -92,7 +92,7 @@ const ContarctSummarySection: React.FC<ContarctSummarySectionProps> = ({
             Abbrechen
           </GButton>
           <GButton color="ggreen" onClick={() => {}}>
-            Anwenden
+            Jetzt Bewerben
           </GButton>
         </Grid>
       </Grid>
@@ -100,4 +100,4 @@ const ContarctSummarySection: React.FC<ContarctSummarySectionProps> = ({
   );
 };
 
-export default ContarctSummarySection;
+export default ContractSummarySection;

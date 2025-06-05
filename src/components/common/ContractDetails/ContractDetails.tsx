@@ -19,7 +19,7 @@ interface ContractDetailsProps {
 const ContractDetails: React.FC<ContractDetailsProps> = ({
   id,
 }): JSX.Element => {
-  const appdispatch = useAppDispatch();
+  const appDispatch = useAppDispatch();
   const user = useAppSelector((state) => state.user);
   const contractDetails = useAppSelector(getContractDetails);
 
@@ -29,9 +29,9 @@ const ContractDetails: React.FC<ContractDetailsProps> = ({
 
   const fetchContractDetails = async (): Promise<void> => {
     try {
-      await appdispatch(fetchContractById({ id: id })).unwrap();
+      await appDispatch(fetchContractById({ id: id })).unwrap();
     } catch {
-      appdispatch(
+      appDispatch(
         showSnackbar({
           type: "error",
           message:
