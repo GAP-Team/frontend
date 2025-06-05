@@ -38,9 +38,9 @@ const ContarctSummarySection: React.FC<ContarctSummarySectionProps> = ({
       value:
         contract?.fromDate &&
         contract?.toDate &&
-        `${new Date(contract?.fromDate).toLocaleDateString()} - ${new Date(
+        `${new Date(contract?.fromDate).toLocaleDateString("de-DE")} - ${new Date(
           contract?.toDate
-        ).toLocaleDateString()}`,
+        ).toLocaleDateString("de-DE")}`,
     },
     {
       label: "Detailbeschreibung",
