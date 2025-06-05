@@ -38,6 +38,8 @@ export const ROUTES = {
     APPLICATIONS: `${SERVICE_PROVIDER_BASE}/applications`,
     MESSAGES: `${SERVICE_PROVIDER_BASE}/messages`,
     CONTRACTS: `${SERVICE_PROVIDER_BASE}/contracts`,
+    CONTRACT_DETAILS: (id: string) =>
+      `${SERVICE_PROVIDER_BASE}/contracts/${id}`,
   },
   BLOGS: {
     BLOGS: "/blogs",

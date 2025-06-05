@@ -1,3 +1,4 @@
+import { Document } from "@/typings/types";
 import { BuildingAddress } from "../../buildings/building_card/types";
 export interface BuildingTenders {
   buildingName: string;
@@ -26,4 +27,23 @@ export interface Tender {
   updatedAt: Date;
   status: string;
   createdAt: Date;
+}
+
+export interface Contarct {
+  city: string;
+  state: string;
+  facilityType: string;
+  subcategory: string;
+  tenderForm: string;
+  tenderId: string;
+  clientName: string;
+  detailDescription: string;
+  tenderType: string;
+  urgency: string;
+  safetyWorkRequired: boolean;
+  freeParkingAvailable: boolean;
+  facilityDocuments: Document[];
+  buildingDocuments: Document[];
+  toDate?: string;
+  fromDate?: string;
 }
