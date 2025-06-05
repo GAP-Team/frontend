@@ -91,6 +91,9 @@ const ContarctSummarySection: React.FC<ContarctSummarySectionProps> = ({
           <GButton color="gprimary" variant="outlined" onClick={backHandler}>
             Abbrechen
           </GButton>
+          <GButton color="ggreen" onClick={() => {}}>
+            Anwenden
+          </GButton>
         </Grid>
       </Grid>
     </>

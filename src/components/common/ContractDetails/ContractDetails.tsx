@@ -1,8 +1,8 @@
 import { memo, useEffect } from "react";
-import { USER_ROLE } from "@/utils/enums";
 import NoAccessPage from "../NoAccessPage";
-import { Grid, Paper } from "@mui/material";
+import { USER_ROLE, DOCUMENT_TYPE } from "@/utils/enums";
 import { showSnackbar } from "@/components/root-snackbar";
+import { Box, Grid, Paper, Typography } from "@mui/material";
 import { useAppSelector, useAppDispatch } from "@/lib/hooks";
 import ContarctSummarySection from "./ContarctSummarySection";
 import TenderTitleBar from "@/screens/dashboard/tenders/tender_card/TenderTitleBar";
@@ -10,6 +10,7 @@ import {
   fetchContractById,
   getContractDetails,
 } from "@/lib/features/contractSlice";
+import DocumentList from "@/screens/dashboard/buildings/building_card/DocumentList ";
 
 interface ContractDetailsProps {
   id: string;
@@ -76,10 +77,101 @@ const ContractDetails: React.FC<ContractDetailsProps> = ({
             style={styles.innerContainer}
           >
             <Grid item xs={8}>
-              <Paper sx={styles.paper}>
+              <Paper sx={styles.summaryContainer}>
                 <ContarctSummarySection contract={contractDetails} />
               </Paper>
             </Grid>
+            <Grid item xs={8}>
+              <Grid container spacing={2}>
+                <Grid item xs={12}>
+                  <Paper sx={styles.documentContainer}>
+                    <Typography
+                      variant="body2"
+                      color="text.secondary"
+                      style={styles.documentTitle}
+                    >
+                      DOKUMENTE Objekte (
+                      {contractDetails?.buildingDocuments?.length})
+                    </Typography>
+                    <Box sx={styles.documentsContainer}>
+                      <Grid container spacing={2}>
+                        {contractDetails?.buildingDocuments &&
+                          contractDetails?.buildingDocuments?.length > 0 && (
+                            <>
+                              <Grid item xs={12}>
+                                <DocumentList
+                                  title={"Bauunterlagen"}
+                                  documentType={
+                                    DOCUMENT_TYPE.CONSTRUCTION_DOCUMENTS
+                                  }
+                                  documents={contractDetails?.buildingDocuments}
+                                />
+                              </Grid>
+                              <Grid item xs={12}>
+                                <DocumentList
+                                  title={"Grundrisse"}
+                                  documentType={DOCUMENT_TYPE.FLOOR_PLANS}
+                                  documents={contractDetails?.buildingDocuments}
+                                />
+                              </Grid>
+                              <Grid item xs={12}>
+                                <DocumentList
+                                  title={"Sonstige Dokumente"}
+                                  documentType={DOCUMENT_TYPE.OTHER}
+                                  documents={contractDetails?.buildingDocuments}
+                                />
+                              </Grid>
+                            </>
+                          )}
+                      </Grid>
+                    </Box>
+                  </Paper>
+                </Grid>
+                <Grid item xs={12}>
+                  <Paper sx={styles.documentContainer}>
+                    <Typography
+                      variant="body2"
+                      color="text.secondary"
+                      style={styles.documentTitle}
+                    >
+                      DOKUMENTE Anlage (
+                      {contractDetails?.facilityDocuments?.length})
+                    </Typography>
+                    <Box sx={styles.documentsContainer}>
+                      <Grid container spacing={2}>
+                        {contractDetails?.facilityDocuments &&
+                          contractDetails?.facilityDocuments?.length > 0 && (
+                            <>
+                              <Grid item xs={12}>
+                                <DocumentList
+                                  title={"Berichte"}
+                                  documentType={DOCUMENT_TYPE.CHECK_REPORTS}
+                                  documents={contractDetails?.facilityDocuments}
+                                />
+                              </Grid>
+                              <Grid item xs={12}>
+                                <DocumentList
+                                  title={"Grundrisse"}
+                                  documentType={DOCUMENT_TYPE.FLOOR_PLANS}
+                                  documents={contractDetails?.facilityDocuments}
+                                />
+                              </Grid>
+                              <Grid item xs={12}>
+                                <DocumentList
+                                  title={"Sonstige Dokumente"}
+                                  documentType={DOCUMENT_TYPE.OTHER}
+                                  documents={contractDetails?.facilityDocuments}
+                                />
+                              </Grid>
+                            </>
+                          )}
+                      </Grid>
+                    </Box>
+                  </Paper>
+                </Grid>
+              </Grid>
+            </Grid>
+            <Grid item xs={2}></Grid>
           </Grid>
         </Grid>
       )}
@@ -93,9 +185,29 @@ const styles = {
   innerContainer: {
     marginBottom: "1.25rem",
   },
-  paper: {
+  summaryContainer: {
     maxWidth: "false",
     width: "100%",
     p: "1.25rem",
+  },
+  documentContainer: {
+    display: "flex",
+    flexDirection: "column",
+    maxWidth: "false",
+    width: "100%",
+    borderRadius: "0.8rem",
+    p: "1.25rem",
+  },
+  documentsContainer: {
+    display: "flex",
+    flexWrap: "wrap",
+    mb: 1,
+  },
+  documentTitle: {
+    marginBottom: "0.5rem",
+    borderWidth: "medium",
+    borderBottom: "3px solid #22A7F2",
+    maxWidth: "15rem",
+    paddingBottom: "0.50rem",
   },
 };
