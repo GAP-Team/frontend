@@ -1,8 +1,9 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-import { RootState } from "../store";
 import userAPIs from "@/api/user";
-import { Document } from "@/typings/types";
+import emailAPIs from "@/api/email";
+import { RootState } from "../store";
+import { Document, SendActivityEmailType } from "@/typings/types";
 
 interface Company {
   name: string;
@@ -36,6 +37,7 @@ interface UserState {
   manufacturerExperience: string;
   position: string;
   isActive: boolean;
+  sendUserActivityEmailStatus?: boolean;
 }
 
 interface ChangePassword {
@@ -71,6 +73,7 @@ const initialState: UserState = {
   manufacturerExperience: "",
   position: "",
   isActive: false,
+  sendUserActivityEmailStatus: false,
 };
 
 export const updateUserProfile = createAsyncThunk(
@@ -88,10 +91,19 @@ export const updateUserPassword = createAsyncThunk(
     return response.data;
   }
 );
+
 export const deleteUser = createAsyncThunk(
   "user/deleteUser",
   async ({ id, currentPassword }: { id: string; currentPassword: string }) => {
     const response = await userAPIs.deleteUser(id, currentPassword);
+    return response.data;
+  }
+);
+
+export const sendUserActivityEmail = createAsyncThunk(
+  "user/sendActivityEmail",
+  async ({ data }: { data: SendActivityEmailType }) => {
+    const response = await emailAPIs.sendActivityEmail(data);
     return response.data;
   }
 );
@@ -111,6 +123,9 @@ const userSlice = createSlice({
     builder.addCase(deleteUser.fulfilled, (state, action) => {
       return { ...state, ...action.payload };
     });
+    builder.addCase(sendUserActivityEmail.fulfilled, (state, action) => {
+      state.sendUserActivityEmailStatus = action.payload.status;
+    });
   },
 });
 
@@ -122,4 +137,7 @@ export const currentUserId = (state: RootState): string => state.user.id;
 export const currentUserEmail = (state: RootState): string => state.user.email;
 export const currentUserCompany = (state: RootState): Company =>
   state.user.company;
+export const emailSendStatus = (state: RootState): boolean =>
+  state.user.sendUserActivityEmailStatus || false;
+
 export default userSlice.reducer;

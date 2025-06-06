@@ -70,3 +70,9 @@ export interface SideFilterPanelOptionsProps {
   preSelectedOptions: string[];
   onSelect: (selected: string[], field: string) => void;
 }
+
+export interface SendActivityEmailType {
+  email: string;
+  templateName: string;
+  userFirstName: string;
+}

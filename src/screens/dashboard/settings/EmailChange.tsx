@@ -9,15 +9,22 @@ import Divider from "@mui/material/Divider";
 import { useRouter } from "next/navigation";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
+import { showSnackbar } from "@/components/root-snackbar";
 import { EmailChangeSchema } from "@/utils/ValidationSchema";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
-import { updateUserProfile } from "@/lib/features/userSlice";
-import { showSnackbar } from "@/components/root-snackbar";
+import {
+  emailSendStatus,
+  updateUserProfile,
+  sendUserActivityEmail,
+} from "@/lib/features/userSlice";
+import { USER_ACTIVITY_EMAIL_TEMPLATES } from "@/utils/Constants";
 
 const EmailChange = (): JSX.Element => {
-  const dispatch = useAppDispatch();
   const router = useRouter();
+  const appDispatch = useAppDispatch();
   const user = useAppSelector((state) => state.user);
+  const sentEmailStatus = useAppSelector(emailSendStatus);
+
   const formik = useFormik({
     initialValues: {
       email: user?.email,
@@ -26,23 +33,39 @@ const EmailChange = (): JSX.Element => {
     validationSchema: EmailChangeSchema,
     onSubmit: async (values) => {
       try {
-        await dispatch(
+        await appDispatch(
           updateUserProfile({
             id: user.id,
             data: {
               email: values.email,
             },
           })
-        ).unwrap();
+        )
+          .unwrap()
+          .then(async () => {
+            const data = {
+              email: values.email,
+              userFirstName: user?.firstName,
+              templateName: USER_ACTIVITY_EMAIL_TEMPLATES.EMAIL_CHANGE,
+            };
+            await appDispatch(
+              sendUserActivityEmail({
+                data: data,
+              })
+            ).unwrap();
+          });
 
-        dispatch(
-          showSnackbar({
-            type: "success",
-            message: "E-Mail-Adresse wurde erfolgreich geändert",
-          })
-        );
+        if (sentEmailStatus) {
+          appDispatch(
+            showSnackbar({
+              type: "success",
+              message: "E-Mail-Adresse wurde erfolgreich geändert",
+            })
+          );
+        }
+        formik.resetForm();
       } catch {
-        dispatch(
+        appDispatch(
           showSnackbar({
             type: "error",
             message:
