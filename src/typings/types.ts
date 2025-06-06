@@ -31,13 +31,22 @@ export interface BlogProps {
 export interface Contract {
   city: string;
   state: string;
-  subcategory: string;
+  buildingName: string;
+  facilityName: string;
   facilityType: string;
+  subcategory: string;
+  tenderForm: string;
   tenderId: string;
+  clientName: string;
+  detailDescription: string;
   tenderType: string;
   urgency: string;
-  fromDate: string;
-  toDate: string;
+  safetyWorkRequired: boolean;
+  freeParkingAvailable: boolean;
+  facilityDocuments: Document[];
+  buildingDocuments: Document[];
+  toDate?: string;
+  fromDate?: string;
 }
 
 export interface FilterOptionType {
