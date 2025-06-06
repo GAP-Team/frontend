@@ -42,12 +42,14 @@ const BuildingCard: React.FC<BuildingCardProps> = ({ building }) => {
 
   const getFacilityTendersCount = async (): Promise<void> => {
     var count = 0;
-    await Promise.all(
-      building?.facilityIds?.map(async (facilityId: string) => {
-        const tender = await facilityAPIs.getFacilityTenders(facilityId);
-        count = count + tender?.data?.length;
-      })
-    );
+    if (building?.facilityIds?.length > 0) {
+      await Promise.all(
+        building?.facilityIds?.map(async (facilityId: string) => {
+          const tender = await facilityAPIs.getFacilityTenders(facilityId);
+          count = count + tender?.data?.length;
+        })
+      );
+    }
     setTotalTenders(count);
   };
 
@@ -102,7 +104,7 @@ const BuildingCard: React.FC<BuildingCardProps> = ({ building }) => {
           <Typography
             style={styles.items}
             onClick={() => handleRedirect("facilities")}
-          >{`${building.facilityIds?.length} Anlagen`}</Typography>
+          >{`${building?.facilityIds?.length} Anlagen`}</Typography>
         </Stack>
         <Stack direction="row" alignItems="center" gap={2}>
           <CgNotes size="1.5rem" color="#A0ADB1" />
