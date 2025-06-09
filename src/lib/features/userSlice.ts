@@ -137,7 +137,5 @@ export const currentUserId = (state: RootState): string => state.user.id;
 export const currentUserEmail = (state: RootState): string => state.user.email;
 export const currentUserCompany = (state: RootState): Company =>
   state.user.company;
-export const emailSendStatus = (state: RootState): boolean =>
-  state.user.sendUserActivityEmailStatus || false;
 
 export default userSlice.reducer;

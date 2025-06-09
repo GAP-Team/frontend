@@ -13,17 +13,15 @@ import { showSnackbar } from "@/components/root-snackbar";
 import { EmailChangeSchema } from "@/utils/ValidationSchema";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import {
-  emailSendStatus,
   updateUserProfile,
   sendUserActivityEmail,
 } from "@/lib/features/userSlice";
 import { USER_ACTIVITY_EMAIL_TEMPLATES } from "@/utils/Constants";
 
-const EmailChange = (): JSX.Element => {
+const ChangeEmail = (): JSX.Element => {
   const router = useRouter();
   const appDispatch = useAppDispatch();
   const user = useAppSelector((state) => state.user);
-  const sentEmailStatus = useAppSelector(emailSendStatus);
 
   const formik = useFormik({
     initialValues: {
@@ -40,29 +38,26 @@ const EmailChange = (): JSX.Element => {
               email: values.email,
             },
           })
-        )
-          .unwrap()
-          .then(async () => {
-            const data = {
-              email: values.email,
-              userFirstName: user?.firstName,
-              templateName: USER_ACTIVITY_EMAIL_TEMPLATES.EMAIL_CHANGE,
-            };
-            await appDispatch(
-              sendUserActivityEmail({
-                data: data,
-              })
-            ).unwrap();
-          });
+        ).unwrap();
 
-        if (sentEmailStatus) {
-          appDispatch(
-            showSnackbar({
-              type: "success",
-              message: "E-Mail-Adresse wurde erfolgreich geändert",
-            })
-          );
-        }
+        const data = {
+          email: values.email,
+          userFirstName: user?.firstName,
+          templateName: USER_ACTIVITY_EMAIL_TEMPLATES.EMAIL_CHANGE,
+        };
+        await appDispatch(
+          sendUserActivityEmail({
+            data: data,
+          })
+        ).unwrap();
+
+        appDispatch(
+          showSnackbar({
+            type: "success",
+            message: "E-Mail-Adresse wurde erfolgreich geändert",
+          })
+        );
+
         formik.resetForm();
       } catch {
         appDispatch(
@@ -148,7 +143,7 @@ const EmailChange = (): JSX.Element => {
   );
 };
 
-export default EmailChange;
+export default ChangeEmail;
 
 // Styles
 const styles = {
