@@ -16,7 +16,6 @@ import {
   getPasswordStrengthColor,
 } from "@/utils/utils";
 import {
-  emailSendStatus,
   updateUserPassword,
   sendUserActivityEmail,
 } from "@/lib/features/userSlice";
@@ -36,7 +35,6 @@ const ChangePassword = (): JSX.Element => {
 
   const appDispatch = useAppDispatch();
   const user = useAppSelector((state) => state.user);
-  const sentEmailStatus = useAppSelector(emailSendStatus);
 
   const initialValues: ChangePasswordInitialValuesProps = {
     currentPassword: "",
@@ -56,29 +54,25 @@ const ChangePassword = (): JSX.Element => {
               currentPassword: values.currentPassword,
             },
           })
-        )
-          .unwrap()
-          .then(async () => {
-            const data = {
-              email: user.email,
-              userFirstName: user?.firstName,
-              templateName: USER_ACTIVITY_EMAIL_TEMPLATES.PASSWORD_CHANGE,
-            };
-            await appDispatch(
-              sendUserActivityEmail({
-                data: data,
-              })
-            ).unwrap();
-          });
+        ).unwrap();
 
-        if (sentEmailStatus) {
-          appDispatch(
-            showSnackbar({
-              type: "success",
-              message: "Passwort erfolgreich geändert",
-            })
-          );
-        }
+        const data = {
+          email: user.email,
+          userFirstName: user?.firstName,
+          templateName: USER_ACTIVITY_EMAIL_TEMPLATES.PASSWORD_CHANGE,
+        };
+        await appDispatch(
+          sendUserActivityEmail({
+            data: data,
+          })
+        ).unwrap();
+
+        appDispatch(
+          showSnackbar({
+            type: "success",
+            message: "Passwort erfolgreich geändert",
+          })
+        );
 
         formik.resetForm();
       } catch {
