@@ -70,3 +70,8 @@ export interface SideFilterPanelOptionsProps {
   preSelectedOptions: string[];
   onSelect: (selected: string[], field: string) => void;
 }
+
+export interface HelpIconButtonProps {
+  helpText: string;
+  iconColor?: string;
+}

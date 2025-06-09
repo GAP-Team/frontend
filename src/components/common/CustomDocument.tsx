@@ -5,7 +5,6 @@ import Grid from "@mui/material/Grid";
 import Radio from "@mui/material/Radio";
 import { useFormikContext } from "formik";
 import GTextInput from "../input/GTextInput";
-import { Documentation } from "@/utils/Constants";
 import UploadMultiButton from "../button/UploadMultiButton";
 import {
   FormControl,
@@ -14,6 +13,8 @@ import {
   Typography,
 } from "@mui/material";
 import { DocumentChoice } from "@/utils/enums";
+import HelpIconButton from "@/components/button/HelpIconButton";
+import { Documentation, HELP_ICON_BUTTON_COLOR } from "@/utils/Constants";
 
 interface CustomDocumentationProps {
   formikValue: any;
@@ -59,6 +60,10 @@ const CustomDocumentation = ({
                     <Typography>
                       Jetzt hochladen{" "}
                       <span style={style.highlightText}>Empfohlen</span>
+                      <HelpIconButton
+                        iconColor={HELP_ICON_BUTTON_COLOR.GREY}
+                        helpText="The helper text will be displayed here."
+                      />
                     </Typography>
                   }
                 />
@@ -81,7 +86,15 @@ const CustomDocumentation = ({
                 <FormControlLabel
                   value={DocumentChoice.SERVER_LINK}
                   control={<Radio />}
-                  label="Server verküpfung"
+                  label={
+                    <Typography>
+                      Server verküpfung{""}
+                      <HelpIconButton
+                        iconColor={HELP_ICON_BUTTON_COLOR.GREY}
+                        helpText="The helper text will be displayed here."
+                      />
+                    </Typography>
+                  }
                 />
               </Grid>
               <Grid item xs={4}>

@@ -724,3 +724,8 @@ export const FAQs = [
 ];
 
 export const DEFAULT_PUBLISH_MONTHS = 3;
+
+export const HELP_ICON_BUTTON_COLOR = {
+  GOLDER: "#FF9209",
+  GREY: "#A0ADB1",
+};

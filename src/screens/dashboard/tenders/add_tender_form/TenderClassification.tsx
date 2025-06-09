@@ -10,6 +10,8 @@ import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { useFormikContext } from "formik";
 import { AddTenderFormValues } from "./types";
+import HelpIconButton from "@/components/button/HelpIconButton";
+import { HELP_ICON_BUTTON_COLOR } from "@/utils/Constants";
 
 const TenderClassification = (): JSX.Element => {
   const formik = useFormikContext<AddTenderFormValues>();
@@ -24,6 +26,10 @@ const TenderClassification = (): JSX.Element => {
         <Grid item xs={12}>
           <Typography variant="gsub" color="gray.500">
             DRINGLICHKEIT
+            <HelpIconButton
+              iconColor={HELP_ICON_BUTTON_COLOR.GREY}
+              helpText="The helper text will be displayed here."
+            />
           </Typography>
           <FormControl sx={{ display: "block", mt: 1 }}>
             <RadioGroup
