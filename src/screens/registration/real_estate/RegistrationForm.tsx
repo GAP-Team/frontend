@@ -18,7 +18,7 @@ import GProgressStepper from "@/components/stepper/GProgressStepper";
 import CircularProgress from "@mui/material/CircularProgress";
 import { RegistrationFormValues } from "../types";
 import ExpertiseServiceProvider from "../service_provider/ExpertiseServiceProvider";
-import { Typography } from "@mui/material";
+import { getRegistrationSteps } from "@/utils/Constants";
 
 interface RegistrationFormProps {
   activeStep: number;
@@ -38,6 +38,9 @@ const RegistrationForm = ({
   const formik = useFormikContext<RegistrationFormValues>();
   const [personTypeTab, setPersonTyp] = React.useState(0);
   const [stakeholderTyp, setStakeholderTyp] = React.useState(0);
+  const [registrationSteps, setRegistrationSteps] = React.useState<string[]>(
+    []
+  );
 
   useEffect(() => {
     if (personTypeTab === 0) {
@@ -50,6 +53,10 @@ const RegistrationForm = ({
       formik.setFieldValue("role", USER_ROLE.SERVICE_PROVIDER);
     }
   }, []);
+
+  useEffect(() => {
+    setRegistrationSteps(steps);
+  }, [steps]);
 
   const handlePersonTabChange = (
     event: React.SyntheticEvent,
@@ -83,8 +90,12 @@ const RegistrationForm = ({
     setStakeholderTyp(newValue);
 
     if (newValue === 0) {
+      const updatedSteps = getRegistrationSteps(USER_ROLE.REAL_ESTATE_OWNER);
+      setRegistrationSteps(updatedSteps);
       formik.setFieldValue("role", USER_ROLE.REAL_ESTATE_OWNER);
     } else {
+      const updatedSteps = getRegistrationSteps(USER_ROLE.SERVICE_PROVIDER);
+      setRegistrationSteps(updatedSteps);
       formik.setFieldValue("role", USER_ROLE.SERVICE_PROVIDER);
     }
   };
@@ -114,10 +125,10 @@ const RegistrationForm = ({
           color="inherit"
           href="/"
         >
-          Schritt {activeStep + 1}/ {steps.length}
+          Schritt {activeStep + 1}/ {registrationSteps.length}
         </Link>
 
-        <GStepper activeStep={activeStep} steps={steps} />
+        <GStepper activeStep={activeStep} steps={registrationSteps} />
       </Grid>
 
       <Divider orientation="vertical" variant="middle" flexItem />
@@ -125,16 +136,14 @@ const RegistrationForm = ({
       <Grid item xs={9} sx={styles.mainContent}>
         <div style={{ flexGrow: 1 }}>
           <div className="flex flex-col">
-            <SectionTitle text={steps[activeStep]} sx={styles.subTitle} />
+            <SectionTitle
+              text={registrationSteps[activeStep]}
+              sx={styles.subTitle}
+            />
             <GProgressStepper
               sx={styles.progressStepper}
               activeStep={activeStep}
             />
-          </div>
-          <div className="flex flex-col" style={styles.userInfo}>
-            <Typography variant="gsub" color="gray.500">
-              Wer sind Sie?
-            </Typography>
           </div>
           {activeStep === 0 && (
             <GTab
@@ -160,7 +169,7 @@ const RegistrationForm = ({
             formik?.values?.role === USER_ROLE.SERVICE_PROVIDER && (
               <ExpertiseServiceProvider formik={formik} />
             )}
-          {steps[activeStep] === "Zusammenfassung" && (
+          {registrationSteps[activeStep] === "Zusammenfassung" && (
             <SummaryRegistration setActiveStep={setActiveStep} />
           )}
         </div>

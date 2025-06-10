@@ -1,6 +1,7 @@
 import { Notification } from "@/components/navigation/GAppbar/types";
 import OfficeImage from "../../public/images/office.jpg";
 import { FilterOptionType } from "@/typings/types";
+import { USER_ROLE } from "./enums";
 
 export const listOfFacilitySubcategories: FilterOptionType[] = [
   {
@@ -724,3 +725,21 @@ export const FAQs = [
 ];
 
 export const DEFAULT_PUBLISH_MONTHS = 3;
+
+export function getRegistrationSteps(role?: string): string[] {
+  if (role === USER_ROLE.SERVICE_PROVIDER) {
+    return [
+      "Grundinformation",
+      "Adresse der Firma",
+      "Gewerbeanmeldung",
+      "Fachkenntnisse",
+      "Zusammenfassung",
+    ];
+  }
+  return [
+    "Grundinformation",
+    "Adresse der Firma",
+    "Gewerbeanmeldung",
+    "Zusammenfassung",
+  ];
+}
