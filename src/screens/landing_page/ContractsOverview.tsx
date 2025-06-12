@@ -65,7 +65,11 @@ const ContractsOverview = (): JSX.Element => {
           facilitySubcategories: facilitySubcategories,
         })
       ).unwrap();
-      const url = `${ROUTES.SERVICE_PROVIDER.CONTRACTS}?facilitySubcategories=${states.join(",")}&tenderTypes=${tenderTypes.join(",")}&states=${facilitySubcategories.join(",")}`;
+      const url = ROUTES.SERVICE_PROVIDER.CONTRACT_FILTER_URL(
+        states,
+        tenderTypes,
+        facilitySubcategories
+      );
       router.push(url);
     } catch {
       appdispatch(
