@@ -24,7 +24,7 @@ const ContractApplicationForm: React.FC<ApplyContractProps> = ({
   const typeOfBtn = activeStep.id + 1 >= steps.length ? "submit" : "button";
 
   const handleRoute = (): void => {
-    router.push(ROUTES.REAL_ESTATE.BUILDING.BUILDINGS);
+    router.push(ROUTES.SERVICE_PROVIDER.CONTRACTS);
   };
 
   const forwardAndBackBtns = (
