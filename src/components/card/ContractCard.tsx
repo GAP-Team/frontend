@@ -23,7 +23,7 @@ const ContractCard = ({ contracts }: ContractCardProps): JSX.Element => {
   const appDispatch = useAppDispatch();
   const user = useAppSelector(currentUser);
 
-  const handleShowContarctDetails = (contractId: string): void => {
+  const handleShowContractDetails = (contractId: string): void => {
     if (checkIsLoggedIn() && user?.role === USER_ROLE.SERVICE_PROVIDER) {
       router.push(ROUTES.SERVICE_PROVIDER.CONTRACT_DETAILS(contractId));
     } else {
@@ -75,7 +75,7 @@ const ContractCard = ({ contracts }: ContractCardProps): JSX.Element => {
 
               <GButton
                 style={styles.button}
-                onClick={() => handleShowContarctDetails(contract?.tenderId)}
+                onClick={() => handleShowContractDetails(contract?.tenderId)}
               >
                 Mehr Anzeigen
               </GButton>
