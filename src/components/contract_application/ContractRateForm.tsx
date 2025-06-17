@@ -10,10 +10,12 @@ import { useState } from "react";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 
 const ContractRateForm = ({ formik }: { formik?: any }): JSX.Element => {
-  const [zip, setZip] = useState<string>("");
   const [info, setInfo] = useState<string>("");
-  const [date, setDate] = useState<string>("");
-  const [city, setCity] = useState<string>("");
+
+  const handleSetInfo = (value: string): void => {
+    setInfo(value);
+    formik.setFieldValue("message", value);
+  };
 
   return (
     <Grid item xs={12} md={9}>
@@ -97,11 +99,16 @@ const ContractRateForm = ({ formik }: { formik?: any }): JSX.Element => {
             rows={4}
             multiline
             fullWidth
-            value={info}
             name="message"
             sx={{ mt: 2 }}
-            helperText={`${info.length}/250`}
-            onChange={(e) => setInfo(e.target.value.slice(0, 250))}
+            onBlur={formik?.handleBlur}
+            value={formik?.values?.message}
+            helperText={
+              <Typography sx={{ color: info.length === 250 ? "red" : "" }}>
+                {info.length}/250
+              </Typography>
+            }
+            onChange={(e) => handleSetInfo(e.target.value.slice(0, 250))}
           />
         </Grid>
       </Grid>
@@ -125,10 +132,11 @@ const ContractRateForm = ({ formik }: { formik?: any }): JSX.Element => {
               <div>
                 <TextField
                   type="date"
-                  value={date}
+                  value={formik?.values?.checkDate}
                   name="checkDate"
                   InputLabelProps={{ shrink: true }}
-                  onChange={(e) => setDate(e.target.value)}
+                  onBlur={formik?.handleBlur}
+                  onChange={formik?.handleChange}
                 />
               </div>
             </Grid>
@@ -164,9 +172,10 @@ const ContractRateForm = ({ formik }: { formik?: any }): JSX.Element => {
               </Typography>
               <TextField
                 fullWidth
-                value={zip}
                 name="zip"
-                onChange={(e) => setZip(e.target.value)}
+                value={formik?.values?.zip}
+                onBlur={formik?.handleBlur}
+                onChange={formik?.handleChange}
               />
             </Grid>
             <Grid item xs={12} md={6}>
@@ -176,8 +185,9 @@ const ContractRateForm = ({ formik }: { formik?: any }): JSX.Element => {
               <TextField
                 fullWidth
                 name="city"
-                value={city}
-                onChange={(e) => setCity(e.target.value)}
+                onBlur={formik?.handleBlur}
+                value={formik?.values?.city}
+                onChange={formik?.handleChange}
               />
             </Grid>
           </Grid>
