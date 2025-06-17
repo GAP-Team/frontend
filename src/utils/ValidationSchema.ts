@@ -451,3 +451,8 @@ export const ContractSearchSchema = yup.object({
 export const DeleteAccountSchema = yup.object({
   password: yup.string().required("Passwort ist erforderlich"),
 });
+
+export const applyContractFormSchema = yup.object().shape({
+  totalPrice: yup.string().required("totalPrice requried"),
+  hourlyRate: yup.string().required("hourlyRate requried"),
+});

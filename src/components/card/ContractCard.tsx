@@ -4,15 +4,39 @@ import Chip from "@mui/material/Chip";
 import Paper from "@mui/material/Paper";
 import GButton from "../button/GButton";
 import { ROUTES } from "@/utils/routes";
+import { USER_ROLE } from "@/utils/enums";
 import { Contract } from "@/typings/types";
 import { Typography } from "@mui/material";
+import { showSnackbar } from "../root-snackbar";
 import SectionTitle from "../label/SectionTitle";
+import { checkIsLoggedIn } from "@/utils/helperJWT";
+import { currentUser } from "@/lib/features/userSlice";
+import { useAppSelector, useAppDispatch } from "@/lib/hooks";
+import { useRouter } from "next/navigation";
 
 interface ContractCardProps {
   contracts: Contract[];
 }
 
 const ContractCard = ({ contracts }: ContractCardProps): JSX.Element => {
+  const router = useRouter();
+  const appDispatch = useAppDispatch();
+  const user = useAppSelector(currentUser);
+
+  const handleShowContarctDetails = (contractId: string): void => {
+    if (checkIsLoggedIn() && user?.role === USER_ROLE.SERVICE_PROVIDER) {
+      router.push(ROUTES.SERVICE_PROVIDER.CONTRACT_DETAILS(contractId));
+    } else {
+      appDispatch(
+        showSnackbar({
+          type: "error",
+          message:
+            "Um auf diese Funktion zugreifen zu können, müssen Sie sich als Dienstanbieter anmelden!",
+        })
+      );
+    }
+  };
+
   return (
     <>
       {contracts?.map((contract, index) => {
@@ -51,9 +75,7 @@ const ContractCard = ({ contracts }: ContractCardProps): JSX.Element => {
 
               <GButton
                 style={styles.button}
-                href={ROUTES.SERVICE_PROVIDER.CONTRACT_DETAILS(
-                  contract?.tenderId
-                )}
+                onClick={() => handleShowContarctDetails(contract?.tenderId)}
               >
                 Mehr Anzeigen
               </GButton>

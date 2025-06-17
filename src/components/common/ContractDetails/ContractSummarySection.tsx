@@ -91,7 +91,12 @@ const ContractSummarySection: React.FC<ContractSummarySectionProps> = ({
           <GButton color="gprimary" variant="outlined" onClick={backHandler}>
             Abbrechen
           </GButton>
-          <GButton color="ggreen" onClick={() => {}}>
+          <GButton
+            color="ggreen"
+            href={ROUTES.SERVICE_PROVIDER.CONTRACT_APPLICATION(
+              contract?.tenderId
+            )}
+          >
             Jetzt Bewerben
           </GButton>
         </Grid>
