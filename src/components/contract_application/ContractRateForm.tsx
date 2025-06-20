@@ -1,11 +1,4 @@
-import {
-  Box,
-  Grid,
-  Button,
-  Divider,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Grid, Divider, TextField, Typography } from "@mui/material";
 import { useState } from "react";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 
@@ -127,28 +120,48 @@ const ContractRateForm = ({ formik }: { formik?: any }): JSX.Element => {
           <Grid container spacing={2} sx={styles.desiredDateHolder}>
             <Grid item xs={12} md={4}>
               <Typography variant="gsub" color="gray.500" sx={styles.lableText}>
-                Gewünschtes Datum
+                Gewünschtes Datum 1
               </Typography>
               <div>
                 <TextField
                   type="date"
-                  value={formik?.values?.checkDate}
-                  name="checkDate"
+                  value={formik?.values?.desiredDateOne}
+                  name="desiredDateOne"
                   InputLabelProps={{ shrink: true }}
                   onBlur={formik?.handleBlur}
                   onChange={formik?.handleChange}
                 />
               </div>
             </Grid>
-            <Grid item xs={12} md={8}>
+            <Grid item xs={12} md={4}>
               <Typography variant="gsub" color="gray.500" sx={styles.lableText}>
-                Gesamtpreis
+                Gewünschtes Datum 2
               </Typography>
-              <Box sx={styles.totalPriceOptions}>
-                <Button variant="outlined">Zeitfenster 1</Button>
-                <Button variant="outlined">Zeitfenster 2</Button>
-                <Button variant="outlined">Zeitfenster 3</Button>
-              </Box>
+              <div>
+                <TextField
+                  type="date"
+                  value={formik?.values?.desiredDateTwo}
+                  name="desiredDateTwo"
+                  InputLabelProps={{ shrink: true }}
+                  onBlur={formik?.handleBlur}
+                  onChange={formik?.handleChange}
+                />
+              </div>
+            </Grid>
+            <Grid item xs={12} md={4}>
+              <Typography variant="gsub" color="gray.500" sx={styles.lableText}>
+                Gewünschtes Datum 3
+              </Typography>
+              <div>
+                <TextField
+                  type="date"
+                  value={formik?.values?.desiredDateThree}
+                  name="desiredDateThree"
+                  InputLabelProps={{ shrink: true }}
+                  onBlur={formik?.handleBlur}
+                  onChange={formik?.handleChange}
+                />
+              </div>
             </Grid>
           </Grid>
         </Grid>

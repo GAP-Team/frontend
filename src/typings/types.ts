@@ -78,7 +78,9 @@ export interface ContractApplicationFormValues {
   message: string;
   zip: string;
   city: string;
-  checkDate: string;
+  desiredDateOne: string;
+  desiredDateTwo: string;
+  desiredDateThree: string;
 }
 
 export interface ApplyContractProps {

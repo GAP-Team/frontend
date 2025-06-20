@@ -26,7 +26,7 @@ const ContractApplication = (): JSX.Element => {
   const [activeStep, setActiveStep] = useState<ActiveStepItem>(steps[0]);
 
   const stepFieldsMap: { [key: number]: string[] } = {
-    0: ["totalPrice", "hourlyRate", "message", "zip", "city", "checkDate"],
+    0: ["totalPrice", "hourlyRate", "message", "zip", "city", "desiredDateOne"],
     1: [],
     2: [],
   };
@@ -71,7 +71,9 @@ const ContractApplication = (): JSX.Element => {
     message: "",
     zip: "",
     city: "",
-    checkDate: "",
+    desiredDateOne: "",
+    desiredDateTwo: "",
+    desiredDateThree: "",
   };
 
   return (
@@ -180,166 +182,6 @@ const ContractApplication = (): JSX.Element => {
               />
             )}
           </Formik>
-
-          {/* <Grid item xs={12} md={9} >
-                        <Grid container spacing={2} >
-                            <Grid item xs={12} md={4}>
-                                <Typography sx={styles.descriptionLable}>Kosten der Dienstleistung</Typography>
-                                <Typography sx={styles.descriptionText}>
-                                    Geben Sie den Preis für den Service ein.<br />
-                                    Mehraufwand nach Stundenbasis*
-                                </Typography>
-                            </Grid>
-                            <Grid item xs={12} md={8}>
-                                <Grid container spacing={2}>
-                                    <Grid item xs={12} md={6}>
-                                        <Typography variant="gsub" color="gray.500" sx={styles.lableText}>
-                                            Gesamtpreis
-                                        </Typography>
-                                        <TextField
-                                            fullWidth
-                                            name='totalPrice'
-                                            sx={{ mt: 0.5 }}
-                                            value={totalPrice}
-                                            onChange={(e) => setTotalPrice(e.target.value)}
-                                            InputProps={{ startAdornment: <span>€&nbsp;</span> }}
-                                        />
-                                    </Grid>
-                                    <Grid item xs={12} md={6}>
-                                        <Typography variant="gsub" color="gray.500" sx={styles.lableText}>
-                                            Nettostundensatz Einzelstunden
-                                            <HelpOutlineIcon style={styles.helpIcon} fontSize="small" />
-                                        </Typography>
-                                        <TextField
-                                            fullWidth
-                                            name="hourlyRate"
-                                            value={hourlyRate}
-                                            onChange={(e) => setHourlyRate(e.target.value)}
-                                            InputProps={{ startAdornment: <span>€&nbsp;</span> }}
-                                        />
-                                    </Grid>
-                                </Grid>
-                            </Grid>
-                        </Grid>
-                        <Divider sx={styles.divider} />
-
-                        <Grid container spacing={2} >
-                            <Grid item xs={12} md={4}>
-                                <Typography sx={styles.descriptionLable}>Nachricht für Auftraggeber</Typography>
-                                <Typography sx={styles.descriptionText}>
-                                    Hier können Sie alles schreiben, was Sie für<br />
-                                    nützlich für die Arbeit erachten, die Sie erledigen <br />
-                                    können. Möglicherweise einige Einschränkungen oder Details.
-                                </Typography>
-                            </Grid>
-                            <Grid item xs={12} md={8}>
-                                <Typography variant="gsub" color="gray.500" sx={styles.lableText}>
-                                    Nützliche Informationen
-                                </Typography>
-                                <TextField
-                                    rows={4}
-                                    multiline
-                                    fullWidth
-                                    value={info}
-                                    name="message"
-                                    sx={{ mt: 2 }}
-                                    helperText={`${info.length}/250`}
-                                    onChange={(e) => setInfo(e.target.value.slice(0, 250))}
-                                />
-                            </Grid>
-                        </Grid>
-                        <Divider sx={styles.divider} />
-
-                        <Grid container spacing={2} >
-                            <Grid item xs={12} md={4}>
-                                <Typography sx={styles.descriptionLable}>Prüfungsdatum</Typography>
-                                <Typography sx={styles.descriptionText}>
-                                    Hier ist das gewünschte und mögliche<br />
-                                    Prüfungsdatum angezeigt.
-                                </Typography>
-                            </Grid>
-                            <Grid item xs={12} md={8}>
-                                <Grid container spacing={2} sx={styles.desiredDateHolder}>
-                                    <Grid item xs={12} md={4}>
-                                        <Typography variant="gsub" color="gray.500" sx={styles.lableText}>
-                                            Gewünschtes Datum
-                                        </Typography>
-                                        <div>
-                                            <TextField
-                                                type="date"
-                                                value={date}
-                                                name='checkDate'
-                                                InputLabelProps={{ shrink: true }}
-                                                onChange={(e) => setDate(e.target.value)}
-                                            />
-                                        </div>
-                                    </Grid>
-                                    <Grid item xs={12} md={8}>
-                                        <Typography variant="gsub" color="gray.500" sx={styles.lableText}>
-                                            Gesamtpreis
-                                        </Typography>
-                                        <Box sx={styles.totalPriceOptions}>
-                                            <Button variant="outlined">Zeitfenster 1</Button>
-                                            <Button variant="outlined">Zeitfenster 2</Button>
-                                            <Button variant="outlined">Zeitfenster 3</Button>
-                                        </Box>
-                                    </Grid>
-                                </Grid>
-                            </Grid>
-                        </Grid>
-                        <Divider sx={styles.divider} />
-
-                        <Grid container spacing={2} >
-                            <Grid item xs={12} md={4}>
-                                <Typography sx={styles.descriptionLable}>Prüfungsdatum</Typography>
-                                <Typography sx={styles.descriptionText}>
-                                    Hier ist das gewünschte und mögliche<br />
-                                    Prüfungsdatum angezeigt.
-                                </Typography>
-                            </Grid>
-                            <Grid item xs={12} md={8}>
-                                <Grid container spacing={2}>
-                                    <Grid item xs={12} md={6}>
-                                        <Typography variant="gsub" color="gray.500" sx={styles.lableText}>
-                                            Stadt-PLZ
-                                        </Typography>
-                                        <TextField
-                                            fullWidth
-                                            value={zip}
-                                            name='zip'
-                                            onChange={(e) => setZip(e.target.value)}
-                                        />
-                                    </Grid>
-                                    <Grid item xs={12} md={6}>
-                                        <Typography variant="gsub" color="gray.500" sx={styles.lableText}>
-                                            Stadt/Ort
-                                        </Typography>
-                                        <TextField
-                                            fullWidth
-                                            name='city'
-                                            value={city}
-                                            onChange={(e) => setCity(e.target.value)}
-                                        />
-                                    </Grid>
-                                </Grid>
-                            </Grid>
-                        </Grid>
-                        <Divider sx={styles.divider} />
-
-                        
-
-                        <FormControlLabel
-                            control={<Checkbox checked={accepted} onChange={(e) => setAccepted(e.target.checked)} />}
-                            label={<span>Ich akzeptiere die <strong>Allgemeinen Geschäftsbedingungen</strong> und die <strong>Datenschutzbestimmungen</strong>.</span>}
-                            sx={{ mt: 2 }}
-                        />
-                        <Divider sx={styles.divider} />
-
-                        <Box display="flex" mt={3}>
-                            <Button sx={{ mr: 1 }} variant="outlined">Abbrechen</Button>
-                            <Button variant="contained" disabled={!accepted}>Weiter</Button>
-                        </Box>
-                    </Grid> */}
         </Grid>
       </Paper>
     </Grid>
