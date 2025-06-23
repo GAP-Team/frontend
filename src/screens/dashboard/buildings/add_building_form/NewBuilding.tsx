@@ -148,7 +148,7 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
             Number(building.address.houseNumber) === Number(houseNumber)
         );
 
-        if (isBuildingExist) {
+        if (actionType === "add" && isBuildingExist) {
           appDispatch(
             showSnackbar({
               type: "error",
