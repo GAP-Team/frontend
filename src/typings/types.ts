@@ -41,6 +41,7 @@ export interface Contract {
   detailDescription: string;
   tenderType: string;
   urgency: string;
+  status: string;
   safetyWorkRequired: boolean;
   freeParkingAvailable: boolean;
   facilityDocuments: Document[];

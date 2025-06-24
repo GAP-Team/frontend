@@ -12,6 +12,8 @@ import NoContentPage from "@/components/common/NoContentPage";
 import SideFilterPanel from "../../components/search/SideFilterPanel";
 import { getAllContracts, fetchContracts } from "@/lib/features/contractSlice";
 import { ROUTES } from "@/utils/routes";
+import { TenderStatusEnum } from "@/utils/enums";
+import { Contract } from "@/typings/types";
 
 const ContractsOverview = (): JSX.Element => {
   const router = useRouter();
@@ -51,6 +53,11 @@ const ContractsOverview = (): JSX.Element => {
 
     getContracts(statesArray, tenderTypesArray, facilitySubcategoriesArray);
   }, []);
+
+  // Filter contracts to only include those with status OPEN
+  const filteredOpenContracts: Contract[] = contracts.filter(
+    (contract) => contract.status === TenderStatusEnum.OPEN
+  );
 
   const getContracts = async (
     states: string[],
@@ -96,7 +103,7 @@ const ContractsOverview = (): JSX.Element => {
             facilitySubcategories={preSelectedFacilitySubcategories}
           />
         </div>
-        {contracts.length === 0 ? (
+        {filteredOpenContracts.length === 0 ? (
           <div style={styles.resultSection}>
             <NoContentPage
               image={addTenderSrc}
@@ -116,7 +123,13 @@ const ContractsOverview = (): JSX.Element => {
               sx={{ overflow: "auto", flexGrow: 1 }}
             >
               <Grid item sx={styles.innerContainer}>
-                <ContractCard contracts={contracts} />
+                {filteredOpenContracts?.map((contract, index) => {
+                  return (
+                    contract.status === TenderStatusEnum.OPEN && (
+                      <ContractCard key={index} contract={contract} />
+                    )
+                  );
+                })}
               </Grid>
             </Grid>
           </div>
