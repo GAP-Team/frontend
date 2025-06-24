@@ -139,7 +139,7 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
         const { state, city, zip, street, houseNumber } = values;
 
         // Check for existing building at the same address
-        const isBuildingExist: boolean = userBuildingDetails?.some(
+        const doesBuildingExist: boolean = userBuildingDetails?.some(
           (building: SelectedBuildingData) =>
             building.address.state === state &&
             building.address.city === city &&
@@ -148,7 +148,7 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
             Number(building.address.houseNumber) === Number(houseNumber)
         );
 
-        if (actionType === FORM_ACTION_TYPE.CREATE && isBuildingExist) {
+        if (actionType === FORM_ACTION_TYPE.CREATE && doesBuildingExist) {
           appDispatch(
             showSnackbar({
               type: "error",
@@ -255,12 +255,12 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
       buildingAbbreviation: values.buildingAbbreviation,
     };
 
-    if (actionType === "edit") {
+    if (actionType === FORM_ACTION_TYPE.UPDATE) {
       const saveStatus = await UpdateBuildingData(buildingData);
       if (saveStatus) {
         status = true;
       }
-    } else if (actionType === "add") {
+    } else if (actionType === FORM_ACTION_TYPE.CREATE) {
       const updateStatus = await saveBuildingData(buildingData);
       if (updateStatus) {
         status = true;
