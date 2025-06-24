@@ -453,8 +453,18 @@ export const DeleteAccountSchema = yup.object({
 });
 
 export const applyContractFormSchema = yup.object().shape({
-  totalPrice: yup.number().typeError("Gesamtkosten muss eine Zahl sein.").positive("Gesamtkosten muss größer als 0 sein.").required("Gesamtkosten ist erforderlich").integer("Gesamtkosten muss eine ganze Zahl sein."),
-  hourlyRate: yup.number().typeError("Netto-Stundensatz muss eine Zahl sein.").positive("Netto-Stundensatz muss größer als 0 sein.").required("Netto-Stundensatz ist erforderlich").integer("Netto-Stundensatz muss eine ganze Zahl sein."),
+  totalPrice: yup
+    .number()
+    .typeError("Gesamtkosten muss eine Zahl sein.")
+    .positive("Gesamtkosten muss größer als 0 sein.")
+    .required("Gesamtkosten ist erforderlich")
+    .integer("Gesamtkosten muss eine ganze Zahl sein."),
+  hourlyRate: yup
+    .number()
+    .typeError("Netto-Stundensatz muss eine Zahl sein.")
+    .positive("Netto-Stundensatz muss größer als 0 sein.")
+    .required("Netto-Stundensatz ist erforderlich")
+    .integer("Netto-Stundensatz muss eine ganze Zahl sein."),
   zip: yup
     .string()
     .matches(

@@ -69,5 +69,9 @@ export const clearLocalStorage = (): void => {
 };
 
 export const translateTenderForm = (tenderForm: string): string => {
-  return tenderForm !== "" ? (tenderForm === TENDER_FORM.CRAFTSMAN ? "Handwerker" : "Sachverständigen") : "Nicht_Vorhanden";
+  return tenderForm !== ""
+    ? tenderForm === TENDER_FORM.CRAFTSMAN
+      ? "Handwerker"
+      : "Sachverständigen"
+    : "Nicht_Vorhanden";
 };

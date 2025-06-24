@@ -10,7 +10,7 @@ import { BsClockFill } from "react-icons/bs";
 import Typography from "@mui/material/Typography";
 import { VscDebugBreakpointLog } from "react-icons/vsc";
 import SectionTitle from "@/components/label/SectionTitle";
-import { TENDER_FORM, Urgency } from "@/utils/enums";
+import { Urgency } from "@/utils/enums";
 import ActionMenu from "@/components/common/ActionMenu";
 import { useAppDispatch } from "@/lib/hooks";
 import { showSnackbar } from "@/components/root-snackbar";

@@ -27,7 +27,7 @@ const ContractRateForm = ({ formik }: { formik?: any }): JSX.Element => {
         <Grid item xs={12} md={8}>
           <Grid container spacing={2}>
             <Grid item xs={12} md={6}>
-              <LabelWithAsterisk >Gesamtpreis</LabelWithAsterisk>
+              <LabelWithAsterisk>Gesamtpreis</LabelWithAsterisk>
               <TextField
                 fullWidth
                 name="totalPrice"
@@ -46,7 +46,7 @@ const ContractRateForm = ({ formik }: { formik?: any }): JSX.Element => {
               />
             </Grid>
             <Grid item xs={12} md={6}>
-              <LabelWithAsterisk >
+              <LabelWithAsterisk>
                 Nettostundensatz Einzelstunden
               </LabelWithAsterisk>
               <HelpOutlineIcon style={styles.helpIcon} fontSize="small" />
@@ -173,7 +173,7 @@ const ContractRateForm = ({ formik }: { formik?: any }): JSX.Element => {
             Stadt-PLZ des Dienstleisters
           </Typography>
           <Typography sx={styles.descriptionText}>
-            Wenn Ihre Geschäftsadresse nicht Ihr 
+            Wenn Ihre Geschäftsadresse nicht Ihr
             <br />
             Startadresse für die Abfahrt ist.
           </Typography>
@@ -190,13 +190,8 @@ const ContractRateForm = ({ formik }: { formik?: any }): JSX.Element => {
                 value={formik?.values?.zip}
                 onBlur={formik?.handleBlur}
                 onChange={formik?.handleChange}
-                error={
-                  formik?.touched?.zip &&
-                  Boolean(formik?.errors?.zip)
-                }
-                helperText={
-                  formik?.touched?.zip && formik?.errors?.zip
-                }
+                error={formik?.touched?.zip && Boolean(formik?.errors?.zip)}
+                helperText={formik?.touched?.zip && formik?.errors?.zip}
               />
             </Grid>
             <Grid item xs={12} md={6}>

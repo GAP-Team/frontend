@@ -62,7 +62,7 @@ const ContractApplication = (): JSX.Element => {
     if (activeStep.id > 0) {
       setActiveStep(steps[activeStep.id - 1]);
     } else {
-      router.push(ROUTES.SERVICE_PROVIDER_HOME);
+      router.push(ROUTES.SERVICE_PROVIDER.CONTRACT_FILTER_URL([], [], []));
     }
   };
 
@@ -81,9 +81,7 @@ const ContractApplication = (): JSX.Element => {
     <Grid sx={{ padding: 4, marginTop: 2 }}>
       <Typography variant="h5" fontWeight="bold" gutterBottom>
         Bewerbung{" "}
-        <span style={{ color: "#909090" }}>
-          {contractDetails?.tenderType}
-        </span>
+        <span style={{ color: "#909090" }}>{contractDetails?.tenderType}</span>
       </Typography>
       <Paper elevation={1} sx={{ p: 4, mx: "auto", my: 4 }}>
         <Grid container spacing={2}>
@@ -126,9 +124,9 @@ const ContractApplication = (): JSX.Element => {
               Angebotsfrist:
             </Typography>
             <Typography sx={styles.textGrey}>
-              { contractDetails?.fromDate && contractDetails?.toDate && (
-                ` ${new Date(contractDetails?.fromDate ?? "").toLocaleDateString("de-DE")} - ${new Date(contractDetails?.toDate ?? "").toLocaleDateString("de-DE")}`
-              )}
+              {contractDetails?.fromDate &&
+                contractDetails?.toDate &&
+                ` ${new Date(contractDetails?.fromDate ?? "").toLocaleDateString("de-DE")} - ${new Date(contractDetails?.toDate ?? "").toLocaleDateString("de-DE")}`}
             </Typography>
 
             <Typography
