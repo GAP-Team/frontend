@@ -27,7 +27,7 @@ import { addObjektFormSchema } from "@/utils/ValidationSchema";
 import { useAppDispatch } from "@/lib/hooks";
 import { showSnackbar } from "@/components/root-snackbar";
 import { getUserBuildings } from "@/lib/features/buildingSlice";
-import { DOCUMENT_TYPE } from "@/utils/enums";
+import { DOCUMENT_TYPE, FORM_ACTION_TYPE } from "@/utils/enums";
 
 const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
   const router = useRouter();
@@ -55,9 +55,9 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
 
   useEffect(() => {
     if (id === "") {
-      setActionType("add");
+      setActionType(FORM_ACTION_TYPE.CREATE);
     } else {
-      setActionType("edit");
+      setActionType(FORM_ACTION_TYPE.UPDATE);
       getCurrentBuildingDetails(id);
     }
   }, []);
@@ -148,7 +148,7 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
             Number(building.address.houseNumber) === Number(houseNumber)
         );
 
-        if (actionType === "add" && isBuildingExist) {
+        if (actionType === FORM_ACTION_TYPE.CREATE && isBuildingExist) {
           appDispatch(
             showSnackbar({
               type: "error",
