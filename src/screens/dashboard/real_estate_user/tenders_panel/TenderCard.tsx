@@ -9,7 +9,6 @@ import Divider from "@mui/material/Divider";
 import { BsClockFill } from "react-icons/bs";
 import Typography from "@mui/material/Typography";
 import { VscDebugBreakpointLog } from "react-icons/vsc";
-import { getTenderStatusStyle } from "@/utils/utils";
 import SectionTitle from "@/components/label/SectionTitle";
 import { TENDER_FORM, Urgency } from "@/utils/enums";
 import ActionMenu from "@/components/common/ActionMenu";
@@ -18,19 +17,13 @@ import { showSnackbar } from "@/components/root-snackbar";
 import { deleteTender } from "@/lib/features/tenderSlice";
 import { BuildingAddress } from "@/screens/dashboard/buildings/building_card/types";
 import { Tender } from "@/screens/dashboard/tenders/tender_card/types";
+import { getTenderStatusStyle, translateTenderForm } from "@/utils/utils";
 
 interface TenderCardProps {
   tender: Tender;
   buildingName: string;
   buildingAddress: BuildingAddress;
 }
-
-// Helper to translate tenderForm
-const translateTenderForm = (tenderForm: string): string => {
-  return tenderForm === TENDER_FORM.CRAFTSMAN
-    ? "Handwerker"
-    : "Sachverständigen";
-};
 
 const TenderCard: React.FC<TenderCardProps> = ({
   tender,

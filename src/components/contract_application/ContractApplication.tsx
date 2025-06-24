@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useAppSelector } from "@/lib/hooks";
 import { Formik, FormikHelpers } from "formik";
 import ContractRateForm from "./ContractRateForm";
+import { translateTenderForm } from "@/utils/utils";
 import { ActiveStepItem } from "@/screens/dashboard/types";
 import ContractApplicationForm from "./ContractApplicationForm";
 import { getContractDetails } from "@/lib/features/contractSlice";
@@ -81,7 +82,7 @@ const ContractApplication = (): JSX.Element => {
       <Typography variant="h5" fontWeight="bold" gutterBottom>
         Bewerbung{" "}
         <span style={{ color: "#909090" }}>
-          {contractDetails?.facilityName}
+          {contractDetails?.tenderType}
         </span>
       </Typography>
       <Paper elevation={1} sx={{ p: 4, mx: "auto", my: 4 }}>
@@ -92,7 +93,7 @@ const ContractApplication = (): JSX.Element => {
               Ausschreibungsart:
             </Typography>
             <Typography sx={styles.textGrey}>
-              {contractDetails?.facilityType}
+              {translateTenderForm(contractDetails?.tenderForm ?? "")}
             </Typography>
 
             <Typography
@@ -103,7 +104,7 @@ const ContractApplication = (): JSX.Element => {
               Auftragstyp:
             </Typography>
             <Typography sx={styles.textGrey}>
-              {contractDetails?.subcategory}
+              {contractDetails?.tenderType}
             </Typography>
 
             <Typography
@@ -114,7 +115,7 @@ const ContractApplication = (): JSX.Element => {
               Anlagentyp:
             </Typography>
             <Typography sx={styles.textGrey}>
-              {contractDetails?.tenderType}
+              {contractDetails?.subcategory}
             </Typography>
 
             <Typography
@@ -125,7 +126,9 @@ const ContractApplication = (): JSX.Element => {
               Angebotsfrist:
             </Typography>
             <Typography sx={styles.textGrey}>
-              {`${new Date(contractDetails?.fromDate ?? "").toLocaleDateString("de-DE")} - ${new Date(contractDetails?.toDate ?? "").toLocaleDateString("de-DE")}`}
+              { contractDetails?.fromDate && contractDetails?.toDate && (
+                ` ${new Date(contractDetails?.fromDate ?? "").toLocaleDateString("de-DE")} - ${new Date(contractDetails?.toDate ?? "").toLocaleDateString("de-DE")}`
+              )}
             </Typography>
 
             <Typography
@@ -137,7 +140,7 @@ const ContractApplication = (): JSX.Element => {
             </Typography>
             <Typography
               sx={styles.textGrey}
-            >{`${contractDetails?.state}, ${contractDetails?.city}`}</Typography>
+            >{`${contractDetails?.city}, ${contractDetails?.state}`}</Typography>
 
             <Typography
               sx={styles.basicInformationLable}

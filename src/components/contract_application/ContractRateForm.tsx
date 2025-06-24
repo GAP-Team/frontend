@@ -1,6 +1,7 @@
 import { Grid, Divider, TextField, Typography } from "@mui/material";
 import { useState } from "react";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
+import LabelWithAsterisk from "../label/LabelWithAsterisk";
 
 const ContractRateForm = ({ formik }: { formik?: any }): JSX.Element => {
   const [info, setInfo] = useState<string>("");
@@ -26,9 +27,7 @@ const ContractRateForm = ({ formik }: { formik?: any }): JSX.Element => {
         <Grid item xs={12} md={8}>
           <Grid container spacing={2}>
             <Grid item xs={12} md={6}>
-              <Typography variant="gsub" color="gray.500" sx={styles.lableText}>
-                Gesamtpreis
-              </Typography>
+              <LabelWithAsterisk >Gesamtpreis</LabelWithAsterisk>
               <TextField
                 fullWidth
                 name="totalPrice"
@@ -47,10 +46,10 @@ const ContractRateForm = ({ formik }: { formik?: any }): JSX.Element => {
               />
             </Grid>
             <Grid item xs={12} md={6}>
-              <Typography variant="gsub" color="gray.500" sx={styles.lableText}>
+              <LabelWithAsterisk >
                 Nettostundensatz Einzelstunden
-                <HelpOutlineIcon style={styles.helpIcon} fontSize="small" />
-              </Typography>
+              </LabelWithAsterisk>
+              <HelpOutlineIcon style={styles.helpIcon} fontSize="small" />
               <TextField
                 fullWidth
                 name="hourlyRate"
@@ -170,11 +169,13 @@ const ContractRateForm = ({ formik }: { formik?: any }): JSX.Element => {
 
       <Grid container spacing={2}>
         <Grid item xs={12} md={4}>
-          <Typography sx={styles.descriptionLable}>Prüfungsdatum</Typography>
+          <Typography sx={styles.descriptionLable}>
+            Stadt-PLZ des Dienstleisters
+          </Typography>
           <Typography sx={styles.descriptionText}>
-            Hier ist das gewünschte und mögliche
+            Wenn Ihre Geschäftsadresse nicht Ihr 
             <br />
-            Prüfungsdatum angezeigt.
+            Startadresse für die Abfahrt ist.
           </Typography>
         </Grid>
         <Grid item xs={12} md={8}>
@@ -189,6 +190,13 @@ const ContractRateForm = ({ formik }: { formik?: any }): JSX.Element => {
                 value={formik?.values?.zip}
                 onBlur={formik?.handleBlur}
                 onChange={formik?.handleChange}
+                error={
+                  formik?.touched?.zip &&
+                  Boolean(formik?.errors?.zip)
+                }
+                helperText={
+                  formik?.touched?.zip && formik?.errors?.zip
+                }
               />
             </Grid>
             <Grid item xs={12} md={6}>
