@@ -39,11 +39,13 @@ const sidebarItems: SidebarItem[] = [
 const ServiceProviderLayout: React.FC<any> = ({ children }) => {
   const router = useRouter();
   const pathname = usePathname();
-  const [selected, setSelected] = useState<SidebarItem | SubItem>(
+  const [selectedSidebarItem, setSelectedSidebarItem] = useState<SidebarItem | SubItem>(
     sidebarItems[0]
   );
 
   useEffect(() => {
+    // FIXME: we already use this logic in the RealEstateLayout, consider refactoring to a common utility function
+    // to avoid code duplication.
     const matchSidebarItem = (): SidebarItem | SubItem => {
       for (const item of sidebarItems) {
         if (item.url === pathname) {
@@ -59,12 +61,12 @@ const ServiceProviderLayout: React.FC<any> = ({ children }) => {
       }
       return sidebarItems[0];
     };
-    setSelected(matchSidebarItem());
+    setSelectedSidebarItem(matchSidebarItem());
   }, [pathname]);
 
   const handleRedirect = (item: SidebarItem | SubItem): void => {
     if (item.url) {
-      setSelected(item);
+      setSelectedSidebarItem(item);
       router.push(item.url);
     }
   };
@@ -72,7 +74,7 @@ const ServiceProviderLayout: React.FC<any> = ({ children }) => {
   return (
     <Layout
       sidebarItems={sidebarItems}
-      selected={selected}
+      selected={selectedSidebarItem}
       setSelected={handleRedirect}
     >
       {children}
