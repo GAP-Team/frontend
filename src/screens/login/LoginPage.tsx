@@ -24,7 +24,7 @@ import emailAPI from "@/api/email";
 import { ROUTES } from "@/utils/routes";
 import { USER_ROLE } from "@/utils/enums";
 
-const LoginPage = (): JSX.Element => {
+const Login = (): JSX.Element => {
   const router = useRouter();
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
@@ -211,7 +211,7 @@ const LoginPage = (): JSX.Element => {
   );
 };
 
-export default LoginPage;
+export default Login;
 
 //Styles
 
