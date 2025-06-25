@@ -67,7 +67,11 @@ const HeroSection = (): JSX.Element => {
     initialValues: initialValues,
     validationSchema: ContractSearchSchema,
     onSubmit: async (values) => {
-      const url = `${ROUTES.SERVICE_PROVIDER.CONTRACTS}?facilitySubcategories=${values?.facilitySubcategories?.join(",")}&tenderTypes=${values?.tenderTypes?.join(",")}&states=${values?.states?.join(",")}`;
+      const url = ROUTES.SERVICE_PROVIDER.CONTRACT_FILTER_URL(
+        values?.states,
+        values?.tenderTypes,
+        values?.facilitySubcategories
+      );
       router.push(url);
     },
   });
