@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../store";
 import { Facility } from "@/screens/dashboard/facilities/facility_card/types";
-import buildingAPIs from "@/api/building";
+import buildingAPI from "@/api/building";
 import userAPIs from "@/api/user";
 import facilityAPIs from "@/api/facility";
 
@@ -22,7 +22,7 @@ export const fetchFacilities = createAsyncThunk(
   "facilities/fetchForBuilding",
   async (buildingId: string, { rejectWithValue }) => {
     try {
-      const response = await buildingAPIs.getBuildingFacilities(buildingId);
+      const response = await buildingAPI.getFacilitiesOfBuilding(buildingId);
       return response.data;
     } catch (error: any) {
       return rejectWithValue(

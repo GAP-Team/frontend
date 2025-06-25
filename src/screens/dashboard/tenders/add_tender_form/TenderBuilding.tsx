@@ -3,7 +3,7 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import { useSelector } from "react-redux";
 import { useFormikContext } from "formik";
-import buildingAPIs from "@/api/building";
+import buildingAPI from "@/api/building";
 import { Item } from "@/utils/Constants";
 import { useEffect, useState } from "react";
 import { AddTenderFormValues } from "./types";
@@ -41,7 +41,7 @@ const TenderBuilding = (): JSX.Element => {
   }, []);
 
   const setSelectedBuildingFacilities = async (): Promise<void> => {
-    const allFacilities = await buildingAPIs.getBuildingFacilities(
+    const allFacilities = await buildingAPI.getFacilitiesOfBuilding(
       formik?.values?.buildingId
     );
 
@@ -67,7 +67,7 @@ const TenderBuilding = (): JSX.Element => {
       formik?.setFieldValue("buildingName", building[0]?.buildingName);
 
       const allFacilities =
-        await buildingAPIs.getBuildingFacilities(selectedBuildingId);
+        await buildingAPI.getFacilitiesOfBuilding(selectedBuildingId);
 
       const facilityOptions: Item[] = [];
       allFacilities?.data?.map((facility: any) => {

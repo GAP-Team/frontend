@@ -15,7 +15,7 @@ import { IoExtensionPuzzleOutline } from "react-icons/io5";
 
 import { Building } from "./types";
 import facilityAPIs from "@/api/facility";
-import buildingAPIs from "@/api/building";
+import buildingAPI from "@/api/building";
 import DocumentList from "./DocumentList ";
 import { DOCUMENT_TYPE } from "@/utils/enums";
 import ActionMenu from "@/components/common/ActionMenu";
@@ -67,7 +67,7 @@ const BuildingCard: React.FC<BuildingCardProps> = ({ building }) => {
   `;
 
   const deleteBuilding = async (buildingId: string): Promise<void> => {
-    const deleteStatus = await buildingAPIs.delete(buildingId);
+    const deleteStatus = await buildingAPI.delete(buildingId);
     if (deleteStatus?.data?.statusCode === 204) {
       const buildingsAfterDelete = userBuildings.filter(
         (building: Building) => building.id !== buildingId
