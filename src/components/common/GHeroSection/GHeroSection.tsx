@@ -47,9 +47,6 @@ const HeroSection = (): JSX.Element => {
   const [facilityExpanded, setFacilityExpanded] = useState<{
     [key: string]: boolean;
   }>({});
-  const [stateExpanded, setStateExpanded] = useState<{
-    [key: string]: boolean;
-  }>({});
   const [selectedFacilitySubcategories, setSelectedFacilitySubcategories] =
     useState<string[]>([]);
   const [selectedStates, setSelectedStates] = useState<string[]>([]);
@@ -70,7 +67,11 @@ const HeroSection = (): JSX.Element => {
     initialValues: initialValues,
     validationSchema: ContractSearchSchema,
     onSubmit: async (values) => {
-      const url = `${ROUTES.SERVICE_PROVIDER.CONTRACTS}?facilitySubcategories=${values?.facilitySubcategories?.join(",")}&tenderTypes=${values?.tenderTypes?.join(",")}&states=${values?.states?.join(",")}`;
+      const url = ROUTES.SERVICE_PROVIDER.CONTRACT_FILTER_URL(
+        values?.states,
+        values?.tenderTypes,
+        values?.facilitySubcategories
+      );
       router.push(url);
     },
   });
@@ -171,16 +172,13 @@ const HeroSection = (): JSX.Element => {
   };
 
   // State handles
-  const handleClickStateSelect = (
-    event: React.MouseEvent<HTMLDivElement>
-  ): void => {
-    setStateAnchorEl(event.currentTarget);
-  };
   const handleStateOptionsClose = (): void => {
     setStateAnchorEl(null);
   };
-  const handleStateOptionsExpand = (category: string): void => {
-    setStateExpanded((prev) => ({ ...prev, [category]: !prev[category] }));
+  const handleStateOptionsExpand = (
+    event: React.MouseEvent<HTMLDivElement>
+  ): void => {
+    setStateAnchorEl(event.currentTarget);
   };
   const handleStateOptionSelect = (item: string): void => {
     const states = handleOptionsSelectFilter(item, "states");
@@ -376,7 +374,6 @@ const HeroSection = (): JSX.Element => {
                                   </InputAdornment>
                                 ),
                               }}
-                              // value={selectedTenderType}
                               onBlur={formik?.handleBlur}
                               onChange={formik?.handleChange}
                               error={
@@ -476,7 +473,7 @@ const HeroSection = (): JSX.Element => {
                             </label>
                             <TextField
                               label="Bundesländer"
-                              onClick={handleClickStateSelect}
+                              onClick={(e) => handleStateOptionsExpand(e)}
                               InputProps={{
                                 readOnly: true,
                                 endAdornment: (
@@ -502,41 +499,19 @@ const HeroSection = (): JSX.Element => {
                             >
                               {listOfGermanStates.map((states) => (
                                 <div key={states.category}>
-                                  <ListItemButton
-                                    onClick={() =>
-                                      handleStateOptionsExpand(states.category)
-                                    }
-                                  >
-                                    <ListItemText primary={states.category} />
-                                    {stateExpanded[states.category] ? (
-                                      <ExpandLess />
-                                    ) : (
-                                      <ExpandMore />
-                                    )}
-                                  </ListItemButton>
-                                  <Collapse
-                                    in={stateExpanded[states.category]}
-                                    timeout="auto"
-                                    unmountOnExit
-                                  >
-                                    <List disablePadding>
-                                      {states.items.map((item) => (
-                                        <MenuItem
-                                          key={item}
-                                          onClick={() =>
-                                            handleStateOptionSelect(item)
-                                          }
-                                        >
-                                          <Checkbox
-                                            checked={selectedStates.includes(
-                                              item
-                                            )}
-                                          />
-                                          <ListItemText primary={item} />
-                                        </MenuItem>
-                                      ))}
-                                    </List>
-                                  </Collapse>
+                                  {states.items.map((item) => (
+                                    <MenuItem
+                                      key={item}
+                                      onClick={() =>
+                                        handleStateOptionSelect(item)
+                                      }
+                                    >
+                                      <Checkbox
+                                        checked={selectedStates.includes(item)}
+                                      />
+                                      <ListItemText primary={item} />
+                                    </MenuItem>
+                                  ))}
                                 </div>
                               ))}
                             </Menu>
