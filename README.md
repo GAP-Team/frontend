@@ -22,6 +22,103 @@ A Next.js 14 project with App Router, ready to power GAP with the latest feature
   - Landing page styles are defined in **tailwind.config.ts**.
   - Dashboard styles are defined in **app/theme.ts**.
 
+## Component Structure
+
+The application follows a standardized component structure to ensure maintainability and scalability.
+
+### Directory Structure
+
+```
+src/
+├── components/
+│   ├── ui/             # Reusable UI components
+│   │   ├── button/
+│   │   ├── input/
+│   │   ├── card/
+│   │   └── dialog/
+│   ├── layout/         # Layout components
+│   │   ├── header/
+│   │   ├── footer/
+│   │   └── sidebar/
+│   ├── features/       # Feature-specific components
+│   │   ├── auth/
+│   │   ├── dashboard/
+│   │   ├── facility/
+│   │   └── building/
+│   ├── forms/          # Form components
+│   │   ├── auth/
+│   │   ├── facility/
+│   │   └── building/
+│   └── shared/         # Shared components
+```
+
+### Component Structure
+
+Each component should follow this structure:
+
+```
+ComponentName/
+├── index.tsx          # Main component file
+├── styles.ts          # Component styles
+├── types.ts           # TypeScript interfaces/types
+```
+
+### Naming Conventions
+
+1. **Component Files:**
+   - Use PascalCase for component files (e.g., `Button.tsx`)
+   - Use camelCase for utility files (e.g., `styles.ts`, `types.ts`)
+
+2. **Component Names:**
+   - Prefix shared components with 'G' (e.g., `GButton`, `GInput`)
+   - Use descriptive names that reflect component functionality
+
+3. **Type Definitions:**
+   - Suffix interfaces with 'Props' for component props (e.g., `ButtonProps`)
+   - Use PascalCase for type names
+
+### Example Component
+
+```typescript
+// Component index.tsx
+import React from 'react';
+import { styles } from './styles';
+import type { ComponentProps } from './types';
+
+export const Component: React.FC<ComponentProps> = ({ children }) => {
+  return <div style={styles.root}>{children}</div>;
+};
+
+// types.ts
+export interface ComponentProps {
+  children: React.ReactNode;
+}
+
+// styles.ts
+export const styles = {
+  root: {
+    // styles
+  }
+};
+```
+
+### Usage Guidelines
+
+1. **Component Creation:**
+   - Place components in appropriate directories based on their purpose
+   - Include all necessary files (index, types, styles)
+   - Document props and functionality
+
+2. **Imports/Exports:**
+   - Export components as named exports
+   - Use barrel exports (index.ts) in directories
+   - Import components from the barrel file
+
+3. **Styling:**
+   - Use MUI's styling solution with TypeScript
+   - Keep styles colocated with components
+   - Use theme variables for consistency
+
 ## Getting Started
 
 1. Install npm packages:
