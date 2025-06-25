@@ -1,6 +1,10 @@
-import { Notification } from "@/components/navigation/GAppbar/types";
-import OfficeImage from "../../public/images/office.jpg";
 import { FilterOptionType } from "@/typings/types";
+import HomeWorkIcon from "@mui/icons-material/HomeWork";
+import OfficeImage from "../../public/images/office.jpg";
+import DescriptionIcon from "@mui/icons-material/Description";
+import { Notification } from "@/components/navigation/GAppbar/types";
+import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
+import ConnectWithoutContactIcon from "@mui/icons-material/ConnectWithoutContact";
 
 export const listOfFacilitySubcategories: FilterOptionType[] = [
   {
@@ -724,3 +728,34 @@ export const FAQs = [
 ];
 
 export const DEFAULT_PUBLISH_MONTHS = 3;
+
+export const featuresDammy = [
+  {
+    icon: HomeWorkIcon,
+    title: "Immobilienmanagement",
+    subtitle: "Behalte den Überblick über Deine Objekte.",
+    description:
+      "Erhalte schnell einen Überblick über Dein Objektportfolio. Egal, ob Du Deine Mieteingänge prüfen, den Ist-Zustand erfassen oder die Betriebskostenabrechnung erstellen möchtest. Der Objektbereich ist der perfekte Ort für Dich.",
+  },
+  {
+    icon: ConnectWithoutContactIcon,
+    title: "Kommunikation & Interaktion",
+    subtitle: "Digitalisiere Deine Mieterkommunikation.",
+    description:
+      "Versende Schreiben digital, egal ob per E-Mail, SMS oder Post. Oder lade Deine Mieter in das Mieterportal ein. Dort gibt es die Möglichkeit, Dokumente und wichtige Ansprechpartner zu teilen, Nachrichten auszutauschen oder Ankündigungen zu hinterlegen.",
+  },
+  {
+    icon: AccountBalanceIcon,
+    title: "Finanzmanagement",
+    subtitle: "Erhalte die volle Kontrolle über Deine Finanzen.",
+    description:
+      "Erfasse neben Deinen Mieten wichtige Einnahmen und Ausgaben zu Deinen Objekten und erhalte so einen schnellen Überblick über Deinen gesamten Cashflow. Auf Basis Deiner Buchungen ist die Betriebskostenabrechnung nur noch einen Klick entfernt.",
+  },
+  {
+    icon: DescriptionIcon,
+    title: "Dokumentenmanagement",
+    subtitle: "Perfekt organisiert ohne Papierkram.",
+    description:
+      "Digitalisiere Deine Dokumente wie z.B. Rechnungen und Verträge und verwalte sie bequem in immocloud. So stehen sie von überall und zu jederzeit zum Abruf bereit. Bei Bedarf kannst Du sie auch über das Mieterportal mit Deinen Mietern teilen.",
+  },
+];
