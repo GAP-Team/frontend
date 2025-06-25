@@ -7,7 +7,7 @@ import { articles } from "@/utils/Constants";
 import BlogDetails from "@/components/common/BlogDetails/BlogDetails";
 import LandingPageLayout from "@/screens/landingpage_layout/LandingPageLayout";
 
-export default function Blogs(): JSX.Element {
+export default function BlogPage(): JSX.Element {
   const params = useParams();
   const slug = Array.isArray(params.slug) ? params.slug[0] : params.slug;
 
