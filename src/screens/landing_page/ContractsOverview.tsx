@@ -124,11 +124,7 @@ const ContractsOverview = (): JSX.Element => {
             >
               <Grid item sx={styles.innerContainer}>
                 {filteredOpenContracts?.map((contract, index) => {
-                  return (
-                    contract.status === TenderStatusEnum.OPEN && (
-                      <ContractCard key={index} contract={contract} />
-                    )
-                  );
+                  return <ContractCard key={index} contract={contract} />;
                 })}
               </Grid>
             </Grid>
