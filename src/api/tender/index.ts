@@ -1,11 +1,11 @@
 import api from "../axios";
 
-const tenderAPIs = {
+const tenderAPI = {
   /* Tender Routes */
-  create: (data: any): any => api.post("/tenders", data),
+  create: (tender: any): any => api.post("/tenders", tender),
   delete: (tenderId: string): any => api.delete(`/tenders/${tenderId}`),
-  update: (tenderId: string, tenderData: any): any =>
-    api.put(`/tenders/${tenderId}`, tenderData),
+  update: (tenderId: string, tender: any): any =>
+    api.put(`/tenders/${tenderId}`, tender),
 };
 
-export default tenderAPIs;
+export default tenderAPI;
