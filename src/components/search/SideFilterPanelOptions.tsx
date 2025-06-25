@@ -40,7 +40,7 @@ const SideFilterPanelOptions: React.FC<SideFilterPanelOptionsProps> = ({
       );
       setOptionExpanded(initialExpanded);
     }
-  }, [preSelectedOptions]);
+  }, [preSelectedOptions, title, options]);
 
   const toggleSection = (): void => {
     setOpenSections((prev) => ({ ...prev, [title]: !prev[title] }));
