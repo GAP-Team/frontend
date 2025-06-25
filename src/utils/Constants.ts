@@ -187,7 +187,7 @@ export interface DashboardComponentsProps {
   slot?: string;
 }
 
-export interface Documentation {
+export interface Documents {
   documentChoice: string;
   constructionDocs: File[];
   floorplanDocs: File[];

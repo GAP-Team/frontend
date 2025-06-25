@@ -19,7 +19,7 @@ import { setUser } from "@/lib/features/userSlice";
 import { GapLogo } from "@/components/logo/GapLogo";
 import HeroBanner from "../../components/common/InfoBanner";
 import { loginValidationSchema } from "@/utils/ValidationSchema";
-import { setAccessToken, setIsUserVerified } from "@/utils/helperJWT";
+import { setAccessToken, setIsUserVerified } from "@/utils/auth";
 import emailAPI from "@/api/email";
 import { ROUTES } from "@/utils/routes";
 import { USER_ROLE } from "@/utils/enums";
