@@ -12,7 +12,7 @@ import BuildingContainer from "./building_card/BuildingContainer";
 import PropertyFilterPanel from "@/components/filter/PropertyFilterPanel";
 import { fetchBuildings, getUserBuildings } from "@/lib/features/buildingSlice";
 
-const BuildingOverview: React.FC = () => {
+const BuildingsOverview: React.FC = () => {
   const dispatch = useAppDispatch();
   const user = useSelector(currentUser);
   const userBuildings = useSelector(getUserBuildings);
@@ -70,7 +70,7 @@ const BuildingOverview: React.FC = () => {
   );
 };
 
-export default BuildingOverview;
+export default BuildingsOverview;
 
 // Styles
 const styles = {
