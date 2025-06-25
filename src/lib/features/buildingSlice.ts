@@ -58,8 +58,7 @@ const buildingSlice = createSlice({
   },
 });
 
-export const { setUserBuilding: setUserBuilding } =
-  buildingSlice.actions;
+export const { setUserBuilding: setUserBuilding } = buildingSlice.actions;
 
 export const getUserBuildings = (state: RootState): any =>
   state.building.buildings;

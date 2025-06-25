@@ -39,9 +39,9 @@ const sidebarItems: SidebarItem[] = [
 const ServiceProviderLayout: React.FC<any> = ({ children }) => {
   const router = useRouter();
   const pathname = usePathname();
-  const [selectedSidebarItem, setSelectedSidebarItem] = useState<SidebarItem | SubItem>(
-    sidebarItems[0]
-  );
+  const [selectedSidebarItem, setSelectedSidebarItem] = useState<
+    SidebarItem | SubItem
+  >(sidebarItems[0]);
 
   useEffect(() => {
     // FIXME: we already use this logic in the RealEstateLayout, consider refactoring to a common utility function

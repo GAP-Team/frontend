@@ -40,7 +40,9 @@ const userAPI = {
       `/users/${userId}/facilities?city=${city}&state=${state}&facilityType=${facilityType}`
     ),
   delete: (userId: string, currentPassword: string): any =>
-    api.delete(`/users/${userId}`, { data: { currentPassword: currentPassword } }),
+    api.delete(`/users/${userId}`, {
+      data: { currentPassword: currentPassword },
+    }),
 };
 
 export default userAPI;

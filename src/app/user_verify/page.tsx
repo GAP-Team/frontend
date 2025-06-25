@@ -25,7 +25,7 @@ export default function UserMailVerification(): JSX.Element {
       <section style={{ display: "flex", backgroundColor: "#F1F3F4" }}>
         <GNavbar />
       </section>
-      // FIXME: renaming necessary as they do not have intuitive names
+      {/*// FIXME: renaming necessary as they do not have intuitive names */}
       <EmailVerification
         sendMail={false}
         newUserId={user?.id}
