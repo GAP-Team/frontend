@@ -27,7 +27,7 @@ import { notifications } from "@/utils/Constants";
 import { ROUTES } from "@/utils/routes";
 import Button from "@mui/material/Button";
 import { FaArrowRightToBracket } from "react-icons/fa6";
-import { checkIsLoggedIn } from "@/utils/helperJWT";
+import { checkIsLoggedIn } from "@/utils/auth";
 
 export default function GAppbar(): JSX.Element {
   const router = useRouter();
