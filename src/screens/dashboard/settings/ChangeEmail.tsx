@@ -40,14 +40,14 @@ const ChangeEmail = (): JSX.Element => {
           })
         ).unwrap();
 
-        const data = {
+        const userActivityPayload = {
           email: values.email,
           userFirstName: user?.firstName,
           templateName: USER_ACTIVITY_EMAIL_TEMPLATES.EMAIL_CHANGE,
         };
         await appDispatch(
           sendUserActivityEmail({
-            data: data,
+            data: userActivityPayload,
           })
         ).unwrap();
 

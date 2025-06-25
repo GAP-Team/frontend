@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 import userAPIs from "@/api/user";
-import emailAPIs from "@/api/email";
+import emailAPI from "@/api/email";
 import { RootState } from "../store";
 import { Document, SendActivityEmailType } from "@/typings/types";
 
@@ -103,7 +103,7 @@ export const deleteUser = createAsyncThunk(
 export const sendUserActivityEmail = createAsyncThunk(
   "user/sendActivityEmail",
   async ({ data }: { data: SendActivityEmailType }) => {
-    const response = await emailAPIs.sendActivityEmail(data);
+    const response = await emailAPI.sendActivityEmail(data);
     return response.data;
   }
 );
