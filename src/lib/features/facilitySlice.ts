@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../store";
 import { Facility } from "@/screens/dashboard/facilities/facility_card/types";
 import buildingAPI from "@/api/building";
-import userAPIs from "@/api/user";
+import userAPI from "@/api/user";
 import facilityAPI from "@/api/facility";
 
 interface FacilityState {
@@ -41,7 +41,7 @@ const getFacilitiesByUserId = createAsyncThunk(
     facilityType?: string;
   }) => {
     const { userId, city, state, facilityType } = param;
-    const response = await userAPIs.getUserFacilities(
+    const response = await userAPI.getFacilitiesOfUser(
       userId,
       city,
       state,

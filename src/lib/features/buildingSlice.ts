@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import userAPIs from "@/api/user";
+import userAPI from "@/api/user";
 import { RootState } from "../store";
 import { Building } from "@/screens/dashboard/buildings/building_card/types";
 interface queryType {
@@ -24,7 +24,7 @@ const initialState: BuildingState = {
 export const fetchBuildings = createAsyncThunk(
   "building/fetchBuildings",
   async (query: queryType) => {
-    const response = await userAPIs.getBuildings(
+    const response = await userAPI.getBuildings(
       query.userId,
       query.city,
       query.federalState,

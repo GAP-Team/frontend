@@ -9,7 +9,7 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import CircularProgress from "@mui/material/CircularProgress";
 
-import userAPIs from "@/api/user";
+import userAPI from "@/api/user";
 import emailAPI from "@/api/email";
 import GButton from "@/components/button/GButton";
 import SuccessPage from "@/components/common/SuccessPage";
@@ -95,7 +95,7 @@ const EmailVerification = ({
     };
 
     try {
-      const res = await userAPIs.verifyEmailToken(verificationQuery);
+      const res = await userAPI.verifyEmailToken(verificationQuery);
 
       if (res?.data?.status) {
         handleVerificationSuccess();

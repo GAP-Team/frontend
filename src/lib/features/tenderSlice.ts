@@ -4,7 +4,7 @@ import {
   Tender,
   BuildingTenders,
 } from "@/screens/dashboard/tenders/tender_card/types";
-import userAPIs from "@/api/user";
+import userAPI from "@/api/user";
 import tenderAPI from "@/api/tender";
 interface TenderState {
   numOfTenders: number;
@@ -31,7 +31,7 @@ const getTenders = createAsyncThunk(
     facilityType?: string;
   }) => {
     const { userId, city, state, facilityType } = param;
-    const response = await userAPIs.getUserTenders(
+    const response = await userAPI.getTendersOfUser(
       userId,
       city,
       state,
