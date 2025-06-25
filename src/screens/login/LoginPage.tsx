@@ -14,7 +14,7 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import InputAdornment from "@mui/material/InputAdornment";
 import CircularProgress from "@mui/material/CircularProgress";
-import authAPIs from "@/api/auth";
+import authAPI from "@/api/auth";
 import { setUser } from "@/lib/features/userSlice";
 import { GapLogo } from "@/components/logo/GapLogo";
 import HeroBanner from "../../components/common/InfoBanner";
@@ -39,7 +39,7 @@ const LoginPage = (): JSX.Element => {
     onSubmit: async (values, { setSubmitting, setTouched }) => {
       try {
         setLoading(true);
-        const res = await authAPIs.login(values);
+        const res = await authAPI.login(values);
 
         if (res?.data?.access_token) {
           dispatch(setUser(res.data?.user));
