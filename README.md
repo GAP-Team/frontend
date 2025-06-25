@@ -66,10 +66,12 @@ ComponentName/
 ### Naming Conventions
 
 1. **Component Files:**
+
    - Use PascalCase for component files (e.g., `Button.tsx`)
    - Use camelCase for utility files (e.g., `styles.ts`, `types.ts`)
 
 2. **Component Names:**
+
    - Prefix shared components with 'G' (e.g., `GButton`, `GInput`)
    - Use descriptive names that reflect component functionality
 
@@ -105,11 +107,13 @@ export const styles = {
 ### Usage Guidelines
 
 1. **Component Creation:**
+
    - Place components in appropriate directories based on their purpose
    - Include all necessary files (index, types, styles)
    - Document props and functionality
 
 2. **Imports/Exports:**
+
    - Export components as named exports
    - Use barrel exports (index.ts) in directories
    - Import components from the barrel file
