@@ -1,25 +1,25 @@
 // The list component now uses JobApplicationItem for each job application.
 import React from "react";
 import { List } from "@mui/material";
-import { NewsItemProps } from "./types";
-import NewsItem from "./NewsItem";
+import { NewsItemProps as MessageItemProps } from "./types";
+import Message from "./NewsItem";
 import { scrollBarStyles } from "@/components/scrollbar/Scrollbar";
 
-interface NewsListProps {
-  news: NewsItemProps[];
+interface MessagesProps {
+  messages: MessageItemProps[];
 }
 
-const NewsList: React.FC<NewsListProps> = ({ news }) => {
+const MessageContainer: React.FC<MessagesProps> = ({ messages: messages }) => {
   return (
     <List sx={styles.listContainer}>
-      {news.map((app, index) => (
-        <NewsItem key={index} {...app} />
+      {messages.map((app, index) => (
+        <Message key={index} {...app} />
       ))}
     </List>
   );
 };
 
-export default NewsList;
+export default MessageContainer;
 
 // Styles
 const styles = {

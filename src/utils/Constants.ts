@@ -273,7 +273,7 @@ export const applications = [
   // ...other applications
 ];
 
-export const news = [
+export const messages = [
   {
     companyName: "Mayer Prüfungs GmbH",
     numberOfMessages: 3,

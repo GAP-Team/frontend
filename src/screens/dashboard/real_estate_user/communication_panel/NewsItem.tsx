@@ -1,7 +1,7 @@
 import { ListItem, Avatar, Typography, Box } from "@mui/material";
 import { NewsItemProps } from "./types";
 
-const NewsItem: React.FC<NewsItemProps> = ({
+const Message: React.FC<NewsItemProps> = ({
   companyName,
   numberOfMessages,
   location,
@@ -37,7 +37,7 @@ const NewsItem: React.FC<NewsItemProps> = ({
   );
 };
 
-export default NewsItem;
+export default Message;
 
 // Define the styles
 const styles = {
