@@ -5,7 +5,7 @@ import Grid from "@mui/material/Grid";
 import Radio from "@mui/material/Radio";
 import { useFormikContext } from "formik";
 import GTextInput from "../input/GTextInput";
-import { Documentation } from "@/utils/Constants";
+import { Documents } from "@/utils/Constants";
 import UploadMultiButton from "../button/UploadMultiButton";
 import {
   FormControl,
@@ -24,7 +24,7 @@ const CustomDocumentation = ({
   formikValue,
   documentFor,
 }: CustomDocumentationProps): JSX.Element => {
-  const formik = useFormikContext<Documentation>();
+  const formik = useFormikContext<Documents>();
 
   useEffect(() => {
     if (formikValue.documentChoice !== DocumentChoice.UPLOAD_NOW) {
