@@ -1,8 +1,8 @@
 import api from "../axios";
 
-const s3APIs = {
+const s3API = {
   /* S3 Routes */
-  upload: (data: any): any => api.post("/files", data),
+  upload: (file: any): any => api.post("/files", file),
   getFile: (key: string): any =>
     api.get(`/files/${key}`, {
       responseType: "blob",
@@ -10,4 +10,4 @@ const s3APIs = {
   delete: (key: any): any => api.delete(`/files/${key}`),
 };
 
-export default s3APIs;
+export default s3API;
