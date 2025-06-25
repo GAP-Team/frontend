@@ -14,10 +14,10 @@ export default function Blogs(): JSX.Element {
   const [blog, setBlog] = useState<BlogProps>({} as BlogProps);
 
   useEffect(() => {
-    handleGetSelectedBlog(slug);
+    handleSelectedBlog(slug);
   }, [slug]);
 
-  const handleGetSelectedBlog = (slug: string): void => {
+  const handleSelectedBlog = (slug: string): void => {
     const selectedBlog = articles.find((article) => article.slug === slug);
     if (selectedBlog) {
       setBlog(selectedBlog);
