@@ -1,7 +1,8 @@
 import { Notification } from "@/components/navigation/GAppbar/types";
 import OfficeImage from "../../public/images/office.jpg";
+import { FilterOptionType } from "@/typings/types";
 
-export const listOfFacilitySubcategories = [
+export const listOfFacilitySubcategories: FilterOptionType[] = [
   {
     category: "Brandwache",
     items: ["Brandwache"],
@@ -128,7 +129,7 @@ export const listOfFacilitySubcategories = [
   },
 ];
 
-export const listOfTenderTypes = [
+export const listOfTenderTypes: FilterOptionType[] = [
   {
     category: "Unterteilung Auftragstypen (Ingenieurdienstleistungen)",
     items: [
@@ -149,6 +150,30 @@ export const listOfTenderTypes = [
       "Sachkundigenprüfung",
       "Instandsetzung/Reparatur",
       "Wartung",
+    ],
+  },
+];
+
+export const listOfGermanStates: FilterOptionType[] = [
+  {
+    category: "Staaten",
+    items: [
+      "Baden-Württemberg",
+      "Bayern",
+      "Berlin",
+      "Brandenburg",
+      "Bremen",
+      "Hamburg",
+      "Hessen",
+      "Niedersachsen",
+      "Mecklenburg-Vorpommern",
+      "Nordrhein-Westfalen",
+      "Rheinland-Pfalz",
+      "Saarland",
+      "Sachsen",
+      "Sachsen-Anhalt",
+      "Schleswig-Holstein",
+      "Thüringen",
     ],
   },
 ];
@@ -359,65 +384,11 @@ export const buildingTypesList = [
   { label: "Wohnhaus", value: "Wohnhaus" }, // Residential building
 ];
 
-export const tenderTypesListHW = [
-  { label: "Reperatur", value: "Reperatur" },
-  { label: "Wartung", value: "Wartung" },
-  { label: "Installation", value: "Installation" },
-  { label: "Prüfung", value: "Prüfung" },
-  { label: "SV Begleitung", value: "SV Begleitung" },
-  { label: "Beratung/Planprüfung", value: "Beratung/Planprüfung" },
-  { label: "Konzepterstellung BSK", value: "Konzepterstellung BSK" },
-  {
-    label: "Konzepterstellung Löschanlage",
-    value: "Konzepterstellung Löschanlage",
-  },
-  { label: "Brandwache", value: "Brandwache" },
-];
+const mapTenderTypeItems = (items: string[]): Item[] =>
+  items.map((item) => ({ label: item, value: item }));
 
-export const tenderTypesListSV = [
-  {
-    label: "Arbeitsstättenverordnung - Gesundheitsschutz der Beschäftigte",
-    value: "Arbeitsstättenverordnung - Gesundheitsschutz der Beschäftigte",
-  },
-  {
-    label:
-      "Betriebssicherheitsverordnung (ZÜS) - Sicherheit Maschinen und Anlagen",
-    value:
-      "Betriebssicherheitsverordnung (ZÜS) - Sicherheit Maschinen und Anlagen",
-  },
-  {
-    label: "Baurechtliche Prüfung - Gesetzlicher Brandschutz",
-    value: "Baurechtliche Prüfung - Gesetzlicher Brandschutz",
-  },
-  {
-    label: "DGUV - Deutsche Gesetzliche Unfallversicherung",
-    value: "DGUV - Deutsche Gesetzliche Unfallversicherung",
-  },
-  {
-    label: "Elektrische Anlagen - VDE 0105-100",
-    value: "Elektrische Anlagen - VDE 0105-100",
-  },
-  {
-    label: "Konzepterstellung - Brandschutzkonzept",
-    value: "Konzepterstellung - Brandschutzkonzept",
-  },
-  {
-    label: "Hygiene Prüfung Lüftung - VDI 6022",
-    value: "Hygiene Prüfung Lüftung - VDI 6022",
-  },
-  {
-    label: "Hygiene Prüfung Trinkwasser - VDI 6023",
-    value: "Hygiene Prüfung Trinkwasser - VDI 6023",
-  },
-  {
-    label: "Versicherungsprüfung - VdS Prüfung",
-    value: "Versicherungsprüfung - VdS Prüfung",
-  },
-  {
-    label: "Wassergefährdete Stoffe - AwsV Prüfung",
-    value: "Wassergefährdete Stoffe - AwsV Prüfung",
-  },
-];
+export const tenderTypesListSV = mapTenderTypeItems(listOfTenderTypes[0].items);
+export const tenderTypesListHW = mapTenderTypeItems(listOfTenderTypes[1].items);
 
 export const jobItemListInCostPage = [
   {
@@ -533,6 +504,7 @@ export const NextCheckOptions = [
     value: 6,
   },
 ];
+
 export const reminderOptions = [
   {
     label: "Keine",
@@ -555,6 +527,7 @@ export const reminderOptions = [
     value: 12,
   },
 ];
+
 export const autoPublishMonthsOptions = [
   {
     label: "12 Monate",
@@ -573,6 +546,7 @@ export const autoPublishMonthsOptions = [
     value: 3,
   },
 ];
+
 export const notifications: Notification[] = [
   {
     message: "You were chosen as a main provider for object G-302.",
@@ -690,35 +664,6 @@ export const RealEstateLandingPageTabs = [
   { label: "Objektübersicht", index: "3" },
 ];
 
-export const contactFiltersOption = {
-  state: {
-    title: "Bundesland",
-    options: [
-      "Bayern",
-      "Hessen",
-      "Sachsen",
-      "Thüringen",
-      "Baden-Württemberg",
-      "Schleswig-Holstein",
-      "Nordrhein-Westfalen",
-      "Mecklenburg-Vorpommern",
-    ],
-  },
-  facilityType: {
-    title: "Anlagentyp",
-    options: [
-      "Anlagentyp 1",
-      "Anlagentyp 2",
-      "Anlagentyp 3",
-      "Anlagentyp 4",
-      "Anlagentyp 5",
-    ],
-  },
-  tenderType: {
-    title: "Auftragstyp",
-    options: ["Wartung", "Installation", "Reparatur", "Prüfung", "Fire"],
-  },
-};
 export const CHECK_DUE_SOON_DAYS = 183;
 export const MAINTENANCE_DUE_SOON_DAYS = 15;
 
@@ -757,23 +702,30 @@ export const articles = [
 
 export const FAQs = [
   {
-    question: "Was ist immocloud?",
+    question: "Was ist GAP?",
     answer:
-      "immocloud ist eine Plattform zur digitalen Immobilienverwaltung. Sie ist für Immobilienbesitzer und Hausverwaltungen konzipiert, die eine effiziente Verwaltung ihres Bestandes anstreben. Dabei verfolgen wir das Ziel, der Verwaltung die Komplexität zu nehmen und Immobilienbesitzern als digitaler Assistent zur Seite zu stehen.",
+      "GAP ist eine Plattform zur digitalen Immobilienverwaltung. Sie ist für Immobilienbesitzer und Hausverwaltungen konzipiert, die eine effiziente Verwaltung ihres Bestandes anstreben. Dabei verfolgen wir das Ziel, der Verwaltung die Komplexität zu nehmen und Immobilienbesitzern als digitaler Assistent zur Seite zu stehen.",
   },
   {
-    question: "Welche Funktionen bietet mir immocloud?",
+    question: "Welche Funktionen bietet mir GAP?",
     answer:
-      "immocloud bietet eine Vielzahl an Funktionen für eine effiziente Immobilienverwaltung.",
+      "GAP bietet eine Vielzahl an Funktionen für eine effiziente Immobilienverwaltung.",
   },
   {
-    question: "Wie wechsle ich zu immocloud?",
+    question: "Wie wechsle ich zu GAP?",
     answer:
-      "Der Wechsel zu immocloud ist einfach und schnell. Sie können Ihre bestehenden Daten importieren und sofort loslegen.",
+      "Der Wechsel zu GAP ist einfach und schnell. Sie können Ihre bestehenden Daten importieren und sofort loslegen.",
   },
   {
     question: "Gibt es technische Voraussetzungen?",
     answer:
-      "Ja, immocloud erfordert einen aktuellen Webbrowser und eine Internetverbindung.",
+      "Ja, GAP erfordert einen aktuellen Webbrowser und eine Internetverbindung.",
   },
 ];
+
+export const DEFAULT_PUBLISH_MONTHS = 3;
+
+export const USER_ACTIVITY_EMAIL_TEMPLATES = {
+  PASSWORD_CHANGE: "ChangePasswordTemplate",
+  EMAIL_CHANGE: "ChangeEmailTemplate",
+};

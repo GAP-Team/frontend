@@ -1,17 +1,30 @@
 "use client";
-import { useEffect } from "react";
 import { Grid } from "@mui/material";
 import TopFilter from "./TopFilterPanel";
 import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { useAppDispatch } from "@/lib/hooks";
 import ContractCard from "@/components/card/ContractCard";
 import { showSnackbar } from "@/components/root-snackbar";
+import addTenderSrc from "@/../public/icons/add_tender.svg";
+import NoContentPage from "@/components/common/NoContentPage";
 import SideFilterPanel from "../../components/search/SideFilterPanel";
 import { getAllContracts, fetchContracts } from "@/lib/features/contractSlice";
+import { ROUTES } from "@/utils/routes";
 
 const ContractsOverview = (): JSX.Element => {
+  const router = useRouter();
   const appdispatch = useAppDispatch();
   const contracts = useSelector(getAllContracts);
+  const [preSelectedStates, setPreSelectedStates] = useState<string[]>([]);
+  const [preSelectedTenderTypes, setPreSelectedTenderTypes] = useState<
+    string[]
+  >([]);
+  const [
+    preSelectedFacilitySubcategories,
+    setPreSelectedFacilitySubcategories,
+  ] = useState<string[]>([]);
 
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
@@ -20,7 +33,23 @@ const ContractsOverview = (): JSX.Element => {
     const facilitySubcategories =
       searchParams.getAll("facilitySubcategories") || [];
 
-    getContracts(states, tenderTypes, facilitySubcategories);
+    const statesArray = states.length
+      ? states[0].split(",").map((state) => state.trim())
+      : [];
+    const tenderTypesArray = tenderTypes.length
+      ? tenderTypes[0].split(",").map((type) => type.trim())
+      : [];
+    const facilitySubcategoriesArray = facilitySubcategories.length
+      ? facilitySubcategories[0]
+          .split(",")
+          .map((subcategory) => subcategory.trim())
+      : [];
+
+    setPreSelectedStates(statesArray);
+    setPreSelectedTenderTypes(tenderTypesArray);
+    setPreSelectedFacilitySubcategories(facilitySubcategoriesArray);
+
+    getContracts(statesArray, tenderTypesArray, facilitySubcategoriesArray);
   }, []);
 
   const getContracts = async (
@@ -36,6 +65,12 @@ const ContractsOverview = (): JSX.Element => {
           facilitySubcategories: facilitySubcategories,
         })
       ).unwrap();
+      const url = ROUTES.SERVICE_PROVIDER.CONTRACT_FILTER_URL(
+        states,
+        tenderTypes,
+        facilitySubcategories
+      );
+      router.push(url);
     } catch {
       appdispatch(
         showSnackbar({
@@ -54,22 +89,38 @@ const ContractsOverview = (): JSX.Element => {
       </div>
       <div className="flex flex-cols-2 justify-between mb-8 ">
         <div style={styles.filterSection}>
-          <SideFilterPanel />
+          <SideFilterPanel
+            states={preSelectedStates}
+            handleSearchContracts={getContracts}
+            tenderTypes={preSelectedTenderTypes}
+            facilitySubcategories={preSelectedFacilitySubcategories}
+          />
         </div>
-        <div
-          style={styles.resultSection}
-          className="flex flex-cols-4 mb-8 pl-2"
-        >
-          <Grid
-            container
-            spacing={"1.25rem"}
-            sx={{ overflow: "auto", flexGrow: 1 }}
+        {contracts.length === 0 ? (
+          <div style={styles.resultSection}>
+            <NoContentPage
+              image={addTenderSrc}
+              alt="No Content"
+              title="Keine Verträge gefunden"
+              description="Kein Vertrag mit allen ausgewählten Kriterien gefunden."
+            />
+          </div>
+        ) : (
+          <div
+            style={styles.resultSection}
+            className="flex flex-cols-4 mb-8 pl-2"
           >
-            <Grid item sx={styles.innerContainer}>
-              <ContractCard contracts={contracts} />
+            <Grid
+              container
+              spacing={"1.25rem"}
+              sx={{ overflow: "auto", flexGrow: 1 }}
+            >
+              <Grid item sx={styles.innerContainer}>
+                <ContractCard contracts={contracts} />
+              </Grid>
             </Grid>
-          </Grid>
-        </div>
+          </div>
+        )}
       </div>
     </section>
   );
@@ -91,8 +142,6 @@ const styles = {
     display: "flex",
     flexDirection: "row",
     flexWrap: "wrap",
-    // justifyContent: "space-between",
-    // alignItems: "center",
     padding: "0.5rem",
     marginBottom: "1rem",
     width: "100%",

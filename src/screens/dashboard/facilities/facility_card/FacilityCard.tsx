@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 import { Facility } from "./types";
 import Box from "@mui/material/Box";
 import Chip from "@mui/material/Chip";
@@ -135,6 +136,17 @@ const FacilityCard: React.FC<FacilityCardProps> = ({ facility }) => {
       <Divider sx={styles.divider} orientation="horizontal" />
       <SummaryCard>
         <DetailItem label="Unterkategorie" value={facility.subcategory} />
+        <div>
+          <Link
+            style={{ textDecoration: "none" }}
+            href={ROUTES.REAL_ESTATE.TENDER.TENDERS}
+          >
+            <DetailItem
+              label="Anzahl der Ausschreibungen"
+              value={facility.tenderIds.length.toString()}
+            />
+          </Link>
+        </div>
         {/* Check Information */}
         <Typography variant="subtitle2" sx={{ ...styles.sectionTitle, mt: 1 }}>
           Prüfung
@@ -166,10 +178,12 @@ const FacilityCard: React.FC<FacilityCardProps> = ({ facility }) => {
           label="E-Mail Benachrichtigung"
           value={facility.check.isEmailNotificationEnable ? "Ja" : "Nein"}
         />
-        <DetailItem
-          label="E-Mail Liste"
-          value={facility.check.emailNotificationList.join(", ") || "Keine"}
-        />
+        {facility.check.isEmailNotificationEnable && (
+          <DetailItem
+            label="E-Mail Liste"
+            value={facility.check.emailNotificationList.join(", ") || "Keine"}
+          />
+        )}
 
         {/* Maintenance Information */}
         <Typography variant="subtitle2" sx={{ ...styles.sectionTitle, mt: 1 }}>
@@ -203,12 +217,14 @@ const FacilityCard: React.FC<FacilityCardProps> = ({ facility }) => {
           label="E-Mail Benachrichtigung"
           value={facility.maintenance.isEmailNotificationEnable ? "Ja" : "Nein"}
         />
-        <DetailItem
-          label="E-Mail Liste"
-          value={
-            facility.maintenance.emailNotificationList.join(", ") || "Keine"
-          }
-        />
+        {facility.maintenance.isEmailNotificationEnable && (
+          <DetailItem
+            label="E-Mail Liste"
+            value={
+              facility.maintenance.emailNotificationList.join(", ") || "Keine"
+            }
+          />
+        )}
       </SummaryCard>
 
       {/* Document Section */}

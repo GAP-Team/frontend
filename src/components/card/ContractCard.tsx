@@ -3,6 +3,7 @@ import Box from "@mui/material/Box";
 import Chip from "@mui/material/Chip";
 import Paper from "@mui/material/Paper";
 import GButton from "../button/GButton";
+import { ROUTES } from "@/utils/routes";
 import { Contract } from "@/typings/types";
 import { Typography } from "@mui/material";
 import SectionTitle from "../label/SectionTitle";
@@ -50,7 +51,9 @@ const ContractCard = ({ contracts }: ContractCardProps): JSX.Element => {
 
               <GButton
                 style={styles.button}
-                href={`/contracts/${contract?.tenderId}`}
+                href={ROUTES.SERVICE_PROVIDER.CONTRACT_DETAILS(
+                  contract?.tenderId
+                )}
               >
                 Mehr Anzeigen
               </GButton>

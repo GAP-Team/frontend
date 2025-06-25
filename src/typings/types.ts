@@ -31,11 +31,48 @@ export interface BlogProps {
 export interface Contract {
   city: string;
   state: string;
-  subcategory: string;
+  buildingName: string;
+  facilityName: string;
   facilityType: string;
+  subcategory: string;
+  tenderForm: string;
   tenderId: string;
+  clientName: string;
+  detailDescription: string;
   tenderType: string;
   urgency: string;
-  fromDate: string;
-  toDate: string;
+  safetyWorkRequired: boolean;
+  freeParkingAvailable: boolean;
+  facilityDocuments: Document[];
+  buildingDocuments: Document[];
+  toDate?: string;
+  fromDate?: string;
+}
+
+export interface FilterOptionType {
+  category: string;
+  items: string[];
+}
+export interface SideFilterPanelProps {
+  states: string[];
+  tenderTypes: string[];
+  facilitySubcategories: string[];
+  handleSearchContracts: (
+    states: string[],
+    tenderTypes: string[],
+    facilitySubcategories: string[]
+  ) => void;
+}
+
+export interface SideFilterPanelOptionsProps {
+  title: string;
+  options: FilterOptionType[];
+  preSelectedOptions: string[];
+  onSelect: (selected: string[], field: string) => void;
+}
+
+export interface SendActivityEmailType {
+  email: string;
+  templateName: string;
+  userFirstName: string;
 }

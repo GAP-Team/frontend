@@ -8,5 +8,7 @@ const contractAPIs = {
     api.get(
       `/contracts?states=${states}&subcategories=${subcategories}&tenderTypes=${tenderTypes}`
     ),
+
+  getContractById: (id: string): any => api.get(`/contracts/${id}`),
 };
 export default contractAPIs;

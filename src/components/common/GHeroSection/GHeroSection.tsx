@@ -21,8 +21,8 @@ import {
   Grid,
 } from "@mui/material";
 import {
-  germanStates,
   listOfTenderTypes,
+  listOfGermanStates,
   listOfFacilitySubcategories,
 } from "@/utils/Constants";
 import { useFormik } from "formik";
@@ -32,7 +32,6 @@ import CloseIcon from "@mui/icons-material/Close";
 import { ContractSearchProps } from "@/typings/types";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
-import CustomSelect from "@/components/drop_down/CustomSelect";
 import { ContractSearchSchema } from "@/utils/ValidationSchema";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import heroBackgroundPicture from "../../../../public/images/hero6.jpg";
@@ -42,11 +41,15 @@ const HeroSection = (): JSX.Element => {
 
   const [facilityAnchorEl, setFacilityAnchorEl] =
     useState<HTMLDivElement | null>(null);
+  const [stateAnchorEl, setStateAnchorEl] = useState<HTMLDivElement | null>(
+    null
+  );
   const [facilityExpanded, setFacilityExpanded] = useState<{
     [key: string]: boolean;
   }>({});
   const [selectedFacilitySubcategories, setSelectedFacilitySubcategories] =
     useState<string[]>([]);
+  const [selectedStates, setSelectedStates] = useState<string[]>([]);
   const [selectedTenderType, setSelectedTenderType] = useState<string[]>([]);
   const [tenderTypeAnchorEl, setTenderTypeAnchorEl] =
     useState<HTMLDivElement | null>(null);
@@ -64,7 +67,11 @@ const HeroSection = (): JSX.Element => {
     initialValues: initialValues,
     validationSchema: ContractSearchSchema,
     onSubmit: async (values) => {
-      const url = `${ROUTES.SERVICE_PROVIDER.CONTRACTS}?facilitySubcategories=${values?.facilitySubcategories?.join(",")}&tenderTypes=${values?.tenderTypes?.join(",")}&states=${values?.states?.join(",")}`;
+      const url = ROUTES.SERVICE_PROVIDER.CONTRACT_FILTER_URL(
+        values?.states,
+        values?.tenderTypes,
+        values?.facilitySubcategories
+      );
       router.push(url);
     },
   });
@@ -89,10 +96,14 @@ const HeroSection = (): JSX.Element => {
       return selectedFacilitySubcategories.includes(item)
         ? selectedFacilitySubcategories.filter((selected) => selected !== item)
         : [...selectedFacilitySubcategories, item];
-    } else {
+    } else if (type === "tenderTypes") {
       return selectedTenderType.includes(item)
         ? selectedTenderType.filter((selected) => selected !== item)
         : [...selectedTenderType, item];
+    } else {
+      return selectedStates.includes(item)
+        ? selectedStates.filter((selected) => selected !== item)
+        : [...selectedStates, item];
     }
   };
 
@@ -160,12 +171,26 @@ const HeroSection = (): JSX.Element => {
     formik.setFieldValue("tenderTypes", facilitiesAfterDeselect);
   };
 
-  const handleSelectStates = (event: any): void => {
-    const states = [];
-    const value = event.target.value;
+  // State handles
+  const handleStateOptionsClose = (): void => {
+    setStateAnchorEl(null);
+  };
+  const handleStateOptionsExpand = (
+    event: React.MouseEvent<HTMLDivElement>
+  ): void => {
+    setStateAnchorEl(event.currentTarget);
+  };
+  const handleStateOptionSelect = (item: string): void => {
+    const states = handleOptionsSelectFilter(item, "states");
 
-    states.push(value);
+    setSelectedStates(states);
     formik.setFieldValue("states", states);
+  };
+  const handleStateOptionDeselect = (item: string): void => {
+    const statesAfterDeselect = handleOptionsDeselectFilter(item, "states");
+
+    setSelectedStates(statesAfterDeselect);
+    formik.setFieldValue("states", statesAfterDeselect);
   };
 
   return (
@@ -349,7 +374,6 @@ const HeroSection = (): JSX.Element => {
                                   </InputAdornment>
                                 ),
                               }}
-                              // value={selectedTenderType}
                               onBlur={formik?.handleBlur}
                               onChange={formik?.handleChange}
                               error={
@@ -442,22 +466,75 @@ const HeroSection = (): JSX.Element => {
                         <div className="flex flex-col w-full px-2 sm:px-4 md:w-1/3">
                           <FormControl sx={{ m: 1, minWidth: 120 }}>
                             <label
-                              htmlFor="type"
+                              htmlFor="craft"
                               className="text-sm font-medium text-gray-700 mb-4"
                             >
-                              Wählen Sie ein Bundesland aus:
+                              Wählen Sie Bundesländer aus:
                             </label>
-                            <CustomSelect
-                              name="state"
-                              label={"Bundesländer"}
-                              options={germanStates}
-                              value={formik?.values?.states[0]}
-                              onChange={(val) => handleSelectStates(val)}
+                            <TextField
+                              label="Bundesländer"
+                              onClick={(e) => handleStateOptionsExpand(e)}
+                              InputProps={{
+                                readOnly: true,
+                                endAdornment: (
+                                  <InputAdornment position="start">
+                                    <ArrowDropDownIcon />
+                                  </InputAdornment>
+                                ),
+                              }}
+                              onBlur={formik?.handleBlur}
+                              error={
+                                formik?.touched?.states &&
+                                Boolean(formik?.errors?.states)
+                              }
+                              helperText={
+                                formik?.touched?.states &&
+                                formik?.errors?.states
+                              }
                             />
-                            {formik?.touched?.states && (
-                              <p style={styles.errorTexts}>
-                                {formik?.errors?.states}
-                              </p>
+                            <Menu
+                              anchorEl={stateAnchorEl}
+                              open={Boolean(stateAnchorEl)}
+                              onClose={handleStateOptionsClose}
+                            >
+                              {listOfGermanStates.map((states) => (
+                                <div key={states.category}>
+                                  {states.items.map((item) => (
+                                    <MenuItem
+                                      key={item}
+                                      onClick={() =>
+                                        handleStateOptionSelect(item)
+                                      }
+                                    >
+                                      <Checkbox
+                                        checked={selectedStates.includes(item)}
+                                      />
+                                      <ListItemText primary={item} />
+                                    </MenuItem>
+                                  ))}
+                                </div>
+                              ))}
+                            </Menu>
+                            {selectedStates.length > 0 && (
+                              <Box
+                                sx={{
+                                  display: "flex",
+                                  gap: 1,
+                                  flexWrap: "wrap",
+                                  mt: 2,
+                                }}
+                              >
+                                {selectedStates.map((item) => (
+                                  <Chip
+                                    key={item}
+                                    label={item}
+                                    onDelete={() =>
+                                      handleStateOptionDeselect(item)
+                                    }
+                                    deleteIcon={<CloseIcon />}
+                                  />
+                                ))}
+                              </Box>
                             )}
                           </FormControl>
                         </div>

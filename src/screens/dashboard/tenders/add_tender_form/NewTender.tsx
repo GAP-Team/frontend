@@ -27,6 +27,7 @@ import SectionTitle from "@/components/label/SectionTitle";
 import { addTenderValidationSchema } from "@/utils/ValidationSchema";
 import GProgressStepper from "@/components/stepper/GProgressStepper";
 import { TENDER_FORM } from "@/utils/enums";
+import { isUserActive } from "@/lib/features/userSlice";
 import {
   createTender,
   getTenderById,
@@ -39,6 +40,7 @@ dayjs.extend(utc);
 const NewTender: React.FC<NewTenderProps> = ({ id }): JSX.Element => {
   const router = useRouter();
   const dispatch = useAppDispatch();
+  const checkActiveUser = useAppSelector(isUserActive);
   const tender = useAppSelector((state) =>
     id ? getTenderById(id)(state) : null
   );
@@ -69,10 +71,21 @@ const NewTender: React.FC<NewTenderProps> = ({ id }): JSX.Element => {
     actions: FormikHelpers<AddTenderFormValues>
   ): Promise<void> => {
     if (activeStep?.id === steps.length - 1) {
-      const saveData = await saveTenderData(values);
-      if (saveData) {
-        setIsSubmitted(true);
+      if (checkActiveUser) {
+        const saveData = await saveTenderData(values);
+        if (saveData) {
+          setIsSubmitted(true);
+          actions.setSubmitting(false);
+        }
+      } else {
         actions.setSubmitting(false);
+        dispatch(
+          showSnackbar({
+            type: "error",
+            message:
+              "Bitte aktivieren Sie Ihr Konto, um diese Funktion zu nutzen.",
+          })
+        );
       }
     } else {
       setActiveStep(steps[activeStep.id + 1]);

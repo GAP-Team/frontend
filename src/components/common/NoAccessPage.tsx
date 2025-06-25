@@ -1,52 +1,39 @@
+import Image from "next/image";
 import Box from "@mui/material/Box";
-import Image, { StaticImageData } from "next/image";
+import { ROUTES } from "@/utils/routes";
 import Typography from "@mui/material/Typography";
 import GButton from "@/components/button/GButton";
-import React from "react";
+import NoAccessImage from "../../../public/images/no_access.png";
 
-interface NoContentPageProps {
-  image: StaticImageData;
-  alt: string;
-  title: string;
-  buttonLabel?: string;
-  buttonLink?: string;
+interface NoAccessPageProps {
   description?: string;
 }
 
-const NoContentPage: React.FC<NoContentPageProps> = ({
-  image,
-  alt,
-  title,
-  buttonLabel,
-  buttonLink,
-  description,
-}) => {
+const NoAccessPage: React.FC<NoAccessPageProps> = ({ description }) => {
   return (
     <Box sx={styles.container}>
       <Image
         width={400}
         height={400}
-        alt={alt}
+        alt={"No Access"}
         style={{ marginBottom: "1.5rem" }}
-        src={image}
+        src={NoAccessImage}
       />
-      <Typography variant="h4sb">{title}</Typography>
+      <Typography variant="h4sb">Zugriff verweigert</Typography>
       <Typography
         variant="bodymr"
         style={{ maxWidth: "22rem", textAlign: "center", color: "#8D999C" }}
       >
         {description}
       </Typography>
-      {buttonLabel && (
-        <GButton style={{ marginTop: "1rem" }} href={buttonLink}>
-          {buttonLabel}
-        </GButton>
-      )}
+      <GButton style={{ marginTop: "1rem" }} href={ROUTES?.LOGIN}>
+        Login
+      </GButton>
     </Box>
   );
 };
 
-export default NoContentPage;
+export default NoAccessPage;
 
 const styles = {
   container: {

@@ -24,11 +24,6 @@ const FacilityInformation = (): JSX.Element => {
       ? { label: formik.values.facilityType, value: formik.values.facilityType }
       : null
   );
-  const [selectedSubCategory, setSelectedSubCategory] = useState<Item | null>(
-    formik?.values?.subcategory
-      ? { label: formik.values.subcategory, value: formik.values.subcategory }
-      : null
-  );
   const [subCategoryOptions, setSubCategoryOptions] = useState<Item[]>([]);
 
   const facilityTypeOptions = listOfFacilitySubcategories.map((trade) => ({
@@ -43,6 +38,8 @@ const FacilityInformation = (): JSX.Element => {
       selectedItem ? selectedItem.value : ""
     );
 
+    formik?.setFieldValue("subcategory", "");
+
     if (selectedItem) {
       const selectedTrade = listOfFacilitySubcategories.find(
         (trade) => trade.category === selectedItem.value
@@ -55,13 +52,9 @@ const FacilityInformation = (): JSX.Element => {
     } else {
       setSubCategoryOptions([]);
     }
-
-    setSelectedSubCategory(null);
-    formik?.setFieldValue("subcategory", "");
   };
 
   const handleSubCategorySelect = (selectedItem: Item | null): void => {
-    setSelectedSubCategory(selectedItem);
     formik?.setFieldValue(
       "subcategory",
       selectedItem ? selectedItem.value : ""
@@ -120,7 +113,7 @@ const FacilityInformation = (): JSX.Element => {
               formik?.touched?.subcategory && formik?.errors?.subcategory
             }
             onChange={handleSubCategorySelect}
-            value={selectedSubCategory}
+            value={formik?.values?.subcategory}
           />
         </Grid>
 
