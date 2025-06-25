@@ -100,7 +100,8 @@ const NewFacility: React.FC<NewFacilityProps> = ({
     isPublishMaintenanceAutomatically:
       facility?.maintenance?.isPublishAutomatically || false,
     publishMaintenanceAutomaticallyInMonth:
-      facility?.maintenance?.publishAutomaticallyInMonth || DEFAULT_PUBLISH_MONTHS,
+      facility?.maintenance?.publishAutomaticallyInMonth ||
+      DEFAULT_PUBLISH_MONTHS,
     maintenanceReminderInMonth: facility?.maintenance?.reminderInMonth || 0,
     maintenanceEmailNotificationList: facility?.maintenance
       ?.emailNotificationList || ["", ""],
@@ -296,8 +297,6 @@ const NewFacility: React.FC<NewFacilityProps> = ({
       return false;
     }
   };
-
-  
 
   const formOrSuccessContent = isSubmitted ? (
     <SuccessPage
