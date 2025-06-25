@@ -285,7 +285,7 @@ export const addFacilityValidationSchema = [
     lastCheckDate: yup.date().nullable(),
     nextCheckInYearNumber: yup.number(),
     isPublishCheckAutomatically: yup.boolean(),
-    publishAutomaticallyInMonth: yup.number(),
+    publishCheckAutomaticallyInMonth: yup.number(),
     reminderInMonth: yup.number(),
     isEmailNotificationEnable: yup.boolean(),
     emailNotificationList: yup
