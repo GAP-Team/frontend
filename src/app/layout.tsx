@@ -10,6 +10,7 @@ import RootSnackbar from "@/components/root-snackbar";
 
 const inter = Inter({ subsets: ["latin"] });
 
+// FIXME: update the metadata to reflect the actual company name and description
 export const metadata: Metadata = {
   title: "GAP",
   description: "The GAP company website",
@@ -23,6 +24,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>): JSX.Element {
   return (
+    // FIXME: update the lang attribute to reflect the actual language of the website
     <html lang="en">
       <head>
         <script async defer src={googleMapsApiUrl}></script>
