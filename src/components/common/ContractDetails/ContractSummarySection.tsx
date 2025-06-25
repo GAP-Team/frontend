@@ -30,9 +30,19 @@ const ContractSummarySection: React.FC<ContractSummarySectionProps> = ({
     },
     { label: "Ausschreibungstyp", value: contract?.tenderType },
     { label: "Objekt", value: contract?.buildingName },
+    {
+      label: "Bundesland und Stadt",
+      value: `${contract?.city}, ${contract?.state}`,
+    },
     { label: "Anlage", value: contract?.facilityName },
     { label: "Anlagetyp", value: contract?.subcategory },
     { label: "Dringlichkeit", value: contract?.urgency },
+    {
+      label: "Auftragsinformation",
+      value: contract?.detailDescription
+        ? `${contract?.detailDescription.substring(0, 60)}...`
+        : "",
+    },
     {
       label: "Gewünschtes Zeitfenster",
       value:
@@ -41,12 +51,6 @@ const ContractSummarySection: React.FC<ContractSummarySectionProps> = ({
         `${new Date(contract?.fromDate).toLocaleDateString("de-DE")} - ${new Date(
           contract?.toDate
         ).toLocaleDateString("de-DE")}`,
-    },
-    {
-      label: "Detailbeschreibung",
-      value: contract?.detailDescription
-        ? `${contract?.detailDescription.substring(0, 60)}...`
-        : "",
     },
     {
       label: "Sicherheit Arbeit erforderlich",
@@ -59,7 +63,7 @@ const ContractSummarySection: React.FC<ContractSummarySectionProps> = ({
   ].filter((item) => item.value);
 
   const backHandler = (): void => {
-    router.push(ROUTES.SERVICE_PROVIDER_HOME);
+    router.push(ROUTES.SERVICE_PROVIDER.CONTRACT_FILTER_URL([], [], []));
   };
 
   return (
