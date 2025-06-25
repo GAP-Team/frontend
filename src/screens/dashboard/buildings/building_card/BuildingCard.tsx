@@ -23,7 +23,7 @@ import { ROUTES, REAL_ESTATE_BASE } from "@/utils/routes";
 import { scrollBarStyles } from "@/components/scrollbar/Scrollbar";
 import {
   getUserBuildings,
-  setUserBuildingDetails,
+  setUserBuilding,
 } from "@/lib/features/buildingSlice";
 
 interface BuildingCardProps {
@@ -72,7 +72,7 @@ const BuildingCard: React.FC<BuildingCardProps> = ({ building }) => {
       const buildingsAfterDelete = userBuildings.filter(
         (building: Building) => building.id !== buildingId
       );
-      dispatch(setUserBuildingDetails(buildingsAfterDelete));
+      dispatch(setUserBuilding(buildingsAfterDelete));
     }
   };
 

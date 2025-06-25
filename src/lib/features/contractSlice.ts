@@ -79,7 +79,7 @@ const contractSlice = createSlice({
 
 export const getAllContracts = (state: RootState): Contract[] =>
   state.contract.contracts;
-export const getContractDetails = (state: RootState): Contract | null =>
+export const getContract = (state: RootState): Contract =>
   state.contract.contract;
 
 export default contractSlice.reducer;

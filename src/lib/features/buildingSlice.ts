@@ -5,7 +5,7 @@ import { Building } from "@/screens/dashboard/buildings/building_card/types";
 interface queryType {
   userId: string;
   city: string;
-  federalState: string;
+  state: string;
   facilityType: string;
 }
 
@@ -27,7 +27,7 @@ export const fetchBuildings = createAsyncThunk(
     const response = await userAPI.getBuildings(
       query.userId,
       query.city,
-      query.federalState,
+      query.state,
       query.facilityType
     );
     return response.data;
@@ -38,7 +38,7 @@ const buildingSlice = createSlice({
   name: "building",
   initialState,
   reducers: {
-    setUserBuildingDetails: (state, action) => {
+    setUserBuilding: (state, action) => {
       state.buildings = action?.payload;
     },
   },
@@ -58,7 +58,8 @@ const buildingSlice = createSlice({
   },
 });
 
-export const { setUserBuildingDetails } = buildingSlice.actions;
+export const { setUserBuilding: setUserBuilding } =
+  buildingSlice.actions;
 
 export const getUserBuildings = (state: RootState): any =>
   state.building.buildings;

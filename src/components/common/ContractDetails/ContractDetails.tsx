@@ -6,10 +6,7 @@ import { Box, Grid, Paper, Typography } from "@mui/material";
 import { useAppSelector, useAppDispatch } from "@/lib/hooks";
 import ContractSummarySection from "./ContractSummarySection";
 import TenderTitleBar from "@/screens/dashboard/tenders/tender_card/TenderTitleBar";
-import {
-  fetchContractById,
-  getContractDetails,
-} from "@/lib/features/contractSlice";
+import { fetchContractById, getContract } from "@/lib/features/contractSlice";
 import DocumentList from "@/screens/dashboard/buildings/building_card/DocumentList ";
 
 interface ContractDetailsProps {
@@ -21,7 +18,7 @@ const ContractDetails: React.FC<ContractDetailsProps> = ({
 }): JSX.Element => {
   const appDispatch = useAppDispatch();
   const user = useAppSelector((state) => state.user);
-  const contractDetails = useAppSelector(getContractDetails);
+  const contractDetails = useAppSelector(getContract);
 
   useEffect(() => {
     fetchContractDetails();
