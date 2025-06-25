@@ -729,7 +729,14 @@ export const FAQs = [
 
 export const DEFAULT_PUBLISH_MONTHS = 3;
 
-export const featuresDammy = [
+export interface FeatureType {
+  icon: React.ElementType;
+  title: string;
+  subtitle: string;
+  description: string;
+}
+
+export const featuresDammy: FeatureType[] = [
   {
     icon: HomeWorkIcon,
     title: "Immobilienmanagement",

@@ -24,8 +24,8 @@ const FunctionsSection = (): JSX.Element => {
       </Grid>
 
       <Grid container spacing={4}>
-        {featuresDammy.map((feature, index) => (
-          <Grid item xs={12} md={6} key={index}>
+        {featuresDammy.map((feature) => (
+          <Grid item xs={12} md={6} key={feature.title}>
             <Card sx={styles.cardHolder}>
               <Grid container sx={styles.innerHolder}>
                 <Grid item xs={1} md={1} lg={1} sx={{ pt: "1.3rem" }}>
