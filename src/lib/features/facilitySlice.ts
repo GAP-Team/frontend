@@ -3,7 +3,7 @@ import { RootState } from "../store";
 import { Facility } from "@/screens/dashboard/facilities/facility_card/types";
 import buildingAPI from "@/api/building";
 import userAPIs from "@/api/user";
-import facilityAPIs from "@/api/facility";
+import facilityAPI from "@/api/facility";
 
 interface FacilityState {
   facilities: Facility[];
@@ -55,7 +55,7 @@ const getFacilitiesByUserId = createAsyncThunk(
 export const deleteFacility = createAsyncThunk(
   "facility/deleteFacility",
   async (facilityId: string) => {
-    await facilityAPIs.delete(facilityId);
+    await facilityAPI.delete(facilityId);
     return facilityId;
   }
 );
@@ -72,7 +72,7 @@ export const getFacilitiesByUser = (
 export const createFacility = createAsyncThunk(
   "facility/createFacility",
   async (newFacility: any) => {
-    const response = await facilityAPIs.create(newFacility);
+    const response = await facilityAPI.create(newFacility);
     return response.data;
   }
 );
@@ -86,7 +86,7 @@ export const updateFacility = createAsyncThunk(
     facilityId: string;
     data: Partial<Facility>;
   }) => {
-    const response = await facilityAPIs.update(facilityId, data);
+    const response = await facilityAPI.update(facilityId, data);
     return response.data;
   }
 );

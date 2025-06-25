@@ -14,7 +14,7 @@ import Typography from "@mui/material/Typography";
 import { IoExtensionPuzzleOutline } from "react-icons/io5";
 
 import { Building } from "./types";
-import facilityAPIs from "@/api/facility";
+import facilityAPI from "@/api/facility";
 import buildingAPI from "@/api/building";
 import DocumentList from "./DocumentList ";
 import { DOCUMENT_TYPE } from "@/utils/enums";
@@ -45,7 +45,7 @@ const BuildingCard: React.FC<BuildingCardProps> = ({ building }) => {
     if (building?.facilityIds?.length > 0) {
       await Promise.all(
         building?.facilityIds?.map(async (facilityId: string) => {
-          const tender = await facilityAPIs.getFacilityTenders(facilityId);
+          const tender = await facilityAPI.getTendersOfFacility(facilityId);
           count = count + tender?.data?.length;
         })
       );
