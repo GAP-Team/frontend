@@ -23,9 +23,6 @@ import emailAPIs from "@/api/email";
 import { ROUTES } from "@/utils/routes";
 import { USER_ROLE } from "@/utils/enums";
 import { useAppDispatch } from "@/lib/hooks";
-import { fetchTenders } from "@/lib/features/tenderSlice";
-import { fetchBuildings } from "@/lib/features/buildingSlice";
-import { getFacilitiesByUser } from "@/lib/features/facilitySlice";
 
 const LoginPage = (): JSX.Element => {
   const router = useRouter();
@@ -48,14 +45,6 @@ const LoginPage = (): JSX.Element => {
           appDispatch(setUser(res.data?.user));
           setAccessToken(res.data.access_token);
           setIsUserVerified(res.data.user?.isVerified);
-
-          const getBuildingQuery = {
-            userId: res?.data?.user?.id,
-          };
-
-          appDispatch(fetchBuildings(getBuildingQuery));
-          appDispatch(fetchTenders(res?.data?.user?.id));
-          appDispatch(getFacilitiesByUser(res?.data?.user?.id));
 
           if (!res.data.user?.isVerified) {
             await emailAPIs.sendVerificationEmail({
