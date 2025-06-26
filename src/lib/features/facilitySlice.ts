@@ -71,9 +71,9 @@ export const getFacilitiesByUser = (
 // Create Facility
 export const createFacility = createAsyncThunk(
   "facility/createFacility",
-  async (newFacility: any) => {
+  async (newFacility: Facility): Promise<{ id: string }> => {
     const response = await facilityAPI.create(newFacility);
-    return response.data;
+    return response;
   }
 );
 // Update Facility
@@ -87,7 +87,7 @@ export const updateFacility = createAsyncThunk(
     data: Partial<Facility>;
   }) => {
     const response = await facilityAPI.update(facilityId, data);
-    return response.data;
+    return response;
   }
 );
 
