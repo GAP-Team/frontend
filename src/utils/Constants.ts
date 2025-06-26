@@ -766,6 +766,10 @@ export const featuresDammy: FeatureType[] = [
       "Digitalisiere Deine Dokumente wie z.B. Rechnungen und Verträge und verwalte sie bequem in immocloud. So stehen sie von überall und zu jederzeit zum Abruf bereit. Bei Bedarf kannst Du sie auch über das Mieterportal mit Deinen Mietern teilen.",
   },
 ];
+
+export const NUMBER_OF_STATE_OPTIONS = 4;
+export const NUMBER_OF_OTHER_OPTIONS = 6;
+
 export const USER_ACTIVITY_EMAIL_TEMPLATES = {
   PASSWORD_CHANGE: "ChangePasswordTemplate",
   EMAIL_CHANGE: "ChangeEmailTemplate",
