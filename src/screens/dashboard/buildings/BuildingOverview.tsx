@@ -23,7 +23,7 @@ const BuildingsOverview: React.FC = () => {
 
   const fetchUserBuildings = async (
     city: string,
-    federalState: string,
+    state: string,
     facilityType: string
   ): Promise<void> => {
     if (!user?.id) return;
@@ -31,7 +31,7 @@ const BuildingsOverview: React.FC = () => {
     const query = {
       userId: user?.id,
       city: city,
-      federalState: federalState,
+      state: state,
       facilityType: facilityType,
     };
     dispatch(fetchBuildings(query));
