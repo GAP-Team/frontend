@@ -27,7 +27,7 @@ import { addObjektFormSchema } from "@/utils/ValidationSchema";
 import { useAppDispatch } from "@/lib/hooks";
 import { showSnackbar } from "@/components/root-snackbar";
 import { getUserBuildings } from "@/lib/features/buildingSlice";
-import { DOCUMENT_TYPE } from "@/utils/enums";
+import { DOCUMENT_TYPE, FORM_ACTION_TYPE } from "@/utils/enums";
 
 const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
   const router = useRouter();
@@ -55,9 +55,9 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
 
   useEffect(() => {
     if (id === "") {
-      setActionType("add");
+      setActionType(FORM_ACTION_TYPE.CREATE);
     } else {
-      setActionType("edit");
+      setActionType(FORM_ACTION_TYPE.UPDATE);
       getCurrentBuildingDetails(id);
     }
   }, []);
@@ -139,7 +139,7 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
         const { state, city, zip, street, houseNumber } = values;
 
         // Check for existing building at the same address
-        const isBuildingExist: boolean = userBuildingDetails?.some(
+        const doesBuildingExist: boolean = userBuildingDetails?.some(
           (building: SelectedBuildingData) =>
             building.address.state === state &&
             building.address.city === city &&
@@ -148,7 +148,7 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
             Number(building.address.houseNumber) === Number(houseNumber)
         );
 
-        if (isBuildingExist) {
+        if (actionType === FORM_ACTION_TYPE.CREATE && doesBuildingExist) {
           appDispatch(
             showSnackbar({
               type: "error",
@@ -225,6 +225,7 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
     }
   };
 
+  // FIXME: We have to make all the forms consistent with the edit and create process.
   const handleSubmit = async (
     values: AddBuildingFormValues,
     docObjList: any[] = []
@@ -255,12 +256,12 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
       buildingAbbreviation: values.buildingAbbreviation,
     };
 
-    if (actionType === "edit") {
+    if (actionType === FORM_ACTION_TYPE.UPDATE) {
       const saveStatus = await UpdateBuildingData(buildingData);
       if (saveStatus) {
         status = true;
       }
-    } else if (actionType === "add") {
+    } else if (actionType === FORM_ACTION_TYPE.CREATE) {
       const updateStatus = await saveBuildingData(buildingData);
       if (updateStatus) {
         status = true;
@@ -338,7 +339,7 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
       <Grid item xs={12} md={12} lg={12} sx={{ backgroundColor: "#F9FAFA" }}>
         <PageTitle
           title={
-            actionType === "edit"
+            actionType === FORM_ACTION_TYPE.UPDATE
               ? `Objekt Bearbeiten: ${initialValues?.name}`
               : `Neues Objekt erstellen`
           }
