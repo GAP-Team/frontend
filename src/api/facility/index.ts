@@ -9,8 +9,10 @@ const facilityAPI = {
   delete: (facilityId: string): any => api.delete(`/facilities/${facilityId}`),
   getTendersOfFacility: (facilityId: string): any =>
     api.get(`/facilities/${facilityId}/tenders`),
-  update: (facilityId: string, facility: Partial<Facility>): Promise<Facility> =>
-    api.put(`/facilities/${facilityId}`, facility),
+  update: (
+    facilityId: string,
+    facility: Partial<Facility>
+  ): Promise<Facility> => api.put(`/facilities/${facilityId}`, facility),
 };
 
 export default facilityAPI;

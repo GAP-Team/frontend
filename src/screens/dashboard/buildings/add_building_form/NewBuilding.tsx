@@ -257,12 +257,12 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
     };
 
     if (actionType === FORM_ACTION_TYPE.UPDATE) {
-      const saveStatus = await UpdateBuildingData(buildingData);
+      const saveStatus = await UpdateBuildingData(building);
       if (saveStatus) {
         status = true;
       }
     } else if (actionType === FORM_ACTION_TYPE.CREATE) {
-      const updateStatus = await saveBuildingData(buildingData);
+      const updateStatus = await saveBuildingData(building);
       if (updateStatus) {
         status = true;
       }
