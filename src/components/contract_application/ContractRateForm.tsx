@@ -117,51 +117,35 @@ const ContractRateForm = ({ formik }: { formik?: any }): JSX.Element => {
         </Grid>
         <Grid item xs={12} md={8}>
           <Grid container spacing={2} sx={styles.desiredDateHolder}>
-            <Grid item xs={12} md={4}>
-              <Typography variant="gsub" color="gray.500" sx={styles.lableText}>
-                Gewünschtes Datum 1
-              </Typography>
-              <div>
-                <TextField
-                  type="date"
-                  value={formik?.values?.desiredDateOne}
-                  name="desiredDateOne"
-                  InputLabelProps={{ shrink: true }}
-                  onBlur={formik?.handleBlur}
-                  onChange={formik?.handleChange}
-                />
-              </div>
-            </Grid>
-            <Grid item xs={12} md={4}>
-              <Typography variant="gsub" color="gray.500" sx={styles.lableText}>
-                Gewünschtes Datum 2
-              </Typography>
-              <div>
-                <TextField
-                  type="date"
-                  value={formik?.values?.desiredDateTwo}
-                  name="desiredDateTwo"
-                  InputLabelProps={{ shrink: true }}
-                  onBlur={formik?.handleBlur}
-                  onChange={formik?.handleChange}
-                />
-              </div>
-            </Grid>
-            <Grid item xs={12} md={4}>
-              <Typography variant="gsub" color="gray.500" sx={styles.lableText}>
-                Gewünschtes Datum 3
-              </Typography>
-              <div>
-                <TextField
-                  type="date"
-                  value={formik?.values?.desiredDateThree}
-                  name="desiredDateThree"
-                  InputLabelProps={{ shrink: true }}
-                  onBlur={formik?.handleBlur}
-                  onChange={formik?.handleChange}
-                />
-              </div>
-            </Grid>
+            {formik?.values?.desiredDates?.map(
+              (date: string, index: number) => (
+                <Grid item xs={12} md={4} key={index}>
+                  <Typography
+                    variant="gsub"
+                    color="gray.500"
+                    sx={styles.lableText}
+                  >
+                    Gewünschtes Datum {index + 1}
+                  </Typography>
+                  <div>
+                    <TextField
+                      type="date"
+                      onBlur={formik?.handleBlur}
+                      id={`desiredDates[${index}]`}
+                      name={`desiredDates[${index}]`}
+                      onChange={formik?.handleChange}
+                      InputLabelProps={{ shrink: true }}
+                      value={formik?.values?.desiredDates[index] || ""}
+                      InputProps={{
+                        inputProps: {
+                          min: new Date().toISOString().split("T")[0],
+                        },
+                      }}
+                    />
+                  </div>
+                </Grid>
+              )
+            )}
           </Grid>
         </Grid>
       </Grid>

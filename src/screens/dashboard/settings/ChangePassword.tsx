@@ -8,7 +8,6 @@ import Typography from "@mui/material/Typography";
 import GTextInput from "@/components/input/GTextInput";
 import { showSnackbar } from "@/components/root-snackbar";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
-import { updateUserPassword } from "@/lib/features/userSlice";
 import { passwordChangeSchema } from "@/utils/ValidationSchema";
 import ShowPasswordButton from "@/components/button/ShowPasswordButton";
 import {
@@ -16,6 +15,11 @@ import {
   getPasswordStrengthLabel,
   getPasswordStrengthColor,
 } from "@/utils/utils";
+import {
+  updateUserPassword,
+  sendUserActivityEmail,
+} from "@/lib/features/userSlice";
+import { USER_ACTIVITY_EMAIL_TEMPLATES } from "@/utils/Constants";
 
 interface ChangePasswordInitialValuesProps {
   currentPassword: string;
@@ -29,7 +33,7 @@ const ChangePassword = (): JSX.Element => {
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  const dispatch = useAppDispatch();
+  const appDispatch = useAppDispatch();
   const user = useAppSelector((state) => state.user);
 
   const initialValues: ChangePasswordInitialValuesProps = {
@@ -42,7 +46,7 @@ const ChangePassword = (): JSX.Element => {
     validationSchema: passwordChangeSchema,
     onSubmit: async (values) => {
       try {
-        await dispatch(
+        await appDispatch(
           updateUserPassword({
             id: user.id,
             data: {
@@ -52,16 +56,27 @@ const ChangePassword = (): JSX.Element => {
           })
         ).unwrap();
 
-        formik.resetForm();
+        const data = {
+          email: user.email,
+          userFirstName: user?.firstName,
+          templateName: USER_ACTIVITY_EMAIL_TEMPLATES.PASSWORD_CHANGE,
+        };
+        await appDispatch(
+          sendUserActivityEmail({
+            data: data,
+          })
+        ).unwrap();
 
-        dispatch(
+        appDispatch(
           showSnackbar({
             type: "success",
             message: "Passwort erfolgreich geändert",
           })
         );
+
+        formik.resetForm();
       } catch {
-        dispatch(
+        appDispatch(
           showSnackbar({
             type: "error",
             message:

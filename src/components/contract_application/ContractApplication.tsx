@@ -72,9 +72,7 @@ const ContractApplication = (): JSX.Element => {
     message: "",
     zip: "",
     city: "",
-    desiredDateOne: "",
-    desiredDateTwo: "",
-    desiredDateThree: "",
+    desiredDates: [new Date(), new Date(), new Date()],
   };
 
   return (

@@ -78,9 +78,7 @@ export interface ContractApplicationFormValues {
   message: string;
   zip: string;
   city: string;
-  desiredDateOne: string;
-  desiredDateTwo: string;
-  desiredDateThree: string;
+  desiredDates: Date[];
 }
 
 export interface ApplyContractProps {
@@ -90,4 +88,9 @@ export interface ApplyContractProps {
   handleNext: () => void;
   activeStep: ActiveStepItem;
   setActiveStep: React.Dispatch<React.SetStateAction<ActiveStepItem>>;
+}
+export interface SendActivityEmailType {
+  email: string;
+  templateName: string;
+  userFirstName: string;
 }

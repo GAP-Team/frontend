@@ -471,4 +471,5 @@ export const applyContractFormSchema = yup.object().shape({
       /^\d{4,5}$/,
       "Postleitzahl muss zwischen 4 und 5 Ziffern lang sein"
     ),
+  desiredDates: yup.array().of(yup.date()),
 });
