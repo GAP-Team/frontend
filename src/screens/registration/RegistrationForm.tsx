@@ -4,10 +4,10 @@ import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import { useFormikContext } from "formik";
 import Divider from "@mui/material/Divider";
-import PrivatePerson from "./PrivatePerson";
+import PrivatePerson from "./real_estate/PrivatePerson";
 import GTab from "@/components/filter/GTab";
 import CompanyAddress from "./CompanyAddress";
-import ComercialPerson from "./CommercialPerson";
+import ComercialPerson from "./real_estate/CommercialPerson";
 import GButton from "@/components/button/GButton";
 import BasicInformation from "./BasicInformation";
 import GStepper from "@/components/stepper/GStepper";
@@ -16,8 +16,8 @@ import SectionTitle from "@/components/label/SectionTitle";
 import { USER_ROLE, BUSINESS_TYPE } from "@/utils/enums";
 import GProgressStepper from "@/components/stepper/GProgressStepper";
 import CircularProgress from "@mui/material/CircularProgress";
-import { RegistrationFormValues } from "../types";
-import ExpertiseServiceProvider from "../service_provider/ExpertiseServiceProvider";
+import { RegistrationFormValues } from "./types";
+import ExpertiseServiceProvider from "./service_provider/ExpertiseServiceProvider";
 import { getRegistrationSteps } from "@/utils/Constants";
 
 interface RegistrationFormProps {

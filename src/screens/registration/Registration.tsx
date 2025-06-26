@@ -10,7 +10,7 @@ import RegistrationForm from "./RegistrationForm";
 import Typography from "@mui/material/Typography";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
 import userAPIs from "@/api/user";
-import { RegistrationFormValues } from "../types";
+import { RegistrationFormValues } from "./types";
 
 import { DOCUMENT_TYPE, USER_ROLE } from "@/utils/enums";
 import PageTitle from "@/components/label/PageTitle";
@@ -30,7 +30,7 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>((props, ref) => {
 
 Alert.displayName = "Alert";
 
-const RegistrationRealState = (): JSX.Element => {
+const Registration = (): JSX.Element => {
   const router = useRouter();
 
   const [newUserId, setNewUserId] = useState("");
@@ -314,7 +314,7 @@ const RegistrationRealState = (): JSX.Element => {
   );
 };
 
-export default RegistrationRealState;
+export default Registration;
 
 export const styles = {
   mainContainer: { height: "100vh" },
