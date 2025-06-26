@@ -1,6 +1,7 @@
 import api from "../axios";
 import { SendActivityEmailType } from "@/typings/types";
 
+// FIXME: Add proper types for the parameters and response
 const emailAPI = {
   sendVerificationEmail: (userEmailPayload: any): any =>
     api.post("/emails/send-verification-email", userEmailPayload),

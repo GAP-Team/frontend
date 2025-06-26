@@ -1,4 +1,6 @@
 import api from "../axios";
+
+// FIXME: Add proper types for the parameters and response
 const contractAPI = {
   getContracts: (
     states: string[],

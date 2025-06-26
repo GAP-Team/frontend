@@ -2,6 +2,7 @@ import api from "../axios";
 
 const userAPI = {
   /* User Routes */
+  // FIXME: Add proper types for the parameters and response
   register: (user: any): any => api.post("/users", user),
   getUserById: (id: any): any => api.get(`/users/${id}`),
   verifyEmailToken: (verificationPayload: any): any =>
