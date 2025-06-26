@@ -69,7 +69,7 @@ const FacilityMaintenance = (): JSX.Element => {
           <Typography variant="gsub" color="gray.500" sx={style.helpIconLable}>
             NÄCHSTE WARTUNG
             <HelpIconButton
-              iconColor={HELP_ICON_BUTTON_COLOR.GOLDER}
+              iconColor={HELP_ICON_BUTTON_COLOR.GREY}
               helpText="The helper text will be displayed here."
             />
           </Typography>

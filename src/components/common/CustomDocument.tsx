@@ -41,7 +41,7 @@ const CustomDocumentation = ({
   }, [formikValue.documentChoice]);
 
   return (
-    <Box noValidate component="form" style={style.boxContainer}>
+    <Box noValidate component="form" style={styles.boxContainer}>
       <Grid container spacing={1} ml={0.1}>
         <FormControl sx={{ display: "block" }}>
           <RadioGroup
@@ -59,13 +59,13 @@ const CustomDocumentation = ({
                   label={
                     <Typography>
                       Jetzt hochladen{" "}
-                      <span style={style.highlightText}>Empfohlen</span>
-                      <HelpIconButton
-                        iconColor={HELP_ICON_BUTTON_COLOR.GREY}
-                        helpText="The helper text will be displayed here."
-                      />
+                      <span style={styles.highlightText}>Empfohlen</span>
                     </Typography>
                   }
+                />
+                <HelpIconButton
+                  iconColor={HELP_ICON_BUTTON_COLOR.GREY}
+                  helpText="The helper text will be displayed here."
                 />
               </Grid>
               <Grid item xs={4}>
@@ -82,19 +82,23 @@ const CustomDocumentation = ({
                   label="Per email versenden"
                 />
               </Grid>
-              <Grid item xs={4}>
+              <Grid
+                item
+                xs={4}
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  flexDirection: "row",
+                }}
+              >
                 <FormControlLabel
                   value={DocumentChoice.SERVER_LINK}
                   control={<Radio />}
-                  label={
-                    <Typography>
-                      Server verküpfung{""}
-                      <HelpIconButton
-                        iconColor={HELP_ICON_BUTTON_COLOR.GREY}
-                        helpText="The helper text will be displayed here."
-                      />
-                    </Typography>
-                  }
+                  label={<Typography>Server verküpfung{""}</Typography>}
+                />
+                <HelpIconButton
+                  iconColor={HELP_ICON_BUTTON_COLOR.GREY}
+                  helpText="The helper text will be displayed here."
                 />
               </Grid>
               <Grid item xs={4}>
@@ -216,7 +220,7 @@ const CustomDocumentation = ({
 
 export default CustomDocumentation;
 
-const style = {
+const styles = {
   boxContainer: { p: 1, width: "auto", marginLeft: "1.5rem" },
   highlightText: { fontWeight: "600", color: "#22A7F1" },
 };

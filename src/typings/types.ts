@@ -75,3 +75,8 @@ export interface HelpIconButtonProps {
   helpText: string;
   iconColor?: string;
 }
+export interface SendActivityEmailType {
+  email: string;
+  templateName: string;
+  userFirstName: string;
+}
