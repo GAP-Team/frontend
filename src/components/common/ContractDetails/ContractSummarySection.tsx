@@ -31,7 +31,7 @@ const ContractSummarySection: React.FC<ContractSummarySectionProps> = ({
     { label: "Ausschreibungstyp", value: contract?.tenderType },
     { label: "Objekt", value: contract?.buildingName },
     {
-      label: "Bundesland und Stadt",
+      label: "Stadt und Bundesland",
       value: `${contract?.city}, ${contract?.state}`,
     },
     { label: "Anlage", value: contract?.facilityName },
@@ -41,16 +41,16 @@ const ContractSummarySection: React.FC<ContractSummarySectionProps> = ({
       label: "Auftragsinformation",
       value: contract?.detailDescription
         ? `${contract?.detailDescription.substring(0, 60)}...`
-        : "",
+        : "Nicht Vorhanden",
     },
     {
-      label: "Gewünschtes Zeitfenster",
+      label: "Angebotsfrist",
       value:
-        contract?.fromDate &&
-        contract?.toDate &&
-        `${new Date(contract?.fromDate).toLocaleDateString("de-DE")} - ${new Date(
-          contract?.toDate
-        ).toLocaleDateString("de-DE")}`,
+        contract?.fromDate && contract?.toDate
+          ? `${new Date(contract?.fromDate).toLocaleDateString("de-DE")} - ${new Date(
+              contract?.toDate
+            ).toLocaleDateString("de-DE")}`
+          : "Nicht Vorhanden",
     },
     {
       label: "Sicherheit Arbeit erforderlich",
