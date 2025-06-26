@@ -225,6 +225,7 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
     }
   };
 
+  // FIXME: We have to make all the forms consistent with the edit and create process.
   const handleSubmit = async (
     values: AddBuildingFormValues,
     docObjList: any[] = []
@@ -338,7 +339,7 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
       <Grid item xs={12} md={12} lg={12} sx={{ backgroundColor: "#F9FAFA" }}>
         <PageTitle
           title={
-            actionType === "edit"
+            actionType === FORM_ACTION_TYPE.UPDATE
               ? `Objekt Bearbeiten: ${initialValues?.name}`
               : `Neues Objekt erstellen`
           }
