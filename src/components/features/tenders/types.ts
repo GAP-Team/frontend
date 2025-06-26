@@ -1,4 +1,4 @@
-import { BuildingAddress } from "../../buildings/building/types";
+import { BuildingAddress } from "../buildings/building/types";
 export interface BuildingTenders {
   buildingName: string;
   buildingAddress: BuildingAddress;

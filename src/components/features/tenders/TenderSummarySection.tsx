@@ -1,6 +1,6 @@
 "use client";
 
-import HeaderSection from "../../../layout/HeaderSection";
+import HeaderSection from "../../layout/HeaderSection";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import Divider from "@mui/material/Divider";
@@ -11,7 +11,7 @@ import { Tender } from "./types";
 import { TENDER_FORM } from "@/utils/enums";
 import { useAppSelector } from "@/lib/hooks";
 import { ROUTES } from "@/utils/routes";
-import { Facility } from "../../facilities/facility/types";
+import { Facility } from "../facilities/facility/types";
 
 interface TenderSummarySectionProps {
   tender?: Tender | null;

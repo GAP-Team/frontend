@@ -1,9 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../store";
-import {
-  Tender,
-  BuildingTenders,
-} from "@/components/features/tenders/tender_card/types";
+import { Tender, BuildingTenders } from "@/components/features/tenders/types";
 import userAPIs from "@/api/user";
 import tenderAPIs from "@/api/tender";
 interface TenderState {
