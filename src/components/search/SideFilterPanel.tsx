@@ -68,7 +68,7 @@ const SideFilterPanel: React.FC<SideFilterPanelProps> = ({
     formik.setFieldValue("tenderTypes", []);
     formik.setFieldValue("facilitySubcategories", []);
     handleSearchContracts([], [], []);
-    const url = `${ROUTES.SERVICE_PROVIDER.CONTRACTS}?facilitySubcategories=${[].join(",")}&tenderTypes=${[].join(",")}&states=${[].join(",")}`;
+    const url = ROUTES.SERVICE_PROVIDER.CONTRACT_FILTER_URL([], [], []);
     router.push(url);
   };
 
