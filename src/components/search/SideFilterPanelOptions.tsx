@@ -60,16 +60,25 @@ const SideFilterPanelOptions: React.FC<SideFilterPanelOptionsProps> = ({
   };
 
   const renderItems = (items: string[]): JSX.Element[] =>
-    items.slice(0, showAllOptions ? items.length : 4).map((item) => (
-      <ListItemButton
-        key={item}
-        onClick={() => handleOptionSelect(item)}
-        sx={{ pl: 4 }}
-      >
-        <Checkbox checked={selectedOptions.includes(item)} />
-        <ListItemText primary={item} />
-      </ListItemButton>
-    ));
+    items
+      .slice(
+        0,
+        showAllOptions
+          ? items.length
+          : title === FilterPanelLabels.STATE
+            ? 4
+            : 6
+      )
+      .map((item) => (
+        <ListItemButton
+          key={item}
+          onClick={() => handleOptionSelect(item)}
+          sx={{ pl: 4 }}
+        >
+          <Checkbox checked={selectedOptions.includes(item)} />
+          <ListItemText primary={item} />
+        </ListItemButton>
+      ));
 
   return (
     <>
