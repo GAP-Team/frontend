@@ -743,3 +743,7 @@ export function getRegistrationSteps(role?: string): string[] {
     "Zusammenfassung",
   ];
 }
+export const USER_ACTIVITY_EMAIL_TEMPLATES = {
+  PASSWORD_CHANGE: "ChangePasswordTemplate",
+  EMAIL_CHANGE: "ChangeEmailTemplate",
+};

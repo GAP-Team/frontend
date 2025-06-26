@@ -1,11 +1,8 @@
 import { useState, useEffect } from "react";
-import ExpandLessIcon from "@mui/icons-material/ExpandLess";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import {
   Box,
   List,
   Button,
-  Divider,
   Collapse,
   Checkbox,
   IconButton,
@@ -13,8 +10,10 @@ import {
   FormControl,
   ListItemText,
   ListItemButton,
+  Divider,
 } from "@mui/material";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
+import { FilterPanelLabels } from "@/utils/enums";
 import { SideFilterPanelOptionsProps } from "@/typings/types";
 
 const SideFilterPanelOptions: React.FC<SideFilterPanelOptionsProps> = ({
@@ -27,16 +26,23 @@ const SideFilterPanelOptions: React.FC<SideFilterPanelOptionsProps> = ({
   const [openSections, setOpenSections] = useState<Record<string, boolean>>(
     options.reduce((acc) => ({ ...acc, [title]: true }), {})
   );
-  const [optionExpanded, setOptionExpanded] = useState<{
-    [key: string]: boolean;
-  }>({});
+  const [optionExpanded, setOptionExpanded] = useState<Record<string, boolean>>(
+    {}
+  );
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
 
   useEffect(() => {
     setSelectedOptions(preSelectedOptions);
-  }, [preSelectedOptions]);
+    if (title === FilterPanelLabels.STATE) {
+      const initialExpanded = options.reduce(
+        (acc, option) => ({ ...acc, [option.category]: true }),
+        {}
+      );
+      setOptionExpanded(initialExpanded);
+    }
+  }, [preSelectedOptions, title, options]);
 
-  const toggleSection = (title: string): void => {
+  const toggleSection = (): void => {
     setOpenSections((prev) => ({ ...prev, [title]: !prev[title] }));
   };
 
@@ -45,16 +51,25 @@ const SideFilterPanelOptions: React.FC<SideFilterPanelOptionsProps> = ({
   };
 
   const handleOptionSelect = (item: string): void => {
-    const facilitySubcategories = handleOptionsSelectFilter(item);
-    setSelectedOptions(facilitySubcategories);
-    onSelect(facilitySubcategories, title);
-  };
-
-  const handleOptionsSelectFilter = (item: string): string[] => {
-    return selectedOptions.includes(item)
+    const updatedSelection = selectedOptions.includes(item)
       ? selectedOptions.filter((selected) => selected !== item)
       : [...selectedOptions, item];
+
+    setSelectedOptions(updatedSelection);
+    onSelect(updatedSelection, title);
   };
+
+  const renderItems = (items: string[]): JSX.Element[] =>
+    items.slice(0, showAllOptions ? items.length : 4).map((item) => (
+      <ListItemButton
+        key={item}
+        onClick={() => handleOptionSelect(item)}
+        sx={{ pl: 4 }}
+      >
+        <Checkbox checked={selectedOptions.includes(item)} />
+        <ListItemText primary={item} />
+      </ListItemButton>
+    ));
 
   return (
     <>
@@ -63,8 +78,8 @@ const SideFilterPanelOptions: React.FC<SideFilterPanelOptionsProps> = ({
           <Typography variant="subtitle1" fontWeight="bold">
             {title}
           </Typography>
-          <IconButton size="small" onClick={() => toggleSection(title)}>
-            {openSections[title] ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+          <IconButton size="small" onClick={toggleSection}>
+            {openSections[title] ? <ExpandLess /> : <ExpandMore />}
           </IconButton>
         </Box>
         <Collapse in={openSections[title]}>
@@ -72,47 +87,37 @@ const SideFilterPanelOptions: React.FC<SideFilterPanelOptionsProps> = ({
             <FormControl fullWidth>
               <List component="nav" disablePadding>
                 {options
-                  ?.slice(0, showAllOptions ? options.length : 4)
+                  .slice(0, showAllOptions ? options.length : 4)
                   .map((option, index) => (
                     <Box key={index}>
-                      <ListItemButton
-                        onClick={() => handleOptionsExpand(option.category)}
-                      >
-                        <ListItemText primary={option.category} />
-                        {optionExpanded[option.category] ? (
-                          <ExpandLess />
-                        ) : (
-                          <ExpandMore />
-                        )}
-                      </ListItemButton>
+                      {option.category !== "Staaten" && (
+                        <ListItemButton
+                          onClick={() => handleOptionsExpand(option.category)}
+                        >
+                          <ListItemText primary={option.category} />
+                          {optionExpanded[option.category] ? (
+                            <ExpandLess />
+                          ) : (
+                            <ExpandMore />
+                          )}
+                        </ListItemButton>
+                      )}
                       <Collapse
                         in={optionExpanded[option.category]}
                         timeout="auto"
                         unmountOnExit
                       >
-                        <List disablePadding>
-                          {option.items.map((item) => (
-                            <ListItemButton
-                              key={item}
-                              onClick={() => handleOptionSelect(item)}
-                              sx={{ pl: 4 }}
-                            >
-                              <Checkbox
-                                checked={selectedOptions.includes(item)}
-                              />
-                              <ListItemText primary={item} />
-                            </ListItemButton>
-                          ))}
-                        </List>
+                        <List disablePadding>{renderItems(option.items)}</List>
                       </Collapse>
                     </Box>
                   ))}
               </List>
-              {options.length > 4 && (
+
+              {(title === FilterPanelLabels.STATE || options.length > 4) && (
                 <Button
                   size="small"
                   sx={{ alignSelf: "flex-start" }}
-                  onClick={() => setShowAllOptions(!showAllOptions)}
+                  onClick={() => setShowAllOptions((prev) => !prev)}
                 >
                   <Typography sx={styles.buttonText}>
                     {showAllOptions ? "weniger sehen" : "Mehr sehen"}
@@ -143,9 +148,5 @@ const styles = {
     fontSize: "0.875rem",
     color: "primary.main",
     "&:hover": { textDecoration: "underline" },
-  },
-  formControl: {
-    display: "block",
-    ml: 1,
   },
 };
