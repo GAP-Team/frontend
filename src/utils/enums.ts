@@ -52,3 +52,8 @@ export enum FilterPanelLabels {
   TENDER_TYPE = "Auftragstyp",
   FACILITY_SUBCATEGORY = "Anlagentyp",
 }
+
+export enum FORM_ACTION_TYPE {
+  CREATE = "CREATE",
+  UPDATE = "UPDATE",
+}
