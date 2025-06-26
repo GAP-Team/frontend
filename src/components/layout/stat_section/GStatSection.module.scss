@@ -1,0 +1,37 @@
+.diamond_container {
+  width: 615px;
+  //   height: 20rem;
+}
+.diamond_grid {
+  position: relative;
+  z-index: 1;
+}
+.diamond_grid__inner {
+  display: flex;
+  flex-wrap: wrap;
+  -webkit-transform: scale(0.71) rotate(-45deg);
+  transform: scale(0.71) rotate(-45deg);
+}
+
+.diamond_grid__item {
+  display: block;
+  width: calc(50% - var(10px) / 2);
+  padding-bottom: calc(50% - var(10px) / 2);
+  overflow: hidden;
+}
+.diamond_grid__item:nth-child(1),
+.diamond_grid__item:nth-child(3) {
+  margin-right: 10px;
+}
+.diamond_grid__item:nth-child(1),
+.diamond_grid__item:nth-child(2) {
+  margin-bottom: 10px;
+}
+
+.diamond_grid__img {
+  height: inherit;
+  object-fit: cover;
+  -o-object-fit: cover;
+  -webkit-transform: scale(1.414) rotate(45deg);
+  transform: scale(1.414) rotate(45deg);
+}

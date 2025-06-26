@@ -1,0 +1,41 @@
+// GFunctionSection.module.scss
+.w-full {
+  width: 100%;
+}
+.p-4 {
+  padding: 1rem;
+}
+.max-w-screen-xl {
+  max-width: 1280px;
+}
+
+.card {
+  display: flex;
+  padding: 1rem;
+  cursor: pointer;
+  position: relative;
+  flex-direction: column;
+  min-height: var(--card-min-height, 60vh);
+  border-radius: var(--rounded-box, 1rem /* 16px */);
+}
+.card:focus {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+.card_body {
+  padding: 1rem /* 16px */;
+  font-size: 0.875rem /* 14px */;
+  line-height: 1.25rem /* 20px */;
+}
+.card_title {
+  font-size: 1.25rem /* 20px */;
+  line-height: 1.75rem /* 28px */;
+  font-weight: 600;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+.card_subtitle {
+  font-size: 1.1rem;
+  line-height: 1.5rem;
+  margin-bottom: 1rem;
+}

@@ -3,7 +3,7 @@ import { RootState } from "../store";
 import {
   Tender,
   BuildingTenders,
-} from "@/screens/dashboard/tenders/tender_card/types";
+} from "@/components/features/tenders/tender_card/types";
 import userAPIs from "@/api/user";
 import tenderAPIs from "@/api/tender";
 interface TenderState {
