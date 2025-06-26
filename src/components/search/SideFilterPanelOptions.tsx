@@ -3,6 +3,7 @@ import {
   Box,
   List,
   Button,
+  Divider,
   Collapse,
   Checkbox,
   IconButton,
@@ -10,10 +11,13 @@ import {
   FormControl,
   ListItemText,
   ListItemButton,
-  Divider,
 } from "@mui/material";
-import { ExpandLess, ExpandMore } from "@mui/icons-material";
+import {
+  NUMBER_OF_STATE_OPTIONS,
+  NUMBER_OF_OTHER_OPTIONS,
+} from "@/utils/Constants";
 import { FilterPanelLabels } from "@/utils/enums";
+import { ExpandLess, ExpandMore } from "@mui/icons-material";
 import { SideFilterPanelOptionsProps } from "@/typings/types";
 
 const SideFilterPanelOptions: React.FC<SideFilterPanelOptionsProps> = ({
@@ -66,8 +70,8 @@ const SideFilterPanelOptions: React.FC<SideFilterPanelOptionsProps> = ({
         showAllOptions
           ? items.length
           : title === FilterPanelLabels.STATE
-            ? 4
-            : 6
+            ? NUMBER_OF_STATE_OPTIONS
+            : NUMBER_OF_OTHER_OPTIONS
       )
       .map((item) => (
         <ListItemButton

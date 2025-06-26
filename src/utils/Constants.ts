@@ -724,3 +724,5 @@ export const FAQs = [
 ];
 
 export const DEFAULT_PUBLISH_MONTHS = 3;
+export const NUMBER_OF_STATE_OPTIONS = 4;
+export const NUMBER_OF_OTHER_OPTIONS = 6;
