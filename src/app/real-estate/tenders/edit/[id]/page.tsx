@@ -1,6 +1,6 @@
 "use client";
 import { useParams } from "next/navigation";
-import NewTender from "@/screens/dashboard/tenders/add_tender_form/NewTender";
+import NewTender from "@/components/forms/tender/NewTender";
 
 export default function TenderOverview(): JSX.Element {
   const params = useParams();

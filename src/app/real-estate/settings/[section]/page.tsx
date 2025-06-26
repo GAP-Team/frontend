@@ -1,8 +1,8 @@
-import UserProfile from "@/screens/dashboard/settings/UserProfile";
-import ChangeEmail from "@/screens/dashboard/settings/ChangeEmail";
-import DeleteAccount from "@/screens/dashboard/settings/DeleteAccount";
-import CompanyProfile from "@/screens/dashboard/settings/CompanyProfile";
-import ChangePassword from "@/screens/dashboard/settings/ChangePassword";
+import UserProfile from "@/components/features/settings/UserProfile";
+import ChangeEmail from "@/components/features/settings/ChangeEmail";
+import DeleteAccount from "@/components/features/settings/DeleteAccount";
+import CompanyProfile from "@/components/features/settings/CompanyProfile";
+import ChangePassword from "@/components/features/settings/ChangePassword";
 
 export default function SectionPage({
   params,

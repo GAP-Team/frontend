@@ -1,6 +1,6 @@
 "use client";
 import { useParams } from "next/navigation";
-import NewBuilding from "@/screens/dashboard/buildings/add_building_form/NewBuilding";
+import NewBuilding from "@/components/forms/building/NewBuilding";
 
 export default function UpdatedBuilding(): JSX.Element {
   const params = useParams();

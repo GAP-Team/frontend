@@ -1,4 +1,4 @@
-import NewBuilding from "@/screens/dashboard/buildings/add_building_form/NewBuilding";
+import NewBuilding from "@/components/forms/building/NewBuilding";
 
 export default function AddBuildingFormPage(): JSX.Element {
   return <NewBuilding id="" />;

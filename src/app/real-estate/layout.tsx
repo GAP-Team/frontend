@@ -5,9 +5,9 @@ import React, { useEffect, useState } from "react";
 import { LuLayoutDashboard } from "react-icons/lu";
 import { useRouter, usePathname } from "next/navigation";
 import { MdOutlineDoorSliding, MdOutlineAddHomeWork } from "react-icons/md";
-import { SubItem, SidebarItem } from "@/components/navigation/GSidebar/SideBar";
+import { SubItem, SidebarItem } from "@/components/layout/navigation/GSidebar/SideBar";
 import { ROUTES } from "@/utils/routes";
-import Layout from "@/screens/dashboard/Layout";
+import Layout from "@/components/features/dashboard/Layout";
 import { Box } from "@mui/material";
 
 const sidebarItems: SidebarItem[] = [

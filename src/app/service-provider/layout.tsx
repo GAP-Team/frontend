@@ -4,10 +4,10 @@ import { ROUTES } from "@/utils/routes";
 import { CgNotes } from "react-icons/cg";
 import { useEffect, useState } from "react";
 import { BsEnvelope } from "react-icons/bs";
-import Layout from "@/screens/dashboard/Layout";
+import Layout from "@/components/features/dashboard/Layout";
 import { LuLayoutDashboard } from "react-icons/lu";
 import { useRouter, usePathname } from "next/navigation";
-import { SubItem, SidebarItem } from "@/components/navigation/GSidebar/SideBar";
+import { SubItem, SidebarItem } from "@/components/layout/navigation/GSidebar/SideBar";
 
 const sidebarItems: SidebarItem[] = [
   {
