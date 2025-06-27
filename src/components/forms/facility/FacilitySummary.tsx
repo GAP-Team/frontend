@@ -5,12 +5,12 @@ import Grid from "@mui/material/Grid";
 import { useSelector } from "react-redux";
 import { useFormikContext } from "formik";
 import { useEffect, useState } from "react";
-import { ActiveStepItem } from "../../types";
+import { ActiveStepItem } from "@/components/features/dashboard/types";
 import { getUserBuildings } from "@/lib/features/buildingSlice";
 import SummarySection, {
   Detail,
 } from "@/components/layout/summary/SummarySection";
-import { SelectedBuildingData } from "../../buildings/add_building_form/types";
+import { SelectedBuildingData } from "@/components/forms/building/types";
 
 interface FacilitySummaryProps {
   setActiveStep: React.Dispatch<React.SetStateAction<ActiveStepItem>>;

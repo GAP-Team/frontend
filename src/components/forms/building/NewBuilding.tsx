@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import { Formik, FormikHelpers } from "formik";
 import Grid from "@mui/material/Grid";
 import buildingAPIs from "@/api/building";
-import { ActiveStepItem } from "../../types";
+import { ActiveStepItem } from "@/components/features/dashboard/types";
 import {
   AddBuildingFormValues,
   NewBuildingProps,
