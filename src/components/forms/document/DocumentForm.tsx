@@ -4,9 +4,9 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Radio from "@mui/material/Radio";
 import { useFormikContext } from "formik";
-import GTextInput from "../ui/input/GTextInput";
+import GTextInput from "@/components/ui/input/GTextInput";
 import { Documentation } from "@/utils/Constants";
-import UploadMultiButton from "../ui/button/UploadMultiButton";
+import UploadMultiButton from "@/components/ui/button/UploadMultiButton";
 import {
   FormControl,
   FormControlLabel,

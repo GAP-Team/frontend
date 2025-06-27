@@ -20,7 +20,7 @@ import DocumentList from "./DocumentList ";
 import { DOCUMENT_TYPE } from "@/utils/enums";
 import ActionMenu from "@/components/layout/ActionMenu";
 import { ROUTES, REAL_ESTATE_BASE } from "@/utils/routes";
-import { styles } from "@/components/ui/scrollbar/styles";
+import { styles as scrollbar_styles } from "@/components/ui/scrollbar/styles";
 import {
   getUserBuildings,
   setUserBuildingDetails,
@@ -185,7 +185,7 @@ const styles = {
     paddingTop: "0.5rem",
     overflow: "auto",
     paddingRight: "0.65rem",
-    ...styles,
+    ...scrollbar_styles,
   },
   items: {
     variant: "bodymsb",

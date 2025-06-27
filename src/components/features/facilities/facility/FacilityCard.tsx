@@ -15,8 +15,8 @@ import { DOCUMENT_TYPE } from "@/utils/enums";
 import Typography from "@mui/material/Typography";
 import ActionMenu from "@/components/layout/ActionMenu";
 import SectionTitle from "@/components/ui/label/SectionTitle";
-import { styles } from "@/components/ui/scrollbar/styles";
-import DocumentList from "../../../buildings/building_card/DocumentList ";
+import { styles as scrollbar_styles } from "@/components/ui/scrollbar/styles";
+import DocumentList from "@/components/features/buildings/building/DocumentList ";
 import { checkActiveTenderForFacility } from "@/lib/features/tenderSlice";
 import { showSnackbar } from "@/components/ui/root-snackbar";
 import { deleteFacility } from "@/lib/features/facilitySlice";
@@ -321,7 +321,7 @@ const styles = {
     paddingTop: "0.5rem",
     overflow: "auto",
     paddingRight: "0.65rem",
-    ...styles,
+    ...scrollbar_styles,
   },
   sectionTitle: {
     fontWeight: 600,
