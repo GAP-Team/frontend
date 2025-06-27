@@ -1,20 +1,20 @@
 import Box from "@mui/material/Box";
 import TenderCard from "./TenderCard";
 import { Typography } from "@mui/material";
-import { styles } from "@/components/ui/scrollbar/styles";
+import { scrollBarStyles } from "@/components/ui/scrollbar/Scrollbar";
 import { Urgency } from "@/utils/enums";
-import { BuildingTenders } from "../../../tenders/types";
+import { BuildingTenderGroup } from "@/components/features/tenders/types";
 import { useAppSelector } from "@/lib/hooks";
 
 const TenderCardList: React.FC = () => {
   const tenders = useAppSelector((state) => state.tender.tenders);
 
   const renderSortedTenders = (
-    tendersInBuilding: BuildingTenders[]
+    tendersInBuilding: BuildingTenderGroup[]
   ): React.ReactNode => {
     if (
       !tendersInBuilding?.some(
-        (building: BuildingTenders) => building?.tenders?.length > 0
+        (building: BuildingTenderGroup) => building?.tenders?.length > 0
       )
     ) {
       return (
@@ -84,7 +84,7 @@ const styles = {
     paddingTop: "1rem",
     px: "0.2rem",
     overflowX: "auto",
-    ...styles,
+    ...scrollBarStyles,
   },
   noDataContainer: {
     display: "grid",

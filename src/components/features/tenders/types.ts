@@ -1,5 +1,5 @@
 import { BuildingAddress } from "../buildings/building/types";
-export interface BuildingTenders {
+export interface BuildingTenderGroup {
   buildingName: string;
   buildingAddress: BuildingAddress;
   tenders: Tender[];
