@@ -5,7 +5,7 @@ import { useFormikContext } from "formik";
 import SummarySection, {
   Detail,
 } from "@/components/layout/summary/SummarySection";
-import { ActiveStepItem } from "../../types";
+import { ActiveStepItem } from "@/components/features/dashboard/types";
 
 interface BuildingSummaryProps {
   setActiveStep: React.Dispatch<React.SetStateAction<ActiveStepItem>>;
