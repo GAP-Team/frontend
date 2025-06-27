@@ -1,5 +1,5 @@
 import { useState } from "react";
-import LabelWithAsterisk from "../ui/label/LabelWithAsterisk";
+import LabelWithAsterisk from "@/components/ui/label/LabelWithAsterisk";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import { Grid, Divider, TextField, Typography } from "@mui/material";
 

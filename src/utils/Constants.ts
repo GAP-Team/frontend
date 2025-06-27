@@ -4,6 +4,8 @@ import OfficeImage from "../../public/images/office.jpg";
 import DescriptionIcon from "@mui/icons-material/Description";
 import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
 import ConnectWithoutContactIcon from "@mui/icons-material/ConnectWithoutContact";
+// FIXME : location of the notification type need to be fixed
+import { Notification } from "@/components/layout/navigation/GAppbar/types";
 
 export const listOfFacilitySubcategories: FilterOptionType[] = [
   {
@@ -550,7 +552,7 @@ export const autoPublishMonthsOptions = [
   },
 ];
 
-export const notifications = [
+export const notifications : Notification[] = [
   {
     message: "You were chosen as a main provider for object G-302.",
     time: "25m ago",
