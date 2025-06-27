@@ -60,11 +60,11 @@ const RegistrationForm = ({
 
   const handlePersonTabChange = (
     event: React.SyntheticEvent,
-    newValue: number
+    userTypeFlag: number
   ): void => {
-    setPersonTyp(newValue);
+    setPersonTyp(userTypeFlag);
 
-    if (newValue === 0) {
+    if (userTypeFlag === 0) {
       formik.setFieldValue("businessType", BUSINESS_TYPE.BUSINESS);
     } else {
       formik.setFieldValue("businessType", BUSINESS_TYPE.PRIVATE);
@@ -72,7 +72,7 @@ const RegistrationForm = ({
 
     //Make user to only be private or commercial person, also their formik values null on selection change
     //Commercial person, make land and approv doc undefined
-    if (!newValue) {
+    if (!userTypeFlag) {
       formik.setFieldValue("approvalDocument", "");
       formik.setFieldValue("landRegisterEntryDocument", "");
     }
@@ -85,11 +85,11 @@ const RegistrationForm = ({
 
   const handleStakeholderTabChange = (
     event: React.SyntheticEvent,
-    newValue: number
+    stakeholderTypeFlag: number
   ): void => {
-    setStakeholderTyp(newValue);
+    setStakeholderTyp(stakeholderTypeFlag);
 
-    if (newValue === 0) {
+    if (stakeholderTypeFlag === 0) {
       const updatedSteps = getRegistrationSteps(USER_ROLE.REAL_ESTATE_OWNER);
       setRegistrationSteps(updatedSteps);
       formik.setFieldValue("role", USER_ROLE.REAL_ESTATE_OWNER);
