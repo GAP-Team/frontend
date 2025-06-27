@@ -16,7 +16,6 @@ import Divider from "@mui/material/Divider";
 import { AddFacilityFormValues } from "./types";
 import Typography from "@mui/material/Typography";
 import GTextInput from "@/components/ui/input/GTextInput";
-import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import {
@@ -25,7 +24,7 @@ import {
   HELP_ICON_BUTTON_COLOR,
   autoPublishMonthsOptions,
 } from "@/utils/Constants";
-import HelpIcon from "@/components/button/HelpIcon";
+import HelpIcon from "@/components/ui/button/HelpIcon";
 
 const FacilityCheck = (): JSX.Element => {
   const formik = useFormikContext<AddFacilityFormValues>();
