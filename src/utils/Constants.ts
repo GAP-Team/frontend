@@ -552,7 +552,7 @@ export const autoPublishMonthsOptions = [
   },
 ];
 
-export const notifications : Notification[] = [
+export const notifications: Notification[] = [
   {
     message: "You were chosen as a main provider for object G-302.",
     time: "25m ago",

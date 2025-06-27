@@ -3,7 +3,7 @@ import React from "react";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import ListItemButton from "@mui/material/ListItemButton";
-import { SidebarItem } from "@/components/navigation/GSidebar/SideBar";
+import { SidebarItem } from "@/components/layout/navigation/GSidebar/SideBar";
 
 interface SidebarItemComponentProps {
   item: SidebarItem;

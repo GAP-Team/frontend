@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { SidebarItem, SubItem } from "@/components/navigation/GSidebar/SideBar";
+import {
+  SidebarItem,
+  SubItem,
+} from "@/components/layout/navigation/GSidebar/SideBar";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";

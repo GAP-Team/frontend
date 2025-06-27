@@ -1,5 +1,5 @@
 import { StaticImageData } from "next/image";
-import { ActiveStepItem } from "@/screens/dashboard/types";
+import { ActiveStepItem } from "@/components/features/dashboard/types";
 
 export interface FormErrors {
   [key: string]: string;
