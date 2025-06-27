@@ -10,7 +10,7 @@ import { AddTenderFormValues } from "./types";
 import { FormControl, MenuItem, Select } from "@mui/material";
 import CustomSelect from "@/components/drop_down/CustomSelect";
 import { getUserBuildings } from "@/lib/features/buildingSlice";
-import HelpIconButton from "@/components/button/HelpIconButton";
+import HelpIcon from "@/components/button/HelpIcon";
 import LabelWithAsterisk from "@/components/label/LabelWithAsterisk";
 import { AddFacilityFormValues } from "../../facilities/add_facility_form/types";
 
@@ -113,7 +113,7 @@ const TenderBuilding = (): JSX.Element => {
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <LabelWithAsterisk>OBJEKT AUSWÄHLEN</LabelWithAsterisk>
-          <HelpIconButton
+          <HelpIcon
             iconColor={HELP_ICON_BUTTON_COLOR.GREY}
             helpText="The helper text will be displayed here."
           />
@@ -145,7 +145,7 @@ const TenderBuilding = (): JSX.Element => {
         </Grid>
         <Grid item xs={12}>
           <LabelWithAsterisk>ANLAGE AUSWÄHLEN</LabelWithAsterisk>
-          <HelpIconButton
+          <HelpIcon
             iconColor={HELP_ICON_BUTTON_COLOR.GREY}
             helpText="The helper text will be displayed here."
           />

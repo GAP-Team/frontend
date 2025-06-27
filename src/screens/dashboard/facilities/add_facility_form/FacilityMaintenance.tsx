@@ -24,7 +24,7 @@ import {
   HELP_ICON_BUTTON_COLOR,
   autoPublishMonthsOptions,
 } from "@/utils/Constants";
-import HelpIconButton from "@/components/button/HelpIconButton";
+import HelpIcon from "@/components/button/HelpIcon";
 
 const FacilityMaintenance = (): JSX.Element => {
   const formik = useFormikContext<AddFacilityFormValues>();
@@ -44,7 +44,7 @@ const FacilityMaintenance = (): JSX.Element => {
         <Grid item xs={6}>
           <Typography variant="gsub" color="gray.500">
             LETZTE WARTUNG (Einschätzung)
-            <HelpIconButton
+            <HelpIcon
               iconColor={HELP_ICON_BUTTON_COLOR.GREY}
               helpText="The helper text will be displayed here."
             />
@@ -68,7 +68,7 @@ const FacilityMaintenance = (): JSX.Element => {
         <Grid item xs={6}>
           <Typography variant="gsub" color="gray.500" sx={style.helpIconLable}>
             NÄCHSTE WARTUNG
-            <HelpIconButton
+            <HelpIcon
               iconColor={HELP_ICON_BUTTON_COLOR.GREY}
               helpText="The helper text will be displayed here."
             />
@@ -93,7 +93,7 @@ const FacilityMaintenance = (): JSX.Element => {
         <Grid item xs={12}>
           <Typography variant="gsub" color="gray.500" sx={style.helpIconLable}>
             AUTOMATISCH VERÖFFENTLICHEN
-            <HelpIconButton
+            <HelpIcon
               iconColor={HELP_ICON_BUTTON_COLOR.GREY}
               helpText="The helper text will be displayed here."
             />
@@ -139,7 +139,7 @@ const FacilityMaintenance = (): JSX.Element => {
         <Grid item xs={6}>
           <Typography variant="gsub" color="gray.500">
             REMINDER EINSTELLEN
-            <HelpIconButton
+            <HelpIcon
               iconColor={HELP_ICON_BUTTON_COLOR.GREY}
               helpText="The helper text will be displayed here."
             />
@@ -164,7 +164,7 @@ const FacilityMaintenance = (): JSX.Element => {
         <Grid item xs={12} sx={style.lable}>
           <Typography variant="gsub" color="gray.500">
             AUTOMATISCHE E-MAIL ERHALTEN
-            <HelpIconButton
+            <HelpIcon
               iconColor={HELP_ICON_BUTTON_COLOR.GREY}
               helpText="The helper text will be displayed here."
             />

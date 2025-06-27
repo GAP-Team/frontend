@@ -24,7 +24,7 @@ import {
   HELP_ICON_BUTTON_COLOR,
   autoPublishMonthsOptions,
 } from "@/utils/Constants";
-import HelpIconButton from "@/components/button/HelpIconButton";
+import HelpIcon from "@/components/button/HelpIcon";
 
 const FacilityCheck = (): JSX.Element => {
   const formik = useFormikContext<AddFacilityFormValues>();
@@ -44,7 +44,7 @@ const FacilityCheck = (): JSX.Element => {
         <Grid item xs={6}>
           <Typography variant="gsub" color="gray.500">
             LETZTE PRÜFUNG (Einschätzung)
-            <HelpIconButton
+            <HelpIcon
               iconColor={HELP_ICON_BUTTON_COLOR.GREY}
               helpText="The helper text will be displayed here."
             />
@@ -66,7 +66,7 @@ const FacilityCheck = (): JSX.Element => {
         <Grid item xs={6}>
           <Typography variant="gsub" color="gray.500" sx={style.helpIconLable}>
             NÄCHSTE PRÜFUNG
-            <HelpIconButton
+            <HelpIcon
               iconColor={HELP_ICON_BUTTON_COLOR.GREY}
               helpText="The helper text will be displayed here."
             />
@@ -91,7 +91,7 @@ const FacilityCheck = (): JSX.Element => {
         <Grid item xs={12}>
           <Typography variant="gsub" color="gray.500" sx={style.helpIconLable}>
             AUTOMATISCH VERÖFFENTLICHEN
-            <HelpIconButton
+            <HelpIcon
               iconColor={HELP_ICON_BUTTON_COLOR.GREY}
               helpText="The helper text will be displayed here."
             />
@@ -117,9 +117,9 @@ const FacilityCheck = (): JSX.Element => {
             {formik?.values?.isPublishCheckAutomatically && (
               <FormControl sx={style.conditionalBorder}>
                 <RadioGroup
-                  id="publishAutomaticallyInMonth"
-                  name="publishAutomaticallyInMonth"
-                  value={formik?.values?.publishAutomaticallyInMonth}
+                  id="publishCheckAutomaticallyInMonth"
+                  name="publishCheckAutomaticallyInMonth"
+                  value={formik?.values?.publishCheckAutomaticallyInMonth}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                 >
@@ -142,7 +142,7 @@ const FacilityCheck = (): JSX.Element => {
         <Grid item xs={6}>
           <Typography variant="gsub" color="gray.500">
             REMINDER EINSTELLEN
-            <HelpIconButton
+            <HelpIcon
               iconColor={HELP_ICON_BUTTON_COLOR.GREY}
               helpText="The helper text will be displayed here."
             />
@@ -167,7 +167,7 @@ const FacilityCheck = (): JSX.Element => {
         <Grid item xs={12} sx={style.lable}>
           <Typography variant="gsub" color="gray.500">
             AUTOMATISCHE E-MAIL ERHALTEN
-            <HelpIconButton
+            <HelpIcon
               iconColor={HELP_ICON_BUTTON_COLOR.GREY}
               helpText="The helper text will be displayed here."
             />

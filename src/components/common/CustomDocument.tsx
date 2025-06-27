@@ -13,7 +13,7 @@ import {
   Typography,
 } from "@mui/material";
 import { DocumentChoice } from "@/utils/enums";
-import HelpIconButton from "@/components/button/HelpIconButton";
+import HelpIcon from "@/components/button/HelpIcon";
 import { Documentation, HELP_ICON_BUTTON_COLOR } from "@/utils/Constants";
 
 interface CustomDocumentationProps {
@@ -63,7 +63,7 @@ const CustomDocumentation = ({
                     </Typography>
                   }
                 />
-                <HelpIconButton
+                <HelpIcon
                   iconColor={HELP_ICON_BUTTON_COLOR.GREY}
                   helpText="The helper text will be displayed here."
                 />
@@ -96,7 +96,7 @@ const CustomDocumentation = ({
                   control={<Radio />}
                   label={<Typography>Server verküpfung{""}</Typography>}
                 />
-                <HelpIconButton
+                <HelpIcon
                   iconColor={HELP_ICON_BUTTON_COLOR.GREY}
                   helpText="The helper text will be displayed here."
                 />

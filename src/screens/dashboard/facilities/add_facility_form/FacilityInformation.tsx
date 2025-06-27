@@ -12,7 +12,7 @@ import { AddFacilityFormValues } from "./types";
 import GTextInput from "@/components/input/GTextInput";
 import GTextSelector from "@/components/input/GTextSelector";
 import { getUserBuildings } from "@/lib/features/buildingSlice";
-import HelpIconButton from "@/components/button/HelpIconButton";
+import HelpIcon from "@/components/button/HelpIcon";
 import LabelWithAsterisk from "@/components/label/LabelWithAsterisk";
 import {
   HELP_ICON_BUTTON_COLOR,
@@ -74,7 +74,7 @@ const FacilityInformation = (): JSX.Element => {
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <LabelWithAsterisk>ANLAGENNAME-/BEZEICHNUNG</LabelWithAsterisk>
-          <HelpIconButton
+          <HelpIcon
             iconColor={HELP_ICON_BUTTON_COLOR.GREY}
             helpText="The helper text will be displayed here."
           />
@@ -127,7 +127,7 @@ const FacilityInformation = (): JSX.Element => {
 
         <Grid item xs={12}>
           <LabelWithAsterisk>OBJEKT ZUORDNEN</LabelWithAsterisk>
-          <HelpIconButton
+          <HelpIcon
             iconColor={HELP_ICON_BUTTON_COLOR.GREY}
             helpText="The helper text will be displayed here."
           />

@@ -3,7 +3,7 @@ import { HelpIconButtonProps } from "@/typings/types";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import { Tooltip, Typography, Popover, Grid } from "@mui/material";
 
-const HelpIconButton: React.FC<HelpIconButtonProps> = ({
+const HelpIcon: React.FC<HelpIconButtonProps> = ({
   iconColor,
   helpText,
 }): JSX.Element => {
@@ -52,7 +52,7 @@ const HelpIconButton: React.FC<HelpIconButtonProps> = ({
   );
 };
 
-export default HelpIconButton;
+export default HelpIcon;
 
 const styles = {
   helpIcon: {

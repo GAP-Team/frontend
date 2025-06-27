@@ -5,7 +5,6 @@ import Box from "@mui/material/Box";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
-import { useDispatch } from "react-redux";
 import Button from "@mui/material/Button";
 import { useRouter } from "next/navigation";
 import { PiLockBold } from "react-icons/pi";
@@ -23,10 +22,11 @@ import { setAccessToken, setIsUserVerified } from "@/utils/helperJWT";
 import emailAPIs from "@/api/email";
 import { ROUTES } from "@/utils/routes";
 import { USER_ROLE } from "@/utils/enums";
+import { useAppDispatch } from "@/lib/hooks";
 
 const LoginPage = (): JSX.Element => {
   const router = useRouter();
-  const dispatch = useDispatch();
+  const appDispatch = useAppDispatch();
   const [loading, setLoading] = useState(false);
   const [loginError, setLoginError] = React.useState<string | null>(null);
 
@@ -42,9 +42,10 @@ const LoginPage = (): JSX.Element => {
         const res = await authAPIs.login(values);
 
         if (res?.data?.access_token) {
-          dispatch(setUser(res.data?.user));
+          appDispatch(setUser(res.data?.user));
           setAccessToken(res.data.access_token);
           setIsUserVerified(res.data.user?.isVerified);
+
           if (!res.data.user?.isVerified) {
             await emailAPIs.sendVerificationEmail({
               email: res.data?.user.email,
