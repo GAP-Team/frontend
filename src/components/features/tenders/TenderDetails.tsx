@@ -3,11 +3,11 @@ import React, { memo } from "react";
 import { useAppSelector } from "@/lib/hooks";
 import { getTenderById } from "@/lib/features/tenderSlice";
 import Grid from "@mui/material/Grid";
-import TenderTitleBar from "./TenderTitleBar";
+import TenderTitleBar from "./TenderTitelBar";
 import Paper from "@mui/material/Paper";
 import TenderSummarySection from "./TenderSummarySection";
 import ApplicationCard from "./ApplicationCard";
-import { Facility } from "../../facilities/facility/types";
+import { Facility } from "@/components/features/facilities/facility/types";
 
 interface TenderDetailsProps {
   tenderId: string;

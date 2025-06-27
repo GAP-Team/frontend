@@ -5,11 +5,11 @@ import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAppDispatch } from "@/lib/hooks";
-import ContractCard from "@/components/card/ContractCard";
+import ContractCard from "@/components/ui/card/ContractCard";
 import { showSnackbar } from "@/components/ui/root-snackbar";
 import addTenderSrc from "@/../public/icons/add_tender.svg";
 import NoContentSection from "@/components/layout/NoContentSection";
-import SideFilterPanel from "../../components/search/SideFilterPanel";
+import SideFilterPanel from "@/components/ui/search/SideFilterPanel";
 import { getAllContracts, fetchContracts } from "@/lib/features/contractSlice";
 import { ROUTES } from "@/utils/routes";
 

@@ -3,8 +3,8 @@ import React, { ReactNode, useEffect, useState } from "react";
 import Sidebar, {
   SubItem,
   SidebarItem,
-} from "@/components/navigation/GSidebar/SideBar";
-import GAppbar from "@/components/navigation/GAppbar/GAppbar";
+} from "@/components/layout/navigation/GSidebar/SideBar";
+import GAppbar from "@/components/layout/navigation/GAppbar/GAppbar";
 import Box from "@mui/material/Box";
 import { useAppSelector } from "@/lib/hooks";
 import CustomDialog from "@/components/ui/dialog/CustomDialog";

@@ -3,7 +3,8 @@ import React from "react";
 import { List } from "@mui/material";
 import { NewsItemProps } from "./types";
 import NewsItem from "./NewsItem";
-import { custom_styles } from "@/components/ui/scrollbar/Scrollbar";
+// FIXME: if it is style why it is defined as tsx and there are two styles what are the difference between them?
+import { scrollBarStyles } from "@/components/ui/scrollbar/Scrollbar";
 
 interface NewsListProps {
   news: NewsItemProps[];
@@ -29,6 +30,6 @@ const styles = {
     paddingRight: "0.65rem", // Add padding to the bottom for the scrollbar
     gap: "1.25rem",
     overflowY: "auto",
-    ...custom_styles,
+    ...scrollBarStyles,
   },
 };

@@ -1,4 +1,3 @@
-import { Notification } from "@/components/navigation/GAppbar/types";
 import OfficeImage from "../../public/images/office.jpg";
 import { FilterOptionType } from "@/typings/types";
 
@@ -547,7 +546,7 @@ export const autoPublishMonthsOptions = [
   },
 ];
 
-export const notifications: Notification[] = [
+export const notifications = [
   {
     message: "You were chosen as a main provider for object G-302.",
     time: "25m ago",

@@ -5,7 +5,7 @@ import { showSnackbar } from "@/components/ui/root-snackbar";
 import { Box, Grid, Paper, Typography } from "@mui/material";
 import { useAppSelector, useAppDispatch } from "@/lib/hooks";
 import ContractSummarySection from "./ContractSummarySection";
-import TenderTitleBar from "@/components/features/tenders/tender_card/TenderTitleBar";
+import TenderTitleBar from "@/components/features/tenders/TenderTitelBar";
 import {
   fetchContractById,
   getContractDetails,
