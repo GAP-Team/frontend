@@ -52,17 +52,6 @@ src/
 │   └── shared/         # Shared components
 ```
 
-### Component Structure
-
-Each component should follow this structure:
-
-```
-ComponentName/
-├── index.tsx          # Main component file
-├── styles.ts          # Component styles
-├── types.ts           # TypeScript interfaces/types
-```
-
 ### Naming Conventions
 
 1. **Component Files:**
@@ -79,7 +68,7 @@ ComponentName/
    - Suffix interfaces with 'Props' for component props (e.g., `ButtonProps`)
    - Use PascalCase for type names
 
-### Example Component
+### Example Component (will not be implemented as shown due to high complexity)
 
 ```typescript
 // Component index.tsx
