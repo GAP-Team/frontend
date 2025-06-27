@@ -4,13 +4,14 @@ import Grid from "@mui/material/Grid";
 import { useSelector } from "react-redux";
 import { useFormikContext } from "formik";
 import buildingAPIs from "@/api/building";
-import { Item } from "@/utils/Constants";
+import { HELP_ICON_BUTTON_COLOR, Item } from "@/utils/Constants";
 import { useEffect, useState } from "react";
 import { AddTenderFormValues } from "./types";
 import { FormControl, MenuItem, Select } from "@mui/material";
 import CustomSelect from "@/components/ui/drop_down/CustomSelect";
 import { getUserBuildings } from "@/lib/features/buildingSlice";
 import LabelWithAsterisk from "@/components/ui/label/LabelWithAsterisk";
+import HelpIcon from "@/components/button/HelpIcon";
 import { AddFacilityFormValues } from "../../facilities/add_facility_form/types";
 
 const TenderBuilding = (): JSX.Element => {
@@ -112,6 +113,10 @@ const TenderBuilding = (): JSX.Element => {
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <LabelWithAsterisk>OBJEKT AUSWÄHLEN</LabelWithAsterisk>
+          <HelpIcon
+            iconColor={HELP_ICON_BUTTON_COLOR.GREY}
+            helpText="The helper text will be displayed here."
+          />
           <FormControl fullWidth>
             {buildingDropDownOptions?.length > 0 ? (
               <CustomSelect
@@ -140,6 +145,10 @@ const TenderBuilding = (): JSX.Element => {
         </Grid>
         <Grid item xs={12}>
           <LabelWithAsterisk>ANLAGE AUSWÄHLEN</LabelWithAsterisk>
+          <HelpIcon
+            iconColor={HELP_ICON_BUTTON_COLOR.GREY}
+            helpText="The helper text will be displayed here."
+          />
           <FormControl fullWidth>
             {facilityDropDownOptions?.length > 0 ? (
               <CustomSelect

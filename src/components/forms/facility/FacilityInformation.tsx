@@ -14,6 +14,11 @@ import { listOfFacilitySubcategories } from "@/utils/Constants";
 import GTextSelector from "@/components/ui/input/GTextSelector";
 import { getUserBuildings } from "@/lib/features/buildingSlice";
 import LabelWithAsterisk from "@/components/ui/label/LabelWithAsterisk";
+import {
+  HELP_ICON_BUTTON_COLOR,
+  listOfFacilitySubcategories,
+} from "@/utils/Constants";
+import HelpIcon from "@/components/button/HelpIcon";
 
 const FacilityInformation = (): JSX.Element => {
   const allBuildings = useSelector(getUserBuildings);
@@ -70,6 +75,10 @@ const FacilityInformation = (): JSX.Element => {
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <LabelWithAsterisk>ANLAGENNAME-/BEZEICHNUNG</LabelWithAsterisk>
+          <HelpIcon
+            iconColor={HELP_ICON_BUTTON_COLOR.GREY}
+            helpText="The helper text will be displayed here."
+          />
           <GTextInput
             id="name"
             name="name"
@@ -119,6 +128,10 @@ const FacilityInformation = (): JSX.Element => {
 
         <Grid item xs={12}>
           <LabelWithAsterisk>OBJEKT ZUORDNEN</LabelWithAsterisk>
+          <HelpIcon
+            iconColor={HELP_ICON_BUTTON_COLOR.GREY}
+            helpText="The helper text will be displayed here."
+          />
           <FormControl fullWidth>
             <Select
               name="selectedBuilding"

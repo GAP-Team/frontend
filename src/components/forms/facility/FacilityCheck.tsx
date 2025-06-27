@@ -20,10 +20,12 @@ import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import {
-  NextCheckOptions,
   reminderOptions,
+  NextCheckOptions,
+  HELP_ICON_BUTTON_COLOR,
   autoPublishMonthsOptions,
 } from "@/utils/Constants";
+import HelpIcon from "@/components/button/HelpIcon";
 
 const FacilityCheck = (): JSX.Element => {
   const formik = useFormikContext<AddFacilityFormValues>();
@@ -43,6 +45,10 @@ const FacilityCheck = (): JSX.Element => {
         <Grid item xs={6}>
           <Typography variant="gsub" color="gray.500">
             LETZTE PRÜFUNG (Einschätzung)
+            <HelpIcon
+              iconColor={HELP_ICON_BUTTON_COLOR.GREY}
+              helpText="The helper text will be displayed here."
+            />
           </Typography>
           <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="de">
             <DatePicker
@@ -61,7 +67,10 @@ const FacilityCheck = (): JSX.Element => {
         <Grid item xs={6}>
           <Typography variant="gsub" color="gray.500" sx={style.helpIconLable}>
             NÄCHSTE PRÜFUNG
-            <HelpOutlineIcon style={style.helpIconYellow} fontSize="small" />
+            <HelpIcon
+              iconColor={HELP_ICON_BUTTON_COLOR.GREY}
+              helpText="The helper text will be displayed here."
+            />
           </Typography>
           <FormControl fullWidth>
             <Select
@@ -83,7 +92,10 @@ const FacilityCheck = (): JSX.Element => {
         <Grid item xs={12}>
           <Typography variant="gsub" color="gray.500" sx={style.helpIconLable}>
             AUTOMATISCH VERÖFFENTLICHEN
-            <HelpOutlineIcon style={style.helpIconGray} fontSize="small" />
+            <HelpIcon
+              iconColor={HELP_ICON_BUTTON_COLOR.GREY}
+              helpText="The helper text will be displayed here."
+            />
           </Typography>
           <Grid sx={style.helpIconLable}>
             <FormControlLabel
@@ -131,6 +143,10 @@ const FacilityCheck = (): JSX.Element => {
         <Grid item xs={6}>
           <Typography variant="gsub" color="gray.500">
             REMINDER EINSTELLEN
+            <HelpIcon
+              iconColor={HELP_ICON_BUTTON_COLOR.GREY}
+              helpText="The helper text will be displayed here."
+            />
           </Typography>
           <FormControl fullWidth>
             <Select
@@ -152,6 +168,10 @@ const FacilityCheck = (): JSX.Element => {
         <Grid item xs={12} sx={style.lable}>
           <Typography variant="gsub" color="gray.500">
             AUTOMATISCHE E-MAIL ERHALTEN
+            <HelpIcon
+              iconColor={HELP_ICON_BUTTON_COLOR.GREY}
+              helpText="The helper text will be displayed here."
+            />
           </Typography>
           <FormControlLabel
             control={
@@ -200,20 +220,6 @@ const style = {
   helpIconLable: {
     display: "flex",
     flexDirection: "row",
-  },
-  helpIconYellow: {
-    color: "#FF9209",
-    marginLeft: "0.5rem",
-    marginBottom: "0.5rem",
-    cursor: "pointer",
-    paddingBotton: "2px",
-  },
-  helpIconGray: {
-    color: "#A0ADB1",
-    marginLeft: "0.5rem",
-    marginBottom: "0.5rem",
-    cursor: "pointer",
-    paddingBotton: "2px",
   },
   conditionalBorder: {
     display: "flex",

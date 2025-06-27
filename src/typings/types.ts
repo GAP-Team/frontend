@@ -72,6 +72,11 @@ export interface SideFilterPanelOptionsProps {
   onSelect: (selected: string[], field: string) => void;
 }
 
+export interface HelpIconButtonProps {
+  helpText: string;
+  iconColor?: string;
+}
+
 export interface ContractApplicationFormValues {
   totalPrice: string;
   hourlyRate: string;

@@ -5,7 +5,6 @@ import Grid from "@mui/material/Grid";
 import Radio from "@mui/material/Radio";
 import { useFormikContext } from "formik";
 import GTextInput from "@/components/ui/input/GTextInput";
-import { Documentation } from "@/utils/Constants";
 import UploadMultiButton from "@/components/ui/button/UploadMultiButton";
 import {
   FormControl,
@@ -14,6 +13,8 @@ import {
   Typography,
 } from "@mui/material";
 import { DocumentChoice } from "@/utils/enums";
+import HelpIcon from "@/components/ui/button/HelpIcon";
+import { Documentation, HELP_ICON_BUTTON_COLOR } from "@/utils/Constants";
 
 interface CustomDocumentationProps {
   formikValue: any;
@@ -40,7 +41,7 @@ const DocumentForm = ({
   }, [formikValue.documentChoice]);
 
   return (
-    <Box noValidate component="form" style={style.boxContainer}>
+    <Box noValidate component="form" style={styles.boxContainer}>
       <Grid container spacing={1} ml={0.1}>
         <FormControl sx={{ display: "block" }}>
           <RadioGroup
@@ -58,9 +59,13 @@ const DocumentForm = ({
                   label={
                     <Typography>
                       Jetzt hochladen{" "}
-                      <span style={style.highlightText}>Empfohlen</span>
+                      <span style={styles.highlightText}>Empfohlen</span>
                     </Typography>
                   }
+                />
+                <HelpIcon
+                  iconColor={HELP_ICON_BUTTON_COLOR.GREY}
+                  helpText="The helper text will be displayed here."
                 />
               </Grid>
               <Grid item xs={4}>
@@ -77,11 +82,23 @@ const DocumentForm = ({
                   label="Per email versenden"
                 />
               </Grid>
-              <Grid item xs={4}>
+              <Grid
+                item
+                xs={4}
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  flexDirection: "row",
+                }}
+              >
                 <FormControlLabel
                   value={DocumentChoice.SERVER_LINK}
                   control={<Radio />}
-                  label="Server verküpfung"
+                  label={<Typography>Server verküpfung{""}</Typography>}
+                />
+                <HelpIcon
+                  iconColor={HELP_ICON_BUTTON_COLOR.GREY}
+                  helpText="The helper text will be displayed here."
                 />
               </Grid>
               <Grid item xs={4}>
@@ -203,7 +220,7 @@ const DocumentForm = ({
 
 export default DocumentForm;
 
-const style = {
+const styles = {
   boxContainer: { p: 1, width: "auto", marginLeft: "1.5rem" },
   highlightText: { fontWeight: "600", color: "#22A7F1" },
 };

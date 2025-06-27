@@ -728,6 +728,9 @@ export const FAQs = [
 
 export const DEFAULT_PUBLISH_MONTHS = 3;
 
+export const HELP_ICON_BUTTON_COLOR = {
+  GREY: "#A0ADB1",
+};
 export interface FeatureType {
   icon: React.ElementType;
   title: string;
