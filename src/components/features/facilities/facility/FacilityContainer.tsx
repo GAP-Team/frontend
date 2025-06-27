@@ -1,7 +1,7 @@
 import { Box, Divider } from "@mui/material";
 import React from "react";
 import FacilityItems from "./FacilityItems";
-import { Building } from "../../../buildings/building_card/types";
+import { Building } from "@/components/features/buildings/building/types";
 import OverviewHeader from "@/components/ui/label/OverviewHeader";
 
 interface FacilityListProps {
