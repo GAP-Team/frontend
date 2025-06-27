@@ -1,5 +1,5 @@
 import React from "react";
-import HeaderSection from "../../../../layout/HeaderSection";
+import HeaderSection from "../../../../layout/header/HeaderSection";
 import ApplicationList from "./ApplicationList";
 import { applications, DashboardComponentsProps } from "@/utils/Constants";
 import ScrollableSection from "../../../../layout/ScrollableSection";

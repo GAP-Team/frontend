@@ -1,6 +1,6 @@
 "use client";
 
-import HeaderSection from "../../layout/HeaderSection";
+import HeaderSection from "../../layout/header/HeaderSection";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import Divider from "@mui/material/Divider";

@@ -1,6 +1,6 @@
 import React from "react";
 import NewsList from "./NewsList";
-import HeaderSection from "../../../../layout/HeaderSection";
+import HeaderSection from "../../../../layout/header/HeaderSection";
 import { news, DashboardComponentsProps } from "@/utils/Constants";
 import ScrollableSection from "../../../../layout/ScrollableSection";
 

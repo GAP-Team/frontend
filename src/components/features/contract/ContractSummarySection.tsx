@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 import Typography from "@mui/material/Typography";
 import GButton from "@/components/ui/button/GButton";
 import LabelText from "@/components/ui/label/LabelText";
-import HeaderSection from "@/components/layout/HeaderSection";
+import HeaderSection from "@/components/layout/header/HeaderSection";
 
 interface ContractSummarySectionProps {
   contract?: Contract | null;
