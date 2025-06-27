@@ -7,10 +7,7 @@ import { Box, Grid, Paper, Typography } from "@mui/material";
 import { useAppSelector, useAppDispatch } from "@/lib/hooks";
 import ContractSummarySection from "./ContractSummarySection";
 import TenderTitleBar from "@/components/features/tenders/TenderTitelBar";
-import {
-  fetchContractById,
-  getContract,
-} from "@/lib/features/contractSlice";
+import { fetchContractById, getContract } from "@/lib/features/contractSlice";
 import DocumentList from "@/components/features/buildings/building/DocumentList ";
 
 interface ContractDetailsProps {
