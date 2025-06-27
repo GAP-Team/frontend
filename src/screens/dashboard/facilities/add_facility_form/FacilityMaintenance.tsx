@@ -7,7 +7,6 @@ import { AddFacilityFormValues } from "./types";
 import Typography from "@mui/material/Typography";
 import GTextInput from "@/components/input/GTextInput";
 import { ErrorMessage, useFormikContext } from "formik";
-import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import {
@@ -20,10 +19,12 @@ import {
   Select,
 } from "@mui/material";
 import {
-  NextMaintenanceOptions,
   reminderOptions,
+  NextMaintenanceOptions,
+  HELP_ICON_BUTTON_COLOR,
   autoPublishMonthsOptions,
 } from "@/utils/Constants";
+import HelpIcon from "@/components/button/HelpIcon";
 
 const FacilityMaintenance = (): JSX.Element => {
   const formik = useFormikContext<AddFacilityFormValues>();
@@ -43,6 +44,10 @@ const FacilityMaintenance = (): JSX.Element => {
         <Grid item xs={6}>
           <Typography variant="gsub" color="gray.500">
             LETZTE WARTUNG (Einschätzung)
+            <HelpIcon
+              iconColor={HELP_ICON_BUTTON_COLOR.GREY}
+              helpText="The helper text will be displayed here."
+            />
           </Typography>
           <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="de">
             <Box mt={1} sx={{ width: "auto" }}>
@@ -63,7 +68,10 @@ const FacilityMaintenance = (): JSX.Element => {
         <Grid item xs={6}>
           <Typography variant="gsub" color="gray.500" sx={style.helpIconLable}>
             NÄCHSTE WARTUNG
-            <HelpOutlineIcon style={style.helpIconYellow} fontSize="small" />
+            <HelpIcon
+              iconColor={HELP_ICON_BUTTON_COLOR.GREY}
+              helpText="The helper text will be displayed here."
+            />
           </Typography>
           <FormControl fullWidth>
             <Select
@@ -85,7 +93,10 @@ const FacilityMaintenance = (): JSX.Element => {
         <Grid item xs={12}>
           <Typography variant="gsub" color="gray.500" sx={style.helpIconLable}>
             AUTOMATISCH VERÖFFENTLICHEN
-            <HelpOutlineIcon style={style.helpIconGray} fontSize="small" />
+            <HelpIcon
+              iconColor={HELP_ICON_BUTTON_COLOR.GREY}
+              helpText="The helper text will be displayed here."
+            />
           </Typography>
           <Grid sx={style.helpIconLable}>
             <FormControlLabel
@@ -128,6 +139,10 @@ const FacilityMaintenance = (): JSX.Element => {
         <Grid item xs={6}>
           <Typography variant="gsub" color="gray.500">
             REMINDER EINSTELLEN
+            <HelpIcon
+              iconColor={HELP_ICON_BUTTON_COLOR.GREY}
+              helpText="The helper text will be displayed here."
+            />
           </Typography>
           <FormControl fullWidth>
             <Select
@@ -149,6 +164,10 @@ const FacilityMaintenance = (): JSX.Element => {
         <Grid item xs={12} sx={style.lable}>
           <Typography variant="gsub" color="gray.500">
             AUTOMATISCHE E-MAIL ERHALTEN
+            <HelpIcon
+              iconColor={HELP_ICON_BUTTON_COLOR.GREY}
+              helpText="The helper text will be displayed here."
+            />
           </Typography>
           <FormControlLabel
             control={
@@ -211,20 +230,6 @@ const style = {
     mx: 2,
     height: "auto",
     bgcolor: "#d2d7d9",
-  },
-  helpIconYellow: {
-    color: "#FF9209",
-    marginLeft: "0.5rem",
-    marginBottom: "0.5rem",
-    cursor: "pointer",
-    paddingBotton: "2px",
-  },
-  helpIconGray: {
-    color: "#A0ADB1",
-    marginLeft: "0.5rem",
-    marginBottom: "0.5rem",
-    cursor: "pointer",
-    paddingBotton: "2px",
   },
   conditionalBorder: {
     display: "flex",
