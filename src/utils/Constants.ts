@@ -2,7 +2,6 @@ import { FilterOptionType } from "@/typings/types";
 import HomeWorkIcon from "@mui/icons-material/HomeWork";
 import OfficeImage from "../../public/images/office.jpg";
 import DescriptionIcon from "@mui/icons-material/Description";
-import { Notification } from "@/components/layout/navigation/GAppbar/types";
 import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
 import ConnectWithoutContactIcon from "@mui/icons-material/ConnectWithoutContact";
 
