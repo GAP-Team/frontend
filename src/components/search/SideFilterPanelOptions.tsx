@@ -3,6 +3,7 @@ import {
   Box,
   List,
   Button,
+  Divider,
   Collapse,
   Checkbox,
   IconButton,
@@ -10,10 +11,13 @@ import {
   FormControl,
   ListItemText,
   ListItemButton,
-  Divider,
 } from "@mui/material";
-import { ExpandLess, ExpandMore } from "@mui/icons-material";
+import {
+  NUMBER_OF_STATE_OPTIONS,
+  NUMBER_OF_OTHER_OPTIONS,
+} from "@/utils/Constants";
 import { FilterPanelLabels } from "@/utils/enums";
+import { ExpandLess, ExpandMore } from "@mui/icons-material";
 import { SideFilterPanelOptionsProps } from "@/typings/types";
 
 const SideFilterPanelOptions: React.FC<SideFilterPanelOptionsProps> = ({
@@ -60,16 +64,25 @@ const SideFilterPanelOptions: React.FC<SideFilterPanelOptionsProps> = ({
   };
 
   const renderItems = (items: string[]): JSX.Element[] =>
-    items.slice(0, showAllOptions ? items.length : 4).map((item) => (
-      <ListItemButton
-        key={item}
-        onClick={() => handleOptionSelect(item)}
-        sx={{ pl: 4 }}
-      >
-        <Checkbox checked={selectedOptions.includes(item)} />
-        <ListItemText primary={item} />
-      </ListItemButton>
-    ));
+    items
+      .slice(
+        0,
+        showAllOptions
+          ? items.length
+          : title === FilterPanelLabels.STATE
+            ? NUMBER_OF_STATE_OPTIONS
+            : NUMBER_OF_OTHER_OPTIONS
+      )
+      .map((item) => (
+        <ListItemButton
+          key={item}
+          onClick={() => handleOptionSelect(item)}
+          sx={{ pl: 4 }}
+        >
+          <Checkbox checked={selectedOptions.includes(item)} />
+          <ListItemText primary={item} />
+        </ListItemButton>
+      ));
 
   return (
     <>

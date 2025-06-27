@@ -68,6 +68,58 @@ const NewFacility: React.FC<NewFacilityProps> = ({
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [activeStep, setActiveStep] = useState<ActiveStepItem>(steps[0]);
 
+  const getInitialFormValues = (): AddFacilityFormValues => ({
+    name: facility?.name || "",
+    facilityType: facility?.facilityType || "",
+    subcategory: facility?.subcategory || "",
+    isPublishCheckAutomatically:
+      facility?.check?.isPublishAutomatically || false,
+    publishCheckAutomaticallyInMonth:
+      facility?.check?.publishAutomaticallyInMonth || DEFAULT_PUBLISH_MONTHS,
+    isReminderEnabled: false,
+    emailNotificationList: facility?.check?.emailNotificationList || ["", ""],
+    selectedBuilding: facility?.buildingId || "",
+    documentChoice: facility?.documentUploadType || DocumentChoice.UPLOAD_NOW,
+    checkReports:
+      facility?.documents?.filter(
+        (doc: any) => doc.documentType === DOCUMENT_TYPE.CHECK_REPORTS
+      ) || [],
+    floorplanDocs:
+      facility?.documents?.filter(
+        (doc: any) => doc.documentType === DOCUMENT_TYPE.FLOOR_PLANS
+      ) || [],
+    otherDocs:
+      facility?.documents?.filter(
+        (doc: any) => doc.documentType === DOCUMENT_TYPE.OTHER
+      ) || [],
+    serverLink: facility?.serverLink || "",
+    lastMaintenanceDate: facility?.maintenance?.lastMaintenanceDate
+      ? dayjs(facility.maintenance.lastMaintenanceDate)
+      : null,
+    nextMaintenanceInMonth: facility?.maintenance?.nextMaintenanceInMonth || 0,
+    isPublishMaintenanceAutomatically:
+      facility?.maintenance?.isPublishAutomatically || false,
+    publishMaintenanceAutomaticallyInMonth:
+      facility?.maintenance?.publishAutomaticallyInMonth ||
+      DEFAULT_PUBLISH_MONTHS,
+    maintenanceReminderInMonth: facility?.maintenance?.reminderInMonth || 0,
+    maintenanceEmailNotificationList: facility?.maintenance
+      ?.emailNotificationList || ["", ""],
+    isMaintenanceEmailNotificationEnable:
+      facility?.maintenance?.isEmailNotificationEnable || false,
+    lastCheckDate: facility?.check?.lastCheckDate
+      ? dayjs(facility?.check?.lastCheckDate)
+      : null,
+    nextCheckInYearNumber: facility?.check?.nextCheckInYearNumber || 0,
+    reminderInMonth: facility?.check?.reminderInMonth || 0,
+    isEmailNotificationEnable:
+      facility?.check?.isEmailNotificationEnable || false,
+  });
+
+  const [formData, setFormData] = useState<AddFacilityFormValues>(() =>
+    getInitialFormValues()
+  );
+
   const StepComponent = steps[activeStep.id]
     ?.component as React.ComponentType<StepComponentProps>;
 
@@ -91,6 +143,8 @@ const NewFacility: React.FC<NewFacilityProps> = ({
     values: AddFacilityFormValues,
     actions: FormikHelpers<AddFacilityFormValues>
   ): Promise<void> => {
+    const updatedValues = { ...formData, ...values };
+    setFormData(updatedValues);
     if (activeStep?.id === steps.length - 1) {
       if (checkActiveUser) {
         const saveStatus = await uploadAllDocuments(values);
@@ -139,14 +193,15 @@ const NewFacility: React.FC<NewFacilityProps> = ({
         nextCheckInYearNumber: values?.nextCheckInYearNumber,
         isPublishAutomatically: values?.isPublishCheckAutomatically,
         publishAutomaticallyInMonth: values?.isPublishCheckAutomatically
-          ? Number(values?.publishAutomaticallyInMonth)
+          ? Number(values?.publishCheckAutomaticallyInMonth)
           : 0,
         reminderInMonth: values?.reminderInMonth,
         isEmailNotificationEnable: values?.isEmailNotificationEnable,
         emailNotificationList: values?.isEmailNotificationEnable
-          ? Array.isArray(values?.emailNotificationList)
-            ? values.emailNotificationList.filter((item) => item !== "")
-            : ["", ""]
+          ? values.emailNotificationList?.filter((item) => item !== "") || [
+              "",
+              "",
+            ]
           : ["", ""],
       },
       maintenance: {
@@ -161,11 +216,9 @@ const NewFacility: React.FC<NewFacilityProps> = ({
         reminderInMonth: values?.maintenanceReminderInMonth,
         isEmailNotificationEnable: values?.isMaintenanceEmailNotificationEnable,
         emailNotificationList: values?.isMaintenanceEmailNotificationEnable
-          ? Array.isArray(values?.maintenanceEmailNotificationList)
-            ? values.maintenanceEmailNotificationList.filter(
-                (item) => item !== ""
-              )
-            : ["", ""]
+          ? values.maintenanceEmailNotificationList?.filter(
+              (item) => item !== ""
+            ) || ["", ""]
           : ["", ""],
       },
       documents: docObjList,
@@ -173,10 +226,10 @@ const NewFacility: React.FC<NewFacilityProps> = ({
       serverLink: values?.serverLink,
     };
 
-    if (facility) {
-      try {
+    try {
+      if (facility) {
         await dispatch(
-          updateFacility({ facilityId: facility?.id, data: facilityData })
+          updateFacility({ facilityId: facility.id, data: facilityData })
         ).unwrap();
         dispatch(
           showSnackbar({
@@ -184,19 +237,7 @@ const NewFacility: React.FC<NewFacilityProps> = ({
             message: "Die Anlage wurde erfolgreich aktualisiert!",
           })
         );
-        return true;
-      } catch {
-        dispatch(
-          showSnackbar({
-            type: "error",
-            message:
-              "Die Anlage konnte nicht aktualisiert werden. Bitte überprüfen Sie die Eingabedaten und versuchen Sie es erneut",
-          })
-        );
-        return false;
-      }
-    } else {
-      try {
+      } else {
         await dispatch(createFacility(facilityData)).unwrap();
         dispatch(
           showSnackbar({
@@ -204,24 +245,24 @@ const NewFacility: React.FC<NewFacilityProps> = ({
             message: "Die Anlage wurde erfolgreich hinzugefügt!",
           })
         );
-        return true;
-      } catch {
-        dispatch(
-          showSnackbar({
-            type: "error",
-            message:
-              "Anlage konnte nicht hinzugefügt werden. Bitte überprüfen Sie die Eingabedaten und versuchen Sie es erneut",
-          })
-        );
-        return false;
       }
+      return true;
+    } catch {
+      dispatch(
+        showSnackbar({
+          type: "error",
+          message: facility
+            ? "Die Anlage konnte nicht aktualisiert werden. Bitte überprüfen Sie die Eingabedaten und versuchen Sie es erneut"
+            : "Anlage konnte nicht hinzugefügt werden. Bitte überprüfen Sie die Eingabedaten und versuchen Sie es erneut",
+        })
+      );
+      return false;
     }
   };
 
   const uploadAllDocuments = async (
     values: AddFacilityFormValues
   ): Promise<boolean> => {
-    // If document choice is NO_DOCUMENTS, pass empty array
     if (values.documentChoice === DocumentChoice.NO_DOCUMENTS) {
       return await saveFacilityData(values, []);
     }
@@ -234,18 +275,14 @@ const NewFacility: React.FC<NewFacilityProps> = ({
 
     try {
       const docObjList = await Promise.all(
-        docTypes.flatMap(async ({ files, type }) => {
-          return Promise.all(
-            files.map(async (file) => {
-              if ("documentType" in file) {
-                return file;
-              }
-              const uploadedDoc = await handleUploadMultipleDoc(file);
-              return { ...uploadedDoc, documentType: type };
-            })
-          );
-        })
-      ).then((results) => results.flat());
+        docTypes.flatMap(({ files, type }) =>
+          files.map(async (file) => {
+            if ("documentType" in file) return file;
+            const uploaded = await handleUploadMultipleDoc(file);
+            return { ...uploaded, documentType: type };
+          })
+        )
+      );
 
       await saveFacilityData(values, docObjList);
       return true;
@@ -259,54 +296,6 @@ const NewFacility: React.FC<NewFacilityProps> = ({
       );
       return false;
     }
-  };
-
-  const initialValues: AddFacilityFormValues = {
-    name: facility?.name || "",
-    facilityType: facility?.facilityType || "",
-    subcategory: facility?.subcategory || "",
-    isPublishCheckAutomatically:
-      facility?.check?.isPublishAutomatically || false,
-    publishAutomaticallyInMonth:
-      facility?.check?.publishAutomaticallyInMonth || DEFAULT_PUBLISH_MONTHS,
-    isReminderEnabled: false,
-    emailNotificationList: facility?.check?.emailNotificationList || ["", ""],
-    selectedBuilding: facility?.buildingId || "",
-    documentChoice: facility?.documentUploadType || DocumentChoice.UPLOAD_NOW,
-    checkReports:
-      facility?.documents?.filter(
-        (doc: any) => doc.documentType === DOCUMENT_TYPE.CHECK_REPORTS
-      ) || [],
-    floorplanDocs:
-      facility?.documents?.filter(
-        (doc: any) => doc.documentType === DOCUMENT_TYPE.FLOOR_PLANS
-      ) || [],
-    otherDocs:
-      facility?.documents?.filter(
-        (doc: any) => doc.documentType === DOCUMENT_TYPE.OTHER
-      ) || [],
-    serverLink: facility?.serverLink || "",
-    lastMaintenanceDate: facility?.maintenance?.lastMaintenanceDate
-      ? dayjs(facility.maintenance.lastMaintenanceDate)
-      : null,
-    nextMaintenanceInMonth: facility?.maintenance?.nextMaintenanceInMonth || 0,
-    isPublishMaintenanceAutomatically:
-      facility?.maintenance?.isPublishAutomatically || false,
-    publishMaintenanceAutomaticallyInMonth:
-      facility?.maintenance?.publishAutomaticallyInMonth ||
-      DEFAULT_PUBLISH_MONTHS,
-    maintenanceReminderInMonth: facility?.maintenance?.reminderInMonth || 0,
-    maintenanceEmailNotificationList: facility?.maintenance
-      ?.emailNotificationList || ["", ""],
-    isMaintenanceEmailNotificationEnable:
-      facility?.maintenance?.isEmailNotificationEnable || false,
-    lastCheckDate: facility?.check?.lastCheckDate
-      ? dayjs(facility?.check?.lastCheckDate)
-      : null,
-    nextCheckInYearNumber: facility?.check?.nextCheckInYearNumber || 0,
-    reminderInMonth: facility?.check?.reminderInMonth || 0,
-    isEmailNotificationEnable:
-      facility?.check?.isEmailNotificationEnable || false,
   };
 
   const formOrSuccessContent = isSubmitted ? (
@@ -331,7 +320,7 @@ const NewFacility: React.FC<NewFacilityProps> = ({
           />
         </Grid>
         <Grid item>
-          <Link href={ROUTES.REAL_ESTATE.FACILITY.FACILITIES} type="button">
+          <Link href={ROUTES.REAL_ESTATE.FACILITY.FACILITIES}>
             <IconButton sx={{ marginLeft: "auto" }} size="medium">
               <CgClose color="red" />
             </IconButton>
@@ -352,8 +341,8 @@ const NewFacility: React.FC<NewFacilityProps> = ({
           sx={{ ml: "1.5rem" }}
         />
         <Formik
-          initialValues={initialValues}
-          validationSchema={addFacilityValidationSchema[activeStep?.id]}
+          initialValues={formData}
+          validationSchema={addFacilityValidationSchema[activeStep.id]}
           onSubmit={handleNext}
           enableReinitialize
         >
