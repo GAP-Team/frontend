@@ -1,15 +1,13 @@
 import { memo, useEffect } from "react";
 import NoAccessPage from "../NoAccessPage";
+import { checkIsLoggedIn } from "@/utils/helperJWT";
 import { USER_ROLE, DOCUMENT_TYPE } from "@/utils/enums";
 import { showSnackbar } from "@/components/root-snackbar";
 import { Box, Grid, Paper, Typography } from "@mui/material";
 import { useAppSelector, useAppDispatch } from "@/lib/hooks";
 import ContractSummarySection from "./ContractSummarySection";
 import TenderTitleBar from "@/screens/dashboard/tenders/tender_card/TenderTitleBar";
-import {
-  fetchContractById,
-  getContractDetails,
-} from "@/lib/features/contractSlice";
+import { getContract, fetchContractById } from "@/lib/features/contractSlice";
 import DocumentList from "@/screens/dashboard/buildings/building_card/DocumentList ";
 
 interface ContractDetailsProps {
@@ -21,10 +19,10 @@ const ContractDetails: React.FC<ContractDetailsProps> = ({
 }): JSX.Element => {
   const appDispatch = useAppDispatch();
   const user = useAppSelector((state) => state.user);
-  const contractDetails = useAppSelector(getContractDetails);
+  const contractDetails = useAppSelector(getContract);
 
   useEffect(() => {
-    fetchContractDetails();
+    if (checkIsLoggedIn()) fetchContractDetails();
   }, [id]);
 
   const fetchContractDetails = async (): Promise<void> => {
@@ -42,7 +40,7 @@ const ContractDetails: React.FC<ContractDetailsProps> = ({
   };
 
   const renderRestrictionUI = (): JSX.Element => {
-    if (user?.id) {
+    if (!checkIsLoggedIn() && !user?.id) {
       if (user?.role !== USER_ROLE.SERVICE_PROVIDER) {
         return (
           <NoAccessPage description="Sie müssen ein Dienstanbieter sein, um auf diese Seite zugreifen zu können." />
@@ -53,13 +51,13 @@ const ContractDetails: React.FC<ContractDetailsProps> = ({
         <NoAccessPage description="Bitte melden Sie sich an, um auf die Vertragsdetails zuzugreifen." />
       );
     }
-    // Default fallback (should not be reached)
+
     return <></>;
   };
 
   return (
     <>
-      {user?.id && user?.role !== USER_ROLE.SERVICE_PROVIDER ? (
+      {!checkIsLoggedIn() ? (
         renderRestrictionUI()
       ) : (
         <Grid container component="main">
