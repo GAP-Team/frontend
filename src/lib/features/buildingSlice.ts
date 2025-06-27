@@ -4,9 +4,9 @@ import { RootState } from "../store";
 import { Building } from "@/components/features/buildings/building/types";
 interface queryType {
   userId: string;
-  city: string;
-  federalState: string;
-  facilityType: string;
+  city?: string;
+  federalState?: string;
+  facilityType?: string;
 }
 
 interface BuildingState {
