@@ -11,8 +11,8 @@ import { FormControl, MenuItem, Select } from "@mui/material";
 import CustomSelect from "@/components/ui/drop_down/CustomSelect";
 import { getUserBuildings } from "@/lib/features/buildingSlice";
 import LabelWithAsterisk from "@/components/ui/label/LabelWithAsterisk";
-import HelpIcon from "@/components/button/HelpIcon";
-import { AddFacilityFormValues } from "../../facilities/add_facility_form/types";
+import HelpIcon from "@/components/ui/button/HelpIcon";
+import { AddFacilityFormValues } from "@/components/forms/facility/types";
 
 const TenderBuilding = (): JSX.Element => {
   const allBuildings = useSelector(getUserBuildings);

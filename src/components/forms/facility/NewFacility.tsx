@@ -37,7 +37,7 @@ import {
 import { DOCUMENT_TYPE, DocumentChoice } from "@/utils/enums";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
-import { Facility } from "../facility_card/types";
+import { Facility } from "@/components/features/facilities/facility/types";
 
 dayjs.extend(utc);
 interface NewFacilityProps {
