@@ -17,7 +17,7 @@ import { useAppDispatch } from "@/lib/hooks";
 import { showSnackbar } from "@/components/ui/root-snackbar";
 import { deleteTender } from "@/lib/features/tenderSlice";
 import { BuildingAddress } from "@/components/features/buildings/building/types";
-import { Tender } from "@/screens/dashboard/tenders/tender_card/types";
+import { Tender } from "@/components/features/tenders/types";
 
 interface TenderCardProps {
   tender: Tender;
