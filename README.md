@@ -109,49 +109,58 @@ export const styles = {
 This folder contains all the building blocks of the UI, organized by purpose and reusability. Use the following guidelines to decide where to place your components:
 
 ## 📦 Reusable UI components (`ui/`)
+
 Small, generic UI elements that are used across the application. These components should have no feature-specific logic.
 
-**Examples:**  
-- `Button`  
-- `Input`  
-- `Card`  
+**Examples:**
+
+- `Button`
+- `Input`
+- `Card`
 - `Dialog`
 
 ## 🧱 Layout components (`layout/`)
+
 Structural components that define the layout and framework of the UI, often used at the page level.
 
-**Examples:**  
-- `Header`  
-- `Footer`  
+**Examples:**
+
+- `Header`
+- `Footer`
 - `Sidebar`
 
 ## 🚀 Feature-specific components (`features/`)
+
 Components that belong to a specific domain or feature and are usually not reused elsewhere.
 
-**Examples:**  
-- `AuthPanel` in `auth/`  
-- `FacilityCard` in `facility/`  
+**Examples:**
+
+- `AuthPanel` in `auth/`
+- `FacilityCard` in `facility/`
 - `DashboardStats` in `dashboard/`
 
 ## 📝 Form components (`forms/`)
+
 Components used to handle form-related logic, including input groups, validation, and submission logic, specific to a feature.
 
-**Examples:**  
-- `LoginForm` in `auth/`  
+**Examples:**
+
+- `LoginForm` in `auth/`
 - `FacilityForm` in `facility/`
 
 ## 🔄 Shared components (`shared/`)
+
 Generic, utility-like components that are used across multiple features or layouts.
 
-**Examples:**  
-- `Loader`  
-- `ErrorBoundary`  
+**Examples:**
+
+- `Loader`
+- `ErrorBoundary`
 - `ConfirmDialog`
 
 ---
 
 ➡️ **Tip:** When in doubt, prefer placing a component under `features/` if it serves a specific business logic or user flow, and under `ui/` or `shared/` if it's a generic piece of UI or utility.
-
 
 ### Usage Guidelines
 

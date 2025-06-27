@@ -7,7 +7,10 @@ import { BsEnvelope } from "react-icons/bs";
 import Layout from "@/components/features/dashboard/Layout";
 import { LuLayoutDashboard } from "react-icons/lu";
 import { useRouter, usePathname } from "next/navigation";
-import { SubItem, SidebarItem } from "@/components/layout/navigation/GSidebar/SideBar";
+import {
+  SubItem,
+  SidebarItem,
+} from "@/components/layout/navigation/GSidebar/SideBar";
 
 const sidebarItems: SidebarItem[] = [
   {

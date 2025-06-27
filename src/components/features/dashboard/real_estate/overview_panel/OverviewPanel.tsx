@@ -11,7 +11,10 @@ import { Tender } from "../../../tenders/types";
 import { TenderStatusEnum } from "@/utils/enums";
 import { getFacilitiesByUser } from "@/lib/features/facilitySlice";
 import { Facility } from "@/components/features/facilities/facility/types";
-import { Building, BuildingAddress } from "@/components/features/buildings/building/types";
+import {
+  Building,
+  BuildingAddress,
+} from "@/components/features/buildings/building/types";
 import { truncateLabel } from "@/utils/utils";
 import {
   DashboardComponentsProps,
