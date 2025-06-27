@@ -1,12 +1,12 @@
 import React from "react";
 import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
-import OverviewHeader from "../../../../components/label/OverviewHeader";
-import { BuildingTenders } from "../types";
+import OverviewHeader from "@/components/ui/label/OverviewHeader";
+import { BuildingTenderGroup } from "./types";
 import TenderItems from "./TenderItems";
 
 interface TendersContainerProps {
-  buildings: BuildingTenders[];
+  buildings: BuildingTenderGroup[];
 }
 
 const TendersContainer: React.FC<TendersContainerProps> = ({ buildings }) => {

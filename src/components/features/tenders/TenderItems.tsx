@@ -1,5 +1,5 @@
 import React from "react";
-import TenderCard from "../../real_estate_user/tenders_panel/TenderCard";
+import TenderCard from "@/components/features/dashboard/real_estate/tenders_panel/TenderCard";
 import Grid from "@mui/material/Grid";
 import { BuildingTenderGroup } from "./types";
 
