@@ -1,5 +1,5 @@
 import React from "react";
-import NewsList from "../../components/features/communication_panel/NewsList";
+import NewsList from "./NewsList";
 import HeaderSection from "../../../../layout/HeaderSection";
 import { news, DashboardComponentsProps } from "@/utils/Constants";
 import ScrollableSection from "../../../../layout/ScrollableSection";

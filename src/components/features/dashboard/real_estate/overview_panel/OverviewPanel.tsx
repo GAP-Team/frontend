@@ -10,18 +10,19 @@ import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { Tender } from "../../../tenders/types";
 import { TenderStatusEnum } from "@/utils/enums";
 import { getFacilitiesByUser } from "@/lib/features/facilitySlice";
-import { Facility } from "../../facilities/facility_card/types";
-import { Building, BuildingAddress } from "../buildings/building_card/types";
+import { Facility } from "@/components/features/facilities/facility/types";
+import { Building, BuildingAddress } from "@/components/features/buildings/building/types";
 import { truncateLabel } from "@/utils/utils";
 import {
   DashboardComponentsProps,
   CHECK_DUE_SOON_DAYS,
   MAINTENANCE_DUE_SOON_DAYS,
 } from "@/utils/Constants";
+// FIXME: facility utils functions should be moved to general utils
 import {
   getFacilityCheckTimeRemaining,
   getFacilityMaintenanceTimeRemaining,
-} from "../../facilities/utils";
+} from "@/components/features/facilities/utils";
 import GButton from "@/components/ui/button/GButton";
 import { ROUTES } from "@/utils/routes";
 import { useRouter } from "next/navigation";

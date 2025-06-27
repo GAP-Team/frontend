@@ -3,7 +3,7 @@ import React from "react";
 import { List } from "@mui/material";
 import { NewsItemProps } from "./types";
 import NewsItem from "./NewsItem";
-import { scrollBarStyles } from "@/components/scrollbar/Scrollbar";
+import { custom_styles } from "@/components/ui/scrollbar/Scrollbar";
 
 interface NewsListProps {
   news: NewsItemProps[];
@@ -29,6 +29,6 @@ const styles = {
     paddingRight: "0.65rem", // Add padding to the bottom for the scrollbar
     gap: "1.25rem",
     overflowY: "auto",
-    ...scrollBarStyles,
+    ...custom_styles,
   },
 };

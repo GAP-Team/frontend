@@ -7,7 +7,7 @@ import Avatar from "@mui/material/Avatar";
 import Paper from "@mui/material/Paper";
 import CircularProgress from "@mui/material/CircularProgress";
 import Skeleton from "@mui/material/Skeleton";
-import GButton from "@/components/button/GButton";
+import GButton from "@/components/ui/button/GButton";
 
 interface ApplicationCardProps {
   loading?: boolean;

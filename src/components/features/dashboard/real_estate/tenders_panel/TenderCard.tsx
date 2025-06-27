@@ -10,13 +10,13 @@ import { BsClockFill } from "react-icons/bs";
 import Typography from "@mui/material/Typography";
 import { VscDebugBreakpointLog } from "react-icons/vsc";
 import { getTenderStatusStyle } from "@/utils/utils";
-import SectionTitle from "@/components/label/SectionTitle";
+import SectionTitle from "@/components/ui/label/SectionTitle";
 import { TENDER_FORM, Urgency } from "@/utils/enums";
-import ActionMenu from "@/components/common/ActionMenu";
+import ActionMenu from "@/components/layout/ActionMenu";
 import { useAppDispatch } from "@/lib/hooks";
-import { showSnackbar } from "@/components/root-snackbar";
+import { showSnackbar } from "@/components/ui/root-snackbar";
 import { deleteTender } from "@/lib/features/tenderSlice";
-import { BuildingAddress } from "@/screens/dashboard/buildings/building_card/types";
+import { BuildingAddress } from "@/components/features/buildings/building/types";
 import { Tender } from "@/screens/dashboard/tenders/tender_card/types";
 
 interface TenderCardProps {
