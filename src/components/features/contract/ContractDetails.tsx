@@ -1,5 +1,6 @@
 import { memo, useEffect } from "react";
 import NoAccessSection from "../../layout/NoAccessSection";
+import { checkIsLoggedIn } from "@/utils/helperJWT";
 import { USER_ROLE, DOCUMENT_TYPE } from "@/utils/enums";
 import { showSnackbar } from "@/components/ui/root-snackbar";
 import { Box, Grid, Paper, Typography } from "@mui/material";
@@ -8,7 +9,7 @@ import ContractSummarySection from "./ContractSummarySection";
 import TenderTitleBar from "@/components/features/tenders/TenderTitelBar";
 import {
   fetchContractById,
-  getContractDetails,
+  getContract,
 } from "@/lib/features/contractSlice";
 import DocumentList from "@/components/features/buildings/building/DocumentList ";
 
@@ -21,10 +22,10 @@ const ContractDetails: React.FC<ContractDetailsProps> = ({
 }): JSX.Element => {
   const appDispatch = useAppDispatch();
   const user = useAppSelector((state) => state.user);
-  const contractDetails = useAppSelector(getContractDetails);
+  const contractDetails = useAppSelector(getContract);
 
   useEffect(() => {
-    fetchContractDetails();
+    if (checkIsLoggedIn()) fetchContractDetails();
   }, [id]);
 
   const fetchContractDetails = async (): Promise<void> => {
@@ -42,7 +43,7 @@ const ContractDetails: React.FC<ContractDetailsProps> = ({
   };
 
   const renderRestrictionUI = (): JSX.Element => {
-    if (user?.id) {
+    if (!checkIsLoggedIn() && !user?.id) {
       if (user?.role !== USER_ROLE.SERVICE_PROVIDER) {
         return (
           <NoAccessSection description="Sie müssen ein Dienstanbieter sein, um auf diese Seite zugreifen zu können." />
@@ -53,13 +54,13 @@ const ContractDetails: React.FC<ContractDetailsProps> = ({
         <NoAccessSection description="Bitte melden Sie sich an, um auf die Vertragsdetails zuzugreifen." />
       );
     }
-    // Default fallback (should not be reached)
+
     return <></>;
   };
 
   return (
     <>
-      {user?.id && user?.role !== USER_ROLE.SERVICE_PROVIDER ? (
+      {!checkIsLoggedIn() ? (
         renderRestrictionUI()
       ) : (
         <Grid container component="main">

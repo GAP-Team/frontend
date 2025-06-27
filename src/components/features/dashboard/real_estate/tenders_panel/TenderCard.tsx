@@ -9,9 +9,9 @@ import Divider from "@mui/material/Divider";
 import { BsClockFill } from "react-icons/bs";
 import Typography from "@mui/material/Typography";
 import { VscDebugBreakpointLog } from "react-icons/vsc";
-import { getTenderStatusStyle } from "@/utils/utils";
+import { getTenderStatusStyle, translateTenderForm } from "@/utils/utils";
 import SectionTitle from "@/components/ui/label/SectionTitle";
-import { TENDER_FORM, Urgency } from "@/utils/enums";
+import { Urgency } from "@/utils/enums";
 import ActionMenu from "@/components/layout/ActionMenu";
 import { useAppDispatch } from "@/lib/hooks";
 import { showSnackbar } from "@/components/ui/root-snackbar";
@@ -24,13 +24,6 @@ interface TenderCardProps {
   buildingName: string;
   buildingAddress: BuildingAddress;
 }
-
-// Helper to translate tenderForm
-const translateTenderForm = (tenderForm: string): string => {
-  return tenderForm === TENDER_FORM.CRAFTSMAN
-    ? "Handwerker"
-    : "Sachverständigen";
-};
 
 const TenderCard: React.FC<TenderCardProps> = ({
   tender,

@@ -1,4 +1,5 @@
 import { StaticImageData } from "next/image";
+import { ActiveStepItem } from "@/screens/dashboard/types";
 
 export interface FormErrors {
   [key: string]: string;
@@ -71,6 +72,23 @@ export interface SideFilterPanelOptionsProps {
   onSelect: (selected: string[], field: string) => void;
 }
 
+export interface ContractApplicationFormValues {
+  totalPrice: string;
+  hourlyRate: string;
+  message: string;
+  zip: string;
+  city: string;
+  desiredDates: Date[];
+}
+
+export interface ApplyContractProps {
+  loading: boolean;
+  steps: ActiveStepItem[];
+  handleBack: () => void;
+  handleNext: () => void;
+  activeStep: ActiveStepItem;
+  setActiveStep: React.Dispatch<React.SetStateAction<ActiveStepItem>>;
+}
 export interface SendActivityEmailType {
   email: string;
   templateName: string;

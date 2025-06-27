@@ -28,6 +28,7 @@ import { ROUTES } from "@/utils/routes";
 import Button from "@mui/material/Button";
 import { FaArrowRightToBracket } from "react-icons/fa6";
 import { checkIsLoggedIn } from "@/utils/helperJWT";
+import { persistor } from "@/lib/store";
 
 export default function GAppbar(): JSX.Element {
   const router = useRouter();
@@ -66,6 +67,7 @@ export default function GAppbar(): JSX.Element {
       Cookies.remove("access_token");
       Cookies.remove("isVerified");
       localStorage.clear();
+      persistor.purge();
       handleClose();
       router.push("/login");
     }
