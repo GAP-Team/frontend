@@ -1,8 +1,8 @@
 import React from "react";
-import HeaderSection from "../HeaderSection";
+import HeaderSection from "../../../../layout/HeaderSection";
 import ApplicationList from "./ApplicationList";
 import { applications, DashboardComponentsProps } from "@/utils/Constants";
-import ScrollableSection from "../../../../components/common/ScrollableSection";
+import ScrollableSection from "../../../../layout/ScrollableSection";
 
 const ApplicationsPanel: React.FC<
   DashboardComponentsProps

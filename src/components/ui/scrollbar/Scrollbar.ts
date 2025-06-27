@@ -1,5 +1,5 @@
 // Custom scrollbar styles for reusability across components
-export const custom_styles = {
+export const scrollBarStyles = {
   "&::-webkit-scrollbar": {
     width: "6px",
     height: "6px",
