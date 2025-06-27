@@ -1,4 +1,3 @@
-import { Grid, Paper, Typography } from "@mui/material";
 import { useState } from "react";
 import { ROUTES } from "@/utils/routes";
 import { useRouter } from "next/navigation";
@@ -6,18 +5,19 @@ import { useAppSelector } from "@/lib/hooks";
 import { Formik, FormikHelpers } from "formik";
 import ContractRateForm from "./ContractRateForm";
 import { translateTenderForm } from "@/utils/utils";
+import { Grid, Paper, Typography } from "@mui/material";
+import { getContract } from "@/lib/features/contractSlice";
 import { ActiveStepItem } from "@/screens/dashboard/types";
 import ContractApplicationForm from "./ContractApplicationForm";
-import { getContractDetails } from "@/lib/features/contractSlice";
 import { applyContractFormSchema } from "@/utils/ValidationSchema";
 import {
-  ContractApplicationFormValues,
   SubmitFormFunction,
+  ContractApplicationFormValues,
 } from "@/typings/types";
 
 const ContractApplication = (): JSX.Element => {
   const router = useRouter();
-  const contractDetails = useAppSelector(getContractDetails);
+  const contract = useAppSelector(getContract);
 
   const steps: ActiveStepItem[] = [
     { id: 0, stepName: "ContractRate", component: ContractRateForm },
@@ -53,6 +53,7 @@ const ContractApplication = (): JSX.Element => {
         setActiveStep(steps[nextStepId]);
       } else {
         setLoading(true);
+        // FIXME: Replace with actual submission logic
         console.log("Final values submitted:", values);
       }
     }
@@ -79,7 +80,7 @@ const ContractApplication = (): JSX.Element => {
     <Grid sx={{ padding: 4, marginTop: 2 }}>
       <Typography variant="h5" fontWeight="bold" gutterBottom>
         Bewerbung{" "}
-        <span style={{ color: "#909090" }}>{contractDetails?.tenderType}</span>
+        <span style={{ color: "#909090" }}>{contract?.tenderType}</span>
       </Typography>
       <Paper elevation={1} sx={{ p: 4, mx: "auto", my: 4 }}>
         <Grid container spacing={2}>
@@ -89,7 +90,7 @@ const ContractApplication = (): JSX.Element => {
               Ausschreibungsart:
             </Typography>
             <Typography sx={styles.textGrey}>
-              {translateTenderForm(contractDetails?.tenderForm ?? "")}
+              {translateTenderForm(contract?.tenderForm ?? "")}
             </Typography>
 
             <Typography
@@ -99,9 +100,7 @@ const ContractApplication = (): JSX.Element => {
             >
               Auftragstyp:
             </Typography>
-            <Typography sx={styles.textGrey}>
-              {contractDetails?.tenderType}
-            </Typography>
+            <Typography sx={styles.textGrey}>{contract?.tenderType}</Typography>
 
             <Typography
               sx={styles.basicInformationLable}
@@ -111,7 +110,7 @@ const ContractApplication = (): JSX.Element => {
               Anlagentyp:
             </Typography>
             <Typography sx={styles.textGrey}>
-              {contractDetails?.subcategory}
+              {contract?.subcategory}
             </Typography>
 
             <Typography
@@ -122,9 +121,9 @@ const ContractApplication = (): JSX.Element => {
               Angebotsfrist:
             </Typography>
             <Typography sx={styles.textGrey}>
-              {contractDetails?.fromDate &&
-                contractDetails?.toDate &&
-                ` ${new Date(contractDetails?.fromDate ?? "").toLocaleDateString("de-DE")} - ${new Date(contractDetails?.toDate ?? "").toLocaleDateString("de-DE")}`}
+              {contract?.fromDate &&
+                contract?.toDate &&
+                ` ${new Date(contract?.fromDate ?? "").toLocaleDateString("de-DE")} - ${new Date(contract?.toDate ?? "").toLocaleDateString("de-DE")}`}
             </Typography>
 
             <Typography
@@ -136,7 +135,7 @@ const ContractApplication = (): JSX.Element => {
             </Typography>
             <Typography
               sx={styles.textGrey}
-            >{`${contractDetails?.city}, ${contractDetails?.state}`}</Typography>
+            >{`${contract?.city}, ${contract?.state}`}</Typography>
 
             <Typography
               sx={styles.basicInformationLable}
@@ -145,9 +144,7 @@ const ContractApplication = (): JSX.Element => {
             >
               Dringlichkeit:
             </Typography>
-            <Typography sx={styles.textGrey}>
-              {contractDetails?.urgency}
-            </Typography>
+            <Typography sx={styles.textGrey}>{contract?.urgency}</Typography>
 
             <Typography
               sx={styles.basicInformationLable}
@@ -156,9 +153,7 @@ const ContractApplication = (): JSX.Element => {
             >
               Wer benötigt den Service?
             </Typography>
-            <Typography sx={styles.textGrey}>
-              {contractDetails?.clientName}
-            </Typography>
+            <Typography sx={styles.textGrey}>{contract?.clientName}</Typography>
           </Grid>
 
           {/* Contract Application Form Section */}

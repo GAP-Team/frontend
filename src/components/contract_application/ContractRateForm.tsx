@@ -1,7 +1,7 @@
-import { Grid, Divider, TextField, Typography } from "@mui/material";
 import { useState } from "react";
-import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import LabelWithAsterisk from "../label/LabelWithAsterisk";
+import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
+import { Grid, Divider, TextField, Typography } from "@mui/material";
 
 const ContractRateForm = ({ formik }: { formik?: any }): JSX.Element => {
   const [info, setInfo] = useState<string>("");
@@ -21,7 +21,7 @@ const ContractRateForm = ({ formik }: { formik?: any }): JSX.Element => {
           <Typography sx={styles.descriptionText}>
             Geben Sie den Preis für den Service ein.
             <br />
-            Mehraufwand nach Stundenbasis*
+            Mehraufwand nach Stundenbasis
           </Typography>
         </Grid>
         <Grid item xs={12} md={8}>
