@@ -7,10 +7,9 @@ import { useFormikContext } from "formik";
 import Typography from "@mui/material/Typography";
 import { FormControl, MenuItem, Select } from "@mui/material";
 
-import { Item } from "../../types";
+import { Item } from "@/components/features/dashboard/types";
 import { AddFacilityFormValues } from "./types";
 import GTextInput from "@/components/ui/input/GTextInput";
-import { listOfFacilitySubcategories } from "@/utils/Constants";
 import GTextSelector from "@/components/ui/input/GTextSelector";
 import { getUserBuildings } from "@/lib/features/buildingSlice";
 import LabelWithAsterisk from "@/components/ui/label/LabelWithAsterisk";
@@ -18,7 +17,8 @@ import {
   HELP_ICON_BUTTON_COLOR,
   listOfFacilitySubcategories,
 } from "@/utils/Constants";
-import HelpIcon from "@/components/button/HelpIcon";
+// FIXME : should move to icons folder
+import HelpIcon from "@/components/ui/button/HelpIcon";
 
 const FacilityInformation = (): JSX.Element => {
   const allBuildings = useSelector(getUserBuildings);
