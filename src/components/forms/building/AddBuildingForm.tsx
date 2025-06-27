@@ -11,7 +11,8 @@ import CircularProgress from "@mui/material/CircularProgress";
 import { ROUTES } from "@/utils/routes";
 import { AddBuildingFormValues } from "./types";
 import GButton from "@/components/ui/button/GButton";
-import { AddComponentFormProps } from "../../types";
+// FIXME: reorganise the types in whole project
+import { AddComponentFormProps } from "@/components/features/dashboard/types";
 import GStepper from "@/components/ui/stepper/GStepper";
 import SuccessSection from "@/components/layout/SuccessSection";
 import SectionTitle from "@/components/ui/label/SectionTitle";
