@@ -2,6 +2,7 @@ import React, { ReactNode } from "react";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -41,6 +42,11 @@ const GTab: React.FC<GTabProps> = ({
 }) => {
   return (
     <>
+      <div className="flex flex-col" style={styles.userInfo}>
+        <Typography variant="gsub" color="gray.500">
+          Wer sind Sie?
+        </Typography>
+      </div>
       <Box sx={styles.tabsContainer}>
         <Tabs
           value={tabvalue}
@@ -75,6 +81,11 @@ export default GTab;
 
 // Styles
 const styles = {
+  userInfo: {
+    width: "auto",
+    padding: "0.50rem",
+    marginLeft: "1.5rem",
+  },
   tabsContainer: {
     bgcolor: "#F1F3F4",
     width: "auto",

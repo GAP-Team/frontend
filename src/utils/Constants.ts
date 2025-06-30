@@ -1,4 +1,5 @@
 import { FilterOptionType } from "@/typings/types";
+import { USER_ROLE } from "./enums";
 import HomeWorkIcon from "@mui/icons-material/HomeWork";
 import OfficeImage from "../../public/images/office.jpg";
 import DescriptionIcon from "@mui/icons-material/Description";
@@ -729,6 +730,23 @@ export const FAQs = [
 
 export const DEFAULT_PUBLISH_MONTHS = 3;
 
+export function getRegistrationSteps(role?: string): string[] {
+  if (role === USER_ROLE.SERVICE_PROVIDER) {
+    return [
+      "Grundinformation",
+      "Adresse der Firma",
+      "Gewerbeanmeldung",
+      "Fachkenntnisse",
+      "Zusammenfassung",
+    ];
+  }
+  return [
+    "Grundinformation",
+    "Adresse der Firma",
+    "Gewerbeanmeldung",
+    "Zusammenfassung",
+  ];
+}
 export const HELP_ICON_BUTTON_COLOR = {
   GREY: "#A0ADB1",
 };
