@@ -285,7 +285,7 @@ export const addFacilityValidationSchema = [
     lastCheckDate: yup.date().nullable(),
     nextCheckInYearNumber: yup.number(),
     isPublishCheckAutomatically: yup.boolean(),
-    publishAutomaticallyInMonth: yup.number(),
+    publishCheckAutomaticallyInMonth: yup.number(),
     reminderInMonth: yup.number(),
     isEmailNotificationEnable: yup.boolean(),
     emailNotificationList: yup
@@ -450,4 +450,38 @@ export const ContractSearchSchema = yup.object({
 
 export const DeleteAccountSchema = yup.object({
   password: yup.string().required("Passwort ist erforderlich"),
+});
+
+export const applyContractFormSchema = yup.object().shape({
+  totalPrice: yup
+    .number()
+    .transform((_, value) => {
+      if (value.includes(".")) {
+        return null;
+      }
+      return +value.replace(/,/, ".");
+    })
+    .typeError("Gesamtkosten muss eine Zahl sein.")
+    .positive("Gesamtkosten muss größer als 0 sein.")
+    .required("Gesamtkosten ist erforderlich")
+    .integer("Gesamtkosten muss eine ganze Zahl sein."),
+  hourlyRate: yup
+    .number()
+    .transform((_, value) => {
+      if (value.includes(".")) {
+        return null;
+      }
+      return +value.replace(/,/, ".");
+    })
+    .typeError("Netto-Stundensatz muss eine Zahl sein.")
+    .positive("Netto-Stundensatz muss größer als 0 sein.")
+    .required("Netto-Stundensatz ist erforderlich")
+    .integer("Netto-Stundensatz muss eine ganze Zahl sein."),
+  zip: yup
+    .string()
+    .matches(
+      /^\d{4,5}$/,
+      "Postleitzahl muss zwischen 4 und 5 Ziffern lang sein"
+    ),
+  desiredDates: yup.array().of(yup.date()),
 });

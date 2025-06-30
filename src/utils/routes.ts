@@ -40,6 +40,8 @@ export const ROUTES = {
     CONTRACTS: `${SERVICE_PROVIDER_BASE}/contracts`,
     CONTRACT_DETAILS: (id: string) =>
       `${SERVICE_PROVIDER_BASE}/contracts/${id}`,
+    CONTRACT_APPLICATION: (id: string | undefined) =>
+      `${SERVICE_PROVIDER_BASE}/contracts/${id}/application`,
     CONTRACT_FILTER_URL: (
       states: string[],
       tenderTypes: string[],
