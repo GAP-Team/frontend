@@ -15,7 +15,7 @@ const TenderTitleBar: React.FC<TenderTitleBarProps> = ({ title, subTitle }) => {
         <Typography sx={styles.titleTypography}>{title} • &nbsp;</Typography>
       )}
       {subTitle && (
-        <Typography sx={styles.desTypography} >{subTitle}</Typography>
+        <Typography sx={styles.desTypography}>{subTitle}</Typography>
       )}
     </Container>
   );
