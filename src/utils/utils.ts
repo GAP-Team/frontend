@@ -1,4 +1,5 @@
 import Cookies from "js-cookie";
+import { TENDER_FORM } from "./enums";
 
 export const getTenderStatusStyle: {
   [key: string]: { bgcolor: string; color: string; title: string };
@@ -65,4 +66,12 @@ export const clearLocalStorage = (): void => {
   Cookies.remove("access_token");
   Cookies.remove("isVerified");
   localStorage.clear();
+};
+
+export const translateTenderForm = (tenderForm: string): string => {
+  return tenderForm !== ""
+    ? tenderForm === TENDER_FORM.CRAFTSMAN
+      ? "Handwerker"
+      : "Sachverständigen"
+    : "Nicht_Vorhanden";
 };
