@@ -15,7 +15,7 @@ const TenderTitleBar: React.FC<TenderTitleBarProps> = ({ title, subTitle }) => {
         <Typography sx={styles.titleTypography}>{title} • &nbsp;</Typography>
       )}
       {subTitle && (
-        <Typography sx={styles.desTypography}>{subTitle}</Typography>
+        <Typography sx={styles.desTypography} >{subTitle}</Typography>
       )}
     </Container>
   );
@@ -45,7 +45,7 @@ const styles = {
     fontSize: "1.2rem",
     fontWeight: "400",
     lineHeight: "2rem",
-    color: "#2356FF",
+    color: "blue.main",
     display: "inline",
   },
 };
