@@ -10,7 +10,7 @@ import RegistrationForm from "./RegistrationForm";
 import Typography from "@mui/material/Typography";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
 import userAPIs from "@/api/user";
-import { RegistrationFormValues } from "../types";
+import { RegistrationFormValues } from "./types";
 
 import { DOCUMENT_TYPE, USER_ROLE } from "@/utils/enums";
 import PageTitle from "@/components/label/PageTitle";
@@ -19,28 +19,10 @@ import BackButton from "@/components/button/BackButton";
 import InfoBanner from "@/components/common/InfoBanner";
 import EmailVerification from "@/components/email/EmailVerification";
 import { registrationValidationSchema } from "@/utils/ValidationSchema";
-import { numOfEmployeesOptions } from "@/utils/Constants";
 import { Document } from "@/typings/types";
 import emailAPIs from "@/api/email";
 import { ROUTES } from "@/utils/routes";
-
-export function getSteps(role?: string): string[] {
-  if (role === USER_ROLE.SERVICE_PROVIDER) {
-    return [
-      "Grundinformation",
-      "Adresse der Firma",
-      "Gewerbeanmeldung",
-      "Fachkenntnisse",
-      "Zusammenfassung",
-    ];
-  }
-  return [
-    "Grundinformation",
-    "Adresse der Firma",
-    "Gewerbeanmeldung",
-    "Zusammenfassung",
-  ];
-}
+import { numOfEmployeesOptions, getRegistrationSteps } from "@/utils/Constants";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>((props, ref) => {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -48,7 +30,7 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>((props, ref) => {
 
 Alert.displayName = "Alert";
 
-const RegistrationRealState = (): JSX.Element => {
+const Registration = (): JSX.Element => {
   const router = useRouter();
 
   const [newUserId, setNewUserId] = useState("");
@@ -58,12 +40,13 @@ const RegistrationRealState = (): JSX.Element => {
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [isVerificationEmailSent, setIsVerificationEmailSent] =
     useState<boolean>(false);
+  const [steps, setSteps] = useState<string[]>(getRegistrationSteps());
 
   const handleNext = async (
     values: RegistrationFormValues,
     actions: FormikHelpers<RegistrationFormValues>
   ): Promise<void> => {
-    const currentSteps = getSteps(values.role);
+    const currentSteps = getRegistrationSteps(values.role);
     setSteps(currentSteps);
 
     if (activeStep === steps.length - 1) {
@@ -111,7 +94,6 @@ const RegistrationRealState = (): JSX.Element => {
     manufacturerExperience: "",
     qualificationDocs: [],
   };
-  const [steps, setSteps] = useState<string[]>(getSteps());
 
   const onSubmit = async (values: any, docObj: any): Promise<void> => {
     try {
@@ -332,7 +314,7 @@ const RegistrationRealState = (): JSX.Element => {
   );
 };
 
-export default RegistrationRealState;
+export default Registration;
 
 export const styles = {
   mainContainer: { height: "100vh" },
