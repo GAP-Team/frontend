@@ -20,6 +20,8 @@ import {
   sendUserActivityEmail,
 } from "@/lib/features/userSlice";
 import { USER_ACTIVITY_EMAIL_TEMPLATES } from "@/utils/Constants";
+import { useRouter } from "next/navigation";
+import { ROUTES } from "@/utils/routes";
 
 interface ChangePasswordInitialValuesProps {
   currentPassword: string;
@@ -34,6 +36,7 @@ const ChangePassword = (): JSX.Element => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const appDispatch = useAppDispatch();
+  const router = useRouter();
   const user = useAppSelector((state) => state.user);
 
   const initialValues: ChangePasswordInitialValuesProps = {
@@ -236,6 +239,14 @@ const ChangePassword = (): JSX.Element => {
         {/* Actions */}
         <Grid item xs={12}>
           <Grid container justifyContent="flex-end" spacing={2}>
+            <Grid item>
+              <Button
+                variant="outlined"
+                onClick={() => router.push(ROUTES.REAL_ESTATE.DASHBOARD)}
+              >
+                Abbrechen
+              </Button>
+            </Grid>
             <Grid item>
               <Button variant="contained" color="primary" type="submit">
                 Änderungen Speichern

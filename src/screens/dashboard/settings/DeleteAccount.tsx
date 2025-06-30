@@ -95,6 +95,14 @@ const DeleteAccount = (): JSX.Element => {
         <Grid container justifyContent="flex-end" spacing={2}>
           <Grid item>
             <Button
+              variant="outlined"
+              onClick={() => router.push(ROUTES.REAL_ESTATE.DASHBOARD)}
+            >
+              Abbrechen
+            </Button>
+          </Grid>
+          <Grid item>
+            <Button
               variant="contained"
               color="error"
               type="button"
