@@ -2,7 +2,6 @@
 import { useFormik } from "formik";
 import Grid from "@mui/material/Grid";
 import React, { useState } from "react";
-import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
 import Typography from "@mui/material/Typography";
 import GTextInput from "@/components/input/GTextInput";
@@ -22,6 +21,7 @@ import {
 import { USER_ACTIVITY_EMAIL_TEMPLATES } from "@/utils/Constants";
 import { useRouter } from "next/navigation";
 import { ROUTES } from "@/utils/routes";
+import GButton from "@/components/button/GButton";
 
 interface ChangePasswordInitialValuesProps {
   currentPassword: string;
@@ -240,17 +240,17 @@ const ChangePassword = (): JSX.Element => {
         <Grid item xs={12}>
           <Grid container justifyContent="flex-end" spacing={2}>
             <Grid item>
-              <Button
+              <GButton
                 variant="outlined"
                 onClick={() => router.push(ROUTES.REAL_ESTATE.DASHBOARD)}
               >
                 Abbrechen
-              </Button>
+              </GButton>
             </Grid>
             <Grid item>
-              <Button variant="contained" color="primary" type="submit">
+              <GButton variant="contained" color="primary" type="submit">
                 Änderungen Speichern
-              </Button>
+              </GButton>
             </Grid>
           </Grid>
         </Grid>
