@@ -6,8 +6,9 @@ export enum Urgency {
   HANDOVER = "Übergabe an Bauherren/Kunden",
 }
 export enum USER_ROLE {
-  REAL_ESTATE_OWNER = "REAL_ESTATE_OWNER",
+  ADMIN = "ADMIN",
   SERVICE_PROVIDER = "SERVICE_PROVIDER",
+  REAL_ESTATE_OWNER = "REAL_ESTATE_OWNER",
 }
 
 export enum BUSINESS_TYPE {

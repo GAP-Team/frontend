@@ -3,34 +3,13 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import userAPIs from "@/api/user";
 import emailAPIs from "@/api/email";
 import { RootState } from "../store";
-import { Document, SendActivityEmailType } from "@/typings/types";
-
-interface Company {
-  name: string;
-  phonenumber: number;
-  numberOfEmployees?: number;
-  address: Partial<UserAddress>;
-  business?: Partial<UserBusiness>;
-}
-interface UserAddress {
-  zip: number;
-  state: string;
-  street: string;
-  country: string;
-  houseNo: number;
-  city: string;
-}
-export interface UserBusiness {
-  businessType: string;
-  registrationNumber: string;
-  documents: Document[];
-}
+import { User, UserCompany, SendActivityEmailType } from "@/typings/types";
 
 interface UserState {
   id: string;
   role: string;
   email: string;
-  company: Partial<Company>;
+  company: Partial<UserCompany>;
   lastName: string;
   firstName: string;
   buildingIds: string[];
@@ -38,6 +17,7 @@ interface UserState {
   position: string;
   isActive: boolean;
   sendUserActivityEmailStatus?: boolean;
+  users: User[];
 }
 
 interface ChangePassword {
@@ -74,6 +54,7 @@ const initialState: UserState = {
   position: "",
   isActive: false,
   sendUserActivityEmailStatus: false,
+  users: [],
 };
 
 export const updateUserProfile = createAsyncThunk(
@@ -108,6 +89,19 @@ export const sendUserActivityEmail = createAsyncThunk(
   }
 );
 
+export const fetchUsers = createAsyncThunk("user/fetchUsers", async () => {
+  const response = await userAPIs.getUsers();
+  return response.data;
+});
+
+export const activateUser = createAsyncThunk(
+  "user/activateUser",
+  async ({ id }: { id: string }) => {
+    const response = await userAPIs.activateUser(id);
+    return response.data;
+  }
+);
+
 const userSlice = createSlice({
   name: "user",
   initialState,
@@ -126,6 +120,12 @@ const userSlice = createSlice({
     builder.addCase(sendUserActivityEmail.fulfilled, (state, action) => {
       state.sendUserActivityEmailStatus = action.payload.status;
     });
+    builder.addCase(fetchUsers.fulfilled, (state, action) => {
+      state.users = action.payload;
+    });
+    builder.addCase(activateUser.fulfilled, (state, action) => {
+      state.isActive = action.payload.status === 200 ? true : false;
+    });
   },
 });
 
@@ -135,7 +135,7 @@ export const isUserActive = (state: RootState): boolean => state.user.isActive;
 export const currentUser = (state: RootState): UserState => state.user;
 export const currentUserId = (state: RootState): string => state.user.id;
 export const currentUserEmail = (state: RootState): string => state.user.email;
-export const currentUserCompany = (state: RootState): Company =>
+export const currentUserCompany = (state: RootState): UserCompany =>
   state.user.company;
 
 export default userSlice.reducer;

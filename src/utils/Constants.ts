@@ -1,10 +1,10 @@
-import { FilterOptionType } from "@/typings/types";
 import { USER_ROLE } from "./enums";
+import { FilterOptionType } from "@/typings/types";
 import HomeWorkIcon from "@mui/icons-material/HomeWork";
 import OfficeImage from "../../public/images/office.jpg";
 import DescriptionIcon from "@mui/icons-material/Description";
-import { Notification } from "@/components/navigation/GAppbar/types";
 import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
+import { Notification } from "@/components/navigation/GAppbar/types";
 import ConnectWithoutContactIcon from "@mui/icons-material/ConnectWithoutContact";
 
 export const listOfFacilitySubcategories: FilterOptionType[] = [
@@ -795,3 +795,48 @@ export const USER_ACTIVITY_EMAIL_TEMPLATES = {
   PASSWORD_CHANGE: "ChangePasswordTemplate",
   EMAIL_CHANGE: "ChangeEmailTemplate",
 };
+
+export const UsersTableColumns = [
+  { id: "firstNname", label: "First Name", minWidth: 80 },
+  { id: "lastName", label: "Last Name", minWidth: 70 },
+  {
+    id: "companyName",
+    label: "Company Name",
+    minWidth: 100,
+  },
+  {
+    id: "companyPhoneNumber",
+    label: "Company Phone Number",
+    minWidth: 80,
+  },
+  {
+    id: "companyAddress",
+    label: "Company Address",
+    minWidth: 100,
+  },
+  {
+    id: "companyBusinessType",
+    label: "Company Business Type",
+    minWidth: 70,
+  },
+  {
+    id: "companyRegistrationNumber",
+    label: "Company Registration Number",
+    minWidth: 90,
+  },
+  {
+    id: "companyDocuments",
+    label: "Company Documents",
+    minWidth: 120,
+  },
+  {
+    id: "qualificationDocuments",
+    label: "Qualification Documents",
+    minWidth: 120,
+  },
+  {
+    id: "activation",
+    label: "Activation",
+    minWidth: 80,
+  },
+];

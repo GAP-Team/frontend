@@ -1,12 +1,12 @@
 "use client";
 import { useEffect } from "react";
 import { ROUTES } from "@/utils/routes";
+import Users from "@/screens/admin/Users";
 import { useRouter } from "next/navigation";
-import Dashboard from "@/screens/dashboard/Dashboard";
 import NoAccessPage from "@/components/common/NoAccessPage";
 import { userIsAdmin, checkIsLoggedIn } from "@/utils/helperJWT";
 
-export default function ServiceProviderDashboardPage(): JSX.Element {
+export default function UsersPage(): JSX.Element {
   const router = useRouter();
 
   useEffect(() => {
@@ -29,7 +29,7 @@ export default function ServiceProviderDashboardPage(): JSX.Element {
     <>
       {checkIsLoggedIn() && userIsAdmin() ? (
         <>
-          <Dashboard></Dashboard>
+          <Users />
         </>
       ) : (
         <>{renderRestrictionUI()}</>

@@ -1,5 +1,6 @@
 import Cookies from "js-cookie";
 import * as jwt from "jsonwebtoken";
+import { USER_ROLE } from "./enums";
 
 export const verifyJWT = (accessToken: string): any => {
   try {
@@ -35,4 +36,9 @@ export const setIsUserVerified = (verified: string): void => {
 };
 export const getIsUserVerified = (): string => {
   return Cookies.get("isVerified") || "";
+};
+
+export const userIsAdmin = (): boolean => {
+  const role = Cookies.get("role");
+  return role === USER_ROLE.ADMIN;
 };
