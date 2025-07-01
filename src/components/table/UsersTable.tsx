@@ -2,6 +2,7 @@ import s3APIs from "@/api/s3";
 import { useState } from "react";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
+import { useAppDispatch } from "@/lib/hooks";
 import TableRow from "@mui/material/TableRow";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -13,7 +14,6 @@ import { UsersTableColumns } from "@/utils/Constants";
 import { activateUser } from "@/lib/features/userSlice";
 import TableContainer from "@mui/material/TableContainer";
 import TablePagination from "@mui/material/TablePagination";
-import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import CircularProgress from "@mui/material/CircularProgress";
 
 interface UsersTableProps {
@@ -22,7 +22,6 @@ interface UsersTableProps {
 
 const UsersTable: React.FC<UsersTableProps> = ({ users }): JSX.Element => {
   const appDispatch = useAppDispatch();
-  const user = useAppSelector((state) => state.user);
 
   const [page, setPage] = useState<number>(0);
   const [rowsPerPage, setRowsPerPage] = useState<number>(10);
@@ -44,7 +43,6 @@ const UsersTable: React.FC<UsersTableProps> = ({ users }): JSX.Element => {
 
   const handleOnChange = (id: string, isChecked: boolean): void => {
     if (isChecked) {
-      user?.id;
       appDispatch(activateUser({ id: id }));
     }
   };

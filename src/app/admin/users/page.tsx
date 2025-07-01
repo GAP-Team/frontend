@@ -8,12 +8,14 @@ import { userIsAdmin, checkIsLoggedIn } from "@/utils/helperJWT";
 
 export default function UsersPage(): JSX.Element {
   const router = useRouter();
+  const isAdmin = userIsAdmin();
+  const isLoggedIn = checkIsLoggedIn();
 
   useEffect(() => {
-    if (!checkIsLoggedIn() || !userIsAdmin()) {
+    if (!isLoggedIn || !isAdmin) {
       router.push(ROUTES.LOGIN);
     }
-  }, [checkIsLoggedIn(), userIsAdmin()]);
+  }, [isLoggedIn, isAdmin]);
 
   const renderRestrictionUI = (): JSX.Element => {
     if (!checkIsLoggedIn() && !userIsAdmin()) {

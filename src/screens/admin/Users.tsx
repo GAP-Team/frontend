@@ -1,5 +1,6 @@
 "use client";
 import { useEffect } from "react";
+import { RootState } from "@/lib/store";
 import { useSelector } from "react-redux";
 import { useAppDispatch } from "@/lib/hooks";
 import { fetchUsers } from "@/lib/features/userSlice";
@@ -8,7 +9,7 @@ import UsersTable from "../../components/table/UsersTable";
 
 const Users = (): JSX.Element => {
   const appDispatch = useAppDispatch();
-  const users = useSelector((state: any) => state.user.users);
+  const users = useSelector((state: RootState) => state.user.users);
 
   useEffect(() => {
     appDispatch(fetchUsers());

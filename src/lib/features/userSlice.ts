@@ -124,7 +124,7 @@ const userSlice = createSlice({
       state.users = action.payload;
     });
     builder.addCase(activateUser.fulfilled, (state, action) => {
-      state.isActive = action.payload.status === 200 ? true : false;
+      state.isActive = action.payload.status === 200;
     });
   },
 });
