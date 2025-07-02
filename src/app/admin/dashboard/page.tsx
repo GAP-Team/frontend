@@ -29,7 +29,7 @@ export default function ServiceProviderDashboardPage(): JSX.Element {
     <>
       {checkIsLoggedIn() && userIsAdmin() ? (
         <>
-          <Dashboard></Dashboard>
+          <Dashboard />
         </>
       ) : (
         <>{renderRestrictionUI()}</>

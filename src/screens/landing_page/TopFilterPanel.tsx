@@ -2,11 +2,13 @@
 import { TopFilterProps } from "@/typings/types";
 import { Container, Typography } from "@mui/material";
 
-const TopFilter: React.FC<TopFilterProps> = ({ title }): JSX.Element => {
+const TopFilter: React.FC<TopFilterProps> = ({
+  title = "Alle Aufträge",
+}): JSX.Element => {
   return (
     <Container maxWidth={false} sx={styles.container}>
       <Typography variant="h6" sx={styles.typography}>
-        {title ? title : "Alle Aufträge"}
+        {title}
       </Typography>
     </Container>
   );
