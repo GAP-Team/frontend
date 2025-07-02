@@ -155,6 +155,7 @@ export const listOfTenderTypes: FilterOptionType[] = [
       "Sachkundigenprüfung",
       "Instandsetzung/Reparatur",
       "Wartung",
+      "Errichtung/Neubau",
     ],
   },
 ];
