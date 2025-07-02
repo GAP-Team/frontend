@@ -84,6 +84,9 @@ export interface ContractApplicationFormValues {
   zip: string;
   city: string;
   desiredDates: Date[];
+  offerDocs: File[];
+  termsConditionDocs: File[];
+  advantage: string[];
 }
 
 export interface ApplyContractProps {

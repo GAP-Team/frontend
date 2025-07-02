@@ -796,3 +796,15 @@ export const USER_ACTIVITY_EMAIL_TEMPLATES = {
   PASSWORD_CHANGE: "ChangePasswordTemplate",
   EMAIL_CHANGE: "ChangeEmailTemplate",
 };
+
+export const previousAdvantages = [
+  "Bericht 1-7 Tage",
+  "Bericht 1-7 Tage (-10%)",
+  "Gewünschter Prüfzeitraum",
+  "Skonto (1-3%) 7-10 Tage",
+  "Kostenlose Anpassung",
+  "Kostenpflichtige Anpassung",
+  "Sofortiger Bericht",
+  "Fristverlängerung Gratis",
+  "Benutzerangebot Nummer 1",
+];
