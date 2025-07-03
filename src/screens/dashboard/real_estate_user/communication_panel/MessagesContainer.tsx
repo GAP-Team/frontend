@@ -1,7 +1,7 @@
 // The list component now uses JobApplicationItem for each job application.
 import React from "react";
 import { List } from "@mui/material";
-import { NewsItemProps as MessageItemProps } from "./types";
+import {MessageItemProps } from "./types";
 import Message from "./Message";
 import { scrollBarStyles } from "@/components/scrollbar/Scrollbar";
 
