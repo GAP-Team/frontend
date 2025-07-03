@@ -1,6 +1,6 @@
 import { memo, useEffect } from "react";
 import NoAccessPage from "../NoAccessPage";
-import { checkIsLoggedIn } from "@/utils/helperJWT";
+import { checkIsLoggedIn } from "@/utils/auth";
 import { USER_ROLE, DOCUMENT_TYPE } from "@/utils/enums";
 import { showSnackbar } from "@/components/root-snackbar";
 import { Box, Grid, Paper, Typography } from "@mui/material";
@@ -19,7 +19,6 @@ const ContractDetails: React.FC<ContractDetailsProps> = ({
 }): JSX.Element => {
   const appDispatch = useAppDispatch();
   const user = useAppSelector((state) => state.user);
-  const contractDetails = useAppSelector(getContract);
   const contractDetails = useAppSelector(getContract);
 
   useEffect(() => {
