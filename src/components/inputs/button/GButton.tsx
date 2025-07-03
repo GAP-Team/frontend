@@ -1,7 +1,6 @@
 import React from "react";
 import Button, { ButtonProps } from "@mui/material/Button";
 import { SxProps } from "@mui/system";
-import "../button/GButton.module.css";
 
 interface GButtonProps extends ButtonProps {
   children?: React.ReactNode;
