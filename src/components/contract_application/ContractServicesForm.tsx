@@ -16,7 +16,7 @@ import LabelWithAsterisk from "../label/LabelWithAsterisk";
 const ContractServicesForm = ({ formik }: { formik?: any }): JSX.Element => {
   const [newAdvantage, setNewAdvantage] = useState<string>("");
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const [selectedAdvantages, setSelectedAdvantages] = useState<string[]>();
+  const [selectedAdvantages, setSelectedAdvantages] = useState<string[]>([]);
   const [advantages, setAdvantages] = useState<string[]>(previousAdvantages);
 
   const open = Boolean(anchorEl);
