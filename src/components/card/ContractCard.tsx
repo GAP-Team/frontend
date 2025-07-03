@@ -24,7 +24,7 @@ const ContractCard = ({ contracts }: ContractCardProps): JSX.Element => {
   const user = useAppSelector(currentUser);
 
   const handleShowContractDetails = (contractId: string): void => {
-    if (checkIsLoggedIn() && user?.user?.role === USER_ROLE.SERVICE_PROVIDER) {
+    if (checkIsLoggedIn() && user?.role === USER_ROLE.SERVICE_PROVIDER) {
       router.push(ROUTES.SERVICE_PROVIDER.CONTRACT_DETAILS(contractId));
     } else {
       appDispatch(

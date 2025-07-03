@@ -26,9 +26,9 @@ export default function UserMailVerification(): JSX.Element {
       </section>
       <EmailVerification
         sendMail={false}
-        newUserId={user?.user?.id}
-        newUserEmail={user?.user?.email}
-        newUserName={user?.user?.firstName}
+        newUserId={user?.id}
+        newUserEmail={user?.email}
+        newUserName={user?.firstName}
         postVerificationAction={postVerificationAction}
       />
     </>

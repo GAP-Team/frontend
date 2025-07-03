@@ -136,6 +136,6 @@ const userSlice = createSlice({
 export const { setUser } = userSlice.actions;
 
 export const isUserActive = (state: RootState): boolean => state.user.isActive;
-export const currentUser = (state: RootState): UserState => state.user;
+export const currentUser = (state: RootState): UserState["user"] => state.user;
 
 export default userSlice.reducer;

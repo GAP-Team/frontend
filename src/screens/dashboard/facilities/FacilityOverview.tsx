@@ -28,30 +28,24 @@ const FacilityOverview: React.FC = (): JSX.Element => {
   const facilityId = searchParams.get("facilityId");
 
   useEffect(() => {
-    if (user?.user?.id) {
+    if (user?.id) {
       dispatch(
         fetchBuildings({
-          userId: user?.user?.id,
+          userId: user.id,
           city: "",
           federalState: "",
           facilityType: "",
         })
       );
-      dispatch(getFacilitiesByUser(user?.user?.id));
+      dispatch(getFacilitiesByUser(user.id));
     }
-  }, [user?.user?.id, dispatch]);
+  }, [user?.id, dispatch]);
 
   useEffect(() => {
-    if (
-      user?.user?.id &&
-      buildings.length > 0 &&
-      city &&
-      state &&
-      facilityType
-    ) {
-      dispatch(getFacilitiesByUser(user?.user?.id, city, state, facilityType));
+    if (user?.id && buildings.length > 0 && city && state && facilityType) {
+      dispatch(getFacilitiesByUser(user.id, city, state, facilityType));
     }
-  }, [user?.user?.id, buildings, city, state, facilityType, dispatch]);
+  }, [user?.id, buildings, city, state, facilityType, dispatch]);
 
   const onFilterCriteriaChange = useCallback(
     async (
@@ -60,10 +54,10 @@ const FacilityOverview: React.FC = (): JSX.Element => {
       facilityType: string
     ): Promise<void> => {
       await dispatch(
-        getFacilitiesByUser(user?.user?.id, city, state, facilityType)
+        getFacilitiesByUser(user?.id, city, state, facilityType)
       ).unwrap();
     },
-    [dispatch, user?.user?.id]
+    [dispatch, user?.id]
   );
 
   const filteredFacilities = useMemo(() => {
