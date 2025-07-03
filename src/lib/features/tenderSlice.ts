@@ -54,7 +54,7 @@ export const createTender = createAsyncThunk(
   "tender/createTender",
   async (newTender: any) => {
     const response = await tenderAPI.create(newTender);
-    return response.data;
+    return response.id;
   }
 );
 
@@ -63,7 +63,7 @@ export const updateTender = createAsyncThunk(
   "tender/updateTender",
   async ({ tenderId, data }: { tenderId: string; data: any }) => {
     const response = await tenderAPI.update(tenderId, data);
-    return response.data;
+    return response;
   }
 );
 
