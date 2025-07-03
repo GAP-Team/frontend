@@ -50,7 +50,7 @@ const TenderBuilding = (): JSX.Element => {
     const facilityOptions: Item[] = [];
     allFacilities?.data?.forEach((facility: Facility) => {
       const temp = {
-        label: `${facility?.facilityType} - ${facility?.subcategory} - ${facility?.name}`,
+        label: constructFacilityLabel(facility),
         value: facility?.id,
       };
       facilityOptions.push(temp);
@@ -72,9 +72,9 @@ const TenderBuilding = (): JSX.Element => {
         await buildingAPIs.getBuildingFacilities(selectedBuildingId);
 
       const facilityOptions: Item[] = [];
-      allFacilities?.data?.map((facility: Facility) => {
+      allFacilities?.data?.forEach((facility: Facility) => {
         const temp = {
-          label: `${facility?.facilityType} - ${facility?.subcategory} - ${facility?.name}`,
+          label: constructFacilityLabel(facility),
           value: facility?.id,
         };
         facilityOptions.push(temp);
@@ -103,6 +103,10 @@ const TenderBuilding = (): JSX.Element => {
       (facility: any) => facility.id === facilityId
     );
     return facility[0];
+  };
+
+  const constructFacilityLabel = (facility: Facility): string => {
+    return `${facility?.facilityType} - ${facility?.subcategory} - ${facility?.name}`;
   };
 
   return (
