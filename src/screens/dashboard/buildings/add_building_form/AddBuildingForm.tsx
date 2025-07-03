@@ -10,7 +10,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 
 import { ROUTES } from "@/utils/routes";
 import { AddBuildingFormValues } from "./types";
-import GButton from "@/components/button/GButton";
+import GButton from "@/components/inputs/button/GButton";
 import { AddComponentFormProps } from "../../types";
 import GStepper from "@/components/stepper/GStepper";
 import SuccessPage from "@/components/common/SuccessPage";

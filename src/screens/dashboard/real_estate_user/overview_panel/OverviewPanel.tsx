@@ -22,7 +22,7 @@ import {
   getFacilityCheckTimeRemaining,
   getFacilityMaintenanceTimeRemaining,
 } from "../../facilities/utils";
-import GButton from "@/components/button/GButton";
+import GButton from "@/components/inputs/button/GButton";
 import { ROUTES } from "@/utils/routes";
 import { useRouter } from "next/navigation";
 

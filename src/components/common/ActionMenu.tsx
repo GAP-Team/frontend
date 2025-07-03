@@ -15,7 +15,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContentText from "@mui/material/DialogContentText";
 
-import GButton from "@/components/button/GButton";
+import GButton from "@/components/inputs/button/GButton";
 
 interface ActionMenuProps {
   itemId: string;

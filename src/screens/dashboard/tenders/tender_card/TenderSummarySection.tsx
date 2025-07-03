@@ -4,7 +4,7 @@ import HeaderSection from "../../real_estate_user/HeaderSection";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import Divider from "@mui/material/Divider";
-import GButton from "@/components/button/GButton";
+import GButton from "@/components/inputs/button/GButton";
 import { useRouter } from "next/navigation";
 import LabelText from "@/components/label/LabelText";
 import { Tender } from "./types";

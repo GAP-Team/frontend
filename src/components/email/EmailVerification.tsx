@@ -11,7 +11,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 
 import userAPIs from "@/api/user";
 import emailAPIs from "@/api/email";
-import GButton from "@/components/button/GButton";
+import GButton from "@/components/inputs/button/GButton";
 import SuccessPage from "@/components/common/SuccessPage";
 
 interface EmailVerificationProps {
@@ -22,6 +22,7 @@ interface EmailVerificationProps {
   postVerificationAction: () => void;
 }
 
+// FIXME: email verification should be a screen component, it does not belong to the components folder
 const EmailVerification = ({
   sendMail,
   newUserId,

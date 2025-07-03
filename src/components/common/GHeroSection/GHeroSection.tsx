@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import Badge from "../../badge/GBadge";
+import Badge from "../../data_display/badge/GBadge";
 import React, { useState } from "react";
 import { FaCheck } from "react-icons/fa";
 import { FaArrowRightLong } from "react-icons/fa6";

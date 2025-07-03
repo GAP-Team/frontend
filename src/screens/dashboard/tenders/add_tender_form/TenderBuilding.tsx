@@ -10,7 +10,7 @@ import { AddTenderFormValues } from "./types";
 import { FormControl, MenuItem, Select } from "@mui/material";
 import CustomSelect from "@/components/drop_down/CustomSelect";
 import { getUserBuildings } from "@/lib/features/buildingSlice";
-import HelpIcon from "@/components/button/HelpIcon";
+import HelpIcon from "@/components/icons/HelpIcon";
 import LabelWithAsterisk from "@/components/label/LabelWithAsterisk";
 import { AddFacilityFormValues } from "../../facilities/add_facility_form/types";
 

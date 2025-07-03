@@ -8,7 +8,7 @@ import PrivatePerson from "./real_estate/PrivatePerson";
 import GTab from "@/components/filter/GTab";
 import CompanyAddress from "./CompanyAddress";
 import ComercialPerson from "./real_estate/CommercialPerson";
-import GButton from "@/components/button/GButton";
+import GButton from "@/components/inputs/button/GButton";
 import BasicInformation from "./BasicInformation";
 import GStepper from "@/components/stepper/GStepper";
 import SummaryRegistration from "./SummaryRegistration";

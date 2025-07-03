@@ -20,7 +20,7 @@ import { showSnackbar } from "@/components/root-snackbar";
 import { updateUserProfile } from "@/lib/features/userSlice";
 import { useRouter } from "next/navigation";
 import { BUSINESS_TYPE, DOCUMENT_TYPE } from "@/utils/enums";
-import UploadButton from "@/components/button/UploadButton";
+import UploadButton from "@/components/inputs/button/UploadButton";
 import { handleDeleteDoc, handleUploadDoc } from "@/utils/uploadToS3";
 import { Document } from "@/typings/types";
 import { ROUTES } from "@/utils/routes";

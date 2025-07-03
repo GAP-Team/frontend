@@ -15,7 +15,7 @@ import { useSelector } from "react-redux";
 import userApi from "@/api/user";
 import { currentUser } from "@/lib/features/userSlice";
 import { PropertyFilterProps } from "@/screens/dashboard/buildings/building_card/types";
-import GButton from "../button/GButton";
+import GButton from "../inputs/button/GButton";
 
 const PropertyFilterPanel = ({
   handleOnChange = () => {},

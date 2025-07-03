@@ -24,7 +24,7 @@ import {
   HELP_ICON_BUTTON_COLOR,
   autoPublishMonthsOptions,
 } from "@/utils/Constants";
-import HelpIcon from "@/components/button/HelpIcon";
+import HelpIcon from "@/components/icons/HelpIcon";
 
 const FacilityMaintenance = (): JSX.Element => {
   const formik = useFormikContext<AddFacilityFormValues>();

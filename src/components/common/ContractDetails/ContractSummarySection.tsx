@@ -6,7 +6,7 @@ import { TENDER_FORM } from "@/utils/enums";
 import Divider from "@mui/material/Divider";
 import { useRouter } from "next/navigation";
 import Typography from "@mui/material/Typography";
-import GButton from "@/components/button/GButton";
+import GButton from "@/components/inputs/button/GButton";
 import LabelText from "@/components/label/LabelText";
 import HeaderSection from "@/screens/dashboard/real_estate_user/HeaderSection";
 

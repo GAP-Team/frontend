@@ -2,7 +2,7 @@ import React from "react";
 import Box from "@mui/material/Box";
 import Chip from "@mui/material/Chip";
 import Paper from "@mui/material/Paper";
-import GButton from "../button/GButton";
+import GButton from "../inputs/button/GButton";
 import { ROUTES } from "@/utils/routes";
 import { USER_ROLE } from "@/utils/enums";
 import { Contract } from "@/typings/types";

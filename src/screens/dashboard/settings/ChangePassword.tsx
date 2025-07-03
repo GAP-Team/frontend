@@ -9,7 +9,7 @@ import GTextInput from "@/components/input/GTextInput";
 import { showSnackbar } from "@/components/root-snackbar";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { passwordChangeSchema } from "@/utils/ValidationSchema";
-import ShowPasswordButton from "@/components/button/ShowPasswordButton";
+import ShowPasswordButton from "@/components/inputs/button/ShowPasswordButton";
 import {
   calculateStrength,
   getPasswordStrengthLabel,

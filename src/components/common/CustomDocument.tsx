@@ -5,7 +5,7 @@ import Grid from "@mui/material/Grid";
 import Radio from "@mui/material/Radio";
 import { useFormikContext } from "formik";
 import GTextInput from "../input/GTextInput";
-import UploadMultiButton from "../button/UploadMultiButton";
+import UploadMultiButton from "../inputs/button/UploadMultiButton";
 import {
   FormControl,
   FormControlLabel,
@@ -13,7 +13,7 @@ import {
   Typography,
 } from "@mui/material";
 import { DocumentChoice } from "@/utils/enums";
-import HelpIcon from "@/components/button/HelpIcon";
+import HelpIcon from "@/components/icons/HelpIcon";
 import { Documentation, HELP_ICON_BUTTON_COLOR } from "@/utils/Constants";
 
 interface CustomDocumentationProps {

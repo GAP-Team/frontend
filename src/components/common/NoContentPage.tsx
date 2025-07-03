@@ -1,7 +1,7 @@
 import Box from "@mui/material/Box";
 import Image, { StaticImageData } from "next/image";
 import Typography from "@mui/material/Typography";
-import GButton from "@/components/button/GButton";
+import GButton from "@/components/inputs/button/GButton";
 import React from "react";
 
 interface NoContentPageProps {

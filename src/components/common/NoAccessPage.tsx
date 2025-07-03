@@ -2,7 +2,7 @@ import Image from "next/image";
 import Box from "@mui/material/Box";
 import { ROUTES } from "@/utils/routes";
 import Typography from "@mui/material/Typography";
-import GButton from "@/components/button/GButton";
+import GButton from "@/components/inputs/button/GButton";
 import NoAccessImage from "../../../public/images/no_access.png";
 
 interface NoAccessPageProps {

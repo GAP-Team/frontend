@@ -10,7 +10,7 @@ import {
   useTheme,
 } from "@mui/material";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
-import RoundButton from "@/components/button/RoundButton";
+import RoundButton from "@/components/inputs/button/RoundButton";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 import { FAQs } from "@/utils/Constants";
 

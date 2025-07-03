@@ -1,4 +1,4 @@
-import GButton from "../button/GButton";
+import GButton from "../inputs/button/GButton";
 import { ROUTES } from "@/utils/routes";
 import { useFormikContext } from "formik";
 import { useRouter } from "next/navigation";

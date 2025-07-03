@@ -4,7 +4,7 @@ import { useFormik } from "formik";
 import { ROUTES } from "@/utils/routes";
 import { useRouter } from "next/navigation";
 import { Box, Typography } from "@mui/material";
-import GButton from "@/components/button/GButton";
+import GButton from "@/components/inputs/button/GButton";
 import { FilterPanelLabels } from "@/utils/enums";
 import SideFilterPanelOptions from "./SideFilterPanelOptions";
 import { ContractSearchProps, SideFilterPanelProps } from "@/typings/types";

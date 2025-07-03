@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 
-import Badge from "../../badge/GBadge";
+import Badge from "../../data_display/badge/GBadge";
 import classes from "./GFunctionSection.module.scss";
 import TitleSection from "../../label/title-section";
 import { ContractSvgIcon } from "../../../../public/svg/ContractSvgIcon";

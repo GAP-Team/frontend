@@ -8,7 +8,7 @@ import Typography from "@mui/material/Typography";
 import GTextInput from "@/components/input/GTextInput";
 import LabelWithAsterisk from "@/components/label/LabelWithAsterisk";
 import { numOfEmployeesOptions } from "@/utils/Constants";
-import UploadMultiButton from "@/components/button/UploadMultiButton";
+import UploadMultiButton from "@/components/inputs/button/UploadMultiButton";
 
 const ExpertiseServiceProvider = ({ formik }: any): JSX.Element => {
   return (

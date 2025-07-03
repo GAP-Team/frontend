@@ -1,4 +1,4 @@
-import Badge from "../../badge/GBadge";
+import GBadge from "../../data_display/badge/GBadge";
 import { Box, Grid } from "@mui/material";
 import { articles } from "@/utils/Constants";
 import BlogCard from "@/components/card/BlogCard";
@@ -8,7 +8,7 @@ const BlogsOverview = (): JSX.Element => {
     <>
       <Box sx={styles.box}>
         <Grid sx={styles.batchHolder}>
-          <Badge color="#d0ede8" title="Unsere Blogs" />
+          <GBadge color="#d0ede8" title="Unsere Blogs" />
         </Grid>
         <Grid container spacing={4}>
           {articles.map((article, index) => (

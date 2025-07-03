@@ -15,7 +15,7 @@ import { RegistrationFormValues } from "./types";
 import { DOCUMENT_TYPE, USER_ROLE } from "@/utils/enums";
 import PageTitle from "@/components/label/PageTitle";
 import { handleUploadDoc } from "@/utils/uploadToS3";
-import BackButton from "@/components/button/BackButton";
+import BackButton from "@/components/inputs/button/BackButton";
 import InfoBanner from "@/components/common/InfoBanner";
 import EmailVerification from "@/components/email/EmailVerification";
 import { registrationValidationSchema } from "@/utils/ValidationSchema";

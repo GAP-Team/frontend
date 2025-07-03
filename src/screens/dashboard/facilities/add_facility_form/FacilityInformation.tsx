@@ -12,7 +12,7 @@ import { AddFacilityFormValues } from "./types";
 import GTextInput from "@/components/input/GTextInput";
 import GTextSelector from "@/components/input/GTextSelector";
 import { getUserBuildings } from "@/lib/features/buildingSlice";
-import HelpIcon from "@/components/button/HelpIcon";
+import HelpIcon from "@/components/icons/HelpIcon";
 import LabelWithAsterisk from "@/components/label/LabelWithAsterisk";
 import {
   HELP_ICON_BUTTON_COLOR,
