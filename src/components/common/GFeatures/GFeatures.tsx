@@ -6,7 +6,6 @@ import { SprinklerSvgIcon } from "../../../../public/svg/SprinklerSvgIcon";
 import { RwaSvgIcon } from "../../../../public/svg/RwaSvgIcon";
 import { VentilationSvgIcon } from "../../../../public/svg/VentilationSvgIcon";
 import { ElectricalSvgIcon } from "../../../../public/svg/ElectricalSvgIcon";
-import { HeatingSvgIcon } from "../../../../public/svg/HeatingSvgIcon";
 import { WaterSvgIcon } from "../../../../public/svg/WaterSvgIcon";
 import { EmergencyLightSvgIcon } from "../../../../public/svg/EmergencyLightSvgIcon";
 import { DoorSvgIcon } from "../../../../public/svg/DoorSvgIcon";
@@ -14,6 +13,9 @@ import { GasSvgIcon } from "../../../../public/svg/GasSvgIcon";
 import { CoolingSvgIcon } from "../../../../public/svg/CoolingSvgIcon";
 import TitleSection from "../../label/title-section";
 import { FeatureCard } from "./../../card/FeatureCard";
+import { BrandwacheSvgIcon } from "../../../../public/svg/BrandwacheSvgIcon";
+import { WandhydrantenanlageSvgIcon } from "../../../../public/svg/WandhydrantenanlageSvgIcon";
+import { HygieneCheckWaterAirSvgIcon } from "../../../../public/svg/HygieneCheckWaterAirScgIcon";
 
 const GFeatures = (): JSX.Element => {
   return (
@@ -36,17 +38,28 @@ const GFeatures = (): JSX.Element => {
           title="Elektrotechnische Anlagen"
           icon={<ElectricalSvgIcon />}
         />
-        <FeatureCard title="Heizungsanlagen" icon={<HeatingSvgIcon />} />
-        <FeatureCard title="Trinkwasseranlagen" icon={<WaterSvgIcon />} />
+        <FeatureCard title="Brandwache" icon={<BrandwacheSvgIcon />} />
+        <FeatureCard
+          title="Brandschutzkonzept und Löschanlagenkonzept"
+          icon={<WaterSvgIcon />}
+        />
         <FeatureCard
           title="Notbeleuchtung und Sicherheitsbeleuchtung"
           icon={<EmergencyLightSvgIcon />}
         />
         <FeatureCard title="Tür- und Toranlagen" icon={<DoorSvgIcon />} />
-        <FeatureCard title="Gasleitungen" icon={<GasSvgIcon />} />
+        <FeatureCard title="Feuerlöscher" icon={<GasSvgIcon />} />
         <FeatureCard
-          title="Kälte- und Klimatechnik"
+          title="Druckbehälter und Tankanlagen"
           icon={<CoolingSvgIcon />}
+        />
+        <FeatureCard
+          title="Wandhydrantenanlage"
+          icon={<WandhydrantenanlageSvgIcon />}
+        />
+        <FeatureCard
+          title="Hygienprüfung Trinkwasser und Lüftungsanlage"
+          icon={<HygieneCheckWaterAirSvgIcon />}
         />
       </div>
     </div>
