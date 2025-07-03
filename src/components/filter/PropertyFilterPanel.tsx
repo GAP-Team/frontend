@@ -41,9 +41,9 @@ const PropertyFilterPanel = ({
 
   useEffect(() => {
     const fetchData = async (): Promise<void> => {
-      if (!user?.id) return;
+      if (!user?.user?.id) return;
 
-      const cs = await userApi?.getFilterCreteria(user?.id);
+      const cs = await userApi?.getFilterCreteria(user?.user?.id);
       if (cs?.data?.cities)
         setUserCities(
           cs.data.cities.map((city: any) => ({ value: city, label: city }))

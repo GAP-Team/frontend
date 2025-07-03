@@ -112,7 +112,7 @@ const UsersTable: React.FC<UsersTableProps> = ({ users }): JSX.Element => {
                 <TableCell
                   align="left"
                   key={column.id}
-                  sx={[styles.tableHeadCell, { minWidth: column.minWidth }]}
+                  sx={styles.tableHeadCell}
                 >
                   {column.label}
                 </TableCell>
@@ -164,7 +164,7 @@ const UsersTable: React.FC<UsersTableProps> = ({ users }): JSX.Element => {
           </TableBody>
         </Table>
       </TableContainer>
-      {users.length > rowsPerPage && (
+      {users?.length > rowsPerPage && (
         <TablePagination
           page={page}
           component="div"
@@ -188,6 +188,7 @@ const styles = {
   },
   tableHeadCell: {
     top: 57,
+    minWidth: "auto",
     fontWeight: "bold",
   },
   docName: {

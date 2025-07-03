@@ -243,7 +243,7 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
     const formateDate = moment().format("YYYY-MM-DDTHH:mm:ss.SSS[Z]");
 
     let buildingData = {
-      userId: user?.id,
+      userId: user?.user?.id,
       documents: docObjList,
       address: addressObj,
       createdAt: formateDate,

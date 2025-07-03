@@ -6,17 +6,19 @@ import { RootState } from "../store";
 import { User, UserCompany, SendActivityEmailType } from "@/typings/types";
 
 interface UserState {
-  id: string;
-  role: string;
-  email: string;
-  company: Partial<UserCompany>;
-  lastName: string;
-  firstName: string;
-  buildingIds: string[];
-  manufacturerExperience: string;
-  position: string;
-  isActive: boolean;
-  sendUserActivityEmailStatus?: boolean;
+  user: {
+    id: string;
+    role: string;
+    email: string;
+    company: Partial<UserCompany>;
+    lastName: string;
+    firstName: string;
+    buildingIds: string[];
+    manufacturerExperience: string;
+    position: string;
+    isActive: boolean;
+    sendUserActivityEmailStatus?: boolean;
+  };
   users: User[];
 }
 
@@ -26,34 +28,36 @@ interface ChangePassword {
 }
 
 const initialState: UserState = {
-  id: "",
-  role: "",
-  email: "",
-  company: {
-    name: "",
-    phonenumber: 0,
-    numberOfEmployees: 0,
-    address: {
-      zip: 0,
-      state: "",
-      street: "",
-      country: "",
-      houseNo: 0,
-      city: "",
+  user: {
+    id: "",
+    role: "",
+    email: "",
+    company: {
+      name: "",
+      phonenumber: 0,
+      numberOfEmployees: 0,
+      address: {
+        zip: 0,
+        state: "",
+        street: "",
+        country: "",
+        houseNo: 0,
+        city: "",
+      },
+      business: {
+        businessType: "",
+        registrationNumber: "",
+        documents: [],
+      },
     },
-    business: {
-      businessType: "",
-      registrationNumber: "",
-      documents: [],
-    },
+    lastName: "",
+    firstName: "",
+    buildingIds: [],
+    manufacturerExperience: "",
+    position: "",
+    isActive: false,
+    sendUserActivityEmailStatus: false,
   },
-  lastName: "",
-  firstName: "",
-  buildingIds: [],
-  manufacturerExperience: "",
-  position: "",
-  isActive: false,
-  sendUserActivityEmailStatus: false,
   users: [],
 };
 
@@ -118,13 +122,13 @@ const userSlice = createSlice({
       return { ...state, ...action.payload };
     });
     builder.addCase(sendUserActivityEmail.fulfilled, (state, action) => {
-      state.sendUserActivityEmailStatus = action.payload.status;
+      state.user.sendUserActivityEmailStatus = action.payload.status;
     });
     builder.addCase(fetchUsers.fulfilled, (state, action) => {
       state.users = action.payload;
     });
     builder.addCase(activateUser.fulfilled, (state, action) => {
-      state.isActive = action.payload.status === 200;
+      state.user.isActive = action.payload.status === 200;
     });
   },
 });
@@ -133,9 +137,5 @@ export const { setUser } = userSlice.actions;
 
 export const isUserActive = (state: RootState): boolean => state.user.isActive;
 export const currentUser = (state: RootState): UserState => state.user;
-export const currentUserId = (state: RootState): string => state.user.id;
-export const currentUserEmail = (state: RootState): string => state.user.email;
-export const currentUserCompany = (state: RootState): UserCompany =>
-  state.user.company;
 
 export default userSlice.reducer;

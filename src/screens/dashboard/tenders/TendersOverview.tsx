@@ -18,17 +18,17 @@ const TendersOverview: React.FC = () => {
   const { tenders } = useAppSelector((state) => state.tender);
 
   useEffect(() => {
-    if (user?.id) {
-      dispatch(fetchTenders(user.id));
+    if (user?.user?.id) {
+      dispatch(fetchTenders(user?.user?.id));
     }
-  }, [user?.id, dispatch]);
+  }, [user?.user?.id, dispatch]);
 
   const onFilterCriteriaChange = (
     city: string,
     federalState: string,
     facilityType: string
   ): void => {
-    dispatch(fetchTenders(user?.id, city, federalState, facilityType));
+    dispatch(fetchTenders(user?.user?.id, city, federalState, facilityType));
   };
 
   const hasTenders = tenders?.some(

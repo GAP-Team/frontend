@@ -61,7 +61,7 @@ export default function GAppbar(): JSX.Element {
   };
 
   const handleLogout = async (): Promise<void> => {
-    let data = { userId: user?.id };
+    let data = { userId: user?.user?.id };
     const logoutStatus = await authAPIs.logout(data);
     if (logoutStatus?.status === 201) {
       Cookies.remove("access_token");
@@ -96,7 +96,7 @@ export default function GAppbar(): JSX.Element {
         sx={styles.title}
         suppressHydrationWarning
       >
-        {user?.company?.name}
+        {user?.user?.company?.name}
       </Typography>
 
       <Box sx={{ flexGrow: 1, display: "flex", justifyContent: "center" }}>
@@ -147,7 +147,7 @@ export default function GAppbar(): JSX.Element {
             <Box sx={styles.userControls} onClick={handleProfileMenuOpen}>
               <AccountCircle sx={styles.accountIcon} />
               <Typography sx={styles.userName} suppressHydrationWarning>
-                {`${user?.firstName} ${user?.lastName}`}
+                {`${user?.user?.firstName} ${user?.user?.lastName}`}
               </Typography>
               <ArrowDropDownIcon sx={styles.dropDownIcon} />
             </Box>

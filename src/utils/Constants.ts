@@ -798,46 +798,38 @@ export const USER_ACTIVITY_EMAIL_TEMPLATES = {
 };
 
 export const UsersTableColumns = [
-  { id: "firstNname", label: "First Name", minWidth: 80 },
-  { id: "lastName", label: "Last Name", minWidth: 70 },
+  { id: "firstNname", label: "First Name" },
+  { id: "lastName", label: "Last Name" },
   {
     id: "companyName",
     label: "Company Name",
-    minWidth: 100,
   },
   {
     id: "companyPhoneNumber",
     label: "Company Phone Number",
-    minWidth: 80,
   },
   {
     id: "companyAddress",
     label: "Company Address",
-    minWidth: 100,
   },
   {
     id: "companyBusinessType",
     label: "Company Business Type",
-    minWidth: 70,
   },
   {
     id: "companyRegistrationNumber",
     label: "Company Registration Number",
-    minWidth: 90,
   },
   {
     id: "companyDocuments",
     label: "Company Documents",
-    minWidth: 120,
   },
   {
     id: "qualificationDocuments",
     label: "Qualification Documents",
-    minWidth: 120,
   },
   {
     id: "activation",
     label: "Activation",
-    minWidth: 80,
   },
 ];

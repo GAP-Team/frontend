@@ -19,17 +19,17 @@ const BuildingOverview: React.FC = () => {
 
   useEffect(() => {
     fetchUserBuildings("", "", "");
-  }, [user?.id]);
+  }, [user?.user?.id]);
 
   const fetchUserBuildings = async (
     city: string,
     federalState: string,
     facilityType: string
   ): Promise<void> => {
-    if (!user?.id) return;
+    if (!user?.user?.id) return;
 
     const query = {
-      userId: user?.id,
+      userId: user?.user?.id,
       city: city,
       federalState: federalState,
       facilityType: facilityType,

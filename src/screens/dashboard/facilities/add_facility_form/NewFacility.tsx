@@ -131,7 +131,7 @@ const NewFacility: React.FC<NewFacilityProps> = ({
 
   const getUserBuildingDetails = async (): Promise<void> => {
     const query = {
-      userId: user?.id,
+      userId: user?.user?.id,
       city: "",
       federalState: "",
       facilityType: "",
