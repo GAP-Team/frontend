@@ -1,5 +1,5 @@
-import CostSavingPage from "@/screens/dashboard/cost_saving/CostSavingPage";
+import CostSaving from "@/screens/dashboard/cost_saving/CostSavingPage";
 
-export default function CostSavingsDashboard(): JSX.Element {
-  return <CostSavingPage />;
+export default function CostSavingsPage(): JSX.Element {
+  return <CostSaving />;
 }

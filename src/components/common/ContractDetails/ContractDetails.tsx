@@ -1,13 +1,13 @@
 import { memo, useEffect } from "react";
 import NoAccessPage from "../NoAccessPage";
-import { checkIsLoggedIn } from "@/utils/helperJWT";
+import { checkIsLoggedIn } from "@/utils/auth";
 import { USER_ROLE, DOCUMENT_TYPE } from "@/utils/enums";
 import { showSnackbar } from "@/components/root-snackbar";
 import { Box, Grid, Paper, Typography } from "@mui/material";
 import { useAppSelector, useAppDispatch } from "@/lib/hooks";
 import ContractSummarySection from "./ContractSummarySection";
 import TenderTitleBar from "@/screens/dashboard/tenders/tender_card/TenderTitleBar";
-import { getContract, fetchContractById } from "@/lib/features/contractSlice";
+import { fetchContractById, getContract } from "@/lib/features/contractSlice";
 import DocumentList from "@/screens/dashboard/buildings/building_card/DocumentList ";
 
 interface ContractDetailsProps {

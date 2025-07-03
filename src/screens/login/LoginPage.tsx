@@ -13,18 +13,18 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import InputAdornment from "@mui/material/InputAdornment";
 import CircularProgress from "@mui/material/CircularProgress";
-import authAPIs from "@/api/auth";
+import authAPI from "@/api/auth";
 import { setUser } from "@/lib/features/userSlice";
 import { GapLogo } from "@/components/logo/GapLogo";
 import HeroBanner from "../../components/common/InfoBanner";
 import { loginValidationSchema } from "@/utils/ValidationSchema";
-import { setAccessToken, setIsUserVerified } from "@/utils/helperJWT";
-import emailAPIs from "@/api/email";
+import { setAccessToken, setIsUserVerified } from "@/utils/auth";
+import emailAPI from "@/api/email";
 import { ROUTES } from "@/utils/routes";
 import { USER_ROLE } from "@/utils/enums";
 import { useAppDispatch } from "@/lib/hooks";
 
-const LoginPage = (): JSX.Element => {
+const Login = (): JSX.Element => {
   const router = useRouter();
   const appDispatch = useAppDispatch();
   const [loading, setLoading] = useState(false);
@@ -39,7 +39,7 @@ const LoginPage = (): JSX.Element => {
     onSubmit: async (values, { setSubmitting, setTouched }) => {
       try {
         setLoading(true);
-        const res = await authAPIs.login(values);
+        const res = await authAPI.login(values);
 
         if (res?.data?.access_token) {
           appDispatch(setUser(res.data?.user));
@@ -47,7 +47,7 @@ const LoginPage = (): JSX.Element => {
           setIsUserVerified(res.data.user?.isVerified);
 
           if (!res.data.user?.isVerified) {
-            await emailAPIs.sendVerificationEmail({
+            await emailAPI.sendVerificationEmail({
               email: res.data?.user.email,
             });
           }
@@ -212,7 +212,7 @@ const LoginPage = (): JSX.Element => {
   );
 };
 
-export default LoginPage;
+export default Login;
 
 //Styles
 

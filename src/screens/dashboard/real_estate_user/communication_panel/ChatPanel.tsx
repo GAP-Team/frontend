@@ -1,10 +1,10 @@
 import React from "react";
-import NewsList from "./NewsList";
+import MessagesContainer from "./MessagesContainer";
 import HeaderSection from "../HeaderSection";
-import { news, DashboardComponentsProps } from "@/utils/Constants";
+import { messages, DashboardComponentsProps } from "@/utils/Constants";
 import ScrollableSection from "../../../../components/common/ScrollableSection";
 
-const NewsPanel: React.FC<DashboardComponentsProps> = (): JSX.Element => {
+const ChatPanel: React.FC<DashboardComponentsProps> = (): JSX.Element => {
   return (
     <ScrollableSection>
       <HeaderSection
@@ -12,9 +12,9 @@ const NewsPanel: React.FC<DashboardComponentsProps> = (): JSX.Element => {
         count={3}
         overviewText="Alle anzeigen"
       />
-      <NewsList news={news} />
+      <MessagesContainer messages={messages} />
     </ScrollableSection>
   );
 };
 
-export default NewsPanel;
+export default ChatPanel;
