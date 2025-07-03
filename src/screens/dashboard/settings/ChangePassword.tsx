@@ -2,7 +2,6 @@
 import { useFormik } from "formik";
 import Grid from "@mui/material/Grid";
 import React, { useState } from "react";
-import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
 import Typography from "@mui/material/Typography";
 import GTextInput from "@/components/input/GTextInput";
@@ -20,6 +19,9 @@ import {
   sendUserActivityEmail,
 } from "@/lib/features/userSlice";
 import { USER_ACTIVITY_EMAIL_TEMPLATES } from "@/utils/Constants";
+import { useRouter } from "next/navigation";
+import { ROUTES } from "@/utils/routes";
+import GButton from "@/components/button/GButton";
 
 interface ChangePasswordInitialValuesProps {
   currentPassword: string;
@@ -34,6 +36,7 @@ const ChangePassword = (): JSX.Element => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const appDispatch = useAppDispatch();
+  const router = useRouter();
   const user = useAppSelector((state) => state.user);
 
   const initialValues: ChangePasswordInitialValuesProps = {
@@ -237,9 +240,17 @@ const ChangePassword = (): JSX.Element => {
         <Grid item xs={12}>
           <Grid container justifyContent="flex-end" spacing={2}>
             <Grid item>
-              <Button variant="contained" color="primary" type="submit">
+              <GButton
+                variant="outlined"
+                onClick={() => router.push(ROUTES.REAL_ESTATE.DASHBOARD)}
+              >
+                Abbrechen
+              </GButton>
+            </Grid>
+            <Grid item>
+              <GButton variant="contained" color="primary" type="submit">
                 Änderungen Speichern
-              </Button>
+              </GButton>
             </Grid>
           </Grid>
         </Grid>
