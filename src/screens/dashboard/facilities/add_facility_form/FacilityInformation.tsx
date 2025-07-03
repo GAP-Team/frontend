@@ -10,10 +10,14 @@ import { FormControl, MenuItem, Select } from "@mui/material";
 import { Item } from "../../types";
 import { AddFacilityFormValues } from "./types";
 import GTextInput from "@/components/input/GTextInput";
-import { listOfFacilitySubcategories } from "@/utils/Constants";
 import GTextSelector from "@/components/input/GTextSelector";
 import { getUserBuildings } from "@/lib/features/buildingSlice";
+import HelpIcon from "@/components/button/HelpIcon";
 import LabelWithAsterisk from "@/components/label/LabelWithAsterisk";
+import {
+  HELP_ICON_BUTTON_COLOR,
+  listOfFacilitySubcategories,
+} from "@/utils/Constants";
 
 const FacilityInformation = (): JSX.Element => {
   const allBuildings = useSelector(getUserBuildings);
@@ -70,6 +74,10 @@ const FacilityInformation = (): JSX.Element => {
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <LabelWithAsterisk>ANLAGENNAME-/BEZEICHNUNG</LabelWithAsterisk>
+          <HelpIcon
+            iconColor={HELP_ICON_BUTTON_COLOR.GREY}
+            helpText="The helper text will be displayed here."
+          />
           <GTextInput
             id="name"
             name="name"
@@ -119,6 +127,10 @@ const FacilityInformation = (): JSX.Element => {
 
         <Grid item xs={12}>
           <LabelWithAsterisk>OBJEKT ZUORDNEN</LabelWithAsterisk>
+          <HelpIcon
+            iconColor={HELP_ICON_BUTTON_COLOR.GREY}
+            helpText="The helper text will be displayed here."
+          />
           <FormControl fullWidth>
             <Select
               name="selectedBuilding"
