@@ -5,7 +5,7 @@ import Grid from "@mui/material/Grid";
 import Radio from "@mui/material/Radio";
 import { useFormikContext } from "formik";
 import GTextInput from "../input/GTextInput";
-import { Documents } from "@/utils/Constants";
+import { Documents, HELP_ICON_BUTTON_COLOR } from "@/utils/Constants";
 import UploadMultiButton from "../button/UploadMultiButton";
 import {
   FormControl,
@@ -15,7 +15,6 @@ import {
 } from "@mui/material";
 import { DocumentChoice } from "@/utils/enums";
 import HelpIcon from "@/components/button/HelpIcon";
-import {HELP_ICON_BUTTON_COLOR } from "@/utils/Constants";
 
 interface CustomDocumentationProps {
   formikValue: any;
