@@ -1,5 +1,5 @@
 import React from "react";
-import MessageContainer from "./MessageContainer";
+import MessagesContainer from "./MessagesContainer";
 import HeaderSection from "../HeaderSection";
 import { messages, DashboardComponentsProps } from "@/utils/Constants";
 import ScrollableSection from "../../../../components/common/ScrollableSection";
@@ -12,7 +12,7 @@ const ChatPanel: React.FC<DashboardComponentsProps> = (): JSX.Element => {
         count={3}
         overviewText="Alle anzeigen"
       />
-      <MessageContainer messages={messages} />
+      <MessagesContainer messages={messages} />
     </ScrollableSection>
   );
 };

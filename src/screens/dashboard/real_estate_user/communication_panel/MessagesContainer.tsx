@@ -9,7 +9,7 @@ interface MessagesProps {
   messages: MessageItemProps[];
 }
 
-const MessageContainer: React.FC<MessagesProps> = ({ messages: messages }) => {
+const MessagesContainer: React.FC<MessagesProps> = ({ messages: messages }) => {
   return (
     <List sx={styles.listContainer}>
       {messages.map((app, index) => (
@@ -19,7 +19,7 @@ const MessageContainer: React.FC<MessagesProps> = ({ messages: messages }) => {
   );
 };
 
-export default MessageContainer;
+export default MessagesContainer;
 
 // Styles
 const styles = {
