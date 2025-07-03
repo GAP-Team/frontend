@@ -4,7 +4,6 @@ import React from "react";
 import { useFormik } from "formik";
 import Grid from "@mui/material/Grid";
 import { ROUTES } from "@/utils/routes";
-import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
 import { useRouter } from "next/navigation";
 import TextField from "@mui/material/TextField";
@@ -17,6 +16,7 @@ import {
   sendUserActivityEmail,
 } from "@/lib/features/userSlice";
 import { USER_ACTIVITY_EMAIL_TEMPLATES } from "@/utils/Constants";
+import GButton from "@/components/button/GButton";
 
 const ChangeEmail = (): JSX.Element => {
   const router = useRouter();
@@ -124,17 +124,17 @@ const ChangeEmail = (): JSX.Element => {
         <Grid item xs={12}>
           <Grid container justifyContent="flex-end" spacing={2}>
             <Grid item>
-              <Button
+              <GButton
                 variant="outlined"
                 onClick={() => router.push(ROUTES.REAL_ESTATE.DASHBOARD)}
               >
                 Abbrechen
-              </Button>
+              </GButton>
             </Grid>
             <Grid item>
-              <Button variant="contained" color="primary" type="submit">
+              <GButton variant="contained" color="primary" type="submit">
                 Änderungen speichern
-              </Button>
+              </GButton>
             </Grid>
           </Grid>
         </Grid>
