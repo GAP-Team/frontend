@@ -71,7 +71,8 @@ export const getFacilitiesByUser = (
 // Create Facility
 export const createFacility = createAsyncThunk(
   "facility/createFacility",
-  async (newFacility: Facility): Promise<{ id: string }> => {
+  //FIXME: Add proper types for the parameters and response
+  async (newFacility: any): Promise<{ id: string }> => {
     const response = await facilityAPI.create(newFacility);
     return response;
   }
