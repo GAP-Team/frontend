@@ -1,5 +1,5 @@
 import React from "react";
-import MessageContainer from "./NewsList";
+import MessageContainer from "./ChatList";
 import HeaderSection from "../HeaderSection";
 import { messages, DashboardComponentsProps } from "@/utils/Constants";
 import ScrollableSection from "../../../../components/common/ScrollableSection";

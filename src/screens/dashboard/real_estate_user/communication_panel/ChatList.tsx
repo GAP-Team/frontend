@@ -2,7 +2,7 @@
 import React from "react";
 import { List } from "@mui/material";
 import { NewsItemProps as MessageItemProps } from "./types";
-import Message from "./NewsItem";
+import Message from "./ChatItem";
 import { scrollBarStyles } from "@/components/scrollbar/Scrollbar";
 
 interface MessagesProps {

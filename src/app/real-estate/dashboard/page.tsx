@@ -7,7 +7,7 @@ import { fetchTenders } from "@/lib/features/tenderSlice";
 import { useLogin } from "@/hooks/useUserLoginVerification";
 import { fetchBuildings } from "@/lib/features/buildingSlice";
 import { getFacilitiesByUser } from "@/lib/features/facilitySlice";
-import ChatPanel from "@/screens/dashboard/real_estate_user/communication_panel/NewsPanel";
+import ChatPanel from "@/screens/dashboard/real_estate_user/communication_panel/ChatPanel";
 import TendersPanel from "@/screens/dashboard/real_estate_user/tenders_panel/TendersPanel";
 import OverviewPanel from "@/screens/dashboard/real_estate_user/overview_panel/OverviewPanel";
 import ApplicationsPanel from "@/screens/dashboard/real_estate_user/applications_panel/ApplicationsPanel";
