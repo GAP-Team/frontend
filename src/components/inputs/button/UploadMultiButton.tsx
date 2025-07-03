@@ -33,6 +33,7 @@ export default function UploadMultiButton({
 }: UploadMultiButtonProps): JSX.Element {
   const theme = useTheme();
 
+  // FIXME: the style sshould be outside the component, but what to do with the theme?
   const styles = {
     display: "flex",
     alignItems: "center",
@@ -62,7 +63,7 @@ export default function UploadMultiButton({
     }
   };
 
-  const handleDelete = (index: number): void => {
+  const handleRemove = (index: number): void => {
     const newValue = value?.filter((_, i) => i !== index) || [];
     const syntheticEvent = {
       target: {
@@ -73,9 +74,11 @@ export default function UploadMultiButton({
     onChange && onChange(syntheticEvent);
 
     const deletedFile = value?.filter((_, i) => i === index) || [];
+     // FIXME: why it is calling s3 api
     deleteFileFromS3(deletedFile[0]);
   };
 
+  // FIXME: why it is calling s3 api
   const deleteFileFromS3 = async (file: any): Promise<void> => {
     if (file.hasOwnProperty("documentType")) {
       await s3APIs.delete(file?.key);
@@ -110,7 +113,7 @@ export default function UploadMultiButton({
             <Chip
               key={index}
               label={file.name}
-              onDelete={() => handleDelete(index)}
+              onDelete={() => handleRemove(index)}
             />
           ))}
         <Button
