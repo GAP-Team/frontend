@@ -26,6 +26,9 @@ interface ChangePassword {
   currentPassword: string;
   newPassword: string;
 }
+interface ChangeEmail {
+  email: string;
+}
 
 const initialState: UserState = {
   user: {
@@ -63,7 +66,7 @@ const initialState: UserState = {
 
 export const updateUserProfile = createAsyncThunk(
   "user/updateProfile",
-  async ({ id, data }: { id: string; data: Partial<UserState> }) => {
+  async ({ id, data }: { id: string; data: Partial<ChangeEmail> }) => {
     const response = await userAPIs.updateUser(id, data);
     return response.data;
   }
