@@ -484,11 +484,11 @@ export const applyContractFormSchema = yup.object().shape({
       "Postleitzahl muss zwischen 4 und 5 Ziffern lang sein"
     ),
   desiredDates: yup.array().of(yup.date()),
-  termsConditionDocs: yup
+  termsConditionDoc: yup
     .array()
     .of(yup.mixed())
     .min(1, "AGB dokument ist erforderlich"),
-  offerDocs: yup
+  offerDoc: yup
     .array()
     .of(yup.mixed())
     .min(1, "Angebot dokument ist erforderlich"),

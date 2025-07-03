@@ -117,17 +117,17 @@ const ContractServicesForm = ({ formik }: { formik?: any }): JSX.Element => {
           <LabelWithAsterisk>AGB Dokumente</LabelWithAsterisk>
           <Box sx={styles.docUploaderBox}>
             <UploadButton
-              id="termsConditionDocs"
-              name="termsConditionDocs"
-              onChange={(ev: any) => setUploadLandDoc(ev, "termsConditionDocs")}
-              value={formik.values.termsConditionDocs}
+              id="termsConditionDoc"
+              name="termsConditionDoc"
+              onChange={(ev: any) => setUploadLandDoc(ev, "termsConditionDoc")}
+              value={formik.values.termsConditionDoc}
               error={
-                formik.touched.termsConditionDocs &&
-                Boolean(formik.errors.termsConditionDocs)
+                formik.touched.termsConditionDoc &&
+                Boolean(formik.errors.termsConditionDoc)
               }
               helperText={
-                formik.touched.termsConditionDocs &&
-                formik.errors.termsConditionDocs?.toString()
+                formik.touched.termsConditionDoc &&
+                formik.errors.termsConditionDoc?.toString()
               }
             />
           </Box>
@@ -151,15 +151,13 @@ const ContractServicesForm = ({ formik }: { formik?: any }): JSX.Element => {
           <LabelWithAsterisk>Angebot Dokumente</LabelWithAsterisk>
           <Box sx={styles.docUploaderBox}>
             <UploadButton
-              id="offerDocs"
-              name="offerDocs"
-              onChange={(ev: any) => setUploadLandDoc(ev, "offerDocs")}
-              value={formik.values.offerDocs}
-              error={
-                formik.touched.offerDocs && Boolean(formik.errors.offerDocs)
-              }
+              id="offerDoc"
+              name="offerDoc"
+              onChange={(ev: any) => setUploadLandDoc(ev, "offerDoc")}
+              value={formik.values.offerDoc}
+              error={formik.touched.offerDoc && Boolean(formik.errors.offerDoc)}
               helperText={
-                formik.touched.offerDocs && formik.errors.offerDocs?.toString()
+                formik.touched.offerDoc && formik.errors.offerDoc?.toString()
               }
             />
           </Box>

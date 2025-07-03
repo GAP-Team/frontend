@@ -77,8 +77,8 @@ const ContractApplication = (): JSX.Element => {
     city: "",
     desiredDates: [new Date(), new Date(), new Date()],
     advantages: [],
-    offerDocs: "",
-    termsConditionDocs: "",
+    offerDoc: "",
+    termsConditionDoc: "",
   };
 
   return (
