@@ -6,7 +6,7 @@ interface ShowPasswordButtonProps {
   onClick: () => void;
 }
 
-const ShowPasswordButton: React.FC<ShowPasswordButtonProps> = ({
+const PasswordVisibilityToggle: React.FC<ShowPasswordButtonProps> = ({
   showPassword,
   onClick,
 }): JSX.Element => {
@@ -26,7 +26,7 @@ const ShowPasswordButton: React.FC<ShowPasswordButtonProps> = ({
   );
 };
 
-export default ShowPasswordButton;
+export default PasswordVisibilityToggle;
 
 const styles = {
   showPasswordButton: {

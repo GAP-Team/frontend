@@ -9,7 +9,7 @@ import GTextInput from "@/components/input/GTextInput";
 import { showSnackbar } from "@/components/root-snackbar";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { passwordChangeSchema } from "@/utils/ValidationSchema";
-import ShowPasswordButton from "@/components/inputs/button/ShowPasswordButton";
+import PasswordVisibilityToggle from "@/components/inputs/toggle/PasswordVisibilityToggle";
 import {
   calculateStrength,
   getPasswordStrengthLabel,
@@ -148,7 +148,7 @@ const ChangePassword = (): JSX.Element => {
                 formik.errors.currentPassword?.toString()
               }
             />
-            <ShowPasswordButton
+            <PasswordVisibilityToggle
               onClick={() => togglePasswordVisibility("current")}
               showPassword={showPassword}
             />
@@ -174,7 +174,7 @@ const ChangePassword = (): JSX.Element => {
                 formik.errors.newPassword?.toString()
               }
             />
-            <ShowPasswordButton
+            <PasswordVisibilityToggle
               onClick={() => togglePasswordVisibility("new")}
               showPassword={showNewPassword}
             />
@@ -223,7 +223,7 @@ const ChangePassword = (): JSX.Element => {
                 formik.errors.confirmPassword?.toString()
               }
             />
-            <ShowPasswordButton
+            <PasswordVisibilityToggle
               onClick={() => togglePasswordVisibility("confirm")}
               showPassword={showConfirmPassword}
             />
