@@ -86,7 +86,7 @@ export interface ContractApplicationFormValues {
   desiredDates: Date[];
   offerDocs: File[];
   termsConditionDocs: File[];
-  advantage: string[];
+  advantages: string[];
 }
 
 export interface ApplyContractProps {

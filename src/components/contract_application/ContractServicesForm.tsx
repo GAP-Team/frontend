@@ -34,7 +34,7 @@ const ContractServicesForm = ({ formik }: { formik?: any }): JSX.Element => {
     setAnchorEl(null);
   };
 
-  const handleAddNewAdventage = (): void => {
+  const handleAddNewAdvantage = (): void => {
     if (newAdvantage.trim() !== "") {
       setAdvantages([...advantages, newAdvantage]);
       setSelectedAdvantages([...(selectedAdvantages || []), newAdvantage]);
@@ -188,7 +188,7 @@ const ContractServicesForm = ({ formik }: { formik?: any }): JSX.Element => {
           <Button
             variant="text"
             sx={styles.confirmButton}
-            onClick={handleAddNewAdventage}
+            onClick={handleAddNewAdvantage}
           >
             Speichern
           </Button>
