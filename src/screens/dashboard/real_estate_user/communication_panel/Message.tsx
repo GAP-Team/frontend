@@ -1,7 +1,7 @@
 import { ListItem, Avatar, Typography, Box } from "@mui/material";
-import { NewsItemProps } from "./types";
+import { MessageItemProps } from "./types";
 
-const Message: React.FC<NewsItemProps> = ({
+const Message: React.FC<MessageItemProps> = ({
   companyName,
   numberOfMessages,
   location,
