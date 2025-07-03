@@ -1,6 +1,7 @@
-import Registration from "../../screens/registration/Registration";
+// import Registration from "../registration/Registration";
+import Registration from "@/screens/registration/Registration";
 
-export default function Registration(): JSX.Element {
+export default function RegistrationPage(): JSX.Element {
   // FIXME: is this registration really just for real estate?
-  return <RegistrationRealState />;
+  return <Registration />;
 }

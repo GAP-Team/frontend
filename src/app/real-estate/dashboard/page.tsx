@@ -12,7 +12,6 @@ import TendersPanel from "@/screens/dashboard/real_estate_user/tenders_panel/Ten
 import OverviewPanel from "@/screens/dashboard/real_estate_user/overview_panel/OverviewPanel";
 import ApplicationsPanel from "@/screens/dashboard/real_estate_user/applications_panel/ApplicationsPanel";
 
-
 export default function RealEstateDashboardPage(): JSX.Element {
   const appDispatch = useAppDispatch();
   const user = useAppSelector((state) => state.user);

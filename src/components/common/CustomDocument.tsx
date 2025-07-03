@@ -15,7 +15,7 @@ import {
 } from "@mui/material";
 import { DocumentChoice } from "@/utils/enums";
 import HelpIcon from "@/components/button/HelpIcon";
-import { Documentation, HELP_ICON_BUTTON_COLOR } from "@/utils/Constants";
+import {HELP_ICON_BUTTON_COLOR } from "@/utils/Constants";
 
 interface CustomDocumentationProps {
   formikValue: any;
