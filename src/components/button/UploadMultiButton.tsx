@@ -17,7 +17,6 @@ interface UploadMultiButtonProps {
   id?: string;
   name?: string;
   error?: boolean;
-  documentHelperText?: string;
   helperText?: string | boolean;
 }
 
@@ -31,7 +30,6 @@ export default function UploadMultiButton({
   error,
   onChange,
   helperText,
-  documentHelperText = "Dokumente hinzuziehen oder",
 }: UploadMultiButtonProps): JSX.Element {
   const theme = useTheme();
 
@@ -103,7 +101,7 @@ export default function UploadMultiButton({
           <>
             <FiFileText size="1.5rem" color="#A0ADB1" />
             <Typography sx={{ mx: "0.8rem" }} color="gray.700">
-              {documentHelperText}
+              Dokumente hinzuziehen oder
             </Typography>
           </>
         ) : null}

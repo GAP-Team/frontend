@@ -1,16 +1,16 @@
-import { useState } from "react";
-import { previousAdvantages } from "@/utils/Constants";
-import UploadMultiButton from "../button/UploadMultiButton";
 import {
   Box,
-  Typography,
-  Popover,
   Chip,
-  Button,
   Grid,
+  Button,
+  Popover,
   Divider,
   TextField,
+  Typography,
 } from "@mui/material";
+import { useState } from "react";
+import UploadButton from "../button/UploadButton";
+import { previousAdvantages } from "@/utils/Constants";
 import LabelWithAsterisk from "../label/LabelWithAsterisk";
 
 const ContractServicesForm = ({ formik }: { formik?: any }): JSX.Element => {
@@ -51,6 +51,11 @@ const ContractServicesForm = ({ formik }: { formik?: any }): JSX.Element => {
     event: React.MouseEvent<HTMLButtonElement>
   ): void => {
     setAnchorEl(event.currentTarget);
+  };
+
+  const setUploadLandDoc = (ev: any, fileType: string): void => {
+    formik.setFieldValue(`${fileType}File`, ev?.target.files[0]);
+    formik.setFieldValue(`${fileType}`, ev?.target.files[0].name);
   };
 
   return (
@@ -111,10 +116,10 @@ const ContractServicesForm = ({ formik }: { formik?: any }): JSX.Element => {
         <Grid item xs={12} md={8}>
           <LabelWithAsterisk>AGB Dokumente</LabelWithAsterisk>
           <Box sx={styles.docUploaderBox}>
-            <UploadMultiButton
+            <UploadButton
               id="termsConditionDocs"
               name="termsConditionDocs"
-              onChange={formik.handleChange}
+              onChange={(ev: any) => setUploadLandDoc(ev, "termsConditionDocs")}
               value={formik.values.termsConditionDocs}
               error={
                 formik.touched.termsConditionDocs &&
@@ -124,7 +129,6 @@ const ContractServicesForm = ({ formik }: { formik?: any }): JSX.Element => {
                 formik.touched.termsConditionDocs &&
                 formik.errors.termsConditionDocs?.toString()
               }
-              documentHelperText="AGB Dokumente hinzuziehen"
             />
           </Box>
         </Grid>
@@ -146,10 +150,10 @@ const ContractServicesForm = ({ formik }: { formik?: any }): JSX.Element => {
         <Grid item xs={12} md={8}>
           <LabelWithAsterisk>Angebot Dokumente</LabelWithAsterisk>
           <Box sx={styles.docUploaderBox}>
-            <UploadMultiButton
+            <UploadButton
               id="offerDocs"
               name="offerDocs"
-              onChange={formik.handleChange}
+              onChange={(ev: any) => setUploadLandDoc(ev, "offerDocs")}
               value={formik.values.offerDocs}
               error={
                 formik.touched.offerDocs && Boolean(formik.errors.offerDocs)
@@ -157,7 +161,6 @@ const ContractServicesForm = ({ formik }: { formik?: any }): JSX.Element => {
               helperText={
                 formik.touched.offerDocs && formik.errors.offerDocs?.toString()
               }
-              documentHelperText="Angebot Dokumente hinzuziehen"
             />
           </Box>
         </Grid>
