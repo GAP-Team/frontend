@@ -1,4 +1,3 @@
-// import Registration from "../registration/Registration";
 import Registration from "@/screens/registration/Registration";
 
 export default function RegistrationPage(): JSX.Element {
