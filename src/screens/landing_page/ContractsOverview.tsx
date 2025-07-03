@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAppDispatch } from "@/lib/hooks";
-import ContractCard from "@/components/card/ContractCard";
+import ContractCard from "@/screens/service_provider/contracts/ContractCard";
 import { showSnackbar } from "@/components/root-snackbar";
 import addTenderSrc from "@/../public/icons/add_tender.svg";
 import NoContentPage from "@/components/common/NoContentPage";

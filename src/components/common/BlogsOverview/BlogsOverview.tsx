@@ -1,7 +1,7 @@
 import GBadge from "../../data_display/badge/GBadge";
 import { Box, Grid } from "@mui/material";
 import { articles } from "@/utils/Constants";
-import BlogCard from "@/components/card/BlogCard";
+import BlogCard from "@/components/surfaces/card/BlogCard";
 
 const BlogsOverview = (): JSX.Element => {
   return (

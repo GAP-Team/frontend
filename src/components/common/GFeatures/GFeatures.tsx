@@ -13,7 +13,7 @@ import { DoorSvgIcon } from "../../../../public/svg/DoorSvgIcon";
 import { GasSvgIcon } from "../../../../public/svg/GasSvgIcon";
 import { CoolingSvgIcon } from "../../../../public/svg/CoolingSvgIcon";
 import TitleSection from "../../label/title-section";
-import { FeatureCard } from "./../../card/FeatureCard";
+import { FeatureCard } from "../../surfaces/card/FeatureCard";
 
 const GFeatures = (): JSX.Element => {
   return (

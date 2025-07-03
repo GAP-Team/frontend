@@ -4,7 +4,7 @@ import HeroSection from "@/components/common/HeroSection/HeroSection";
 import FeatureSection from "@/components/common/FeatureSection/FeatureSection";
 import RealEstateOwnerTypes from "@/components/common/RealEstateOwnerTypes/RealEstateOwnerTypes";
 
-const RealEstateLandingPage = (): JSX.Element => {
+const RealEstateScreen = (): JSX.Element => {
   return (
     <Box sx={{ width: "100%" }}>
       <HeroSection />
@@ -15,4 +15,4 @@ const RealEstateLandingPage = (): JSX.Element => {
   );
 };
 
-export default RealEstateLandingPage;
+export default RealEstateScreen;

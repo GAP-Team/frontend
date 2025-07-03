@@ -2,7 +2,7 @@ import React from "react";
 import Box from "@mui/material/Box";
 import { ROUTES } from "@/utils/routes";
 import SectionTitle from "@/components/label/SectionTitle"; // Ensure this import path is correct
-import DividerDecorator from "@/components/divider/DividerDecorator"; // Ensure this import path is correct
+import DividerDecorator from "@/components/data_display/divider/DividerDecorator"; // Ensure this import path is correct
 
 interface HeaderSectionProps {
   count?: number;

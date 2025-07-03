@@ -23,7 +23,7 @@ interface EmailVerificationProps {
 }
 
 // FIXME: email verification should be a screen component, it does not belong to the components folder
-const EmailVerification = ({
+const EmailVerificationScreen = ({
   sendMail,
   newUserId,
   newUserEmail,
@@ -243,7 +243,7 @@ const EmailVerification = ({
   );
 };
 
-export default EmailVerification;
+export default EmailVerificationScreen;
 
 const styles = {
   mainContainer: {

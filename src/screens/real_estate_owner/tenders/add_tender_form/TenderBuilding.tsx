@@ -8,7 +8,7 @@ import { HELP_ICON_BUTTON_COLOR, Item } from "@/utils/Constants";
 import { useEffect, useState } from "react";
 import { AddTenderFormValues } from "./types";
 import { FormControl, MenuItem, Select } from "@mui/material";
-import CustomSelect from "@/components/drop_down/CustomSelect";
+import CustomSelect from "@/components/inputs/drop_down/CustomSelect";
 import { getUserBuildings } from "@/lib/features/buildingSlice";
 import HelpIcon from "@/components/icons/HelpIcon";
 import LabelWithAsterisk from "@/components/label/LabelWithAsterisk";

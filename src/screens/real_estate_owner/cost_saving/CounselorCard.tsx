@@ -4,7 +4,7 @@ import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import { IconButton } from "@mui/material";
 import { AiOutlineArrowLeft, AiOutlineArrowRight } from "react-icons/ai"; // For navigation arrows
-import DividerDecorator from "@/components/divider/DividerDecorator";
+import DividerDecorator from "@/components/data_display/divider/DividerDecorator";
 import { RiRobot2Line } from "react-icons/ri";
 
 const CounselorCard = (): JSX.Element => {

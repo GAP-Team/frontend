@@ -17,7 +17,7 @@ import PageTitle from "@/components/label/PageTitle";
 import { handleUploadDoc } from "@/utils/uploadToS3";
 import BackButton from "@/components/inputs/button/BackButton";
 import InfoBanner from "@/components/common/InfoBanner";
-import EmailVerification from "@/components/email/EmailVerification";
+import EmailVerificationScreen from "@/screens/EmailVerification";
 import { registrationValidationSchema } from "@/utils/ValidationSchema";
 import { Document } from "@/typings/types";
 import emailAPIs from "@/api/email";
@@ -274,7 +274,7 @@ const Registration = (): JSX.Element => {
                   />
                 ) : (
                   isVerificationEmailSent && (
-                    <EmailVerification
+                    <EmailVerificationScreen
                       sendMail={false}
                       newUserId={newUserId}
                       newUserName={newUserName}

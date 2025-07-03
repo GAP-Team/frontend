@@ -1,14 +1,14 @@
 "use client";
 import { Box } from "@mui/material";
 import LandingPageLayout from "@/screens/landingpage_layout/LandingPageLayout";
-import RealEstateLandingPage from "@/screens/real_estate_landing_page/RealEstateLandingPage";
+import RealEstateScreen from "@/screens/landing_page/RealEstateScreen";
 
-export default function Home(): JSX.Element {
+export default function RealEstateLandingpage(): JSX.Element {
   return (
     <main className="flex min-h-screen flex-col items-center bg-white justify-between">
       <LandingPageLayout>
         <Box sx={styles.pageContainer}>
-          <RealEstateLandingPage />
+          <RealEstateScreen />
         </Box>
       </LandingPageLayout>
     </main>

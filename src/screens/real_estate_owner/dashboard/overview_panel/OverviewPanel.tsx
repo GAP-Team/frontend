@@ -5,7 +5,7 @@ import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
 import StatisticsItem from "@/components/label/StatisticsItem";
 import ProjectCard from "./ProjectCard";
-import DividerDecorator from "@/components/divider/DividerDecorator";
+import DividerDecorator from "@/components/data_display/divider/DividerDecorator";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { Tender } from "../../tenders/tender_card/types";
 import { TenderStatusEnum } from "@/utils/enums";

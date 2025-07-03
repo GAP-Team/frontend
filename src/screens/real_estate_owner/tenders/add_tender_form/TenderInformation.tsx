@@ -10,7 +10,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import { TENDER_FORM } from "@/utils/enums";
 import { AddTenderFormValues } from "./types";
 import GTextInput from "@/components/input/GTextInput";
-import CustomSelect from "@/components/drop_down/CustomSelect";
+import CustomSelect from "@/components/inputs/drop_down/CustomSelect";
 import LabelWithAsterisk from "@/components/label/LabelWithAsterisk";
 import { tenderTypesListHW, tenderTypesListSV } from "@/utils/Constants";
 

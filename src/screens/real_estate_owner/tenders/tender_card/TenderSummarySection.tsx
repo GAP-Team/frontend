@@ -1,6 +1,6 @@
 "use client";
 
-import HeaderSection from "../../real_estate_user/HeaderSection";
+import HeaderSection from "../../dashboard/HeaderSection";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import Divider from "@mui/material/Divider";

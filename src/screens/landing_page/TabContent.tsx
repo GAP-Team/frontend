@@ -12,6 +12,7 @@ interface TabContentProps {
   image: StaticImageData;
 }
 
+// FIXME: rename this component to something more descriptive
 const TabContent: React.FC<TabContentProps> = ({
   title,
   image,

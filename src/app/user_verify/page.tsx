@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 import { currentUser } from "@/lib/features/userSlice";
 import GNavbar from "@/components/navigation/GNavbar/GNavbar";
-import EmailVerification from "@/components/email/EmailVerification";
+import EmailVerificationScreen from "@/screens/EmailVerification";
 
 export default function UserMailVerification(): JSX.Element {
   const router = useRouter();
@@ -24,7 +24,7 @@ export default function UserMailVerification(): JSX.Element {
       <section style={{ display: "flex", backgroundColor: "#F1F3F4" }}>
         <GNavbar />
       </section>
-      <EmailVerification
+      <EmailVerificationScreen
         sendMail={false}
         newUserId={user?.id}
         newUserEmail={user?.email}

@@ -4,10 +4,10 @@ import Sidebar, {
   SubItem,
   SidebarItem,
 } from "@/components/navigation/GSidebar/SideBar";
-import GAppbar from "@/components/navigation/GAppbar/GAppbar";
+import GAppbar from "@/screens/real_estate_owner/navigation/GAppbar";
 import Box from "@mui/material/Box";
 import { useAppSelector } from "@/lib/hooks";
-import CustomDialog from "@/components/dialog/CustomDialog";
+import CustomDialog from "@/components/feedback/dialog/CustomDialog";
 import { checkIsLoggedIn } from "@/utils/helperJWT";
 
 interface LayoutProps {

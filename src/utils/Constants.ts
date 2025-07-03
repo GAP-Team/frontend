@@ -3,7 +3,7 @@ import { USER_ROLE } from "./enums";
 import HomeWorkIcon from "@mui/icons-material/HomeWork";
 import OfficeImage from "../../public/images/office.jpg";
 import DescriptionIcon from "@mui/icons-material/Description";
-import { Notification } from "@/components/navigation/GAppbar/types";
+import { Notification } from "@/components/notification/types";
 import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
 import ConnectWithoutContactIcon from "@mui/icons-material/ConnectWithoutContact";
 
