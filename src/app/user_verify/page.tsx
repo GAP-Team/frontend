@@ -8,6 +8,7 @@ import { currentUser } from "@/lib/features/userSlice";
 import GNavbar from "@/components/navigation/GNavbar/GNavbar";
 import EmailVerification from "@/components/email/EmailVerification";
 
+// FIXME: renaming necessary as they do not have intuitive names
 export default function UserMailVerification(): JSX.Element {
   const router = useRouter();
   const user = useSelector(currentUser);
@@ -24,6 +25,7 @@ export default function UserMailVerification(): JSX.Element {
       <section style={{ display: "flex", backgroundColor: "#F1F3F4" }}>
         <GNavbar />
       </section>
+      {/*// FIXME: renaming necessary as they do not have intuitive names */}
       <EmailVerification
         sendMail={false}
         newUserId={user?.id}

@@ -1,13 +1,18 @@
+import { Facility } from "@/screens/dashboard/facilities/facility_card/types";
 import api from "../axios";
 
-const facilityAPIs = {
+const facilityAPI = {
   /* Facility Routes */
-  create: (data: any): any => api.post("/facilities", data),
+  // FIXME: Add proper types for the parameters and response
+  create: (facility: Facility): Promise<{ id: string }> =>
+    api.post("/facilities", facility),
   delete: (facilityId: string): any => api.delete(`/facilities/${facilityId}`),
-  getFacilityTenders: (facilityId: string): any =>
+  getTendersOfFacility: (facilityId: string): any =>
     api.get(`/facilities/${facilityId}/tenders`),
-  update: (facilityId: string, facilityData: any): any =>
-    api.put(`/facilities/${facilityId}`, facilityData),
+  update: (
+    facilityId: string,
+    facility: Partial<Facility>
+  ): Promise<Facility> => api.put(`/facilities/${facilityId}`, facility),
 };
 
-export default facilityAPIs;
+export default facilityAPI;

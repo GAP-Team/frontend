@@ -3,7 +3,7 @@ import Stack from "@mui/material/Stack";
 import { FiFileText } from "react-icons/fi";
 import Typography from "@mui/material/Typography";
 import { CircularProgress, Divider } from "@mui/material";
-import s3APIs from "@/api/s3";
+import s3API from "@/api/s3";
 import { Document } from "@/typings/types";
 
 interface DocumentListProps {
@@ -30,7 +30,7 @@ const DocumentList: React.FC<DocumentListProps> = ({
     setSelectedIndex(selectedIndex);
     setIsDownloading(true);
 
-    let fileDetails = await s3APIs.getFile(fileKey);
+    let fileDetails = await s3API.getFile(fileKey);
 
     const url = window.URL.createObjectURL(
       new Blob([fileDetails.data], { type: "application/pdf" })

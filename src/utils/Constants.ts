@@ -193,7 +193,7 @@ export interface DashboardComponentsProps {
   slot?: string;
 }
 
-export interface Documentation {
+export interface Documents {
   documentChoice: string;
   constructionDocs: File[];
   floorplanDocs: File[];
@@ -279,7 +279,7 @@ export const applications = [
   // ...other applications
 ];
 
-export const news = [
+export const messages = [
   {
     companyName: "Mayer Prüfungs GmbH",
     numberOfMessages: 3,
