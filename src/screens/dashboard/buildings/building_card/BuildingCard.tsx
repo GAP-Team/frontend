@@ -14,8 +14,8 @@ import Typography from "@mui/material/Typography";
 import { IoExtensionPuzzleOutline } from "react-icons/io5";
 
 import { Building } from "./types";
-import facilityAPIs from "@/api/facility";
-import buildingAPIs from "@/api/building";
+import facilityAPI from "@/api/facility";
+import buildingAPI from "@/api/building";
 import DocumentList from "./DocumentList ";
 import { DOCUMENT_TYPE } from "@/utils/enums";
 import ActionMenu from "@/components/common/ActionMenu";
@@ -23,7 +23,7 @@ import { ROUTES, REAL_ESTATE_BASE } from "@/utils/routes";
 import { scrollBarStyles } from "@/components/scrollbar/Scrollbar";
 import {
   getUserBuildings,
-  setUserBuildingDetails,
+  setUserBuilding,
 } from "@/lib/features/buildingSlice";
 
 interface BuildingCardProps {
@@ -45,7 +45,7 @@ const BuildingCard: React.FC<BuildingCardProps> = ({ building }) => {
     if (building?.facilityIds?.length > 0) {
       await Promise.all(
         building?.facilityIds?.map(async (facilityId: string) => {
-          const tender = await facilityAPIs.getFacilityTenders(facilityId);
+          const tender = await facilityAPI.getTendersOfFacility(facilityId);
           count = count + tender?.data?.length;
         })
       );
@@ -67,12 +67,12 @@ const BuildingCard: React.FC<BuildingCardProps> = ({ building }) => {
   `;
 
   const deleteBuilding = async (buildingId: string): Promise<void> => {
-    const deleteStatus = await buildingAPIs.delete(buildingId);
+    const deleteStatus = await buildingAPI.delete(buildingId);
     if (deleteStatus?.data?.statusCode === 204) {
       const buildingsAfterDelete = userBuildings.filter(
         (building: Building) => building.id !== buildingId
       );
-      dispatch(setUserBuildingDetails(buildingsAfterDelete));
+      dispatch(setUserBuilding(buildingsAfterDelete));
     }
   };
 

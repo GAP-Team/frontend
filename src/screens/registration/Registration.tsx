@@ -11,7 +11,6 @@ import Typography from "@mui/material/Typography";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
 import userAPIs from "@/api/user";
 import { RegistrationFormValues } from "./types";
-
 import { DOCUMENT_TYPE, USER_ROLE } from "@/utils/enums";
 import PageTitle from "@/components/label/PageTitle";
 import { handleUploadDoc } from "@/utils/uploadToS3";
@@ -20,7 +19,7 @@ import InfoBanner from "@/components/common/InfoBanner";
 import EmailVerification from "@/components/email/EmailVerification";
 import { registrationValidationSchema } from "@/utils/ValidationSchema";
 import { Document } from "@/typings/types";
-import emailAPIs from "@/api/email";
+import emailAPI from "@/api/email";
 import { ROUTES } from "@/utils/routes";
 import { numOfEmployeesOptions, getRegistrationSteps } from "@/utils/Constants";
 
@@ -150,8 +149,7 @@ const Registration = (): JSX.Element => {
         setNewUserName(res?.data?.firstName);
 
         const sendEmailQuery = { email: values.email };
-        const sendStatus =
-          await emailAPIs.sendVerificationEmail(sendEmailQuery);
+        const sendStatus = await emailAPI.sendVerificationEmail(sendEmailQuery);
 
         if (sendStatus.status === 201) {
           setIsVerificationEmailSent(true);

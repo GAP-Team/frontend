@@ -10,7 +10,7 @@ import Typography from "@mui/material/Typography";
 import CircularProgress from "@mui/material/CircularProgress";
 
 import userAPIs from "@/api/user";
-import emailAPIs from "@/api/email";
+import emailAPI from "@/api/email";
 import GButton from "@/components/button/GButton";
 import SuccessPage from "@/components/common/SuccessPage";
 
@@ -137,8 +137,8 @@ const EmailVerification = ({
 
   const handleResendCode = async (): Promise<void> => {
     setResendDisabled(true);
-    const sendEmailQuery = { email: newUserEmail };
-    const sendStatus = await emailAPIs.sendVerificationEmail(sendEmailQuery);
+    const userEmailPayload = { email: newUserEmail };
+    const sendStatus = await emailAPI.sendVerificationEmail(userEmailPayload);
 
     if (sendStatus.status === 201) {
       setIsVerificationEmailSent(true);

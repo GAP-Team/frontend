@@ -7,7 +7,7 @@ import CounselorCard from "./CounselorCard";
 import JobList from "./JobList";
 import { jobItemListInCostPage } from "@/utils/Constants";
 
-export default function CostSavingPage(): JSX.Element {
+export default function CostSaving(): JSX.Element {
   return (
     <Box sx={styles.pageContainer}>
       <PageTitle title="Kosteneinsparung" sx={{ ml: "1.5rem", my: "1rem" }} />

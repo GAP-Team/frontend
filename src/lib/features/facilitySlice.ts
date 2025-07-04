@@ -1,9 +1,9 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../store";
 import { Facility } from "@/screens/dashboard/facilities/facility_card/types";
-import buildingAPIs from "@/api/building";
+import buildingAPI from "@/api/building";
 import userAPIs from "@/api/user";
-import facilityAPIs from "@/api/facility";
+import facilityAPI from "@/api/facility";
 
 interface FacilityState {
   facilities: Facility[];
@@ -22,7 +22,7 @@ export const fetchFacilities = createAsyncThunk(
   "facilities/fetchForBuilding",
   async (buildingId: string, { rejectWithValue }) => {
     try {
-      const response = await buildingAPIs.getBuildingFacilities(buildingId);
+      const response = await buildingAPI.getFacilitiesOfBuilding(buildingId);
       return response.data;
     } catch (error: any) {
       return rejectWithValue(
@@ -41,7 +41,7 @@ const getFacilitiesByUserId = createAsyncThunk(
     facilityType?: string;
   }) => {
     const { userId, city, state, facilityType } = param;
-    const response = await userAPIs.getUserFacilities(
+    const response = await userAPIs.getFacilitiesOfUser(
       userId,
       city,
       state,
@@ -55,7 +55,7 @@ const getFacilitiesByUserId = createAsyncThunk(
 export const deleteFacility = createAsyncThunk(
   "facility/deleteFacility",
   async (facilityId: string) => {
-    await facilityAPIs.delete(facilityId);
+    await facilityAPI.delete(facilityId);
     return facilityId;
   }
 );
@@ -71,9 +71,10 @@ export const getFacilitiesByUser = (
 // Create Facility
 export const createFacility = createAsyncThunk(
   "facility/createFacility",
-  async (newFacility: any) => {
-    const response = await facilityAPIs.create(newFacility);
-    return response.data;
+  //FIXME: Add proper types for the parameters and response
+  async (newFacility: any): Promise<{ id: string }> => {
+    const response = await facilityAPI.create(newFacility);
+    return response;
   }
 );
 // Update Facility
@@ -86,8 +87,8 @@ export const updateFacility = createAsyncThunk(
     facilityId: string;
     data: Partial<Facility>;
   }) => {
-    const response = await facilityAPIs.update(facilityId, data);
-    return response.data;
+    const response = await facilityAPI.update(facilityId, data);
+    return response;
   }
 );
 

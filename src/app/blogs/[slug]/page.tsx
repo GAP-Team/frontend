@@ -7,17 +7,17 @@ import { articles } from "@/utils/Constants";
 import BlogDetails from "@/components/common/BlogDetails/BlogDetails";
 import LandingPageLayout from "@/screens/landingpage_layout/LandingPageLayout";
 
-export default function Blogs(): JSX.Element {
+export default function BlogPage(): JSX.Element {
   const params = useParams();
   const slug = Array.isArray(params.slug) ? params.slug[0] : params.slug;
 
   const [blog, setBlog] = useState<BlogProps>({} as BlogProps);
 
   useEffect(() => {
-    handleGetSelectedBlog(slug);
+    handleSelectedBlog(slug);
   }, [slug]);
 
-  const handleGetSelectedBlog = (slug: string): void => {
+  const handleSelectedBlog = (slug: string): void => {
     const selectedBlog = articles.find((article) => article.slug === slug);
     if (selectedBlog) {
       setBlog(selectedBlog);

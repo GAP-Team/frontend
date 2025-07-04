@@ -4,7 +4,7 @@ import { ROUTES } from "@/utils/routes";
 import { useRouter } from "next/navigation";
 import Dashboard from "@/screens/dashboard/Dashboard";
 import NoAccessPage from "@/components/common/NoAccessPage";
-import { userIsAdmin, checkIsLoggedIn } from "@/utils/helperJWT";
+import { userIsAdmin, checkIsLoggedIn } from "@/utils/auth";
 
 export default function AdminDashboardPage(): JSX.Element {
   const router = useRouter();

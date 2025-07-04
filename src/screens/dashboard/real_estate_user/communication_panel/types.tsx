@@ -1,4 +1,4 @@
-export interface NewsItemProps {
+export interface MessageItemProps {
   companyName: string;
   numberOfMessages: string | number;
   location: string;
