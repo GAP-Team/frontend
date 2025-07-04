@@ -13,12 +13,8 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import InputAdornment from "@mui/material/InputAdornment";
 import CircularProgress from "@mui/material/CircularProgress";
-<<<<<<< HEAD
 import Cookies from "js-cookie";
-import authAPIs from "@/api/auth";
-=======
 import authAPI from "@/api/auth";
->>>>>>> a8ce4fa6b651f6253f7ed0712b8a96b1164ae5db
 import { setUser } from "@/lib/features/userSlice";
 import { GapLogo } from "@/components/logo/GapLogo";
 import HeroBanner from "../../components/common/InfoBanner";

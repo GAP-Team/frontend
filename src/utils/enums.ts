@@ -58,3 +58,8 @@ export enum FORM_ACTION_TYPE {
   CREATE = "CREATE",
   UPDATE = "UPDATE",
 }
+
+export enum USER_ROLE_IN_GERMAN {
+  SERVICE_PROVIDER = "Dienstleister",
+  REAL_ESTATE_OWNER = "Immobilienbetreiber",
+}

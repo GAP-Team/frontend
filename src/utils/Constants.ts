@@ -817,6 +817,10 @@ export const UsersTableColumns = [
     label: "Unternehmenstyp",
   },
   {
+    id: "role",
+    label: "Rolle",
+  },
+  {
     id: "companyRegistrationNumber",
     label: "Registrierungsnummer",
   },

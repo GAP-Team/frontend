@@ -1,19 +1,33 @@
 "use client";
-import { useEffect } from "react";
-import { RootState } from "@/lib/store";
-import { useSelector } from "react-redux";
+import userAPIs from "@/api/user";
+import { User } from "@/typings/types";
+import { useState, useEffect } from "react";
 import { useAppDispatch } from "@/lib/hooks";
-import { fetchUsers } from "@/lib/features/userSlice";
 import TopFilter from "../landing_page/TopFilterPanel";
+import { showSnackbar } from "@/components/root-snackbar";
 import UsersTable from "../../components/table/UsersTable";
 
 const Users = (): JSX.Element => {
   const appDispatch = useAppDispatch();
-  const users = useSelector((state: RootState) => state.user.users);
+  const [users, setUsers] = useState<User[]>([]);
 
   useEffect(() => {
-    appDispatch(fetchUsers());
+    fetchUsers();
   }, []);
+
+  const fetchUsers = async (): Promise<void> => {
+    try {
+      const response = await userAPIs.getUsers();
+      setUsers(response.data);
+    } catch {
+      appDispatch(
+        showSnackbar({
+          type: "error",
+          message: "Etwas ist schiefgelaufen. Versuchen Sie es später erneut!",
+        })
+      );
+    }
+  };
 
   return (
     <section className="bg-#E0E0E0 w-full px-3 py-5">

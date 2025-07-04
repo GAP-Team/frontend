@@ -1,45 +1,39 @@
 import { useState } from "react";
+import userAPIs from "@/api/user";
 import Switch from "@mui/material/Switch";
+import { useAppDispatch } from "@/lib/hooks";
 import { showSnackbar } from "../root-snackbar";
-import { useAppSelector, useAppDispatch } from "@/lib/hooks";
 import { Popover, Grid, Typography, Button } from "@mui/material";
 
 interface SwitchButtonProps {
   color: "primary" | "secondary" | "success" | "error" | "warning" | "info";
   checked: boolean;
   userId: string;
-  onChange: (id: string, isChecked: boolean) => void;
 }
 
 const SwitchButton: React.FC<SwitchButtonProps> = ({
   color,
   userId,
   checked,
-  onChange,
 }) => {
   const appDispatch = useAppDispatch();
   const [isChecked, setIsChecked] = useState<boolean>(false);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [showIsChecked, setshowIsChecked] = useState<boolean>(checked);
-  const isInActiveUpdatedError = useAppSelector(
-    (state) => state.user.userIsActiveError
-  );
 
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
 
   const handleError = (status: boolean): void => {
-    if (isInActiveUpdatedError) {
-      setIsChecked(status);
-      setshowIsChecked(status);
+    setIsChecked(status);
+    setshowIsChecked(status);
 
-      appDispatch(
-        showSnackbar({
-          type: "error",
-          message: "Etwas ist schiefgelaufen. Versuchen Sie es später erneut!",
-        })
-      );
-    }
+    appDispatch(
+      showSnackbar({
+        type: "error",
+        message: "Etwas ist schiefgelaufen. Versuchen Sie es später erneut!",
+      })
+    );
   };
 
   const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
@@ -47,11 +41,27 @@ const SwitchButton: React.FC<SwitchButtonProps> = ({
     setIsChecked(event.target.checked);
   };
 
-  const handleUpdateUserIsActiveStatus = (): void => {
+  const handleUpdateUserIsActiveStatus = async (): Promise<void> => {
     setAnchorEl(null);
     setshowIsChecked(isChecked);
-    onChange(userId, isChecked);
-    handleError(!isChecked);
+
+    try {
+      if (isChecked) {
+        await userAPIs.activateUser(userId);
+      } else {
+        await userAPIs.deActivateUser(userId);
+      }
+
+      appDispatch(
+        showSnackbar({
+          type: "success",
+          message: "Benutzeraktivierung erfolgreich aktualisiert!",
+        })
+      );
+    } catch {
+      handleError(!isChecked);
+      return;
+    }
   };
 
   const handleClose = (): void => {
