@@ -1,7 +1,7 @@
 "use client";
 
 import { useParams } from "next/navigation";
-import TenderDetails from "@/screens/dashboard/tenders/tender_card/TenderDetails";
+import TenderDetails from "@/screens/real_estate_owner/tenders/tender_card/TenderDetails";
 
 export default function TenderOverview(): JSX.Element {
   const params = useParams();

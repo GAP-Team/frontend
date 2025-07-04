@@ -7,7 +7,7 @@ import { useRouter, usePathname } from "next/navigation";
 import { MdOutlineDoorSliding, MdOutlineAddHomeWork } from "react-icons/md";
 import { SubItem, SidebarItem } from "@/components/navigation/GSidebar/SideBar";
 import { ROUTES } from "@/utils/routes";
-import Layout from "@/screens/dashboard/Layout";
+import Layout from "@/screens/real_estate_owner/Layout";
 import { Box } from "@mui/material";
 
 const sidebarItems: SidebarItem[] = [

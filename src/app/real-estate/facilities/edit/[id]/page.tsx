@@ -1,6 +1,6 @@
 "use client";
 import { useParams } from "next/navigation";
-import NewFacility from "@/screens/dashboard/facilities/add_facility_form/NewFacility";
+import NewFacility from "@/screens/real_estate_owner/facilities/add_facility_form/NewFacility";
 
 export default function EditFacilityPage(): JSX.Element {
   const params = useParams();

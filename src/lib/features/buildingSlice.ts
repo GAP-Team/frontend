@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import userAPIs from "@/api/user";
 import { RootState } from "../store";
-import { Building } from "@/screens/dashboard/buildings/building_card/types";
+import { Building } from "@/screens/real_estate_owner/buildings/building_card/types";
 interface queryType {
   userId: string;
   city?: string;

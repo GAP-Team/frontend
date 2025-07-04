@@ -4,7 +4,7 @@ import { ROUTES } from "@/utils/routes";
 import { CgNotes } from "react-icons/cg";
 import { useEffect, useState } from "react";
 import { BsEnvelope } from "react-icons/bs";
-import Layout from "@/screens/dashboard/Layout";
+import Layout from "@/screens/real_estate_owner/Layout";
 import { LuLayoutDashboard } from "react-icons/lu";
 import { useRouter, usePathname } from "next/navigation";
 import { SubItem, SidebarItem } from "@/components/navigation/GSidebar/SideBar";
