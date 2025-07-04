@@ -6,7 +6,7 @@ import Dashboard from "@/screens/dashboard/Dashboard";
 import NoAccessPage from "@/components/common/NoAccessPage";
 import { userIsAdmin, checkIsLoggedIn } from "@/utils/helperJWT";
 
-export default function ServiceProviderDashboardPage(): JSX.Element {
+export default function AdminDashboardPage(): JSX.Element {
   const router = useRouter();
 
   useEffect(() => {

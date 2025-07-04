@@ -20,6 +20,8 @@ interface UserState {
     sendUserActivityEmailStatus?: boolean;
   };
   users: User[];
+  loading: boolean;
+  userIsActiveError: string | null;
 }
 
 interface ChangePassword {
@@ -59,6 +61,8 @@ const initialState: UserState = {
     sendUserActivityEmailStatus: false,
   },
   users: [],
+  loading: false,
+  userIsActiveError: null,
 };
 
 export const updateUserProfile = createAsyncThunk(
@@ -101,8 +105,23 @@ export const fetchUsers = createAsyncThunk("user/fetchUsers", async () => {
 export const activateUser = createAsyncThunk(
   "user/activateUser",
   async ({ id }: { id: string }) => {
-    const response = await userAPIs.activateUser(id);
-    return response.data;
+    try {
+      const response = await userAPIs.activateUser(id);
+      return response.data;
+    } catch {
+      throw new Error("Failed to activate user");
+    }
+  }
+);
+export const deActivateUser = createAsyncThunk(
+  "user/deActivateUser",
+  async ({ id }: { id: string }) => {
+    try {
+      const response = await userAPIs.deActivateUser(id);
+      return response.data;
+    } catch {
+      throw new Error("Failed to activate user");
+    }
   }
 );
 
@@ -122,20 +141,47 @@ const userSlice = createSlice({
       return { ...state, ...action.payload };
     });
     builder.addCase(sendUserActivityEmail.fulfilled, (state, action) => {
-      state.user.sendUserActivityEmailStatus = action.payload.status;
+      if (state.user) {
+        state.user.sendUserActivityEmailStatus = action.payload.status;
+      }
     });
     builder.addCase(fetchUsers.fulfilled, (state, action) => {
       state.users = action.payload;
     });
-    builder.addCase(activateUser.fulfilled, (state, action) => {
-      state.user.isActive = action.payload.status === 200;
-    });
+    builder
+      .addCase(activateUser.pending, (state) => {
+        state.loading = true;
+        state.userIsActiveError = null;
+      })
+      .addCase(activateUser.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload;
+      })
+      .addCase(activateUser.rejected, (state, action) => {
+        state.loading = false;
+        state.userIsActiveError =
+          action.error.message || "Failed to activate user";
+      });
+    builder
+      .addCase(deActivateUser.pending, (state) => {
+        state.loading = true;
+        state.userIsActiveError = null;
+      })
+      .addCase(deActivateUser.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload;
+      })
+      .addCase(deActivateUser.rejected, (state, action) => {
+        state.loading = false;
+        state.userIsActiveError =
+          action.error.message || "Failed to deactivate user";
+      });
   },
 });
 
 export const { setUser } = userSlice.actions;
 
-export const isUserActive = (state: RootState): boolean => state.user.isActive;
+export const isUserActive = (state: RootState): boolean => state.user?.isActive;
 export const currentUser = (state: RootState): UserState["user"] => state.user;
 
 export default userSlice.reducer;

@@ -1,5 +1,7 @@
 import { useState } from "react";
 import Switch from "@mui/material/Switch";
+import { showSnackbar } from "../root-snackbar";
+import { useAppSelector, useAppDispatch } from "@/lib/hooks";
 import { Popover, Grid, Typography, Button } from "@mui/material";
 
 interface SwitchButtonProps {
@@ -11,24 +13,45 @@ interface SwitchButtonProps {
 
 const SwitchButton: React.FC<SwitchButtonProps> = ({
   color,
-  checked,
   userId,
+  checked,
   onChange,
 }) => {
-  const [isChecked, setIsChecked] = useState<boolean>(checked);
+  const appDispatch = useAppDispatch();
+  const [isChecked, setIsChecked] = useState<boolean>(false);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [showIsChecked, setshowIsChecked] = useState<boolean>(checked);
+  const isInActiveUpdatedError = useAppSelector(
+    (state) => state.user.userIsActiveError
+  );
 
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
 
-  const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-    setAnchorEl(event.currentTarget);
+  const handleError = (status: boolean): void => {
+    if (isInActiveUpdatedError) {
+      setIsChecked(status);
+      setshowIsChecked(status);
+
+      appDispatch(
+        showSnackbar({
+          type: "error",
+          message: "Etwas ist schiefgelaufen. Versuchen Sie es später erneut!",
+        })
+      );
+    }
   };
 
-  const handleActivateUser = (): void => {
-    setIsChecked(true);
+  const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    setAnchorEl(event.currentTarget);
+    setIsChecked(event.target.checked);
+  };
+
+  const handleUpdateUserIsActiveStatus = (): void => {
     setAnchorEl(null);
-    onChange(userId, true);
+    setshowIsChecked(isChecked);
+    onChange(userId, isChecked);
+    handleError(!isChecked);
   };
 
   const handleClose = (): void => {
@@ -37,12 +60,7 @@ const SwitchButton: React.FC<SwitchButtonProps> = ({
 
   return (
     <>
-      <Switch
-        color={color}
-        checked={isChecked}
-        onChange={handleOnChange}
-        disabled={isChecked}
-      />
+      <Switch color={color} checked={showIsChecked} onChange={handleOnChange} />
       <Popover
         id={id}
         open={open}
@@ -59,13 +77,22 @@ const SwitchButton: React.FC<SwitchButtonProps> = ({
       >
         <Grid container sx={styles.innerBox}>
           <Typography variant="body2">
-            Diese Aktion dient der Aktivierung des Benutzers. <br />
-            Möchten Sie diesen Benutzer wirklich aktivieren?
+            {!isChecked ? (
+              <>
+                Diese Aktion deaktiviert den Benutzer. <br />
+                Möchten Sie diesen Benutzer wirklich deaktivieren?
+              </>
+            ) : (
+              <>
+                Diese Aktion dient der Aktivierung des Benutzers. <br />
+                Möchten Sie diesen Benutzer wirklich aktivieren?
+              </>
+            )}
           </Typography>
           <Button
             variant="text"
             sx={styles.confirmButton}
-            onClick={handleActivateUser}
+            onClick={handleUpdateUserIsActiveStatus}
           >
             Bestätigen
           </Button>

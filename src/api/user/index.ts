@@ -43,6 +43,7 @@ const userAPIs = {
     api.delete(`/users/${id}`, { data: { currentPassword: currentPassword } }),
   getUsers: (): any => api.get("/users"),
   activateUser: (id: string): any => api.post(`/users/${id}/active`),
+  deActivateUser: (id: string): any => api.post(`/users/${id}/deactive`),
 };
 
 export default userAPIs;

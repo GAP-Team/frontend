@@ -11,10 +11,10 @@ import { User, Document } from "@/typings/types";
 import Typography from "@mui/material/Typography";
 import SwitchButton from "../button/SwitchButton";
 import { UsersTableColumns } from "@/utils/Constants";
-import { activateUser } from "@/lib/features/userSlice";
 import TableContainer from "@mui/material/TableContainer";
 import TablePagination from "@mui/material/TablePagination";
 import CircularProgress from "@mui/material/CircularProgress";
+import { activateUser, deActivateUser } from "@/lib/features/userSlice";
 
 interface UsersTableProps {
   users: User[];
@@ -44,6 +44,8 @@ const UsersTable: React.FC<UsersTableProps> = ({ users }): JSX.Element => {
   const handleOnChange = (id: string, isChecked: boolean): void => {
     if (isChecked) {
       appDispatch(activateUser({ id: id }));
+    } else {
+      appDispatch(deActivateUser({ id: id }));
     }
   };
 
