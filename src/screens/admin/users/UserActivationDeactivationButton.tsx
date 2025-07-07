@@ -2,20 +2,18 @@ import { useState } from "react";
 import userAPI from "@/api/user";
 import Switch from "@mui/material/Switch";
 import { useAppDispatch } from "@/lib/hooks";
-import { showSnackbar } from "../root-snackbar";
+import { showSnackbar } from "../../../components/root-snackbar";
 import { Popover, Grid, Typography, Button } from "@mui/material";
 
-interface SwitchButtonProps {
+interface UserActivationDeactivationButtonProps {
   color: "primary" | "secondary" | "success" | "error" | "warning" | "info";
   checked: boolean;
   userId: string;
 }
 
-const SwitchButton: React.FC<SwitchButtonProps> = ({
-  color,
-  userId,
-  checked,
-}) => {
+const UserActivationDeactivationButton: React.FC<
+  UserActivationDeactivationButtonProps
+> = ({ color, userId, checked }) => {
   const appDispatch = useAppDispatch();
   const [isChecked, setIsChecked] = useState<boolean>(false);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -112,7 +110,7 @@ const SwitchButton: React.FC<SwitchButtonProps> = ({
   );
 };
 
-export default SwitchButton;
+export default UserActivationDeactivationButton;
 
 const styles = {
   innerBox: {

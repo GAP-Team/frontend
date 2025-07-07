@@ -1,10 +1,10 @@
 "use client";
 import { useEffect } from "react";
-import { useRouter } from "next/navigation";
 import { ROUTES } from "@/utils/routes";
-import UsersOverview from "@/screens/admin/UsersOverview";
+import { useRouter } from "next/navigation";
 import NoAccessPage from "@/components/common/NoAccessPage";
 import { userIsAdmin, checkIsLoggedIn } from "@/utils/auth";
+import UsersOverview from "@/screens/admin/users/UsersOverview";
 
 export default function UsersPage(): JSX.Element {
   const router = useRouter();
