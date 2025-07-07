@@ -1,17 +1,18 @@
 "use client";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
+import buildingAPI from "@/api/building";
 import { useSelector } from "react-redux";
 import { useFormikContext } from "formik";
-import buildingAPI from "@/api/building";
-import { HELP_ICON_BUTTON_COLOR, Item } from "@/utils/Constants";
 import { useEffect, useState } from "react";
 import { AddTenderFormValues } from "./types";
+import HelpIcon from "@/components/button/HelpIcon";
 import { FormControl, MenuItem, Select } from "@mui/material";
 import CustomSelect from "@/components/drop_down/CustomSelect";
 import { getUserBuildings } from "@/lib/features/buildingSlice";
-import HelpIcon from "@/components/button/HelpIcon";
+import { HELP_ICON_BUTTON_COLOR, Item } from "@/utils/Constants";
 import LabelWithAsterisk from "@/components/label/LabelWithAsterisk";
+import { Facility } from "@/screens/dashboard/facilities/facility_card/types";
 import { AddFacilityFormValues } from "../../facilities/add_facility_form/types";
 
 const TenderBuilding = (): JSX.Element => {
@@ -47,9 +48,9 @@ const TenderBuilding = (): JSX.Element => {
     );
 
     const facilityOptions: Item[] = [];
-    allFacilities?.data?.forEach((facility: any) => {
+    allFacilities?.data?.forEach((facility: Facility) => {
       const temp = {
-        label: facility?.name,
+        label: constructFacilityLabel(facility),
         value: facility?.id,
       };
       facilityOptions.push(temp);
@@ -71,9 +72,9 @@ const TenderBuilding = (): JSX.Element => {
         await buildingAPI.getFacilitiesOfBuilding(selectedBuildingId);
 
       const facilityOptions: Item[] = [];
-      allFacilities?.data?.map((facility: any) => {
+      allFacilities?.data?.forEach((facility: Facility) => {
         const temp = {
-          label: facility?.name,
+          label: constructFacilityLabel(facility),
           value: facility?.id,
         };
         facilityOptions.push(temp);
@@ -102,6 +103,10 @@ const TenderBuilding = (): JSX.Element => {
       (facility: any) => facility.id === facilityId
     );
     return facility[0];
+  };
+
+  const constructFacilityLabel = (facility: Facility): string => {
+    return `${facility?.facilityType} - ${facility?.subcategory} - ${facility?.name}`;
   };
 
   return (
