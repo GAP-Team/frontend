@@ -4,7 +4,7 @@ import DeleteAccount from "@/screens/dashboard/settings/DeleteAccount";
 import CompanyProfile from "@/screens/dashboard/settings/CompanyProfile";
 import ChangePassword from "@/screens/dashboard/settings/ChangePassword";
 
-export default function SectionPage({
+export default function SettingSectionPage({
   params,
 }: {
   params: { section: string };

@@ -8,7 +8,7 @@ import GAppbar from "@/components/navigation/GAppbar/GAppbar";
 import Box from "@mui/material/Box";
 import { useAppSelector } from "@/lib/hooks";
 import CustomDialog from "@/components/dialog/CustomDialog";
-import { checkIsLoggedIn } from "@/utils/helperJWT";
+import { checkIsLoggedIn } from "@/utils/auth";
 
 interface LayoutProps {
   sidebarItems: SidebarItem[];
