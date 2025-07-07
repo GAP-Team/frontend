@@ -3,7 +3,7 @@ import React, { ReactNode, useEffect, useState } from "react";
 import Sidebar, {
   SubItem,
   SidebarItem,
-} from "@/components/navigation/GSidebar/SideBar";
+} from "@/components/navigation/sidebar/SideBar";
 import GAppbar from "@/screens/real_estate_owner/navigation/GAppbar";
 import Box from "@mui/material/Box";
 import { useAppSelector } from "@/lib/hooks";

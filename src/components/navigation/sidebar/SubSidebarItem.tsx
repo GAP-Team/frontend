@@ -15,6 +15,7 @@ interface SubSidebarItemProps {
   setSelected?: (item: SubItem) => void;
 }
 
+// FIXME: it is just subsidebar that belongs to sidebar (rename required) and can stay in same file
 export const SubSidebarItem: React.FC<SubSidebarItemProps> = ({
   item,
   open,

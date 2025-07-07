@@ -7,7 +7,7 @@ import { BsEnvelope } from "react-icons/bs";
 import Layout from "@/screens/real_estate_owner/Layout";
 import { LuLayoutDashboard } from "react-icons/lu";
 import { useRouter, usePathname } from "next/navigation";
-import { SubItem, SidebarItem } from "@/components/navigation/GSidebar/SideBar";
+import { SubItem, SidebarItem } from "@/components/navigation/sidebar/SideBar";
 
 const sidebarItems: SidebarItem[] = [
   {

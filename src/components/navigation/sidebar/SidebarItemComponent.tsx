@@ -12,6 +12,7 @@ interface SidebarItemComponentProps {
   setSelected: (item: SidebarItem) => void;
 }
 
+// FIXME: it is just subsidebar that belongs to sidebar (rename required) and can stay in same file
 const SidebarItemComponent: React.FC<SidebarItemComponentProps> = ({
   item,
   open,

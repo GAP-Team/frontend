@@ -5,7 +5,7 @@ import React, { useEffect, useState } from "react";
 import { LuLayoutDashboard } from "react-icons/lu";
 import { useRouter, usePathname } from "next/navigation";
 import { MdOutlineDoorSliding, MdOutlineAddHomeWork } from "react-icons/md";
-import { SubItem, SidebarItem } from "@/components/navigation/GSidebar/SideBar";
+import { SubItem, SidebarItem } from "@/components/navigation/sidebar/SideBar";
 import { ROUTES } from "@/utils/routes";
 import Layout from "@/screens/real_estate_owner/Layout";
 import { Box } from "@mui/material";

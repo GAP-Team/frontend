@@ -79,6 +79,7 @@ const MyDrawer = styled(Drawer)(
   })
 );
 
+// FIXME: refactor need here, it should belong to its own component file
 const DrawerLogo = ({
   src,
   open,
