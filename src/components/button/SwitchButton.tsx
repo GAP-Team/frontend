@@ -49,7 +49,7 @@ const SwitchButton: React.FC<SwitchButtonProps> = ({
       if (isChecked) {
         await userAPI.activateUser(userId);
       } else {
-        await userAPI.deActivateUser(userId);
+        await userAPI.deactivateUser(userId);
       }
 
       appDispatch(

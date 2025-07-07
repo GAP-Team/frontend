@@ -1,6 +1,6 @@
 import api from "../axios";
 
-const userAPI = {
+const userAPIs = {
   /* User Routes */
   // FIXME: Add proper types for the parameters and response
   register: (user: any): any => api.post("/users", user),
@@ -51,4 +51,4 @@ const userAPI = {
     }),
 };
 
-export default userAPI;
+export default userAPIs;
