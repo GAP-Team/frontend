@@ -2,7 +2,7 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { ROUTES } from "@/utils/routes";
-import UsersOverview from "@/screens/admin/Users";
+import UsersOverview from "@/screens/admin/UsersOverview";
 import NoAccessPage from "@/components/common/NoAccessPage";
 import { userIsAdmin, checkIsLoggedIn } from "@/utils/auth";
 

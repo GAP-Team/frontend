@@ -830,7 +830,7 @@ export const UsersTableColumns = [
   },
   {
     id: "qualificationDocuments",
-    label: "Qualifikationsdokumente",
+    label: "Qualifikations Dokumente",
   },
   {
     id: "activation",
