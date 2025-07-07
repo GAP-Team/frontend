@@ -7,7 +7,7 @@ import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import Typography from "@mui/material/Typography";
-import UserActivationDeactivationButton from "./UserActivationDeactivationButton";
+import UpdateUserIsActiveStatusButton from "./UserActivationDeactivationButton";
 import { UsersTableColumns } from "@/utils/Constants";
 import TableContainer from "@mui/material/TableContainer";
 import TablePagination from "@mui/material/TablePagination";
@@ -113,7 +113,7 @@ const UsersTable: React.FC<UsersTableProps> = ({ users }): JSX.Element => {
                       )}
                     </TableCell>
                     <TableCell align="left">
-                      <UserActivationDeactivationButton
+                      <UpdateUserIsActiveStatusButton
                         color="success"
                         userId={user.id}
                         checked={user.isActive}

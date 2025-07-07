@@ -5,14 +5,14 @@ import { useAppDispatch } from "@/lib/hooks";
 import { showSnackbar } from "../../../components/root-snackbar";
 import { Popover, Grid, Typography, Button } from "@mui/material";
 
-interface UserActivationDeactivationButtonProps {
+interface UpdateUserIsActiveStatusButtonProps {
   color: "primary" | "secondary" | "success" | "error" | "warning" | "info";
   checked: boolean;
   userId: string;
 }
 
-const UserActivationDeactivationButton: React.FC<
-  UserActivationDeactivationButtonProps
+const UpdateUserIsActiveStatusButton: React.FC<
+  UpdateUserIsActiveStatusButtonProps
 > = ({ color, userId, checked }) => {
   const appDispatch = useAppDispatch();
   const [isChecked, setIsChecked] = useState<boolean>(false);
@@ -110,7 +110,7 @@ const UserActivationDeactivationButton: React.FC<
   );
 };
 
-export default UserActivationDeactivationButton;
+export default UpdateUserIsActiveStatusButton;
 
 const styles = {
   innerBox: {
