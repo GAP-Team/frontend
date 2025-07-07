@@ -1,39 +1,26 @@
 "use client";
 import { useEffect } from "react";
-import { ROUTES } from "@/utils/routes";
 import { useRouter } from "next/navigation";
+import { ROUTES } from "@/utils/routes";
 import Dashboard from "@/screens/dashboard/Dashboard";
 import NoAccessPage from "@/components/common/NoAccessPage";
 import { userIsAdmin, checkIsLoggedIn } from "@/utils/auth";
 
 export default function AdminDashboardPage(): JSX.Element {
   const router = useRouter();
+  const isAdmin = userIsAdmin();
+  const isLoggedIn = checkIsLoggedIn();
+  const hasAccess = isLoggedIn && isAdmin;
 
   useEffect(() => {
-    if (!checkIsLoggedIn() || !userIsAdmin()) {
-      router.push(ROUTES.LOGIN);
-    }
-  }, [checkIsLoggedIn(), userIsAdmin()]);
+    if (!hasAccess) router.push(ROUTES.LOGIN);
+  }, [hasAccess]);
 
-  const renderRestrictionUI = (): JSX.Element => {
-    if (!checkIsLoggedIn() && !userIsAdmin()) {
-      return (
-        <NoAccessPage description="Sie müssen ein Administrator sein, um auf diese Site zugreifen zu können." />
-      );
-    }
+  if (!hasAccess) {
+    return (
+      <NoAccessPage description="Sie müssen ein Administrator sein, um auf diese Site zugreifen zu können." />
+    );
+  }
 
-    return <></>;
-  };
-
-  return (
-    <>
-      {checkIsLoggedIn() && userIsAdmin() ? (
-        <>
-          <Dashboard />
-        </>
-      ) : (
-        <>{renderRestrictionUI()}</>
-      )}
-    </>
-  );
+  return <Dashboard />;
 }

@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-import userAPIs from "@/api/user";
+import userAPI from "@/api/user";
 import emailAPI from "@/api/email";
 import { RootState } from "../store";
 import { Document, SendActivityEmailType } from "@/typings/types";
@@ -79,7 +79,7 @@ const initialState: UserState = {
 export const updateUserProfile = createAsyncThunk(
   "user/updateProfile",
   async ({ id, data }: { id: string; data: Partial<UserState> }) => {
-    const response = await userAPIs.update(id, data);
+    const response = await userAPI.update(id, data);
     return response.data;
   }
 );
@@ -87,7 +87,7 @@ export const updateUserProfile = createAsyncThunk(
 export const updateUserPassword = createAsyncThunk(
   "user/updatePassword",
   async ({ id, data }: { id: string; data: Partial<ChangePassword> }) => {
-    const response = await userAPIs.changePassword(id, data);
+    const response = await userAPI.changePassword(id, data);
     return response.data;
   }
 );
@@ -95,7 +95,7 @@ export const updateUserPassword = createAsyncThunk(
 export const deleteUser = createAsyncThunk(
   "user/deleteUser",
   async ({ id, currentPassword }: { id: string; currentPassword: string }) => {
-    const response = await userAPIs.delete(id, currentPassword);
+    const response = await userAPI.delete(id, currentPassword);
     return response.data;
   }
 );

@@ -1,5 +1,5 @@
 "use client";
-import userAPIs from "@/api/user";
+import userAPI from "@/api/user";
 import { User } from "@/typings/types";
 import { useState, useEffect } from "react";
 import { useAppDispatch } from "@/lib/hooks";
@@ -7,7 +7,7 @@ import TopFilter from "../landing_page/TopFilterPanel";
 import { showSnackbar } from "@/components/root-snackbar";
 import UsersTable from "../../components/table/UsersTable";
 
-const Users = (): JSX.Element => {
+const UsersOverview = (): JSX.Element => {
   const appDispatch = useAppDispatch();
   const [users, setUsers] = useState<User[]>([]);
 
@@ -17,7 +17,7 @@ const Users = (): JSX.Element => {
 
   const fetchUsers = async (): Promise<void> => {
     try {
-      const response = await userAPIs.getUsers();
+      const response = await userAPI.getUsers();
       setUsers(response.data);
     } catch {
       appDispatch(
@@ -41,4 +41,4 @@ const Users = (): JSX.Element => {
   );
 };
 
-export default Users;
+export default UsersOverview;

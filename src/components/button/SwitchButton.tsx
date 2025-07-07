@@ -1,5 +1,5 @@
 import { useState } from "react";
-import userAPIs from "@/api/user";
+import userAPI from "@/api/user";
 import Switch from "@mui/material/Switch";
 import { useAppDispatch } from "@/lib/hooks";
 import { showSnackbar } from "../root-snackbar";
@@ -47,9 +47,9 @@ const SwitchButton: React.FC<SwitchButtonProps> = ({
 
     try {
       if (isChecked) {
-        await userAPIs.activateUser(userId);
+        await userAPI.activateUser(userId);
       } else {
-        await userAPIs.deActivateUser(userId);
+        await userAPI.deActivateUser(userId);
       }
 
       appDispatch(

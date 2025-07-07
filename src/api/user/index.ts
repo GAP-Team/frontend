@@ -1,6 +1,6 @@
 import api from "../axios";
 
-const userAPIs = {
+const userAPI = {
   /* User Routes */
   // FIXME: Add proper types for the parameters and response
   register: (user: any): any => api.post("/users", user),
@@ -44,11 +44,11 @@ const userAPIs = {
     api.delete(`/users/${id}`, { data: { currentPassword: currentPassword } }),
   getUsers: (): any => api.get("/users"),
   activateUser: (id: string): any => api.post(`/users/${id}/active`),
-  deActivateUser: (id: string): any => api.post(`/users/${id}/deactive`),
+  deactivateUser: (id: string): any => api.post(`/users/${id}/deactive`),
   delete: (userId: string, currentPassword: string): any =>
     api.delete(`/users/${userId}`, {
       data: { currentPassword: currentPassword },
     }),
 };
 
-export default userAPIs;
+export default userAPI;

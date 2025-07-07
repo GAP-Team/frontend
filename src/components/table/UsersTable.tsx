@@ -1,19 +1,18 @@
-import s3APIs from "@/api/s3";
 import { useState } from "react";
+import { User } from "@/typings/types";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableRow from "@mui/material/TableRow";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
-import { User, Document } from "@/typings/types";
 import Typography from "@mui/material/Typography";
 import SwitchButton from "../button/SwitchButton";
 import { UsersTableColumns } from "@/utils/Constants";
 import TableContainer from "@mui/material/TableContainer";
 import TablePagination from "@mui/material/TablePagination";
-import CircularProgress from "@mui/material/CircularProgress";
 import { USER_ROLE, USER_ROLE_IN_GERMAN } from "@/utils/enums";
+import DocumentList from "@/screens/dashboard/buildings/building_card/DocumentList ";
 
 interface UsersTableProps {
   users: User[];
@@ -22,10 +21,6 @@ interface UsersTableProps {
 const UsersTable: React.FC<UsersTableProps> = ({ users }): JSX.Element => {
   const [page, setPage] = useState<number>(0);
   const [rowsPerPage, setRowsPerPage] = useState<number>(10);
-  const [isDownloading, setIsDownloading] = useState<boolean>(false);
-  const [selectedIndex, setSelectedIndex] = useState<number | undefined>(
-    undefined
-  );
 
   const handleChangePage = (event: unknown, newPage: number): void => {
     setPage(newPage);
@@ -36,61 +31,6 @@ const UsersTable: React.FC<UsersTableProps> = ({ users }): JSX.Element => {
   ): void => {
     setPage(0);
     setRowsPerPage(+event.target.value);
-  };
-
-  const renderDocuments = (documents: Document[]): JSX.Element => {
-    if (documents.length === 0) {
-      return (
-        <Typography variant="body2" color="textSecondary">
-          Keine Dokumente vorhanden
-        </Typography>
-      );
-    } else {
-      return (
-        <>
-          {documents.map((doc, index) => (
-            <Typography
-              key={doc.key}
-              sx={styles.docName}
-              onClick={() => handleDownloadDocument(doc.key, doc.name, index)}
-            >
-              {doc.name}
-              {index === selectedIndex && isDownloading && (
-                <CircularProgress
-                  size={20}
-                  color="primary"
-                  style={{ marginTop: "5px", marginLeft: "1rem" }}
-                />
-              )}
-              {index !== documents.length - 1 && ", "}
-            </Typography>
-          ))}
-        </>
-      );
-    }
-  };
-
-  const handleDownloadDocument = async (
-    fileKey: string,
-    fileName: string,
-    selectedDocIndex: number
-  ): Promise<void> => {
-    setIsDownloading(true);
-    setSelectedIndex(selectedDocIndex);
-
-    let fileDetails = await s3APIs.getFile(fileKey);
-
-    const url = window.URL.createObjectURL(
-      new Blob([fileDetails.data], { type: "application/pdf" })
-    );
-
-    const link = document.createElement("a");
-    link.href = url;
-    link.setAttribute("download", fileName);
-
-    link.click();
-
-    setIsDownloading(false);
   };
 
   return (
@@ -134,17 +74,29 @@ const UsersTable: React.FC<UsersTableProps> = ({ users }): JSX.Element => {
                     {user.company.business?.registrationNumber}
                   </TableCell>
                   <TableCell align="left">
-                    {user.company.business?.documents ? (
-                      <>{renderDocuments(user.company.business?.documents)}</>
+                    {user.company.business?.documents &&
+                    user.company.business?.documents.length > 0 ? (
+                      <DocumentList
+                        title="Dokumente des Unternehmens"
+                        documents={user.company.business?.documents}
+                      />
                     ) : (
-                      "Keine Dokumente vorhanden"
+                      <Typography variant="body2" color="textSecondary">
+                        Keine Dokumente vorhanden
+                      </Typography>
                     )}
                   </TableCell>
                   <TableCell align="left">
-                    {user.qualificationDocuments ? (
-                      <>{renderDocuments(user.qualificationDocuments)}</>
+                    {user.qualificationDocuments &&
+                    user.qualificationDocuments.length > 0 ? (
+                      <DocumentList
+                        title="Qualifikationsdokumente"
+                        documents={user.qualificationDocuments}
+                      />
                     ) : (
-                      "Keine Dokumente vorhanden"
+                      <Typography variant="body2" color="textSecondary">
+                        Keine Dokumente vorhanden
+                      </Typography>
                     )}
                   </TableCell>
                   <TableCell align="left">

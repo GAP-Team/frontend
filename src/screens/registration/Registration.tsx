@@ -9,7 +9,7 @@ import Snackbar from "@mui/material/Snackbar";
 import RegistrationForm from "./RegistrationForm";
 import Typography from "@mui/material/Typography";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
-import userAPIs from "@/api/user";
+import userAPI from "@/api/user";
 import { RegistrationFormValues } from "./types";
 import { DOCUMENT_TYPE, USER_ROLE } from "@/utils/enums";
 import PageTitle from "@/components/label/PageTitle";
@@ -140,7 +140,7 @@ const Registration = (): JSX.Element => {
         }),
       };
 
-      const res = await userAPIs.register(arrangedDataObj);
+      const res = await userAPI.register(arrangedDataObj);
 
       if (res.status === 201) {
         setActiveStep(steps.length);
