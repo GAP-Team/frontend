@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect } from "react";
 import Box from "@mui/material/Box";
-import PropertyFilterPanel from "@/components/filter/PropertyFilterPanel";
+import PropertyFilterPanel from "@/components/common/filter/PropertyFilterPanel";
 import NoContentPage from "@/components/common/NoContentPage";
 import addTenderSrc from "@/../public/icons/add_tender.svg";
 import TendersContainer from "./tender_card/TendersContainer";

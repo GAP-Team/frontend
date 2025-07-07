@@ -15,7 +15,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 import CircularProgress from "@mui/material/CircularProgress";
 import authAPIs from "@/api/auth";
 import { setUser } from "@/lib/features/userSlice";
-import { GapLogo } from "@/components/logo/GapLogo";
+import { GapLogo } from "@/components/icons/logo/GapLogo";
 import HeroBanner from "../../components/common/InfoBanner";
 import { loginValidationSchema } from "@/utils/ValidationSchema";
 import { setAccessToken, setIsUserVerified } from "@/utils/helperJWT";

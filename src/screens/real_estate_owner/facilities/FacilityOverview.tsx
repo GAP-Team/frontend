@@ -1,6 +1,6 @@
 "use client";
 import { Box } from "@mui/system";
-import PropertyFilterPanel from "@/components/filter/PropertyFilterPanel";
+import PropertyFilterPanel from "@/components/common/filter/PropertyFilterPanel";
 import React, { useEffect, useMemo, useCallback } from "react";
 import addObjSrc from "@/../public/icons/add_building.svg";
 import NoContentPage from "@/components/common/NoContentPage";

@@ -5,7 +5,7 @@ import { ROUTES } from "@/utils/routes";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 import { currentUser } from "@/lib/features/userSlice";
-import GNavbar from "@/components/navigation/GNavbar/GNavbar";
+import GNavbar from "@/components/navigation/navbar/GNavbar";
 import EmailVerificationScreen from "@/screens/EmailVerification";
 
 export default function UserMailVerification(): JSX.Element {

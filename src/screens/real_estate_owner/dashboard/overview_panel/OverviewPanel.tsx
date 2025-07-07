@@ -1,9 +1,9 @@
 "use client";
 import React, { useEffect } from "react";
-import SectionTitle from "@/components/label/SectionTitle";
+import SectionTitle from "@/components/data_display/label/SectionTitle";
 import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
-import StatisticsItem from "@/components/label/StatisticsItem";
+import StatisticDisplay from "@/components/data_display/StatisticDisplay";
 import ProjectCard from "./ProjectCard";
 import DividerDecorator from "@/components/data_display/divider/DividerDecorator";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
@@ -136,13 +136,16 @@ const OverviewPanel: React.FC<DashboardComponentsProps> = (): JSX.Element => {
       />
       <DividerDecorator />
       <Box sx={styles.statsSection}>
-        <StatisticsItem
+        <StatisticDisplay
           number={openTenders}
           color="#FECB00"
           text="offene Ausschreibungen"
         />
         <Divider orientation="vertical" flexItem sx={styles.dividerStats} />
-        <StatisticsItem number={activeTender} text="laufende Ausschreibungen" />
+        <StatisticDisplay
+          number={activeTender}
+          text="laufende Ausschreibungen"
+        />
       </Box>
       <Box sx={{ display: "flex", gap: 2, mt: 2 }}>
         <GButton

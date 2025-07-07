@@ -1,7 +1,7 @@
 // TotalSavingSection.tsx
 import React from "react";
 import Box from "@mui/material/Box";
-import SectionTitle from "@/components/label/SectionTitle";
+import SectionTitle from "@/components/data_display/label/SectionTitle";
 import DividerDecorator from "@/components/data_display/divider/DividerDecorator";
 import Typography from "@mui/material/Typography";
 import CircularProgress from "@mui/material/CircularProgress";

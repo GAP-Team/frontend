@@ -5,7 +5,7 @@ import React, { useState } from "react";
 import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
 import Typography from "@mui/material/Typography";
-import GTextInput from "@/components/input/GTextInput";
+import GTextInput from "@/components/inputs/GTextInput";
 import { showSnackbar } from "@/components/root-snackbar";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { passwordChangeSchema } from "@/utils/ValidationSchema";

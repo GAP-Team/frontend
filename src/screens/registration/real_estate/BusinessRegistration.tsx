@@ -3,7 +3,7 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import UploadButtons from "@/components/inputs/button/UploadButton";
-import GTextInput from "@/components/input/GTextInput";
+import GTextInput from "@/components/inputs/GTextInput";
 
 interface BusinessRegistrationProps {
   value?: number;

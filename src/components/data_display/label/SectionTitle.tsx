@@ -6,6 +6,7 @@ interface SectionTitleProps {
   sx?: SxProps<Theme>;
   href?: string;
 }
+// FIXME: what is the difference between this and PageTitle?
 const SectionTitle = ({ text, sx, href }: SectionTitleProps): JSX.Element => {
   const sectionStyles = { ...styles, ...sx };
   if (href) {

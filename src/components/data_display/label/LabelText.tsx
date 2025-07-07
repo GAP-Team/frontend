@@ -10,7 +10,7 @@ interface LabeledTextProps {
   textColor?: string;
 }
 
-const LabeledText: React.FC<LabeledTextProps> = ({
+const LabelText: React.FC<LabeledTextProps> = ({
   text,
   fontSize = "1.2rem",
   textColor = "blue.main",
@@ -24,7 +24,7 @@ const LabeledText: React.FC<LabeledTextProps> = ({
   );
 };
 
-export default LabeledText;
+export default LabelText;
 
 const styles = {
   iconTextContainer: {

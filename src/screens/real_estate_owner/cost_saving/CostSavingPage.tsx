@@ -2,7 +2,7 @@ import React from "react";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import TotalSavingSection from "./TotalSavingSection";
-import PageTitle from "@/components/label/PageTitle";
+import PageTitle from "@/components/data_display/label/PageTitle";
 import CounselorCard from "./CounselorCard";
 import JobList from "./JobList";
 import { jobItemListInCostPage } from "@/utils/Constants";

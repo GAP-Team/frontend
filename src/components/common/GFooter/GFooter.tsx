@@ -1,5 +1,5 @@
 import Divider from "@mui/material/Divider";
-import { GapLogo } from "@/components/logo/GapLogo";
+import { GapLogo } from "@/components/icons/logo/GapLogo";
 import { ROUTES, REAL_ESTATE_BASE } from "@/utils/routes";
 import { Box, Typography, Grid, Link } from "@mui/material";
 

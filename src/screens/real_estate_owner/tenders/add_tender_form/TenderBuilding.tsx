@@ -11,7 +11,7 @@ import { FormControl, MenuItem, Select } from "@mui/material";
 import CustomSelect from "@/components/inputs/drop_down/CustomSelect";
 import { getUserBuildings } from "@/lib/features/buildingSlice";
 import HelpIcon from "@/components/icons/HelpIcon";
-import LabelWithAsterisk from "@/components/label/LabelWithAsterisk";
+import LabelWithAsterisk from "@/components/data_display/label/LabelWithAsterisk";
 import { AddFacilityFormValues } from "../../facilities/add_facility_form/types";
 
 const TenderBuilding = (): JSX.Element => {

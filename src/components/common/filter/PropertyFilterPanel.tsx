@@ -16,7 +16,7 @@ import userApi from "@/api/user";
 import { currentUser } from "@/lib/features/userSlice";
 // FIXME: props should be in same component file
 import { PropertyFilterProps } from "@/screens/real_estate_owner/buildings/building_card/types";
-import GButton from "../inputs/button/GButton";
+import GButton from "../../inputs/button/GButton";
 
 const PropertyFilterPanel = ({
   handleOnChange = () => {},

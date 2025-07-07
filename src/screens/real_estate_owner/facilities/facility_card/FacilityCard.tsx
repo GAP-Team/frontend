@@ -14,7 +14,7 @@ import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { DOCUMENT_TYPE } from "@/utils/enums";
 import Typography from "@mui/material/Typography";
 import ActionMenu from "@/components/common/ActionMenu";
-import SectionTitle from "@/components/label/SectionTitle";
+import SectionTitle from "@/components/data_display/label/SectionTitle";
 import { scrollBarStyles } from "@/components/scrollbar/Scrollbar";
 import DocumentList from "../../buildings/building_card/DocumentList ";
 import { checkActiveTenderForFacility } from "@/lib/features/tenderSlice";

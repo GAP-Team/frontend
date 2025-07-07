@@ -8,7 +8,7 @@ interface StatisticsItemProps {
   color?: string;
 }
 
-const StatisticsItem: React.FC<StatisticsItemProps> = ({
+const StatisticDisplay: React.FC<StatisticsItemProps> = ({
   number,
   text,
   color,
@@ -29,7 +29,7 @@ const StatisticsItem: React.FC<StatisticsItemProps> = ({
   );
 };
 
-export default StatisticsItem;
+export default StatisticDisplay;
 
 const styles = {
   statisticsItem: {

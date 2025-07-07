@@ -2,11 +2,11 @@
 import { useEffect, useState } from "react";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import LabelWithAsterisk from "@/components/label/LabelWithAsterisk";
-import GTextInput from "@/components/input/GTextInput";
-import GSelector from "@/components/input/GSelector";
+import LabelWithAsterisk from "@/components/data_display/label/LabelWithAsterisk";
+import GTextInput from "@/components/inputs/GTextInput";
+import GSelector from "@/components/inputs/GSelector";
 import { germanStates } from "@/utils/Constants";
-import GoogleAutocomplete from "@/components/input/GoogleAutocomplete";
+import GoogleAutocomplete from "@/components/inputs/GoogleAutocomplete";
 import { geocodeByAddress } from "react-places-autocomplete";
 
 interface Item {

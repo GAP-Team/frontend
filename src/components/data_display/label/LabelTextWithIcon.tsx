@@ -6,7 +6,7 @@ import Typography from "@mui/material/Typography";
 import { styled } from "@mui/material/styles";
 import { IconType } from "react-icons";
 
-interface LabeledTextWithIconProps {
+interface LabelTextWithIconProps {
   text: string;
   Icon: IconType;
   iconColor?: string;
@@ -16,7 +16,7 @@ interface LabeledTextWithIconProps {
   iconMarginLeft?: string;
 }
 
-const LabeledTextWithIcon: React.FC<LabeledTextWithIconProps> = ({
+const LabelTextWithIcon: React.FC<LabelTextWithIconProps> = ({
   text,
   Icon,
   iconColor = "#22A7F1",
@@ -42,7 +42,7 @@ const LabeledTextWithIcon: React.FC<LabeledTextWithIconProps> = ({
   );
 };
 
-export default LabeledTextWithIcon;
+export default LabelTextWithIcon;
 
 const styles = {
   iconTextContainer: {

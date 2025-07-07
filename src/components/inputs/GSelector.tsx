@@ -18,7 +18,7 @@ interface SelectorProps<> {
   helperText?: string;
 }
 
-const Selector = ({
+const GSelector = ({
   name,
   options,
   placeholder = "Wählen Sie aus",
@@ -51,4 +51,4 @@ const Selector = ({
   );
 };
 
-export default Selector;
+export default GSelector;

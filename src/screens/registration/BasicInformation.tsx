@@ -2,9 +2,9 @@
 import { useEffect } from "react";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import LabelWithAsterisk from "@/components/label/LabelWithAsterisk";
-import PhoneInput from "@/components/input/GPhoneInput";
-import GTextInput from "@/components/input/GTextInput";
+import LabelWithAsterisk from "@/components/data_display/label/LabelWithAsterisk";
+import PhoneInput from "@/components/inputs/GPhoneInput";
+import GTextInput from "@/components/inputs/GTextInput";
 
 const BasicInformation = ({ formik }: any): JSX.Element => {
   useEffect(() => {

@@ -12,7 +12,7 @@ import GButton from "@/components/inputs/button/GButton";
 import BasicInformation from "./BasicInformation";
 import GStepper from "@/components/stepper/GStepper";
 import SummaryRegistration from "./SummaryRegistration";
-import SectionTitle from "@/components/label/SectionTitle";
+import SectionTitle from "@/components/data_display/label/SectionTitle";
 import { USER_ROLE, BUSINESS_TYPE } from "@/utils/enums";
 import GProgressStepper from "@/components/stepper/GProgressStepper";
 import CircularProgress from "@mui/material/CircularProgress";

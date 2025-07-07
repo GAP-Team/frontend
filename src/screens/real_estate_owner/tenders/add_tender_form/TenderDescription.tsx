@@ -1,7 +1,7 @@
 "use client";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import GTextInput from "@/components/input/GTextInput";
+import GTextInput from "@/components/inputs/GTextInput";
 import { useFormikContext } from "formik";
 import { AddTenderFormValues } from "./types";
 import Typography from "@mui/material/Typography";

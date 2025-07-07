@@ -6,7 +6,7 @@ import Grid from "@mui/material/Grid";
 import Divider from "@mui/material/Divider";
 import GButton from "@/components/inputs/button/GButton";
 import { useRouter } from "next/navigation";
-import LabelText from "@/components/label/LabelText";
+import LabelText from "@/components/data_display/label/LabelText";
 import { Tender } from "./types";
 import { TENDER_FORM } from "@/utils/enums";
 import { useAppSelector } from "@/lib/hooks";

@@ -2,7 +2,7 @@ import { useFormik } from "formik";
 import emailAPIs from "@/api/email";
 import { ContactFormProps } from "./types";
 import { useAppDispatch } from "@/lib/hooks";
-import GTextInput from "@/components/input/GTextInput";
+import GTextInput from "@/components/inputs/GTextInput";
 import { showSnackbar } from "@/components/root-snackbar";
 import { ContactFormSchema } from "@/utils/ValidationSchema";
 import {
@@ -13,8 +13,8 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import LabelWithAsterisk from "@/components/label/LabelWithAsterisk";
-import PhoneInput from "@/components/input/GPhoneInput";
+import LabelWithAsterisk from "@/components/data_display/label/LabelWithAsterisk";
+import PhoneInput from "@/components/inputs/GPhoneInput";
 
 const ContactForm = (): JSX.Element => {
   const dispatch = useAppDispatch();

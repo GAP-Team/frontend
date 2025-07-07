@@ -9,7 +9,7 @@ import { currentUser } from "@/lib/features/userSlice";
 import addObjSrc from "@/../public/icons/add_building.svg";
 import NoContentPage from "@/components/common/NoContentPage";
 import BuildingContainer from "./building_card/BuildingContainer";
-import PropertyFilterPanel from "@/components/filter/PropertyFilterPanel";
+import PropertyFilterPanel from "@/components/common/filter/PropertyFilterPanel";
 import { fetchBuildings, getUserBuildings } from "@/lib/features/buildingSlice";
 
 const BuildingOverview: React.FC = () => {

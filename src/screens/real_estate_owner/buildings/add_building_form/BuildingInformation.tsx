@@ -14,10 +14,10 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import { ContactPersonItem } from "./types";
-import { Item } from "@/components/input/GSelector";
-import GTextInput from "@/components/input/GTextInput";
-import GTextSelector from "@/components/input/GTextSelector";
-import LabelWithAsterisk from "@/components/label/LabelWithAsterisk";
+import { Item } from "@/components/inputs/GSelector";
+import GTextInput from "@/components/inputs/GTextInput";
+import GTextSelector from "@/components/inputs/GTextSelector";
+import LabelWithAsterisk from "@/components/data_display/label/LabelWithAsterisk";
 import { buildingTypesList } from "@/utils/Constants";
 
 const checkedIcon = <CheckBoxIcon fontSize="small" />;

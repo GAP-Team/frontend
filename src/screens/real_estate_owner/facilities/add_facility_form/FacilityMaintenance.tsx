@@ -5,7 +5,7 @@ import Grid from "@mui/material/Grid";
 import Divider from "@mui/material/Divider";
 import { AddFacilityFormValues } from "./types";
 import Typography from "@mui/material/Typography";
-import GTextInput from "@/components/input/GTextInput";
+import GTextInput from "@/components/inputs/GTextInput";
 import { ErrorMessage, useFormikContext } from "formik";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";

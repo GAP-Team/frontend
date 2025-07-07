@@ -1,4 +1,4 @@
-import SectionTitle from "@/components/label/SectionTitle";
+import SectionTitle from "@/components/data_display/label/SectionTitle";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";

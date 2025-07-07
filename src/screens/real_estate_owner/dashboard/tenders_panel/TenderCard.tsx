@@ -9,7 +9,7 @@ import Divider from "@mui/material/Divider";
 import { BsClockFill } from "react-icons/bs";
 import Typography from "@mui/material/Typography";
 import { VscDebugBreakpointLog } from "react-icons/vsc";
-import SectionTitle from "@/components/label/SectionTitle";
+import SectionTitle from "@/components/data_display/label/SectionTitle";
 import { Urgency } from "@/utils/enums";
 import ActionMenu from "@/components/common/ActionMenu";
 import { useAppDispatch } from "@/lib/hooks";

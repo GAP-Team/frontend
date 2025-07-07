@@ -13,7 +13,7 @@ import userAPIs from "@/api/user";
 import { RegistrationFormValues } from "./types";
 
 import { DOCUMENT_TYPE, USER_ROLE } from "@/utils/enums";
-import PageTitle from "@/components/label/PageTitle";
+import PageTitle from "@/components/data_display/label/PageTitle";
 import { handleUploadDoc } from "@/utils/uploadToS3";
 import BackButton from "@/components/inputs/button/BackButton";
 import InfoBanner from "@/components/common/InfoBanner";
