@@ -485,11 +485,15 @@ export const applyContractFormSchema = yup.object().shape({
     ),
   desiredDates: yup.array().of(yup.date()),
   termsConditionDoc: yup
-    .array()
-    .of(yup.mixed())
-    .min(1, "AGB dokument ist erforderlich"),
+    .mixed()
+    .required("AGB dokument ist erforderlich")
+    .test("fileRequired", "AGB dokument ist erforderlich", (value) => {
+      return value instanceof File;
+    }),
   offerDoc: yup
-    .array()
-    .of(yup.mixed())
-    .min(1, "Angebot dokument ist erforderlich"),
+    .mixed()
+    .required("Angebot dokument ist erforderlich")
+    .test("fileRequired", "Angebot dokument ist erforderlich", (value) => {
+      return value instanceof File;
+    }),
 });

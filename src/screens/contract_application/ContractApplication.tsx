@@ -30,7 +30,7 @@ const ContractApplication = (): JSX.Element => {
 
   const stepFieldsMap: { [key: number]: string[] } = {
     0: ["totalPrice", "hourlyRate", "message", "zip", "city", "desiredDateOne"],
-    1: ["advantages", "termsConditionDocs", "offerDocs"],
+    1: ["advantages", "termsConditionDoc", "offerDoc"],
     2: [],
   };
 
