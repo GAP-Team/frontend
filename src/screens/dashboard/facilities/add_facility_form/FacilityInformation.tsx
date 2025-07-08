@@ -125,7 +125,7 @@ const FacilityInformation = (): JSX.Element => {
           />
         </Grid>
 
-        <Grid item xs={12}>
+        <Grid item xs={6}>
           <LabelWithAsterisk>OBJEKT ZUORDNEN</LabelWithAsterisk>
           <HelpIcon
             iconColor={HELP_ICON_BUTTON_COLOR.GREY}
@@ -159,6 +159,27 @@ const FacilityInformation = (): JSX.Element => {
               </p>
             )}
           </FormControl>
+        </Grid>
+        <Grid item xs={6}>
+          <LabelWithAsterisk>Anlage Anzahl</LabelWithAsterisk>
+          <HelpIcon
+            iconColor={HELP_ICON_BUTTON_COLOR.GREY}
+            helpText="The helper text will be displayed here."
+          />
+          <GTextInput
+            id="numberOfUits"
+            name="numberOfUits"
+            value={formik?.values?.numberOfUits}
+            onChange={formik?.handleChange}
+            onBlur={formik?.handleBlur}
+            error={
+              formik?.touched?.numberOfUits &&
+              Boolean(formik?.errors?.numberOfUits)
+            }
+            helperText={
+              formik?.touched?.numberOfUits && formik?.errors?.numberOfUits
+            }
+          />
         </Grid>
       </Grid>
     </Box>

@@ -271,6 +271,17 @@ export const addFacilityValidationSchema = [
   yup.object({
     name: yup.string().required("Anlagenname ist erforderlich"),
     facilityType: yup.string().required("Oberbegriff ist erforderlich"),
+    numberOfUits: yup
+      .number()
+      .required("Anlage Anzahl ist erforderlich")
+      .typeError("Anlage Anzahl muss eine Zahl sein")
+      .positive("Anlage Anzahl muss eine positive Zahl sein")
+      .integer("Anlage Anzahl muss eine Ganzzahl sein")
+      .test(
+        "not-zero",
+        "Anlage Anzahl, um mindestens eine zu haben",
+        (value) => value !== 0
+      ),
     subcategory: yup.string(),
     selectedBuilding: yup
       .string()
