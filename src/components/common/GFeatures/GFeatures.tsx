@@ -40,7 +40,7 @@ const GFeatures = (): JSX.Element => {
         />
         <FeatureCard title="Brandwache" icon={<FireWatchSvgIcon />} />
         <FeatureCard
-          title="Brandschutzkonzept und Löschanlagenkonzept"
+          title="Brandschutz- und Löschanlagenkonzept"
           icon={<WaterSvgIcon />}
         />
         <FeatureCard
@@ -58,7 +58,7 @@ const GFeatures = (): JSX.Element => {
           icon={<WallHydrantSystemSvgIcon />}
         />
         <FeatureCard
-          title="Hygienprüfung Trinkwasser und Lüftungsanlage"
+          title="Hygieneprüfung Trinkwasser und Lüftungsanlage"
           icon={<HygieneCheckWaterAirSvgIcon />}
         />
       </div>
