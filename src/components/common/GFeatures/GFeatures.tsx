@@ -15,7 +15,7 @@ import TitleSection from "../../label/title-section";
 import { FeatureCard } from "./../../card/FeatureCard";
 import { BrandwacheSvgIcon } from "../../../../public/svg/BrandwacheSvgIcon";
 import { WandhydrantenanlageSvgIcon } from "../../../../public/svg/WandhydrantenanlageSvgIcon";
-import { HygieneCheckWaterAirSvgIcon } from "../../../../public/svg/HygieneCheckWaterAirScgIcon";
+import { HygieneCheckWaterAirSvgIcon } from "../../../../public/svg/HygieneCheckWaterAirSvgIcon";
 
 const GFeatures = (): JSX.Element => {
   return (
