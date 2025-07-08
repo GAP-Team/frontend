@@ -9,7 +9,7 @@ import { ElectricalSvgIcon } from "../../../../public/svg/ElectricalSvgIcon";
 import { WaterSvgIcon } from "../../../../public/svg/WaterSvgIcon";
 import { EmergencyLightSvgIcon } from "../../../../public/svg/EmergencyLightSvgIcon";
 import { DoorSvgIcon } from "../../../../public/svg/DoorSvgIcon";
-import { GasSvgIcon } from "../../../../public/svg/GasSvgIcon";
+import { FireExtinguisherSvgIcon } from "../../../../public/svg/FireExtinguisherSvgIcon";
 import { CoolingSvgIcon } from "../../../../public/svg/CoolingSvgIcon";
 import TitleSection from "../../label/title-section";
 import { FeatureCard } from "./../../card/FeatureCard";
@@ -48,7 +48,7 @@ const GFeatures = (): JSX.Element => {
           icon={<EmergencyLightSvgIcon />}
         />
         <FeatureCard title="Tür- und Toranlagen" icon={<DoorSvgIcon />} />
-        <FeatureCard title="Feuerlöscher" icon={<GasSvgIcon />} />
+        <FeatureCard title="Feuerlöscher" icon={<FireExtinguisherSvgIcon />} />
         <FeatureCard
           title="Druckbehälter und Tankanlagen"
           icon={<CoolingSvgIcon />}
