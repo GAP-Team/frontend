@@ -1,4 +1,4 @@
-export const WandhydrantenanlageSvgIcon = ({ className }: { className?: string }): JSX.Element => {
+export const WallHydrantSystemSvgIcon = ({ className }: { className?: string }): JSX.Element => {
   return (
     <svg
       className={className || "w-14 h-14 text-blue-600"}

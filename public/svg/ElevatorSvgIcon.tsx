@@ -1,4 +1,4 @@
-export const AufzugSvgIcon = ({ className }: { className?: string }): JSX.Element => {
+export const ElevatorSvgIcon = ({ className }: { className?: string }): JSX.Element => {
     return (
       <svg
         className={`${className || "h-12 w-12 text-blue-500"}`}
