@@ -26,9 +26,9 @@ const DocumentList: React.FC<DocumentListProps> = ({
     setSelectedIndex(index);
     setIsDownloading(true);
 
-    const fileDetails = await s3API.getFile(fileKey);
+    const file = await s3API.getFile(fileKey);
     const url = window.URL.createObjectURL(
-      new Blob([fileDetails.data], { type: "application/pdf" })
+      new Blob([file.data], { type: "application/pdf" })
     );
 
     const link = document.createElement("a");
