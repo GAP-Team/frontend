@@ -167,17 +167,17 @@ const FacilityInformation = (): JSX.Element => {
             helpText="The helper text will be displayed here."
           />
           <GTextInput
-            id="numberOfUits"
-            name="numberOfUits"
-            value={formik?.values?.numberOfUits}
+            id="numberOfUnits"
+            name="numberOfUnits"
+            value={formik?.values?.numberOfUnits}
             onChange={formik?.handleChange}
             onBlur={formik?.handleBlur}
             error={
-              formik?.touched?.numberOfUits &&
-              Boolean(formik?.errors?.numberOfUits)
+              formik?.touched?.numberOfUnits &&
+              Boolean(formik?.errors?.numberOfUnits)
             }
             helperText={
-              formik?.touched?.numberOfUits && formik?.errors?.numberOfUits
+              formik?.touched?.numberOfUnits && formik?.errors?.numberOfUnits
             }
           />
         </Grid>

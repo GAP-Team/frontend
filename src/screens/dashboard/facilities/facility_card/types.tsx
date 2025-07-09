@@ -23,7 +23,7 @@ export interface Facility {
   id: string;
   name: string;
   facilityType: string;
-  numberOfUits: number;
+  numberOfUnits: number;
   subcategory: string;
   buildingId: string;
   check: Check;
