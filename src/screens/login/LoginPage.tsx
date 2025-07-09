@@ -13,6 +13,7 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import InputAdornment from "@mui/material/InputAdornment";
 import CircularProgress from "@mui/material/CircularProgress";
+import Cookies from "js-cookie";
 import authAPI from "@/api/auth";
 import { setUser } from "@/lib/features/userSlice";
 import { GapLogo } from "@/components/logo/GapLogo";
@@ -52,6 +53,10 @@ const Login = (): JSX.Element => {
             });
           }
 
+          if (res.data.user?.role === USER_ROLE.ADMIN) {
+            router.push(ROUTES.ADMIN.DASHBOARD);
+            Cookies.set("role", res.data.user?.role);
+          }
           if (res.data.user?.role === USER_ROLE.SERVICE_PROVIDER) {
             router.push(ROUTES.SERVICE_PROVIDER.DASHBOARD);
           }
