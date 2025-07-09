@@ -32,12 +32,12 @@ const LoginPage = (): JSX.Element => {
   const [loginError, setLoginError] = React.useState<string | null>(null);
   const [passwordResetDialogOpen, setPasswordResetDialogOpen] = useState(false);
 
-  const handlePasswordResetClick = (event: React.MouseEvent) => {
+  const handlePasswordResetClick = (event: React.MouseEvent): void => {
     event.preventDefault();
     setPasswordResetDialogOpen(true);
   };
 
-  const handlePasswordResetDialogClose = () => {
+  const handlePasswordResetDialogClose = (): void => {
     setPasswordResetDialogOpen(false);
   };
 
@@ -224,11 +224,11 @@ const LoginPage = (): JSX.Element => {
           </Typography>
         </Box>
       </Grid>
-      
+
       {/* Password Reset Dialog */}
-      <PasswordResetDialog 
-        open={passwordResetDialogOpen} 
-        handleClose={handlePasswordResetDialogClose} 
+      <PasswordResetDialog
+        open={passwordResetDialogOpen}
+        handleClose={handlePasswordResetDialogClose}
       />
     </Grid>
   );

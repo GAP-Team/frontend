@@ -39,7 +39,7 @@ const PasswordResetDialog: React.FC<PasswordResetDialogProps> = ({
         setLoading(true);
         // await emailAPIs.sendPasswordResetEmail({ email: values.email });
         setSuccess(true);
-      } catch (error) {
+      } catch {
         setErrors({
           email:
             "Ein Fehler ist aufgetreten. Bitte versuche es später noch einmal.",
@@ -51,24 +51,22 @@ const PasswordResetDialog: React.FC<PasswordResetDialogProps> = ({
     },
   });
 
-  const handleReset = () => {
+  const handleReset = (): void => {
     formik.resetForm();
     setSuccess(false);
     handleClose();
   };
-    return (
-    <Dialog 
-      open={open} 
-      onClose={handleClose} 
-      maxWidth="sm" 
+  return (
+    <Dialog
+      open={open}
+      onClose={handleClose}
+      maxWidth="sm"
       fullWidth
       PaperProps={{
-        sx: styles.dialogPaper
+        sx: styles.dialogPaper,
       }}
     >
-      <DialogTitle sx={styles.dialogTitle}>
-        Passwort zurücksetzen
-      </DialogTitle>
+      <DialogTitle sx={styles.dialogTitle}>Passwort zurücksetzen</DialogTitle>
       <DialogContent sx={styles.dialogContent}>
         {!success ? (
           <>
@@ -96,7 +94,7 @@ const PasswordResetDialog: React.FC<PasswordResetDialogProps> = ({
                       <FaRegEnvelope style={{ color: "#666" }} />
                     </InputAdornment>
                   ),
-                  sx: styles.textFieldInput
+                  sx: styles.textFieldInput,
                 }}
                 sx={styles.textField}
               />
@@ -104,7 +102,11 @@ const PasswordResetDialog: React.FC<PasswordResetDialogProps> = ({
           </>
         ) : (
           <Box sx={styles.successBox}>
-            <Typography variant="body1" color="success.main" sx={styles.successText}>
+            <Typography
+              variant="body1"
+              color="success.main"
+              sx={styles.successText}
+            >
               Eine E-Mail mit Anweisungen zum Zurücksetzen deines Passworts
               wurde an {formik.values.email} gesendet.
             </Typography>
@@ -147,51 +149,51 @@ const PasswordResetDialog: React.FC<PasswordResetDialogProps> = ({
 const styles: Record<string, SxProps<Theme>> = {
   dialogPaper: {
     borderRadius: 2,
-    boxShadow: '0 8px 24px rgba(0,0,0,0.12)'
+    boxShadow: "0 8px 24px rgba(0,0,0,0.12)",
   },
-  dialogTitle: { 
-    fontWeight: "bold", 
-    py: 3, 
-    textAlign: 'center' 
+  dialogTitle: {
+    fontWeight: "bold",
+    py: 3,
+    textAlign: "center",
   },
-  dialogContent: { 
-    px: 4,  
+  dialogContent: {
+    px: 4,
   },
-  dialogDescription: { 
-    mb: 3, 
-    textAlign: 'center' 
+  dialogDescription: {
+    mb: 3,
+    textAlign: "center",
   },
-  textField: { 
-    mb: 2 
+  textField: {
+    mb: 2,
   },
-  textFieldInput: { 
-    borderRadius: 2 
+  textFieldInput: {
+    borderRadius: 2,
   },
-  successBox: { 
-    textAlign: "center", 
-    py: 3, 
-    px: 2 
+  successBox: {
+    textAlign: "center",
+    py: 3,
+    px: 2,
   },
-  successText: { 
-    fontWeight: 500 
-  },
-  dialogActions: { 
-    p: 3, 
-    display: "block" 
-  },
-  sendButton: { 
-    borderRadius: 5, 
-    py: 1.5,
+  successText: {
     fontWeight: 500,
-    boxShadow: '0 4px 12px rgba(0,0,0,0.15)'
   },
-  closeButton: { 
-    width: "100%", 
+  dialogActions: {
+    p: 3,
+    display: "block",
+  },
+  sendButton: {
     borderRadius: 5,
     py: 1.5,
-    fontWeight: 500, 
-    boxShadow: '0 4px 12px rgba(0,0,0,0.15)'
-  }
+    fontWeight: 500,
+    boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
+  },
+  closeButton: {
+    width: "100%",
+    borderRadius: 5,
+    py: 1.5,
+    fontWeight: 500,
+    boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
+  },
 };
 
 export default PasswordResetDialog;
