@@ -23,12 +23,23 @@ import emailAPIs from "@/api/email";
 import { ROUTES } from "@/utils/routes";
 import { USER_ROLE } from "@/utils/enums";
 import { useAppDispatch } from "@/lib/hooks";
+import PasswordResetDialog from "@/components/dialog/PasswordResetDialog";
 
 const LoginPage = (): JSX.Element => {
   const router = useRouter();
   const appDispatch = useAppDispatch();
   const [loading, setLoading] = useState(false);
   const [loginError, setLoginError] = React.useState<string | null>(null);
+  const [passwordResetDialogOpen, setPasswordResetDialogOpen] = useState(false);
+
+  const handlePasswordResetClick = (event: React.MouseEvent) => {
+    event.preventDefault();
+    setPasswordResetDialogOpen(true);
+  };
+
+  const handlePasswordResetDialogClose = () => {
+    setPasswordResetDialogOpen(false);
+  };
 
   const formik = useFormik({
     initialValues: {
@@ -105,7 +116,12 @@ const LoginPage = (): JSX.Element => {
                 </Link>
               </Grid>
               <Grid item>
-                <Link href="#" variant="body2" sx={styles.linkDesignSmall}>
+                <Link
+                  href="#"
+                  variant="body2"
+                  sx={styles.linkDesignSmall}
+                  onClick={handlePasswordResetClick}
+                >
                   Passwort vergessen
                 </Link>
               </Grid>
@@ -208,6 +224,12 @@ const LoginPage = (): JSX.Element => {
           </Typography>
         </Box>
       </Grid>
+      
+      {/* Password Reset Dialog */}
+      <PasswordResetDialog 
+        open={passwordResetDialogOpen} 
+        handleClose={handlePasswordResetDialogClose} 
+      />
     </Grid>
   );
 };

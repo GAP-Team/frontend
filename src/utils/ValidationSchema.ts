@@ -485,3 +485,10 @@ export const applyContractFormSchema = yup.object().shape({
     ),
   desiredDates: yup.array().of(yup.date()),
 });
+
+export const passwordResetValidationSchema = yup.object({
+  email: yup
+    .string()
+    .matches(EMAIL_REGEX, "Ungültige Email")
+    .required("Email ist erforderlich."),
+});
