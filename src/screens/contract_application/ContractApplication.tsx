@@ -6,6 +6,7 @@ import { Formik, FormikHelpers } from "formik";
 import ContractRateForm from "./ContractRateForm";
 import { translateTenderForm } from "@/utils/utils";
 import { Grid, Paper, Typography } from "@mui/material";
+import ContractServicesForm from "./ContractServicesForm";
 import { getContract } from "@/lib/features/contractSlice";
 import { ActiveStepItem } from "@/screens/dashboard/types";
 import ContractApplicationForm from "./ContractApplicationForm";
@@ -21,6 +22,7 @@ const ContractApplication = (): JSX.Element => {
 
   const steps: ActiveStepItem[] = [
     { id: 0, stepName: "ContractRate", component: ContractRateForm },
+    { id: 1, stepName: "ContractServices", component: ContractServicesForm },
   ];
 
   const [loading, setLoading] = useState<boolean>(false);
@@ -28,7 +30,7 @@ const ContractApplication = (): JSX.Element => {
 
   const stepFieldsMap: { [key: number]: string[] } = {
     0: ["totalPrice", "hourlyRate", "message", "zip", "city", "desiredDateOne"],
-    1: [],
+    1: ["advantages", "termsConditionDoc", "offerDoc"],
     2: [],
   };
 
@@ -74,6 +76,9 @@ const ContractApplication = (): JSX.Element => {
     zip: "",
     city: "",
     desiredDates: [new Date(), new Date(), new Date()],
+    advantages: [],
+    offerDoc: "",
+    termsConditionDoc: "",
   };
 
   return (
