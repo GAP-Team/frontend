@@ -2,13 +2,15 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import { useFormikContext } from "formik";
 
-import SummarySection, { Detail } from "@/components/summary/SummarySection";
+import SummarySection, {
+  Detail,
+} from "@/components/common/summary/SummarySection";
 import { USER_ROLE } from "@/utils/enums";
 interface SummaryRegistrationProps {
   setActiveStep: (num: number) => void;
 }
 
-const SummaryRegistration = ({
+const RegistrationSummary = ({
   setActiveStep,
 }: SummaryRegistrationProps): JSX.Element => {
   const { values } = useFormikContext<any>();
@@ -123,4 +125,4 @@ const SummaryRegistration = ({
   );
 };
 
-export default SummaryRegistration;
+export default RegistrationSummary;

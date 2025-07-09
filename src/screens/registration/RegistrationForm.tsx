@@ -11,7 +11,7 @@ import ComercialPerson from "./real_estate/CommercialPerson";
 import GButton from "@/components/inputs/button/GButton";
 import BasicInformation from "./BasicInformation";
 import GStepper from "@/components/navigation/stepper/GStepper";
-import SummaryRegistration from "./SummaryRegistration";
+import RegistrationSummary from "./RegistrationSummary";
 import SectionTitle from "@/components/data_display/label/SectionTitle";
 import { USER_ROLE, BUSINESS_TYPE } from "@/utils/enums";
 import GProgressStepper from "@/components/navigation/stepper/GProgressStepper";
@@ -170,7 +170,7 @@ const RegistrationForm = ({
               <ExpertiseServiceProvider formik={formik} />
             )}
           {registrationSteps[activeStep] === "Zusammenfassung" && (
-            <SummaryRegistration setActiveStep={setActiveStep} />
+            <RegistrationSummary setActiveStep={setActiveStep} />
           )}
         </div>
         <Grid container justifyContent="flex-end" spacing={2}>

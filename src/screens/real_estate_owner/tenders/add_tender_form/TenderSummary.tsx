@@ -3,7 +3,9 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import { useFormikContext } from "formik";
 import { StepComponentProps } from "./types";
-import SummarySection, { Detail } from "@/components/summary/SummarySection";
+import SummarySection, {
+  Detail,
+} from "@/components/common/summary/SummarySection";
 import { TENDER_FORM } from "@/utils/enums";
 
 const TenderSummary = ({

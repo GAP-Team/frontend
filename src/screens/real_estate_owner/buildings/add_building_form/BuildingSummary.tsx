@@ -2,7 +2,9 @@
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import { useFormikContext } from "formik";
-import SummarySection, { Detail } from "@/components/summary/SummarySection";
+import SummarySection, {
+  Detail,
+} from "@/components/common/summary/SummarySection";
 import { ActiveStepItem } from "../../types";
 
 interface BuildingSummaryProps {

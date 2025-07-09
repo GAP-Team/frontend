@@ -2,9 +2,9 @@ import React from "react";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
-import SummaryLayout from "@/components/summary/SummaryCard";
+import SummaryLayout from "@/components/layout/SummaryLayout";
 import { FaRegEdit } from "react-icons/fa";
-import DetailItem from "../common/DetailItem";
+import DetailItem from "../DetailItem";
 export interface Detail {
   label: string;
   value: string;
