@@ -1,3 +1,4 @@
+// FIXME: UpdateUserIsActiveStatusButton.tsx is NOT-Reusable UI Component
 import { useState } from "react";
 import userAPI from "@/api/user";
 import Switch from "@mui/material/Switch";
