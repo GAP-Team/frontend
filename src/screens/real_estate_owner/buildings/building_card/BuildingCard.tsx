@@ -18,9 +18,9 @@ import facilityAPIs from "@/api/facility";
 import buildingAPIs from "@/api/building";
 import DocumentList from "./DocumentList ";
 import { DOCUMENT_TYPE } from "@/utils/enums";
-import ActionMenu from "@/components/common/ActionMenu";
+import ActionMenu from "@/components/navigation/ActionMenu";
 import { ROUTES, REAL_ESTATE_BASE } from "@/utils/routes";
-import { styles } from "@/components/common/scrollbar/styles";
+import { styles } from "@/components/utils/scrollbar/styles";
 import {
   getUserBuildings,
   setUserBuildingDetails,

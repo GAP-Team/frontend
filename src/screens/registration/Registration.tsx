@@ -16,7 +16,7 @@ import { DOCUMENT_TYPE, USER_ROLE } from "@/utils/enums";
 import PageTitle from "@/components/data_display/label/PageTitle";
 import { handleUploadDoc } from "@/utils/uploadToS3";
 import BackButton from "@/components/inputs/button/BackButton";
-import InfoBanner from "@/components/common/InfoBanner";
+import InfoBanner from "@/components/data_display/InfoBanner";
 import EmailVerificationScreen from "@/screens/EmailVerification";
 import { registrationValidationSchema } from "@/utils/ValidationSchema";
 import { Document } from "@/typings/types";

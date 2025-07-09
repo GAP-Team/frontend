@@ -20,7 +20,7 @@ import TenderBuilding from "./TenderBuilding";
 import TenderInformation from "./TenderInformation";
 import TenderDescription from "./TenderDescription";
 import PageTitle from "@/components/data_display/label/PageTitle";
-import SuccessPage from "@/components/common/SuccessPage";
+import SuccessPage from "@/components/common/pages/SuccessPage";
 import TenderClassification from "./TenderClassification";
 import { showSnackbar } from "@/components/feedback/root-snackbar";
 import SectionTitle from "@/components/data_display/label/SectionTitle";

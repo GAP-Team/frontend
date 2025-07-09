@@ -4,8 +4,8 @@ import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 import { BlogProps } from "@/typings/types";
 import { articles } from "@/utils/Constants";
-import BlogDetails from "@/components/common/BlogDetails/BlogDetails";
-import LandingPageLayout from "@/screens/landingpage_layout/LandingPageLayout";
+import BlogDetails from "@/screens/landing_page/blogs/BlogDetails";
+import LandingPageLayout from "@/components/layout/LandingPageLayout";
 
 export default function Blogs(): JSX.Element {
   const params = useParams();

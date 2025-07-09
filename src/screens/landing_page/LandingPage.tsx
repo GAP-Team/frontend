@@ -1,9 +1,9 @@
-import GFeatures from "@/components/common/GFeatures/GFeatures";
-import HeroSection from "@/components/common/GHeroSection/GHeroSection";
-import GStatSection from "@/components/common/GStatSection/GStatSection";
-import GOfferSection from "@/components/common/GOfferSection/GOfferSection";
-import GFunctionSection from "@/components/common/GFunctionSection/GFunctionSection";
-import BlogsOverview from "@/components/common/BlogsOverview/BlogsOverview";
+import GFeatures from "@/screens/landing_page/features/GFeatures";
+import HeroSection from "@/screens/landing_page/hero-section/GHeroSection";
+import GStatSection from "@/screens/landing_page/stat-section/GStatSection";
+import GOfferSection from "@/screens/landing_page/offer-section/GOfferSection";
+import GFunctionSection from "@/screens/landing_page/function/GFunctionSection";
+import BlogsOverview from "@/screens/landing_page/blogs/BlogsOverview";
 
 export default function LandingPage(): JSX.Element {
   return (

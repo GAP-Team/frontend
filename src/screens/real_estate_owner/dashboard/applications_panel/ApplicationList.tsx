@@ -3,7 +3,7 @@ import React from "react";
 import { List } from "@mui/material";
 import { ApplicationItemProps } from "./types";
 import ApplicationItem from "./ApplicationItem";
-import { styles as scrollbarStyles } from "@/components/common/scrollbar/styles";
+import { styles as scrollbarStyles } from "@/components/utils/scrollbar/styles";
 
 interface ApplicationListProps {
   applications: ApplicationItemProps[];

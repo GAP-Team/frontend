@@ -1,13 +1,11 @@
 "use client";
 import { useFormikContext } from "formik";
 import { AddFacilityFormValues } from "./types";
-import CustomDocumentation from "@/components/common/CustomDocument";
+import DocumentForm from "@/components/common/DocumentForm";
 
 const FacilityDocumentation = (): JSX.Element => {
   const formik = useFormikContext<AddFacilityFormValues>();
-  return (
-    <CustomDocumentation formikValue={formik.values} documentFor={"facility"} />
-  );
+  return <DocumentForm formikValue={formik.values} documentFor={"facility"} />;
 };
 
 export default FacilityDocumentation;

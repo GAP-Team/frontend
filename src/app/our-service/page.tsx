@@ -1,7 +1,7 @@
 "use client";
 import { Grid } from "@mui/material";
-import LandingPageLayout from "@/screens/landingpage_layout/LandingPageLayout";
-import FunctionsSection from "@/components/common/FunctionsSection/FunctionsSection";
+import LandingPageLayout from "@/components/layout/LandingPageLayout";
+import FunctionsSection from "@/screens/landing_page/FunctionsSection";
 
 export default function OurServicePage(): JSX.Element {
   return (

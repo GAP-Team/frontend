@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { ROUTES } from "@/utils/routes";
 import { useRouter } from "next/navigation";
-import RoundButton from "../../inputs/button/RoundButton";
+import RoundButton from "../../components/inputs/button/RoundButton";
 import TabContent from "../../tab_panel/TabContent";
 import CustomTabPanel from "../../tab_panel/CustomTabPanel";
 import { RealEstateLandingPageTabs } from "@/utils/Constants";
@@ -12,7 +12,8 @@ import BuildingImage from "../../../../public/images/buildings.png";
 import DashboardImage from "../../../../public/images/dashboard.png";
 import CostSavingImage from "../../../../public/images/cost-saving.png";
 
-const FeatureSection = (): JSX.Element => {
+// FIXME: find better name to differentiate between it and GFeature
+const DashboardFeatureSection = (): JSX.Element => {
   const router = useRouter();
   const [currentTabIndex, setCurrentTabIndex] = useState<string>("0");
 
@@ -129,4 +130,4 @@ const FeatureSection = (): JSX.Element => {
   );
 };
 
-export default FeatureSection;
+export default DashboardFeatureSection;

@@ -1,5 +1,5 @@
 import { memo, useEffect } from "react";
-import NoAccessPage from "../../../components/common/NoAccessPage";
+import NoAccessPage from "../../../components/common/pages/NoAccessPage";
 import { checkIsLoggedIn } from "@/utils/helperJWT";
 import { USER_ROLE, DOCUMENT_TYPE } from "@/utils/enums";
 import { showSnackbar } from "@/components/feedback/root-snackbar";

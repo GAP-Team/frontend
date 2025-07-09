@@ -21,7 +21,7 @@ interface CustomDocumentationProps {
   documentFor: string;
 }
 
-const CustomDocumentation = ({
+const DocumentForm = ({
   formikValue,
   documentFor,
 }: CustomDocumentationProps): JSX.Element => {
@@ -218,7 +218,7 @@ const CustomDocumentation = ({
   );
 };
 
-export default CustomDocumentation;
+export default DocumentForm;
 
 const styles = {
   boxContainer: { p: 1, width: "auto", marginLeft: "1.5rem" },

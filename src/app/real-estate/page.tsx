@@ -1,6 +1,6 @@
 "use client";
 import { Box } from "@mui/material";
-import LandingPageLayout from "@/screens/landingpage_layout/LandingPageLayout";
+import LandingPageLayout from "@/components/layout/LandingPageLayout";
 import RealEstateScreen from "@/screens/landing_page/RealEstateScreen";
 
 export default function RealEstateLandingpage(): JSX.Element {

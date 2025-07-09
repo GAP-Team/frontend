@@ -3,7 +3,7 @@ import React from "react";
 import { List } from "@mui/material";
 import { NewsItemProps } from "./types";
 import NewsItem from "./NewsItem";
-import { styles as scrollbarStyles } from "@/components/common/scrollbar/styles";
+import { styles as scrollbarStyles } from "@/components/utils/scrollbar/styles";
 
 interface NewsListProps {
   news: NewsItemProps[];

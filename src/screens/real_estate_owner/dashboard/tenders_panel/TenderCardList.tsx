@@ -1,7 +1,7 @@
 import Box from "@mui/material/Box";
 import TenderCard from "./TenderCard";
 import { Typography } from "@mui/material";
-import { styles } from "@/components/common/scrollbar/styles";
+import { styles } from "@/components/utils/scrollbar/styles";
 import { Urgency } from "@/utils/enums";
 import { BuildingTenders } from "../../tenders/tender_card/types";
 import { useAppSelector } from "@/lib/hooks";

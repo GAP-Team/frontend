@@ -1,10 +1,8 @@
 "use client";
-import CustomDocumentation from "@/components/common/CustomDocument";
+import DocumentForm from "@/components/common/DocumentForm";
 
 const BuildingDocumentation = ({ formik }: { formik?: any }): JSX.Element => {
-  return (
-    <CustomDocumentation formikValue={formik.values} documentFor={"building"} />
-  );
+  return <DocumentForm formikValue={formik.values} documentFor={"building"} />;
 };
 
 export default BuildingDocumentation;

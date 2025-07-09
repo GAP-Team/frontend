@@ -12,6 +12,7 @@ import Box from "@mui/material/Box";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
+// FIXME: rename heroSection to defferentiate between it and GHeroSection
 const HeroSection = (): JSX.Element => {
   const router = useRouter();
   const theme = useTheme();

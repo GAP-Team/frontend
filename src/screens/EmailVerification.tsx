@@ -12,7 +12,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import userAPIs from "@/api/user";
 import emailAPIs from "@/api/email";
 import GButton from "@/components/inputs/button/GButton";
-import SuccessPage from "@/components/common/SuccessPage";
+import SuccessPage from "@/components/common/pages/SuccessPage";
 
 interface EmailVerificationProps {
   sendMail: boolean;

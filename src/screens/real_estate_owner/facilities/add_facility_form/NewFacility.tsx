@@ -18,7 +18,7 @@ import React, { useEffect, useState } from "react";
 import PageTitle from "@/components/data_display/label/PageTitle";
 import FacilityMaintenance from "./FacilityMaintenance";
 import FacilityInformation from "./FacilityInformation";
-import SuccessPage from "@/components/common/SuccessPage";
+import SuccessPage from "@/components/common/pages/SuccessPage";
 import { showSnackbar } from "@/components/feedback/root-snackbar";
 import SectionTitle from "@/components/data_display/label/SectionTitle";
 import { DEFAULT_PUBLISH_MONTHS } from "@/utils/Constants";

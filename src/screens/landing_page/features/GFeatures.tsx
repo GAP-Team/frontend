@@ -1,5 +1,5 @@
 "use client";
-import GBadge from "../../data_display/badge/GBadge";
+import GBadge from "../../../components/data_display/badge/GBadge";
 import { AufzugSvgIcon } from "../../../../public/svg/AufzugSvgIcon";
 import { BmaSvgIcon } from "../../../../public/svg/BmaSvgIcon";
 import { SprinklerSvgIcon } from "../../../../public/svg/SprinklerSvgIcon";
@@ -12,8 +12,8 @@ import { EmergencyLightSvgIcon } from "../../../../public/svg/EmergencyLightSvgI
 import { DoorSvgIcon } from "../../../../public/svg/DoorSvgIcon";
 import { GasSvgIcon } from "../../../../public/svg/GasSvgIcon";
 import { CoolingSvgIcon } from "../../../../public/svg/CoolingSvgIcon";
-import TitleSection from "../../data_display/label/title-section";
-import { FeatureCard } from "../../surfaces/card/FeatureCard";
+import TitleSection from "../../../components/data_display/label/title-section";
+import { FeatureCard } from "../../../components/surfaces/card/FeatureCard";
 
 const GFeatures = (): JSX.Element => {
   return (

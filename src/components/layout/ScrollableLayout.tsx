@@ -7,7 +7,7 @@ interface ScrollableSectionProps {
   sx?: SxProps<Theme>; // Optional style props using MUI's system
 }
 
-const ScrollableSection: React.FC<ScrollableSectionProps> = ({
+const ScrollableLayout: React.FC<ScrollableSectionProps> = ({
   children,
   sx,
 }) => {
@@ -15,7 +15,7 @@ const ScrollableSection: React.FC<ScrollableSectionProps> = ({
   return <Box sx={rootStyles}>{children}</Box>;
 };
 
-export default ScrollableSection;
+export default ScrollableLayout;
 
 // Styles
 const styles: SxProps<Theme> = {

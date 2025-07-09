@@ -1,6 +1,6 @@
 "use client";
 import { ReactNode } from "react";
-import GFooter from "@/components/common/GFooter/GFooter";
+import GFooter from "@/screens/landing_page/footer/GFooter";
 import GNavbar from "@/components/navigation/navbar/GNavbar";
 
 interface LandingPageLayoutProps {

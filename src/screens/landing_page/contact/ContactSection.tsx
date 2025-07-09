@@ -1,8 +1,8 @@
 "use client";
 import { useCallback, useRef } from "react";
-import ContactForm from "../ContactForm/ContactForm";
+import ContactForm from "./ContactForm";
 import { Box, Container, Typography } from "@mui/material";
-import FAQSection from "@/components/common/FaqSection/FaqSection";
+import FAQSection from "@/screens/landing_page/contact/FaqSection";
 
 const ContactSection = (): JSX.Element => {
   const contactRef = useRef<HTMLDivElement | null>(null);
