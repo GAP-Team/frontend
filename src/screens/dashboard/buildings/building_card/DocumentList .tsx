@@ -1,95 +1,89 @@
-import { useState, Fragment } from "react";
-import Stack from "@mui/material/Stack";
-import { FiFileText } from "react-icons/fi";
-import Typography from "@mui/material/Typography";
-import { CircularProgress, Divider } from "@mui/material";
 import s3API from "@/api/s3";
 import { Document } from "@/typings/types";
+import { useState, Fragment } from "react";
+import { FiFileText } from "react-icons/fi";
+import { Stack, Typography, CircularProgress, Divider } from "@mui/material";
 
 interface DocumentListProps {
-  title: string;
-  documentType: string;
+  title?: string;
+  documentType?: string;
   documents: Document[];
 }
 
 const DocumentList: React.FC<DocumentListProps> = ({
   title,
-  documentType,
   documents,
+  documentType,
 }) => {
-  const [selectedIndex, setSelectedIndex] = useState<number | undefined>(
-    undefined
-  );
-  const [isDownloading, setIsDownloading] = useState<boolean>(false);
+  const [selectedIndex, setSelectedIndex] = useState<number | undefined>();
+  const [isDownloading, setIsDownloading] = useState(false);
 
   const handleDownloadFile = async (
-    selectedIndex: number,
+    index: number,
     fileKey: string,
     fileName: string
   ): Promise<void> => {
-    setSelectedIndex(selectedIndex);
+    setSelectedIndex(index);
     setIsDownloading(true);
 
-    let fileDetails = await s3API.getFile(fileKey);
-
+    const file = await s3API.getFile(fileKey);
     const url = window.URL.createObjectURL(
-      new Blob([fileDetails.data], { type: "application/pdf" })
+      new Blob([file.data], { type: "application/pdf" })
     );
 
     const link = document.createElement("a");
     link.href = url;
     link.setAttribute("download", fileName);
-
     link.click();
 
     setIsDownloading(false);
   };
 
+  const renderDocument = (document: Document, index: number): JSX.Element => (
+    <Fragment key={index}>
+      <Stack direction="row" alignItems="center" py="0.55rem" gap={2}>
+        <FiFileText size="1.5rem" color="#22A7F1" />
+        <Typography
+          variant="body1"
+          color="#22A7F1"
+          onClick={() => handleDownloadFile(index, document.key, document.name)}
+          sx={{
+            cursor: "pointer",
+            overflow: "hidden",
+            whiteSpace: "nowrap",
+            textOverflow: "ellipsis",
+            maxWidth: 200,
+          }}
+          title={document.name}
+        >
+          {document.name}
+          {index === selectedIndex && isDownloading && (
+            <CircularProgress
+              color="primary"
+              size={20}
+              sx={{ mt: "5px", ml: "1rem" }}
+            />
+          )}
+        </Typography>
+      </Stack>
+    </Fragment>
+  );
+
+  const filteredDocuments = documentType
+    ? documents.filter((doc) => doc.documentType === documentType)
+    : documents;
+
+  if (!filteredDocuments.length) return null;
+
   return (
     <>
-      {documents?.filter((doc) => doc.documentType === documentType).length >
-        0 && (
+      {title && (
         <Typography variant="body1" color="black">
           {title}
         </Typography>
       )}
-
-      {documents
-        ?.filter((doc) => doc.documentType === documentType)
-        .map((document, index) => (
-          <Fragment key={index}>
-            <Stack direction="row" alignItems="center" py="0.55rem" gap={2}>
-              <FiFileText size="1.5rem" color="#22A7F1" />
-              <Typography
-                variant="body1"
-                color="#22A7F1"
-                onClick={() =>
-                  handleDownloadFile(index, document.key, document.name)
-                }
-                style={{
-                  cursor: "pointer",
-                  overflow: "hidden",
-                  whiteSpace: "nowrap",
-                  textOverflow: "ellipsis",
-                  maxWidth: "200px",
-                }}
-                title={document.name}
-              >
-                {document.name}
-                {index === selectedIndex && isDownloading && (
-                  <CircularProgress
-                    color="primary"
-                    size={20}
-                    style={{ marginTop: "5px", marginLeft: "1rem" }}
-                  />
-                )}
-              </Typography>
-            </Stack>
-          </Fragment>
-        ))}
-
-      {documents?.filter((doc) => doc.documentType === documentType).length >
-        0 && <Divider />}
+      {filteredDocuments.map(renderDocument)}
+      {documentType && <Divider />}
     </>
   );
 };
