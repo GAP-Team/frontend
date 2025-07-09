@@ -1,3 +1,4 @@
+export const ADMIN_BASE = "/admin";
 export const REAL_ESTATE_BASE = "/real-estate";
 export const SERVICE_PROVIDER_BASE = "/service-provider";
 
@@ -5,6 +6,10 @@ export const ROUTES = {
   SERVICE_PROVIDER_HOME: "/",
   LOGIN: "/login",
   REGISTRATION: "/registration",
+  ADMIN: {
+    DASHBOARD: `${ADMIN_BASE}/dashboard`,
+    USERS: `${ADMIN_BASE}/users`,
+  },
   REAL_ESTATE: {
     DASHBOARD: `${REAL_ESTATE_BASE}/dashboard`,
     BUILDING: {
