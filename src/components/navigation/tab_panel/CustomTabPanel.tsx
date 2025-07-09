@@ -5,8 +5,8 @@ import TabList from "@mui/lab/TabList";
 import TabContext from "@mui/lab/TabContext";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
-
 import { TabsTypes } from "@/utils/Constants";
+
 
 interface CustomTabPanelProps {
   tabs: TabsTypes[];

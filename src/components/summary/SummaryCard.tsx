@@ -2,11 +2,11 @@ import Box, { BoxProps } from "@mui/material/Box";
 
 import { useTheme } from "@mui/material/styles";
 
-interface SummaryCardProps extends BoxProps {
+interface SummaryLayoutProps extends BoxProps {
   children?: React.ReactNode;
 }
 
-const SummaryCard: React.FC<SummaryCardProps> = ({ children, ...other }) => {
+const SummaryLayout: React.FC<SummaryLayoutProps> = ({ children, ...other }) => {
   const theme = useTheme();
 
   const defaultStyles = {
@@ -31,4 +31,4 @@ const SummaryCard: React.FC<SummaryCardProps> = ({ children, ...other }) => {
   );
 };
 
-export default SummaryCard;
+export default SummaryLayout;

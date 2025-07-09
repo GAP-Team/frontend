@@ -2,7 +2,7 @@ import React from "react";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
-import SummaryCard from "@/components/summary/SummaryCard";
+import SummaryLayout from "@/components/summary/SummaryCard";
 import { FaRegEdit } from "react-icons/fa";
 import DetailItem from "../common/DetailItem";
 export interface Detail {
@@ -30,11 +30,11 @@ const SummarySection: React.FC<{
         </Typography>
         <EditIcon onClick={setActiveStep} />
       </Box>
-      <SummaryCard>
+      <SummaryLayout>
         {details.map((detail, index) => (
           <DetailItem key={index} label={detail.label} value={detail.value} />
         ))}
-      </SummaryCard>
+      </SummaryLayout>
     </>
   );
 };

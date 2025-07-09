@@ -1,4 +1,4 @@
-export const scrollBarStyles = {
+export const styles = {
   "&::-webkit-scrollbar": {
     width: "8px",
     height: "4px",

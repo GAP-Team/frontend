@@ -3,17 +3,18 @@ import React from "react";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import ListItemButton from "@mui/material/ListItemButton";
-import { SidebarItem } from "@/components/navigation/sidebar/SideBar";
+import { SidebarItemTypes } from "@/components/navigation/sidebar/types";
 
-interface SidebarItemComponentProps {
-  item: SidebarItem;
+
+
+interface SidebarItemProps {
+  item: SidebarItemTypes;
   open: boolean;
   selected: boolean;
-  setSelected: (item: SidebarItem) => void;
+  setSelected: (item: SidebarItemTypes) => void;
 }
 
-// FIXME: it is just subsidebar that belongs to sidebar (rename required) and can stay in same file
-const SidebarItemComponent: React.FC<SidebarItemComponentProps> = ({
+const SidebarItem: React.FC<SidebarItemProps> = ({
   item,
   open,
   selected,
@@ -68,4 +69,4 @@ const styles = {
   },
 };
 
-export default SidebarItemComponent;
+export default SidebarItem;

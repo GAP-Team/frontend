@@ -15,10 +15,10 @@ import { DOCUMENT_TYPE } from "@/utils/enums";
 import Typography from "@mui/material/Typography";
 import ActionMenu from "@/components/common/ActionMenu";
 import SectionTitle from "@/components/data_display/label/SectionTitle";
-import { scrollBarStyles } from "@/components/scrollbar/Scrollbar";
+import { styles as scrollbarStyles } from "@/components/common/scrollbar/styles";
 import DocumentList from "../../buildings/building_card/DocumentList ";
 import { checkActiveTenderForFacility } from "@/lib/features/tenderSlice";
-import { showSnackbar } from "@/components/root-snackbar";
+import { showSnackbar } from "@/components/feedback/root-snackbar";
 import { deleteFacility } from "@/lib/features/facilitySlice";
 import {
   getFacilityCheckTimeRemaining,
@@ -30,7 +30,7 @@ import {
 } from "@/utils/Constants";
 import dayjs from "dayjs";
 import DetailItem from "@/components/common/DetailItem";
-import SummaryCard from "@/components/summary/SummaryCard";
+import SummaryLayout from "@/components/summary/SummaryCard";
 import Grid from "@mui/material/Grid";
 
 interface FacilityCardProps {
@@ -134,7 +134,7 @@ const FacilityCard: React.FC<FacilityCardProps> = ({ facility }) => {
       </Typography>
       <Box sx={styles.tags} />
       <Divider sx={styles.divider} orientation="horizontal" />
-      <SummaryCard>
+      <SummaryLayout>
         <DetailItem label="Unterkategorie" value={facility.subcategory} />
         <div>
           <Link
@@ -225,7 +225,7 @@ const FacilityCard: React.FC<FacilityCardProps> = ({ facility }) => {
             }
           />
         )}
-      </SummaryCard>
+      </SummaryLayout>
 
       {/* Document Section */}
       <List sx={{ ...styles.listContainer }}>
@@ -321,7 +321,7 @@ const styles = {
     paddingTop: "0.5rem",
     overflow: "auto",
     paddingRight: "0.65rem",
-    ...scrollBarStyles,
+    ...scrollbarStyles,
   },
   sectionTitle: {
     fontWeight: 600,

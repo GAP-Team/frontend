@@ -4,7 +4,7 @@ import { PiArrowBendDownRightBold } from "react-icons/pi";
 import { getTenderStatusStyle } from "@/utils/utils";
 import { VscDebugBreakpointLog } from "react-icons/vsc";
 import React from "react";
-import GProgressLinearBar from "@/components/stepper/GProgressLinearBar";
+import GProgressLinearBar from "@/components/navigation/stepper/GProgressLinearBar";
 
 // JobItem component
 const JobItem: React.FC<JobItemProps> = ({

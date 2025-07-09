@@ -3,7 +3,7 @@ import React from "react";
 import { List } from "@mui/material";
 import { ApplicationItemProps } from "./types";
 import ApplicationItem from "./ApplicationItem";
-import { scrollBarStyles } from "@/components/scrollbar/Scrollbar";
+import { styles as scrollbarStyles } from "@/components/common/scrollbar/styles";
 
 interface ApplicationListProps {
   applications: ApplicationItemProps[];
@@ -29,6 +29,6 @@ const styles = {
     gap: "1rem",
     paddingRight: "0.65rem",
     overflowY: "auto",
-    ...scrollBarStyles,
+    ...scrollbarStyles,
   },
 };

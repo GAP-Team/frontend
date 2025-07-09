@@ -14,7 +14,7 @@ import {
   listOfFacilitySubcategories,
 } from "@/utils/Constants";
 
-const SideFilterPanel: React.FC<SideFilterPanelProps> = ({
+const ContractFilterPanel: React.FC<SideFilterPanelProps> = ({
   states,
   tenderTypes,
   facilitySubcategories,
@@ -105,7 +105,7 @@ const SideFilterPanel: React.FC<SideFilterPanelProps> = ({
   );
 };
 
-export default SideFilterPanel;
+export default ContractFilterPanel;
 
 const styles = {
   mainContainer: {

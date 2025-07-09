@@ -6,7 +6,7 @@ import React, { useState } from "react";
 import { ROUTES } from "@/utils/routes";
 import Divider from "@mui/material/Divider";
 import { useRouter } from "next/navigation";
-import { showSnackbar } from "@/components/root-snackbar";
+import { showSnackbar } from "@/components/feedback/root-snackbar";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import {
   Button,

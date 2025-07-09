@@ -22,10 +22,10 @@ import TenderDescription from "./TenderDescription";
 import PageTitle from "@/components/data_display/label/PageTitle";
 import SuccessPage from "@/components/common/SuccessPage";
 import TenderClassification from "./TenderClassification";
-import { showSnackbar } from "@/components/root-snackbar";
+import { showSnackbar } from "@/components/feedback/root-snackbar";
 import SectionTitle from "@/components/data_display/label/SectionTitle";
 import { addTenderValidationSchema } from "@/utils/ValidationSchema";
-import GProgressStepper from "@/components/stepper/GProgressStepper";
+import GProgressStepper from "@/components/navigation/stepper/GProgressStepper";
 import { TENDER_FORM } from "@/utils/enums";
 import { isUserActive } from "@/lib/features/userSlice";
 import {

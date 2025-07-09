@@ -9,7 +9,7 @@ import Divider from "@mui/material/Divider";
 import { useRouter } from "next/navigation";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import { showSnackbar } from "@/components/root-snackbar";
+import { showSnackbar } from "@/components/feedback/root-snackbar";
 import { EmailChangeSchema } from "@/utils/ValidationSchema";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import {

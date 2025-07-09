@@ -9,29 +9,16 @@ import { styled, Theme, CSSObject } from "@mui/material/styles";
 import Image from "next/image";
 import gapLogo from "../../../../public/icons/gap-logo.svg";
 import gapLogoFull from "../../../../public/icons/gapfull-logo.svg";
-import SidebarItemComponent from "./SidebarItemComponent";
 import { SubSidebarItem } from "./SubSidebarItem";
 import { ROUTES } from "@/utils/routes";
+import SidebarItem from "./SidebarItem";
+import { SubItem, SidebarItemTypes } from "./types";
 
-export interface SubItem {
-  id: number;
-  text: string;
-  url: string;
-  component?: React.ReactElement;
-}
-export interface SidebarItem {
-  id: number;
-  icon: IconType;
-  text: string;
-  url?: string;
-  component?: React.ReactElement;
-  subItems?: SubItem[];
-}
 
 interface SidebarProps {
-  items: SidebarItem[];
-  setSelected: (item: SidebarItem | SubItem) => void;
-  selected: SidebarItem | SubItem;
+  items: SidebarItemTypes[];
+  setSelected: (item: SidebarItemTypes | SubItem) => void;
+  selected: SidebarItemTypes | SubItem;
 }
 
 const drawerWidth = 300;
@@ -138,7 +125,7 @@ const Sidebar: React.FC<SidebarProps> = ({ items, setSelected, selected }) => {
                 setSelected={setSelected}
               />
             ) : (
-              <SidebarItemComponent
+              <SidebarItem
                 key={item?.id}
                 item={item}
                 open={open}

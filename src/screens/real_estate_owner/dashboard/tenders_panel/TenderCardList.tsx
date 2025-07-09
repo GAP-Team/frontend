@@ -1,7 +1,7 @@
 import Box from "@mui/material/Box";
 import TenderCard from "./TenderCard";
 import { Typography } from "@mui/material";
-import { scrollBarStyles } from "@/components/scrollbar/Scrollbar";
+import { styles } from "@/components/common/scrollbar/styles";
 import { Urgency } from "@/utils/enums";
 import { BuildingTenders } from "../../tenders/tender_card/types";
 import { useAppSelector } from "@/lib/hooks";
@@ -84,7 +84,7 @@ const styles = {
     paddingTop: "1rem",
     px: "0.2rem",
     overflowX: "auto",
-    ...scrollBarStyles,
+    ...styles,
   },
   noDataContainer: {
     display: "grid",

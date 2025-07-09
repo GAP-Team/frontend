@@ -16,7 +16,7 @@ import FormHelperText from "@mui/material/FormHelperText";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
-import { showSnackbar } from "@/components/root-snackbar";
+import { showSnackbar } from "@/components/feedback/root-snackbar";
 import { updateUserProfile } from "@/lib/features/userSlice";
 import { useRouter } from "next/navigation";
 import { BUSINESS_TYPE, DOCUMENT_TYPE } from "@/utils/enums";

@@ -3,7 +3,7 @@ import emailAPIs from "@/api/email";
 import { ContactFormProps } from "./types";
 import { useAppDispatch } from "@/lib/hooks";
 import GTextInput from "@/components/inputs/GTextInput";
-import { showSnackbar } from "@/components/root-snackbar";
+import { showSnackbar } from "@/components/feedback/root-snackbar";
 import { ContactFormSchema } from "@/utils/ValidationSchema";
 import {
   Grid,

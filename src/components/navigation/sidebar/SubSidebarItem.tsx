@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { SidebarItem, SubItem } from "@/components/navigation/sidebar/SideBar";
+import {
+  SidebarItemTypes,
+  SubItem,
+} from "@/components/navigation/sidebar/types";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
@@ -9,13 +12,12 @@ import List from "@mui/material/List";
 import Collapse from "@mui/material/Collapse";
 
 interface SubSidebarItemProps {
-  item: SidebarItem;
+  item: SidebarItemTypes;
   open: boolean;
   selected?: boolean;
   setSelected?: (item: SubItem) => void;
 }
 
-// FIXME: it is just subsidebar that belongs to sidebar (rename required) and can stay in same file
 export const SubSidebarItem: React.FC<SubSidebarItemProps> = ({
   item,
   open,

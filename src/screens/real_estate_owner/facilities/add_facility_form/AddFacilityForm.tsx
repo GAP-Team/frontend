@@ -1,7 +1,7 @@
 import React from "react";
 import Grid from "@mui/material/Grid";
 import { Divider, Typography } from "@mui/material";
-import GStepper from "@/components/stepper/GStepper";
+import GStepper from "@/components/navigation/stepper/GStepper";
 import GButton from "@/components/inputs/button/GButton";
 import { ActiveStepItem } from "./types";
 

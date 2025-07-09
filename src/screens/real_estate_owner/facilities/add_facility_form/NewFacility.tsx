@@ -19,7 +19,7 @@ import PageTitle from "@/components/data_display/label/PageTitle";
 import FacilityMaintenance from "./FacilityMaintenance";
 import FacilityInformation from "./FacilityInformation";
 import SuccessPage from "@/components/common/SuccessPage";
-import { showSnackbar } from "@/components/root-snackbar";
+import { showSnackbar } from "@/components/feedback/root-snackbar";
 import SectionTitle from "@/components/data_display/label/SectionTitle";
 import { DEFAULT_PUBLISH_MONTHS } from "@/utils/Constants";
 import FacilityDocumentation from "./FacilityDocumentation";
@@ -27,7 +27,7 @@ import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { handleUploadMultipleDoc } from "@/utils/uploadToS3";
 import { fetchBuildings } from "@/lib/features/buildingSlice";
 import { currentUser, isUserActive } from "@/lib/features/userSlice";
-import GProgressStepper from "@/components/stepper/GProgressStepper";
+import GProgressStepper from "@/components/navigation/stepper/GProgressStepper";
 import { addFacilityValidationSchema } from "@/utils/ValidationSchema";
 import {
   createFacility,
