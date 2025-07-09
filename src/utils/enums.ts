@@ -6,8 +6,9 @@ export enum Urgency {
   HANDOVER = "Übergabe an Bauherren/Kunden",
 }
 export enum USER_ROLE {
-  REAL_ESTATE_OWNER = "REAL_ESTATE_OWNER",
+  ADMIN = "ADMIN",
   SERVICE_PROVIDER = "SERVICE_PROVIDER",
+  REAL_ESTATE_OWNER = "REAL_ESTATE_OWNER",
 }
 
 export enum BUSINESS_TYPE {
@@ -56,4 +57,9 @@ export enum FilterPanelLabels {
 export enum FORM_ACTION_TYPE {
   CREATE = "CREATE",
   UPDATE = "UPDATE",
+}
+
+export enum USER_ROLE_IN_GERMAN {
+  SERVICE_PROVIDER = "Dienstleister",
+  REAL_ESTATE_OWNER = "Immobilienbetreiber",
 }

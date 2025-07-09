@@ -40,6 +40,11 @@ const userAPI = {
     api.get(
       `/users/${userId}/facilities?city=${city}&state=${state}&facilityType=${facilityType}`
     ),
+  deleteUser: (id: string, currentPassword: string): any =>
+    api.delete(`/users/${id}`, { data: { currentPassword: currentPassword } }),
+  getUsers: (): any => api.get("/users"),
+  activateUser: (id: string): any => api.post(`/users/${id}/active`),
+  deactivateUser: (id: string): any => api.post(`/users/${id}/deactive`),
   delete: (userId: string, currentPassword: string): any =>
     api.delete(`/users/${userId}`, {
       data: { currentPassword: currentPassword },
