@@ -126,6 +126,28 @@ const FacilityInformation = (): JSX.Element => {
         </Grid>
 
         <Grid item xs={6}>
+          <LabelWithAsterisk>Anlage Anzahl</LabelWithAsterisk>
+          <HelpIcon
+            iconColor={HELP_ICON_BUTTON_COLOR.GREY}
+            helpText="The helper text will be displayed here."
+          />
+          <GTextInput
+            id="numberOfUnits"
+            name="numberOfUnits"
+            value={formik?.values?.numberOfUnits}
+            onChange={formik?.handleChange}
+            onBlur={formik?.handleBlur}
+            error={
+              formik?.touched?.numberOfUnits &&
+              Boolean(formik?.errors?.numberOfUnits)
+            }
+            helperText={
+              formik?.touched?.numberOfUnits && formik?.errors?.numberOfUnits
+            }
+          />
+        </Grid>
+
+        <Grid item xs={6}>
           <LabelWithAsterisk>OBJEKT ZUORDNEN</LabelWithAsterisk>
           <HelpIcon
             iconColor={HELP_ICON_BUTTON_COLOR.GREY}
@@ -159,27 +181,6 @@ const FacilityInformation = (): JSX.Element => {
               </p>
             )}
           </FormControl>
-        </Grid>
-        <Grid item xs={6}>
-          <LabelWithAsterisk>Anlage Anzahl</LabelWithAsterisk>
-          <HelpIcon
-            iconColor={HELP_ICON_BUTTON_COLOR.GREY}
-            helpText="The helper text will be displayed here."
-          />
-          <GTextInput
-            id="numberOfUnits"
-            name="numberOfUnits"
-            value={formik?.values?.numberOfUnits}
-            onChange={formik?.handleChange}
-            onBlur={formik?.handleBlur}
-            error={
-              formik?.touched?.numberOfUnits &&
-              Boolean(formik?.errors?.numberOfUnits)
-            }
-            helperText={
-              formik?.touched?.numberOfUnits && formik?.errors?.numberOfUnits
-            }
-          />
         </Grid>
       </Grid>
     </Box>

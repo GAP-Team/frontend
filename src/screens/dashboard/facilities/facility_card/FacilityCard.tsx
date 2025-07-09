@@ -98,6 +98,8 @@ const FacilityCard: React.FC<FacilityCardProps> = ({ facility }) => {
     }
   };
 
+  console.log("FacilityCard rendered with facility:", facility);
+
   return (
     <Paper
       sx={styles.card}
@@ -136,6 +138,12 @@ const FacilityCard: React.FC<FacilityCardProps> = ({ facility }) => {
       <Divider sx={styles.divider} orientation="horizontal" />
       <SummaryCard>
         <DetailItem label="Unterkategorie" value={facility.subcategory} />
+        <div>
+          <DetailItem
+            label="Anzahl der Anlagen"
+            value={facility.numberOfUnits?.toString()}
+          />
+        </div>
         <div>
           <Link
             style={{ textDecoration: "none" }}
