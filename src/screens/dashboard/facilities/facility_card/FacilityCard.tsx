@@ -98,8 +98,6 @@ const FacilityCard: React.FC<FacilityCardProps> = ({ facility }) => {
     }
   };
 
-  console.log("FacilityCard rendered with facility:", facility);
-
   return (
     <Paper
       sx={styles.card}
