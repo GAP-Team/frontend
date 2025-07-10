@@ -12,7 +12,7 @@ import { showSnackbar } from "@/components/feedback/root-snackbar";
 import { useAppSelector, useAppDispatch } from "@/lib/hooks";
 import { updateUserProfile } from "@/lib/features/userSlice";
 import { UserProfileSchema } from "@/utils/ValidationSchema";
-import GButton from "@/components/button/GButton";
+import GButton from "@/components/inputs/button/GButton";
 
 const UserProfile = (): JSX.Element => {
   const dispatch = useAppDispatch();

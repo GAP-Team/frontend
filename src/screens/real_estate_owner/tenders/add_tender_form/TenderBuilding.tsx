@@ -6,13 +6,13 @@ import { useSelector } from "react-redux";
 import { useFormikContext } from "formik";
 import { useEffect, useState } from "react";
 import { AddTenderFormValues } from "./types";
-import HelpIcon from "@/components/button/HelpIcon";
+import HelpIcon from "@/components/icons/HelpIcon";
 import { FormControl, MenuItem, Select } from "@mui/material";
 import CustomSelect from "@/components/inputs/drop_down/CustomSelect";
 import { getUserBuildings } from "@/lib/features/buildingSlice";
 import { HELP_ICON_BUTTON_COLOR, Item } from "@/utils/Constants";
-import LabelWithAsterisk from "@/components/label/LabelWithAsterisk";
-import { Facility } from "@/screens/dashboard/facilities/facility_card/types";
+import LabelWithAsterisk from "@/components/data_display/label/LabelWithAsterisk";
+import { Facility } from "@/screens/real_estate_owner/facilities/facility_card/types";
 import { AddFacilityFormValues } from "../../facilities/add_facility_form/types";
 
 const TenderBuilding = (): JSX.Element => {

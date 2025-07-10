@@ -16,7 +16,7 @@ import {
   sendUserActivityEmail,
 } from "@/lib/features/userSlice";
 import { USER_ACTIVITY_EMAIL_TEMPLATES } from "@/utils/Constants";
-import GButton from "@/components/button/GButton";
+import GButton from "@/components/inputs/button/GButton";
 
 const ChangeEmail = (): JSX.Element => {
   const router = useRouter();

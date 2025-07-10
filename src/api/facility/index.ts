@@ -1,4 +1,4 @@
-import { Facility } from "@/screens/dashboard/facilities/facility_card/types";
+import { Facility } from "@/screens/real_estate_owner/facilities/facility_card/types";
 import api from "../axios";
 
 const facilityAPI = {

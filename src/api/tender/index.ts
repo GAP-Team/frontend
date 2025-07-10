@@ -1,4 +1,4 @@
-import { Tender } from "@/screens/dashboard/tenders/tender_card/types";
+import { Tender } from "@/screens/real_estate_owner/tenders/tender_card/types";
 import api from "../axios";
 
 const tenderAPI = {
