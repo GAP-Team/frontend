@@ -25,7 +25,7 @@ import { handleDeleteDoc, handleUploadDoc } from "@/utils/uploadToS3";
 import { Document } from "@/typings/types";
 import { ROUTES } from "@/utils/routes";
 import Image from "next/image";
-import GButton from "@/components/button/GButton";
+import GButton from "@/components/inputs/button/GButton";
 
 const CompanyProfile = (): JSX.Element => {
   const dispatch = useAppDispatch();

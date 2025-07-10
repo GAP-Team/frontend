@@ -43,13 +43,13 @@ const ServiceProviderLayout: React.FC<any> = ({ children }) => {
   const router = useRouter();
   const pathname = usePathname();
   const [selectedSidebarItem, setSelectedSidebarItem] = useState<
-    SidebarItem | SubItem
+    SidebarItemTypes | SubItem
   >(sidebarItems[0]);
 
   useEffect(() => {
     // FIXME: we already use this logic in the RealEstateLayout, consider refactoring to a common utility function
     // to avoid code duplication.
-    const matchSidebarItem = (): SidebarItem | SubItem => {
+    const matchSidebarItem = (): SidebarItemTypes | SubItem => {
       for (const item of sidebarItems) {
         if (item.url === pathname) {
           return item;

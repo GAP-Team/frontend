@@ -21,7 +21,7 @@ import {
 import { clearLocalStorage } from "@/utils/utils";
 import { deleteUser } from "@/lib/features/userSlice";
 import { DeleteAccountSchema } from "@/utils/ValidationSchema";
-import GButton from "@/components/button/GButton";
+import GButton from "@/components/inputs/button/GButton";
 
 const DeleteAccount = (): JSX.Element => {
   const router = useRouter();

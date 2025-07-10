@@ -21,7 +21,7 @@ import {
 import { USER_ACTIVITY_EMAIL_TEMPLATES } from "@/utils/Constants";
 import { useRouter } from "next/navigation";
 import { ROUTES } from "@/utils/routes";
-import GButton from "@/components/button/GButton";
+import GButton from "@/components/inputs/button/GButton";
 
 interface ChangePasswordInitialValuesProps {
   currentPassword: string;
