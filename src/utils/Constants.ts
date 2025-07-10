@@ -1,9 +1,10 @@
-import { FilterOptionType, Notification } from "@/typings/types";
 import { USER_ROLE } from "./enums";
+import { FilterOptionType } from "@/typings/types";
 import HomeWorkIcon from "@mui/icons-material/HomeWork";
 import OfficeImage from "../../public/images/office.jpg";
 import DescriptionIcon from "@mui/icons-material/Description";
 import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
+import { Notification } from "@/components/navigation/GAppbar/types";
 import ConnectWithoutContactIcon from "@mui/icons-material/ConnectWithoutContact";
 
 export const listOfFacilitySubcategories: FilterOptionType[] = [
@@ -795,3 +796,56 @@ export const USER_ACTIVITY_EMAIL_TEMPLATES = {
   PASSWORD_CHANGE: "ChangePasswordTemplate",
   EMAIL_CHANGE: "ChangeEmailTemplate",
 };
+
+export const previousAdvantages = [
+  "Bericht 1-7 Tage",
+  "Bericht 1-7 Tage (-10%)",
+  "Gewünschter Prüfzeitraum",
+  "Skonto (1-3%) 7-10 Tage",
+  "Kostenlose Anpassung",
+  "Kostenpflichtige Anpassung",
+  "Sofortiger Bericht",
+  "Fristverlängerung Gratis",
+  "Benutzerangebot Nummer 1",
+];
+
+export const UsersTableColumns = [
+  { id: "firstNname", label: "Vorname" },
+  { id: "lastName", label: "Name" },
+  {
+    id: "companyName",
+    label: "Unternehmensname",
+  },
+  {
+    id: "companyPhoneNumber",
+    label: "Geschäftsnummer",
+  },
+  {
+    id: "companyAddress",
+    label: "Geschäftsadresse",
+  },
+  {
+    id: "companyBusinessType",
+    label: "Unternehmenstyp",
+  },
+  {
+    id: "role",
+    label: "Rolle",
+  },
+  {
+    id: "companyRegistrationNumber",
+    label: "Registrierungsnummer",
+  },
+  {
+    id: "companyDocuments",
+    label: "Dokumente des Unternehmens",
+  },
+  {
+    id: "qualificationDocuments",
+    label: "Qualifikations Dokumente",
+  },
+  {
+    id: "activation",
+    label: "Aktiv Status",
+  },
+];
