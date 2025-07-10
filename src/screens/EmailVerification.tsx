@@ -22,7 +22,6 @@ interface EmailVerificationProps {
   postVerificationAction: () => void;
 }
 
-// FIXME: email verification should be a screen component, it does not belong to the components folder
 const EmailVerificationScreen = ({
   sendMail,
   newUserId,
