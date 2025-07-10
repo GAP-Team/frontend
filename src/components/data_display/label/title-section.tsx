@@ -17,4 +17,4 @@ const CenteredSection = ({
   );
 };
 
-export default TitleSection;
+export default CenteredSection;
