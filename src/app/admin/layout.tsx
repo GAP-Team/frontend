@@ -1,12 +1,12 @@
 "use client";
 import { ROUTES } from "@/utils/routes";
 import { useEffect, useState } from "react";
-import Layout from "@/screens/dashboard/Layout";
+import Layout from "@/screens/real_estate_owner/Layout";
 import { useRouter, usePathname } from "next/navigation";
 import { LuUsers, LuLayoutDashboard } from "react-icons/lu";
-import { SubItem, SidebarItem } from "@/components/navigation/GSidebar/SideBar";
+import { SubItem, SidebarItemTypes } from "@/components/navigation/sidebar/types";
 
-const sidebarItems: SidebarItem[] = [
+const sidebarItems: SidebarItemTypes[] = [
   {
     id: 0,
     icon: LuLayoutDashboard,
@@ -24,12 +24,12 @@ const sidebarItems: SidebarItem[] = [
 const AdminLayout: React.FC<any> = ({ children }) => {
   const router = useRouter();
   const pathname = usePathname();
-  const [selected, setSelected] = useState<SidebarItem | SubItem>(
+  const [selected, setSelected] = useState<SidebarItemTypes | SubItem>(
     sidebarItems[0]
   );
 
   useEffect(() => {
-    const matchSidebarItem = (): SidebarItem | SubItem => {
+    const matchSidebarItem = (): SidebarItemTypes | SubItem => {
       for (const item of sidebarItems) {
         if (item.url === pathname) {
           return item;
@@ -47,7 +47,7 @@ const AdminLayout: React.FC<any> = ({ children }) => {
     setSelected(matchSidebarItem());
   }, [pathname]);
 
-  const handleRedirect = (item: SidebarItem | SubItem): void => {
+  const handleRedirect = (item: SidebarItemTypes | SubItem): void => {
     if (item.url) {
       setSelected(item);
       router.push(item.url);
