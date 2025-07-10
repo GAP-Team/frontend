@@ -4,7 +4,6 @@ import React from "react";
 import { useFormik } from "formik";
 import Grid from "@mui/material/Grid";
 import { ROUTES } from "@/utils/routes";
-import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
 import { useRouter } from "next/navigation";
 import TextField from "@mui/material/TextField";
@@ -13,6 +12,7 @@ import { showSnackbar } from "@/components/feedback/root-snackbar";
 import { useAppSelector, useAppDispatch } from "@/lib/hooks";
 import { updateUserProfile } from "@/lib/features/userSlice";
 import { UserProfileSchema } from "@/utils/ValidationSchema";
+import GButton from "@/components/button/GButton";
 
 const UserProfile = (): JSX.Element => {
   const dispatch = useAppDispatch();
@@ -163,17 +163,17 @@ const UserProfile = (): JSX.Element => {
         <Grid item xs={12}>
           <Grid container justifyContent="flex-end" spacing={2}>
             <Grid item>
-              <Button
-                variant="outlined"
+              <GButton
                 onClick={() => router.push(ROUTES.REAL_ESTATE.DASHBOARD)}
+                variant="outlined"
               >
                 Abbrechen
-              </Button>
+              </GButton>
             </Grid>
             <Grid item>
-              <Button variant="contained" color="primary" type="submit">
+              <GButton variant="contained" color="primary" type="submit">
                 Änderungen speichern
-              </Button>
+              </GButton>
             </Grid>
           </Grid>
         </Grid>

@@ -1,11 +1,14 @@
+import { Tender } from "@/screens/dashboard/tenders/tender_card/types";
 import api from "../axios";
 
-const tenderAPIs = {
+const tenderAPI = {
   /* Tender Routes */
-  create: (data: any): any => api.post("/tenders", data),
+  // FIXME: Add proper types for the parameters and response
+  create: (tender: Tender): Promise<{ id: string }> =>
+    api.post("/tenders", tender),
   delete: (tenderId: string): any => api.delete(`/tenders/${tenderId}`),
-  update: (tenderId: string, tenderData: any): any =>
-    api.put(`/tenders/${tenderId}`, tenderData),
+  update: (tenderId: string, tender: Partial<Tender>): Promise<Tender> =>
+    api.put(`/tenders/${tenderId}`, tender),
 };
 
-export default tenderAPIs;
+export default tenderAPI;

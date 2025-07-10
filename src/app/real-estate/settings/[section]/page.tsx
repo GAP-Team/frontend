@@ -4,7 +4,7 @@ import DeleteAccount from "@/screens/real_estate_owner/settings/DeleteAccount";
 import CompanyProfile from "@/screens/real_estate_owner/settings/CompanyProfile";
 import ChangePassword from "@/screens/real_estate_owner/settings/ChangePassword";
 
-export default function SectionPage({
+export default function SettingSectionPage({
   params,
 }: {
   params: { section: string };

@@ -1,6 +1,8 @@
 import api from "../axios";
-const contractAPIs = {
-  getAllContracts: (
+
+// FIXME: Add proper types for the parameters and response
+const contractAPI = {
+  getContracts: (
     states: string[],
     tenderTypes: string[],
     subcategories: string[]
@@ -11,4 +13,4 @@ const contractAPIs = {
 
   getContractById: (id: string): any => api.get(`/contracts/${id}`),
 };
-export default contractAPIs;
+export default contractAPI;

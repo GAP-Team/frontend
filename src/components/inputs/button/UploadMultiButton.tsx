@@ -9,7 +9,7 @@ import { useTheme } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import FormHelperText from "@mui/material/FormHelperText";
 
-import s3APIs from "@/api/s3";
+import s3API from "@/api/s3";
 
 interface UploadMultiButtonProps {
   value?: File[] | null | undefined;
@@ -81,7 +81,7 @@ export default function UploadMultiButton({
   // FIXME: why it is calling s3 api
   const deleteFileFromS3 = async (file: any): Promise<void> => {
     if (file.hasOwnProperty("documentType")) {
-      await s3APIs.delete(file?.key);
+      await s3API.delete(file?.key);
     }
   };
 

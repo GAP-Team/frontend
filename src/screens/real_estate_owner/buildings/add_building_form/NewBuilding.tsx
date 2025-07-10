@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { useSelector } from "react-redux";
 import { Formik, FormikHelpers } from "formik";
 import Grid from "@mui/material/Grid";
-import buildingAPIs from "@/api/building";
+import buildingAPI from "@/api/building";
 import { ActiveStepItem } from "../../types";
 import {
   AddBuildingFormValues,
@@ -242,7 +242,7 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
 
     const formateDate = moment().format("YYYY-MM-DDTHH:mm:ss.SSS[Z]");
 
-    let buildingData = {
+    let building = {
       userId: user?.id,
       documents: docObjList,
       address: addressObj,
@@ -257,12 +257,12 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
     };
 
     if (actionType === FORM_ACTION_TYPE.UPDATE) {
-      const saveStatus = await UpdateBuildingData(buildingData);
+      const saveStatus = await UpdateBuildingData(building);
       if (saveStatus) {
         status = true;
       }
     } else if (actionType === FORM_ACTION_TYPE.CREATE) {
-      const updateStatus = await saveBuildingData(buildingData);
+      const updateStatus = await saveBuildingData(building);
       if (updateStatus) {
         status = true;
       }
@@ -271,9 +271,9 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
     return status;
   };
 
-  const saveBuildingData = async (data: any): Promise<boolean> => {
+  const saveBuildingData = async (building: any): Promise<boolean> => {
     try {
-      const createBuildingResponse = await buildingAPIs.create(data);
+      const createBuildingResponse = await buildingAPI.create(building);
       if (createBuildingResponse?.data?.id) {
         appDispatch(
           showSnackbar({
@@ -305,7 +305,7 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
     }
 
     try {
-      const updateBuildingResponse = await buildingAPIs.update(
+      const updateBuildingResponse = await buildingAPI.update(
         selectedBuildingDetails?.id,
         data
       );

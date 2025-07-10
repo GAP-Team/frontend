@@ -4,8 +4,9 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Radio from "@mui/material/Radio";
 import { useFormikContext } from "formik";
-import GTextInput from "../inputs/GTextInput";
-import UploadMultiButton from "../inputs/button/UploadMultiButton";
+import GTextInput from "../input/GTextInput";
+import { Documents, HELP_ICON_BUTTON_COLOR } from "@/utils/Constants";
+import UploadMultiButton from "../button/UploadMultiButton";
 import {
   FormControl,
   FormControlLabel,
@@ -13,8 +14,7 @@ import {
   Typography,
 } from "@mui/material";
 import { DocumentChoice } from "@/utils/enums";
-import HelpIcon from "@/components/icons/HelpIcon";
-import { Documentation, HELP_ICON_BUTTON_COLOR } from "@/utils/Constants";
+import HelpIcon from "@/components/button/HelpIcon";
 
 interface CustomDocumentationProps {
   formikValue: any;
@@ -25,7 +25,7 @@ const DocumentForm = ({
   formikValue,
   documentFor,
 }: CustomDocumentationProps): JSX.Element => {
-  const formik = useFormikContext<Documentation>();
+  const formik = useFormikContext<Documents>();
 
   useEffect(() => {
     if (formikValue.documentChoice !== DocumentChoice.UPLOAD_NOW) {

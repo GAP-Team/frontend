@@ -16,7 +16,7 @@ import { useSelector } from "react-redux";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import authAPIs from "@/api/auth";
+import authAPI from "@/api/auth";
 import GSearch from "@/components/inputs/search/GSearch";
 import { MdOutlineLogout } from "react-icons/md";
 import { Business, Email, Lock } from "@mui/icons-material";
@@ -27,7 +27,7 @@ import { notifications } from "@/utils/Constants";
 import { ROUTES } from "@/utils/routes";
 import Button from "@mui/material/Button";
 import { FaArrowRightToBracket } from "react-icons/fa6";
-import { checkIsLoggedIn } from "@/utils/helperJWT";
+import { checkIsLoggedIn } from "@/utils/auth";
 import { persistor } from "@/lib/store";
 
 export default function GAppbar(): JSX.Element {
@@ -61,8 +61,8 @@ export default function GAppbar(): JSX.Element {
   };
 
   const handleLogout = async (): Promise<void> => {
-    let data = { userId: user?.id };
-    const logoutStatus = await authAPIs.logout(data);
+    let currentUserId = { userId: user?.id };
+    const logoutStatus = await authAPI.logout(currentUserId);
     if (logoutStatus?.status === 201) {
       Cookies.remove("access_token");
       Cookies.remove("isVerified");

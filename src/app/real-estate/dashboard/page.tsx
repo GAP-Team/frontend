@@ -19,6 +19,8 @@ export default function RealEstateDashboardPage(): JSX.Element {
 
   useEffect(() => {
     if (user?.id) {
+      // FIXME: avoid mixing get and fetch and retrieve
+      appDispatch(fetchTenders(user.id));
       fetchAllNecessaryData(user.id);
     }
   }, [user?.id, appDispatch]);
@@ -26,6 +28,9 @@ export default function RealEstateDashboardPage(): JSX.Element {
   const fetchAllNecessaryData = (userId: string): void => {
     const getBuildingQuery = {
       userId: userId,
+      city: "",
+      facilityType: "",
+      state: "",
     };
 
     appDispatch(fetchTenders(userId));
@@ -41,7 +46,7 @@ export default function RealEstateDashboardPage(): JSX.Element {
             <OverviewPanel slot="overview" />
             <TendersPanel slot="tenders" />
             <ApplicationsPanel slot="applications" />
-            <NewsPanel slot="news" />
+            <ChatPanel slot="news" />
           </Dashboard>
         </>
       )}

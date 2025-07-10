@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { checkIsLoggedIn, getIsUserVerified } from "@/utils/helperJWT";
+import { checkIsLoggedIn, getIsUserVerified } from "@/utils/auth";
 
 export const useLogin = (): {
   isLoggedIn: boolean;

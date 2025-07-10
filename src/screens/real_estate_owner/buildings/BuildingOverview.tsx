@@ -12,7 +12,7 @@ import BuildingContainer from "./building_card/BuildingContainer";
 import PropertyFilterPanel from "@/components/common/filter/PropertyFilterPanel";
 import { fetchBuildings, getUserBuildings } from "@/lib/features/buildingSlice";
 
-const BuildingOverview: React.FC = () => {
+const BuildingsOverview: React.FC = () => {
   const dispatch = useAppDispatch();
   const user = useSelector(currentUser);
   const userBuildings = useSelector(getUserBuildings);
@@ -23,7 +23,7 @@ const BuildingOverview: React.FC = () => {
 
   const fetchUserBuildings = async (
     city: string,
-    federalState: string,
+    state: string,
     facilityType: string
   ): Promise<void> => {
     if (!user?.id) return;
@@ -31,7 +31,7 @@ const BuildingOverview: React.FC = () => {
     const query = {
       userId: user?.id,
       city: city,
-      federalState: federalState,
+      state: state,
       facilityType: facilityType,
     };
     dispatch(fetchBuildings(query));
@@ -70,7 +70,7 @@ const BuildingOverview: React.FC = () => {
   );
 };
 
-export default BuildingOverview;
+export default BuildingsOverview;
 
 // Styles
 const styles = {

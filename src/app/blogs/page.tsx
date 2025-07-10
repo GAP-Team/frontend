@@ -3,7 +3,7 @@ import { Grid } from "@mui/material";
 import BlogsOverview from "@/screens/landing_page/blogs/BlogsOverview";
 import LandingPageLayout from "@/components/layout/LandingPageLayout";
 
-export default function Blogs(): JSX.Element {
+export default function BlogsPage(): JSX.Element {
   return (
     <main className="flex min-h-screen flex-col items-center bg-white justify-between">
       <LandingPageLayout>

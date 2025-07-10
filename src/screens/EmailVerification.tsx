@@ -9,10 +9,10 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import CircularProgress from "@mui/material/CircularProgress";
 
-import userAPIs from "@/api/user";
-import emailAPIs from "@/api/email";
-import GButton from "@/components/inputs/button/GButton";
-import SuccessPage from "@/components/common/pages/SuccessPage";
+import userAPI from "@/api/user";
+import emailAPI from "@/api/email";
+import GButton from "@/components/button/GButton";
+import SuccessPage from "@/components/common/SuccessPage";
 
 interface EmailVerificationProps {
   sendMail: boolean;
@@ -96,7 +96,7 @@ const EmailVerificationScreen = ({
     };
 
     try {
-      const res = await userAPIs.verifyEmailToken(verificationQuery);
+      const res = await userAPI.verifyEmailToken(verificationQuery);
 
       if (res?.data?.status) {
         handleVerificationSuccess();
@@ -138,8 +138,8 @@ const EmailVerificationScreen = ({
 
   const handleResendCode = async (): Promise<void> => {
     setResendDisabled(true);
-    const sendEmailQuery = { email: newUserEmail };
-    const sendStatus = await emailAPIs.sendVerificationEmail(sendEmailQuery);
+    const userEmailPayload = { email: newUserEmail };
+    const sendStatus = await emailAPI.sendVerificationEmail(userEmailPayload);
 
     if (sendStatus.status === 201) {
       setIsVerificationEmailSent(true);

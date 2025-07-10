@@ -3,7 +3,7 @@ import { Grid } from "@mui/material";
 import LandingPageLayout from "@/components/layout/LandingPageLayout";
 import SupportCenterSection from "@/screens/landing_page/SupportCenterSection";
 
-export default function SupportCenter(): JSX.Element {
+export default function SupportCenterPage(): JSX.Element {
   return (
     <main className="flex min-h-screen flex-col items-center bg-white justify-between">
       <LandingPageLayout>

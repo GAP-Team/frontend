@@ -25,6 +25,7 @@ import { handleDeleteDoc, handleUploadDoc } from "@/utils/uploadToS3";
 import { Document } from "@/typings/types";
 import { ROUTES } from "@/utils/routes";
 import Image from "next/image";
+import GButton from "@/components/button/GButton";
 
 const CompanyProfile = (): JSX.Element => {
   const dispatch = useAppDispatch();
@@ -583,17 +584,17 @@ const CompanyProfile = (): JSX.Element => {
         <Grid item xs={12}>
           <Grid container justifyContent="flex-end" spacing={2}>
             <Grid item>
-              <Button
+              <GButton
                 variant="outlined"
                 onClick={() => router.push(ROUTES.REAL_ESTATE.DASHBOARD)}
               >
                 Abbrechen
-              </Button>
+              </GButton>
             </Grid>
             <Grid item>
-              <Button variant="contained" color="primary" type="submit">
+              <GButton variant="contained" color="primary" type="submit">
                 Änderungen speichern
-              </Button>
+              </GButton>
             </Grid>
           </Grid>
         </Grid>

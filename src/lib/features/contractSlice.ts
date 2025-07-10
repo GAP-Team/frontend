@@ -1,5 +1,5 @@
 import { RootState } from "../store";
-import contractAPIs from "@/api/contract";
+import contractAPI from "@/api/contract";
 import { Contract } from "@/typings/types";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
@@ -28,7 +28,7 @@ export const fetchContracts = createAsyncThunk(
     tenderTypes: string[];
     facilitySubcategories: string[];
   }) => {
-    const response = await contractAPIs.getAllContracts(
+    const response = await contractAPI.getContracts(
       states,
       tenderTypes,
       facilitySubcategories
@@ -40,7 +40,7 @@ export const fetchContracts = createAsyncThunk(
 export const fetchContractById = createAsyncThunk(
   "contract/getContractById",
   async ({ id }: { id: string }) => {
-    const response = await contractAPIs.getContractById(id);
+    const response = await contractAPI.getContractById(id);
     return response.data;
   }
 );
@@ -79,7 +79,7 @@ const contractSlice = createSlice({
 
 export const getAllContracts = (state: RootState): Contract[] =>
   state.contract.contracts;
-export const getContract = (state: RootState): Contract | null =>
+export const getContract = (state: RootState): Contract =>
   state.contract.contract;
 
 export default contractSlice.reducer;

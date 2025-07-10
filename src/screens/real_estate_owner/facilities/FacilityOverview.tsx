@@ -33,7 +33,7 @@ const FacilityOverview: React.FC = (): JSX.Element => {
         fetchBuildings({
           userId: user.id,
           city: "",
-          federalState: "",
+          state: "",
           facilityType: "",
         })
       );

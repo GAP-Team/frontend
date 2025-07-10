@@ -1,5 +1,5 @@
 import { useFormik } from "formik";
-import emailAPIs from "@/api/email";
+import emailAPI from "@/api/email";
 import { ContactFormProps } from "./types";
 import { useAppDispatch } from "@/lib/hooks";
 import GTextInput from "@/components/inputs/GTextInput";
@@ -37,7 +37,7 @@ const ContactForm = (): JSX.Element => {
     validationSchema: ContactFormSchema,
 
     onSubmit: async (values) => {
-      const formData = {
+      const contactPayload = {
         firstName: values?.firstName,
         lastName: values?.lastName,
         email: values?.email,
@@ -47,7 +47,7 @@ const ContactForm = (): JSX.Element => {
         dataPrivacyAccepted: values?.dataPrivacyAccepted,
       };
 
-      const response = await emailAPIs.contactUs(formData);
+      const response = await emailAPI.contactUs(contactPayload);
       if (response?.data?.status === 201) {
         formik?.resetForm();
         dispatch(

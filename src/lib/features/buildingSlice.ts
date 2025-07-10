@@ -1,12 +1,12 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import userAPIs from "@/api/user";
+import userAPI from "@/api/user";
 import { RootState } from "../store";
 import { Building } from "@/screens/real_estate_owner/buildings/building_card/types";
 interface queryType {
   userId: string;
-  city?: string;
-  federalState?: string;
-  facilityType?: string;
+  city: string;
+  state: string;
+  facilityType: string;
 }
 
 interface BuildingState {
@@ -24,10 +24,10 @@ const initialState: BuildingState = {
 export const fetchBuildings = createAsyncThunk(
   "building/fetchBuildings",
   async (query: queryType) => {
-    const response = await userAPIs.getBuildings(
+    const response = await userAPI.getBuildings(
       query.userId,
       query.city,
-      query.federalState,
+      query.state,
       query.facilityType
     );
     return response.data;
@@ -38,7 +38,7 @@ const buildingSlice = createSlice({
   name: "building",
   initialState,
   reducers: {
-    setUserBuildingDetails: (state, action) => {
+    setUserBuilding: (state, action) => {
       state.buildings = action?.payload;
     },
   },
@@ -58,7 +58,7 @@ const buildingSlice = createSlice({
   },
 });
 
-export const { setUserBuildingDetails } = buildingSlice.actions;
+export const { setUserBuilding: setUserBuilding } = buildingSlice.actions;
 
 export const getUserBuildings = (state: RootState): any =>
   state.building.buildings;

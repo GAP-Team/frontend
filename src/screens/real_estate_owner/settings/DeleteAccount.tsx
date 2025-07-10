@@ -21,6 +21,7 @@ import {
 import { clearLocalStorage } from "@/utils/utils";
 import { deleteUser } from "@/lib/features/userSlice";
 import { DeleteAccountSchema } from "@/utils/ValidationSchema";
+import GButton from "@/components/button/GButton";
 
 const DeleteAccount = (): JSX.Element => {
   const router = useRouter();
@@ -94,14 +95,22 @@ const DeleteAccount = (): JSX.Element => {
       <Grid item xs={12}>
         <Grid container justifyContent="flex-end" spacing={2}>
           <Grid item>
-            <Button
+            <GButton
+              variant="outlined"
+              onClick={() => router.push(ROUTES.REAL_ESTATE.DASHBOARD)}
+            >
+              Abbrechen
+            </GButton>
+          </Grid>
+          <Grid item>
+            <GButton
               variant="contained"
               color="error"
               type="button"
               onClick={() => setOpen(true)}
             >
               Konto löschen
-            </Button>
+            </GButton>
           </Grid>
         </Grid>
       </Grid>

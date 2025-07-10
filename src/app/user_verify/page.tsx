@@ -8,6 +8,7 @@ import { currentUser } from "@/lib/features/userSlice";
 import GNavbar from "@/components/navigation/navbar/GNavbar";
 import EmailVerificationScreen from "@/screens/EmailVerification";
 
+// FIXME: renaming necessary as they do not have intuitive names
 export default function UserMailVerification(): JSX.Element {
   const router = useRouter();
   const user = useSelector(currentUser);
