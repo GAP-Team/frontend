@@ -15,8 +15,8 @@ import ActionMenu from "@/components/navigation/ActionMenu";
 import { useAppDispatch } from "@/lib/hooks";
 import { showSnackbar } from "@/components/feedback/root-snackbar";
 import { deleteTender } from "@/lib/features/tenderSlice";
-import { BuildingAddress } from "@/screens/dashboard/buildings/building_card/types";
-import { Tender } from "@/screens/dashboard/tenders/tender_card/types";
+import { BuildingAddress } from "@/screens/real_estate_owner/buildings/building_card/types";
+import { Tender } from "@/screens/real_estate_owner/tenders/tender_card/types";
 import { getTenderStatusStyle, translateTenderForm } from "@/utils/utils";
 
 interface TenderCardProps {
