@@ -1,4 +1,3 @@
-
 // FIXME: find the right name for this component and move where it belongs as it is not a label
 const TitleSection = ({
   badge,

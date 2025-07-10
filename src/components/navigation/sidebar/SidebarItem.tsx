@@ -5,8 +5,6 @@ import ListItemText from "@mui/material/ListItemText";
 import ListItemButton from "@mui/material/ListItemButton";
 import { SidebarItemTypes } from "@/components/navigation/sidebar/types";
 
-
-
 interface SidebarItemProps {
   item: SidebarItemTypes;
   open: boolean;

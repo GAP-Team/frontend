@@ -48,4 +48,3 @@ const GButton: React.FC<GButtonProps> = ({
 };
 
 export default GButton;
-

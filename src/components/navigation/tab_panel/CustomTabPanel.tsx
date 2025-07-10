@@ -7,7 +7,6 @@ import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { TabsTypes } from "@/utils/Constants";
 
-
 interface CustomTabPanelProps {
   tabs: TabsTypes[];
   handleTabSelection: (tabIndex: string) => void;

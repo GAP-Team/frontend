@@ -14,7 +14,6 @@ import { ROUTES } from "@/utils/routes";
 import SidebarItem from "./SidebarItem";
 import { SubItem, SidebarItemTypes } from "./types";
 
-
 interface SidebarProps {
   items: SidebarItemTypes[];
   setSelected: (item: SidebarItemTypes | SubItem) => void;

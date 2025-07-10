@@ -74,7 +74,7 @@ export default function UploadMultiButton({
     onChange && onChange(syntheticEvent);
 
     const deletedFile = value?.filter((_, i) => i === index) || [];
-     // FIXME: why it is calling s3 api
+    // FIXME: why it is calling s3 api
     deleteFileFromS3(deletedFile[0]);
   };
 

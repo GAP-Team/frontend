@@ -37,6 +37,9 @@ export default function GProgressLinearBar({
   const normalizedValue = (value / maxValue) * 100;
 
   return (
-    <CustomLinearProgressBarStyle variant="determinate" value={normalizedValue} />
+    <CustomLinearProgressBarStyle
+      variant="determinate"
+      value={normalizedValue}
+    />
   );
 }

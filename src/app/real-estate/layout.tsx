@@ -8,7 +8,7 @@ import { MdOutlineDoorSliding, MdOutlineAddHomeWork } from "react-icons/md";
 import {
   SubItem,
   SidebarItemTypes,
-} from "@/components/navigation/sidebar/SideBar";
+} from "@/components/navigation/sidebar/types";
 import { ROUTES } from "@/utils/routes";
 import Layout from "@/screens/real_estate_owner/Layout";
 import { Box } from "@mui/material";

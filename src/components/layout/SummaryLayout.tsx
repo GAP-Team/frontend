@@ -6,7 +6,10 @@ interface SummaryLayoutProps extends BoxProps {
   children?: React.ReactNode;
 }
 
-const SummaryLayout: React.FC<SummaryLayoutProps> = ({ children, ...other }) => {
+const SummaryLayout: React.FC<SummaryLayoutProps> = ({
+  children,
+  ...other
+}) => {
   const theme = useTheme();
 
   const defaultStyles = {
