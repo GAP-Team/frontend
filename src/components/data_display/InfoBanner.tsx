@@ -9,6 +9,7 @@ interface HeroBannerProps {
   copyright: string;
 }
 
+// FIXME: need to be refactored with TenderTitleBar as they share similar layout patterns
 const InfoBanner: React.FC<HeroBannerProps> = ({
   title,
   subtitle,
