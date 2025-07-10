@@ -26,9 +26,9 @@ const Input = styled("input")({
 
 export default function UploadMultiButton({
   value,
-  onChange,
   name,
   error,
+  onChange,
   helperText,
 }: UploadMultiButtonProps): JSX.Element {
   const theme = useTheme();

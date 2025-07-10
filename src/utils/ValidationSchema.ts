@@ -472,9 +472,9 @@ export const applyContractFormSchema = yup.object().shape({
       }
       return +value.replace(/,/, ".");
     })
+    .required("Gesamtkosten ist erforderlich")
     .typeError("Gesamtkosten muss eine Zahl sein.")
     .positive("Gesamtkosten muss größer als 0 sein.")
-    .required("Gesamtkosten ist erforderlich")
     .integer("Gesamtkosten muss eine ganze Zahl sein."),
   hourlyRate: yup
     .number()
@@ -495,4 +495,16 @@ export const applyContractFormSchema = yup.object().shape({
       "Postleitzahl muss zwischen 4 und 5 Ziffern lang sein"
     ),
   desiredDates: yup.array().of(yup.date()),
+  termsConditionDoc: yup
+    .mixed()
+    .required("AGB dokument ist erforderlich")
+    .test("fileRequired", "AGB dokument ist erforderlich", (value) => {
+      return value instanceof File;
+    }),
+  offerDoc: yup
+    .mixed()
+    .required("Angebot dokument ist erforderlich")
+    .test("fileRequired", "Angebot dokument ist erforderlich", (value) => {
+      return value instanceof File;
+    }),
 });
