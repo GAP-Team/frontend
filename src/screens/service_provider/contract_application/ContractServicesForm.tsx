@@ -9,9 +9,9 @@ import {
   Typography,
 } from "@mui/material";
 import { useState } from "react";
-import UploadButton from "../../components/button/UploadButton";
+import UploadButton from "@/components/inputs/button/UploadButton";
 import { previousAdvantages } from "@/utils/Constants";
-import LabelWithAsterisk from "../../components/label/LabelWithAsterisk";
+import LabelWithAsterisk from "@/components/data_display/label/LabelWithAsterisk";
 
 const ContractServicesForm = ({ formik }: { formik?: any }): JSX.Element => {
   const [newAdvantage, setNewAdvantage] = useState<string>("");

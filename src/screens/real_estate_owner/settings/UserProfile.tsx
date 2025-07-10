@@ -8,7 +8,7 @@ import Divider from "@mui/material/Divider";
 import { useRouter } from "next/navigation";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import { showSnackbar } from "@/components/feedback/root-snackbar";
+import { showSnackbar } from "@/components/feedback/snackbar";
 import { useAppSelector, useAppDispatch } from "@/lib/hooks";
 import { updateUserProfile } from "@/lib/features/userSlice";
 import { UserProfileSchema } from "@/utils/ValidationSchema";

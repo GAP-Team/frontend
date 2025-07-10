@@ -2,7 +2,7 @@ import { memo, useEffect } from "react";
 import NoAccessPage from "@/components/common/pages/NoAccessPage";
 import { checkIsLoggedIn } from "@/utils/auth";
 import { USER_ROLE, DOCUMENT_TYPE } from "@/utils/enums";
-import { showSnackbar } from "@/components/feedback/root-snackbar";
+import { showSnackbar } from "@/components/feedback/snackbar";
 import { Box, Grid, Paper, Typography } from "@mui/material";
 import { useAppSelector, useAppDispatch } from "@/lib/hooks";
 import ContractSummarySection from "./ContractSummarySection";

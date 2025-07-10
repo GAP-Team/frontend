@@ -1,9 +1,5 @@
 import { useState } from "react";
-<<<<<<<< HEAD:src/screens/service_provider/contract_application/ContractRateForm.tsx
 import LabelWithAsterisk from "@/components/data_display/label/LabelWithAsterisk";
-========
-import LabelWithAsterisk from "../../components/label/LabelWithAsterisk";
->>>>>>>> developer:src/screens/contract_application/ContractRateForm.tsx
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import { Grid, Divider, TextField, Typography } from "@mui/material";
 

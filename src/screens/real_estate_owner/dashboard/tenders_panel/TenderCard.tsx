@@ -13,7 +13,7 @@ import SectionTitle from "@/components/data_display/label/SectionTitle";
 import { Urgency } from "@/utils/enums";
 import ActionMenu from "@/components/navigation/ActionMenu";
 import { useAppDispatch } from "@/lib/hooks";
-import { showSnackbar } from "@/components/feedback/root-snackbar";
+import { showSnackbar } from "@/components/feedback/snackbar";
 import { deleteTender } from "@/lib/features/tenderSlice";
 import { BuildingAddress } from "@/screens/real_estate_owner/buildings/building_card/types";
 import { Tender } from "@/screens/real_estate_owner/tenders/tender_card/types";

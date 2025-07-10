@@ -25,7 +25,7 @@ import BuildingDocumentation from "./BuildingDocumentation";
 import { handleUploadMultipleDoc } from "@/utils/uploadToS3";
 import { addObjektFormSchema } from "@/utils/ValidationSchema";
 import { useAppDispatch } from "@/lib/hooks";
-import { showSnackbar } from "@/components/feedback/root-snackbar";
+import { showSnackbar } from "@/components/feedback/snackbar";
 import { getUserBuildings } from "@/lib/features/buildingSlice";
 import { DOCUMENT_TYPE, FORM_ACTION_TYPE } from "@/utils/enums";
 

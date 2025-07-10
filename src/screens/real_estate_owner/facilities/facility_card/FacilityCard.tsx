@@ -18,7 +18,7 @@ import SectionTitle from "@/components/data_display/label/SectionTitle";
 import { styles as scrollbarStyles } from "@/components/utils/scrollbar/styles";
 import DocumentList from "../../buildings/building_card/DocumentList ";
 import { checkActiveTenderForFacility } from "@/lib/features/tenderSlice";
-import { showSnackbar } from "@/components/feedback/root-snackbar";
+import { showSnackbar } from "@/components/feedback/snackbar";
 import { deleteFacility } from "@/lib/features/facilitySlice";
 import {
   getFacilityCheckTimeRemaining,

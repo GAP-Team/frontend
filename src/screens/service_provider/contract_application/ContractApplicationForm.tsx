@@ -1,8 +1,4 @@
-<<<<<<<< HEAD:src/screens/service_provider/contract_application/ContractApplicationForm.tsx
 import GButton from "@/components/inputs/button/GButton";
-========
-import GButton from "../../components/button/GButton";
->>>>>>>> developer:src/screens/contract_application/ContractApplicationForm.tsx
 import { ROUTES } from "@/utils/routes";
 import { useFormikContext } from "formik";
 import { useRouter } from "next/navigation";

@@ -3,7 +3,7 @@ import { useState } from "react";
 import userAPI from "@/api/user";
 import Switch from "@mui/material/Switch";
 import { useAppDispatch } from "@/lib/hooks";
-import { showSnackbar } from "../../../components/root-snackbar";
+import { showSnackbar } from "@/lib/features/snackbarSlice";
 import { Popover, Grid, Typography, Button } from "@mui/material";
 
 interface UpdateUserIsActiveStatusButtonProps {

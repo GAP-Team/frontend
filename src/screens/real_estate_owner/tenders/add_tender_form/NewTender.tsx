@@ -22,7 +22,7 @@ import TenderDescription from "./TenderDescription";
 import PageTitle from "@/components/data_display/label/PageTitle";
 import SuccessPage from "@/components/common/pages/SuccessPage";
 import TenderClassification from "./TenderClassification";
-import { showSnackbar } from "@/components/feedback/root-snackbar";
+import { showSnackbar } from "@/components/feedback/snackbar";
 import SectionTitle from "@/components/data_display/label/SectionTitle";
 import { addTenderValidationSchema } from "@/utils/ValidationSchema";
 import GProgressStepper from "@/components/navigation/stepper/GProgressStepper";
