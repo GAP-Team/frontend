@@ -7,10 +7,10 @@ import { fetchTenders } from "@/lib/features/tenderSlice";
 import { useLogin } from "@/hooks/useUserLoginVerification";
 import { fetchBuildings } from "@/lib/features/buildingSlice";
 import { getFacilitiesByUser } from "@/lib/features/facilitySlice";
-import NewsPanel from "@/screens/real_estate_owner/dashboard/communication_panel/NewsPanel";
 import TendersPanel from "@/screens/real_estate_owner/dashboard/tenders_panel/TendersPanel";
 import OverviewPanel from "@/screens/real_estate_owner/dashboard/overview_panel/OverviewPanel";
 import ApplicationsPanel from "@/screens/real_estate_owner/dashboard/applications_panel/ApplicationsPanel";
+import ChatPanel from "@/screens/real_estate_owner/dashboard/communication_panel/ChatPanel";
 
 export default function RealEstateDashboardPage(): JSX.Element {
   const appDispatch = useAppDispatch();
