@@ -4,7 +4,6 @@ import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import { createTheme } from "@mui/material";
-import { IconType } from "react-icons";
 import { styled, Theme, CSSObject } from "@mui/material/styles";
 import Image from "next/image";
 import gapLogo from "../../../../public/icons/gap-logo.svg";
