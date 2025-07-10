@@ -83,7 +83,7 @@ const RealStateUserLayout: React.FC<any> = ({ children }) => {
   const router = useRouter();
   const pathname = usePathname();
   const [selectedSidebarItem, setSelectedSidebarItem] = useState<
-    SidebarItem | SubItem
+    SidebarItemTypes | SubItem
   >(sidebarItems[0]);
 
   useEffect(() => {
