@@ -9,7 +9,7 @@ interface CustomLinearProgressBarProps {
   maxValue?: number;
 }
 
-const CustomLinearProgressBarStyle = styled(
+const StyledLinearProgress = styled(
   LinearProgress
 )<CustomLinearProgressBarProps>(({ theme, value }) => ({
   width: "15rem",
@@ -36,10 +36,5 @@ export default function GProgressLinearBar({
 }: CustomLinearProgressBarProps): JSX.Element {
   const normalizedValue = (value / maxValue) * 100;
 
-  return (
-    <CustomLinearProgressBarStyle
-      variant="determinate"
-      value={normalizedValue}
-    />
-  );
+  return <StyledLinearProgress variant="determinate" value={normalizedValue} />;
 }

@@ -74,11 +74,13 @@ export default function UploadMultiButton({
     onChange && onChange(syntheticEvent);
 
     const deletedFile = value?.filter((_, i) => i === index) || [];
-    // FIXME: why it is calling s3 api
+    // FIXME: The component is tightly coupled to S3 API operations. Consider extracting S3 operations to a service layer or passing delete handlers as props to maintain separation of concerns.
+
     deleteFileFromS3(deletedFile[0]);
   };
 
-  // FIXME: why it is calling s3 api
+  // FIXME: The component is tightly coupled to S3 API operations. Consider extracting S3 operations to a service layer or passing delete handlers as props to maintain separation of concerns.
+
   const deleteFileFromS3 = async (file: any): Promise<void> => {
     if (file.hasOwnProperty("documentType")) {
       await s3API.delete(file?.key);

@@ -4,7 +4,10 @@ import { useEffect, useState } from "react";
 import Layout from "@/screens/real_estate_owner/Layout";
 import { useRouter, usePathname } from "next/navigation";
 import { LuUsers, LuLayoutDashboard } from "react-icons/lu";
-import { SubItem, SidebarItemTypes } from "@/components/navigation/sidebar/types";
+import {
+  SubItem,
+  SidebarItemTypes,
+} from "@/components/navigation/sidebar/types";
 
 const sidebarItems: SidebarItemTypes[] = [
   {
