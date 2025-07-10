@@ -1,5 +1,5 @@
-// FIXME: find the right name for this component and move where it belongs as it is not a label
-const TitleSection = ({
+// This component has been renamed and moved to the layout directory as it is not a label
+const CenteredSection = ({
   badge,
   title,
   subtitle,
