@@ -4,9 +4,9 @@ import Link from "next/link";
 import Badge from "../../../components/data_display/badge/GBadge";
 import classes from "./GFunctionSection.module.scss";
 import TitleSection from "../../../components/data_display/label/title-section";
-import { ContractSvgIcon } from "../../../../public/svg/ContractSvgIcon";
-import { SolutionSvgIcon } from "../../../../public/svg/SolutionSvgIcon";
-import { RegisterSvgIcon } from "../../../../public/svg/RegisterSvgIcon";
+import { ContractSvgIcon } from "../../../../public/svgs/ContractSvgIcon";
+import { SolutionSvgIcon } from "../../../../public/svgs/SolutionSvgIcon";
+import { RegisterSvgIcon } from "../../../../public/svgs/RegisterSvgIcon";
 
 const GFunctionSection = (): JSX.Element => {
   return (

@@ -10,7 +10,7 @@ import { useRouter, usePathname } from "next/navigation";
 import {
   SubItem,
   SidebarItemTypes,
-} from "@/components/navigation/sidebar/SideBar";
+} from "@/components/navigation/sidebar/types";
 
 const sidebarItems: SidebarItemTypes[] = [
   {

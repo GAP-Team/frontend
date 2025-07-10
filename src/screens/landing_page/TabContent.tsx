@@ -4,7 +4,7 @@ import Image, { StaticImageData } from "next/image";
 import { Box, useMediaQuery, useTheme } from "@mui/material";
 
 import { ROUTES } from "@/utils/routes";
-import RoundButton from "../inputs/button/RoundButton";
+import RoundButton from "@/components/inputs/button/RoundButton";
 
 interface TabContentProps {
   title: string;

@@ -7,7 +7,7 @@ import ContractRateForm from "./ContractRateForm";
 import { translateTenderForm } from "@/utils/utils";
 import { Grid, Paper, Typography } from "@mui/material";
 import { getContract } from "@/lib/features/contractSlice";
-import { ActiveStepItem } from "@/screens/dashboard/types";
+import { ActiveStepItem } from "@/screens/real_estate_owner/types";
 import ContractApplicationForm from "./ContractApplicationForm";
 import { applyContractFormSchema } from "@/utils/ValidationSchema";
 import {

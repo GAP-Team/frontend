@@ -5,7 +5,7 @@ import Grid from "@mui/material/Grid";
 import { useFormikContext } from "formik";
 import Divider from "@mui/material/Divider";
 import PrivatePerson from "./real_estate/PrivatePerson";
-import GTab from "@/components/tab_panel/GTab";
+import GTab from "@/components/navigation/tab_panel/GTab";
 import CompanyAddress from "./CompanyAddress";
 import ComercialPerson from "./real_estate/CommercialPerson";
 import GButton from "@/components/inputs/button/GButton";

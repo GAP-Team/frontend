@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 import Typography from "@mui/material/Typography";
 import GButton from "@/components/inputs/button/GButton";
 import LabelText from "@/components/data_display/label/LabelText";
-import HeaderSection from "@/screens/dashboard/real_estate_user/HeaderSection";
+import HeaderSection from "@/screens/real_estate_owner/dashboard/HeaderSection";
 
 interface ContractSummarySectionProps {
   contract?: Contract | null;

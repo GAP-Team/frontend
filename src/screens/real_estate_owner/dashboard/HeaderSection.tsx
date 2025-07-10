@@ -10,6 +10,7 @@ interface HeaderSectionProps {
   overviewText?: string;
 }
 
+// FIXME: we do not have headerSection? and why it belongs just to real estate owner?
 const HeaderSection: React.FC<HeaderSectionProps> = ({
   count,
   titletext,

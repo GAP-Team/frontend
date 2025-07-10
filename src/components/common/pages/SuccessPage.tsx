@@ -4,7 +4,7 @@ import { NextPage } from "next";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import GButton from "@/components/inputs/button/GButton";
-import sucessSvg from "../../../public/icons/success.svg";
+import sucessSvg from "../../../../public/icons/success.svg";
 
 interface SuccessPageProps {
   title: string;
