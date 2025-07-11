@@ -1,7 +1,7 @@
 "use client";
 import { ROUTES } from "@/utils/routes";
 import { useEffect, useState } from "react";
-import Layout from "@/screens/real_estate_owner/Layout";
+import Layout from "@/screens/real-estate-owner/Layout";
 import { useRouter, usePathname } from "next/navigation";
 import { LuUsers, LuLayoutDashboard } from "react-icons/lu";
 import {

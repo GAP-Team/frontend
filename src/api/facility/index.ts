@@ -1,4 +1,5 @@
-import { Facility } from "@/screens/real_estate_owner/facilities/facility_card/types";
+// FIXME: Facility should not be imported from the screen, it should be imported from a common types file.
+import { Facility } from "@/screens/real-estate-owner/facilities/facility-card/types";
 import api from "../axios";
 
 const facilityAPI = {

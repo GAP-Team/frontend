@@ -11,7 +11,7 @@ A Next.js 14 project with App Router, ready to power GAP with the latest feature
 
 ## Project Conventions:
 
-- **Folder Naming:** Use **lower case** for folder names. If the name consists of multiple words, use **snake_case** (e.g., `like_this`).
+- **Folder Naming:** Use **lower case** for folder names. If the name consists of multiple words, use (e.g., `like-this`).
 - **File Naming:** Use **PascalCase** for TypeScript file names (e.g., `MyComponent.tsx`).
 - **Variables/Functions Naming:** Use **camelCase** for TypeScript (e.g., `firstName or getMethod`)
 - **Component Structure:** Organize component folders into categories like **input**, **button**, etc.

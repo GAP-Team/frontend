@@ -1,6 +1,6 @@
 "use client";
 import { useParams } from "next/navigation";
-import ContractDetails from "@/screens/service_provider/contracts/ContractDetails";
+import ContractDetails from "@/screens/service-provider/contracts/ContractDetails";
 
 export default function ContractDetailsPage(): JSX.Element {
   const params = useParams();

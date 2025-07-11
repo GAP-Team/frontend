@@ -10,7 +10,7 @@ import {
   SidebarItemTypes,
 } from "@/components/navigation/sidebar/types";
 import { ROUTES } from "@/utils/routes";
-import Layout from "@/screens/real_estate_owner/Layout";
+import Layout from "@/screens/real-estate-owner/Layout";
 import { Box } from "@mui/material";
 
 const sidebarItems: SidebarItemTypes[] = [

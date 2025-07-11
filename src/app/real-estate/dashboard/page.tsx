@@ -2,15 +2,15 @@
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 
-import Dashboard from "@/screens/real_estate_owner/Dashboard";
+import Dashboard from "@/screens/real-estate-owner/Dashboard";
 import { fetchTenders } from "@/lib/features/tenderSlice";
 import { useLogin } from "@/hooks/useUserLoginVerification";
 import { fetchBuildings } from "@/lib/features/buildingSlice";
 import { getFacilitiesByUser } from "@/lib/features/facilitySlice";
-import TendersPanel from "@/screens/real_estate_owner/dashboard/tenders_panel/TendersPanel";
-import OverviewPanel from "@/screens/real_estate_owner/dashboard/overview_panel/OverviewPanel";
-import ApplicationsPanel from "@/screens/real_estate_owner/dashboard/applications_panel/ApplicationsPanel";
-import ChatPanel from "@/screens/real_estate_owner/dashboard/communication_panel/ChatPanel";
+import TendersPanel from "@/screens/real-estate-owner/dashboard/tenders-panel/TendersPanel";
+import OverviewPanel from "@/screens/real-estate-owner/dashboard/overview-panel/OverviewPanel";
+import ApplicationsPanel from "@/screens/real-estate-owner/dashboard/applications-panel/ApplicationsPanel";
+import ChatPanel from "@/screens/real-estate-owner/dashboard/communication-panel/ChatPanel";
 
 export default function RealEstateDashboardPage(): JSX.Element {
   const appDispatch = useAppDispatch();

@@ -1,8 +1,8 @@
-import UserProfile from "@/screens/real_estate_owner/settings/UserProfile";
-import ChangeEmail from "@/screens/real_estate_owner/settings/ChangeEmail";
-import DeleteAccount from "@/screens/real_estate_owner/settings/DeleteAccount";
-import CompanyProfile from "@/screens/real_estate_owner/settings/CompanyProfile";
-import ChangePassword from "@/screens/real_estate_owner/settings/ChangePassword";
+import UserProfile from "@/screens/real-estate-owner/settings/UserProfile";
+import ChangeEmail from "@/screens/real-estate-owner/settings/ChangeEmail";
+import DeleteAccount from "@/screens/real-estate-owner/settings/DeleteAccount";
+import CompanyProfile from "@/screens/real-estate-owner/settings/CompanyProfile";
+import ChangePassword from "@/screens/real-estate-owner/settings/ChangePassword";
 
 export default function SettingSectionPage({
   params,

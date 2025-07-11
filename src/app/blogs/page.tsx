@@ -1,6 +1,6 @@
 "use client";
 import { Grid } from "@mui/material";
-import BlogsOverview from "@/screens/landing_page/blogs/BlogsOverview";
+import BlogsOverview from "@/screens/landing-page/blogs/BlogsOverview";
 import LandingPageLayout from "@/components/layout/LandingPageLayout";
 
 export default function BlogsPage(): JSX.Element {

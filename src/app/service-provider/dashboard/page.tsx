@@ -1,5 +1,5 @@
 "use client";
-import Dashboard from "@/screens/real_estate_owner/Dashboard";
+import Dashboard from "@/screens/real-estate-owner/Dashboard";
 import { useLogin } from "@/hooks/useUserLoginVerification";
 
 export default function ServiceProviderDashboardPage(): JSX.Element {

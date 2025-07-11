@@ -1,5 +1,5 @@
 import { StaticImageData } from "next/image";
-import { ActiveStepItem } from "@/screens/real_estate_owner/types";
+import { ActiveStepItem } from "@/screens/real-estate-owner/types";
 
 export interface FormErrors {
   [key: string]: string;

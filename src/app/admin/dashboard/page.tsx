@@ -2,7 +2,7 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { ROUTES } from "@/utils/routes";
-import Dashboard from "@/screens/real_estate_owner/Dashboard";
+import Dashboard from "@/screens/real-estate-owner/Dashboard";
 import NoAccessPage from "@/components/common/pages/NoAccessPage";
 import { userIsAdmin, checkIsLoggedIn } from "@/utils/auth";
 
