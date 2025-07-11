@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { ROUTES } from "@/utils/routes";
 import { useRouter } from "next/navigation";
-import RoundButton from "../../components/inputs/button/RoundButton";
+import RoundButton from "@/components/inputs/button/RoundButton";
 import TabContent from "@/screens/landing-page/TabContent";
 import CustomTabPanel from "@/components/navigation/tab_panel/CustomTabPanel";
 import { RealEstateLandingPageTabs } from "@/utils/Constants";
