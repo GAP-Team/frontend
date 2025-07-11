@@ -1,5 +1,5 @@
 "use client";
-import GBadge from "../../../components/data-display/badge/GBadge";
+import GBadge from "@/components/data-display/badge/GBadge";
 import { AufzugSvgIcon } from "../../../../public/svgs/AufzugSvgIcon";
 import { BmaSvgIcon } from "../../../../public/svgs/BmaSvgIcon";
 import { SprinklerSvgIcon } from "../../../../public/svgs/SprinklerSvgIcon";
