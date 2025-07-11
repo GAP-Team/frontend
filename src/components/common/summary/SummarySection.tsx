@@ -4,7 +4,7 @@ import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
 import SummaryLayout from "@/components/layout/SummaryLayout";
 import { FaRegEdit } from "react-icons/fa";
-import DetailItem from "../../data-display/DetailItem";
+import DetailItem from "@/components/data-display/DetailItem";
 export interface Detail {
   label: string;
   value: string;
