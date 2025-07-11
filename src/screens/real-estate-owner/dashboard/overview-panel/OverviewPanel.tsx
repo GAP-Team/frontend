@@ -7,11 +7,11 @@ import StatisticDisplay from "@/components/data-display/StatisticDisplay";
 import ProjectCard from "./ProjectCard";
 import DividerDecorator from "@/components/data-display/divider/DividerDecorator";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
-import { Tender } from "../../tenders/tender-card/types";
+import { Tender } from "@/screens/real-estate-owner/tenders/tender-card/types";
 import { TenderStatusEnum } from "@/utils/enums";
 import { getFacilitiesByUser } from "@/lib/features/facilitySlice";
-import { Facility } from "../../facilities/facility-card/types";
-import { Building, BuildingAddress } from "../../buildings/building-card/types";
+import { Facility } from "@/screens/real-estate-owner/facilities/facility-card/types";
+import { Building, BuildingAddress } from "@/screens/real-estate-owner/buildings/building-card/types";
 import { truncateLabel } from "@/utils/utils";
 import {
   DashboardComponentsProps,
