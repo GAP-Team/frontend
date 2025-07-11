@@ -1,19 +1,21 @@
 "use client";
 import GBadge from "../../badge/GBadge";
-import { AufzugSvgIcon } from "../../../../public/svg/AufzugSvgIcon";
+import { ElevatorSvgIcon } from "../../../../public/svg/ElevatorSvgIcon";
 import { BmaSvgIcon } from "../../../../public/svg/BmaSvgIcon";
 import { SprinklerSvgIcon } from "../../../../public/svg/SprinklerSvgIcon";
 import { RwaSvgIcon } from "../../../../public/svg/RwaSvgIcon";
 import { VentilationSvgIcon } from "../../../../public/svg/VentilationSvgIcon";
 import { ElectricalSvgIcon } from "../../../../public/svg/ElectricalSvgIcon";
-import { HeatingSvgIcon } from "../../../../public/svg/HeatingSvgIcon";
 import { WaterSvgIcon } from "../../../../public/svg/WaterSvgIcon";
 import { EmergencyLightSvgIcon } from "../../../../public/svg/EmergencyLightSvgIcon";
 import { DoorSvgIcon } from "../../../../public/svg/DoorSvgIcon";
-import { GasSvgIcon } from "../../../../public/svg/GasSvgIcon";
+import { FireExtinguisherSvgIcon } from "../../../../public/svg/FireExtinguisherSvgIcon";
 import { CoolingSvgIcon } from "../../../../public/svg/CoolingSvgIcon";
 import TitleSection from "../../label/title-section";
 import { FeatureCard } from "./../../card/FeatureCard";
+import { FireWatchSvgIcon } from "../../../../public/svg/FireWatchSvgIcon";
+import { WallHydrantSystemSvgIcon } from "../../../../public/svg/WallHydrantSystemSvgIcon";
+import { HygieneCheckWaterAirSvgIcon } from "../../../../public/svg/HygieneCheckWaterAirSvgIcon";
 
 const GFeatures = (): JSX.Element => {
   return (
@@ -24,7 +26,7 @@ const GFeatures = (): JSX.Element => {
         badge={<GBadge title="Jetzt direkt loslegen" color="#ccdfeb" />}
       />
       <div className="grid grid-cols-2 sm:grid-cols-3  lg:grid-cols-6 gap-4 sm:px-16 mb-8">
-        <FeatureCard title="Aufzugsanlagen" icon={<AufzugSvgIcon />} />
+        <FeatureCard title="Aufzugsanlagen" icon={<ElevatorSvgIcon />} />
         <FeatureCard title="Brandmeldeanlagen" icon={<BmaSvgIcon />} />
         <FeatureCard title="Sprinkleranlagen" icon={<SprinklerSvgIcon />} />
         <FeatureCard
@@ -36,17 +38,28 @@ const GFeatures = (): JSX.Element => {
           title="Elektrotechnische Anlagen"
           icon={<ElectricalSvgIcon />}
         />
-        <FeatureCard title="Heizungsanlagen" icon={<HeatingSvgIcon />} />
-        <FeatureCard title="Trinkwasseranlagen" icon={<WaterSvgIcon />} />
+        <FeatureCard title="Brandwache" icon={<FireWatchSvgIcon />} />
+        <FeatureCard
+          title="Brandschutz- und Löschanlagenkonzept"
+          icon={<WaterSvgIcon />}
+        />
         <FeatureCard
           title="Notbeleuchtung und Sicherheitsbeleuchtung"
           icon={<EmergencyLightSvgIcon />}
         />
         <FeatureCard title="Tür- und Toranlagen" icon={<DoorSvgIcon />} />
-        <FeatureCard title="Gasleitungen" icon={<GasSvgIcon />} />
+        <FeatureCard title="Feuerlöscher" icon={<FireExtinguisherSvgIcon />} />
         <FeatureCard
-          title="Kälte- und Klimatechnik"
+          title="Druckbehälter und Tankanlagen"
           icon={<CoolingSvgIcon />}
+        />
+        <FeatureCard
+          title="Wandhydrantenanlage"
+          icon={<WallHydrantSystemSvgIcon />}
+        />
+        <FeatureCard
+          title="Hygieneprüfung Trinkwasser und Lüftungsanlage"
+          icon={<HygieneCheckWaterAirSvgIcon />}
         />
       </div>
     </div>

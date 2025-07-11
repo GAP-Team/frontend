@@ -3,7 +3,7 @@ import { Grid } from "@mui/material";
 import LandingPageLayout from "@/screens/landingpage_layout/LandingPageLayout";
 import ContactSection from "@/components/common/ContactSection/ContactSection";
 
-export default function ContactUs(): JSX.Element {
+export default function ContactUsPage(): JSX.Element {
   return (
     <main className="flex min-h-screen flex-col items-center bg-white justify-between">
       <LandingPageLayout>

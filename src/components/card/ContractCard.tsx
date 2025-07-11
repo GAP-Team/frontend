@@ -9,7 +9,7 @@ import { Contract } from "@/typings/types";
 import { Typography } from "@mui/material";
 import { showSnackbar } from "../root-snackbar";
 import SectionTitle from "../label/SectionTitle";
-import { checkIsLoggedIn } from "@/utils/helperJWT";
+import { checkIsLoggedIn } from "@/utils/auth";
 import { currentUser } from "@/lib/features/userSlice";
 import { useAppSelector, useAppDispatch } from "@/lib/hooks";
 import { useRouter } from "next/navigation";

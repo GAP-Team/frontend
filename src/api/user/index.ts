@@ -1,14 +1,15 @@
 import api from "../axios";
 
-const userAPIs = {
-  /* User Registration Routes */
-  register: (data: any): any => api.post("/users", data),
-  getUserDataById: (id: any): any => api.get(`/users/${id}`),
-  verifyEmailToken: (data: any): any =>
-    api.post("/users/verify-user-token", data),
-  updateUser: (id: string, data: any): any => api.put(`/users/${id}`, data),
-  getFilterCreteria: (id: string): any =>
-    api.get(`/users/${id}/filter-criteria`),
+const userAPI = {
+  /* User Routes */
+  // FIXME: Add proper types for the parameters and response
+  register: (user: any): any => api.post("/users", user),
+  getUserById: (id: any): any => api.get(`/users/${id}`),
+  verifyEmailToken: (verificationPayload: any): any =>
+    api.post("/users/verify-user-token", verificationPayload),
+  update: (userId: string, user: any): any => api.put(`/users/${userId}`, user),
+  getFilterCreteria: (userId: string): any =>
+    api.get(`/users/${userId}/filter-criteria`),
   getBuildings: (
     userId: string,
     city: string = "",
@@ -18,7 +19,7 @@ const userAPIs = {
     api.get(
       `/users/${userId}/buildings?city=${city}&state=${state}&facilityType=${facilityType}`
     ),
-  getUserTenders: (
+  getTendersOfUser: (
     userId: string,
     city: string = "",
     state: string = "",
@@ -28,9 +29,9 @@ const userAPIs = {
       `/users/${userId}/tenders?city=${city}&state=${state}&facilityType=${facilityType}`
     ),
 
-  changePassword: (id: string, data: any): any =>
-    api.post(`/users/${id}/change-password`, data),
-  getUserFacilities: (
+  changePassword: (userId: string, passwordPayload: any): any =>
+    api.post(`/users/${userId}/change-password`, passwordPayload),
+  getFacilitiesOfUser: (
     userId: string,
     city: string = "",
     state: string = "",
@@ -41,6 +42,13 @@ const userAPIs = {
     ),
   deleteUser: (id: string, currentPassword: string): any =>
     api.delete(`/users/${id}`, { data: { currentPassword: currentPassword } }),
+  getUsers: (): any => api.get("/users"),
+  activateUser: (id: string): any => api.post(`/users/${id}/active`),
+  deactivateUser: (id: string): any => api.post(`/users/${id}/deactive`),
+  delete: (userId: string, currentPassword: string): any =>
+    api.delete(`/users/${userId}`, {
+      data: { currentPassword: currentPassword },
+    }),
 };
 
-export default userAPIs;
+export default userAPI;

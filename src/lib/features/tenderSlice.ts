@@ -4,8 +4,8 @@ import {
   Tender,
   BuildingTenders,
 } from "@/screens/dashboard/tenders/tender_card/types";
-import userAPIs from "@/api/user";
-import tenderAPIs from "@/api/tender";
+import userAPI from "@/api/user";
+import tenderAPI from "@/api/tender";
 interface TenderState {
   numOfTenders: number;
   tenders: BuildingTenders[];
@@ -31,7 +31,7 @@ const getTenders = createAsyncThunk(
     facilityType?: string;
   }) => {
     const { userId, city, state, facilityType } = param;
-    const response = await userAPIs.getUserTenders(
+    const response = await userAPI.getTendersOfUser(
       userId,
       city,
       state,
@@ -53,8 +53,8 @@ export const fetchTenders = (
 export const createTender = createAsyncThunk(
   "tender/createTender",
   async (newTender: any) => {
-    const response = await tenderAPIs.create(newTender);
-    return response.data;
+    const response = await tenderAPI.create(newTender);
+    return response.id;
   }
 );
 
@@ -62,8 +62,8 @@ export const createTender = createAsyncThunk(
 export const updateTender = createAsyncThunk(
   "tender/updateTender",
   async ({ tenderId, data }: { tenderId: string; data: any }) => {
-    const response = await tenderAPIs.update(tenderId, data);
-    return response.data;
+    const response = await tenderAPI.update(tenderId, data);
+    return response;
   }
 );
 
@@ -71,7 +71,7 @@ export const updateTender = createAsyncThunk(
 export const deleteTender = createAsyncThunk(
   "tender/deleteTender",
   async (tenderId: string) => {
-    await tenderAPIs.delete(tenderId);
+    await tenderAPI.delete(tenderId);
     return tenderId;
   }
 );

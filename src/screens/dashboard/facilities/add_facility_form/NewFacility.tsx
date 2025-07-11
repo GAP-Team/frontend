@@ -133,7 +133,7 @@ const NewFacility: React.FC<NewFacilityProps> = ({
     const query = {
       userId: user?.id,
       city: "",
-      federalState: "",
+      state: "",
       facilityType: "",
     };
     dispatch(fetchBuildings(query));
