@@ -13,7 +13,7 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import LabelWithAsterisk from "@/components/data_display/label/LabelWithAsterisk";
+import LabelWithAsterisk from "@/components/data-display/label/LabelWithAsterisk";
 import PhoneInput from "@/components/inputs/GPhoneInput";
 
 const ContactForm = (): JSX.Element => {

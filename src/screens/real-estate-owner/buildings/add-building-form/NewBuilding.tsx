@@ -19,7 +19,7 @@ import { ROUTES } from "@/utils/routes";
 import AddBuildingForm from "./AddBuildingForm";
 import BuildingAddress from "./BuildingAddress";
 import BuildingSummary from "./BuildingSummary";
-import PageTitle from "@/components/data_display/label/PageTitle";
+import PageTitle from "@/components/data-display/label/PageTitle";
 import BuildingInformation from "./BuildingInformation";
 import BuildingDocumentation from "./BuildingDocumentation";
 import { handleUploadMultipleDoc } from "@/utils/uploadToS3";

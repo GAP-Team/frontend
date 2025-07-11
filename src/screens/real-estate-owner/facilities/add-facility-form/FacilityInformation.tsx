@@ -13,7 +13,7 @@ import GTextInput from "@/components/inputs/GTextInput";
 import GTextSelector from "@/components/inputs/GTextSelector";
 import { getUserBuildings } from "@/lib/features/buildingSlice";
 import HelpIcon from "@/components/icons/HelpIcon";
-import LabelWithAsterisk from "@/components/data_display/label/LabelWithAsterisk";
+import LabelWithAsterisk from "@/components/data-display/label/LabelWithAsterisk";
 import {
   HELP_ICON_BUTTON_COLOR,
   listOfFacilitySubcategories,

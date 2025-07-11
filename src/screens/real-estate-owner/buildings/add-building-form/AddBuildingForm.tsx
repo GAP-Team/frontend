@@ -14,7 +14,7 @@ import GButton from "@/components/inputs/button/GButton";
 import { AddComponentFormProps } from "../../types";
 import GStepper from "@/components/navigation/stepper/GStepper";
 import SuccessPage from "@/components/common/pages/SuccessPage";
-import SectionTitle from "@/components/data_display/label/SectionTitle";
+import SectionTitle from "@/components/data-display/label/SectionTitle";
 import GProgressStepper from "@/components/navigation/stepper/GProgressStepper";
 
 const AddBuildingForm = ({

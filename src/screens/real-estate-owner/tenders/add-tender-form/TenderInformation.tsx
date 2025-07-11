@@ -11,7 +11,7 @@ import { TENDER_FORM } from "@/utils/enums";
 import { AddTenderFormValues } from "./types";
 import GTextInput from "@/components/inputs/GTextInput";
 import CustomSelect from "@/components/inputs/drop_down/CustomSelect";
-import LabelWithAsterisk from "@/components/data_display/label/LabelWithAsterisk";
+import LabelWithAsterisk from "@/components/data-display/label/LabelWithAsterisk";
 import { tenderTypesListHW, tenderTypesListSV } from "@/utils/Constants";
 
 const TenderInformation = (): JSX.Element => {

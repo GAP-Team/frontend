@@ -6,7 +6,7 @@ import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import Typography from "@mui/material/Typography";
 import GTextInput from "@/components/inputs/GTextInput";
-import LabelWithAsterisk from "@/components/data_display/label/LabelWithAsterisk";
+import LabelWithAsterisk from "@/components/data-display/label/LabelWithAsterisk";
 import { numOfEmployeesOptions } from "@/utils/Constants";
 import UploadMultiButton from "@/components/inputs/button/UploadMultiButton";
 

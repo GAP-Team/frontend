@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { ReactNode } from "react";
 import { Button } from "@mui/material";
-import GBadge from "@/components/data_display/badge/GBadge";
+import GBadge from "@/components/data-display/badge/GBadge";
 import classes from "./GStatSection.module.scss";
 import GCountDown from "@/screens/landing-page/countdown/GCountDown";
 

@@ -14,7 +14,7 @@ import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { DOCUMENT_TYPE } from "@/utils/enums";
 import Typography from "@mui/material/Typography";
 import ActionMenu from "@/components/navigation/ActionMenu";
-import SectionTitle from "@/components/data_display/label/SectionTitle";
+import SectionTitle from "@/components/data-display/label/SectionTitle";
 import { styles as scrollbarStyles } from "@/components/utils/scrollbar/styles";
 import DocumentList from "../../buildings/building-card/DocumentList ";
 import { checkActiveTenderForFacility } from "@/lib/features/tenderSlice";
@@ -29,7 +29,7 @@ import {
   MAINTENANCE_DUE_SOON_DAYS,
 } from "@/utils/Constants";
 import dayjs from "dayjs";
-import DetailItem from "@/components/data_display/DetailItem";
+import DetailItem from "@/components/data-display/DetailItem";
 import SummaryLayout from "@/components/layout/SummaryLayout";
 import Grid from "@mui/material/Grid";
 

@@ -2,7 +2,7 @@
 import { useEffect } from "react";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import LabelWithAsterisk from "@/components/data_display/label/LabelWithAsterisk";
+import LabelWithAsterisk from "@/components/data-display/label/LabelWithAsterisk";
 import PhoneInput from "@/components/inputs/GPhoneInput";
 import GTextInput from "@/components/inputs/GTextInput";
 

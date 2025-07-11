@@ -22,7 +22,7 @@ import { MdOutlineLogout } from "react-icons/md";
 import { Business, Email, Lock } from "@mui/icons-material";
 import { currentUser } from "@/lib/features/userSlice";
 import SettingsIcon from "@mui/icons-material/Settings";
-import NotificationItem from "../../../components/data_display/notification/NotificationItem";
+import NotificationItem from "../../../components/data-display/notification/NotificationItem";
 import { notifications } from "@/utils/Constants";
 import { ROUTES } from "@/utils/routes";
 import Button from "@mui/material/Button";

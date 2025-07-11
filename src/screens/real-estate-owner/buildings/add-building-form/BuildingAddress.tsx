@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import LabelWithAsterisk from "@/components/data_display/label/LabelWithAsterisk";
+import LabelWithAsterisk from "@/components/data-display/label/LabelWithAsterisk";
 import GTextInput from "@/components/inputs/GTextInput";
 import GSelector from "@/components/inputs/GSelector";
 import { germanStates } from "@/utils/Constants";

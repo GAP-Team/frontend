@@ -1,11 +1,11 @@
 "use client";
 import React, { useEffect } from "react";
-import SectionTitle from "@/components/data_display/label/SectionTitle";
+import SectionTitle from "@/components/data-display/label/SectionTitle";
 import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
-import StatisticDisplay from "@/components/data_display/StatisticDisplay";
+import StatisticDisplay from "@/components/data-display/StatisticDisplay";
 import ProjectCard from "./ProjectCard";
-import DividerDecorator from "@/components/data_display/divider/DividerDecorator";
+import DividerDecorator from "@/components/data-display/divider/DividerDecorator";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { Tender } from "../../tenders/tender-card/types";
 import { TenderStatusEnum } from "@/utils/enums";

@@ -11,7 +11,7 @@ import { FormControl, MenuItem, Select } from "@mui/material";
 import CustomSelect from "@/components/inputs/drop_down/CustomSelect";
 import { getUserBuildings } from "@/lib/features/buildingSlice";
 import { HELP_ICON_BUTTON_COLOR, Item } from "@/utils/Constants";
-import LabelWithAsterisk from "@/components/data_display/label/LabelWithAsterisk";
+import LabelWithAsterisk from "@/components/data-display/label/LabelWithAsterisk";
 import { Facility } from "@/screens/real-estate-owner/facilities/facility-card/types";
 import { AddFacilityFormValues } from "../../facilities/add-facility-form/types";
 

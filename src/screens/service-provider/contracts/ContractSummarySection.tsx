@@ -7,7 +7,7 @@ import Divider from "@mui/material/Divider";
 import { useRouter } from "next/navigation";
 import Typography from "@mui/material/Typography";
 import GButton from "@/components/inputs/button/GButton";
-import LabelText from "@/components/data_display/label/LabelText";
+import LabelText from "@/components/data-display/label/LabelText";
 import HeaderSection from "@/screens/real-estate-owner/dashboard/HeaderSection";
 
 interface ContractSummarySectionProps {

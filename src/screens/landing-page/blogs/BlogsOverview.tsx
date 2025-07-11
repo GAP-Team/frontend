@@ -1,4 +1,4 @@
-import GBadge from "../../../components/data_display/badge/GBadge";
+import GBadge from "../../../components/data-display/badge/GBadge";
 import { Box, Grid } from "@mui/material";
 import { articles } from "@/utils/Constants";
 import BlogCard from "@/components/surfaces/card/BlogCard";

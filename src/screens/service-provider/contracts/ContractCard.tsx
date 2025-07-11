@@ -8,7 +8,7 @@ import { USER_ROLE } from "@/utils/enums";
 import { Contract } from "@/typings/types";
 import { Typography } from "@mui/material";
 import { showSnackbar } from "../../../components/feedback/snackbar";
-import SectionTitle from "../../../components/data_display/label/SectionTitle";
+import SectionTitle from "../../../components/data-display/label/SectionTitle";
 import { checkIsLoggedIn } from "@/utils/auth";
 import { currentUser } from "@/lib/features/userSlice";
 import { useAppSelector, useAppDispatch } from "@/lib/hooks";

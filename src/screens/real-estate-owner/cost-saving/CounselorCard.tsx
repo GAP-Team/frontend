@@ -1,10 +1,10 @@
-import SectionTitle from "@/components/data_display/label/SectionTitle";
+import SectionTitle from "@/components/data-display/label/SectionTitle";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import { IconButton } from "@mui/material";
 import { AiOutlineArrowLeft, AiOutlineArrowRight } from "react-icons/ai"; // For navigation arrows
-import DividerDecorator from "@/components/data_display/divider/DividerDecorator";
+import DividerDecorator from "@/components/data-display/divider/DividerDecorator";
 import { RiRobot2Line } from "react-icons/ri";
 
 const CounselorCard = (): JSX.Element => {

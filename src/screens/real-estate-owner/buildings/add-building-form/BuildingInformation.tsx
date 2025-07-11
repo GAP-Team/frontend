@@ -17,7 +17,7 @@ import { ContactPersonItem } from "./types";
 import { Item } from "@/components/inputs/GSelector";
 import GTextInput from "@/components/inputs/GTextInput";
 import GTextSelector from "@/components/inputs/GTextSelector";
-import LabelWithAsterisk from "@/components/data_display/label/LabelWithAsterisk";
+import LabelWithAsterisk from "@/components/data-display/label/LabelWithAsterisk";
 import { buildingTypesList } from "@/utils/Constants";
 
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
