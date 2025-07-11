@@ -17,7 +17,7 @@ import Cookies from "js-cookie";
 import authAPI from "@/api/auth";
 import { setUser } from "@/lib/features/userSlice";
 import { GapLogo } from "@/components/icons/logo/GapLogo";
-import InfoBanner from "../../components/data-display/InfoBanner";
+import InfoBanner from "@/components/data-display/InfoBanner";
 import { loginValidationSchema } from "@/utils/ValidationSchema";
 import { setAccessToken, setIsUserVerified } from "@/utils/auth";
 import emailAPI from "@/api/email";

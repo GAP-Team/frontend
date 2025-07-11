@@ -1,6 +1,6 @@
 import React from "react";
 import HeaderSection from "../HeaderSection";
-import ScrollableLayout from "../../../../components/layout/ScrollableLayout";
+import ScrollableLayout from "@/components/layout/ScrollableLayout";
 import { messages, DashboardComponentsProps } from "@/utils/Constants";
 import MessagesContainer from "./MessagesContainer";
 
