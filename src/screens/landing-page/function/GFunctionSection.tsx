@@ -3,7 +3,7 @@ import Link from "next/link";
 
 import Badge from "@/components/data-display/badge/GBadge";
 import classes from "./GFunctionSection.module.scss";
-import TitleSection from "../../../components/data-display/label/title-section";
+import TitleSection from "@/components/data-display/label/title-section";
 import { ContractSvgIcon } from "../../../../public/svgs/ContractSvgIcon";
 import { SolutionSvgIcon } from "../../../../public/svgs/SolutionSvgIcon";
 import { RegisterSvgIcon } from "../../../../public/svgs/RegisterSvgIcon";

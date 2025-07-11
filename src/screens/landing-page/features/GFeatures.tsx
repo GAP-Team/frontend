@@ -12,7 +12,7 @@ import { EmergencyLightSvgIcon } from "../../../../public/svgs/EmergencyLightSvg
 import { DoorSvgIcon } from "../../../../public/svgs/DoorSvgIcon";
 import { GasSvgIcon } from "../../../../public/svgs/GasSvgIcon";
 import { CoolingSvgIcon } from "../../../../public/svgs/CoolingSvgIcon";
-import TitleSection from "../../../components/data-display/label/title-section";
+import TitleSection from "@/components/data-display/label/title-section";
 import { FeatureCard } from "../../../components/surfaces/card/FeatureCard";
 
 const GFeatures = (): JSX.Element => {
