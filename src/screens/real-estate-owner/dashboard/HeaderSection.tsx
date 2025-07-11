@@ -1,8 +1,8 @@
 import React from "react";
 import Box from "@mui/material/Box";
 import { ROUTES } from "@/utils/routes";
-import SectionTitle from "@/components/data-display/label/SectionTitle"; 
-import DividerDecorator from "@/components/data-display/divider/DividerDecorator"; 
+import SectionTitle from "@/components/data-display/label/SectionTitle";
+import DividerDecorator from "@/components/data-display/divider/DividerDecorator";
 
 interface HeaderSectionProps {
   count?: number;
