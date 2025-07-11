@@ -122,7 +122,7 @@ const Login = (): JSX.Element => {
               </Grid>
               <Grid item>
                 <Link
-                  href="#"
+                  role="button"
                   variant="body2"
                   sx={styles.linkDesignSmall}
                   onClick={handlePasswordResetClick}
