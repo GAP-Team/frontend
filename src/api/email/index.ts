@@ -9,8 +9,6 @@ const emailAPI = {
     api.post("/emails/contact", contactPayload),
   sendActivityEmail: (userActivityPayload: SendActivityEmailType): any =>
     api.post("/emails/send-email", userActivityPayload),
-  sendPasswordResetEmail: (data: { email: string }): any =>
-    api.post("/emails/send-password-reset", data),
 };
 
 export default emailAPI;
