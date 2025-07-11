@@ -13,7 +13,7 @@ import { getUserBuildings } from "@/lib/features/buildingSlice";
 import { HELP_ICON_BUTTON_COLOR, Item } from "@/utils/Constants";
 import LabelWithAsterisk from "@/components/data-display/label/LabelWithAsterisk";
 import { Facility } from "@/screens/real-estate-owner/facilities/facility-card/types";
-import { AddFacilityFormValues } from "../../facilities/add-facility-form/types";
+import { AddFacilityFormValues } from "@/screens/real-estate-owner/facilities/add-facility-form/types";
 
 const TenderBuilding = (): JSX.Element => {
   const allBuildings = useSelector(getUserBuildings);

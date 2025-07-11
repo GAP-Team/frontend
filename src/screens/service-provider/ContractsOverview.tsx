@@ -1,6 +1,6 @@
 "use client";
 import { Grid } from "@mui/material";
-import TopFilter from "../landing-page/TopFilterPanel";
+import TopFilter from "@/screens/landing-page/TopFilterPanel";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";

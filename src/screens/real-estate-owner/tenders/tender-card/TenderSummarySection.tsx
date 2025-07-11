@@ -1,6 +1,6 @@
 "use client";
 
-import HeaderSection from "../../dashboard/HeaderSection";
+import HeaderSection from "@/screens/real-estate-owner/dashboard/HeaderSection";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import Divider from "@mui/material/Divider";
@@ -11,7 +11,7 @@ import { Tender } from "./types";
 import { TENDER_FORM } from "@/utils/enums";
 import { useAppSelector } from "@/lib/hooks";
 import { ROUTES } from "@/utils/routes";
-import { Facility } from "../../facilities/facility-card/types";
+import { Facility } from "@/screens/real-estate-owner/facilities/facility-card/types";
 
 interface TenderSummarySectionProps {
   tender?: Tender | null;
