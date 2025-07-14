@@ -3,7 +3,7 @@ import TenderCard from "./TenderCard";
 import { Typography } from "@mui/material";
 import { styles as scrollbarStyles } from "@/components/utils/scrollbar/styles";
 import { Urgency } from "@/utils/enums";
-import { BuildingTenders } from "@/screens/real-estate-owner/tenders/tender-card/types";
+import { BuildingTenders } from "@/screens/real-estate-owner/tenders/tender-overview/types";
 import { useAppSelector } from "@/lib/hooks";
 
 const TenderCardList: React.FC = () => {
