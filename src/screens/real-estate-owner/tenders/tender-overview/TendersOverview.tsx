@@ -4,12 +4,12 @@ import Box from "@mui/material/Box";
 import PropertyFilterPanel from "@/components/common/filter/PropertyFilterPanel";
 import NoContentPage from "@/components/common/pages/NoContentPage";
 import addTenderSrc from "@/../public/icons/add_tender.svg";
-import TendersContainer from "./tender-card/TendersContainer";
+import TendersContainer from "@/screens/real-estate-owner/tenders/tender-overview/TendersContainer";
 import { currentUser } from "@/lib/features/userSlice";
 import { useSelector } from "react-redux";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { fetchTenders } from "@/lib/features/tenderSlice";
-import { BuildingTenders } from "./tender-card/types";
+import { BuildingTenders } from "@/screens/real-estate-owner/tenders/tender-overview/types";
 import { ROUTES } from "@/utils/routes";
 
 const TendersOverview: React.FC = () => {

@@ -4,15 +4,15 @@ import PropertyFilterPanel from "@/components/common/filter/PropertyFilterPanel"
 import React, { useEffect, useMemo, useCallback } from "react";
 import addObjSrc from "@/../public/icons/add_building.svg";
 import NoContentPage from "@/components/common/pages/NoContentPage";
-import FacilityContainer from "./facility-card/FacilityContainer";
+import FacilityContainer from "@/screens/real-estate-owner/facilities/facility-overview/FacilityContainer";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { currentUser } from "@/lib/features/userSlice";
 import { useSelector } from "react-redux";
 import { fetchBuildings } from "@/lib/features/buildingSlice";
-import { Building } from "../buildings/building-overview/types";
+import { Building } from "@/screens/real-estate-owner/buildings/building-overview/types";
 import { ROUTES } from "@/utils/routes";
 import { getFacilitiesByUser } from "@/lib/features/facilitySlice";
-import { Facility } from "./facility-card/types";
+import { Facility } from "@/screens/real-estate-owner/facilities/facility-overview/types";
 import { useSearchParams } from "next/navigation";
 
 const FacilityOverview: React.FC = (): JSX.Element => {

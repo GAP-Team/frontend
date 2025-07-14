@@ -29,7 +29,7 @@ import { showSnackbar } from "@/components/feedback/snackbar";
 import { getUserBuildings } from "@/lib/features/buildingSlice";
 import { DOCUMENT_TYPE, FORM_ACTION_TYPE } from "@/utils/enums";
 
-const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
+const BuildingForm: React.FC<NewBuildingProps> = ({ id }) => {
   const router = useRouter();
   const appDispatch = useAppDispatch();
   const user = useSelector(currentUser);
@@ -372,7 +372,7 @@ const NewBuilding: React.FC<NewBuildingProps> = ({ id }) => {
   );
 };
 
-export default NewBuilding;
+export default BuildingForm;
 
 //Styles
 const styles = {

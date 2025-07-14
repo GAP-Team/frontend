@@ -4,7 +4,7 @@ import { RootState } from "../store";
 import {
   Tender,
   BuildingTenders,
-} from "@/screens/real-estate-owner/tenders/tender-card/types";
+} from "@/screens/real-estate-owner/tenders/tender-overview/types";
 import userAPI from "@/api/user";
 import tenderAPI from "@/api/tender";
 interface TenderState {

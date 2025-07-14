@@ -1,5 +1,5 @@
 // FIXME: Tender should not be imported from the screen, it should be imported from a common types file.
-import { Tender } from "@/screens/real-estate-owner/tenders/tender-card/types";
+import { Tender } from "@/screens/real-estate-owner/tenders/tender-overview/types";
 import api from "../axios";
 
 const tenderAPI = {

@@ -16,6 +16,7 @@ import SuccessPage from "@/components/common/pages/SuccessPage";
 import SectionTitle from "@/components/data-display/label/SectionTitle";
 import GProgressStepper from "@/components/navigation/stepper/GProgressStepper";
 
+// FIXME: refactoring needed as it is not a form component and not layout in same time
 const AddBuildingForm = ({
   steps,
   activeStep,
