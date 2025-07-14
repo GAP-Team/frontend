@@ -15,6 +15,7 @@ interface AddTenderFormProps {
   formOrSuccessContent: React.ReactNode;
 }
 
+// FIXME: need refactoring as it is not a form
 const AddTenderForm: React.FC<AddTenderFormProps> = ({
   activeStep,
   steps,

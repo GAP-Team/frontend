@@ -1,5 +1,5 @@
-import NewTender from "@/screens/real-estate-owner/tenders/tender-form/NewTender";
+import TenderForm from "@/screens/real-estate-owner/tenders/tender-form/TenderForm";
 
 export default function AddTenderFormPage(): JSX.Element {
-  return <NewTender />;
+  return <TenderForm />;
 }

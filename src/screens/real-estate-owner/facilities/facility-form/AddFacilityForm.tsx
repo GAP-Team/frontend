@@ -16,6 +16,7 @@ interface AddFacilityFormProps {
   loading?: boolean;
 }
 
+// FIXME: need refactoring as it is not a form
 const AddFacilityForm: React.FC<AddFacilityFormProps> = ({
   activeStep,
   steps,

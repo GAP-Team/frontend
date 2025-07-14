@@ -1,9 +1,9 @@
 "use client";
 import { useParams } from "next/navigation";
-import NewTender from "@/screens/real-estate-owner/tenders/tender-form/NewTender";
+import TenderForm from "@/screens/real-estate-owner/tenders/tender-form/TenderForm";
 
 export default function EditTenderPage(): JSX.Element {
   const params = useParams();
   const id = Array.isArray(params.id) ? params.id[0] : params.id;
-  return <NewTender id={id} />;
+  return <TenderForm id={id} />;
 }

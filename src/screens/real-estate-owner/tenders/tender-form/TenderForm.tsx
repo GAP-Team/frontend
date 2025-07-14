@@ -37,7 +37,7 @@ import { ROUTES } from "@/utils/routes";
 import utc from "dayjs/plugin/utc";
 dayjs.extend(utc);
 
-const NewTender: React.FC<NewTenderProps> = ({ id }): JSX.Element => {
+const TenderForm: React.FC<NewTenderProps> = ({ id }): JSX.Element => {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const checkActiveUser = useAppSelector(isUserActive);
@@ -261,7 +261,7 @@ const NewTender: React.FC<NewTenderProps> = ({ id }): JSX.Element => {
   );
 };
 
-export default NewTender;
+export default TenderForm;
 
 const styles = {
   form: {

@@ -1,5 +1,5 @@
-import NewFacility from "@/screens/real-estate-owner/facilities/facility-form/NewFacility";
+import FacilityForm from "@/screens/real-estate-owner/facilities/facility-form/FacilityForm";
 
 export default function AddFacilityPage(): JSX.Element {
-  return <NewFacility />;
+  return <FacilityForm />;
 }

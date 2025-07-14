@@ -44,7 +44,7 @@ interface NewFacilityProps {
   facilityId?: string;
 }
 
-const NewFacility: React.FC<NewFacilityProps> = ({
+const FacilityForm: React.FC<NewFacilityProps> = ({
   facilityId,
 }): JSX.Element => {
   const router = useRouter();
@@ -365,7 +365,7 @@ const NewFacility: React.FC<NewFacilityProps> = ({
   );
 };
 
-export default NewFacility;
+export default FacilityForm;
 
 const styles = {
   form: {
