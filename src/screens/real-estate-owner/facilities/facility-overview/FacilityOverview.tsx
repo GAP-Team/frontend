@@ -9,7 +9,7 @@ import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { currentUser } from "@/lib/features/userSlice";
 import { useSelector } from "react-redux";
 import { fetchBuildings } from "@/lib/features/buildingSlice";
-import { Building } from "../buildings/building-card/types";
+import { Building } from "../buildings/building-overview/types";
 import { ROUTES } from "@/utils/routes";
 import { getFacilitiesByUser } from "@/lib/features/facilitySlice";
 import { Facility } from "./facility-card/types";

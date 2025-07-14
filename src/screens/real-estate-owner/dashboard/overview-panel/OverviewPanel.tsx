@@ -10,11 +10,11 @@ import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { Tender } from "@/screens/real-estate-owner/tenders/tender-card/types";
 import { TenderStatusEnum } from "@/utils/enums";
 import { getFacilitiesByUser } from "@/lib/features/facilitySlice";
-import { Facility } from "@/screens/real-estate-owner/facilities/facility-card/types";
+import { Facility } from "@/screens/real-estate-owner/facilities/facility-overview/types";
 import {
   Building,
   BuildingAddress,
-} from "@/screens/real-estate-owner/buildings/building-card/types";
+} from "@/screens/real-estate-owner/buildings/building-overview/types";
 import { truncateLabel } from "@/utils/utils";
 import {
   DashboardComponentsProps,

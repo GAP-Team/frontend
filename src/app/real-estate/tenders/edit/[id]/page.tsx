@@ -1,6 +1,6 @@
 "use client";
 import { useParams } from "next/navigation";
-import NewTender from "@/screens/real-estate-owner/tenders/add-tender-form/NewTender";
+import NewTender from "@/screens/real-estate-owner/tenders/tender-form/NewTender";
 
 export default function EditTenderPage(): JSX.Element {
   const params = useParams();

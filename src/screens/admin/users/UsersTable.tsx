@@ -12,7 +12,7 @@ import { UsersTableColumns } from "@/utils/Constants";
 import TableContainer from "@mui/material/TableContainer";
 import TablePagination from "@mui/material/TablePagination";
 import { USER_ROLE, USER_ROLE_IN_GERMAN } from "@/utils/enums";
-import DocumentList from "@/screens/real-estate-owner/buildings/building-card/DocumentList ";
+import DocumentList from "@/screens/real-estate-owner/buildings/building-overview/DocumentList ";
 import { Box, Grid, Tooltip } from "@mui/material";
 
 interface UsersTableProps {

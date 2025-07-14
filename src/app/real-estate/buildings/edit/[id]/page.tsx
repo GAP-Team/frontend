@@ -1,6 +1,6 @@
 "use client";
 import { useParams } from "next/navigation";
-import NewBuilding from "@/screens/real-estate-owner/buildings/add-building-form/NewBuilding";
+import NewBuilding from "@/screens/real-estate-owner/buildings/building-form/NewBuilding";
 
 export default function UpdatedBuildingPage(): JSX.Element {
   const params = useParams();

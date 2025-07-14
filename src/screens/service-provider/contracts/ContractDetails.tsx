@@ -8,7 +8,7 @@ import { useAppSelector, useAppDispatch } from "@/lib/hooks";
 import ContractSummarySection from "./ContractSummarySection";
 import TenderTitleBar from "@/screens/real-estate-owner/tenders/tender-card/TenderTitleBar";
 import { fetchContractById, getContract } from "@/lib/features/contractSlice";
-import DocumentList from "@/screens/real-estate-owner/buildings/building-card/DocumentList ";
+import DocumentList from "@/screens/real-estate-owner/buildings/building-overview/DocumentList ";
 
 interface ContractDetailsProps {
   id: string;

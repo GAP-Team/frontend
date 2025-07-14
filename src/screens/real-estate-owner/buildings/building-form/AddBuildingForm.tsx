@@ -7,7 +7,6 @@ import { useRouter } from "next/navigation";
 import Divider from "@mui/material/Divider";
 import { IconButton, Typography } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
-
 import { ROUTES } from "@/utils/routes";
 import { AddBuildingFormValues } from "./types";
 import GButton from "@/components/inputs/button/GButton";

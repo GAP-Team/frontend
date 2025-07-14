@@ -1,5 +1,5 @@
 import dayjs from "dayjs";
-import { Facility } from "./facility-card/types";
+import { Facility } from "./facility-overview/types";
 
 export const getFacilityCheckTimeRemaining = (
   facility: Facility | undefined,

@@ -1,5 +1,5 @@
 "use client";
-import ContractApplication from "@/screens/service-provider/contract-application/ContractApplication";
+import ContractApplication from "@/screens/service-provider/application/ContractApplication";
 
 export default function ContractApplicationPage(): JSX.Element {
   return <ContractApplication />;

@@ -1,4 +1,4 @@
-import { BuildingAddress } from "@/screens/real-estate-owner/buildings/building-card/types";
+import { BuildingAddress } from "@/screens/real-estate-owner/buildings/building-overview/types";
 export interface BuildingTenders {
   buildingName: string;
   buildingAddress: BuildingAddress;

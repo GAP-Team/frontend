@@ -1,7 +1,7 @@
 import React from "react";
 import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
-import BuildingInfoHeader from "@/screens/real-estate-owner/buildings/building-card/BuildingInfoHeader";
+import BuildingInfoHeader from "@/screens/real-estate-owner/buildings/building-overview/BuildingInfoHeader";
 import { BuildingTenders } from "./types";
 import TenderItems from "./TenderItems";
 

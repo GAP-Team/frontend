@@ -1,7 +1,7 @@
 import React from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import { BuildingAddress } from "@/screens/real-estate-owner/buildings/building-card/types";
+import { BuildingAddress } from "@/screens/real-estate-owner/buildings/building-overview/types";
 interface HeaderProps {
   buildingName: string;
   buildingAddress: BuildingAddress;

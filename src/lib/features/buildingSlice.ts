@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import userAPI from "@/api/user";
 import { RootState } from "../store";
 // FIXME: Building should not be imported from the screen, it should be imported from a common types file.
-import { Building } from "@/screens/real-estate-owner/buildings/building-card/types";
+import { Building } from "@/screens/real-estate-owner/buildings/building-overview/types";
 interface queryType {
   userId: string;
   city: string;

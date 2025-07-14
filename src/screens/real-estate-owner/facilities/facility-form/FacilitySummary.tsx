@@ -10,7 +10,7 @@ import { getUserBuildings } from "@/lib/features/buildingSlice";
 import SummarySection, {
   Detail,
 } from "@/components/common/summary/SummarySection";
-import { SelectedBuildingData } from "../../buildings/add-building-form/types";
+import { SelectedBuildingData } from "../../buildings/building-form/types";
 
 interface FacilitySummaryProps {
   setActiveStep: React.Dispatch<React.SetStateAction<ActiveStepItem>>;

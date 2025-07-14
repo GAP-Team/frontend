@@ -1,8 +1,8 @@
 import { Box, Divider } from "@mui/material";
 import React from "react";
 import FacilityItems from "./FacilityItems";
-import { Building } from "@/screens/real-estate-owner/buildings/building-card/types";
-import BuildingInfoHeader from "@/screens/real-estate-owner/buildings/building-card/BuildingInfoHeader";
+import { Building } from "@/screens/real-estate-owner/buildings/building-overview/types";
+import BuildingInfoHeader from "@/screens/real-estate-owner/buildings/building-overview/BuildingInfoHeader";
 
 interface FacilityListProps {
   buildings: Building[];

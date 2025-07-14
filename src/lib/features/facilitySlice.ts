@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../store";
 // FIXME: Facility should not be imported from the screen, it should be imported from a common types file.
-import { Facility } from "@/screens/real-estate-owner/facilities/facility-card/types";
+import { Facility } from "@/screens/real-estate-owner/facilities/facility-overview/types";
 import buildingAPI from "@/api/building";
 import userAPI from "@/api/user";
 import facilityAPI from "@/api/facility";
