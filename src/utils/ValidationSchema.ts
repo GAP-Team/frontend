@@ -487,3 +487,10 @@ export const applyContractFormSchema = yup.object().shape({
   termsConditionDoc: yup.mixed().required("AGB dokument ist erforderlich"),
   offerDoc: yup.mixed().required("Angebot dokument ist erforderlich"),
 });
+
+export const passwordResetValidationSchema = yup.object({
+  email: yup
+    .string()
+    .matches(EMAIL_REGEX, "Ungültige Email")
+    .required("Email ist erforderlich."),
+});
