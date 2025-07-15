@@ -3,24 +3,31 @@ import {
   ContractApplicationFormValues,
 } from "@/typings/types";
 import { ROUTES } from "@/utils/routes";
+import contractAPI from "@/api/contract";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { useAppSelector } from "@/lib/hooks";
 import { Formik, FormikHelpers } from "formik";
 import ContractRateForm from "./ContractRateForm";
 import { translateTenderForm } from "@/utils/utils";
+import { handleUploadDoc } from "@/utils/uploadToS3";
+import { currentUser } from "@/lib/features/userSlice";
 import { Grid, Paper, Typography } from "@mui/material";
 import ContractServicesForm from "./ContractServicesForm";
+import { showSnackbar } from "@/components/root-snackbar";
 import { getContract } from "@/lib/features/contractSlice";
 import { ActiveStepItem } from "@/screens/dashboard/types";
+import { useAppSelector, useAppDispatch } from "@/lib/hooks";
 import ContractApplicationForm from "./ContractApplicationForm";
 import { applyContractFormSchema } from "@/utils/ValidationSchema";
 import ContractApplicationSummary from "./ContractApplicationSummary";
 import ContractApplicationSuccess from "./ContractApplicationSuccess";
 import HeaderSection from "../dashboard/real_estate_user/HeaderSection";
+import { DOCUMENT_TYPE } from "@/utils/enums";
 
 const ContractApplication = (): JSX.Element => {
   const router = useRouter();
+  const appDispatch = useAppDispatch();
+  const user = useAppSelector(currentUser);
   const contract = useAppSelector(getContract);
 
   const steps: ActiveStepItem[] = [
@@ -36,14 +43,14 @@ const ContractApplication = (): JSX.Element => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [activeStep, setActiveStep] = useState<ActiveStepItem>(steps[0]);
+  const [submittedApplicationId, setSubmittedApplicationId] =
+    useState<string>("");
 
   const stepFieldsMap: { [key: number]: string[] } = {
     0: ["totalPrice", "hourlyRate", "message", "zip", "city", "desiredDateOne"],
     1: ["advantages", "termsConditionDoc", "offerDoc"],
     2: [],
   };
-
-  const isOnLastStep = activeStep.id + 1 === steps.length;
 
   useEffect(() => {
     setActiveStep(steps[0]);
@@ -70,11 +77,75 @@ const ContractApplication = (): JSX.Element => {
       if (nextStepId < steps.length) {
         setActiveStep(steps[nextStepId]);
       } else {
-        setLoading(true);
-        // FIXME: Replace with actual submission logic
-        setIsSubmitted(true);
-        console.log("Final values submitted:", values);
+        uploadDocs(values);
       }
+    }
+  };
+
+  const uploadDocs = async (
+    values: ContractApplicationFormValues
+  ): Promise<void> => {
+    const docObjList: any[] = [];
+    const uploadDocuments = async (
+      file: File | null,
+      docType: string
+    ): Promise<void> => {
+      const uploadedDoc = await handleUploadDoc(file);
+      uploadedDoc.documentType = docType;
+      docObjList.push(uploadedDoc);
+    };
+
+    await uploadDocuments(values.offerDocFile, DOCUMENT_TYPE.OFFER_DOCUMENTS);
+    await uploadDocuments(
+      values.termsConditionDocFile,
+      DOCUMENT_TYPE.TERMS_AND_CONDITIONS
+    );
+
+    await handleSubmit(values, docObjList);
+  };
+
+  const handleSubmit = async (
+    values: ContractApplicationFormValues,
+    docObjList: any[] = []
+  ): Promise<void> => {
+    try {
+      setLoading(true);
+      const applicationRequestBody = {
+        tenderId: contract.tenderId,
+        userId: user.id,
+        serviceTotalPrice: values.totalPrice,
+        servicePerHourPrice: values.hourlyRate,
+        message: values.message,
+        suggestionWorkDates: values.desiredDates.map((date) =>
+          date ? { date: date } : { date: null }
+        ),
+        zip: Number(values.zip),
+        city: values.city,
+        dataPrivacy: values.acceptedTerms,
+        benefitsSpecialServices: values.advantages,
+        documents: docObjList,
+      };
+      const response = await contractAPI.applyContract(
+        contract.tenderId,
+        applicationRequestBody
+      );
+      setSubmittedApplicationId(response.data.id);
+      setLoading(false);
+      appDispatch(
+        showSnackbar({
+          type: "success",
+          message: "Angebot erfolgreich eingereicht.",
+        })
+      );
+    } catch {
+      setLoading(false);
+      setSubmittedApplicationId("");
+      appDispatch(
+        showSnackbar({
+          type: "error",
+          message: "Fehler beim Einreichen des Angebots.",
+        })
+      );
     }
   };
 
@@ -96,6 +167,8 @@ const ContractApplication = (): JSX.Element => {
     advantages: [],
     offerDoc: null,
     termsConditionDoc: null,
+    offerDocFile: null,
+    termsConditionDocFile: null,
     acceptedTerms: false,
   };
 
@@ -107,8 +180,10 @@ const ContractApplication = (): JSX.Element => {
       </Typography>
       <Paper elevation={1} sx={{ p: 4, mx: "auto", my: 4 }}>
         <Grid container spacing={2}>
-          {isOnLastStep && !loading ? (
-            <ContractApplicationSuccess />
+          {submittedApplicationId !== "" && !loading ? (
+            <ContractApplicationSuccess
+              submittedApplicationId={submittedApplicationId}
+            />
           ) : (
             <>
               {/* Contract Basic Information Section */}

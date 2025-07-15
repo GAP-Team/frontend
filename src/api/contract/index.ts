@@ -12,5 +12,7 @@ const contractAPI = {
     ),
 
   getContractById: (id: string): any => api.get(`/contracts/${id}`),
+  applyContract: (contractId: string, applicationData: any): any =>
+    api.post(`/contracts/${contractId}/application`, applicationData),
 };
 export default contractAPI;

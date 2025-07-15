@@ -53,12 +53,14 @@ const ContractApplicationSummary = ({
           value: advantage,
         }))
       : []),
-    ...[
-      {
-        label: "",
-        value: "---------------------------------------------------------",
-      },
-    ],
+    ...(Array.isArray(values.advantages) && values.advantages.length > 0
+      ? [
+          {
+            label: "",
+            value: "---------------------------------------------------------",
+          },
+        ]
+      : []),
     ...(values.offerDoc
       ? [{ label: "Angebotsdokument", value: values.offerDoc }]
       : []),

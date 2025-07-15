@@ -5,7 +5,13 @@ import BackButton from "@/components/button/BackButton";
 import InfoBanner from "@/components/common/InfoBanner";
 import SuccessPage from "@/components/common/SuccessPage";
 
-const ContractApplicationSuccess = (): JSX.Element => {
+interface ContractApplicationSuccessProps {
+  submittedApplicationId: string;
+}
+
+const ContractApplicationSuccess: React.FC<ContractApplicationSuccessProps> = ({
+  submittedApplicationId,
+}): JSX.Element => {
   const router = useRouter();
 
   const handleBackToStart = (): void => {
@@ -40,8 +46,8 @@ const ContractApplicationSuccess = (): JSX.Element => {
               secondaryButtonLabel="Ihre Bewerbung"
               redirectUrl={ROUTES.SERVICE_PROVIDER.DASHBOARD}
               secondaryButtonRedirectUrl={ROUTES.SERVICE_PROVIDER.APPLICATION_DETAILS(
-                "12345"
-              )} // Replace with actual application ID
+                submittedApplicationId
+              )}
             />
           </Grid>
           <Grid sx={{ marginTop: "10rem" }}>

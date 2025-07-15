@@ -91,6 +91,8 @@ export interface ContractApplicationFormValues {
   advantages: string[];
   offerDoc: string | null;
   termsConditionDoc: string | null;
+  offerDocFile: File | null;
+  termsConditionDocFile: File | null;
   acceptedTerms: boolean;
 }
 
