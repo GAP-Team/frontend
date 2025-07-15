@@ -1,12 +1,14 @@
-import { Box, Grid, Divider, Checkbox, Typography } from "@mui/material";
-import { useFormikContext } from "formik";
-import { ActiveStepItem } from "../dashboard/types";
-import SummarySection from "@/components/summary/SummarySection";
-import HeaderSection from "../dashboard/real_estate_user/HeaderSection";
 import {
   SummarySectionDetail,
   ContractApplicationFormValues,
 } from "@/typings/types";
+import { useFormikContext } from "formik";
+import { useAppSelector } from "@/lib/hooks";
+import { ActiveStepItem } from "../dashboard/types";
+import { currentUser } from "@/lib/features/userSlice";
+import SummarySection from "@/components/summary/SummarySection";
+import HeaderSection from "../dashboard/real_estate_user/HeaderSection";
+import { Box, Grid, Divider, Checkbox, Typography } from "@mui/material";
 
 interface ContractApplicationSummaryProps {
   steps: ActiveStepItem[];
@@ -17,14 +19,18 @@ const ContractApplicationSummary = ({
   steps,
   setActiveStep,
 }: ContractApplicationSummaryProps): JSX.Element => {
+  const user = useAppSelector(currentUser);
   const formik = useFormikContext<ContractApplicationFormValues>();
   const { values } = useFormikContext<ContractApplicationFormValues>();
 
-  /*const companyInfromationSummary: SummarySectionDetail[] = [
-        values.companyName && { label: "Firmen Name", value: values.companyName },
-        values.companyEmail && { label: "Firmen Email", value: values.companyEmail },
-        values.companyContactNumber && { label: "Firmen Telefonnummer", value: values.companyContactNumber },
-    ].filter(Boolean);*/
+  const companyInfromationSummary = [
+    user.company.name && { label: "Firmen Name", value: user.company.name },
+    user.email && { label: "Firmen Email", value: user.email },
+    user.company.phonenumber && {
+      label: "Firmen Telefonnummer",
+      value: user.company.phonenumber,
+    },
+  ].filter(Boolean) as SummarySectionDetail[];
 
   const contractOfferSummary: SummarySectionDetail[] = [
     ...(values.totalPrice
@@ -74,15 +80,14 @@ const ContractApplicationSummary = ({
       <HeaderSection titletext="ANGEBOTSZUSAMMENFASSUNG" />
 
       <Grid container spacing={2}>
-        {/* {values.companyName && values.companyEmail && values.companyContactNumber && 
-                    <Grid item xs={12}>
-                        <SummarySection
-                            title="Grundinformation"
-                            details={companyInfromationSummary}
-                            setActiveStep={() => setActiveStep(steps[0])}
-                        />
-                    </Grid>
-                } */}
+        <Grid item xs={12}>
+          <SummarySection
+            disableEdit={true}
+            title="Grundinformation"
+            details={companyInfromationSummary}
+            setActiveStep={() => setActiveStep(steps[0])}
+          />
+        </Grid>
         <Grid item xs={12}>
           <SummarySection
             title="Ihre Angebot"
@@ -92,7 +97,7 @@ const ContractApplicationSummary = ({
         </Grid>
         <Grid item xs={12}>
           <SummarySection
-            title="Vertrag Sleistungen"
+            title="Vertragsleistungen"
             details={contractServiceSummary}
             setActiveStep={() => setActiveStep(steps[1])}
           />

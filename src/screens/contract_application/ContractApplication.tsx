@@ -6,6 +6,7 @@ import { ROUTES } from "@/utils/routes";
 import contractAPI from "@/api/contract";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { DOCUMENT_TYPE } from "@/utils/enums";
 import { Formik, FormikHelpers } from "formik";
 import ContractRateForm from "./ContractRateForm";
 import { translateTenderForm } from "@/utils/utils";
@@ -22,7 +23,6 @@ import { applyContractFormSchema } from "@/utils/ValidationSchema";
 import ContractApplicationSummary from "./ContractApplicationSummary";
 import ContractApplicationSuccess from "./ContractApplicationSuccess";
 import HeaderSection from "../dashboard/real_estate_user/HeaderSection";
-import { DOCUMENT_TYPE } from "@/utils/enums";
 
 const ContractApplication = (): JSX.Element => {
   const router = useRouter();
@@ -40,7 +40,6 @@ const ContractApplication = (): JSX.Element => {
     },
   ];
 
-  const [isSubmitted, setIsSubmitted] = useState(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [activeStep, setActiveStep] = useState<ActiveStepItem>(steps[0]);
   const [submittedApplicationId, setSubmittedApplicationId] =
@@ -54,7 +53,6 @@ const ContractApplication = (): JSX.Element => {
 
   useEffect(() => {
     setActiveStep(steps[0]);
-    setIsSubmitted(false);
   }, []);
 
   const handleNext = async (
@@ -95,11 +93,16 @@ const ContractApplication = (): JSX.Element => {
       docObjList.push(uploadedDoc);
     };
 
-    await uploadDocuments(values.offerDocFile, DOCUMENT_TYPE.OFFER_DOCUMENTS);
-    await uploadDocuments(
-      values.termsConditionDocFile,
-      DOCUMENT_TYPE.TERMS_AND_CONDITIONS
-    );
+    values.offerDocFile &&
+      (await uploadDocuments(
+        values.offerDocFile,
+        DOCUMENT_TYPE.OFFER_DOCUMENTS
+      ));
+    values.termsConditionDocFile &&
+      (await uploadDocuments(
+        values.termsConditionDocFile,
+        DOCUMENT_TYPE.TERMS_AND_CONDITIONS
+      ));
 
     await handleSubmit(values, docObjList);
   };
@@ -279,7 +282,6 @@ const ContractApplication = (): JSX.Element => {
                     activeStep={activeStep}
                     handleBack={handleBack}
                     setActiveStep={setActiveStep}
-                    isBeyondLastStep={isSubmitted}
                     handleNext={() =>
                       handleNext(validateForm, setTouched, submitForm, values)
                     }

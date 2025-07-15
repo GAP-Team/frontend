@@ -87,7 +87,7 @@ export interface ContractApplicationFormValues {
   message: string;
   zip: string;
   city: string;
-  desiredDates: Dayjs[] | null[];
+  desiredDates: (Dayjs | null)[];
   advantages: string[];
   offerDoc: string | null;
   termsConditionDoc: string | null;
@@ -101,7 +101,6 @@ export interface ApplyContractProps {
   handleBack: () => void;
   handleNext: () => void;
   steps: ActiveStepItem[];
-  isBeyondLastStep: boolean;
   activeStep: ActiveStepItem;
   setActiveStep: React.Dispatch<React.SetStateAction<ActiveStepItem>>;
 }
