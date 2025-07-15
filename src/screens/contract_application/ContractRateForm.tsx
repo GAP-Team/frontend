@@ -1,7 +1,8 @@
 import { useState } from "react";
-import LabelWithAsterisk from "../../components/label/LabelWithAsterisk";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import { Grid, Divider, TextField, Typography } from "@mui/material";
+import HeaderSection from "../dashboard/real_estate_user/HeaderSection";
+import LabelWithAsterisk from "../../components/label/LabelWithAsterisk";
 
 const ContractRateForm = ({ formik }: { formik?: any }): JSX.Element => {
   const [info, setInfo] = useState<string>("");
@@ -13,6 +14,7 @@ const ContractRateForm = ({ formik }: { formik?: any }): JSX.Element => {
 
   return (
     <Grid item xs={12} md={9}>
+      <HeaderSection titletext="VERTRAGSRATE" />
       <Grid container spacing={2}>
         <Grid item xs={12} md={4}>
           <Typography sx={styles.descriptionLable}>

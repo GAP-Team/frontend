@@ -1,9 +1,10 @@
 import React from "react";
 import Image from "next/image";
 import { NextPage } from "next";
-import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
+import { Button } from "@mui/material";
 import GButton from "@/components/button/GButton";
+import Typography from "@mui/material/Typography";
 import sucessSvg from "../../../public/icons/success.svg";
 
 interface SuccessPageProps {
@@ -13,6 +14,8 @@ interface SuccessPageProps {
   buttonLabel?: string;
   imageUrl?: string;
   redirectUrl?: string;
+  secondaryButtonLabel?: string;
+  secondaryButtonRedirectUrl?: string;
 }
 
 const SuccessPage: NextPage<SuccessPageProps> = ({
@@ -22,9 +25,11 @@ const SuccessPage: NextPage<SuccessPageProps> = ({
   buttonLabel,
   imageUrl = sucessSvg,
   redirectUrl = "/",
+  secondaryButtonLabel,
+  secondaryButtonRedirectUrl,
 }) => {
   return (
-    <Grid item xs={12} md={12} lg={12} sx={styles}>
+    <Grid item xs={12} md={12} lg={12} sx={styles.mainContainer}>
       <div
         style={{
           marginBottom: "2rem",
@@ -51,11 +56,22 @@ const SuccessPage: NextPage<SuccessPageProps> = ({
           {secondaryDescription}
         </Typography>
       )}
-      {buttonLabel && (
-        <GButton style={{ marginTop: "2rem" }} href={redirectUrl}>
-          {buttonLabel}
-        </GButton>
-      )}
+      <Grid
+        display={"flex"}
+        flexDirection={"row"}
+        justifyContent={"space-between"}
+      >
+        {secondaryButtonLabel && (
+          <Button sx={styles.secondaryButton} href={secondaryButtonRedirectUrl}>
+            {secondaryButtonLabel}
+          </Button>
+        )}
+        {buttonLabel && (
+          <GButton style={{ marginTop: "2rem" }} href={redirectUrl}>
+            {buttonLabel}
+          </GButton>
+        )}
+      </Grid>
     </Grid>
   );
 };
@@ -64,8 +80,20 @@ export default SuccessPage;
 
 // Styles
 const styles = {
-  display: "flex",
-  flexDirection: "column",
-  justifyContent: "center",
-  alignItems: "center",
+  mainContainer: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  secondaryButton: {
+    py: "0.5rem",
+    color: "#000",
+    fontWeight: 600,
+    margin: "0.5rem",
+    marginTop: "2rem",
+    borderRadius: "0.5rem",
+    backgroundColor: "#e4e9e9",
+    textTransform: "capitalize",
+  },
 };

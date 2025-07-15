@@ -1,5 +1,9 @@
-import { useState } from "react";
+import {
+  SubmitFormFunction,
+  ContractApplicationFormValues,
+} from "@/typings/types";
 import { ROUTES } from "@/utils/routes";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAppSelector } from "@/lib/hooks";
 import { Formik, FormikHelpers } from "formik";
@@ -11,10 +15,9 @@ import { getContract } from "@/lib/features/contractSlice";
 import { ActiveStepItem } from "@/screens/dashboard/types";
 import ContractApplicationForm from "./ContractApplicationForm";
 import { applyContractFormSchema } from "@/utils/ValidationSchema";
-import {
-  SubmitFormFunction,
-  ContractApplicationFormValues,
-} from "@/typings/types";
+import ContractApplicationSummary from "./ContractApplicationSummary";
+import ContractApplicationSuccess from "./ContractApplicationSuccess";
+import HeaderSection from "../dashboard/real_estate_user/HeaderSection";
 
 const ContractApplication = (): JSX.Element => {
   const router = useRouter();
@@ -23,8 +26,14 @@ const ContractApplication = (): JSX.Element => {
   const steps: ActiveStepItem[] = [
     { id: 0, stepName: "ContractRate", component: ContractRateForm },
     { id: 1, stepName: "ContractServices", component: ContractServicesForm },
+    {
+      id: 2,
+      stepName: "ContractApplicationSummary",
+      component: ContractApplicationSummary,
+    },
   ];
 
+  const [isSubmitted, setIsSubmitted] = useState(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [activeStep, setActiveStep] = useState<ActiveStepItem>(steps[0]);
 
@@ -33,6 +42,13 @@ const ContractApplication = (): JSX.Element => {
     1: ["advantages", "termsConditionDoc", "offerDoc"],
     2: [],
   };
+
+  const isOnLastStep = activeStep.id + 1 === steps.length;
+
+  useEffect(() => {
+    setActiveStep(steps[0]);
+    setIsSubmitted(false);
+  }, []);
 
   const handleNext = async (
     validateForm: FormikHelpers<ContractApplicationFormValues>["validateForm"],
@@ -56,6 +72,7 @@ const ContractApplication = (): JSX.Element => {
       } else {
         setLoading(true);
         // FIXME: Replace with actual submission logic
+        setIsSubmitted(true);
         console.log("Final values submitted:", values);
       }
     }
@@ -75,10 +92,11 @@ const ContractApplication = (): JSX.Element => {
     message: "",
     zip: "",
     city: "",
-    desiredDates: [new Date(), new Date(), new Date()],
+    desiredDates: [null, null, null],
     advantages: [],
-    offerDoc: "",
-    termsConditionDoc: "",
+    offerDoc: null,
+    termsConditionDoc: null,
+    acceptedTerms: false,
   };
 
   return (
@@ -89,98 +107,112 @@ const ContractApplication = (): JSX.Element => {
       </Typography>
       <Paper elevation={1} sx={{ p: 4, mx: "auto", my: 4 }}>
         <Grid container spacing={2}>
-          {/* Contract Basic Information Section */}
-          <Grid item xs={12} md={3} sx={styles.basicInformationHolder}>
-            <Typography sx={styles.basicInformationLable} fontWeight="bold">
-              Ausschreibungsart:
-            </Typography>
-            <Typography sx={styles.textGrey}>
-              {translateTenderForm(contract?.tenderForm ?? "")}
-            </Typography>
+          {isOnLastStep && !loading ? (
+            <ContractApplicationSuccess />
+          ) : (
+            <>
+              {/* Contract Basic Information Section */}
+              <Grid item xs={12} md={3} sx={styles.basicInformationHolder}>
+                <HeaderSection titletext="BEWERBUNGSDATEN" />
+                <Typography sx={styles.basicInformationLable} fontWeight="bold">
+                  Ausschreibungsart:
+                </Typography>
+                <Typography sx={styles.textGrey}>
+                  {translateTenderForm(contract?.tenderForm ?? "")}
+                </Typography>
 
-            <Typography
-              sx={styles.basicInformationLable}
-              fontWeight="bold"
-              mt={2}
-            >
-              Auftragstyp:
-            </Typography>
-            <Typography sx={styles.textGrey}>{contract?.tenderType}</Typography>
+                <Typography
+                  sx={styles.basicInformationLable}
+                  fontWeight="bold"
+                  mt={2}
+                >
+                  Auftragstyp:
+                </Typography>
+                <Typography sx={styles.textGrey}>
+                  {contract?.tenderType}
+                </Typography>
 
-            <Typography
-              sx={styles.basicInformationLable}
-              fontWeight="bold"
-              mt={2}
-            >
-              Anlagentyp:
-            </Typography>
-            <Typography sx={styles.textGrey}>
-              {contract?.subcategory}
-            </Typography>
+                <Typography
+                  sx={styles.basicInformationLable}
+                  fontWeight="bold"
+                  mt={2}
+                >
+                  Anlagentyp:
+                </Typography>
+                <Typography sx={styles.textGrey}>
+                  {contract?.subcategory}
+                </Typography>
 
-            <Typography
-              sx={styles.basicInformationLable}
-              fontWeight="bold"
-              mt={2}
-            >
-              Angebotsfrist:
-            </Typography>
-            <Typography sx={styles.textGrey}>
-              {contract?.fromDate &&
-                contract?.toDate &&
-                ` ${new Date(contract?.fromDate ?? "").toLocaleDateString("de-DE")} - ${new Date(contract?.toDate ?? "").toLocaleDateString("de-DE")}`}
-            </Typography>
+                <Typography
+                  sx={styles.basicInformationLable}
+                  fontWeight="bold"
+                  mt={2}
+                >
+                  Angebotsfrist:
+                </Typography>
+                <Typography sx={styles.textGrey}>
+                  {contract?.fromDate &&
+                    contract?.toDate &&
+                    ` ${new Date(contract?.fromDate ?? "").toLocaleDateString("de-DE")} - ${new Date(contract?.toDate ?? "").toLocaleDateString("de-DE")}`}
+                </Typography>
 
-            <Typography
-              sx={styles.basicInformationLable}
-              fontWeight="bold"
-              mt={2}
-            >
-              Adresse:
-            </Typography>
-            <Typography
-              sx={styles.textGrey}
-            >{`${contract?.city}, ${contract?.state}`}</Typography>
+                <Typography
+                  sx={styles.basicInformationLable}
+                  fontWeight="bold"
+                  mt={2}
+                >
+                  Adresse:
+                </Typography>
+                <Typography
+                  sx={styles.textGrey}
+                >{`${contract?.city}, ${contract?.state}`}</Typography>
 
-            <Typography
-              sx={styles.basicInformationLable}
-              fontWeight="bold"
-              mt={2}
-            >
-              Dringlichkeit:
-            </Typography>
-            <Typography sx={styles.textGrey}>{contract?.urgency}</Typography>
+                <Typography
+                  sx={styles.basicInformationLable}
+                  fontWeight="bold"
+                  mt={2}
+                >
+                  Dringlichkeit:
+                </Typography>
+                <Typography sx={styles.textGrey}>
+                  {contract?.urgency}
+                </Typography>
 
-            <Typography
-              sx={styles.basicInformationLable}
-              fontWeight="bold"
-              mt={2}
-            >
-              Wer benötigt den Service?
-            </Typography>
-            <Typography sx={styles.textGrey}>{contract?.clientName}</Typography>
-          </Grid>
+                <Typography
+                  sx={styles.basicInformationLable}
+                  fontWeight="bold"
+                  mt={2}
+                >
+                  Wer benötigt den Service?
+                </Typography>
+                <Typography sx={styles.textGrey}>
+                  {contract?.clientName}
+                </Typography>
+              </Grid>
 
-          {/* Contract Application Form Section */}
-          <Formik
-            enableReinitialize
-            onSubmit={() => {}}
-            initialValues={initialValues}
-            validationSchema={applyContractFormSchema}
-          >
-            {({ validateForm, setTouched, submitForm, values }) => (
-              <ContractApplicationForm
-                steps={steps}
-                loading={loading}
-                activeStep={activeStep}
-                handleBack={handleBack}
-                setActiveStep={setActiveStep}
-                handleNext={() =>
-                  handleNext(validateForm, setTouched, submitForm, values)
-                }
-              />
-            )}
-          </Formik>
+              {/* Contract Application Form Section */}
+              <Formik
+                enableReinitialize
+                onSubmit={() => {}}
+                initialValues={initialValues}
+                validationSchema={applyContractFormSchema}
+              >
+                {({ validateForm, setTouched, submitForm, values }) => (
+                  <ContractApplicationForm
+                    steps={steps}
+                    loading={loading}
+                    activeStep={activeStep}
+                    handleBack={handleBack}
+                    setActiveStep={setActiveStep}
+                    isBeyondLastStep={isSubmitted}
+                    handleNext={() =>
+                      handleNext(validateForm, setTouched, submitForm, values)
+                    }
+                  />
+                )}
+              </Formik>
+            </>
+          )}
         </Grid>
       </Paper>
     </Grid>

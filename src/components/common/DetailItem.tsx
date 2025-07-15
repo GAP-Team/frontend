@@ -11,7 +11,7 @@ const DetailItem: React.FC<DetailItemProps> = ({ label, value }) => {
   const theme = useTheme();
   return (
     <Typography variant="gsub1">
-      {label}:{" "}
+      {label && `${label}: `}
       <span style={{ color: theme.palette.gprimary.main, fontWeight: "600" }}>
         {value}
       </span>

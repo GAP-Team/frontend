@@ -9,8 +9,9 @@ import {
   Typography,
 } from "@mui/material";
 import { useState } from "react";
-import UploadButton from "../../components/button/UploadButton";
 import { previousAdvantages } from "@/utils/Constants";
+import UploadButton from "../../components/button/UploadButton";
+import HeaderSection from "../dashboard/real_estate_user/HeaderSection";
 import LabelWithAsterisk from "../../components/label/LabelWithAsterisk";
 
 const ContractServicesForm = ({ formik }: { formik?: any }): JSX.Element => {
@@ -60,6 +61,7 @@ const ContractServicesForm = ({ formik }: { formik?: any }): JSX.Element => {
 
   return (
     <Grid item xs={12} md={9}>
+      <HeaderSection titletext="VERTRAGSLEISTUNGEN" />
       {/* Vorteile - Sonderleistung */}
       <Grid container spacing={2}>
         <Grid item xs={12} md={4}>
@@ -80,7 +82,7 @@ const ContractServicesForm = ({ formik }: { formik?: any }): JSX.Element => {
                 key={index}
                 label={label}
                 sx={
-                  selectedAdvantages?.includes(label)
+                  formik?.values?.advantages?.includes(label)
                     ? styles.clickableButtonSelected
                     : styles.clickableButton
                 }

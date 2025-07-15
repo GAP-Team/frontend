@@ -1,3 +1,4 @@
+import { Dayjs } from "dayjs";
 import { StaticImageData } from "next/image";
 import { ActiveStepItem } from "@/screens/dashboard/types";
 
@@ -77,23 +78,28 @@ export interface HelpIconButtonProps {
   iconColor?: string;
 }
 
+export interface ContractApplicationFormDesiredDateType {
+  desiredDate: Dayjs[] | null;
+}
 export interface ContractApplicationFormValues {
   totalPrice: string;
   hourlyRate: string;
   message: string;
   zip: string;
   city: string;
-  desiredDates: Date[];
+  desiredDates: Dayjs[] | null[];
   advantages: string[];
   offerDoc: string | null;
   termsConditionDoc: string | null;
+  acceptedTerms: boolean;
 }
 
 export interface ApplyContractProps {
   loading: boolean;
-  steps: ActiveStepItem[];
   handleBack: () => void;
   handleNext: () => void;
+  steps: ActiveStepItem[];
+  isBeyondLastStep: boolean;
   activeStep: ActiveStepItem;
   setActiveStep: React.Dispatch<React.SetStateAction<ActiveStepItem>>;
 }
@@ -140,4 +146,9 @@ export interface User {
   manufacturerExperience: string;
   qualificationDocuments: Document[];
   isActive: boolean;
+}
+
+export interface SummarySectionDetail {
+  label: string;
+  value: string;
 }
