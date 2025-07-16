@@ -2,7 +2,7 @@
 import { TopFilterProps } from "@/typings/types";
 import { Container, Typography } from "@mui/material";
 
-const TopFilter: React.FC<TopFilterProps> = ({
+const TopFilterPanel: React.FC<TopFilterProps> = ({
   title = "Alle Aufträge",
 }): JSX.Element => {
   return (
@@ -14,7 +14,7 @@ const TopFilter: React.FC<TopFilterProps> = ({
   );
 };
 
-export default TopFilter;
+export default TopFilterPanel;
 
 const styles = {
   container: {

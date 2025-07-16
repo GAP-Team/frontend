@@ -1,5 +1,5 @@
-import Login from "@/screens/login/LoginPage";
+import LoginPage from "@/screens/login/LoginPage";
 
 export default function LoginPage(): JSX.Element {
-  return <Login />;
+  return <LoginPage />;
 }

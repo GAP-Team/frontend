@@ -16,7 +16,7 @@ import Typography from "@mui/material/Typography";
 import ActionMenu from "@/components/navigation/ActionMenu";
 import SectionTitle from "@/components/data-display/label/SectionTitle";
 import { styles as scrollbarStyles } from "@/components/utils/scrollbar/styles";
-import DocumentList from "@/screens/real-estate-owner/buildings/building-overview/DocumentList ";
+import DocumentList from "@/screens/real-estate-owner/buildings/building-overview/DocumentList";
 import { checkActiveTenderForFacility } from "@/lib/features/tenderSlice";
 import { showSnackbar } from "@/components/feedback/snackbar";
 import { deleteFacility } from "@/lib/features/facilitySlice";

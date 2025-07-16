@@ -89,7 +89,7 @@ const handleClickRediret = (): void => {
   window.location.href = ROUTES.SERVICE_PROVIDER_HOME;
 };
 
-const Sidebar: React.FC<SidebarProps> = ({ items, setSelected, selected }) => {
+const SideBar: React.FC<SidebarProps> = ({ items, setSelected, selected }) => {
   const [open, setOpen] = React.useState(false);
   const theme = createTheme();
 
@@ -138,4 +138,4 @@ const Sidebar: React.FC<SidebarProps> = ({ items, setSelected, selected }) => {
   );
 };
 
-export default Sidebar;
+export default SideBar;

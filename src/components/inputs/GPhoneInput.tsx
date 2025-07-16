@@ -17,7 +17,7 @@ interface PhoneInputProps {
   helperText?: string | boolean;
 }
 
-const PhoneInput: React.FC<PhoneInputProps> = ({
+const GPhoneInput: React.FC<PhoneInputProps> = ({
   placeholder = "Geben Sie Ihre Telefonnummer ein",
   value,
   onChange,
@@ -50,4 +50,4 @@ const PhoneInput: React.FC<PhoneInputProps> = ({
   );
 };
 
-export default PhoneInput;
+export default GPhoneInput;

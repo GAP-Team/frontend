@@ -16,7 +16,7 @@ import { IoExtensionPuzzleOutline } from "react-icons/io5";
 import { Building } from "./types";
 import facilityAPI from "@/api/facility";
 import buildingAPI from "@/api/building";
-import DocumentList from "./DocumentList ";
+import DocumentList from "./DocumentList";
 import { DOCUMENT_TYPE } from "@/utils/enums";
 import ActionMenu from "@/components/navigation/ActionMenu";
 import { ROUTES, REAL_ESTATE_BASE } from "@/utils/routes";

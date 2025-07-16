@@ -3,7 +3,7 @@ import userAPI from "@/api/user";
 import { User } from "@/typings/types";
 import { useState, useEffect } from "react";
 import { useAppDispatch } from "@/lib/hooks";
-import TopFilter from "@/screens/landing-page/TopFilterPanel";
+import TopFilterPanel from "@/screens/landing-page/TopFilterPanel";
 import { showSnackbar } from "@/lib/features/snackbarSlice";
 import UsersTable from "./UsersTable";
 
@@ -32,7 +32,7 @@ const UsersOverview = (): JSX.Element => {
   return (
     <section className="bg-#E0E0E0 w-full px-3 py-5">
       <div className="mb-4 mr-8">
-        <TopFilter title="Alle Benutzer" />
+        <TopFilterPanel title="Alle Benutzer" />
       </div>
       <div className="flex flex-cols-2 mb-8 ">
         <UsersTable users={users} />

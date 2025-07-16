@@ -1,6 +1,6 @@
 import React from "react";
 
-const Clients = (): JSX.Element => {
+const GClients = (): JSX.Element => {
   return (
     <section className="position-relative z-index-1 padding-y-md">
       <div className="container max-width-lg">
@@ -130,4 +130,4 @@ const Clients = (): JSX.Element => {
   );
 };
 
-export default Clients;
+export default GClients;
