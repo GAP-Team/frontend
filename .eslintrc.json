@@ -8,7 +8,7 @@
     "project": "./tsconfig.json"
   },
   "rules": {
-    "filenames/match-exported": [2, "pascal"],
+    "filenames/match-exported": ["error", "pascal"],
     "@typescript-eslint/no-explicit-any": "off", // Disable the rule globally
     "@typescript-eslint/explicit-function-return-type": [
       "error",
