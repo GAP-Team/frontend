@@ -37,7 +37,11 @@
   },
   "overrides": [
     {
-      "files": ["src/app/**/*.{js,ts,jsx,tsx}", "src/lib/**/*.{js,ts,jsx,tsx}", "src/api/**/*.{js,ts,jsx,tsx}"],
+      "files": [
+        "src/app/**/*.{js,ts,jsx,tsx}",
+        "src/lib/**/*.{js,ts,jsx,tsx}",
+        "src/api/**/*.{js,ts,jsx,tsx}"
+      ],
       "rules": {
         "filenames/match-exported": "off"
       }
