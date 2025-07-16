@@ -34,5 +34,13 @@
     "no-undefined": "warn", // Show a warning if undefined is used
     "prefer-arrow-callback": "error", // Show a warning if a function is not an arrow function
     "@typescript-eslint/no-empty-interface": "off" // Show an error if an empty interface is found
-  }
+  },
+  "overrides": [
+    {
+      "files": ["app/**/*.{js,ts,jsx,tsx}"],
+      "rules": {
+        "filenames/match-exported": "off"
+      }
+    }
+  ]
 }
