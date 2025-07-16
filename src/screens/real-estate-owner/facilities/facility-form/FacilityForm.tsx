@@ -72,6 +72,7 @@ const FacilityForm: React.FC<NewFacilityProps> = ({
     name: facility?.name || "",
     facilityType: facility?.facilityType || "",
     subcategory: facility?.subcategory || "",
+    numberOfUnits: facility?.numberOfUnits || 1,
     isPublishCheckAutomatically:
       facility?.check?.isPublishAutomatically || false,
     publishCheckAutomaticallyInMonth:
@@ -184,6 +185,7 @@ const FacilityForm: React.FC<NewFacilityProps> = ({
     let facilityData: Partial<Facility> = {
       name: values?.name,
       facilityType: values?.facilityType,
+      numberOfUnits: values?.numberOfUnits,
       subcategory: values?.subcategory,
       buildingId: values?.selectedBuilding,
       check: {

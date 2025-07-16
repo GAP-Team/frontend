@@ -137,6 +137,12 @@ const FacilityCard: React.FC<FacilityCardProps> = ({ facility }) => {
       <SummaryLayout>
         <DetailItem label="Unterkategorie" value={facility.subcategory} />
         <div>
+          <DetailItem
+            label="Anzahl der Anlagen"
+            value={facility.numberOfUnits?.toString()}
+          />
+        </div>
+        <div>
           <Link
             style={{ textDecoration: "none" }}
             href={ROUTES.REAL_ESTATE.TENDER.TENDERS}
