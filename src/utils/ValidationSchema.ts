@@ -271,6 +271,17 @@ export const addFacilityValidationSchema = [
   yup.object({
     name: yup.string().required("Anlagenname ist erforderlich"),
     facilityType: yup.string().required("Oberbegriff ist erforderlich"),
+    numberOfUnits: yup
+      .number()
+      .required("Anlage Anzahl ist erforderlich")
+      .typeError("Anlage Anzahl muss eine Zahl sein")
+      .positive("Anlage Anzahl muss eine positive Zahl sein")
+      .integer("Anlage Anzahl muss eine Ganzzahl sein")
+      .test(
+        "not-zero",
+        "Anlage Anzahl, um mindestens eine zu haben",
+        (value) => value !== 0
+      ),
     subcategory: yup.string(),
     selectedBuilding: yup
       .string()
@@ -461,9 +472,9 @@ export const applyContractFormSchema = yup.object().shape({
       }
       return +value.replace(/,/, ".");
     })
+    .required("Gesamtkosten ist erforderlich")
     .typeError("Gesamtkosten muss eine Zahl sein.")
     .positive("Gesamtkosten muss größer als 0 sein.")
-    .required("Gesamtkosten ist erforderlich")
     .integer("Gesamtkosten muss eine ganze Zahl sein."),
   hourlyRate: yup
     .number()
@@ -484,4 +495,23 @@ export const applyContractFormSchema = yup.object().shape({
       "Postleitzahl muss zwischen 4 und 5 Ziffern lang sein"
     ),
   desiredDates: yup.array().of(yup.date()),
+  termsConditionDoc: yup
+    .mixed()
+    .required("AGB dokument ist erforderlich")
+    .test("fileRequired", "AGB dokument ist erforderlich", (value) => {
+      return value instanceof File;
+    }),
+  offerDoc: yup
+    .mixed()
+    .required("Angebot dokument ist erforderlich")
+    .test("fileRequired", "Angebot dokument ist erforderlich", (value) => {
+      return value instanceof File;
+    }),
+});
+
+export const passwordResetValidationSchema = yup.object({
+  email: yup
+    .string()
+    .matches(EMAIL_REGEX, "Ungültige Email")
+    .required("Email ist erforderlich."),
 });

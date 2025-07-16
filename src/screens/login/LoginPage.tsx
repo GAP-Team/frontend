@@ -13,22 +13,34 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import InputAdornment from "@mui/material/InputAdornment";
 import CircularProgress from "@mui/material/CircularProgress";
+import Cookies from "js-cookie";
 import authAPI from "@/api/auth";
 import { setUser } from "@/lib/features/userSlice";
-import { GapLogo } from "@/components/logo/GapLogo";
-import HeroBanner from "../../components/common/InfoBanner";
+import { GapLogo } from "@/components/icons/logo/GapLogo";
+import InfoBanner from "@/components/data-display/InfoBanner";
 import { loginValidationSchema } from "@/utils/ValidationSchema";
 import { setAccessToken, setIsUserVerified } from "@/utils/auth";
 import emailAPI from "@/api/email";
 import { ROUTES } from "@/utils/routes";
 import { USER_ROLE } from "@/utils/enums";
 import { useAppDispatch } from "@/lib/hooks";
+import PasswordResetDialog from "@/components/dialog/PasswordResetDialog";
 
 const Login = (): JSX.Element => {
   const router = useRouter();
   const appDispatch = useAppDispatch();
   const [loading, setLoading] = useState(false);
   const [loginError, setLoginError] = React.useState<string | null>(null);
+  const [passwordResetDialogOpen, setPasswordResetDialogOpen] = useState(false);
+
+  const handlePasswordResetClick = (event: React.MouseEvent): void => {
+    event.preventDefault();
+    setPasswordResetDialogOpen(true);
+  };
+
+  const handlePasswordResetDialogClose = (): void => {
+    setPasswordResetDialogOpen(false);
+  };
 
   const formik = useFormik({
     initialValues: {
@@ -52,6 +64,10 @@ const Login = (): JSX.Element => {
             });
           }
 
+          if (res.data.user?.role === USER_ROLE.ADMIN) {
+            router.push(ROUTES.ADMIN.DASHBOARD);
+            Cookies.set("role", res.data.user?.role);
+          }
           if (res.data.user?.role === USER_ROLE.SERVICE_PROVIDER) {
             router.push(ROUTES.SERVICE_PROVIDER.DASHBOARD);
           }
@@ -83,7 +99,7 @@ const Login = (): JSX.Element => {
   return (
     <Grid container component="main" sx={styles.mainContainer}>
       <Grid item xs={false} md={6} lg={6} sx={styles.imageSide}>
-        <HeroBanner
+        <InfoBanner
           title="Where skills are developed"
           subtitle="Gesetzliche Anlagenprüfung"
           copyright="©2024 GAP GmbH"
@@ -105,7 +121,12 @@ const Login = (): JSX.Element => {
                 </Link>
               </Grid>
               <Grid item>
-                <Link href="#" variant="body2" sx={styles.linkDesignSmall}>
+                <Link
+                  role="button"
+                  variant="body2"
+                  sx={styles.linkDesignSmall}
+                  onClick={handlePasswordResetClick}
+                >
                   Passwort vergessen
                 </Link>
               </Grid>
@@ -208,6 +229,12 @@ const Login = (): JSX.Element => {
           </Typography>
         </Box>
       </Grid>
+
+      {/* Password Reset Dialog */}
+      <PasswordResetDialog
+        open={passwordResetDialogOpen}
+        handleClose={handlePasswordResetDialogClose}
+      />
     </Grid>
   );
 };

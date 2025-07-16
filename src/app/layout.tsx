@@ -6,7 +6,7 @@ import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
 import ReduxProvider from "../lib/ReduxProvider";
 import "./globals.css";
 import theme from "./theme/theme";
-import RootSnackbar from "@/components/root-snackbar";
+import RootSnackbar from "@/components/feedback/snackbar";
 
 const inter = Inter({ subsets: ["latin"] });
 

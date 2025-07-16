@@ -1,5 +1,5 @@
 import { StaticImageData } from "next/image";
-import { ActiveStepItem } from "@/screens/dashboard/types";
+import { ActiveStepItem } from "@/screens/real-estate-owner/types";
 
 export interface FormErrors {
   [key: string]: string;
@@ -84,6 +84,9 @@ export interface ContractApplicationFormValues {
   zip: string;
   city: string;
   desiredDates: Date[];
+  advantages: string[];
+  offerDoc: string | null;
+  termsConditionDoc: string | null;
 }
 
 export interface ApplyContractProps {
@@ -98,4 +101,48 @@ export interface SendActivityEmailType {
   email: string;
   templateName: string;
   userFirstName: string;
+}
+export interface Notification {
+  message: string;
+  time: string;
+  status: "success" | "warning" | "danger";
+}
+
+export interface TopFilterProps {
+  title?: string;
+}
+
+export interface UserCompanyAddress {
+  zip: number;
+  state: string;
+  street: string;
+  country: string;
+  houseNo: number;
+  city: string;
+}
+
+export interface UserBusiness {
+  businessType: string;
+  registrationNumber: string;
+  documents: Document[];
+}
+
+export interface UserCompany {
+  name: string;
+  phonenumber: number;
+  address: Partial<UserCompanyAddress>;
+  numberOfEmployees?: number;
+  business?: Partial<UserBusiness>;
+}
+
+export interface User {
+  firstName: string;
+  lastName: string;
+  email: string;
+  company: UserCompany;
+  role: string;
+  id: string;
+  manufacturerExperience: string;
+  qualificationDocuments: Document[];
+  isActive: boolean;
 }

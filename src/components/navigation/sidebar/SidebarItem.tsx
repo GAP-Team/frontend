@@ -1,0 +1,70 @@
+// SidebarItemComponent.tsx
+import React from "react";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import ListItemButton from "@mui/material/ListItemButton";
+import { SidebarItemTypes } from "@/components/navigation/sidebar/types";
+
+interface SidebarItemProps {
+  item: SidebarItemTypes;
+  open: boolean;
+  selected: boolean;
+  setSelected: (item: SidebarItemTypes) => void;
+}
+
+const SidebarItem: React.FC<SidebarItemProps> = ({
+  item,
+  open,
+  selected,
+  setSelected,
+}) => {
+  return (
+    <ListItemButton
+      selected={selected}
+      onClick={() => setSelected(item)}
+      sx={styles.listItemButton}
+    >
+      <ListItemIcon sx={{ ...styles.listItemIcon, mr: open ? 3 : "auto" }}>
+        <item.icon />
+      </ListItemIcon>
+      <ListItemText
+        primary={item.text}
+        sx={{ ...styles.listItemText, opacity: open ? 1 : 0 }}
+      />
+    </ListItemButton>
+  );
+};
+
+//styles
+const styles = {
+  listItemButton: {
+    "&.Mui-selected": {
+      backgroundColor: "#E5F5FA",
+      color: "#22A7F1",
+      "& .MuiListItemIcon-root": {
+        color: "#22A7F1",
+      },
+      "&:hover": {
+        backgroundColor: "#E5F5FA",
+      },
+    },
+    "&:hover": {
+      backgroundColor: "#E5F5FA",
+      color: "#22A7F1",
+      "& .MuiListItemIcon-root": {
+        color: "#22A7F1",
+      },
+    },
+    marginBottom: "1.5rem", // Distance between items
+    ".MuiListItemIcon-root": { fontSize: "1.5rem" }, // Icon size
+  },
+  listItemIcon: {
+    minWidth: "auto",
+  },
+  listItemText: {
+    fontWeight: "600",
+    fontSize: "0.75rem",
+  },
+};
+
+export default SidebarItem;

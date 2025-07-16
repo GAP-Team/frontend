@@ -1,9 +1,9 @@
 "use client";
 import { useParams } from "next/navigation";
-import NewFacility from "@/screens/dashboard/facilities/add_facility_form/NewFacility";
+import FacilityForm from "@/screens/real-estate-owner/facilities/facility-form/FacilityForm";
 
 export default function EditFacilityPage(): JSX.Element {
   const params = useParams();
   const id = Array.isArray(params.id) ? params.id[0] : params.id;
-  return <NewFacility facilityId={id} />;
+  return <FacilityForm facilityId={id} />;
 }

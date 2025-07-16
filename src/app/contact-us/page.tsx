@@ -1,7 +1,7 @@
 "use client";
 import { Grid } from "@mui/material";
-import LandingPageLayout from "@/screens/landingpage_layout/LandingPageLayout";
-import ContactSection from "@/components/common/ContactSection/ContactSection";
+import LandingPageLayout from "@/components/layout/LandingPageLayout";
+import ContactSection from "@/screens/landing-page/contact/ContactSection";
 
 export default function ContactUsPage(): JSX.Element {
   return (
