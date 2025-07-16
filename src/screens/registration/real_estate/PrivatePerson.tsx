@@ -1,6 +1,6 @@
 import { Grid, Typography } from "@mui/material";
 
-import UploadButton from "@/components/button/UploadButton";
+import UploadButton from "@/components/inputs/button/UploadButton";
 
 const PrivatePerson = ({ formik }: any): JSX.Element => {
   const setUploadApprvDoc = (ev: any): void => {

@@ -12,11 +12,11 @@ import MuiAlert, { AlertProps } from "@mui/material/Alert";
 import userAPI from "@/api/user";
 import { RegistrationFormValues } from "./types";
 import { DOCUMENT_TYPE, USER_ROLE } from "@/utils/enums";
-import PageTitle from "@/components/label/PageTitle";
+import PageTitle from "@/components/data-display/label/PageTitle";
 import { handleUploadDoc } from "@/utils/uploadToS3";
-import BackButton from "@/components/button/BackButton";
-import InfoBanner from "@/components/common/InfoBanner";
-import EmailVerification from "@/components/email/EmailVerification";
+import BackButton from "@/components/inputs/button/BackButton";
+import InfoBanner from "@/components/data-display/InfoBanner";
+import EmailVerificationScreen from "@/screens/EmailVerification";
 import { registrationValidationSchema } from "@/utils/ValidationSchema";
 import { Document } from "@/typings/types";
 import emailAPI from "@/api/email";
@@ -272,7 +272,7 @@ const Registration = (): JSX.Element => {
                   />
                 ) : (
                   isVerificationEmailSent && (
-                    <EmailVerification
+                    <EmailVerificationScreen
                       sendMail={false}
                       newUserId={newUserId}
                       newUserName={newUserName}

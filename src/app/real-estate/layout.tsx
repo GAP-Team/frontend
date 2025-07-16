@@ -5,12 +5,15 @@ import React, { useEffect, useState } from "react";
 import { LuLayoutDashboard } from "react-icons/lu";
 import { useRouter, usePathname } from "next/navigation";
 import { MdOutlineDoorSliding, MdOutlineAddHomeWork } from "react-icons/md";
-import { SubItem, SidebarItem } from "@/components/navigation/GSidebar/SideBar";
+import {
+  SubItem,
+  SidebarItemTypes,
+} from "@/components/navigation/sidebar/types";
 import { ROUTES } from "@/utils/routes";
-import Layout from "@/screens/dashboard/Layout";
+import Layout from "@/screens/real-estate-owner/Layout";
 import { Box } from "@mui/material";
 
-const sidebarItems: SidebarItem[] = [
+const sidebarItems: SidebarItemTypes[] = [
   {
     id: 0,
     icon: LuLayoutDashboard,
@@ -80,11 +83,11 @@ const RealStateUserLayout: React.FC<any> = ({ children }) => {
   const router = useRouter();
   const pathname = usePathname();
   const [selectedSidebarItem, setSelectedSidebarItem] = useState<
-    SidebarItem | SubItem
+    SidebarItemTypes | SubItem
   >(sidebarItems[0]);
 
   useEffect(() => {
-    const matchSidebarItem = (): SidebarItem | SubItem => {
+    const matchSidebarItem = (): SidebarItemTypes | SubItem => {
       for (const item of sidebarItems) {
         if (item.url === pathname) {
           return item;
@@ -102,7 +105,7 @@ const RealStateUserLayout: React.FC<any> = ({ children }) => {
     setSelectedSidebarItem(matchSidebarItem());
   }, [pathname]);
 
-  const handleRedirect = (item: SidebarItem | SubItem): void => {
+  const handleRedirect = (item: SidebarItemTypes | SubItem): void => {
     if (item.url) {
       setSelectedSidebarItem(item);
       router.push(item.url);

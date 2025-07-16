@@ -1,5 +1,5 @@
 import { StaticImageData } from "next/image";
-import { ActiveStepItem } from "@/screens/dashboard/types";
+import { ActiveStepItem } from "@/screens/real-estate-owner/types";
 
 export interface FormErrors {
   [key: string]: string;
@@ -101,6 +101,11 @@ export interface SendActivityEmailType {
   email: string;
   templateName: string;
   userFirstName: string;
+}
+export interface Notification {
+  message: string;
+  time: string;
+  status: "success" | "warning" | "danger";
 }
 
 export interface TopFilterProps {

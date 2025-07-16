@@ -1,8 +1,8 @@
 import React from "react";
 import { Grid, Typography } from "@mui/material";
 
-import GTextInput from "@/components/input/GTextInput";
-import UploadButton from "@/components/button/UploadButton";
+import GTextInput from "@/components/inputs/GTextInput";
+import UploadButton from "@/components/inputs/button/UploadButton";
 import { USER_ROLE } from "@/utils/enums";
 
 const ComercialPerson = ({ formik }: any): JSX.Element => {

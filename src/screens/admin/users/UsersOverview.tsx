@@ -3,8 +3,8 @@ import userAPI from "@/api/user";
 import { User } from "@/typings/types";
 import { useState, useEffect } from "react";
 import { useAppDispatch } from "@/lib/hooks";
-import TopFilter from "../../landing_page/TopFilterPanel";
-import { showSnackbar } from "@/components/root-snackbar";
+import TopFilter from "@/screens/landing-page/TopFilterPanel";
+import { showSnackbar } from "@/lib/features/snackbarSlice";
 import UsersTable from "./UsersTable";
 
 const UsersOverview = (): JSX.Element => {
