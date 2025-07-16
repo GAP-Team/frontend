@@ -1,4 +1,4 @@
-import CostSaving from "@/screens/dashboard/cost_saving/CostSavingPage";
+import CostSaving from "@/screens/real-estate-owner/cost-saving/CostSaving";
 
 export default function CostSavingsPage(): JSX.Element {
   return <CostSaving />;

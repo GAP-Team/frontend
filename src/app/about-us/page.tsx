@@ -1,7 +1,7 @@
 "use client";
 import { Grid } from "@mui/material";
-import LandingPageLayout from "@/screens/landingpage_layout/LandingPageLayout";
-import AboutUsSection from "@/components/common/AboutUsSection/AboutUsSection";
+import LandingPageLayout from "@/components/layout/LandingPageLayout";
+import AboutUsSection from "@/screens/landing-page/about-us/AboutUsSection";
 
 export default function AboutUsPage(): JSX.Element {
   return (

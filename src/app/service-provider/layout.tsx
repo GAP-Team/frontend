@@ -4,12 +4,15 @@ import { ROUTES } from "@/utils/routes";
 import { CgNotes } from "react-icons/cg";
 import { useEffect, useState } from "react";
 import { BsEnvelope } from "react-icons/bs";
-import Layout from "@/screens/dashboard/Layout";
+import Layout from "@/screens/real-estate-owner/Layout";
 import { LuLayoutDashboard } from "react-icons/lu";
 import { useRouter, usePathname } from "next/navigation";
-import { SubItem, SidebarItem } from "@/components/navigation/GSidebar/SideBar";
+import {
+  SubItem,
+  SidebarItemTypes,
+} from "@/components/navigation/sidebar/types";
 
-const sidebarItems: SidebarItem[] = [
+const sidebarItems: SidebarItemTypes[] = [
   {
     id: 0,
     icon: LuLayoutDashboard,
@@ -40,13 +43,13 @@ const ServiceProviderLayout: React.FC<any> = ({ children }) => {
   const router = useRouter();
   const pathname = usePathname();
   const [selectedSidebarItem, setSelectedSidebarItem] = useState<
-    SidebarItem | SubItem
+    SidebarItemTypes | SubItem
   >(sidebarItems[0]);
 
   useEffect(() => {
     // FIXME: we already use this logic in the RealEstateLayout, consider refactoring to a common utility function
     // to avoid code duplication.
-    const matchSidebarItem = (): SidebarItem | SubItem => {
+    const matchSidebarItem = (): SidebarItemTypes | SubItem => {
       for (const item of sidebarItems) {
         if (item.url === pathname) {
           return item;
@@ -64,7 +67,7 @@ const ServiceProviderLayout: React.FC<any> = ({ children }) => {
     setSelectedSidebarItem(matchSidebarItem());
   }, [pathname]);
 
-  const handleRedirect = (item: SidebarItem | SubItem): void => {
+  const handleRedirect = (item: SidebarItemTypes | SubItem): void => {
     if (item.url) {
       setSelectedSidebarItem(item);
       router.push(item.url);

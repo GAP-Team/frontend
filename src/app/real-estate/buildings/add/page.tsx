@@ -1,5 +1,5 @@
-import NewBuilding from "@/screens/dashboard/buildings/add_building_form/NewBuilding";
+import BuildingForm from "@/screens/real-estate-owner/buildings/building-form/BuildingForm";
 
 export default function AddBuildingFormPage(): JSX.Element {
-  return <NewBuilding id="" />;
+  return <BuildingForm id="" />;
 }

@@ -5,10 +5,10 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import Typography from "@mui/material/Typography";
-import GTextInput from "@/components/input/GTextInput";
-import LabelWithAsterisk from "@/components/label/LabelWithAsterisk";
+import GTextInput from "@/components/inputs/GTextInput";
+import LabelWithAsterisk from "@/components/data-display/label/LabelWithAsterisk";
 import { numOfEmployeesOptions } from "@/utils/Constants";
-import UploadMultiButton from "@/components/button/UploadMultiButton";
+import UploadMultiButton from "@/components/inputs/button/UploadMultiButton";
 
 const ExpertiseServiceProvider = ({ formik }: any): JSX.Element => {
   return (
