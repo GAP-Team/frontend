@@ -26,7 +26,7 @@ import { USER_ROLE } from "@/utils/enums";
 import { useAppDispatch } from "@/lib/hooks";
 import PasswordResetDialog from "@/components/dialog/PasswordResetDialog";
 
-const LoginPage = (): JSX.Element => {
+const Login = (): JSX.Element => {
   const router = useRouter();
   const appDispatch = useAppDispatch();
   const [loading, setLoading] = useState(false);
@@ -239,7 +239,7 @@ const LoginPage = (): JSX.Element => {
   );
 };
 
-export default LoginPage;
+export default Login;
 
 //Styles
 
