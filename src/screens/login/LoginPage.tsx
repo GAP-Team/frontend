@@ -16,8 +16,8 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Cookies from "js-cookie";
 import authAPI from "@/api/auth";
 import { setUser } from "@/lib/features/userSlice";
-import { GapLogo } from "@/components/logo/GapLogo";
-import HeroBanner from "../../components/common/InfoBanner";
+import { GapLogo } from "@/components/icons/logo/GapLogo";
+import InfoBanner from "@/components/data-display/InfoBanner";
 import { loginValidationSchema } from "@/utils/ValidationSchema";
 import { setAccessToken, setIsUserVerified } from "@/utils/auth";
 import emailAPI from "@/api/email";
@@ -99,7 +99,7 @@ const Login = (): JSX.Element => {
   return (
     <Grid container component="main" sx={styles.mainContainer}>
       <Grid item xs={false} md={6} lg={6} sx={styles.imageSide}>
-        <HeroBanner
+        <InfoBanner
           title="Where skills are developed"
           subtitle="Gesetzliche Anlagenprüfung"
           copyright="©2024 GAP GmbH"

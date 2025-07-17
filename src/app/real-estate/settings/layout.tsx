@@ -9,7 +9,7 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import Divider from "@mui/material/Divider";
 import Typography from "@mui/material/Typography";
-import PageTitle from "@/components/label/PageTitle";
+import PageTitle from "@/components/data-display/label/PageTitle";
 import { ROUTES } from "@/utils/routes";
 
 const menuItems = [

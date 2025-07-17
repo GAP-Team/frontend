@@ -5,16 +5,16 @@ import Grid from "@mui/material/Grid";
 import { useFormikContext } from "formik";
 import Divider from "@mui/material/Divider";
 import PrivatePerson from "./real_estate/PrivatePerson";
-import GTab from "@/components/filter/GTab";
+import GTab from "@/components/navigation/tab_panel/GTab";
 import CompanyAddress from "./CompanyAddress";
 import ComercialPerson from "./real_estate/CommercialPerson";
-import GButton from "@/components/button/GButton";
+import GButton from "@/components/inputs/button/GButton";
 import BasicInformation from "./BasicInformation";
-import GStepper from "@/components/stepper/GStepper";
-import SummaryRegistration from "./SummaryRegistration";
-import SectionTitle from "@/components/label/SectionTitle";
+import GStepper from "@/components/navigation/stepper/GStepper";
+import RegistrationSummary from "./RegistrationSummary";
+import SectionTitle from "@/components/data-display/label/SectionTitle";
 import { USER_ROLE, BUSINESS_TYPE } from "@/utils/enums";
-import GProgressStepper from "@/components/stepper/GProgressStepper";
+import GProgressStepper from "@/components/navigation/stepper/GProgressStepper";
 import CircularProgress from "@mui/material/CircularProgress";
 import { RegistrationFormValues } from "./types";
 import ExpertiseServiceProvider from "./service_provider/ExpertiseServiceProvider";
@@ -170,7 +170,7 @@ const RegistrationForm = ({
               <ExpertiseServiceProvider formik={formik} />
             )}
           {registrationSteps[activeStep] === "Zusammenfassung" && (
-            <SummaryRegistration setActiveStep={setActiveStep} />
+            <RegistrationSummary setActiveStep={setActiveStep} />
           )}
         </div>
         <Grid container justifyContent="flex-end" spacing={2}>

@@ -1,6 +1,6 @@
 import { Dayjs } from "dayjs";
 import { StaticImageData } from "next/image";
-import { ActiveStepItem } from "@/screens/dashboard/types";
+import { ActiveStepItem } from "@/screens/real-estate-owner/types";
 
 export interface FormErrors {
   [key: string]: string;
@@ -109,6 +109,11 @@ export interface SendActivityEmailType {
   templateName: string;
   userFirstName: string;
 }
+export interface Notification {
+  message: string;
+  time: string;
+  status: "success" | "warning" | "danger";
+}
 
 export interface TopFilterProps {
   title?: string;
@@ -152,4 +157,18 @@ export interface User {
 export interface SummarySectionDetail {
   label: string;
   value: string;
+}
+
+export interface Application {
+  tenderId: string;
+  userId: string;
+  serviceTotalPrice: string;
+  servicePerHourPrice: string;
+  message: string;
+  suggestionWorkDates: string[];
+  zip: number;
+  city: string;
+  dataPrivacy: boolean;
+  benefitsSpecialServices: string[];
+  documents: Document[];
 }

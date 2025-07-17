@@ -1,4 +1,5 @@
 import api from "../axios";
+import { Application } from "@/typings/types";
 
 // FIXME: Add proper types for the parameters and response
 const contractAPI = {
@@ -12,7 +13,7 @@ const contractAPI = {
     ),
 
   getContractById: (id: string): any => api.get(`/contracts/${id}`),
-  applyContract: (contractId: string, applicationData: any): any =>
-    api.post(`/contracts/${contractId}/application`, applicationData),
+  applyForContract: (contractId: string, applicationData: Application): any =>
+    api.post(`/contracts/${contractId}/applications`, applicationData),
 };
 export default contractAPI;

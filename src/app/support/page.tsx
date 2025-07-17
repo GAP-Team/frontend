@@ -1,7 +1,7 @@
 "use client";
 import { Grid } from "@mui/material";
-import LandingPageLayout from "@/screens/landingpage_layout/LandingPageLayout";
-import SupportCenterSection from "@/components/common/SupportCenterSection/SupportCenterSection";
+import LandingPageLayout from "@/components/layout/LandingPageLayout";
+import SupportCenterSection from "@/screens/landing-page/SupportCenterSection";
 
 export default function SupportCenterPage(): JSX.Element {
   return (

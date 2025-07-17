@@ -1,9 +1,10 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../store";
+// FIXME: Tender, BuildingTenders should not be imported from the screen, it should be imported from a common types file.
 import {
   Tender,
   BuildingTenders,
-} from "@/screens/dashboard/tenders/tender_card/types";
+} from "@/screens/real-estate-owner/tenders/tender-overview/types";
 import userAPI from "@/api/user";
 import tenderAPI from "@/api/tender";
 interface TenderState {
