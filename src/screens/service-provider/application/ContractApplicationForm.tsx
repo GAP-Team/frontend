@@ -20,8 +20,8 @@ const ContractApplicationForm: React.FC<ApplyContractProps> = ({
   const formik = useFormikContext<ContractApplicationFormValues>();
 
   const StepComponent = steps[activeStep.id]?.component;
-  const isOnLastStep = activeStep.id === steps.length - 1;
-  const typeOfBtn = isOnLastStep ? "submit" : "button";
+  const isOnLastStep = activeStep.id >= steps.length;
+  const typeOfBtn = activeStep.id + 1 >= steps.length ? "submit" : "button";
 
   const handleRoute = (): void => {
     router.push(ROUTES.SERVICE_PROVIDER.CONTRACTS);

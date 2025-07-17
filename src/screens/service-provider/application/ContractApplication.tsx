@@ -1,8 +1,9 @@
 import {
+  Application,
   SubmitFormFunction,
   ContractApplicationFormValues,
-  Application,
 } from "@/typings/types";
+import dayjs from "dayjs";
 import { ROUTES } from "@/utils/routes";
 import contractAPI from "@/api/contract";
 import { useState, useEffect } from "react";
@@ -114,6 +115,7 @@ const ContractApplication = (): JSX.Element => {
   ): Promise<void> => {
     try {
       setLoading(true);
+
       const applicationRequestBody: Application = {
         tenderId: contract.tenderId,
         userId: user.id,
@@ -121,7 +123,7 @@ const ContractApplication = (): JSX.Element => {
         servicePerHourPrice: values.hourlyRate,
         message: values.message,
         suggestionWorkDates: values.desiredDates.map((date) =>
-          date ? date.toISOString() : ""
+          date ? dayjs(date).toISOString() : ""
         ),
         zip: Number(values.zip),
         city: values.city,
@@ -129,6 +131,7 @@ const ContractApplication = (): JSX.Element => {
         benefitsSpecialServices: values.advantages,
         documents: docObjList,
       };
+
       const response = await contractAPI.applyForContract(
         contract.tenderId,
         applicationRequestBody
