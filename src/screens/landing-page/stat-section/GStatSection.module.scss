@@ -15,8 +15,8 @@
 
 .diamond_grid__item {
   display: block;
-  width: calc(50% - var(10px) / 2);
-  padding-bottom: calc(50% - var(10px) / 2);
+  width: calc(50% - 10px / 2);
+  padding-bottom: calc(50% - 10px / 2);
   overflow: hidden;
 }
 .diamond_grid__item:nth-child(1),
