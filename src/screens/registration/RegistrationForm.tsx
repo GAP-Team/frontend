@@ -7,7 +7,7 @@ import Divider from "@mui/material/Divider";
 import PrivatePerson from "./real_estate/PrivatePerson";
 import GTab from "@/components/navigation/tab_panel/GTab";
 import CompanyAddress from "./CompanyAddress";
-import ComercialPerson from "./real_estate/CommercialPerson";
+import CommercialPerson from "./real_estate/CommercialPerson";
 import GButton from "@/components/inputs/button/GButton";
 import BasicInformation from "./BasicInformation";
 import GStepper from "@/components/navigation/stepper/GStepper";
@@ -112,7 +112,7 @@ const RegistrationForm = ({
     },
   ];
   const registertabs = [
-    { label: "Gewerbeperson", content: <ComercialPerson formik={formik} /> },
+    { label: "Gewerbeperson", content: <CommercialPerson formik={formik} /> },
     { label: "Privatperson", content: <PrivatePerson formik={formik} /> },
   ];
 
@@ -163,7 +163,7 @@ const RegistrationForm = ({
             )}
           {activeStep === 2 &&
             formik?.values?.role === USER_ROLE.SERVICE_PROVIDER && (
-              <ComercialPerson formik={formik} />
+              <CommercialPerson formik={formik} />
             )}
           {activeStep === 3 &&
             formik?.values?.role === USER_ROLE.SERVICE_PROVIDER && (

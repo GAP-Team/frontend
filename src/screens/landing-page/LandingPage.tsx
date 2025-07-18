@@ -1,5 +1,5 @@
 import GFeatures from "@/screens/landing-page/features/GFeatures";
-import HeroSection from "@/screens/landing-page/hero-section/GHeroSection";
+import GHeroSection from "@/screens/landing-page/hero-section/GHeroSection";
 import GStatSection from "@/screens/landing-page/stat-section/GStatSection";
 import GOfferSection from "@/screens/landing-page/offer-section/GOfferSection";
 import GFunctionSection from "@/screens/landing-page/function/GFunctionSection";
@@ -8,7 +8,7 @@ import BlogsOverview from "@/screens/landing-page/blogs/BlogsOverview";
 export default function LandingPage(): JSX.Element {
   return (
     <>
-      <HeroSection />
+      <GHeroSection />
       <GFunctionSection />
       <GOfferSection />
       <GFeatures />

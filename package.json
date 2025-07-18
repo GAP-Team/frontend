@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --turbo",
     "test": "echo \"Error: no test specified yet please add some\"",
     "build": "next build --no-lint",
     "start": "next start",
@@ -64,6 +64,7 @@
     "eslint-config-prettier": "^8.5.0",
     "eslint-formatter-friendly": "^7.0.0",
     "eslint-friendly-formatter": "^4.0.1",
+    "eslint-plugin-filenames": "^1.3.2",
     "eslint-plugin-unused-imports": "^4.1.3",
     "postcss": "^8",
     "prettier": "3.2.5",

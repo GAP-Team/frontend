@@ -16,7 +16,7 @@ import PageTitle from "@/components/data-display/label/PageTitle";
 import { handleUploadDoc } from "@/utils/uploadToS3";
 import BackButton from "@/components/inputs/button/BackButton";
 import InfoBanner from "@/components/data-display/InfoBanner";
-import EmailVerificationScreen from "@/screens/EmailVerification";
+import EmailVerificationScreen from "@/screens/EmailVerificationScreen";
 import { registrationValidationSchema } from "@/utils/ValidationSchema";
 import { Document } from "@/typings/types";
 import emailAPI from "@/api/email";

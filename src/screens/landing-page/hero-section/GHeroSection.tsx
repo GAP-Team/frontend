@@ -36,7 +36,7 @@ import { ContractSearchSchema } from "@/utils/ValidationSchema";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import heroBackgroundPicture from "../../../../public/images/hero6.jpg";
 
-const HeroSection = (): JSX.Element => {
+const GHeroSection = (): JSX.Element => {
   const router = useRouter();
 
   const [facilityAnchorEl, setFacilityAnchorEl] =
@@ -600,7 +600,7 @@ const HeroSection = (): JSX.Element => {
   );
 };
 
-export default HeroSection;
+export default GHeroSection;
 
 const styles = {
   querySubmitButton: {
