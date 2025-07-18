@@ -1,61 +1,85 @@
-import {
-  Application,
-  SubmitFormFunction,
-  ContractApplicationFormValues,
-} from "@/typings/types";
-import dayjs from "dayjs";
-import { ROUTES } from "@/utils/routes";
-import contractAPI from "@/api/contract";
+// ContractApplication.tsx
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { DOCUMENT_TYPE } from "@/utils/enums";
-import { Formik, FormikHelpers } from "formik";
-import ContractRateForm from "./ContractRateForm";
-import { translateTenderForm } from "@/utils/utils";
-import { handleUploadDoc } from "@/utils/uploadToS3";
-import { currentUser } from "@/lib/features/userSlice";
 import { Grid, Paper, Typography } from "@mui/material";
-import ContractServicesForm from "./ContractServicesForm";
+import { Formik, FormikHelpers } from "formik";
+import dayjs from "dayjs";
+
+import { useAppSelector, useAppDispatch } from "@/lib/hooks";
+import { currentUser } from "@/lib/features/userSlice";
 import { getContract } from "@/lib/features/contractSlice";
 import { showSnackbar } from "@/lib/features/snackbarSlice";
-import { useAppSelector, useAppDispatch } from "@/lib/hooks";
-import ContractApplicationForm from "./ContractApplicationForm";
+
+import { ROUTES } from "@/utils/routes";
+import { DOCUMENT_TYPE } from "@/utils/enums";
 import { applyContractFormSchema } from "@/utils/ValidationSchema";
-import { ActiveStepItem } from "@/screens/real-estate-owner/types";
-import ContractApplicationSummary from "./ContractApplicationSummary";
-import ContractApplicationSuccess from "./ContractApplicationSuccess";
+import { handleUploadDoc } from "@/utils/uploadToS3";
+import { translateTenderForm } from "@/utils/utils";
+import contractAPI from "@/api/contract";
+import s3API from "@/api/s3";
+
 import HeaderSection from "@/screens/real-estate-owner/dashboard/HeaderSection";
+import ContractRateForm from "./ContractRateForm";
+import ContractServicesForm from "./ContractServicesForm";
+import ContractApplicationSummary from "./ContractApplicationSummary";
+import ContractApplicationForm from "./ContractApplicationForm";
+import ContractApplicationSuccess from "./ContractApplicationSuccess";
+import { ActiveStepItem } from "@/screens/real-estate-owner/types";
+
+import {
+  Document,
+  Application,
+  ContractApplicationFormValues,
+  SubmitFormFunction,
+} from "@/typings/types";
+
+const steps: ActiveStepItem[] = [
+  { id: 0, stepName: "ContractRate", component: ContractRateForm },
+  { id: 1, stepName: "ContractServices", component: ContractServicesForm },
+  {
+    id: 2,
+    stepName: "ContractApplicationSummary",
+    component: ContractApplicationSummary,
+  },
+];
+
+const stepFieldsMap: Record<number, string[]> = {
+  0: ["totalPrice", "hourlyRate", "message", "zip", "city", "desiredDateOne"],
+  1: ["advantages", "termsConditionDoc", "offerDoc"],
+  2: [],
+};
+
+const initialValues: ContractApplicationFormValues = {
+  totalPrice: "",
+  hourlyRate: "",
+  message: "",
+  zip: "",
+  city: "",
+  desiredDates: [null, null, null],
+  advantages: [],
+  offerDoc: null,
+  termsConditionDoc: null,
+  offerDocFile: null,
+  termsConditionDocFile: null,
+  acceptedTerms: false,
+};
 
 const ContractApplication = (): JSX.Element => {
   const router = useRouter();
-  const appDispatch = useAppDispatch();
+  const dispatch = useAppDispatch();
   const user = useAppSelector(currentUser);
   const contract = useAppSelector(getContract);
 
-  const steps: ActiveStepItem[] = [
-    { id: 0, stepName: "ContractRate", component: ContractRateForm },
-    { id: 1, stepName: "ContractServices", component: ContractServicesForm },
-    {
-      id: 2,
-      stepName: "ContractApplicationSummary",
-      component: ContractApplicationSummary,
-    },
-  ];
-
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState(false);
   const [activeStep, setActiveStep] = useState<ActiveStepItem>(steps[0]);
-  const [submittedApplicationId, setSubmittedApplicationId] =
-    useState<string>("");
+  const [submittedId, setSubmittedId] = useState("");
 
-  const stepFieldsMap: { [key: number]: string[] } = {
-    0: ["totalPrice", "hourlyRate", "message", "zip", "city", "desiredDateOne"],
-    1: ["advantages", "termsConditionDoc", "offerDoc"],
-    2: [],
+  useEffect(() => setActiveStep(steps[0]), []);
+
+  const handleBack = (): void => {
+    if (activeStep.id > 0) setActiveStep(steps[activeStep.id - 1]);
+    else router.push(ROUTES.SERVICE_PROVIDER.CONTRACT_FILTER_URL([], [], []));
   };
-
-  useEffect(() => {
-    setActiveStep(steps[0]);
-  }, []);
 
   const handleNext = async (
     validateForm: FormikHelpers<ContractApplicationFormValues>["validateForm"],
@@ -63,229 +87,124 @@ const ContractApplication = (): JSX.Element => {
     submitForm: SubmitFormFunction,
     values: ContractApplicationFormValues
   ): Promise<void> => {
-    const currentStepFields = stepFieldsMap[activeStep.id];
-    setTouched(
-      currentStepFields?.reduce((acc, field) => ({ ...acc, [field]: true }), {})
-    );
+    const fields = stepFieldsMap[activeStep.id];
+    setTouched(fields.reduce((acc, f) => ({ ...acc, [f]: true }), {}));
     const errors = await validateForm();
-    const hasErrors = currentStepFields?.some(
-      (field) => (errors as any)[field]
-    );
-
+    const hasErrors = fields.some((f) => (errors as any)[f]);
     if (!hasErrors) {
-      const nextStepId = activeStep.id + 1;
-      if (nextStepId < steps.length) {
-        setActiveStep(steps[nextStepId]);
-      } else {
-        uploadDocs(values);
-      }
+      activeStep.id + 1 < steps.length
+        ? setActiveStep(steps[activeStep.id + 1])
+        : await submitApplication(values);
     }
   };
 
-  const uploadDocs = async (
+  const submitApplication = async (
     values: ContractApplicationFormValues
   ): Promise<void> => {
-    const docObjList: any[] = [];
-    const uploadDocuments = async (
-      file: File | null,
-      docType: string
-    ): Promise<void> => {
-      const uploadedDoc = await handleUploadDoc(file);
-      uploadedDoc.documentType = docType;
-      docObjList.push(uploadedDoc);
-    };
-
-    values.offerDocFile &&
-      (await uploadDocuments(
-        values.offerDocFile,
-        DOCUMENT_TYPE.OFFER_DOCUMENTS
-      ));
-    values.termsConditionDocFile &&
-      (await uploadDocuments(
-        values.termsConditionDocFile,
-        DOCUMENT_TYPE.TERMS_AND_CONDITIONS
-      ));
-
-    await handleSubmit(values, docObjList);
-  };
-
-  const handleSubmit = async (
-    values: ContractApplicationFormValues,
-    docObjList: any[] = []
-  ): Promise<void> => {
+    setLoading(true);
+    const docs: Document[] = [];
     try {
-      setLoading(true);
+      if (values.offerDocFile)
+        docs.push(
+          await uploadDocument(
+            values.offerDocFile,
+            DOCUMENT_TYPE.OFFER_DOCUMENTS
+          )
+        );
+      if (values.termsConditionDocFile)
+        docs.push(
+          await uploadDocument(
+            values.termsConditionDocFile,
+            DOCUMENT_TYPE.TERMS_AND_CONDITIONS
+          )
+        );
 
-      const applicationRequestBody: Application = {
+      const payload: Application = {
         tenderId: contract.tenderId,
         userId: user.id,
         serviceTotalPrice: values.totalPrice,
         servicePerHourPrice: values.hourlyRate,
         message: values.message,
-        suggestionWorkDates: values.desiredDates.map((date) =>
-          date ? dayjs(date).toISOString() : ""
-        ),
-        zip: Number(values.zip),
+        suggestionWorkDates: values.desiredDates
+          .filter(Boolean)
+          .map((d) => dayjs(d).toISOString()),
+        zip: +values.zip,
         city: values.city,
         dataPrivacy: values.acceptedTerms,
         benefitsSpecialServices: values.advantages,
-        documents: docObjList,
+        documents: docs,
       };
 
-      const response = await contractAPI.applyForContract(
+      const res = await contractAPI.applyForContract(
         contract.tenderId,
-        applicationRequestBody
+        payload
       );
-      setSubmittedApplicationId(response.data.id);
-      setLoading(false);
-      appDispatch(
+      setSubmittedId(res.data.id);
+      dispatch(
         showSnackbar({
           type: "success",
           message: "Angebot erfolgreich eingereicht.",
         })
       );
     } catch {
-      setLoading(false);
-      setSubmittedApplicationId("");
-      appDispatch(
+      await cleanupDocuments(docs);
+      dispatch(
         showSnackbar({
           type: "error",
           message: "Fehler beim Einreichen des Angebots.",
         })
       );
+    } finally {
+      setLoading(false);
     }
   };
 
-  const handleBack = (): void => {
-    if (activeStep.id > 0) {
-      setActiveStep(steps[activeStep.id - 1]);
-    } else {
-      router.push(ROUTES.SERVICE_PROVIDER.CONTRACT_FILTER_URL([], [], []));
-    }
+  const uploadDocument = async (
+    file: File,
+    type: string
+  ): Promise<Document> => {
+    const uploaded = await handleUploadDoc(file);
+    return { ...uploaded, documentType: type };
   };
 
-  const initialValues: ContractApplicationFormValues = {
-    totalPrice: "",
-    hourlyRate: "",
-    message: "",
-    zip: "",
-    city: "",
-    desiredDates: [null, null, null],
-    advantages: [],
-    offerDoc: null,
-    termsConditionDoc: null,
-    offerDocFile: null,
-    termsConditionDocFile: null,
-    acceptedTerms: false,
+  const cleanupDocuments = async (docs: Document[]): Promise<void> => {
+    for (const doc of docs) await s3API.delete(doc.key);
   };
 
   return (
-    <Grid sx={{ padding: 4, marginTop: 2 }}>
+    <Grid sx={{ p: 4, mt: 2 }}>
       <Typography variant="h5" fontWeight="bold" gutterBottom>
         Bewerbung{" "}
         <span style={{ color: "#909090" }}>{contract?.tenderType}</span>
       </Typography>
-      <Paper elevation={1} sx={{ p: 4, mx: "auto", my: 4 }}>
+      <Paper elevation={1} sx={{ p: 4, my: 4 }}>
         <Grid container spacing={2}>
-          {submittedApplicationId !== "" && !loading ? (
-            <ContractApplicationSuccess
-              submittedApplicationId={submittedApplicationId}
-            />
+          {submittedId && !loading ? (
+            <ContractApplicationSuccess submittedApplicationId={submittedId} />
           ) : (
             <>
-              {/* Contract Basic Information Section */}
-              <Grid item xs={12} md={3} sx={styles.basicInformationHolder}>
+              <Grid
+                item
+                xs={12}
+                md={3}
+                sx={{ pr: 2, borderRight: "1px solid #e0e0e0" }}
+              >
                 <HeaderSection titletext="BEWERBUNGSDATEN" />
-                <Typography sx={styles.basicInformationLable} fontWeight="bold">
-                  Ausschreibungsart:
-                </Typography>
-                <Typography sx={styles.textGrey}>
-                  {translateTenderForm(contract?.tenderForm ?? "")}
-                </Typography>
-
-                <Typography
-                  sx={styles.basicInformationLable}
-                  fontWeight="bold"
-                  mt={2}
-                >
-                  Auftragstyp:
-                </Typography>
-                <Typography sx={styles.textGrey}>
-                  {contract?.tenderType}
-                </Typography>
-
-                <Typography
-                  sx={styles.basicInformationLable}
-                  fontWeight="bold"
-                  mt={2}
-                >
-                  Anlagentyp:
-                </Typography>
-                <Typography sx={styles.textGrey}>
-                  {contract?.subcategory}
-                </Typography>
-
-                <Typography
-                  sx={styles.basicInformationLable}
-                  fontWeight="bold"
-                  mt={2}
-                >
-                  Angebotsfrist:
-                </Typography>
-                <Typography sx={styles.textGrey}>
-                  {contract?.fromDate && contract?.toDate
-                    ? ` ${new Date(contract?.fromDate ?? "").toLocaleDateString("de-DE")} - ${new Date(contract?.toDate ?? "").toLocaleDateString("de-DE")}`
-                    : "Nicht Vorhanden"}
-                </Typography>
-
-                <Typography
-                  sx={styles.basicInformationLable}
-                  fontWeight="bold"
-                  mt={2}
-                >
-                  Adresse:
-                </Typography>
-                <Typography
-                  sx={styles.textGrey}
-                >{`${contract?.city}, ${contract?.state}`}</Typography>
-
-                <Typography
-                  sx={styles.basicInformationLable}
-                  fontWeight="bold"
-                  mt={2}
-                >
-                  Dringlichkeit:
-                </Typography>
-                <Typography sx={styles.textGrey}>
-                  {contract?.urgency}
-                </Typography>
-
-                <Typography
-                  sx={styles.basicInformationLable}
-                  fontWeight="bold"
-                  mt={2}
-                >
-                  Wer benötigt den Service?
-                </Typography>
-                <Typography sx={styles.textGrey}>
-                  {contract?.clientName}
-                </Typography>
+                {renderContractInfo(contract)}
               </Grid>
-
-              {/* Contract Application Form Section */}
               <Formik
                 enableReinitialize
-                onSubmit={() => {}}
                 initialValues={initialValues}
                 validationSchema={applyContractFormSchema}
+                onSubmit={() => {}}
               >
                 {({ validateForm, setTouched, submitForm, values }) => (
                   <ContractApplicationForm
                     steps={steps}
                     loading={loading}
                     activeStep={activeStep}
-                    handleBack={handleBack}
                     setActiveStep={setActiveStep}
+                    handleBack={handleBack}
                     handleNext={() =>
                       handleNext(validateForm, setTouched, submitForm, values)
                     }
@@ -300,56 +219,47 @@ const ContractApplication = (): JSX.Element => {
   );
 };
 
-export default ContractApplication;
+const renderContractInfo = (contract: any): JSX.Element => (
+  <>
+    <InfoBlock
+      label="Ausschreibungsart"
+      value={translateTenderForm(contract?.tenderForm || "")}
+    />
+    <InfoBlock label="Auftragstyp" value={contract?.tenderType} />
+    <InfoBlock label="Anlagentyp" value={contract?.subcategory} />
+    <InfoBlock
+      label="Angebotsfrist"
+      value={formatDateRange(contract?.fromDate, contract?.toDate)}
+    />
+    <InfoBlock
+      label="Adresse"
+      value={`${contract?.city}, ${contract?.state}`}
+    />
+    <InfoBlock label="Dringlichkeit" value={contract?.urgency} />
+    <InfoBlock label="Wer benötigt den Service?" value={contract?.clientName} />
+  </>
+);
 
-const styles = {
-  basicInformationHolder: {
-    pr: 2,
-    borderRight: "1px solid #e0e0e0",
-  },
-  basicInformationLable: {
-    fontSize: "1rem",
-  },
-  textGrey: {
-    color: "#8D999C",
-    fontSize: "0.9rem",
-    paddingLeft: "0.5rem",
-  },
-  lableText: {
-    display: "flex",
-    flexDirection: "row",
-  },
-  helpIcon: {
-    color: "#A0ADB1",
-    cursor: "pointer",
-    marginLeft: "0.5rem",
-  },
-  divider: {
-    mt: 4,
-    mb: 4,
-    width: "auto",
-    height: "1px",
-    bgcolor: "#fbfbfb",
-    textAlign: "center",
-  },
-  desiredDateHolder: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
-  descriptionLable: {
-    fontSize: "1rem",
-    fontWeight: "bold",
-  },
-  descriptionText: {
-    color: "#A0ADB1",
-    fontSize: "0.85rem",
-  },
-  totalPriceOptions: {
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-  },
+const InfoBlock = ({
+  label,
+  value,
+}: {
+  label: string;
+  value: string;
+}): JSX.Element => (
+  <>
+    <Typography sx={{ fontSize: "1rem" }} fontWeight="bold" mt={2}>
+      {label}:
+    </Typography>
+    <Typography sx={{ color: "#8D999C", fontSize: "0.9rem", pl: 1 }}>
+      {value || "Nicht Vorhanden"}
+    </Typography>
+  </>
+);
+
+const formatDateRange = (from?: string, to?: string): string => {
+  if (!from || !to) return "Nicht Vorhanden";
+  return `${new Date(from).toLocaleDateString("de-DE")} - ${new Date(to).toLocaleDateString("de-DE")}`;
 };
+
+export default ContractApplication;
