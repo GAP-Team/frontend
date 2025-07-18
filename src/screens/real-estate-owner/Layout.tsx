@@ -9,7 +9,7 @@ import Box from "@mui/material/Box";
 import { useAppSelector } from "@/lib/hooks";
 import CustomDialog from "@/components/feedback/dialog/CustomDialog";
 import { checkIsLoggedIn } from "@/utils/auth";
-import Sidebar from "@/components/navigation/sidebar/SideBar";
+import SideBar from "@/components/navigation/sidebar/SideBar";
 
 interface LayoutProps {
   sidebarItems: SidebarItemTypes[];
@@ -37,7 +37,7 @@ const Layout: React.FC<LayoutProps> = ({
 
   return (
     <Box sx={{ display: "flex", backgroundColor: "#F1F3F4" }}>
-      <Sidebar
+      <SideBar
         items={sidebarItems}
         setSelected={setSelected}
         selected={selected}

@@ -14,7 +14,7 @@ import {
   useTheme,
 } from "@mui/material";
 import LabelWithAsterisk from "@/components/data-display/label/LabelWithAsterisk";
-import PhoneInput from "@/components/inputs/GPhoneInput";
+import GPhoneInput from "@/components/inputs/GPhoneInput";
 
 const ContactForm = (): JSX.Element => {
   const dispatch = useAppDispatch();
@@ -149,7 +149,7 @@ const ContactForm = (): JSX.Element => {
           >
             <Grid sx={styles.textFieldHolder}>
               <LabelWithAsterisk>Telefonnummer</LabelWithAsterisk>
-              <PhoneInput
+              <GPhoneInput
                 id="phoneNumber"
                 name="phoneNumber"
                 value={formik.values.phoneNumber}

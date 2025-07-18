@@ -1,6 +1,6 @@
 {
   "extends": ["next/core-web-vitals"],
-  "plugins": ["@typescript-eslint"],
+  "plugins": ["@typescript-eslint", "filenames"],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaVersion": 2020,
@@ -8,6 +8,7 @@
     "project": "./tsconfig.json"
   },
   "rules": {
+    "filenames/match-exported": ["error", "pascal"],
     "@typescript-eslint/no-explicit-any": "off", // Disable the rule globally
     "@typescript-eslint/explicit-function-return-type": [
       "error",
@@ -33,5 +34,17 @@
     "no-undefined": "warn", // Show a warning if undefined is used
     "prefer-arrow-callback": "error", // Show a warning if a function is not an arrow function
     "@typescript-eslint/no-empty-interface": "off" // Show an error if an empty interface is found
-  }
+  },
+  "overrides": [
+    {
+      "files": [
+        "src/app/**/*.{js,ts,jsx,tsx}",
+        "src/lib/**/*.{js,ts,jsx,tsx}",
+        "src/api/**/*.{js,ts,jsx,tsx}"
+      ],
+      "rules": {
+        "filenames/match-exported": "off"
+      }
+    }
+  ]
 }

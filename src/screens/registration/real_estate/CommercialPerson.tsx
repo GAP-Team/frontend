@@ -5,7 +5,7 @@ import GTextInput from "@/components/inputs/GTextInput";
 import UploadButton from "@/components/inputs/button/UploadButton";
 import { USER_ROLE } from "@/utils/enums";
 
-const ComercialPerson = ({ formik }: any): JSX.Element => {
+const CommercialPerson = ({ formik }: any): JSX.Element => {
   const setUploadDoc = (ev: any): void => {
     const file = ev.target.files[0];
     formik.setFieldValue("businessRegistrationDocumentFile", file);
@@ -91,4 +91,4 @@ const ComercialPerson = ({ formik }: any): JSX.Element => {
   );
 };
 
-export default ComercialPerson;
+export default CommercialPerson;

@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import LabelWithAsterisk from "@/components/data-display/label/LabelWithAsterisk";
-import PhoneInput from "@/components/inputs/GPhoneInput";
+import GPhoneInput from "@/components/inputs/GPhoneInput";
 import GTextInput from "@/components/inputs/GTextInput";
 
 const BasicInformation = ({ formik }: any): JSX.Element => {
@@ -88,7 +88,7 @@ const BasicInformation = ({ formik }: any): JSX.Element => {
         </Grid>
         <Grid item xs={12} sm={6} mt={1}>
           <LabelWithAsterisk>Telefonnummer</LabelWithAsterisk>
-          <PhoneInput
+          <GPhoneInput
             id="telephone"
             name="telephone"
             value={formik.values.telephone}

@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 import { currentUser } from "@/lib/features/userSlice";
 import GNavbar from "@/components/navigation/navbar/GNavbar";
-import EmailVerificationScreen from "@/screens/EmailVerification";
+import EmailVerificationScreen from "@/screens/EmailVerificationScreen";
 
 // FIXME: renaming necessary as they do not have intuitive names
 export default function UserMailVerification(): JSX.Element {

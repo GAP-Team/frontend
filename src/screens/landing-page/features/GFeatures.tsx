@@ -9,7 +9,7 @@ import { WaterSvgIcon } from "../../../../public/svgs/WaterSvgIcon";
 import { EmergencyLightSvgIcon } from "../../../../public/svgs/EmergencyLightSvgIcon";
 import { DoorSvgIcon } from "../../../../public/svgs/DoorSvgIcon";
 import { CoolingSvgIcon } from "../../../../public/svgs/CoolingSvgIcon";
-import TitleSection from "@/components/data-display/label/title-section";
+import TitleSection from "@/components/data-display/label/CenteredSection";
 import { FeatureCard } from "@/components/surfaces/card/FeatureCard";
 import { ElevatorSvgIcon } from "../../../../public/svgs/ElevatorSvgIcon";
 import { FireWatchSvgIcon } from "../../../../public/svgs/FireWatchSvgIcon";
