@@ -6,7 +6,9 @@ import { useFormikContext } from "formik";
 import { useAppSelector } from "@/lib/hooks";
 import { currentUser } from "@/lib/features/userSlice";
 import { ActiveStepItem } from "@/screens/real-estate-owner/types";
-import SummarySection from "@/components/common/summary/SummarySection";
+import SummarySection, {
+  Detail,
+} from "@/components/common/summary/SummarySection";
 import { Box, Grid, Divider, Checkbox, Typography } from "@mui/material";
 import HeaderSection from "@/screens/real-estate-owner/dashboard/HeaderSection";
 
@@ -23,57 +25,46 @@ const ContractApplicationSummary = ({
   const formik = useFormikContext<ContractApplicationFormValues>();
   const { values } = useFormikContext<ContractApplicationFormValues>();
 
-  const companyInfromationSummary = [
+  const companyInfromationSummary: Detail[] = [
     user.company.name && { label: "Ihre Firmenname", value: user.company.name },
     user.email && { label: "Ihre Firmenemail", value: user.email },
     user.company.phonenumber && {
       label: "Ihr Firmentelefonnummer",
       value: user.company.phonenumber,
     },
-  ].filter(Boolean) as SummarySectionDetail[];
+  ].filter(Boolean) as Detail[];
 
-  const contractOfferSummary: SummarySectionDetail[] = [
-    ...(values.totalPrice
-      ? [
-          {
-            label: "Kosten der Dienstleistung Insgesamt",
-            value: `€ ${values.totalPrice}`,
-          },
-        ]
-      : []),
-    ...(values.hourlyRate
-      ? [
-          {
-            label: "Kosten pro Stunde des Dienstes",
-            value: `€ ${values.hourlyRate}`,
-          },
-        ]
-      : []),
-    ...(values.message
-      ? [{ label: "Nützliche Informationen", value: values.message }]
-      : []),
-    ...(Array.isArray(values?.desiredDates) && values.desiredDates.length > 0
+  const contractOfferSummary: Detail[] = [
+    {
+      label: "Kosten der Dienstleistung Insgesamt",
+      value: `€ ${values.totalPrice}`,
+    },
+    {
+      label: "Kosten pro Stunde des Dienstes",
+      value: `€ ${values.hourlyRate}`,
+    },
+    values.message && {
+      label: "Nützliche Informationen",
+      value: values.message,
+    },
+    ...(values.desiredDates && values.desiredDates.length
       ? values.desiredDates.map((date: any, index: number) => ({
           label: `Mögliche Daten ${index + 1}`,
           value: date ? new Date(date).toLocaleDateString() : "Nicht angegeben",
         }))
       : []),
-  ];
+  ].filter(Boolean) as Detail[];
 
-  const contractServiceSummary: SummarySectionDetail[] = [
-    ...(Array.isArray(values.advantages) && values.advantages.length > 0
-      ? values.advantages.map((advantage: any, index: number) => ({
+  const contractServiceSummary: Detail[] = [
+    ...(values.advantages && values.advantages.length
+      ? values.advantages.map((advantage: string, index: number) => ({
           label: `Vorteile – Sonderleistung ${index + 1}`,
           value: advantage,
         }))
       : []),
-    ...(values.offerDoc
-      ? [{ label: "Angebotsdokument", value: values.offerDoc }]
-      : []),
-    ...(values.termsConditionDoc
-      ? [{ label: "AGB Dokument", value: values.termsConditionDoc }]
-      : []),
-  ];
+    { label: "Angebotsdokument", value: values.offerDoc },
+    { label: "AGB Dokument", value: values.termsConditionDoc },
+  ].filter(Boolean) as Detail[];
 
   return (
     <Grid item xs={12} md={9}>

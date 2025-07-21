@@ -172,3 +172,7 @@ export interface Application {
   benefitsSpecialServices: string[];
   documents: Document[];
 }
+
+export interface CreateResponseType {
+  id: string;
+}
