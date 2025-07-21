@@ -1,6 +1,5 @@
 import api from "../axios";
-import { Application } from "@/typings/types";
-import { CreateResponseType } from "@/typings/types";
+import { Application, CreateResponseType } from "@/typings/types";
 
 // FIXME: Add proper types for the parameters and response
 const contractAPI = {
