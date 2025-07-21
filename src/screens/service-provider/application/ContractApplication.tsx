@@ -139,7 +139,7 @@ const ContractApplication = (): JSX.Element => {
         contract.tenderId,
         payload
       );
-      setSubmittedId(res.data.id);
+      setSubmittedId(res.id);
       dispatch(
         showSnackbar({
           type: "success",

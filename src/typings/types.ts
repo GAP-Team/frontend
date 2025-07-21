@@ -154,11 +154,6 @@ export interface User {
   isActive: boolean;
 }
 
-export interface SummarySectionDetail {
-  label: string;
-  value: string;
-}
-
 export interface Application {
   tenderId: string;
   userId: string;
