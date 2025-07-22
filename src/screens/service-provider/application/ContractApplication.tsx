@@ -59,8 +59,8 @@ const initialValues: ContractApplicationFormValues = {
   advantages: [],
   offerDoc: null,
   termsConditionDoc: null,
-  offerDocFile: null,
-  termsConditionDocFile: null,
+  offerDocFile: new File([], ""),
+  termsConditionDocFile: new File([], ""),
   acceptedTerms: false,
 };
 
@@ -104,20 +104,24 @@ const ContractApplication = (): JSX.Element => {
     setLoading(true);
     const docs: Document[] = [];
     try {
-      if (values.offerDocFile)
-        docs.push(
-          await uploadDocument(
-            values.offerDocFile,
-            DOCUMENT_TYPE.OFFER_DOCUMENTS
-          )
-        );
-      if (values.termsConditionDocFile)
-        docs.push(
-          await uploadDocument(
-            values.termsConditionDocFile,
-            DOCUMENT_TYPE.TERMS_AND_CONDITIONS
-          )
-        );
+      const docFields = ["offerDocFile", "termsConditionDocFile"] as const;
+
+      for (const field of docFields) {
+        const file = values[field];
+        switch (field) {
+          case "offerDocFile":
+            docs.push(
+              await uploadDocument(file, DOCUMENT_TYPE.OFFER_DOCUMENTS)
+            );
+            break;
+
+          case "termsConditionDocFile":
+            docs.push(
+              await uploadDocument(file, DOCUMENT_TYPE.TERMS_AND_CONDITIONS)
+            );
+            break;
+        }
+      }
 
       const payload: Application = {
         tenderId: contract.tenderId,
