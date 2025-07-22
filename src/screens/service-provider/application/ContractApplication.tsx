@@ -128,11 +128,12 @@ const ContractApplication = (): JSX.Element => {
         suggestionWorkDates: values.desiredDates
           .filter(Boolean)
           .map((d) => dayjs(d).toISOString()),
-        zip: +values.zip,
+        zip: Number(values.zip),
         city: values.city,
         dataPrivacy: values.acceptedTerms,
         benefitsSpecialServices: values.advantages,
         documents: docs,
+        status: null,
       };
 
       const res = await contractAPI.applyForContract(

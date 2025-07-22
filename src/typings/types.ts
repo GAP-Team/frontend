@@ -166,6 +166,7 @@ export interface Application {
   dataPrivacy: boolean;
   benefitsSpecialServices: string[];
   documents: Document[];
+  status: null;
 }
 
 export interface CreateResponseType {
