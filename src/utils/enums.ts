@@ -42,6 +42,11 @@ export enum DOCUMENT_TYPE {
   TERMS_AND_CONDITIONS = "ALLGEMEINE GESCHÄFTSBEDINGUNGEN",
 }
 
+export enum DOCUMENT_FIELDS {
+  OFFER_DOC_FILE = "offerDocFile",
+  TERMS_CONDITION_DOC_FILE = "termsConditionDocFile",
+}
+
 export enum DocumentChoice {
   UPLOAD_NOW = "Jetzt hochladen Empfohlen",
   NO_DOCUMENTS = "Keine Dokumente vorhanden",

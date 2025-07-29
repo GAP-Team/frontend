@@ -1,36 +1,36 @@
 // ContractApplication.tsx
+import dayjs from "dayjs";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { Grid, Paper, Typography } from "@mui/material";
 import { Formik, FormikHelpers } from "formik";
-import dayjs from "dayjs";
+import { Grid, Paper, Typography } from "@mui/material";
 
-import { useAppSelector, useAppDispatch } from "@/lib/hooks";
 import { currentUser } from "@/lib/features/userSlice";
 import { getContract } from "@/lib/features/contractSlice";
 import { showSnackbar } from "@/lib/features/snackbarSlice";
+import { useAppSelector, useAppDispatch } from "@/lib/hooks";
 
-import { ROUTES } from "@/utils/routes";
-import { DOCUMENT_TYPE } from "@/utils/enums";
-import { applyContractFormSchema } from "@/utils/ValidationSchema";
-import { handleUploadDoc } from "@/utils/uploadToS3";
-import { translateTenderForm } from "@/utils/utils";
-import contractAPI from "@/api/contract";
 import s3API from "@/api/s3";
+import { ROUTES } from "@/utils/routes";
+import contractAPI from "@/api/contract";
+import { translateTenderForm } from "@/utils/utils";
+import { handleUploadDoc } from "@/utils/uploadToS3";
+import { DOCUMENT_TYPE, DOCUMENT_FIELDS } from "@/utils/enums";
+import { applyContractFormSchema } from "@/utils/ValidationSchema";
 
-import HeaderSection from "@/screens/real-estate-owner/dashboard/HeaderSection";
 import ContractRateForm from "./ContractRateForm";
 import ContractServicesForm from "./ContractServicesForm";
-import ContractApplicationSummary from "./ContractApplicationSummary";
 import ContractApplicationForm from "./ContractApplicationForm";
-import ContractApplicationSuccess from "./ContractApplicationSuccess";
 import { ActiveStepItem } from "@/screens/real-estate-owner/types";
+import ContractApplicationSuccess from "./ContractApplicationSuccess";
+import ContractApplicationSummary from "./ContractApplicationSummary";
+import HeaderSection from "@/screens/real-estate-owner/dashboard/HeaderSection";
 
 import {
   Document,
   Application,
-  ContractApplicationFormValues,
   SubmitFormFunction,
+  ContractApplicationFormValues,
 } from "@/typings/types";
 
 const steps: ActiveStepItem[] = [
@@ -104,18 +104,21 @@ const ContractApplication = (): JSX.Element => {
     setLoading(true);
     const docs: Document[] = [];
     try {
-      const docFields = ["offerDocFile", "termsConditionDocFile"] as const;
+      const docFields = [
+        DOCUMENT_FIELDS.OFFER_DOC_FILE,
+        DOCUMENT_FIELDS.TERMS_CONDITION_DOC_FILE,
+      ] as const;
 
       for (const field of docFields) {
         const file = values[field];
         switch (field) {
-          case "offerDocFile":
+          case DOCUMENT_FIELDS.OFFER_DOC_FILE:
             docs.push(
               await uploadDocument(file, DOCUMENT_TYPE.OFFER_DOCUMENTS)
             );
             break;
 
-          case "termsConditionDocFile":
+          case DOCUMENT_FIELDS.TERMS_CONDITION_DOC_FILE:
             docs.push(
               await uploadDocument(file, DOCUMENT_TYPE.TERMS_AND_CONDITIONS)
             );
