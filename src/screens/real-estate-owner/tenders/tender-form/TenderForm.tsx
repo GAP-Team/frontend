@@ -10,7 +10,7 @@ import {
   NewTenderProps,
   ActiveStepItem,
   StepComponentProps,
-  AddTenderFormValues,
+  TenderFormValues,
 } from "./types";
 import dayjs from "dayjs";
 import AddTenderForm from "./AddTenderForm";
@@ -67,8 +67,8 @@ const TenderForm: React.FC<NewTenderProps> = ({ id }): JSX.Element => {
   }, []);
 
   const handleNext = async (
-    values: AddTenderFormValues,
-    actions: FormikHelpers<AddTenderFormValues>
+    values: TenderFormValues,
+    actions: FormikHelpers<TenderFormValues>
   ): Promise<void> => {
     if (activeStep?.id === steps.length - 1) {
       if (checkActiveUser) {
@@ -94,9 +94,7 @@ const TenderForm: React.FC<NewTenderProps> = ({ id }): JSX.Element => {
     }
   };
 
-  const saveTenderData = async (
-    values: AddTenderFormValues
-  ): Promise<boolean> => {
+  const saveTenderData = async (values: TenderFormValues): Promise<boolean> => {
     let buildingObj = {
       id: values?.buildingId,
       name: values?.buildingName,
@@ -173,7 +171,7 @@ const TenderForm: React.FC<NewTenderProps> = ({ id }): JSX.Element => {
     }
   };
 
-  const initialValues: AddTenderFormValues = {
+  const initialValues: TenderFormValues = {
     clientName: tender?.clientName || "",
     tenderForm: tender?.tenderForm || TENDER_FORM.CRAFTSMAN,
     tenderType: tender?.tenderType || "",

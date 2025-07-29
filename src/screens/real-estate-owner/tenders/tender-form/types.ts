@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction } from "react";
 import { Dayjs } from "dayjs";
-export interface AddTenderFormValues {
+export interface TenderFormValues {
   //Tender Info feilds = Form 1
   clientName: string;
   tenderForm: string;
