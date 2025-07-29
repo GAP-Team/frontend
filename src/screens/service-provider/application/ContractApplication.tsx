@@ -123,7 +123,7 @@ const ContractApplication = (): JSX.Element => {
               fontWeight="bold"
               mt={2}
             >
-              Angebotsfrist:
+              Gewünschtes Angebotsfrist:
             </Typography>
             <Typography sx={styles.textGrey}>
               {contract?.fromDate &&
