@@ -26,12 +26,8 @@ import ContractApplicationSuccess from "./ContractApplicationSuccess";
 import ContractApplicationSummary from "./ContractApplicationSummary";
 import HeaderSection from "@/screens/real-estate-owner/dashboard/HeaderSection";
 
-import {
-  Document,
-  Application,
-  SubmitFormFunction,
-  ContractApplicationFormValues,
-} from "@/typings/types";
+import { Document, SubmitFormFunction } from "@/typings/types";
+import { Application, ContractApplicationFormValues } from "./types";
 
 const steps: ActiveStepItem[] = [
   { id: 0, stepName: "ContractRate", component: ContractRateForm },

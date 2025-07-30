@@ -4,7 +4,7 @@ import SummarySection, {
   Detail,
 } from "@/components/common/summary/SummarySection";
 import { currentUser } from "@/lib/features/userSlice";
-import { ContractApplicationFormValues } from "@/typings/types";
+import { ContractApplicationFormValues } from "./types";
 import { ActiveStepItem } from "@/screens/real-estate-owner/types";
 import { Box, Grid, Divider, Checkbox, Typography } from "@mui/material";
 import HeaderSection from "@/screens/real-estate-owner/dashboard/HeaderSection";

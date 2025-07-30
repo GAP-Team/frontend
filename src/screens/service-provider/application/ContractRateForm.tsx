@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { NumericFormat } from "react-number-format";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import { Grid, Divider, TextField, Typography } from "@mui/material";
 import HeaderSection from "@/screens/real-estate-owner/dashboard/HeaderSection";
@@ -10,6 +11,23 @@ const ContractRateForm = ({ formik }: { formik?: any }): JSX.Element => {
   const handleSetInfo = (value: string): void => {
     setInfo(value);
     formik.setFieldValue("message", value);
+  };
+
+  const [priceValues, setPriceValues] = useState({
+    totalPrice: "",
+    hourlyRate: "",
+  });
+
+  const handlePriceChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    name: string
+  ): void => {
+    setPriceValues({
+      ...priceValues,
+      [name]: event.target.value,
+    });
+    const cleanPrice = event.target.value.replace("€", "");
+    formik.setFieldValue(name, cleanPrice);
   };
 
   return (
@@ -30,14 +48,18 @@ const ContractRateForm = ({ formik }: { formik?: any }): JSX.Element => {
           <Grid container spacing={2}>
             <Grid item xs={12} md={6}>
               <LabelWithAsterisk>Gesamtpreis</LabelWithAsterisk>
-              <TextField
+              <NumericFormat
+                prefix="€"
                 fullWidth
-                name="totalPrice"
                 sx={{ mt: 0.5 }}
-                onBlur={formik?.handleBlur}
-                onChange={formik?.handleChange}
-                value={formik?.values?.totalPrice}
-                InputProps={{ startAdornment: <span>€&nbsp;</span> }}
+                name="totalPrice"
+                decimalScale={2}
+                fixedDecimalScale
+                decimalSeparator=","
+                thousandSeparator="."
+                customInput={TextField}
+                value={priceValues.totalPrice}
+                onChange={(event) => handlePriceChange(event, "totalPrice")}
                 helperText={
                   formik?.touched?.totalPrice && formik?.errors?.totalPrice
                 }
@@ -52,13 +74,18 @@ const ContractRateForm = ({ formik }: { formik?: any }): JSX.Element => {
                 Nettostundensatz Einzelstunden
               </LabelWithAsterisk>
               <HelpOutlineIcon style={styles.helpIcon} fontSize="small" />
-              <TextField
+              <NumericFormat
+                prefix="€"
                 fullWidth
+                sx={{ mt: 0.5 }}
                 name="hourlyRate"
-                onBlur={formik?.handleBlur}
-                onChange={formik?.handleChange}
-                value={formik?.values?.hourlyRate}
-                InputProps={{ startAdornment: <span>€&nbsp;</span> }}
+                decimalScale={2}
+                fixedDecimalScale
+                decimalSeparator=","
+                thousandSeparator="."
+                customInput={TextField}
+                value={priceValues.hourlyRate}
+                onChange={(event) => handlePriceChange(event, "hourlyRate")}
                 helperText={
                   formik?.touched?.hourlyRate && formik?.errors?.hourlyRate
                 }

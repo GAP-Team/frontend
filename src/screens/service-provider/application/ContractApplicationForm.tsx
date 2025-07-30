@@ -1,7 +1,4 @@
-import {
-  ApplyContractProps,
-  ContractApplicationFormValues,
-} from "@/typings/types";
+import { ApplyContractProps, ContractApplicationFormValues } from "./types";
 import { ROUTES } from "@/utils/routes";
 import { useFormikContext } from "formik";
 import { useRouter } from "next/navigation";

@@ -1,9 +1,10 @@
 import { USER_ROLE } from "./enums";
-import { FilterOptionType, Notification } from "@/typings/types";
+import { Notification } from "@/typings/types";
 import HomeWorkIcon from "@mui/icons-material/HomeWork";
 import OfficeImage from "../../public/images/office.jpg";
 import DescriptionIcon from "@mui/icons-material/Description";
 import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
+import { FilterOptionType } from "@/screens/service-provider/contracts/types";
 import ConnectWithoutContactIcon from "@mui/icons-material/ConnectWithoutContact";
 
 export const listOfFacilitySubcategories: FilterOptionType[] = [

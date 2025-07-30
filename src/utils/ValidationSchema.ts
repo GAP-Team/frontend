@@ -463,38 +463,9 @@ export const DeleteAccountSchema = yup.object({
   password: yup.string().required("Passwort ist erforderlich"),
 });
 
-const parseGermanNumber = (value: string | number): number | null => {
-  if (typeof value === "string") {
-    // Remove all spaces
-    let clean = value.replace(/\s/g, "");
-
-    // If both dot and comma exist, assume dot is thousand sep and comma is decimal
-    if (clean.includes(".") && clean.includes(",")) {
-      clean = clean.replace(/\./g, "").replace(",", ".");
-    } else if (clean.includes(",")) {
-      // If only comma, treat it as decimal
-      clean = clean.replace(",", ".");
-    }
-
-    const parsed = parseFloat(clean);
-    return isNaN(parsed) ? null : parsed;
-  }
-  return null;
-};
-
 export const applyContractFormSchema = yup.object().shape({
-  totalPrice: yup
-    .number()
-    .transform((_, value) => parseGermanNumber(value))
-    .typeError("Gesamtkosten muss eine Zahl sein.")
-    .positive("Gesamtkosten muss größer als 0 sein.")
-    .required("Gesamtkosten ist erforderlich"),
-  hourlyRate: yup
-    .number()
-    .transform((_, value) => parseGermanNumber(value))
-    .typeError("Netto-Stundensatz muss eine Zahl sein.")
-    .positive("Netto-Stundensatz muss größer als 0 sein.")
-    .required("Netto-Stundensatz ist erforderlich"),
+  totalPrice: yup.string().required("Gesamtkosten ist erforderlich"),
+  hourlyRate: yup.string().required("Netto-Stundensatz ist erforderlich"),
   zip: yup
     .string()
     .matches(

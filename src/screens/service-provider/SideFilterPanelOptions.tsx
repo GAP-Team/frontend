@@ -18,7 +18,7 @@ import {
 } from "@/utils/Constants";
 import { FilterPanelLabels } from "@/utils/enums";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
-import { SideFilterPanelOptionsProps } from "@/typings/types";
+import { SideFilterPanelOptionsProps } from "./contracts/types";
 
 const SideFilterPanelOptions: React.FC<SideFilterPanelOptionsProps> = ({
   title,
