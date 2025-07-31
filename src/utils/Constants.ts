@@ -809,8 +809,9 @@ export const previousAdvantages = [
 ];
 
 export const UsersTableColumns = [
-  { id: "firstNname", label: "Vorname" },
+  { id: "firstName", label: "Vorname" },
   { id: "lastName", label: "Name" },
+  { id: "email", label: "Email" },
   {
     id: "companyName",
     label: "Unternehmensname",
