@@ -68,6 +68,7 @@ const UsersTable: React.FC<UsersTableProps> = ({ users }): JSX.Element => {
                   <TableRow hover tabIndex={-1} key={user.id}>
                     <TableCell align="left">{user.firstName}</TableCell>
                     <TableCell align="left">{user.lastName}</TableCell>
+                    <TableCell align="left">{user.email}</TableCell>
                     <TableCell align="left">{user.company.name}</TableCell>
                     <TableCell align="left">
                       {user.company.phonenumber}
