@@ -42,7 +42,6 @@ const steps: ActiveStepItem[] = [
 const stepFieldsMap: Record<number, string[]> = {
   0: ["totalPrice", "hourlyRate", "message", "zip", "city", "desiredDateOne"],
   1: ["advantages", "termsConditionDoc", "offerDoc"],
-  2: [],
 };
 
 const initialValues: ContractApplicationFormValues = {
@@ -53,8 +52,8 @@ const initialValues: ContractApplicationFormValues = {
   city: "",
   desiredDates: [null, null, null],
   advantages: [],
-  offerDoc: null,
-  termsConditionDoc: null,
+  offerDoc: "",
+  termsConditionDoc: "",
   offerDocFile: new File([], ""),
   termsConditionDocFile: new File([], ""),
   acceptedTerms: false,

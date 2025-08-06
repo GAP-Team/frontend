@@ -25,14 +25,15 @@ export interface ContractApplicationFormValues {
   city: string;
   desiredDates: (Dayjs | null)[];
   advantages: string[];
-  offerDoc: string | null;
-  termsConditionDoc: string | null;
+  offerDoc: string;
+  termsConditionDoc: string;
   offerDocFile: File;
   termsConditionDocFile: File;
   acceptedTerms: boolean;
 }
 
 export interface ApplyContractProps {
+  // FIX ME: Multiple declarations of the same type, make it reusable
   loading: boolean;
   handleBack: () => void;
   handleNext: () => void;

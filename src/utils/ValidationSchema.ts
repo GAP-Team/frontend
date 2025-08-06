@@ -473,8 +473,8 @@ export const applyContractFormSchema = yup.object().shape({
       "Postleitzahl muss zwischen 4 und 5 Ziffern lang sein"
     ),
   desiredDates: yup.array().of(yup.date()),
-  termsConditionDoc: yup.mixed().required("AGB dokument ist erforderlich"),
-  offerDoc: yup.mixed().required("Angebot dokument ist erforderlich"),
+  termsConditionDoc: yup.string().required("AGB dokument ist erforderlich"),
+  offerDoc: yup.string().required("Angebot dokument ist erforderlich"),
 });
 
 export const passwordResetValidationSchema = yup.object({
