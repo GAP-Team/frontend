@@ -9,9 +9,7 @@ const ApplicationsPanel: React.FC<
 > = (): JSX.Element => {
   return (
     <>
-      <Stack
-        height="100%"
-      >
+      <Stack height="100%">
         <HeaderSection
           titletext="NEUE BEWERBUNGEN"
           count={7}
