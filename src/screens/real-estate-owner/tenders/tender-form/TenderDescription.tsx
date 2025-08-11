@@ -3,13 +3,13 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import GTextInput from "@/components/inputs/GTextInput";
 import { useFormikContext } from "formik";
-import { AddTenderFormValues } from "./types";
+import { TenderFormValues } from "./types";
 import Typography from "@mui/material/Typography";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 
 const TenderDescription = (): JSX.Element => {
-  const formik = useFormikContext<AddTenderFormValues>();
+  const formik = useFormikContext<TenderFormValues>();
 
   return (
     <Box

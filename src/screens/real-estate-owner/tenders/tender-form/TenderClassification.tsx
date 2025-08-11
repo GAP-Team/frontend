@@ -9,12 +9,12 @@ import Typography from "@mui/material/Typography";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { useFormikContext } from "formik";
-import { AddTenderFormValues } from "./types";
+import { TenderFormValues } from "./types";
 import HelpIcon from "@/components/icons/HelpIcon";
 import { HELP_ICON_BUTTON_COLOR } from "@/utils/Constants";
 
 const TenderClassification = (): JSX.Element => {
-  const formik = useFormikContext<AddTenderFormValues>();
+  const formik = useFormikContext<TenderFormValues>();
 
   return (
     <Box
