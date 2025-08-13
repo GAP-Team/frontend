@@ -5,7 +5,7 @@ import buildingAPI from "@/api/building";
 import { useSelector } from "react-redux";
 import { useFormikContext } from "formik";
 import { useEffect, useState } from "react";
-import { AddTenderFormValues } from "./types";
+import { TenderFormValues } from "./types";
 import HelpIcon from "@/components/icons/HelpIcon";
 import { FormControl, MenuItem, Select } from "@mui/material";
 import CustomSelect from "@/components/inputs/drop_down/CustomSelect";
@@ -17,7 +17,7 @@ import { AddFacilityFormValues } from "@/screens/real-estate-owner/facilities/fa
 
 const TenderBuilding = (): JSX.Element => {
   const allBuildings = useSelector(getUserBuildings);
-  const formik = useFormikContext<AddTenderFormValues>();
+  const formik = useFormikContext<TenderFormValues>();
   const [buildingFacilities, setBuildingFacilities] = useState([]);
   const [buildingDropDownOptions, setBuildingDropDownOptions] = useState<
     Item[]
