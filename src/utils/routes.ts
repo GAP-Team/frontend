@@ -53,6 +53,8 @@ export const ROUTES = {
       facilitySubcategories: string[]
     ): string =>
       `${SERVICE_PROVIDER_BASE}/contracts?facilitySubcategories=${facilitySubcategories.join(",")}&tenderTypes=${tenderTypes.join(",")}&states=${states.join(",")}`,
+    APPLICATION_DETAILS: (id: string) =>
+      `${SERVICE_PROVIDER_BASE}/applications/${id}`,
   },
   BLOGS: {
     BLOGS: "/blogs",

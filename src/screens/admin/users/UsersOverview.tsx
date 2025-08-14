@@ -1,11 +1,11 @@
 "use client";
 import userAPI from "@/api/user";
-import { User } from "@/typings/types";
+import { User } from "./types";
+import UsersTable from "./UsersTable";
 import { useState, useEffect } from "react";
 import { useAppDispatch } from "@/lib/hooks";
 import TopFilterPanel from "@/screens/landing-page/TopFilterPanel";
 import { showSnackbar } from "@/lib/features/snackbarSlice";
-import UsersTable from "./UsersTable";
 
 const UsersOverview = (): JSX.Element => {
   const appDispatch = useAppDispatch();

@@ -1,18 +1,18 @@
 "use client";
-import { useEffect } from "react";
-import { useFormik } from "formik";
-import { ROUTES } from "@/utils/routes";
-import { useRouter } from "next/navigation";
-import { Box, Typography } from "@mui/material";
-import GButton from "@/components/inputs/button/GButton";
-import { FilterPanelLabels } from "@/utils/enums";
-import SideFilterPanelOptions from "./SideFilterPanelOptions";
-import { ContractSearchProps, SideFilterPanelProps } from "@/typings/types";
 import {
   listOfTenderTypes,
   listOfGermanStates,
   listOfFacilitySubcategories,
 } from "@/utils/Constants";
+import { useEffect } from "react";
+import { useFormik } from "formik";
+import { ROUTES } from "@/utils/routes";
+import { useRouter } from "next/navigation";
+import { Box, Typography } from "@mui/material";
+import { FilterPanelLabels } from "@/utils/enums";
+import GButton from "@/components/inputs/button/GButton";
+import SideFilterPanelOptions from "./SideFilterPanelOptions";
+import { ContractSearchProps, SideFilterPanelProps } from "./contracts/types";
 
 const ContractFilterPanel: React.FC<SideFilterPanelProps> = ({
   states,
