@@ -3,34 +3,14 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import userAPI from "@/api/user";
 import emailAPI from "@/api/email";
 import { RootState } from "../store";
-import { Document, SendActivityEmailType } from "@/typings/types";
-
-interface Company {
-  name: string;
-  phonenumber: number;
-  numberOfEmployees?: number;
-  address: Partial<UserAddress>;
-  business?: Partial<UserBusiness>;
-}
-interface UserAddress {
-  zip: number;
-  state: string;
-  street: string;
-  country: string;
-  houseNo: number;
-  city: string;
-}
-export interface UserBusiness {
-  businessType: string;
-  registrationNumber: string;
-  documents: Document[];
-}
+import { SendActivityEmailType } from "@/typings/types";
+import { UserCompany } from "@/screens/admin/users/types";
 
 interface UserState {
   id: string;
   role: string;
   email: string;
-  company: Partial<Company>;
+  company: Partial<UserCompany>;
   lastName: string;
   firstName: string;
   buildingIds: string[];
@@ -135,7 +115,7 @@ export const isUserActive = (state: RootState): boolean => state.user.isActive;
 export const currentUser = (state: RootState): UserState => state.user;
 export const currentUserId = (state: RootState): string => state.user.id;
 export const currentUserEmail = (state: RootState): string => state.user.email;
-export const currentUserCompany = (state: RootState): Company =>
+export const currentUserCompany = (state: RootState): UserCompany =>
   state.user.company;
 
 export default userSlice.reducer;

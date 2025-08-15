@@ -6,6 +6,7 @@ import GButton from "@/components/inputs/button/GButton";
 import { ActiveStepItem } from "./types";
 
 interface AddFacilityFormProps {
+  // FIX ME: Multiple declarations of the same type, make it reusable
   activeStep: ActiveStepItem;
   steps: ActiveStepItem[];
   handleBack: () => void;

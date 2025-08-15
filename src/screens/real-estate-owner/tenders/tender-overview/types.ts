@@ -27,3 +27,7 @@ export interface Tender {
   status: string;
   createdAt: Date;
 }
+
+export interface UpdateTenderResponse {
+  data: Tender;
+}

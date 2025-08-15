@@ -1,12 +1,9 @@
-import GButton from "@/components/inputs/button/GButton";
+import { ApplyContractProps, ContractApplicationFormValues } from "./types";
 import { ROUTES } from "@/utils/routes";
 import { useFormikContext } from "formik";
 import { useRouter } from "next/navigation";
 import { CircularProgress, Grid } from "@mui/material";
-import {
-  ApplyContractProps,
-  ContractApplicationFormValues,
-} from "@/typings/types";
+import GButton from "@/components/inputs/button/GButton";
 
 const ContractApplicationForm: React.FC<ApplyContractProps> = ({
   steps,
@@ -20,7 +17,7 @@ const ContractApplicationForm: React.FC<ApplyContractProps> = ({
   const formik = useFormikContext<ContractApplicationFormValues>();
 
   const StepComponent = steps[activeStep.id]?.component;
-  const isBeyondLastStep = activeStep.id >= steps.length;
+  const isOnLastStep = activeStep.id >= steps.length;
   const typeOfBtn = activeStep.id + 1 >= steps.length ? "submit" : "button";
 
   const handleRoute = (): void => {
@@ -29,7 +26,7 @@ const ContractApplicationForm: React.FC<ApplyContractProps> = ({
 
   const forwardAndBackBtns = (
     <>
-      {!isBeyondLastStep && (
+      {!isOnLastStep && (
         <GButton onClick={handleBack} color="ggrey">
           Abbrechen
         </GButton>
@@ -38,10 +35,15 @@ const ContractApplicationForm: React.FC<ApplyContractProps> = ({
         <CircularProgress color="gprimary" size={24} />
       ) : (
         <GButton
+          disabled={
+            activeStep.id === steps.length - 1 && !formik.values?.acceptedTerms
+          }
           type={typeOfBtn}
-          onClick={!isBeyondLastStep ? handleNext : handleRoute}
+          onClick={!isOnLastStep ? handleNext : handleRoute}
         >
-          Weiter
+          {activeStep.id < steps.length - 1
+            ? "Weiter"
+            : "Angebot final einreichen"}
         </GButton>
       )}
     </>
