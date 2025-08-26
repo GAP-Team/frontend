@@ -1,6 +1,5 @@
 "use client";
 import GBadge from "@/components/data-display/badge/GBadge";
-import { Box, Stack, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { BmaSvgIcon } from "@svgs/BmaSvgIcon";
 import { SprinklerSvgIcon } from "@svgs/SprinklerSvgIcon";
 import { RwaSvgIcon } from "@svgs/RwaSvgIcon";
