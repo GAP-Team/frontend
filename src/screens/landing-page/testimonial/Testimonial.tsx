@@ -1,5 +1,5 @@
 import Image from "next/image";
-import UserImage from "../../../../public/images/user.jpg";
+import UserImage from "@images/user.jpg";
 import { Box, Typography, Button, Stack } from "@mui/material";
 
 const Testimonial = (): JSX.Element => {

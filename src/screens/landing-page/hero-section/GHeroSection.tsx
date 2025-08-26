@@ -33,7 +33,7 @@ import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import { ContractSearchSchema } from "@/utils/ValidationSchema";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import heroBackgroundPicture from "../../../../public/images/hero6.jpg";
+import heroBackgroundPicture from "@images/hero6.jpg";
 import { ContractSearchProps } from "@/screens/service-provider/contracts/types";
 
 const GHeroSection = (): JSX.Element => {
