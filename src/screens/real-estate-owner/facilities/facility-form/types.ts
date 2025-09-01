@@ -30,6 +30,7 @@ export interface AddFacilityFormValues {
   isEmailNotificationEnable: boolean;
 }
 
+// FIX ME: Multiple declarations of the same type, make it reusable
 export interface ActiveStepItem {
   id: number;
   stepName: string;

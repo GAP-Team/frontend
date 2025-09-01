@@ -121,6 +121,7 @@ const TenderSummary = ({
             />
           </Grid>
         )}
+        {/* FIX ME: Why we have a doc list in tender summary? Tender have no documents to show */}
         {updatedDocList.length > 0 && (
           <Grid item xs={12}>
             <SummarySection
