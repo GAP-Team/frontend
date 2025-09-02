@@ -42,6 +42,7 @@ const steps: ActiveStepItem[] = [
 const stepFieldsMap: Record<number, string[]> = {
   0: ["totalPrice", "hourlyRate", "message", "zip", "city", "desiredDateOne"],
   1: ["advantages", "termsConditionDoc", "offerDoc"],
+  2: [],
 };
 
 const initialValues: ContractApplicationFormValues = {
@@ -66,8 +67,8 @@ const ContractApplication = (): JSX.Element => {
   const contract = useAppSelector(getContract);
 
   const [loading, setLoading] = useState(false);
-  const [activeStep, setActiveStep] = useState<ActiveStepItem>(steps[0]);
   const [submittedId, setSubmittedId] = useState("");
+  const [activeStep, setActiveStep] = useState<ActiveStepItem>(steps[0]);
 
   useEffect(() => setActiveStep(steps[0]), []);
 
@@ -83,9 +84,9 @@ const ContractApplication = (): JSX.Element => {
     values: ContractApplicationFormValues
   ): Promise<void> => {
     const fields = stepFieldsMap[activeStep.id];
-    setTouched(fields.reduce((acc, f) => ({ ...acc, [f]: true }), {}));
+    setTouched(fields?.reduce((acc, f) => ({ ...acc, [f]: true }), {}));
     const errors = await validateForm();
-    const hasErrors = fields.some((f) => (errors as any)[f]);
+    const hasErrors = fields?.some((f) => (errors as any)[f]);
     if (!hasErrors) {
       activeStep.id + 1 < steps.length
         ? setActiveStep(steps[activeStep.id + 1])
