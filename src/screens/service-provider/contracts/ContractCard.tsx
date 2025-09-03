@@ -1,18 +1,18 @@
 import React from "react";
+import { Contract } from "./types";
 import Box from "@mui/material/Box";
 import Chip from "@mui/material/Chip";
 import Paper from "@mui/material/Paper";
-import GButton from "@/components/inputs/button/GButton";
 import { ROUTES } from "@/utils/routes";
 import { USER_ROLE } from "@/utils/enums";
-import { Contract } from "@/typings/types";
 import { Typography } from "@mui/material";
-import { showSnackbar } from "@/components/feedback/snackbar";
-import SectionTitle from "@/components/data-display/label/SectionTitle";
+import { useRouter } from "next/navigation";
 import { checkIsLoggedIn } from "@/utils/auth";
 import { currentUser } from "@/lib/features/userSlice";
+import GButton from "@/components/inputs/button/GButton";
 import { useAppSelector, useAppDispatch } from "@/lib/hooks";
-import { useRouter } from "next/navigation";
+import { showSnackbar } from "@/components/feedback/snackbar";
+import SectionTitle from "@/components/data-display/label/SectionTitle";
 
 interface ContractCardProps {
   contracts: Contract[];

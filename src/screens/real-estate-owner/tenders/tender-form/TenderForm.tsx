@@ -10,7 +10,7 @@ import {
   NewTenderProps,
   ActiveStepItem,
   StepComponentProps,
-  AddTenderFormValues,
+  TenderFormValues,
 } from "./types";
 import dayjs from "dayjs";
 import AddTenderForm from "./AddTenderForm";
@@ -66,10 +66,32 @@ const TenderForm: React.FC<NewTenderProps> = ({ id }): JSX.Element => {
     setIsSubmitted(false);
   }, []);
 
+  const getInitialFormValues = (): TenderFormValues => ({
+    clientName: tender?.clientName || "",
+    tenderForm: tender?.tenderForm || TENDER_FORM.CRAFTSMAN,
+    tenderType: tender?.tenderType || "",
+    buildingName: tender?.building?.name || "",
+    facilityName: tender?.facility?.name || "",
+    detailDescription: tender?.detailDescription || "",
+    urgency: tender?.urgency || "Nicht Dringend",
+    fromDate: tender?.fromDate ? dayjs(tender?.fromDate) : null,
+    toDate: tender?.toDate ? dayjs(tender?.toDate) : null,
+    safetyWorkRequired: tender?.safetyWorkRequired || false,
+    freeParkingAvailable: tender?.freeParkingAvailable || false,
+    buildingId: tender?.building?.id || "",
+    facilityId: tender?.facility?.id || "",
+  });
+
+  const [formData, setFormData] = useState<TenderFormValues>(() =>
+    getInitialFormValues()
+  );
+
   const handleNext = async (
-    values: AddTenderFormValues,
-    actions: FormikHelpers<AddTenderFormValues>
+    values: TenderFormValues,
+    actions: FormikHelpers<TenderFormValues>
   ): Promise<void> => {
+    const updatedValues = { ...formData, ...values };
+    setFormData(updatedValues);
     if (activeStep?.id === steps.length - 1) {
       if (checkActiveUser) {
         const saveData = await saveTenderData(values);
@@ -94,9 +116,7 @@ const TenderForm: React.FC<NewTenderProps> = ({ id }): JSX.Element => {
     }
   };
 
-  const saveTenderData = async (
-    values: AddTenderFormValues
-  ): Promise<boolean> => {
+  const saveTenderData = async (values: TenderFormValues): Promise<boolean> => {
     let buildingObj = {
       id: values?.buildingId,
       name: values?.buildingName,
@@ -173,22 +193,6 @@ const TenderForm: React.FC<NewTenderProps> = ({ id }): JSX.Element => {
     }
   };
 
-  const initialValues: AddTenderFormValues = {
-    clientName: tender?.clientName || "",
-    tenderForm: tender?.tenderForm || TENDER_FORM.CRAFTSMAN,
-    tenderType: tender?.tenderType || "",
-    buildingName: tender?.building?.name || "",
-    facilityName: tender?.facility?.name || "",
-    detailDescription: tender?.detailDescription || "",
-    urgency: tender?.urgency || "Nicht Dringend",
-    fromDate: tender?.fromDate ? dayjs(tender?.fromDate) : null,
-    toDate: tender?.toDate ? dayjs(tender?.toDate) : null,
-    safetyWorkRequired: tender?.safetyWorkRequired || false,
-    freeParkingAvailable: tender?.freeParkingAvailable || false,
-    buildingId: tender?.building?.id || "",
-    facilityId: tender?.facility?.id || "",
-  };
-
   const formOrSuccessContent = isSubmitted ? (
     <SuccessPage
       title="Ausschreibung Online!"
@@ -237,7 +241,7 @@ const TenderForm: React.FC<NewTenderProps> = ({ id }): JSX.Element => {
           sx={{ ml: "1.5rem" }}
         />
         <Formik
-          initialValues={initialValues}
+          initialValues={formData}
           validationSchema={addTenderValidationSchema[activeStep?.id]}
           onSubmit={handleNext}
           enableReinitialize

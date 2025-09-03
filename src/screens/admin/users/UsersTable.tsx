@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { User } from "@/typings/types";
+import { User } from "./types";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableRow from "@mui/material/TableRow";
@@ -7,13 +7,13 @@ import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import Typography from "@mui/material/Typography";
-import UpdateUserIsActiveStatusButton from "./UpdateUserIsActiveStatusButton";
+import { Box, Grid, Tooltip } from "@mui/material";
 import { UsersTableColumns } from "@/utils/Constants";
 import TableContainer from "@mui/material/TableContainer";
 import TablePagination from "@mui/material/TablePagination";
 import { USER_ROLE, USER_ROLE_IN_GERMAN } from "@/utils/enums";
+import UpdateUserIsActiveStatusButton from "./UpdateUserIsActiveStatusButton";
 import DocumentList from "@/screens/real-estate-owner/buildings/building-overview/DocumentList";
-import { Box, Grid, Tooltip } from "@mui/material";
 
 interface UsersTableProps {
   users: User[];
@@ -68,6 +68,7 @@ const UsersTable: React.FC<UsersTableProps> = ({ users }): JSX.Element => {
                   <TableRow hover tabIndex={-1} key={user.id}>
                     <TableCell align="left">{user.firstName}</TableCell>
                     <TableCell align="left">{user.lastName}</TableCell>
+                    <TableCell align="left">{user.email}</TableCell>
                     <TableCell align="left">{user.company.name}</TableCell>
                     <TableCell align="left">
                       {user.company.phonenumber}

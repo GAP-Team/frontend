@@ -1,7 +1,7 @@
 "use client";
+import { Contract } from "./types";
 import Grid from "@mui/material/Grid";
 import { ROUTES } from "@/utils/routes";
-import { Contract } from "@/typings/types";
 import { TENDER_FORM } from "@/utils/enums";
 import Divider from "@mui/material/Divider";
 import { useRouter } from "next/navigation";

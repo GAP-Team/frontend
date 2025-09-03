@@ -242,7 +242,7 @@ const Registration = (): JSX.Element => {
         <InfoBanner
           title="Where skills are developed"
           subtitle="Gesetzliche Anlagenprüfung"
-          copyright="©2023 GAP GmbH"
+          copyright={`©${new Date().getFullYear()} GAP GmbH`}
         />
       </Grid>
       <Grid item xs={12} md={8} lg={8} sx={styles.formGrid}>

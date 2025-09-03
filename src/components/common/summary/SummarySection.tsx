@@ -21,14 +21,15 @@ const SummarySection: React.FC<{
   title: string;
   details: Detail[];
   setActiveStep?: any;
-}> = ({ title, details, setActiveStep }) => {
+  disableEdit?: boolean;
+}> = ({ title, details, setActiveStep, disableEdit }) => {
   return (
     <>
       <Box display="flex" alignItems="center" justifyContent="space-between">
         <Typography color="grey.500" variant="gsub">
           {title}
         </Typography>
-        <EditIcon onClick={setActiveStep} />
+        {!disableEdit && <EditIcon onClick={setActiveStep} />}
       </Box>
       <SummaryLayout>
         {details.map((detail, index) => (

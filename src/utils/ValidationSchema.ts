@@ -464,30 +464,8 @@ export const DeleteAccountSchema = yup.object({
 });
 
 export const applyContractFormSchema = yup.object().shape({
-  totalPrice: yup
-    .number()
-    .transform((_, value) => {
-      if (value.includes(".")) {
-        return null;
-      }
-      return +value.replace(/,/, ".");
-    })
-    .required("Gesamtkosten ist erforderlich")
-    .typeError("Gesamtkosten muss eine Zahl sein.")
-    .positive("Gesamtkosten muss größer als 0 sein.")
-    .integer("Gesamtkosten muss eine ganze Zahl sein."),
-  hourlyRate: yup
-    .number()
-    .transform((_, value) => {
-      if (value.includes(".")) {
-        return null;
-      }
-      return +value.replace(/,/, ".");
-    })
-    .typeError("Netto-Stundensatz muss eine Zahl sein.")
-    .positive("Netto-Stundensatz muss größer als 0 sein.")
-    .required("Netto-Stundensatz ist erforderlich")
-    .integer("Netto-Stundensatz muss eine ganze Zahl sein."),
+  totalPrice: yup.string().required("Gesamtkosten ist erforderlich"),
+  hourlyRate: yup.string().required("Netto-Stundensatz ist erforderlich"),
   zip: yup
     .string()
     .matches(
@@ -495,18 +473,8 @@ export const applyContractFormSchema = yup.object().shape({
       "Postleitzahl muss zwischen 4 und 5 Ziffern lang sein"
     ),
   desiredDates: yup.array().of(yup.date()),
-  termsConditionDoc: yup
-    .mixed()
-    .required("AGB dokument ist erforderlich")
-    .test("fileRequired", "AGB dokument ist erforderlich", (value) => {
-      return value instanceof File;
-    }),
-  offerDoc: yup
-    .mixed()
-    .required("Angebot dokument ist erforderlich")
-    .test("fileRequired", "Angebot dokument ist erforderlich", (value) => {
-      return value instanceof File;
-    }),
+  termsConditionDoc: yup.string().required("AGB dokument ist erforderlich"),
+  offerDoc: yup.string().required("Angebot dokument ist erforderlich"),
 });
 
 export const passwordResetValidationSchema = yup.object({

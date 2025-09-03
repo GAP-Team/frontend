@@ -7,10 +7,10 @@ import CustomTabPanel from "@/components/navigation/tab_panel/CustomTabPanel";
 import { RealEstateLandingPageTabs } from "@/utils/Constants";
 import Box from "@mui/material/Box";
 
-import TenderImage from "../../../public/images/tenders.png";
-import BuildingImage from "../../../public/images/buildings.png";
-import DashboardImage from "../../../public/images/dashboard.png";
-import CostSavingImage from "../../../public/images/cost-saving.png";
+import TenderImage from "@images/tenders.png";
+import BuildingImage from "@images/buildings.png";
+import DashboardImage from "@images/dashboard.png";
+import CostSavingImage from "@images/cost-saving.png";
 
 // FIXME: find better name to differentiate between it and GFeature
 const DashboardFeatureSection = (): JSX.Element => {

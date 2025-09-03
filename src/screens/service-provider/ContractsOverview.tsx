@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import { useAppDispatch } from "@/lib/hooks";
 import ContractCard from "@/screens/service-provider/contracts/ContractCard";
 import { showSnackbar } from "@/components/feedback/snackbar";
-import addTenderSrc from "@/../public/icons/add_tender.svg";
+import addTenderSrc from "@icons/add_tender.svg";
 import NoContentPage from "@/components/common/pages/NoContentPage";
 import ContractFilterPanel from "./ContractFilterPanel";
 import { getAllContracts, fetchContracts } from "@/lib/features/contractSlice";

@@ -1,5 +1,4 @@
 import { StaticImageData } from "next/image";
-import { ActiveStepItem } from "@/screens/real-estate-owner/types";
 
 export interface FormErrors {
   [key: string]: string;
@@ -14,11 +13,7 @@ export interface Document {
   name: string;
   documentType?: string;
 }
-export interface ContractSearchProps {
-  states: string[];
-  tenderTypes: string[];
-  facilitySubcategories: string[];
-}
+
 export interface BlogProps {
   date: string;
   slug: string;
@@ -29,74 +24,11 @@ export interface BlogProps {
   image: StaticImageData;
 }
 
-export interface Contract {
-  city: string;
-  state: string;
-  buildingName: string;
-  facilityName: string;
-  facilityType: string;
-  subcategory: string;
-  tenderForm: string;
-  tenderId: string;
-  clientName: string;
-  detailDescription: string;
-  tenderType: string;
-  urgency: string;
-  safetyWorkRequired: boolean;
-  freeParkingAvailable: boolean;
-  facilityDocuments: Document[];
-  buildingDocuments: Document[];
-  toDate?: string;
-  fromDate?: string;
-}
-
-export interface FilterOptionType {
-  category: string;
-  items: string[];
-}
-export interface SideFilterPanelProps {
-  states: string[];
-  tenderTypes: string[];
-  facilitySubcategories: string[];
-  handleSearchContracts: (
-    states: string[],
-    tenderTypes: string[],
-    facilitySubcategories: string[]
-  ) => void;
-}
-
-export interface SideFilterPanelOptionsProps {
-  title: string;
-  options: FilterOptionType[];
-  preSelectedOptions: string[];
-  onSelect: (selected: string[], field: string) => void;
-}
-
 export interface HelpIconButtonProps {
   helpText: string;
   iconColor?: string;
 }
 
-export interface ContractApplicationFormValues {
-  totalPrice: string;
-  hourlyRate: string;
-  message: string;
-  zip: string;
-  city: string;
-  desiredDates: Date[];
-  advantages: string[];
-  offerDoc: string | null;
-  termsConditionDoc: string | null;
-}
-
-export interface ApplyContractProps {
-  loading: boolean;
-  steps: ActiveStepItem[];
-  handleBack: () => void;
-  handleNext: () => void;
-  activeStep: ActiveStepItem;
-  setActiveStep: React.Dispatch<React.SetStateAction<ActiveStepItem>>;
-}
 export interface SendActivityEmailType {
   email: string;
   templateName: string;
@@ -112,37 +44,6 @@ export interface TopFilterProps {
   title?: string;
 }
 
-export interface UserCompanyAddress {
-  zip: number;
-  state: string;
-  street: string;
-  country: string;
-  houseNo: number;
-  city: string;
-}
-
-export interface UserBusiness {
-  businessType: string;
-  registrationNumber: string;
-  documents: Document[];
-}
-
-export interface UserCompany {
-  name: string;
-  phonenumber: number;
-  address: Partial<UserCompanyAddress>;
-  numberOfEmployees?: number;
-  business?: Partial<UserBusiness>;
-}
-
-export interface User {
-  firstName: string;
-  lastName: string;
-  email: string;
-  company: UserCompany;
-  role: string;
+export interface CreateResponseType {
   id: string;
-  manufacturerExperience: string;
-  qualificationDocuments: Document[];
-  isActive: boolean;
 }

@@ -64,7 +64,7 @@ export const updateTender = createAsyncThunk(
   "tender/updateTender",
   async ({ tenderId, data }: { tenderId: string; data: any }) => {
     const response = await tenderAPI.update(tenderId, data);
-    return response;
+    return response.data;
   }
 );
 

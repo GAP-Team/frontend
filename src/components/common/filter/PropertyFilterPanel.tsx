@@ -44,6 +44,7 @@ const PropertyFilterPanel = ({
     const fetchData = async (): Promise<void> => {
       if (!user?.id) return;
 
+      // FIXME: cs dose not looks like a good name, use something more descriptive
       const cs = await userApi?.getFilterCreteria(user?.id);
       if (cs?.data?.cities)
         setUserCities(

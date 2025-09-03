@@ -1,7 +1,7 @@
 import { RootState } from "../store";
 import contractAPI from "@/api/contract";
-import { Contract } from "@/typings/types";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { Contract } from "@/screens/service-provider/contracts/types";
 
 interface ContractState {
   contract: Contract;
