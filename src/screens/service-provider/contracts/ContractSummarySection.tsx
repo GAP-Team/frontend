@@ -5,8 +5,11 @@ import { ROUTES } from "@/utils/routes";
 import { TENDER_FORM } from "@/utils/enums";
 import Divider from "@mui/material/Divider";
 import { useRouter } from "next/navigation";
+import { useAppDispatch } from "@/lib/hooks";
+import { getIsUserActivated } from "@/utils/auth";
 import Typography from "@mui/material/Typography";
 import GButton from "@/components/inputs/button/GButton";
+import { showSnackbar } from "@/lib/features/snackbarSlice";
 import LabelText from "@/components/data-display/label/LabelText";
 import HeaderSection from "@/screens/real-estate-owner/dashboard/HeaderSection";
 
@@ -18,6 +21,7 @@ const ContractSummarySection: React.FC<ContractSummarySectionProps> = ({
   contract,
 }) => {
   const router = useRouter();
+  const appDispatch = useAppDispatch();
 
   const summaryData = [
     { label: "Name des Auftraggebers", value: contract?.clientName },
@@ -66,6 +70,22 @@ const ContractSummarySection: React.FC<ContractSummarySectionProps> = ({
     router.push(ROUTES.SERVICE_PROVIDER.CONTRACT_FILTER_URL([], [], []));
   };
 
+  const handleGoToApplication = (): void => {
+    if (getIsUserActivated() === "false") {
+      appDispatch(
+        showSnackbar({
+          type: "error",
+          message:
+            "Bitte aktivieren Sie Ihr Konto, um diese Funktion zu nutzen.",
+        })
+      );
+    } else {
+      router.push(
+        ROUTES.SERVICE_PROVIDER.CONTRACT_APPLICATION(contract?.tenderId)
+      );
+    }
+  };
+
   return (
     <>
       <HeaderSection titletext="DATEN ÜBERPRÜFEN" />
@@ -95,12 +115,7 @@ const ContractSummarySection: React.FC<ContractSummarySectionProps> = ({
           <GButton color="gprimary" variant="outlined" onClick={backHandler}>
             Abbrechen
           </GButton>
-          <GButton
-            color="ggreen"
-            href={ROUTES.SERVICE_PROVIDER.CONTRACT_APPLICATION(
-              contract?.tenderId
-            )}
-          >
+          <GButton color="ggreen" onClick={handleGoToApplication}>
             Jetzt Bewerben
           </GButton>
         </Grid>

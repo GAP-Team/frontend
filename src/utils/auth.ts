@@ -38,6 +38,13 @@ export const getIsUserVerified = (): string => {
   return Cookies.get("isVerified") || "";
 };
 
+export const setIsUserActivated = (activated: string): void => {
+  Cookies.set("isActivated", activated);
+};
+export const getIsUserActivated = (): string => {
+  return Cookies.get("isActivated") || "";
+};
+
 export const userIsAdmin = (): boolean => {
   const role = Cookies.get("role");
   return role === USER_ROLE.ADMIN;
