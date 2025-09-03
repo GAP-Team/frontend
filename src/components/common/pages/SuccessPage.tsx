@@ -3,7 +3,7 @@ import Image from "next/image";
 import { NextPage } from "next";
 import Grid from "@mui/material/Grid";
 import { Button, Typography } from "@mui/material";
-import sucessSvg from "@/../public/icons/success.svg";
+import sucessSvg from "@icons/success.svg";
 import GButton from "@/components/inputs/button/GButton";
 
 interface SuccessPageProps {

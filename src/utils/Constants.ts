@@ -1,7 +1,7 @@
 import { USER_ROLE } from "./enums";
 import { Notification } from "@/typings/types";
 import HomeWorkIcon from "@mui/icons-material/HomeWork";
-import OfficeImage from "../../public/images/office.jpg";
+import OfficeImage from "@images/office.jpg";
 import DescriptionIcon from "@mui/icons-material/Description";
 import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
 import { FilterOptionType } from "@/screens/service-provider/contracts/types";

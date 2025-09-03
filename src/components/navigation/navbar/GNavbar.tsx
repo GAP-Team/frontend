@@ -7,7 +7,7 @@ import { Lalezar } from "next/font/google";
 import { usePathname } from "next/navigation";
 import { FaArrowRightToBracket } from "react-icons/fa6";
 import { ROUTES, REAL_ESTATE_BASE } from "@/utils/routes";
-import gapLogo from "../../../../public/icons/gap-logo.svg";
+import gapLogo from "@icons/gap-logo.svg";
 
 const lalezar = Lalezar({ subsets: ["latin"], weight: ["400"] });
 
