@@ -1,5 +1,5 @@
 import React from "react";
-import gapLogo from "../../../../public/icons/gap-logo.svg";
+import gapLogo from "@icons/gap-logo.svg";
 import Image from "next/image";
 import { Lalezar } from "next/font/google";
 const lalezar = Lalezar({ subsets: ["latin"], weight: ["400"] });

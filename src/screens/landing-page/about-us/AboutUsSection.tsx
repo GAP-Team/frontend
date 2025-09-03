@@ -2,7 +2,7 @@
 import Image from "next/image";
 import StatisticsCard from "@/components/surfaces/card/StatisticsCard";
 import { Box, Container, Typography, Grid } from "@mui/material";
-import heroBackgroundPicture from "../../../../public/images/hero6.jpg";
+import heroBackgroundPicture from "@images/hero6.jpg";
 
 const AboutUsSection = (): JSX.Element => {
   const stats = [

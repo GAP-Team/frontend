@@ -18,7 +18,11 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@icons/*": ["./public/icons/*"],
+      "@images/*": ["./public/images/*"],
+      "@svgs/*": ["./public/svgs/*"],
+      "@public/*": ["./public/*"]
     },
     "target": "es6"
   },
