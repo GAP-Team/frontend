@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import Box from "@mui/material/Box";
 import PropertyFilterPanel from "@/components/common/filter/PropertyFilterPanel";
 import NoContentPage from "@/components/common/pages/NoContentPage";
-import addTenderSrc from "@/../public/icons/add_tender.svg";
+import addTenderSrc from "@icons/add_tender.svg";
 import TendersContainer from "@/screens/real-estate-owner/tenders/tender-overview/TendersContainer";
 import { currentUser } from "@/lib/features/userSlice";
 import { useSelector } from "react-redux";
