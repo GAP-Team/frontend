@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { checkIsLoggedIn, getIsUserVerified } from "@/utils/auth";
+import { ROUTES } from "@/utils/routes";
 
 export const useLogin = (): {
   isLoggedIn: boolean;
@@ -23,7 +24,7 @@ export const useLogin = (): {
       setIsUserVerified(true);
     }
     if (checkIsLoggedIn() && getIsUserVerified() !== "true") {
-      router.push("/user_verify");
+      router.push(ROUTES.USER_VERIFY);
     }
   };
 
