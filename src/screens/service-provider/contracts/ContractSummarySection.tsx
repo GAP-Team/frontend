@@ -48,7 +48,7 @@ const ContractSummarySection: React.FC<ContractSummarySectionProps> = ({
         : "Nicht Vorhanden",
     },
     {
-      label: "Angebotsfrist",
+      label: "Gewünschte Angebotsfrist",
       value:
         contract?.fromDate && contract?.toDate
           ? `${new Date(contract?.fromDate).toLocaleDateString("de-DE")} - ${new Date(
