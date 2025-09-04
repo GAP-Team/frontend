@@ -1,21 +1,21 @@
 "use client";
 import GBadge from "@/components/data-display/badge/GBadge";
-import { BmaSvgIcon } from "../../../../public/svgs/BmaSvgIcon";
-import { SprinklerSvgIcon } from "../../../../public/svgs/SprinklerSvgIcon";
-import { RwaSvgIcon } from "../../../../public/svgs/RwaSvgIcon";
-import { VentilationSvgIcon } from "../../../../public/svgs/VentilationSvgIcon";
-import { ElectricalSvgIcon } from "../../../../public/svgs/ElectricalSvgIcon";
-import { WaterSvgIcon } from "../../../../public/svgs/WaterSvgIcon";
-import { EmergencyLightSvgIcon } from "../../../../public/svgs/EmergencyLightSvgIcon";
-import { DoorSvgIcon } from "../../../../public/svgs/DoorSvgIcon";
-import { CoolingSvgIcon } from "../../../../public/svgs/CoolingSvgIcon";
+import { BmaSvgIcon } from "@svgs/BmaSvgIcon";
+import { SprinklerSvgIcon } from "@svgs/SprinklerSvgIcon";
+import { RwaSvgIcon } from "@svgs/RwaSvgIcon";
+import { VentilationSvgIcon } from "@svgs/VentilationSvgIcon";
+import { ElectricalSvgIcon } from "@svgs/ElectricalSvgIcon";
+import { WaterSvgIcon } from "@svgs/WaterSvgIcon";
+import { EmergencyLightSvgIcon } from "@svgs/EmergencyLightSvgIcon";
+import { DoorSvgIcon } from "@svgs/DoorSvgIcon";
+import { CoolingSvgIcon } from "@svgs/CoolingSvgIcon";
 import TitleSection from "@/components/data-display/label/CenteredSection";
 import { FeatureCard } from "@/components/surfaces/card/FeatureCard";
-import { ElevatorSvgIcon } from "../../../../public/svgs/ElevatorSvgIcon";
-import { FireWatchSvgIcon } from "../../../../public/svgs/FireWatchSvgIcon";
-import { FireExtinguisherSvgIcon } from "../../../../public/svgs/FireExtinguisherSvgIcon";
-import { WallHydrantSystemSvgIcon } from "../../../../public/svgs/WallHydrantSystemSvgIcon";
-import { HygieneCheckWaterAirSvgIcon } from "../../../../public/svgs/HygieneCheckWaterAirSvgIcon";
+import { ElevatorSvgIcon } from "@svgs/ElevatorSvgIcon";
+import { FireWatchSvgIcon } from "@svgs/FireWatchSvgIcon";
+import { FireExtinguisherSvgIcon } from "@svgs/FireExtinguisherSvgIcon";
+import { WallHydrantSystemSvgIcon } from "@svgs/WallHydrantSystemSvgIcon";
+import { HygieneCheckWaterAirSvgIcon } from "@svgs/HygieneCheckWaterAirSvgIcon";
 
 const GFeatures = (): JSX.Element => {
   return (

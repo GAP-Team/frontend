@@ -70,4 +70,5 @@ export const ROUTES = {
   OUR_SERVICE: "/our-service",
   DATA_SECURITY: "/data-security",
   SERVICE_PROVIDER_JOURNEY: "/still-employed-become-a-service-provider",
+  USER_VERIFY: "/user-verify",
 };

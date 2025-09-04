@@ -6,7 +6,7 @@ import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useAppDispatch } from "@/lib/hooks";
 import { currentUser } from "@/lib/features/userSlice";
-import addObjSrc from "@/../public/icons/add_building.svg";
+import addObjSrc from "@icons/add_building.svg";
 import NoContentPage from "@/components/common/pages/NoContentPage";
 import BuildingContainer from "@/screens/real-estate-owner/buildings/building-overview/BuildingContainer";
 import PropertyFilterPanel from "@/components/common/filter/PropertyFilterPanel";

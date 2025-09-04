@@ -2,7 +2,7 @@
 import { Box } from "@mui/system";
 import PropertyFilterPanel from "@/components/common/filter/PropertyFilterPanel";
 import React, { useEffect, useMemo, useCallback } from "react";
-import addObjSrc from "@/../public/icons/add_building.svg";
+import addObjSrc from "@icons/add_building.svg";
 import NoContentPage from "@/components/common/pages/NoContentPage";
 import FacilityContainer from "@/screens/real-estate-owner/facilities/facility-overview/FacilityContainer";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";

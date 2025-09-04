@@ -6,7 +6,7 @@ import Divider from "@mui/material/Divider";
 import TaskAltIcon from "@mui/icons-material/TaskAlt";
 import RocketLaunchIcon from "@mui/icons-material/RocketLaunch";
 import QuestionAnswerIcon from "@mui/icons-material/QuestionAnswer";
-import heroBackgroundPicture from "../../../../public/images/hero6.jpg";
+import heroBackgroundPicture from "@images/hero6.jpg";
 import AccessTimeFilledIcon from "@mui/icons-material/AccessTimeFilled";
 import Box from "@mui/material/Box";
 import { useTheme } from "@mui/material/styles";
