@@ -80,8 +80,8 @@ const ContractFilterPanel: React.FC<SideFilterPanelProps> = ({
             Filters
           </Typography>
           <div>
-            <GButton type="submit">Filter</GButton>
-            <GButton onClick={handleOnReset}>Klar</GButton>
+            <GButton onClick={handleOnReset}>Filter Löschen</GButton>
+            <GButton type="submit">Filtern</GButton>
           </div>
         </div>
         <SideFilterPanelOptions
