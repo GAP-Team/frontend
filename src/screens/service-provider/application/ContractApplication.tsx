@@ -232,7 +232,7 @@ const renderContractInfo = (contract: any): JSX.Element => (
     <InfoBlock label="Auftragstyp" value={contract?.tenderType} />
     <InfoBlock label="Anlagentyp" value={contract?.subcategory} />
     <InfoBlock
-      label="Angebotsfrist"
+      label="Gewünschte Angebotsfrist"
       value={formatDateRange(contract?.fromDate, contract?.toDate)}
     />
     <InfoBlock
