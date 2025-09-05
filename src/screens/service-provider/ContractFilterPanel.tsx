@@ -79,7 +79,10 @@ const ContractFilterPanel: React.FC<SideFilterPanelProps> = ({
           <Typography variant="h6" fontWeight="bold">
             Filters
           </Typography>
-          <GButton type="submit">Filter</GButton>
+          <div>
+            <GButton onClick={handleOnReset}>Filter Löschen</GButton>
+            <GButton type="submit">Filtern</GButton>
+          </div>
         </div>
         <SideFilterPanelOptions
           options={listOfGermanStates}
@@ -99,7 +102,6 @@ const ContractFilterPanel: React.FC<SideFilterPanelProps> = ({
           title={FilterPanelLabels.TENDER_TYPE}
           preSelectedOptions={formik.values.tenderTypes}
         />
-        <GButton onClick={handleOnReset}>Filter löschen</GButton>
       </form>
     </Box>
   );

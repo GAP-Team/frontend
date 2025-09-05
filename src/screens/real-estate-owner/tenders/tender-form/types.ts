@@ -19,6 +19,7 @@ export interface TenderFormValues {
   safetyWorkRequired: boolean;
   freeParkingAvailable: boolean;
 }
+// FIX ME: Multiple declarations of the same type, make it reusable
 export interface ActiveStepItem {
   id: number;
   stepName: string;
