@@ -1,3 +1,4 @@
+// FIX ME: Multiple declarations of the same type, make it reusable
 export interface ActiveStepItem {
   id: number;
   stepName: string;
@@ -9,7 +10,6 @@ export interface ActiveStepItem {
 }
 
 export interface AddComponentFormProps {
-  // FIX ME: Multiple declarations of the same type, make it reusable
   activeStep: ActiveStepItem;
   setActiveStep: React.Dispatch<React.SetStateAction<ActiveStepItem>>;
   steps: ActiveStepItem[];
