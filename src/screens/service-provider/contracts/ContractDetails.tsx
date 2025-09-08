@@ -45,12 +45,24 @@ const ContractDetails: React.FC<ContractDetailsProps> = ({
     if (!checkIsLoggedIn() && !user?.id) {
       if (user?.role !== USER_ROLE.SERVICE_PROVIDER) {
         return (
-            <NoContentPage description="Sie müssen ein Dienstanbieter sein, um auf diese Seite zugreifen zu können." title="Zugriff verweigert" buttonLink={ROUTES?.LOGIN} alt="No Access" image={NoAccessImage} />
+          <NoContentPage
+            description="Sie müssen ein Dienstanbieter sein, um auf diese Seite zugreifen zu können."
+            title="Zugriff verweigert"
+            buttonLink={ROUTES?.LOGIN}
+            alt="No Access"
+            image={NoAccessImage}
+          />
         );
       }
     } else {
       return (
-        <NoContentPage description="Bitte melden Sie sich an, um auf die Vertragsdetails zuzugreifen." title="Zugriff verweigert" buttonLink={ROUTES?.LOGIN} alt="No Access" image={NoAccessImage} />
+        <NoContentPage
+          description="Bitte melden Sie sich an, um auf die Vertragsdetails zuzugreifen."
+          title="Zugriff verweigert"
+          buttonLink={ROUTES?.LOGIN}
+          alt="No Access"
+          image={NoAccessImage}
+        />
       );
     }
 
