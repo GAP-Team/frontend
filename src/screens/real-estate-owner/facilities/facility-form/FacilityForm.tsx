@@ -159,7 +159,7 @@ const FacilityForm: React.FC<NewFacilityProps> = ({
           showSnackbar({
             type: "error",
             message:
-              "Bitte aktivieren Sie Ihr Konto, um diese Funktion zu nutzen.",
+              "Ihr Konto ist noch nicht aktiviert. Bitte warten Sie, bis die Administration Ihr Konto freischaltet. Sie erhalten eine E-Mail, sobald dies geschehen ist.",
           })
         );
       }
