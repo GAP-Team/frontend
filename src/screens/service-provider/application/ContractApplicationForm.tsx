@@ -1,7 +1,5 @@
 import { ApplyContractProps, ContractApplicationFormValues } from "./types";
-import { ROUTES } from "@/utils/routes";
 import { useFormikContext } from "formik";
-import { useRouter } from "next/navigation";
 import { CircularProgress, Grid } from "@mui/material";
 import GButton from "@/components/inputs/button/GButton";
 
@@ -13,16 +11,11 @@ const ContractApplicationForm: React.FC<ApplyContractProps> = ({
   activeStep,
   setActiveStep,
 }): JSX.Element => {
-  const router = useRouter();
   const formik = useFormikContext<ContractApplicationFormValues>();
 
   const StepComponent = steps[activeStep.id]?.component;
   const isOnLastStep = activeStep.id >= steps.length;
   const typeOfBtn = activeStep.id + 1 >= steps.length ? "submit" : "button";
-
-  const handleRoute = (): void => {
-    router.push(ROUTES.SERVICE_PROVIDER.CONTRACTS);
-  };
 
   const forwardAndBackBtns = (
     <>
@@ -39,7 +32,7 @@ const ContractApplicationForm: React.FC<ApplyContractProps> = ({
             activeStep.id === steps.length - 1 && !formik.values?.acceptedTerms
           }
           type={typeOfBtn}
-          onClick={!isOnLastStep ? handleNext : handleRoute}
+          onClick={handleNext}
         >
           {activeStep.id < steps.length - 1
             ? "Weiter"

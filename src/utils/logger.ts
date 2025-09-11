@@ -1,9 +1,12 @@
 const isServer = typeof window === "undefined";
 
-if (isServer) {
-  const { createLogger, format, transports } = require("winston");
+let logger: any;
 
-  const customLogger = createLogger({
+if (isServer) {
+  const winston = require("winston");
+  const { createLogger, format, transports } = winston;
+
+  logger = createLogger({
     level: "info",
     format: format.combine(
       format.colorize(),
@@ -26,6 +29,9 @@ if (isServer) {
       new transports.Console(), // Logs to the server console
     ],
   });
-
-  module.exports = customLogger;
+} else {
+  // Client-side fallback
+  logger = console;
 }
+
+export default logger;

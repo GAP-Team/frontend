@@ -4,15 +4,14 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Formik, FormikHelpers } from "formik";
 import { Grid, Paper, Typography } from "@mui/material";
-
+import logger from "@/utils/Logger";
 import { currentUser } from "@/lib/features/userSlice";
-import { getContract } from "@/lib/features/contractSlice";
+import { applyForContract, getContract } from "@/lib/features/contractSlice";
 import { showSnackbar } from "@/lib/features/snackbarSlice";
 import { useAppSelector, useAppDispatch } from "@/lib/hooks";
 
 import s3API from "@/api/s3";
 import { ROUTES } from "@/utils/routes";
-import contractAPI from "@/api/contract";
 import { translateTenderForm } from "@/utils/utils";
 import { handleUploadDoc } from "@/utils/uploadToS3";
 import { DOCUMENT_TYPE, DOCUMENT_FIELDS } from "@/utils/enums";
@@ -65,9 +64,9 @@ const ContractApplication = (): JSX.Element => {
   const dispatch = useAppDispatch();
   const user = useAppSelector(currentUser);
   const contract = useAppSelector(getContract);
+  const loading = useAppSelector((state) => state.contract.loading);
 
-  const [loading, setLoading] = useState(false);
-  const [submittedId, setSubmittedId] = useState("");
+  const [submittedId, setSubmittedId] = useState<string>("");
   const [activeStep, setActiveStep] = useState<ActiveStepItem>(steps[0]);
 
   useEffect(() => setActiveStep(steps[0]), []);
@@ -97,7 +96,6 @@ const ContractApplication = (): JSX.Element => {
   const submitApplication = async (
     values: ContractApplicationFormValues
   ): Promise<void> => {
-    setLoading(true);
     const docs: Document[] = [];
     try {
       const docFields = [
@@ -122,7 +120,7 @@ const ContractApplication = (): JSX.Element => {
         }
       }
 
-      const payload: Application = {
+      const applicationData: Application = {
         tenderId: contract.tenderId,
         userId: user.id,
         serviceTotalPrice: values.totalPrice,
@@ -138,19 +136,24 @@ const ContractApplication = (): JSX.Element => {
         documents: docs,
         status: null,
       };
-
-      const res = await contractAPI.applyForContract(
-        contract.tenderId,
-        payload
+      const resultAction = await dispatch(
+        applyForContract({
+          contractId: contract.tenderId,
+          applicationData,
+        })
       );
-      setSubmittedId(res.id);
+
+      // If we reach here, the action was successful
+      setSubmittedId(resultAction.payload?.id);
       dispatch(
         showSnackbar({
           type: "success",
           message: "Angebot erfolgreich eingereicht.",
         })
       );
-    } catch {
+    } catch (error) {
+      // Clean up uploaded documents in case of error
+      logger.info("Error submitting application:", error);
       await cleanupDocuments(docs);
       dispatch(
         showSnackbar({
@@ -158,8 +161,6 @@ const ContractApplication = (): JSX.Element => {
           message: "Fehler beim Einreichen des Angebots.",
         })
       );
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -183,7 +184,7 @@ const ContractApplication = (): JSX.Element => {
       </Typography>
       <Paper elevation={1} sx={{ p: 4, my: 4 }}>
         <Grid container spacing={2}>
-          {submittedId && !loading ? (
+          {submittedId ? (
             <ContractApplicationSuccess submittedApplicationId={submittedId} />
           ) : (
             <>
