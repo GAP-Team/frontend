@@ -102,7 +102,7 @@ const Login = (): JSX.Element => {
         <InfoBanner
           title="Where skills are developed"
           subtitle="Gesetzliche Anlagenprüfung"
-          copyright="©2024 GAP GmbH"
+          copyright={`©${new Date().getFullYear()} GAP GmbH`}
         />
       </Grid>
       <Grid item xs={12} md={6} lg={6} component={Paper}>
