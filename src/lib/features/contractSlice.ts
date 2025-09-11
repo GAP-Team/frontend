@@ -2,6 +2,7 @@ import { RootState } from "../store";
 import contractAPI from "@/api/contract";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { Contract } from "@/screens/service-provider/contracts/types";
+import { Application } from "@/screens/service-provider/application/types";
 
 interface ContractState {
   currentContract: Contract;
@@ -53,7 +54,7 @@ export const applyForContract = createAsyncThunk(
     applicationData,
   }: {
     contractId: string;
-    applicationData: any;
+    applicationData: Application;
   }) => {
     const response = await contractAPI.applyForContract(
       contractId,
