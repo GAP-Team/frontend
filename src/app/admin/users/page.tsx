@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { userIsAdmin, checkIsLoggedIn } from "@/utils/auth";
 import UsersOverview from "@/screens/admin/users/UsersOverview";
 import NoAccessImage from "@images/no_access.png";
-import NoContentPage from "@/components/common/pages/NoContentPage";
+import NoContentPage from "@/components/common/pages/FallbackPage";
 
 export default function UsersPage(): JSX.Element {
   const router = useRouter();

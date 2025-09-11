@@ -13,8 +13,7 @@ interface NoContentPageProps {
   description?: string;
 }
 
-// FIXME: no content page and no access page are very similar and give the new one general name
-const NoContentPage: React.FC<NoContentPageProps> = ({
+const FallbackPage: React.FC<NoContentPageProps> = ({
   image,
   alt,
   title,
@@ -47,7 +46,7 @@ const NoContentPage: React.FC<NoContentPageProps> = ({
   );
 };
 
-export default NoContentPage;
+export default FallbackPage;
 
 const styles = {
   container: {

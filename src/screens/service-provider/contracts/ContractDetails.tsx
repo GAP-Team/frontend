@@ -8,7 +8,7 @@ import ContractSummarySection from "./ContractSummarySection";
 import TenderTitleBar from "@/screens/real-estate-owner/tenders/tender-overview/TenderTitleBar";
 import { fetchContractById, getContract } from "@/lib/features/contractSlice";
 import DocumentList from "@/screens/real-estate-owner/buildings/building-overview/DocumentList";
-import NoContentPage from "@/components/common/pages/NoContentPage";
+import NoContentPage from "@/components/common/pages/FallbackPage";
 import { ROUTES } from "@/utils/routes";
 import NoAccessImage from "@images/no_access.png";
 

@@ -2,7 +2,7 @@
 import React, { useEffect } from "react";
 import Box from "@mui/material/Box";
 import PropertyFilterPanel from "@/components/common/filter/PropertyFilterPanel";
-import NoContentPage from "@/components/common/pages/NoContentPage";
+
 import addTenderSrc from "@icons/add_tender.svg";
 import TendersContainer from "@/screens/real-estate-owner/tenders/tender-overview/TendersContainer";
 import { currentUser } from "@/lib/features/userSlice";
@@ -11,6 +11,7 @@ import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { fetchTenders } from "@/lib/features/tenderSlice";
 import { BuildingTenders } from "@/screens/real-estate-owner/tenders/tender-overview/types";
 import { ROUTES } from "@/utils/routes";
+import FallbackPage from "@/components/common/pages/FallbackPage";
 
 const TendersOverview: React.FC = () => {
   const user = useSelector(currentUser);
@@ -39,7 +40,7 @@ const TendersOverview: React.FC = () => {
     return hasTenders ? (
       <TendersContainer buildings={tenders} />
     ) : (
-      <NoContentPage
+      <FallbackPage
         alt="No Tenders"
         image={addTenderSrc}
         title="Erstelle eine neue Ausschreibung."

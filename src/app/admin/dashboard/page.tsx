@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { ROUTES } from "@/utils/routes";
 import Dashboard from "@/screens/real-estate-owner/Dashboard";
 import { userIsAdmin, checkIsLoggedIn } from "@/utils/auth";
-import NoContentPage from "@/components/common/pages/NoContentPage";
+import NoContentPage from "@/components/common/pages/FallbackPage";
 import NoAccessImage from "@images/no_access.png";
 
 export default function AdminDashboardPage(): JSX.Element {
