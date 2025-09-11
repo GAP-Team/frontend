@@ -7,7 +7,7 @@ import { ROUTES } from "@/utils/routes";
 import { USER_ROLE } from "@/utils/enums";
 import { Typography } from "@mui/material";
 import { useRouter } from "next/navigation";
-import { checkIsLoggedIn } from "@/utils/auth";
+import { checkIsLoggedIn, getIsUserActivated } from "@/utils/auth";
 import { currentUser } from "@/lib/features/userSlice";
 import GButton from "@/components/inputs/button/GButton";
 import { useAppSelector, useAppDispatch } from "@/lib/hooks";
@@ -23,7 +23,22 @@ const ContractCard = ({ contracts }: ContractCardProps): JSX.Element => {
   const appDispatch = useAppDispatch();
   const user = useAppSelector(currentUser);
 
+  const ensureActivated = (): boolean => {
+    const isActive = getIsUserActivated();
+    if (!isActive) {
+      appDispatch(
+        showSnackbar({
+          type: "error",
+          message:
+            "Ihr Konto ist noch nicht aktiviert. Bitte warten Sie, bis die Administration Ihr Konto freischaltet. Sie erhalten eine E-Mail, sobald dies geschehen ist.",
+        })
+      );
+    }
+    return isActive;
+  };
+
   const handleShowContractDetails = (contractId: string): void => {
+    if (!ensureActivated()) return;
     if (checkIsLoggedIn() && user?.role === USER_ROLE.SERVICE_PROVIDER) {
       router.push(ROUTES.SERVICE_PROVIDER.CONTRACT_DETAILS(contractId));
     } else {
