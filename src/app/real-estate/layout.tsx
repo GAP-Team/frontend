@@ -9,7 +9,7 @@ import {
   SubItem,
   SidebarItemTypes,
 } from "@/components/navigation/sidebar/types";
-import { ROUTES } from "@/utils/routes";
+import { REAL_ESTATE_BASE, ROUTES } from "@/utils/routes";
 import Layout from "@/screens/real-estate-owner/Layout";
 import { Box } from "@mui/material";
 
@@ -113,7 +113,7 @@ const RealStateUserLayout: React.FC<any> = ({ children }) => {
   };
 
   const getLayout = (route: string): JSX.Element => {
-    if (route.startsWith("/real-estate/")) {
+    if (route.startsWith(REAL_ESTATE_BASE)) {
       return (
         <Layout
           sidebarItems={sidebarItems}
