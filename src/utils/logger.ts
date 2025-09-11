@@ -1,7 +1,13 @@
 const isServer = typeof window === "undefined";
 
-let logger: any;
+interface Logger {
+  info: (...args: any[]) => void;
+  error: (...args: any[]) => void;
+  warn: (...args: any[]) => void;
+  debug: (...args: any[]) => void;
+}
 
+let logger: Logger;
 if (isServer) {
   const winston = require("winston");
   const { createLogger, format, transports } = winston;
