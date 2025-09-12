@@ -89,7 +89,7 @@ const TenderCard: React.FC<TenderCardProps> = ({
       </Box>
       <Box sx={styles.location} onClick={handleClick}>
         <SectionTitle
-          text={`Angebote: 0`}
+          text={`Angebote: ${tender?.applicationIds?.length}`}
           sx={{ fontWeight: 400, py: "0.75rem" }}
         />
       </Box>
