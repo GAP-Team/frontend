@@ -36,7 +36,7 @@ const Layout: React.FC<LayoutProps> = ({
       return;
     }
     setOpen(!isActive && checkIsLoggedIn());
-  }, [isActive, checkIsLoggedIn()]);
+  }, [isActive, checkIsLoggedIn]);
 
   const handleClose = (): void => {
     setOpen(false);
