@@ -5,7 +5,6 @@ import { Box, Grid, Paper, Typography } from "@mui/material";
 import { useAppSelector, useAppDispatch } from "@/lib/hooks";
 import { showSnackbar } from "@/components/feedback/snackbar";
 import ContractSummarySection from "./ContractSummarySection";
-import NoAccessPage from "@/components/common/pages/NoAccessPage";
 import { fetchContractById, getContract } from "@/lib/features/contractSlice";
 import TenderTitleBar from "@/screens/real-estate-owner/tenders/tender-overview/TenderTitleBar";
 import DocumentList from "@/screens/real-estate-owner/buildings/building-overview/DocumentList";
