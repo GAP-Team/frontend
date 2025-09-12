@@ -20,6 +20,7 @@ export interface Tender {
   detailDescription: string;
   safetyWorkRequired: boolean;
   freeParkingAvailable: boolean;
+  applicationIds: string[];
   urgency: string;
   fromDate: Date;
   toDate: Date;
