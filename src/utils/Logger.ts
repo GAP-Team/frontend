@@ -11,8 +11,8 @@ let logger: Logger;
 
 if (isServer) {
   try {
-     const winston = eval('require')("winston");
-      const { createLogger, format, transports } = winston;
+    const winston = eval("require")("winston");
+    const { createLogger, format, transports } = winston;
 
     logger = createLogger({
       level: "info",
@@ -37,7 +37,7 @@ if (isServer) {
         new transports.Console(), // Logs to the server console
       ],
     });
-  } catch (error) {
+  } catch {
     // Fallback if Winston fails to load
     logger = {
       info: console.log,
