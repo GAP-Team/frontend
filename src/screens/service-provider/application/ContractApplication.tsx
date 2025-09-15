@@ -153,7 +153,7 @@ const ContractApplication = (): JSX.Element => {
       );
     } catch (error) {
       // Clean up uploaded documents in case of error
-      logger.info("Error submitting application:", error);
+      logger.error("Error submitting application:", error);
       await cleanupDocuments(docs);
       dispatch(
         showSnackbar({
