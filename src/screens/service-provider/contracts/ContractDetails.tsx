@@ -45,7 +45,7 @@ const ContractDetails: React.FC<ContractDetailsProps> = ({
     if (!checkIsLoggedIn() && !user?.id) {
       if (user?.role !== USER_ROLE.SERVICE_PROVIDER) {
         return (
-          <NoContentPage
+          <FallbackPage
             description="Sie müssen ein Dienstanbieter sein, um auf diese Seite zugreifen zu können."
             title="Zugriff verweigert"
             buttonLink={ROUTES?.LOGIN}
@@ -56,7 +56,7 @@ const ContractDetails: React.FC<ContractDetailsProps> = ({
       }
     } else {
       return (
-        <NoContentPage
+        <FallbackPage
           description="Bitte melden Sie sich an, um auf die Vertragsdetails zuzugreifen."
           title="Zugriff verweigert"
           buttonLink={ROUTES?.LOGIN}
