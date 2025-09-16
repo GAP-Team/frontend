@@ -43,7 +43,3 @@ export interface Notification {
 export interface TopFilterProps {
   title?: string;
 }
-
-export interface CreateResponseType {
-  id: string;
-}
