@@ -36,13 +36,13 @@ const TenderDetails: React.FC<TenderDetailsProps> = ({ tenderId }) => {
         <Grid item xs={8}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
-              <ApplicationCard />
+              <ApplicationCard offerID={"1"} />
             </Grid>
             <Grid item xs={12}>
-              <ApplicationCard />
+              <ApplicationCard offerID={"2"} />
             </Grid>
             <Grid item xs={12}>
-              <ApplicationCard />
+              <ApplicationCard offerID={"3"} />
             </Grid>
           </Grid>
         </Grid>

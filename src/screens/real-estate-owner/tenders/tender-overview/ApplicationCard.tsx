@@ -8,13 +8,17 @@ import Paper from "@mui/material/Paper";
 import CircularProgress from "@mui/material/CircularProgress";
 import Skeleton from "@mui/material/Skeleton";
 import GButton from "@/components/inputs/button/GButton";
+import { useRouter } from "next/navigation";
+import { ROUTES } from "@/utils/routes";
 
 interface ApplicationCardProps {
   loading?: boolean;
+  offerID: string;
 }
 
 const ApplicationCard: React.FC<ApplicationCardProps> = ({
   loading = false,
+  offerID,
 }) => {
   const avatarLetter = "M";
   const companyName = "Mayer Prüfungs GmbH";
@@ -26,6 +30,12 @@ const ApplicationCard: React.FC<ApplicationCardProps> = ({
   const specialServices = 4;
   const employees = 15;
   const discount = 18;
+
+  const router = useRouter();
+  const onclickHandler = (): void => {
+    router.push(ROUTES.REAL_ESTATE.TENDER.OFFER_DETAILS(offerID));
+    console.log("Button clicked");
+  };
 
   if (loading) {
     return (
@@ -134,7 +144,9 @@ const ApplicationCard: React.FC<ApplicationCardProps> = ({
       </Box>
 
       <Box sx={styles.buttonContainer}>
-        <GButton variant="outlined">zum Angebot</GButton>
+        <GButton onClick={onclickHandler} variant="outlined">
+          zum Angebot
+        </GButton>
         <Box sx={styles.additionalInfoContainer}>
           <Typography variant="bodylsb" sx={styles.specialServices}>
             {specialServices} Sonderleistungen
