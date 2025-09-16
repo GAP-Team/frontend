@@ -26,9 +26,7 @@ export const getAccessToken = (): string => {
 };
 
 export const checkIsLoggedIn = (): boolean => {
-  const accessToken = getAccessToken();
-
-  return !!accessToken;
+  return Boolean(getAccessToken());
 };
 
 export const setIsUserVerified = (verified: string): void => {

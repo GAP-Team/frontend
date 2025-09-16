@@ -22,7 +22,9 @@
       "@icons/*": ["./public/icons/*"],
       "@images/*": ["./public/images/*"],
       "@svgs/*": ["./public/svgs/*"],
-      "@public/*": ["./public/*"]
+      "@public/*": ["./public/*"],
+      "@/lib/*": ["./src/lib/*"],
+      "@/utils/*": ["./src/utils/*"]
     },
     "target": "es6"
   },
