@@ -19,7 +19,11 @@ import { setUser } from "@/lib/features/userSlice";
 import { GapLogo } from "@/components/icons/logo/GapLogo";
 import InfoBanner from "@/components/data-display/InfoBanner";
 import { loginValidationSchema } from "@/utils/ValidationSchema";
-import { setAccessToken, setIsUserVerified } from "@/utils/auth";
+import {
+  setAccessToken,
+  setIsUserVerified,
+  setIsUserActivated,
+} from "@/utils/auth";
 import emailAPI from "@/api/email";
 import { ROUTES } from "@/utils/routes";
 import { USER_ROLE } from "@/utils/enums";
@@ -57,6 +61,7 @@ const Login = (): JSX.Element => {
           appDispatch(setUser(res.data?.user));
           setAccessToken(res.data.access_token);
           setIsUserVerified(res.data.user?.isVerified);
+          setIsUserActivated(res.data.user?.isActive);
 
           if (!res.data.user?.isVerified) {
             await emailAPI.sendVerificationEmail({
@@ -102,7 +107,7 @@ const Login = (): JSX.Element => {
         <InfoBanner
           title="Where skills are developed"
           subtitle="Gesetzliche Anlagenprüfung"
-          copyright="©2024 GAP GmbH"
+          copyright={`©${new Date().getFullYear()} GAP GmbH`}
         />
       </Grid>
       <Grid item xs={12} md={6} lg={6} component={Paper}>

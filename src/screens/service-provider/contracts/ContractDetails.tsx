@@ -1,13 +1,13 @@
 import { memo, useEffect } from "react";
-import NoAccessPage from "@/components/common/pages/NoAccessPage";
 import { checkIsLoggedIn } from "@/utils/auth";
 import { USER_ROLE, DOCUMENT_TYPE } from "@/utils/enums";
-import { showSnackbar } from "@/components/feedback/snackbar";
 import { Box, Grid, Paper, Typography } from "@mui/material";
 import { useAppSelector, useAppDispatch } from "@/lib/hooks";
+import { showSnackbar } from "@/components/feedback/snackbar";
 import ContractSummarySection from "./ContractSummarySection";
-import TenderTitleBar from "@/screens/real-estate-owner/tenders/tender-overview/TenderTitleBar";
+import NoAccessPage from "@/components/common/pages/NoAccessPage";
 import { fetchContractById, getContract } from "@/lib/features/contractSlice";
+import TenderTitleBar from "@/screens/real-estate-owner/tenders/tender-overview/TenderTitleBar";
 import DocumentList from "@/screens/real-estate-owner/buildings/building-overview/DocumentList";
 
 interface ContractDetailsProps {
@@ -81,92 +81,108 @@ const ContractDetails: React.FC<ContractDetailsProps> = ({
             </Grid>
             <Grid item xs={8}>
               <Grid container spacing={2}>
-                <Grid item xs={12}>
-                  <Paper sx={styles.documentContainer}>
-                    <Typography
-                      variant="body2"
-                      color="text.secondary"
-                      style={styles.documentTitle}
-                    >
-                      DOKUMENTE Objekte (
-                      {contractDetails?.buildingDocuments?.length})
-                    </Typography>
-                    <Box sx={styles.documentsContainer}>
-                      <Grid container spacing={2}>
-                        {contractDetails?.buildingDocuments &&
-                          contractDetails?.buildingDocuments?.length > 0 && (
-                            <>
-                              <Grid item xs={12}>
-                                <DocumentList
-                                  title={"Bauunterlagen"}
-                                  documentType={
-                                    DOCUMENT_TYPE.CONSTRUCTION_DOCUMENTS
-                                  }
-                                  documents={contractDetails?.buildingDocuments}
-                                />
-                              </Grid>
-                              <Grid item xs={12}>
-                                <DocumentList
-                                  title={"Grundrisse"}
-                                  documentType={DOCUMENT_TYPE.FLOOR_PLANS}
-                                  documents={contractDetails?.buildingDocuments}
-                                />
-                              </Grid>
-                              <Grid item xs={12}>
-                                <DocumentList
-                                  title={"Sonstige Dokumente"}
-                                  documentType={DOCUMENT_TYPE.OTHER}
-                                  documents={contractDetails?.buildingDocuments}
-                                />
-                              </Grid>
-                            </>
-                          )}
-                      </Grid>
-                    </Box>
-                  </Paper>
-                </Grid>
-                <Grid item xs={12}>
-                  <Paper sx={styles.documentContainer}>
-                    <Typography
-                      variant="body2"
-                      color="text.secondary"
-                      style={styles.documentTitle}
-                    >
-                      DOKUMENTE Anlage (
-                      {contractDetails?.facilityDocuments?.length})
-                    </Typography>
-                    <Box sx={styles.documentsContainer}>
-                      <Grid container spacing={2}>
-                        {contractDetails?.facilityDocuments &&
-                          contractDetails?.facilityDocuments?.length > 0 && (
-                            <>
-                              <Grid item xs={12}>
-                                <DocumentList
-                                  title={"Berichte"}
-                                  documentType={DOCUMENT_TYPE.CHECK_REPORTS}
-                                  documents={contractDetails?.facilityDocuments}
-                                />
-                              </Grid>
-                              <Grid item xs={12}>
-                                <DocumentList
-                                  title={"Grundrisse"}
-                                  documentType={DOCUMENT_TYPE.FLOOR_PLANS}
-                                  documents={contractDetails?.facilityDocuments}
-                                />
-                              </Grid>
-                              <Grid item xs={12}>
-                                <DocumentList
-                                  title={"Sonstige Dokumente"}
-                                  documentType={DOCUMENT_TYPE.OTHER}
-                                  documents={contractDetails?.facilityDocuments}
-                                />
-                              </Grid>
-                            </>
-                          )}
-                      </Grid>
-                    </Box>
-                  </Paper>
-                </Grid>
+                {contractDetails?.buildingDocuments?.length > 0 && (
+                  <Grid item xs={12}>
+                    <Paper sx={styles.documentContainer}>
+                      <Typography
+                        variant="body2"
+                        color="text.secondary"
+                        style={styles.documentTitle}
+                      >
+                        DOKUMENTE Objekte (
+                        {contractDetails?.buildingDocuments?.length})
+                      </Typography>
+                      <Box sx={styles.documentsContainer}>
+                        <Grid container spacing={2}>
+                          {contractDetails?.buildingDocuments &&
+                            contractDetails?.buildingDocuments?.length > 0 && (
+                              <>
+                                <Grid item xs={12}>
+                                  <DocumentList
+                                    title={"Bauunterlagen"}
+                                    documentType={
+                                      DOCUMENT_TYPE.CONSTRUCTION_DOCUMENTS
+                                    }
+                                    documents={
+                                      contractDetails?.buildingDocuments
+                                    }
+                                  />
+                                </Grid>
+                                <Grid item xs={12}>
+                                  <DocumentList
+                                    title={"Grundrisse"}
+                                    documentType={DOCUMENT_TYPE.FLOOR_PLANS}
+                                    documents={
+                                      contractDetails?.buildingDocuments
+                                    }
+                                  />
+                                </Grid>
+                                <Grid item xs={12}>
+                                  <DocumentList
+                                    title={"Sonstige Dokumente"}
+                                    documentType={DOCUMENT_TYPE.OTHER}
+                                    documents={
+                                      contractDetails?.buildingDocuments
+                                    }
+                                  />
+                                </Grid>
+                              </>
+                            )}
+                        </Grid>
+                      </Box>
+                    </Paper>
+                  </Grid>
+                )}
+                {contractDetails?.facilityDocuments?.length > 0 && (
+                  <Grid item xs={12}>
+                    <Paper sx={styles.documentContainer}>
+                      <Typography
+                        variant="body2"
+                        color="text.secondary"
+                        style={styles.documentTitle}
+                      >
+                        DOKUMENTE Anlage (
+                        {contractDetails?.facilityDocuments?.length})
+                      </Typography>
+                      <Box sx={styles.documentsContainer}>
+                        <Grid container spacing={2}>
+                          {contractDetails?.facilityDocuments &&
+                            contractDetails?.facilityDocuments?.length > 0 && (
+                              <>
+                                <Grid item xs={12}>
+                                  <DocumentList
+                                    title={"Berichte"}
+                                    documentType={DOCUMENT_TYPE.CHECK_REPORTS}
+                                    documents={
+                                      contractDetails?.facilityDocuments
+                                    }
+                                  />
+                                </Grid>
+                                <Grid item xs={12}>
+                                  <DocumentList
+                                    title={"Grundrisse"}
+                                    documentType={DOCUMENT_TYPE.FLOOR_PLANS}
+                                    documents={
+                                      contractDetails?.facilityDocuments
+                                    }
+                                  />
+                                </Grid>
+                                <Grid item xs={12}>
+                                  <DocumentList
+                                    title={"Sonstige Dokumente"}
+                                    documentType={DOCUMENT_TYPE.OTHER}
+                                    documents={
+                                      contractDetails?.facilityDocuments
+                                    }
+                                  />
+                                </Grid>
+                              </>
+                            )}
+                        </Grid>
+                      </Box>
+                    </Paper>
+                  </Grid>
+                )}
               </Grid>
             </Grid>
             <Grid item xs={2}></Grid>
