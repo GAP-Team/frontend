@@ -18,7 +18,7 @@ export default function UsersPage(): JSX.Element {
 
   if (!isLoggedIn || !isAdmin) {
     return (
-      <NoContentPage
+      <FallbackPage
         description="Sie müssen ein Administrator sein, um auf diese Site zugreifen zu können."
         title="Zugriff verweigert"
         buttonLink={ROUTES?.LOGIN}
