@@ -8,7 +8,7 @@ import { useAppDispatch } from "@/lib/hooks";
 import ContractCard from "@/screens/service-provider/contracts/ContractCard";
 import { showSnackbar } from "@/components/feedback/snackbar";
 import addTenderSrc from "@icons/add_tender.svg";
-import NoContentPage from "@/components/common/pages/NoContentPage";
+import FallbackPage from "@/components/common/pages/FallbackPage";
 import ContractFilterPanel from "./ContractFilterPanel";
 import { getAllContracts, fetchContracts } from "@/lib/features/contractSlice";
 import { ROUTES } from "@/utils/routes";
@@ -98,7 +98,7 @@ const ContractsOverview = (): JSX.Element => {
         </div>
         {contracts.length === 0 ? (
           <div style={styles.resultSection}>
-            <NoContentPage
+            <FallbackPage
               image={addTenderSrc}
               alt="No Content"
               title="Keine Verträge gefunden"

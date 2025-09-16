@@ -3,7 +3,7 @@ import { Box } from "@mui/system";
 import PropertyFilterPanel from "@/components/common/filter/PropertyFilterPanel";
 import React, { useEffect, useMemo, useCallback } from "react";
 import addObjSrc from "@icons/add_building.svg";
-import NoContentPage from "@/components/common/pages/NoContentPage";
+import FallbackPage from "@/components/common/pages/FallbackPage";
 import FacilityContainer from "@/screens/real-estate-owner/facilities/facility-overview/FacilityContainer";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { currentUser } from "@/lib/features/userSlice";
@@ -88,7 +88,7 @@ const FacilityOverview: React.FC = (): JSX.Element => {
   const facilityContent = hasFacilities ? (
     <FacilityContainer buildings={filteredBuildings} />
   ) : (
-    <NoContentPage
+    <FallbackPage
       image={addObjSrc}
       alt="No Facility"
       buttonLabel="Anlage anlegen"

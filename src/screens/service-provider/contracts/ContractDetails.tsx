@@ -5,10 +5,12 @@ import { Box, Grid, Paper, Typography } from "@mui/material";
 import { useAppSelector, useAppDispatch } from "@/lib/hooks";
 import { showSnackbar } from "@/components/feedback/snackbar";
 import ContractSummarySection from "./ContractSummarySection";
-import NoAccessPage from "@/components/common/pages/NoAccessPage";
 import { fetchContractById, getContract } from "@/lib/features/contractSlice";
 import TenderTitleBar from "@/screens/real-estate-owner/tenders/tender-overview/TenderTitleBar";
 import DocumentList from "@/screens/real-estate-owner/buildings/building-overview/DocumentList";
+import FallbackPage from "@/components/common/pages/FallbackPage";
+import { ROUTES } from "@/utils/routes";
+import NoAccessImage from "@images/no_access.png";
 
 interface ContractDetailsProps {
   id: string;
@@ -43,12 +45,24 @@ const ContractDetails: React.FC<ContractDetailsProps> = ({
     if (!checkIsLoggedIn() && !user?.id) {
       if (user?.role !== USER_ROLE.SERVICE_PROVIDER) {
         return (
-          <NoAccessPage description="Sie müssen ein Dienstanbieter sein, um auf diese Seite zugreifen zu können." />
+          <FallbackPage
+            description="Sie müssen ein Dienstanbieter sein, um auf diese Seite zugreifen zu können."
+            title="Zugriff verweigert"
+            buttonLink={ROUTES?.LOGIN}
+            alt="No Access"
+            image={NoAccessImage}
+          />
         );
       }
     } else {
       return (
-        <NoAccessPage description="Bitte melden Sie sich an, um auf die Vertragsdetails zuzugreifen." />
+        <FallbackPage
+          description="Bitte melden Sie sich an, um auf die Vertragsdetails zuzugreifen."
+          title="Zugriff verweigert"
+          buttonLink={ROUTES?.LOGIN}
+          alt="No Access"
+          image={NoAccessImage}
+        />
       );
     }
 
