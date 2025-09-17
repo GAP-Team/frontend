@@ -39,7 +39,7 @@ const ButtonCard: React.FC<ButtonCardProps> = ({ loading = false }) => {
         </Box>
         <Box sx={styles.buttonContainer} mt={2}>
           <Button variant="contained" color="error" fullWidth>
-            Angebote ablehnen
+            Angebot ablehnen
           </Button>
         </Box>
       </Box>
