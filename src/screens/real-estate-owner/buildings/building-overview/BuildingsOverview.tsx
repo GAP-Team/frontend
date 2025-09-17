@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 import { useAppDispatch } from "@/lib/hooks";
 import { currentUser } from "@/lib/features/userSlice";
 import addObjSrc from "@icons/add_building.svg";
-import NoContentPage from "@/components/common/pages/NoContentPage";
+import FallbackPage from "@/components/common/pages/FallbackPage";
 import BuildingContainer from "@/screens/real-estate-owner/buildings/building-overview/BuildingContainer";
 import PropertyFilterPanel from "@/components/common/filter/PropertyFilterPanel";
 import { fetchBuildings, getUserBuildings } from "@/lib/features/buildingSlice";
@@ -49,7 +49,7 @@ const BuildingsOverview: React.FC = () => {
     userBuildings?.length > 0 ? (
       <BuildingContainer buildings={userBuildings} />
     ) : (
-      <NoContentPage
+      <FallbackPage
         image={addObjSrc}
         alt="No Building/Objekt"
         buttonLabel="Objekt anlegen"

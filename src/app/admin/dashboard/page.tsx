@@ -3,8 +3,9 @@ import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { ROUTES } from "@/utils/routes";
 import Dashboard from "@/screens/real-estate-owner/Dashboard";
-import NoAccessPage from "@/components/common/pages/NoAccessPage";
 import { userIsAdmin, checkIsLoggedIn } from "@/utils/auth";
+import FallbackPage from "@/components/common/pages/FallbackPage";
+import NoAccessImage from "@images/no_access.png";
 
 export default function AdminDashboardPage(): JSX.Element {
   const router = useRouter();
@@ -18,7 +19,13 @@ export default function AdminDashboardPage(): JSX.Element {
 
   if (!hasAccess) {
     return (
-      <NoAccessPage description="Sie müssen ein Administrator sein, um auf diese Site zugreifen zu können." />
+      <FallbackPage
+        description="Sie müssen ein Administrator sein, um auf diese Site zugreifen zu können."
+        title="Zugriff verweigert"
+        buttonLink={ROUTES?.LOGIN}
+        alt="No Access"
+        image={NoAccessImage}
+      />
     );
   }
 
