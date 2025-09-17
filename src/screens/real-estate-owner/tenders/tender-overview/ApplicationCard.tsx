@@ -34,7 +34,6 @@ const ApplicationCard: React.FC<ApplicationCardProps> = ({
   const router = useRouter();
   const onClickHandler = (): void => {
     router.push(ROUTES.REAL_ESTATE.TENDER.OFFER_DETAILS(offerID));
-    console.log("Button clicked");
   };
 
   if (loading) {
@@ -144,7 +143,7 @@ const ApplicationCard: React.FC<ApplicationCardProps> = ({
       </Box>
 
       <Box sx={styles.buttonContainer}>
-        <GButton onClick={onclickHandler} variant="outlined">
+        <GButton onClick={onClickHandler} variant="outlined">
           zum Angebot
         </GButton>
         <Box sx={styles.additionalInfoContainer}>
