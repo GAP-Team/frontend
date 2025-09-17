@@ -42,6 +42,7 @@ export interface Contract {
   buildingDocuments: Document[];
   toDate?: string;
   fromDate?: string;
+  applicationIds?: string[];
 }
 
 export interface ContractSearchProps {

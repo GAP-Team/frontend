@@ -26,9 +26,7 @@ export const getAccessToken = (): string => {
 };
 
 export const checkIsLoggedIn = (): boolean => {
-  const accessToken = getAccessToken();
-
-  return !!accessToken;
+  return Boolean(getAccessToken());
 };
 
 export const setIsUserVerified = (verified: string): void => {
@@ -36,6 +34,13 @@ export const setIsUserVerified = (verified: string): void => {
 };
 export const getIsUserVerified = (): string => {
   return Cookies.get("isVerified") || "";
+};
+
+export const setIsUserActivated = (activated: string): void => {
+  Cookies.set("isActivated", activated);
+};
+export const getIsUserActivated = (): boolean => {
+  return Cookies.get("isActivated") === "true";
 };
 
 export const userIsAdmin = (): boolean => {
