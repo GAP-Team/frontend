@@ -2,7 +2,14 @@ import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import DiscountIcon from "@mui/icons-material/Discount";
 import SocialDistanceIcon from "@mui/icons-material/SocialDistance";
 
-import { Box, Paper, Skeleton, Typography } from "@mui/material";
+import {
+  Box,
+  List,
+  ListItem,
+  Paper,
+  Skeleton,
+  Typography,
+} from "@mui/material";
 import React from "react";
 import HeaderSection from "../../dashboard/HeaderSection";
 
@@ -36,39 +43,35 @@ const BenefitSpecialServiceCard: React.FC<BenefitSpecialServiceCardProps> = ({
   return (
     <Paper sx={styles.paper}>
       <HeaderSection titletext="SONDERLEISTUNGEN" />
-      <Box sx={styles.iconContainer}>
-        <CalendarTodayIcon
-          sx={{ color: "gold", fontSize: "2rem", mt: 3 }}
-        ></CalendarTodayIcon>
-        <Typography sx={{ mt: 3, ml: 3, color: "lightgrey" }}>
-          {"Mögliches Startdatum"}
-        </Typography>
-        <Typography sx={{ fontWeight: "bold", mt: 3, mr: 3, ml: "auto" }}>
-          {possibleStartDate === "Sofort" ? "Sofort" : possibleStartDate}
-        </Typography>
-      </Box>
-      <Box sx={styles.iconContainer}>
-        <DiscountIcon
-          sx={{ color: "gold", fontSize: "2rem", mt: 0 }}
-        ></DiscountIcon>
-        <Typography sx={{ color: "lightgrey", mt: 0, ml: 3 }}>
-          {"Skonto bei direkter Yusage"}
-        </Typography>
-        <Typography sx={{ fontWeight: "bold", mt: 3, mr: 3, ml: "auto" }}>
-          {discount === "18%" ? "18%" : discount}
-        </Typography>
-      </Box>
-      <Box sx={styles.iconContainer}>
-        <SocialDistanceIcon
-          sx={{ color: "gold", fontSize: "2rem", mt: 0 }}
-        ></SocialDistanceIcon>
-        <Typography sx={{ color: "lightgrey", mt: 0, ml: 3 }}>
-          {"Entfernung zum Objekt "}
-        </Typography>
-        <Typography sx={{ fontWeight: "bold", mt: 3, mr: 3, ml: "auto" }}>
-          {distance === "15 km" ? "15 km" : distance}
-        </Typography>
-      </Box>
+      <List sx={{ p: 0 }}>
+        <ListItem sx={{ ...styles.iconContainer, px: 0 }}>
+          <CalendarTodayIcon sx={{ color: "gold", fontSize: "2rem", mt: 3 }} />
+          <Typography sx={{ mt: 3, ml: 3, color: "lightgrey" }}>
+            {"Mögliches Startdatum"}
+          </Typography>
+          <Typography sx={{ fontWeight: "bold", mt: 3, mr: 3, ml: "auto" }}>
+            {possibleStartDate === "Sofort" ? "Sofort" : possibleStartDate}
+          </Typography>
+        </ListItem>
+        <ListItem sx={{ ...styles.iconContainer, px: 0 }}>
+          <DiscountIcon sx={{ color: "gold", fontSize: "2rem", mt: 0 }} />
+          <Typography sx={{ color: "lightgrey", mt: 0, ml: 3 }}>
+            {"Skonto bei direkter Yusage"}
+          </Typography>
+          <Typography sx={{ fontWeight: "bold", mt: 3, mr: 3, ml: "auto" }}>
+            {discount === "18%" ? "18%" : discount}
+          </Typography>
+        </ListItem>
+        <ListItem sx={{ ...styles.iconContainer, px: 0 }}>
+          <SocialDistanceIcon sx={{ color: "gold", fontSize: "2rem", mt: 0 }} />
+          <Typography sx={{ color: "lightgrey", mt: 0, ml: 3 }}>
+            {"Entfernung zum Objekt "}
+          </Typography>
+          <Typography sx={{ fontWeight: "bold", mt: 3, mr: 3, ml: "auto" }}>
+            {distance === "15 km" ? "15 km" : distance}
+          </Typography>
+        </ListItem>
+      </List>
     </Paper>
   );
 };

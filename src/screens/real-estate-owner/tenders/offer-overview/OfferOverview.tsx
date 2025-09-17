@@ -26,7 +26,7 @@ const OfferOverview: React.FC<OfferOverviewProps> = ({ offerID }) => {
             <PDFViewer
               fileName="/documents/offerPdfView.pdf"
               width="100%"
-              height="625px"
+              height="655px"
               className="my-pdf-viewer"
             />
           </Box>
@@ -36,7 +36,7 @@ const OfferOverview: React.FC<OfferOverviewProps> = ({ offerID }) => {
             sx={{
               display: "flex",
               flexDirection: "column",
-              gap: 4,
+              gap: 2,
             }}
           >
             <OfferCard offerID={offerID} />
