@@ -1,25 +1,27 @@
 "use client";
 import React from "react";
-import OfferTitleBar from "./OfferTitleBar";
 import { Box, Grid } from "@mui/material";
 import PDFViewer from "./PdfViewer";
 import OfferCard from "./OfferCard";
 import BenefitSpecialServiceCard from "./BenefitSpecialServiceCard";
 import ButtonCard from "./ButtonCard";
+import DataDisplayBar from "../tender-overview/DataDisplayBar";
 
 interface OfferOverviewProps {
-  offerID: string;
+  offersID: string;
+  tendersID: string;
 }
 
-const OfferOverview: React.FC<OfferOverviewProps> = ({ offerID }) => {
+const OfferOverview: React.FC<OfferOverviewProps> = ({ offersID }) => {
   return (
     <>
-      <OfferTitleBar
-        offerTitle={offerID}
-        offerSubTitle="Details"
-        zipCode="12345"
-        officeAddress="123 Main St"
+      <DataDisplayBar
+        title={"Angebote 1"}
+        subTitle={"Service Name"}
+        companyName={"Company Name"}
+        officeAddress={"Office Address"}
       />
+
       <Grid container spacing={3} sx={{ mt: 1, px: 2, width: "100%", mb: 2 }}>
         <Grid item xs={12} md={4}>
           <Box sx={{ height: "100%" }}>
@@ -39,7 +41,7 @@ const OfferOverview: React.FC<OfferOverviewProps> = ({ offerID }) => {
               gap: 2,
             }}
           >
-            <OfferCard offerID={offerID} />
+            <OfferCard offerID={offersID} />
             <BenefitSpecialServiceCard />
           </Box>
         </Grid>

@@ -3,34 +3,30 @@ import React from "react";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 
-interface OfferTitleBarProps {
-  offerTitle?: string;
-  offerSubTitle?: string;
-  zipCode?: string;
+interface DataDisplayBarProps {
+  title?: string;
+  subTitle?: string;
+  companyName?: string;
   officeAddress?: string;
 }
 
-const OfferTitleBar: React.FC<OfferTitleBarProps> = ({
-  offerTitle,
-  offerSubTitle,
-  zipCode,
+const DataDisplayBar: React.FC<DataDisplayBarProps> = ({
+  title,
+  subTitle,
+  companyName,
   officeAddress,
 }) => {
   return (
-    <Container maxWidth={false} sx={{ ...styles.container }}>
-      {offerTitle && (
-        <Typography sx={{ ...styles.titleTypography }}>
-          {"Angebote "} • &nbsp;
-        </Typography>
+    <Container maxWidth={false} sx={styles.container}>
+      {title && (
+        <Typography sx={styles.titleTypography}>{title} • &nbsp;</Typography>
       )}
-      {offerSubTitle && (
-        <Typography sx={{ ...styles.desTypography }}>
-          {offerSubTitle} • &nbsp;
-        </Typography>
+      {subTitle && (
+        <Typography sx={styles.desTypography}>{subTitle}</Typography>
       )}
-      {zipCode && (
+      {companyName && (
         <Typography sx={{ ...styles.desTypography }}>
-          {zipCode} • &nbsp;
+          {companyName} • &nbsp;
         </Typography>
       )}
       {officeAddress && (
@@ -42,7 +38,7 @@ const OfferTitleBar: React.FC<OfferTitleBarProps> = ({
   );
 };
 
-export default OfferTitleBar;
+export default DataDisplayBar;
 
 const styles = {
   container: {
