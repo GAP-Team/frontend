@@ -20,7 +20,7 @@ const OfferTitleBar: React.FC<OfferTitleBarProps> = ({
     <Container maxWidth={false} sx={{ ...styles.container }}>
       {offerTitle && (
         <Typography sx={{ ...styles.titleTypography }}>
-          {"Angbote "} • &nbsp;
+          {"Angebote "} • &nbsp;
         </Typography>
       )}
       {offerSubTitle && (
