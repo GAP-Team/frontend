@@ -35,7 +35,6 @@ const ApplicationCard: React.FC<ApplicationCardProps> = ({
 
   const router = useRouter();
   const onClickHandler = (): void => {
-    console.log(tendersID, "Application card");
     router.push(ROUTES.REAL_ESTATE.TENDER.OFFER_DETAILS(tendersID, offerID));
   };
 
