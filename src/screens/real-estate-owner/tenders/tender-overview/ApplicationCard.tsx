@@ -32,7 +32,7 @@ const ApplicationCard: React.FC<ApplicationCardProps> = ({
   const discount = 18;
 
   const router = useRouter();
-  const onclickHandler = (): void => {
+  const onClickHandler = (): void => {
     router.push(ROUTES.REAL_ESTATE.TENDER.OFFER_DETAILS(offerID));
     console.log("Button clicked");
   };
