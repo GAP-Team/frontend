@@ -32,8 +32,8 @@ export const checkIsLoggedIn = (): boolean => {
 export const setIsUserVerified = (verified: string): void => {
   Cookies.set("isVerified", verified);
 };
-export const getIsUserVerified = (): string => {
-  return Cookies.get("isVerified") || "";
+export const getIsUserVerified = (): boolean => {
+  return Cookies.get("isVerified") === "true";
 };
 
 export const setIsUserActivated = (activated: string): void => {

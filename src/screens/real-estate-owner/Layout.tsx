@@ -10,8 +10,6 @@ import { useAppSelector } from "@/lib/hooks";
 import CustomDialog from "@/components/feedback/dialog/CustomDialog";
 import { checkIsLoggedIn } from "@/utils/auth";
 import SideBar from "@/components/navigation/sidebar/SideBar";
-import { ROUTES } from "@/utils/routes";
-import { useRouter } from "next/navigation";
 
 interface LayoutProps {
   sidebarItems: SidebarItemTypes[];
@@ -28,15 +26,11 @@ const Layout: React.FC<LayoutProps> = ({
 }) => {
   const { isActive } = useAppSelector((state) => state.user);
   const [open, setOpen] = useState(false);
-  const router = useRouter();
 
   useEffect(() => {
-    if (!checkIsLoggedIn()) {
-      router.replace(ROUTES.LOGIN);
-      return;
-    }
+    // Only show the activation dialog if user is logged in but not active
     setOpen(!isActive && checkIsLoggedIn());
-  }, [isActive, checkIsLoggedIn]);
+  }, [isActive]);
 
   const handleClose = (): void => {
     setOpen(false);

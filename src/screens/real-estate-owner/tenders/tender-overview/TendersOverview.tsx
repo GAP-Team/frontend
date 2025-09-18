@@ -12,24 +12,30 @@ import { fetchTenders } from "@/lib/features/tenderSlice";
 import { BuildingTenders } from "@/screens/real-estate-owner/tenders/tender-overview/types";
 import { ROUTES } from "@/utils/routes";
 import FallbackPage from "@/components/common/pages/FallbackPage";
+import { useAuth } from "@/hooks/useAuth";
 
 const TendersOverview: React.FC = () => {
   const user = useSelector(currentUser);
   const dispatch = useAppDispatch();
   const { tenders } = useAppSelector((state) => state.tender);
+  const { hasAccess } = useAuth();
 
   useEffect(() => {
-    if (user?.id) {
+    // Only fetch tenders if user is authenticated and has access
+    if (user?.id && hasAccess) {
       dispatch(fetchTenders(user.id));
     }
-  }, [user?.id, dispatch]);
+  }, [user?.id, dispatch, hasAccess]);
 
   const onFilterCriteriaChange = (
     city: string,
     federalState: string,
     facilityType: string
   ): void => {
-    dispatch(fetchTenders(user?.id, city, federalState, facilityType));
+    // Only trigger filter if user is authenticated
+    if (user?.id && hasAccess) {
+      dispatch(fetchTenders(user?.id, city, federalState, facilityType));
+    }
   };
 
   const hasTenders = tenders?.some(

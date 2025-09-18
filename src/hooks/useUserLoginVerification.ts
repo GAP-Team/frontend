@@ -19,11 +19,11 @@ export const useLogin = (): {
     if (!checkIsLoggedIn()) {
       router.push("/login");
     }
-    if (checkIsLoggedIn() && getIsUserVerified() === "true") {
+    if (checkIsLoggedIn() && getIsUserVerified()) {
       setIsLoggedIn(true);
       setIsUserVerified(true);
     }
-    if (checkIsLoggedIn() && getIsUserVerified() !== "true") {
+    if (checkIsLoggedIn() && !getIsUserVerified()) {
       router.push(ROUTES.USER_VERIFY);
     }
   };
