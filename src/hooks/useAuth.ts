@@ -21,7 +21,7 @@ export const useAuth = (): AuthState => {
   });
 
   useEffect(() => {
-    const checkAuth = () => {
+    const checkAuth = (): void => {
       const isLoggedIn = checkIsLoggedIn();
       const isUserVerified = getIsUserVerified();
       const hasAccess = isLoggedIn && isUserVerified;
