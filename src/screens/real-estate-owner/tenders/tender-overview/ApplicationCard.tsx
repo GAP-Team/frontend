@@ -10,7 +10,6 @@ import Skeleton from "@mui/material/Skeleton";
 import GButton from "@/components/inputs/button/GButton";
 import { useRouter } from "next/navigation";
 import { ROUTES } from "@/utils/routes";
-
 interface ApplicationCardProps {
   loading?: boolean;
   offerID: string;
@@ -20,7 +19,7 @@ interface ApplicationCardProps {
 const ApplicationCard: React.FC<ApplicationCardProps> = ({
   loading = false,
   offerID,
-  tendersID,
+  tenderID,
 }) => {
   const avatarLetter = "M";
   const companyName = "Mayer Prüfungs GmbH";
@@ -35,7 +34,7 @@ const ApplicationCard: React.FC<ApplicationCardProps> = ({
 
   const router = useRouter();
   const onClickHandler = (): void => {
-    router.push(ROUTES.REAL_ESTATE.TENDER.OFFER_DETAILS(tendersID, offerID));
+    router.push(ROUTES.REAL_ESTATE.TENDER.OFFER_DETAILS(tenderID, offerID));
   };
 
   if (loading) {

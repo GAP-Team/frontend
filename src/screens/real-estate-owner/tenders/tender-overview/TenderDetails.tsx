@@ -13,9 +13,9 @@ interface TenderDetailsProps {
   tenderId: string;
 }
 
-const TenderDetails: React.FC<TenderDetailsProps> = ({ tendersId }) => {
+const TenderDetails: React.FC<TenderDetailsProps> = ({ tenderId }) => {
   // Fetch tender details by ID
-  const tender = useAppSelector(getTenderById(tendersId));
+  const tender = useAppSelector(getTenderById(tenderId));
   const { facilities } = useAppSelector((state) => state.facility);
   const subcategory = facilities.find(
     (facility: Facility) => facility.id === tender?.facility?.id
@@ -36,13 +36,13 @@ const TenderDetails: React.FC<TenderDetailsProps> = ({ tendersId }) => {
         <Grid item xs={8}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
-              <ApplicationCard tendersID={tendersId} offerID={"1"} />
+              <ApplicationCard tenderID={tenderId} offerID={"1"} />
             </Grid>
             <Grid item xs={12}>
-              <ApplicationCard tendersID={tendersId} offerID={"2"} />
+              <ApplicationCard tenderID={tenderId} offerID={"2"} />
             </Grid>
             <Grid item xs={12}>
-              <ApplicationCard tendersID={tendersId} offerID={"3"} />
+              <ApplicationCard tenderID={tenderId} offerID={"3"} />
             </Grid>
           </Grid>
         </Grid>
