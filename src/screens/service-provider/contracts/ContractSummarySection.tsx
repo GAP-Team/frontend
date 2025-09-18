@@ -93,7 +93,7 @@ const ContractSummarySection: React.FC<ContractSummarySectionProps> = ({
       >
         <Grid item>
           <GButton color="gprimary" variant="outlined" onClick={backHandler}>
-            Abbrechen
+            Zurück
           </GButton>
           <GButton
             color="ggreen"
