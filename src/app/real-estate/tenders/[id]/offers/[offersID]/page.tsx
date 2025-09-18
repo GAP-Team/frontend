@@ -8,5 +8,5 @@ export default function OfferDetailPage(): JSX.Element {
     ? params.offersID[0]
     : params.offersID;
   const tenderID = Array.isArray(params.id) ? params.id[0] : params.id;
-  return <OfferOverview offersID={offersID} tendersID={tendersID} />;
+  return <OfferOverview offerID={offerID} tenderID={tenderID} />;
 }
