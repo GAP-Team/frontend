@@ -14,7 +14,7 @@ import { ROUTES } from "@/utils/routes";
 interface ApplicationCardProps {
   loading?: boolean;
   offerID: string;
-  tendersID: string;
+  tenderID: string;
 }
 
 const ApplicationCard: React.FC<ApplicationCardProps> = ({
