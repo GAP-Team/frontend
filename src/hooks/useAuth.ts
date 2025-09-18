@@ -36,12 +36,6 @@ export const useAuth = (): AuthState => {
 
     // Check auth status on mount
     checkAuth();
-
-    // Optional: Set up an interval to periodically check auth status
-    // This handles cases where tokens expire or user logs out in another tab
-    const interval = setInterval(checkAuth, 30000); // Check every 30 seconds
-
-    return () => clearInterval(interval);
   }, []);
 
   return authState;
