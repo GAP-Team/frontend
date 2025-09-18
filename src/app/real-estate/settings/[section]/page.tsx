@@ -3,6 +3,7 @@ import ChangeEmail from "@/screens/real-estate-owner/settings/ChangeEmail";
 import DeleteAccount from "@/screens/real-estate-owner/settings/DeleteAccount";
 import CompanyProfile from "@/screens/real-estate-owner/settings/CompanyProfile";
 import ChangePassword from "@/screens/real-estate-owner/settings/ChangePassword";
+import AuthGuard from "@/components/common/auth/AuthGuard";
 
 export default function SettingSectionPage({
   params,
@@ -26,5 +27,12 @@ export default function SettingSectionPage({
     }
   };
 
-  return <div>{renderSection()}</div>;
+  return (
+    <AuthGuard
+      fallbackTitle="Einstellungen - Zugriff verweigert"
+      fallbackMessage="Sie müssen angemeldet und verifiziert sein, um auf die Einstellungen zugreifen zu können."
+    >
+      <div>{renderSection()}</div>
+    </AuthGuard>
+  );
 }
