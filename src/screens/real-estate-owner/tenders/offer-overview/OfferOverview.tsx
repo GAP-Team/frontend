@@ -9,9 +9,10 @@ import DataDisplayBar from "../tender-overview/DataDisplayBar";
 
 interface OfferOverviewProps {
   offerID: string;
+  tenderID: string;
 }
 
-const OfferOverview: React.FC<OfferOverviewProps> = ({ offerID }) => {
+const OfferOverview: React.FC<OfferOverviewProps> = ({ offerID, tenderID }) => {
   return (
     <>
       <DataDisplayBar
