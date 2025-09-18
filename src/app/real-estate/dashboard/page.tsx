@@ -48,7 +48,7 @@ export default function RealEstateDashboardPage(): JSX.Element {
         <OverviewPanel slot="overview" />
         <TendersPanel slot="tenders" />
         <ApplicationsPanel slot="applications" />
-        <ChatPanel slot="news" />
+        <ChatPanel slot="chat" />
       </Dashboard>
     </AuthGuard>
   );
