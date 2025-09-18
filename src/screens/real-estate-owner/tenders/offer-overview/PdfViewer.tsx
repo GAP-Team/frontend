@@ -1,32 +1,22 @@
-import { Paper } from "@mui/material";
+import { Box, Paper } from "@mui/material";
 import HeaderSection from "../../dashboard/HeaderSection";
 
 interface PDFViewerProps {
   offerID?: string;
   fileName?: string;
-  width?: string;
-  height?: string;
-  className?: string;
 }
 
-const PDFViewer: React.FC<PDFViewerProps> = ({
-  width = "100%",
-  height = "600px",
-  className = "color: white",
-}) => {
+const PDFViewer: React.FC<PDFViewerProps> = ({ fileName }) => {
   return (
     <Paper sx={styles.paper}>
       <HeaderSection titletext="ANGEBOT PDF" />
       <div
-        className={`pdf-viewer-container ${className}`}
+        className={`pdf-viewer-container`}
         style={{ backgroundColor: "white" }}
       >
-        <iframe
-          src={`${fileName}#toolbar=0`}
-          width={width}
-          height={height}
-          title="PDF Viewer"
-        />
+        <Box sx={styles.pdfViewerContainer}>
+          <iframe src={`${fileName}#toolbar=0`} title="PDF Viewer" />
+        </Box>
       </div>
     </Paper>
   );
@@ -42,5 +32,10 @@ const styles = {
     width: "100%",
     borderRadius: "0.8rem",
     p: "1.25rem",
+  },
+
+  pdfViewerContainer: {
+    width: "100%",
+    height: "600px",
   },
 };

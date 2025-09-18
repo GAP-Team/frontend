@@ -22,15 +22,15 @@ const OfferOverview: React.FC<OfferOverviewProps> = ({ offerID, tenderID }) => {
         officeAddress={"Office Address"}
       />
 
-      <Grid container spacing={3} sx={{ mt: 1, px: 2, width: "100%", mb: 2 }}>
+      <Grid
+        container
+        spacing={3}
+        sx={{ mt: 1, px: 2, width: "100%", mb: 2 }}
+        id={tenderID} // Temprary assignment will remove when integrated with backend
+      >
         <Grid item xs={12} md={4}>
           <Box sx={{ height: "100%" }}>
-            <PDFViewer
-              fileName="/documents/offerPdfView.pdf"
-              width="100%"
-              height="655px"
-              className="my-pdf-viewer"
-            />
+            <PDFViewer fileName="/documents/offerPdfView.pdf" />
           </Box>
         </Grid>
         <Grid item xs={12} md={6}>
