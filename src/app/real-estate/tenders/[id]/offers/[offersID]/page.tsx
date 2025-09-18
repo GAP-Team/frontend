@@ -4,7 +4,7 @@ import OfferOverview from "@/screens/real-estate-owner/tenders/offer-overview/Of
 
 export default function OfferDetailPage(): JSX.Element {
   const params = useParams();
-  const offersID = Array.isArray(params.offersID)
+  const offerID = Array.isArray(params.offersID)
     ? params.offersID[0]
     : params.offersID;
   const tenderID = Array.isArray(params.id) ? params.id[0] : params.id;
