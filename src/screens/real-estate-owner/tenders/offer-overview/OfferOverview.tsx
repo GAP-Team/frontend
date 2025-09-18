@@ -8,10 +8,10 @@ import ButtonCard from "./ButtonCard";
 import DataDisplayBar from "../tender-overview/DataDisplayBar";
 
 interface OfferOverviewProps {
-  offersID: string;
+  offerID: string;
 }
 
-const OfferOverview: React.FC<OfferOverviewProps> = ({ offersID }) => {
+const OfferOverview: React.FC<OfferOverviewProps> = ({ offerID }) => {
   return (
     <>
       <DataDisplayBar
@@ -40,7 +40,7 @@ const OfferOverview: React.FC<OfferOverviewProps> = ({ offersID }) => {
               gap: 2,
             }}
           >
-            <OfferCard offerID={offersID} />
+            <OfferCard offerID={offerID} />
             <BenefitSpecialServiceCard />
           </Box>
         </Grid>
