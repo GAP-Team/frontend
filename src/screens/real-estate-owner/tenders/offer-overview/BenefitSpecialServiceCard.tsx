@@ -56,7 +56,7 @@ const BenefitSpecialServiceCard: React.FC<BenefitSpecialServiceCardProps> = ({
         <ListItem sx={{ ...styles.iconContainer, px: 0 }}>
           <DiscountIcon sx={{ color: "gold", fontSize: "2rem", mt: 0 }} />
           <Typography sx={{ color: "lightgrey", mt: 0, ml: 3 }}>
-            {"Skonto bei direkter Yusage"}
+            {"Skonto bei direkter Zusage"}
           </Typography>
           <Typography sx={{ fontWeight: "bold", mt: 3, mr: 3, ml: "auto" }}>
             {discount === "18%" ? "18%" : discount}
