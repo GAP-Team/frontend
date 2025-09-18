@@ -21,8 +21,8 @@ const BenefitSpecialServiceCard: React.FC<BenefitSpecialServiceCardProps> = ({
   loading = false,
 }) => {
   const possibleStartDate = "Sofort";
-  const discount = "18%";
-  const distance = "15 km";
+  const discount = "18";
+  const distance = "15";
 
   if (loading) {
     return (
@@ -59,7 +59,7 @@ const BenefitSpecialServiceCard: React.FC<BenefitSpecialServiceCardProps> = ({
             {"Skonto bei direkter Zusage"}
           </Typography>
           <Typography sx={{ fontWeight: "bold", mt: 3, mr: 3, ml: "auto" }}>
-            {discount === "18%" ? "18%" : discount}
+            {discount === "18" ? "18" : discount}
           </Typography>
         </ListItem>
         <ListItem sx={{ ...styles.iconContainer, px: 0 }}>
