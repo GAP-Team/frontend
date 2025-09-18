@@ -10,7 +10,7 @@ import {
   Typography,
 } from "@mui/material";
 import React from "react";
-import HeaderSection from "../../dashboard/HeaderSection";
+import HeaderSection from "@/screens/real-estate-owner/dashboard/HeaderSection";
 
 interface OfferCardProps {
   loading?: boolean;

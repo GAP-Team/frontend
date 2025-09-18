@@ -5,7 +5,7 @@ import PDFViewer from "./PdfViewer";
 import OfferCard from "./OfferCard";
 import BenefitSpecialServiceCard from "./BenefitSpecialServiceCard";
 import ButtonCard from "./ButtonCard";
-import DataDisplayBar from "../tender-overview/DataDisplayBar";
+import DataDisplayBar from "@/screens/real-estate-owner/tenders/tender-overview/DataDisplayBar";
 
 interface OfferOverviewProps {
   offerID: string;

@@ -1,5 +1,5 @@
 import { Box, Paper } from "@mui/material";
-import HeaderSection from "../../dashboard/HeaderSection";
+import HeaderSection from "@/screens/real-estate-owner/dashboard/HeaderSection";
 
 interface PDFViewerProps {
   offerID?: string;
