@@ -10,7 +10,7 @@ import { Facility } from "@/screens/real-estate-owner/facilities/facility-overvi
 import DataDisplayBar from "./DataDisplayBar";
 
 interface TenderDetailsProps {
-  tendersId: string;
+  tenderId: string;
 }
 
 const TenderDetails: React.FC<TenderDetailsProps> = ({ tendersId }) => {
