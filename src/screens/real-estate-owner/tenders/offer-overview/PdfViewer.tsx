@@ -10,7 +10,6 @@ interface PDFViewerProps {
 }
 
 const PDFViewer: React.FC<PDFViewerProps> = ({
-  fileName = "documents/offerPdfView.pdf", // Removed leading slash
   width = "100%",
   height = "600px",
   className = "color: white",
