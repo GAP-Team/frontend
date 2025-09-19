@@ -21,8 +21,7 @@ api.interceptors.request.use(
     const url = config.url ?? "";
 
     // Skip attaching token for login or register endpoints
-    const isAuthEndpoint =
-      url.includes("/auth/login");
+    const isAuthEndpoint = url.includes("/auth/login");
 
     if (token && !isAuthEndpoint) {
       config.headers.Authorization = `Bearer ${token}`;
@@ -37,7 +36,6 @@ api.interceptors.request.use(
   },
   (error: AxiosError) => Promise.reject(error)
 );
-
 
 // --- Response Interceptor ---
 api.interceptors.response.use(
