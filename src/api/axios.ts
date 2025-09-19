@@ -17,8 +17,14 @@ api.interceptors.request.use(
   (config: InternalAxiosRequestConfig): InternalAxiosRequestConfig => {
     const token = Cookies.get(ACCESS_TOKEN_KEY);
 
-    // Attach access token if available
-    if (token) {
+    // Normalize the request URL (path only)
+    const url = config.url ?? "";
+
+    // Skip attaching token for login or register endpoints
+    const isAuthEndpoint =
+      url.includes("/auth/login");
+
+    if (token && !isAuthEndpoint) {
       config.headers.Authorization = `Bearer ${token}`;
     }
 
@@ -31,6 +37,7 @@ api.interceptors.request.use(
   },
   (error: AxiosError) => Promise.reject(error)
 );
+
 
 // --- Response Interceptor ---
 api.interceptors.response.use(
