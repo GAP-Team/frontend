@@ -1,33 +1,45 @@
-import axios from "axios";
+import axios, {
+  AxiosError,
+  AxiosResponse,
+  InternalAxiosRequestConfig,
+} from "axios";
 import Cookies from "js-cookie";
 
-export const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
+export const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL ?? "";
+export const API_KEY = process.env.NEXT_PUBLIC_API_KEY ?? "";
 
-const api = axios.create({ baseURL: baseUrl });
+const ACCESS_TOKEN_KEY = "access_token";
 
+const api = axios.create({ baseURL: API_BASE_URL });
+
+// --- Request Interceptor ---
 api.interceptors.request.use(
-  (config) => {
-    let accessToken = Cookies.get("access_token");
-    if (!accessToken) {
-      accessToken = "";
+  (config: InternalAxiosRequestConfig): InternalAxiosRequestConfig => {
+    const token = Cookies.get(ACCESS_TOKEN_KEY);
+
+    // Attach access token if available
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
     }
-    if (accessToken) {
-      config.headers!.Authorization = `Bearer ${accessToken}`;
+
+    // Always attach API key
+    if (API_KEY) {
+      config.headers["x-api-key"] = API_KEY;
     }
+
     return config;
   },
-  (err) => Promise.reject(err)
+  (error: AxiosError) => Promise.reject(error)
 );
+
+// --- Response Interceptor ---
 api.interceptors.response.use(
-  (response: any) => response,
-  async (error: any) => {
-    const originalRequest = error.config;
-    if (
-      error.response &&
-      error.response.status === 403 &&
-      !originalRequest._retry
-    ) {
-      Cookies.remove("access_token");
+  (response: AxiosResponse) => response,
+  (error: AxiosError) => {
+    if (error.response?.status === 403) {
+      Cookies.remove(ACCESS_TOKEN_KEY);
+      // Optional: redirect user to login
+      // window.location.href = "/login";
     }
     return Promise.reject(error);
   }
