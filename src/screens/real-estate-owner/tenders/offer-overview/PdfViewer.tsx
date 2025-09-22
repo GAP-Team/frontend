@@ -15,7 +15,11 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ fileName }) => {
         style={{ backgroundColor: "white" }}
       >
         <Box sx={styles.pdfViewerContainer}>
-          <iframe src={`${fileName}#toolbar=0`} title="PDF Viewer" />
+          <iframe
+            src={`${fileName}#toolbar=0`}
+            title="PDF Viewer"
+            style={{ width: "100%", height: "640px" }}
+          />
         </Box>
       </div>
     </Paper>
@@ -36,6 +40,6 @@ const styles = {
 
   pdfViewerContainer: {
     width: "100%",
-    height: "600px",
+    height: "100%",
   },
 };
