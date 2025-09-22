@@ -1,9 +1,6 @@
 "use client";
 import React, { ReactNode, useEffect, useState } from "react";
-import {
-  SubItem,
-  SidebarItemTypes,
-} from "@/components/navigation/sidebar/types";
+import { SidebarItemTypes } from "@/components/navigation/sidebar/types";
 import GAppbar from "@/screens/real-estate-owner/navigation/GAppbar";
 import Box from "@mui/material/Box";
 import { useAppSelector } from "@/lib/hooks";
@@ -19,19 +16,15 @@ interface LayoutProps {
   children: ReactNode;
 }
 
-const Layout: React.FC<LayoutProps> = ({
-  sidebarItems,
-  children,
-}) => {
+const Layout: React.FC<LayoutProps> = ({ sidebarItems, children }) => {
   const { isActive } = useAppSelector((state) => state.user);
   const [open, setOpen] = useState(false);
   const router = useRouter();
-  
+
   // Always use authentication
-  const { isReady, selectedItem, handleRedirect } = useAuthenticatedLayout({ sidebarItems });
-  
-  // If not ready (authentication in progress), return null
-  if (!isReady) return null;
+  const { isReady, selectedItem, handleRedirect } = useAuthenticatedLayout({
+    sidebarItems,
+  });
 
   useEffect(() => {
     if (!checkIsLoggedIn()) {
@@ -44,6 +37,9 @@ const Layout: React.FC<LayoutProps> = ({
   const handleClose = (): void => {
     setOpen(false);
   };
+
+  // If not ready (authentication in progress), return null
+  if (!isReady) return null;
 
   return (
     <Box sx={{ display: "flex", backgroundColor: "#F1F3F4" }}>

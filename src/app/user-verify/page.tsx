@@ -1,7 +1,6 @@
 "use client";
 import Cookies from "js-cookie";
 import { useState } from "react";
-import { ROUTES } from "@/utils/routes";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 import { currentUser } from "@/lib/features/userSlice";

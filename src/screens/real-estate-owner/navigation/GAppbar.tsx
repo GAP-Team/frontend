@@ -1,5 +1,4 @@
 import * as React from "react";
-import Cookies from "js-cookie";
 import Box from "@mui/material/Box";
 import Menu from "@mui/material/Menu";
 import Badge from "@mui/material/Badge";

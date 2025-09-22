@@ -7,16 +7,36 @@ import { LuLayoutDashboard } from "react-icons/lu";
 import Layout from "@/screens/real-estate-owner/Layout";
 
 const sidebarItems = [
-  { id: 0, icon: LuLayoutDashboard, text: "Dashboard", url: ROUTES.SERVICE_PROVIDER.DASHBOARD },
-  { id: 1, icon: CgNotes, text: "Ausschreibungen", url: ROUTES.SERVICE_PROVIDER.CONTRACTS },
-  { id: 2, icon: BiTask, text: "Aufträge", url: ROUTES.SERVICE_PROVIDER.APPLICATIONS },
-  { id: 3, icon: BsEnvelope, text: "Nachrichten", url: ROUTES.SERVICE_PROVIDER.MESSAGES },
+  {
+    id: 0,
+    icon: LuLayoutDashboard,
+    text: "Dashboard",
+    url: ROUTES.SERVICE_PROVIDER.DASHBOARD,
+  },
+  {
+    id: 1,
+    icon: CgNotes,
+    text: "Ausschreibungen",
+    url: ROUTES.SERVICE_PROVIDER.CONTRACTS,
+  },
+  {
+    id: 2,
+    icon: BiTask,
+    text: "Aufträge",
+    url: ROUTES.SERVICE_PROVIDER.APPLICATIONS,
+  },
+  {
+    id: 3,
+    icon: BsEnvelope,
+    text: "Nachrichten",
+    url: ROUTES.SERVICE_PROVIDER.MESSAGES,
+  },
 ];
 
-const ServiceProviderLayout = ({ children }: { children: React.ReactNode }) => (
-  <Layout sidebarItems={sidebarItems}>
-    {children}
-  </Layout>
-);
+const ServiceProviderLayout: React.FC<any> = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => <Layout sidebarItems={sidebarItems}>{children}</Layout>;
 
 export default ServiceProviderLayout;

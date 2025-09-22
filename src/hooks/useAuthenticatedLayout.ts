@@ -1,8 +1,11 @@
 import { useState, useEffect } from "react";
 import { useRouter, usePathname } from "next/navigation";
-import { checkIsLoggedIn, getIsUserVerified, getUserDashboard } from "@/utils/auth";
+import { checkIsLoggedIn, getIsUserVerified } from "@/utils/auth";
 import { ROUTES } from "@/utils/routes";
-import { SubItem, SidebarItemTypes } from "@/components/navigation/sidebar/types";
+import {
+  SubItem,
+  SidebarItemTypes,
+} from "@/components/navigation/sidebar/types";
 
 export interface UseAuthenticatedLayoutProps {
   sidebarItems: SidebarItemTypes[];
@@ -14,13 +17,15 @@ export interface UseAuthenticatedLayoutReturn {
   handleRedirect: (item: SidebarItemTypes | SubItem) => void;
 }
 
-export const useAuthenticatedLayout = ({ 
-  sidebarItems 
+export const useAuthenticatedLayout = ({
+  sidebarItems,
 }: UseAuthenticatedLayoutProps): UseAuthenticatedLayoutReturn => {
   const router = useRouter();
   const pathname = usePathname();
   const [isReady, setIsReady] = useState(false);
-  const [selectedItem, setSelectedItem] = useState<SidebarItemTypes | SubItem>(sidebarItems[0]);
+  const [selectedItem, setSelectedItem] = useState<SidebarItemTypes | SubItem>(
+    sidebarItems[0]
+  );
 
   useEffect(() => {
     // Authentication and verification check
@@ -28,21 +33,24 @@ export const useAuthenticatedLayout = ({
       router.push("/login");
       return;
     }
-    
+
     if (!getIsUserVerified()) {
       router.push(ROUTES.USER_VERIFY);
       return;
     }
 
     // Sidebar item matching
-    const matchedItem = sidebarItems.find(item => 
-      item.url === pathname || 
-      item.subItems?.find(subItem => subItem.url === pathname)
+    const matchedItem = sidebarItems.find(
+      (item) =>
+        item.url === pathname ||
+        item.subItems?.find((subItem) => subItem.url === pathname)
     );
-    
-    const selectedSidebarItem = matchedItem?.url === pathname 
-      ? matchedItem 
-      : matchedItem?.subItems?.find(subItem => subItem.url === pathname) || sidebarItems[0];
+
+    const selectedSidebarItem =
+      matchedItem?.url === pathname
+        ? matchedItem
+        : matchedItem?.subItems?.find((subItem) => subItem.url === pathname) ||
+          sidebarItems[0];
 
     setSelectedItem(selectedSidebarItem);
     setIsReady(true);
