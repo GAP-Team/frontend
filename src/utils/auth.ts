@@ -66,16 +66,13 @@ export const userIsAdmin = (): boolean => {
 
 export const getUserDashboard = (): string => {
   const role = getUserRole();
-  switch (role) {
-    case USER_ROLE.ADMIN:
-      return ROUTES.ADMIN.DASHBOARD;
-    case USER_ROLE.SERVICE_PROVIDER:
-      return ROUTES.SERVICE_PROVIDER.DASHBOARD;
-    case USER_ROLE.REAL_ESTATE_OWNER:
-      return ROUTES.REAL_ESTATE.DASHBOARD;
-    default:
-      return ROUTES.REAL_ESTATE.DASHBOARD;
-  }
+  const roleDashboardMap: Record<string, string> = {
+    [USER_ROLE.ADMIN]: ROUTES.ADMIN.DASHBOARD,
+    [USER_ROLE.SERVICE_PROVIDER]: ROUTES.SERVICE_PROVIDER.DASHBOARD,
+    [USER_ROLE.REAL_ESTATE_OWNER]: ROUTES.REAL_ESTATE.DASHBOARD,
+  };
+  // Fallback to login or a neutral landing page if role is unknown
+  return roleDashboardMap[role] || ROUTES.LOGIN;
 };
 
 export const clearAuthData = (): void => {
