@@ -1,8 +1,7 @@
-import DButton from "@/components/inputs/button/DButton";
-
 import {
   Avatar,
   Box,
+  Button,
   Checkbox,
   FormControlLabel,
   Paper,
@@ -135,7 +134,7 @@ const OfferCard: React.FC<OfferCardProps> = ({ loading = false }) => {
                 mr: 0,
               }}
             >
-              <DButton variant="contained">DownLoad</DButton>
+              <Button variant="contained">DownLoad</Button>
             </Box>
           </Box>
         </Box>
