@@ -1,5 +1,4 @@
 "use client";
-import Cookies from "js-cookie";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
