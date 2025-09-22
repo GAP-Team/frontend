@@ -7,7 +7,7 @@ import Paper from "@mui/material/Paper";
 import TenderSummarySection from "./TenderSummarySection";
 import ApplicationCard from "./ApplicationCard";
 import { Facility } from "@/screens/real-estate-owner/facilities/facility-overview/types";
-import DataDisplayBar from "./DataDisplayBar";
+import DataDisplayBar from "@/components/data-display/DataDisplayBar";
 
 interface TenderDetailsProps {
   tenderId: string;

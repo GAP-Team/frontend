@@ -7,7 +7,7 @@ import { showSnackbar } from "@/components/feedback/snackbar";
 import ContractSummarySection from "./ContractSummarySection";
 import { fetchContractById, getContract } from "@/lib/features/contractSlice";
 import DocumentList from "@/screens/real-estate-owner/buildings/building-overview/DocumentList";
-import DataDisplayBar from "@/screens/real-estate-owner/tenders/tender-overview/DataDisplayBar";
+import DataDisplayBar from "@/components/data-display/DataDisplayBar";
 import FallbackPage from "@/components/common/pages/FallbackPage";
 import { ROUTES } from "@/utils/routes";
 import NoAccessImage from "@images/no_access.png";
