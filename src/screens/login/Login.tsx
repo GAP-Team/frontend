@@ -20,9 +20,7 @@ import { GapLogo } from "@/components/icons/logo/GapLogo";
 import InfoBanner from "@/components/data-display/InfoBanner";
 import { loginValidationSchema } from "@/utils/ValidationSchema";
 import {
-  setAccessToken,
-  setIsUserVerified,
-  setIsUserActivated,
+  setUserAuthData,
 } from "@/utils/auth";
 import emailAPI from "@/api/email";
 import { ROUTES } from "@/utils/routes";
@@ -59,9 +57,7 @@ const Login = (): JSX.Element => {
 
         if (res?.data?.access_token) {
           appDispatch(setUser(res.data?.user));
-          setAccessToken(res.data.access_token);
-          setIsUserVerified(res.data.user?.isVerified);
-          setIsUserActivated(res.data.user?.isActive);
+          setUserAuthData(res.data.access_token, res.data?.user);
 
           if (!res.data.user?.isVerified) {
             await emailAPI.sendVerificationEmail({
@@ -71,7 +67,6 @@ const Login = (): JSX.Element => {
 
           if (res.data.user?.role === USER_ROLE.ADMIN) {
             router.push(ROUTES.ADMIN.DASHBOARD);
-            Cookies.set("role", res.data.user?.role);
           }
           if (res.data.user?.role === USER_ROLE.SERVICE_PROVIDER) {
             router.push(ROUTES.SERVICE_PROVIDER.DASHBOARD);

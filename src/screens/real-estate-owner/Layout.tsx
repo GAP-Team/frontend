@@ -12,23 +12,26 @@ import { checkIsLoggedIn } from "@/utils/auth";
 import SideBar from "@/components/navigation/sidebar/SideBar";
 import { ROUTES } from "@/utils/routes";
 import { useRouter } from "next/navigation";
+import { useAuthenticatedLayout } from "@/hooks/useAuthenticatedLayout";
 
 interface LayoutProps {
   sidebarItems: SidebarItemTypes[];
-  selected: SidebarItemTypes | SubItem;
-  setSelected: (item: SidebarItemTypes | SubItem) => void;
   children: ReactNode;
 }
 
 const Layout: React.FC<LayoutProps> = ({
   sidebarItems,
-  selected,
-  setSelected,
   children,
 }) => {
   const { isActive } = useAppSelector((state) => state.user);
   const [open, setOpen] = useState(false);
   const router = useRouter();
+  
+  // Always use authentication
+  const { isReady, selectedItem, handleRedirect } = useAuthenticatedLayout({ sidebarItems });
+  
+  // If not ready (authentication in progress), return null
+  if (!isReady) return null;
 
   useEffect(() => {
     if (!checkIsLoggedIn()) {
@@ -46,8 +49,8 @@ const Layout: React.FC<LayoutProps> = ({
     <Box sx={{ display: "flex", backgroundColor: "#F1F3F4" }}>
       <SideBar
         items={sidebarItems}
-        setSelected={setSelected}
-        selected={selected}
+        setSelected={handleRedirect}
+        selected={selectedItem}
       />
       <Box sx={{ width: "100%", height: "100%", backgroundColor: "#F1F3F4" }}>
         <GAppbar />

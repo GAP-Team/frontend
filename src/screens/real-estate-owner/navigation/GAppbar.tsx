@@ -27,7 +27,7 @@ import { notifications } from "@/utils/Constants";
 import { ROUTES } from "@/utils/routes";
 import Button from "@mui/material/Button";
 import { FaArrowRightToBracket } from "react-icons/fa6";
-import { checkIsLoggedIn } from "@/utils/auth";
+import { checkIsLoggedIn, clearAuthData } from "@/utils/auth";
 import { persistor } from "@/lib/store";
 
 export default function GAppbar(): JSX.Element {
@@ -64,9 +64,7 @@ export default function GAppbar(): JSX.Element {
     let currentUserId = { userId: user?.id };
     const logoutStatus = await authAPI.logout(currentUserId);
     if (logoutStatus?.status === 201) {
-      Cookies.remove("access_token");
-      Cookies.remove("isVerified");
-      localStorage.clear();
+      clearAuthData();
       persistor.purge();
       handleClose();
       router.push("/login");
