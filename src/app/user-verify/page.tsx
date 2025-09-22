@@ -18,7 +18,6 @@ export default function UserMailVerification(): JSX.Element {
     setIsUserVerified(true);
     const dashboardRoute = getUserDashboard();
     router.push(dashboardRoute);
-    Cookies.set("isVerified", "true");
   };
 
   return (
