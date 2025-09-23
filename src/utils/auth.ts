@@ -59,7 +59,7 @@ export const getUserRole = (): string => {
   return Cookies.get("role") || "";
 };
 
-export const userIsAdmin = (): boolean => {
+export const isUserAdmin = (): boolean => {
   const role = getUserRole();
   return role === USER_ROLE.ADMIN;
 };
