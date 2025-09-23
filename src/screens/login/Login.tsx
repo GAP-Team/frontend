@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import Box from "@mui/material/Box";
 import Link from "@mui/material/Link";
@@ -18,7 +18,7 @@ import { setUser } from "@/lib/features/userSlice";
 import { GapLogo } from "@/components/icons/logo/GapLogo";
 import InfoBanner from "@/components/data-display/InfoBanner";
 import { loginValidationSchema } from "@/utils/ValidationSchema";
-import { setUserAuthData } from "@/utils/auth";
+import { setUserAuthData, checkIsLoggedIn, getIsUserVerified, getUserDashboard } from "@/utils/auth";
 import emailAPI from "@/api/email";
 import { ROUTES } from "@/utils/routes";
 import { USER_ROLE } from "@/utils/enums";
@@ -31,6 +31,17 @@ const Login = (): JSX.Element => {
   const [loading, setLoading] = useState(false);
   const [loginError, setLoginError] = React.useState<string | null>(null);
   const [passwordResetDialogOpen, setPasswordResetDialogOpen] = useState(false);
+
+  useEffect(() => {
+    if (checkIsLoggedIn()) {
+      if (getIsUserVerified()) {
+        const dashboardRoute = getUserDashboard();
+        router.replace(dashboardRoute);
+      } else {
+        router.replace(ROUTES.USER_VERIFY);
+      }
+    }
+  }, [router]);
 
   const handlePasswordResetClick = (event: React.MouseEvent): void => {
     event.preventDefault();
