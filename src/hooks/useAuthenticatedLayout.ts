@@ -30,7 +30,7 @@ export const useAuthenticatedLayout = ({
   useEffect(() => {
     // Authentication and verification check
     if (!checkIsLoggedIn()) {
-      router.push("/login");
+      router.push(ROUTES.LOGIN);
       return;
     }
 
