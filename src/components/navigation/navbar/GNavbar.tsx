@@ -118,7 +118,7 @@ export default GNavbar;
 
 const styles = {
   serviceProviderMenu: {
-    background: "#16A34A",
+    background: "#FF9209",
     color: "#FFFFFF",
     padding: 15,
     borderRadius: 7,
