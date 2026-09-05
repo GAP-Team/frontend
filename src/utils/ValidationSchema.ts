@@ -395,7 +395,10 @@ export const UserProfileSchema = yup.object({
   lastName: BasicInfoRegistrationSchema.fields.lastName,
   position: yup
     .string()
-    .matches(/^[A-Za-z]+$/, "Beruf darf nur Buchstaben enthalten"),
+    .matches(
+      NAME_REGEX,
+      "Beruf darf nur Buchstaben, Leerzeichen, Bindestriche und Apostrophe enthalten"
+    ),
 });
 
 export const EmailChangeSchema = yup.object({
