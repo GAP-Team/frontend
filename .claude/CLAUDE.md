@@ -4,15 +4,17 @@ Next.js 14 (App Router) app powering GAP — a marketplace connecting real estat
 service providers via tenders/contracts. Landing page uses Tailwind CSS; dashboards use MUI
 (Material-UI). State is managed with Redux Toolkit + redux-persist.
 
-## Git workflow (from AGENTS.md — always follow)
+## Git workflow
 
-- NEVER commit directly to `developer` (the main/base branch).
-- Before editing, check the current branch; if on `developer`, create a feature branch first.
-- Branch naming: `feature/<short-description>`, `fix/<short-description>`,
-  `refactor/<short-description>`, `chore/<short-description>`.
-- Always branch from the latest `developer`.
-- Frontend and backend are independent git repos — branch/commit each separately.
-- Never push directly to `developer`.
+- `developer` is the **protected** main branch — never commit directly to it.
+- Before starting any task, create a new branch off `developer` with a descriptive, kebab-case name reflecting the work, e.g.:
+  - `feat/<short-description>` — new functionality
+  - `fix/<short-description>` — bug fixes
+  - `refact/<short-description>` — refactors
+  - `docs/<short-description>` — documentation-only changes
+  - Include a ticket key when one exists (e.g. `fix/GP-985-twilio-guard`), matching the convention seen in recent commit history (`GP-985-be-update-twilio-endpoints-with-twilio-guard`).
+- Commit and push work on that branch, then open a PR into `developer` — don't ask to merge/push straight to `developer`.
+
 
 ## Commands
 
