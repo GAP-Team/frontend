@@ -83,9 +83,7 @@ const GNavbar = (): JSX.Element => {
                   transform lg:mx-8 
                 `}
                 style={
-                  item.path === ROUTES.SERVICE_PROVIDER_HOME
-                    ? styles.serviceProviderMenu
-                    : pathname === item.path
+                  pathname === item.path
                     ? styles.activeMenu
                     : styles.inActiveMenu
                 }
@@ -117,12 +115,6 @@ const GNavbar = (): JSX.Element => {
 export default GNavbar;
 
 const styles = {
-  serviceProviderMenu: {
-    background: "#FF9209",
-    color: "#FFFFFF",
-    padding: 15,
-    borderRadius: 7,
-  },
   activeMenu: {
     background: "#D0EDE8",
     padding: 15,
