@@ -40,7 +40,7 @@ nitpicks with no functional or maintainability impact):
 - No unused variables/imports, no duplicate imports, no shadowed variables.
 - Cyclomatic complexity kept reasonable (ESLint warns above 5) — flag functions that clearly
   need to be split, not borderline cases.
-- New `any` usage in *new* code where a concrete type is one step away (don't flag pre-existing
+- New `any` usage in _new_ code where a concrete type is one step away (don't flag pre-existing
   `any` in unrelated code you didn't touch).
 
 ## 3. Clean code
@@ -51,7 +51,7 @@ nitpicks with no functional or maintainability impact):
   code used exactly once.
 - Error handling only where errors can actually occur (network calls, parsing, user input) — not
   defensive checks for impossible states.
-- Comments only where they explain a non-obvious *why* (a workaround, a constraint from the
+- Comments only where they explain a non-obvious _why_ (a workaround, a constraint from the
   backend, a tricky invariant) — flag comments that just restate the code.
 
 ## 4. SOLID (applied pragmatically to React/TS, not academically)

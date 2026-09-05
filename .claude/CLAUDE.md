@@ -15,7 +15,6 @@ service providers via tenders/contracts. Landing page uses Tailwind CSS; dashboa
   - Include a ticket key when one exists (e.g. `fix/GP-985-twilio-guard`), matching the convention seen in recent commit history (`GP-985-be-update-twilio-endpoints-with-twilio-guard`).
 - Commit and push work on that branch, then open a PR into `developer` — don't ask to merge/push straight to `developer`.
 
-
 ## Commands
 
 - `npm run dev` — start dev server (turbo mode), http://localhost:3000
