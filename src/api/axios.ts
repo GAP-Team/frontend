@@ -44,8 +44,7 @@ api.interceptors.response.use(
   (error: AxiosError) => {
     if (error.response?.status === 403) {
       Cookies.remove(ACCESS_TOKEN_KEY);
-      // Optional: redirect user to login
-      // window.location.href = "/login";
+      Cookies.remove(ACCESS_TOKEN_KEY);
     }
     return Promise.reject(error);
   }
