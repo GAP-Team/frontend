@@ -21,7 +21,7 @@ api.interceptors.request.use(
     const url = config.url ?? "";
 
     // Skip attaching token for login or register endpoints
-    const isAuthEndpoint = url.includes("/auth/login");
+    const isAuthEndpoint = url.endsWith("/auth/login");
 
     if (token && !isAuthEndpoint) {
       config.headers.Authorization = `Bearer ${token}`;
