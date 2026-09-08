@@ -18,7 +18,12 @@ import { setUser } from "@/lib/features/userSlice";
 import { GapLogo } from "@/components/icons/logo/GapLogo";
 import InfoBanner from "@/components/data-display/InfoBanner";
 import { loginValidationSchema } from "@/utils/ValidationSchema";
-import { setUserAuthData, checkIsLoggedIn, getIsUserVerified, getUserDashboard } from "@/utils/auth";
+import {
+  setUserAuthData,
+  checkIsLoggedIn,
+  getIsUserVerified,
+  getUserDashboard,
+} from "@/utils/auth";
 import emailAPI from "@/api/email";
 import { ROUTES } from "@/utils/routes";
 import { USER_ROLE } from "@/utils/enums";
