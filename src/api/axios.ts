@@ -8,7 +8,10 @@ import logger from "@/utils/Logger";
 
 export const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL ?? "";
 const API_KEY = process.env.NEXT_PUBLIC_API_KEY ?? "";
-if (!API_KEY) logger.error("NEXT_PUBLIC_API_KEY is not set — API requests will be rejected");
+if (!API_KEY)
+  logger.error(
+    "NEXT_PUBLIC_API_KEY is not set — API requests will be rejected"
+  );
 
 const ACCESS_TOKEN_KEY = "access_token";
 
