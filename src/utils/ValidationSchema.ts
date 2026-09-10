@@ -468,7 +468,6 @@ export const DeleteAccountSchema = yup.object({
 
 export const applyContractFormSchema = yup.object().shape({
   totalPrice: yup.string().required("Gesamtkosten ist erforderlich"),
-  hourlyRate: yup.string().required("Netto-Stundensatz ist erforderlich"),
   zip: yup
     .string()
     .matches(

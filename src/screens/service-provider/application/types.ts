@@ -6,7 +6,6 @@ export interface Application {
   tenderId: string;
   userId: string;
   serviceTotalPrice: string;
-  servicePerHourPrice: string;
   message: string;
   suggestionWorkDates: string[];
   zip: number;
@@ -19,7 +18,6 @@ export interface Application {
 
 export interface ContractApplicationFormValues {
   totalPrice: string;
-  hourlyRate: string;
   message: string;
   zip: string;
   city: string;
