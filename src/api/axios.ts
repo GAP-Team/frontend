@@ -46,6 +46,7 @@ api.interceptors.response.use(
   (response: AxiosResponse) => response,
   (error: AxiosError) => {
     if (error.response?.status === 403) {
+    if (error.response?.status === 403) {
       Cookies.remove(ACCESS_TOKEN_KEY);
     }
     return Promise.reject(error);
