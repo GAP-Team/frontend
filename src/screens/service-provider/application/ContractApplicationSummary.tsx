@@ -36,10 +36,6 @@ const ContractApplicationSummary = ({
       label: "Kosten der Dienstleistung Insgesamt",
       value: `€ ${values.totalPrice}`,
     },
-    {
-      label: "Kosten pro Stunde des Dienstes",
-      value: `€ ${values.hourlyRate}`,
-    },
     values.message && {
       label: "Nützliche Informationen",
       value: values.message,

@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { NumericFormat } from "react-number-format";
-import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import { Grid, Divider, TextField, Typography } from "@mui/material";
 import HeaderSection from "@/screens/real-estate-owner/dashboard/HeaderSection";
 import LabelWithAsterisk from "@/components/data-display/label/LabelWithAsterisk";
@@ -15,7 +14,6 @@ const ContractRateForm = ({ formik }: { formik?: any }): JSX.Element => {
 
   const [priceValues, setPriceValues] = useState({
     totalPrice: "",
-    hourlyRate: "",
   });
 
   const handlePriceChange = (
@@ -66,32 +64,6 @@ const ContractRateForm = ({ formik }: { formik?: any }): JSX.Element => {
                 error={
                   formik?.touched?.totalPrice &&
                   Boolean(formik?.errors?.totalPrice)
-                }
-              />
-            </Grid>
-            <Grid item xs={12} md={6}>
-              <LabelWithAsterisk>
-                Nettostundensatz Einzelstunden
-              </LabelWithAsterisk>
-              <HelpOutlineIcon style={styles.helpIcon} fontSize="small" />
-              <NumericFormat
-                prefix="€"
-                fullWidth
-                sx={{ mt: 0.5 }}
-                name="hourlyRate"
-                decimalScale={2}
-                fixedDecimalScale
-                decimalSeparator=","
-                thousandSeparator="."
-                customInput={TextField}
-                value={priceValues.hourlyRate}
-                onChange={(event) => handlePriceChange(event, "hourlyRate")}
-                helperText={
-                  formik?.touched?.hourlyRate && formik?.errors?.hourlyRate
-                }
-                error={
-                  formik?.touched?.hourlyRate &&
-                  Boolean(formik?.errors?.hourlyRate)
                 }
               />
             </Grid>
@@ -243,11 +215,6 @@ const styles = {
     height: "1px",
     bgcolor: "#fbfbfb",
     textAlign: "center",
-  },
-  helpIcon: {
-    color: "#A0ADB1",
-    cursor: "pointer",
-    marginLeft: "0.5rem",
   },
   lableText: {
     display: "flex",

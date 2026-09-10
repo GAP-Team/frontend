@@ -39,14 +39,13 @@ const steps: ActiveStepItem[] = [
 ];
 
 const stepFieldsMap: Record<number, string[]> = {
-  0: ["totalPrice", "hourlyRate", "message", "zip", "city", "desiredDateOne"],
+  0: ["totalPrice", "message", "zip", "city", "desiredDateOne"],
   1: ["advantages", "termsConditionDoc", "offerDoc"],
   2: [],
 };
 
 const initialValues: ContractApplicationFormValues = {
   totalPrice: "",
-  hourlyRate: "",
   message: "",
   zip: "",
   city: "",
@@ -124,7 +123,6 @@ const ContractApplication = (): JSX.Element => {
         tenderId: contract.tenderId,
         userId: user.id,
         serviceTotalPrice: values.totalPrice,
-        servicePerHourPrice: values.hourlyRate,
         message: values.message,
         suggestionWorkDates: values.desiredDates
           .filter(Boolean)
