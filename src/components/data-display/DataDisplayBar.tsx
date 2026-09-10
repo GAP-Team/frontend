@@ -3,12 +3,19 @@ import React from "react";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 
-interface TenderTitleBarProps {
+interface DataDisplayBarProps {
   title?: string;
   subTitle?: string;
+  companyName?: string;
+  officeAddress?: string;
 }
 
-const TenderTitleBar: React.FC<TenderTitleBarProps> = ({ title, subTitle }) => {
+const DataDisplayBar: React.FC<DataDisplayBarProps> = ({
+  title,
+  subTitle,
+  companyName,
+  officeAddress,
+}) => {
   return (
     <Container maxWidth={false} sx={styles.container}>
       {title && (
@@ -17,11 +24,21 @@ const TenderTitleBar: React.FC<TenderTitleBarProps> = ({ title, subTitle }) => {
       {subTitle && (
         <Typography sx={styles.desTypography}>{subTitle}</Typography>
       )}
+      {companyName && (
+        <Typography sx={{ ...styles.desTypography }}>
+          {companyName} • &nbsp;
+        </Typography>
+      )}
+      {officeAddress && (
+        <Typography sx={{ ...styles.desTypography }}>
+          {officeAddress}
+        </Typography>
+      )}
     </Container>
   );
 };
 
-export default TenderTitleBar;
+export default DataDisplayBar;
 
 const styles = {
   container: {

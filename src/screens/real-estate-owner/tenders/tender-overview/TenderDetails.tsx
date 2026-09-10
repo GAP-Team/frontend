@@ -3,11 +3,11 @@ import React, { memo } from "react";
 import { useAppSelector } from "@/lib/hooks";
 import { getTenderById } from "@/lib/features/tenderSlice";
 import Grid from "@mui/material/Grid";
-import TenderTitleBar from "./TenderTitleBar";
 import Paper from "@mui/material/Paper";
 import TenderSummarySection from "./TenderSummarySection";
 import ApplicationCard from "./ApplicationCard";
 import { Facility } from "@/screens/real-estate-owner/facilities/facility-overview/types";
+import DataDisplayBar from "@/components/data-display/DataDisplayBar";
 
 interface TenderDetailsProps {
   tenderId: string;
@@ -23,7 +23,7 @@ const TenderDetails: React.FC<TenderDetailsProps> = ({ tenderId }) => {
 
   return (
     <Grid container component="main">
-      <TenderTitleBar
+      <DataDisplayBar
         title={tender?.tenderType}
         subTitle={subcategory || tender?.facility.name}
       />
@@ -36,13 +36,13 @@ const TenderDetails: React.FC<TenderDetailsProps> = ({ tenderId }) => {
         <Grid item xs={8}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
-              <ApplicationCard />
+              <ApplicationCard tenderID={tenderId} offerID={"1"} />
             </Grid>
             <Grid item xs={12}>
-              <ApplicationCard />
+              <ApplicationCard tenderID={tenderId} offerID={"2"} />
             </Grid>
             <Grid item xs={12}>
-              <ApplicationCard />
+              <ApplicationCard tenderID={tenderId} offerID={"3"} />
             </Grid>
           </Grid>
         </Grid>

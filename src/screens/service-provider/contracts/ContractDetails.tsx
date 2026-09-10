@@ -6,8 +6,8 @@ import { useAppSelector, useAppDispatch } from "@/lib/hooks";
 import { showSnackbar } from "@/components/feedback/snackbar";
 import ContractSummarySection from "./ContractSummarySection";
 import { fetchContractById, getContract } from "@/lib/features/contractSlice";
-import TenderTitleBar from "@/screens/real-estate-owner/tenders/tender-overview/TenderTitleBar";
 import DocumentList from "@/screens/real-estate-owner/buildings/building-overview/DocumentList";
+import DataDisplayBar from "@/components/data-display/DataDisplayBar";
 import FallbackPage from "@/components/common/pages/FallbackPage";
 import { ROUTES } from "@/utils/routes";
 import NoAccessImage from "@images/no_access.png";
@@ -75,7 +75,7 @@ const ContractDetails: React.FC<ContractDetailsProps> = ({
         renderRestrictionUI()
       ) : (
         <Grid container component="main">
-          <TenderTitleBar
+          <DataDisplayBar
             title={contractDetails?.tenderType}
             subTitle={
               contractDetails?.subcategory || contractDetails?.facilityType

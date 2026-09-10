@@ -28,6 +28,8 @@ export const ROUTES = {
       ADD_TENDER: `${REAL_ESTATE_BASE}/tenders/add`,
       TENDER_DETAILS: (id: string) => `${REAL_ESTATE_BASE}/tenders//${id}`,
       EDIT_TENDER: (id?: string) => `${REAL_ESTATE_BASE}/tenders/edit/${id}`,
+      OFFER_DETAILS: (id: string, offerID: string) =>
+        `${REAL_ESTATE_BASE}/tenders/${id}/offers/${offerID}`,
     },
     COST_SAVING: `${REAL_ESTATE_BASE}/cost-savings`,
     SETTINGS: {
