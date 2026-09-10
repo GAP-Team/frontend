@@ -4,6 +4,7 @@ import axios, {
   InternalAxiosRequestConfig,
 } from "axios";
 import Cookies from "js-cookie";
+import logger from "@/utils/Logger";
 
 export const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL ?? "";
 const API_KEY = process.env.NEXT_PUBLIC_API_KEY ?? "";
@@ -47,6 +48,7 @@ api.interceptors.response.use(
   (error: AxiosError) => {
     if (error.response?.status === 403) {
       Cookies.remove(ACCESS_TOKEN_KEY);
+    }
     return Promise.reject(error);
   }
 );
