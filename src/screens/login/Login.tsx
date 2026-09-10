@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import Box from "@mui/material/Box";
 import Link from "@mui/material/Link";
@@ -13,16 +13,16 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import InputAdornment from "@mui/material/InputAdornment";
 import CircularProgress from "@mui/material/CircularProgress";
-import Cookies from "js-cookie";
 import authAPI from "@/api/auth";
 import { setUser } from "@/lib/features/userSlice";
 import { GapLogo } from "@/components/icons/logo/GapLogo";
 import InfoBanner from "@/components/data-display/InfoBanner";
 import { loginValidationSchema } from "@/utils/ValidationSchema";
 import {
-  setAccessToken,
-  setIsUserVerified,
-  setIsUserActivated,
+  setUserAuthData,
+  checkIsLoggedIn,
+  getIsUserVerified,
+  getUserDashboard,
 } from "@/utils/auth";
 import emailAPI from "@/api/email";
 import { ROUTES } from "@/utils/routes";
@@ -36,6 +36,17 @@ const Login = (): JSX.Element => {
   const [loading, setLoading] = useState(false);
   const [loginError, setLoginError] = React.useState<string | null>(null);
   const [passwordResetDialogOpen, setPasswordResetDialogOpen] = useState(false);
+
+  useEffect(() => {
+    if (checkIsLoggedIn()) {
+      if (getIsUserVerified()) {
+        const dashboardRoute = getUserDashboard();
+        router.replace(dashboardRoute);
+      } else {
+        router.replace(ROUTES.USER_VERIFY);
+      }
+    }
+  }, [router]);
 
   const handlePasswordResetClick = (event: React.MouseEvent): void => {
     event.preventDefault();
@@ -59,9 +70,7 @@ const Login = (): JSX.Element => {
 
         if (res?.data?.access_token) {
           appDispatch(setUser(res.data?.user));
-          setAccessToken(res.data.access_token);
-          setIsUserVerified(res.data.user?.isVerified);
-          setIsUserActivated(res.data.user?.isActive);
+          setUserAuthData(res.data.access_token, res.data?.user);
 
           if (!res.data.user?.isVerified) {
             await emailAPI.sendVerificationEmail({
@@ -71,7 +80,6 @@ const Login = (): JSX.Element => {
 
           if (res.data.user?.role === USER_ROLE.ADMIN) {
             router.push(ROUTES.ADMIN.DASHBOARD);
-            Cookies.set("role", res.data.user?.role);
           }
           if (res.data.user?.role === USER_ROLE.SERVICE_PROVIDER) {
             router.push(ROUTES.SERVICE_PROVIDER.DASHBOARD);

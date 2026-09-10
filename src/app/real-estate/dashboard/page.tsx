@@ -4,7 +4,6 @@ import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 
 import Dashboard from "@/screens/real-estate-owner/Dashboard";
 import { fetchTenders } from "@/lib/features/tenderSlice";
-import { useLogin } from "@/hooks/useUserLoginVerification";
 import { fetchBuildings } from "@/lib/features/buildingSlice";
 import { getFacilitiesByUser } from "@/lib/features/facilitySlice";
 import TendersPanel from "@/screens/real-estate-owner/dashboard/tenders-panel/TendersPanel";
@@ -15,7 +14,6 @@ import ChatPanel from "@/screens/real-estate-owner/dashboard/communication-panel
 export default function RealEstateDashboardPage(): JSX.Element {
   const appDispatch = useAppDispatch();
   const user = useAppSelector((state) => state.user);
-  const { isLoggedIn, isUserVerified } = useLogin();
 
   useEffect(() => {
     if (user?.id) {
@@ -39,17 +37,11 @@ export default function RealEstateDashboardPage(): JSX.Element {
   };
 
   return (
-    <>
-      {isLoggedIn && isUserVerified && (
-        <>
-          <Dashboard>
-            <OverviewPanel slot="overview" />
-            <TendersPanel slot="tenders" />
-            <ApplicationsPanel slot="applications" />
-            <ChatPanel slot="news" />
-          </Dashboard>
-        </>
-      )}
-    </>
+    <Dashboard>
+      <OverviewPanel slot="overview" />
+      <TendersPanel slot="tenders" />
+      <ApplicationsPanel slot="applications" />
+      <ChatPanel slot="news" />
+    </Dashboard>
   );
 }

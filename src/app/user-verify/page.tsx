@@ -1,10 +1,9 @@
 "use client";
-import Cookies from "js-cookie";
 import { useState } from "react";
-import { ROUTES } from "@/utils/routes";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 import { currentUser } from "@/lib/features/userSlice";
+import { getUserDashboard } from "@/utils/auth";
 import GNavbar from "@/components/navigation/navbar/GNavbar";
 import EmailVerificationScreen from "@/screens/EmailVerificationScreen";
 
@@ -16,8 +15,8 @@ export default function UserMailVerification(): JSX.Element {
 
   const postVerificationAction = (): void => {
     setIsUserVerified(true);
-    router.push(ROUTES.REAL_ESTATE.DASHBOARD);
-    Cookies.set("isVerified", "true");
+    const dashboardRoute = getUserDashboard();
+    router.push(dashboardRoute);
   };
 
   return (
