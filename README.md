@@ -134,6 +134,8 @@ export const styles = {
 
    - Credential of Google MAP API Key should be provided
      `NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=ask_for_api_key`
+   - API key required to authenticate requests to the backend should be provided
+     `NEXT_PUBLIC_API_KEY=ask_for_api_key`
 
 3. Run the development server:
 
