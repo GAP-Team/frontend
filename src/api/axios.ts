@@ -20,8 +20,11 @@ api.interceptors.request.use(
     // Normalize the request URL (path only)
     const url = config.url ?? "";
 
-    // Skip attaching token for login or register endpoints
-    const PUBLIC_ENDPOINTS = ["/auth/login", "/users/verify-user-token"];
+    // Endpoints that must not carry a stale Authorization header
+    const UNAUTHENTICATED_PATHS = ["/auth/login", "/users"];
+    const isAuthEndpoint = UNAUTHENTICATED_PATHS.some((path) =>
+      url.split("?")[0].endsWith(path)
+    );
     const isAuthEndpoint = PUBLIC_ENDPOINTS.some((path) => url.includes(path));
 
     if (token && !isAuthEndpoint) {
