@@ -6,7 +6,7 @@ import axios, {
 import Cookies from "js-cookie";
 
 export const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL ?? "";
-export const API_KEY = process.env.NEXT_PUBLIC_API_KEY ?? "";
+const API_KEY = process.env.NEXT_PUBLIC_API_KEY ?? "";
 if (!API_KEY) logger.error("NEXT_PUBLIC_API_KEY is not set — API requests will be rejected");
 
 const ACCESS_TOKEN_KEY = "access_token";
