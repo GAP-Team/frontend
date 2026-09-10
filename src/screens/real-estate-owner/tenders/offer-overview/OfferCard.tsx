@@ -184,7 +184,7 @@ const styles = {
   },
 
   checkBoxContainer: {
-    display: "flex", // ✅ make it a flex container
+    display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
     width: "100%",
