@@ -50,7 +50,7 @@ const BenefitSpecialServiceCard: React.FC<BenefitSpecialServiceCardProps> = ({
             {"Mögliches Startdatum"}
           </Typography>
           <Typography sx={{ fontWeight: "bold", mt: 3, mr: 3, ml: "auto" }}>
-            {possibleStartDate === "Sofort" ? "Sofort" : possibleStartDate}
+            {possibleStartDate}
           </Typography>
         </ListItem>
         <ListItem sx={{ ...styles.iconContainer, px: 0 }}>
