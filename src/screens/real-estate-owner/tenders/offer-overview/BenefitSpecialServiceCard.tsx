@@ -68,7 +68,7 @@ const BenefitSpecialServiceCard: React.FC<BenefitSpecialServiceCardProps> = ({
             {"Entfernung zum Objekt "}
           </Typography>
           <Typography sx={{ fontWeight: "bold", mt: 3, mr: 3, ml: "auto" }}>
-            `${distance} km`
+            {`${distance} km`}
           </Typography>
         </ListItem>
       </List>
