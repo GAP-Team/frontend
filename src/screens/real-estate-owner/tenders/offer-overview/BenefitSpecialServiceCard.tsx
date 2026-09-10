@@ -9,7 +9,7 @@ import {
   Paper,
   Skeleton,
   Typography,
-} from "@mui/material";
+import HeaderSection from "@/screens/real-estate-owner/dashboard/HeaderSection";
 import React from "react";
 import HeaderSection from "../../dashboard/HeaderSection";
 
