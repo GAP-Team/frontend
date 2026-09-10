@@ -18,14 +18,16 @@ api.interceptors.request.use(
   (config: InternalAxiosRequestConfig): InternalAxiosRequestConfig => {
     const token = Cookies.get(ACCESS_TOKEN_KEY);
 
-    // Normalize the request URL (path only)
     const url = config.url ?? "";
 
-    // These endpoints are hit pre-authentication, so any stale cookie token
-    // would be rejected rather than ignored by the backend.
-    const isPublicEndpoint = PUBLIC_ENDPOINTS.includes(config.url ?? "");
+    // Match exactly, not by substring: `includes("/users")` would also
+    // strip auth from `/users/:id` and friends.
+    const PUBLIC_ENDPOINTS = ["/auth/login", "/users/verify-user-token"];
+    const isPublicEndpoint = PUBLIC_ENDPOINTS.some(
+      (path) => url === path || url.startsWith(`${path}?`)
+    );
 
-    if (token && !isAuthEndpoint) {
+    if (token && !isPublicEndpoint) {
       config.headers.Authorization = `Bearer ${token}`;
     }
 
