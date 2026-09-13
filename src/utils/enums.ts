@@ -70,3 +70,8 @@ export enum USER_ROLE_IN_GERMAN {
   SERVICE_PROVIDER = "Dienstleister",
   REAL_ESTATE_OWNER = "Immobilienbetreiber",
 }
+
+export enum ObjectFacilityMode {
+  EXISTING = "EXISTING",
+  NEW = "NEW",
+}
