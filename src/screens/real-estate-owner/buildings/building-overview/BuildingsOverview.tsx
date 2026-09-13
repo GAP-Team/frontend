@@ -2,23 +2,34 @@
 "use client";
 import Box from "@mui/material/Box";
 import { ROUTES } from "@/utils/routes";
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import { useAppDispatch } from "@/lib/hooks";
 import { currentUser } from "@/lib/features/userSlice";
 import addObjSrc from "@icons/add_building.svg";
 import FallbackPage from "@/components/common/pages/FallbackPage";
 import BuildingContainer from "@/screens/real-estate-owner/buildings/building-overview/BuildingContainer";
+import BuildingDetailWorkspace from "@/screens/real-estate-owner/buildings/building-overview/BuildingDetailWorkspace";
 import PropertyFilterPanel from "@/components/common/filter/PropertyFilterPanel";
 import { fetchBuildings, getUserBuildings } from "@/lib/features/buildingSlice";
+import { getFacilitiesByUser } from "@/lib/features/facilitySlice";
+import { fetchTenders } from "@/lib/features/tenderSlice";
+import { Building } from "@/screens/real-estate-owner/buildings/building-overview/types";
 
 const BuildingsOverview: React.FC = () => {
   const dispatch = useAppDispatch();
   const user = useSelector(currentUser);
   const userBuildings = useSelector(getUserBuildings);
+  const [selectedBuildingId, setSelectedBuildingId] = useState<string | null>(
+    null
+  );
+  const [selectedTab, setSelectedTab] = useState<number>(0);
 
   useEffect(() => {
+    if (!user?.id) return;
     fetchUserBuildings("", "", "");
+    dispatch(getFacilitiesByUser(user.id));
+    dispatch(fetchTenders(user.id));
   }, [user?.id]);
 
   const fetchUserBuildings = async (
@@ -45,9 +56,35 @@ const BuildingsOverview: React.FC = () => {
     fetchUserBuildings(city, federalState, facilityType);
   };
 
+  const selectedBuilding = useMemo(
+    () =>
+      userBuildings?.find(
+        (building: Building) => building.id === selectedBuildingId
+      ) ?? null,
+    [userBuildings, selectedBuildingId]
+  );
+
+  const handleSelectBuilding = (buildingId: string, tab = 0): void => {
+    setSelectedBuildingId(buildingId);
+    setSelectedTab(tab);
+  };
+
+  if (selectedBuilding) {
+    return (
+      <BuildingDetailWorkspace
+        building={selectedBuilding}
+        initialTab={selectedTab}
+        onBack={() => setSelectedBuildingId(null)}
+      />
+    );
+  }
+
   const buildingContent =
     userBuildings?.length > 0 ? (
-      <BuildingContainer buildings={userBuildings} />
+      <BuildingContainer
+        buildings={userBuildings}
+        onSelect={handleSelectBuilding}
+      />
     ) : (
       <FallbackPage
         image={addObjSrc}

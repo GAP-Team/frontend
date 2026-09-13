@@ -19,7 +19,7 @@ import buildingAPI from "@/api/building";
 import DocumentList from "./DocumentList";
 import { DOCUMENT_TYPE } from "@/utils/enums";
 import ActionMenu from "@/components/navigation/ActionMenu";
-import { ROUTES, REAL_ESTATE_BASE } from "@/utils/routes";
+import { ROUTES } from "@/utils/routes";
 import { styles as scrollbarStyles } from "@/components/utils/scrollbar/styles";
 import {
   getUserBuildings,
@@ -28,9 +28,10 @@ import {
 
 interface BuildingCardProps {
   building: Building;
+  onSelect?: (buildingId: string, tab?: number) => void;
 }
 
-const BuildingCard: React.FC<BuildingCardProps> = ({ building }) => {
+const BuildingCard: React.FC<BuildingCardProps> = ({ building, onSelect }) => {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const userBuildings = useSelector(getUserBuildings);
@@ -76,12 +77,16 @@ const BuildingCard: React.FC<BuildingCardProps> = ({ building }) => {
     }
   };
 
-  const handleRedirect = (redirect: string): void => {
-    router.push(`${REAL_ESTATE_BASE}/${redirect}`);
+  const handleSelectTab = (event: React.MouseEvent, tab: number): void => {
+    event.stopPropagation();
+    onSelect?.(building.id, tab);
   };
 
   return (
-    <Paper sx={styles.card}>
+    <Paper
+      sx={{ ...styles.card, ...(onSelect ? styles.selectableCard : {}) }}
+      onClick={onSelect ? () => onSelect(building.id) : undefined}
+    >
       <Box sx={styles.header}>
         <Box sx={styles.title}>
           <Typography variant="bodylsb">{building.buildingName}</Typography>
@@ -89,28 +94,30 @@ const BuildingCard: React.FC<BuildingCardProps> = ({ building }) => {
             {building.buildingType}
           </Typography>
         </Box>
-        <ActionMenu
-          itemId={building?.id}
-          onEdit={(id) =>
-            router.push(ROUTES.REAL_ESTATE.BUILDING.EDIT_BUILDING(id))
-          }
-          onDelete={(id) => deleteBuilding(id)}
-          messege={delMsg}
-        />
+        <Box onClick={(event) => event.stopPropagation()}>
+          <ActionMenu
+            itemId={building?.id}
+            onEdit={(id) =>
+              router.push(ROUTES.REAL_ESTATE.BUILDING.EDIT_BUILDING(id))
+            }
+            onDelete={(id) => deleteBuilding(id)}
+            messege={delMsg}
+          />
+        </Box>
       </Box>
       <Box sx={styles.header} marginTop="1rem">
         <Stack direction="row" alignItems="center" gap={2}>
           <IoExtensionPuzzleOutline size="1.5rem" color="#A0ADB1" />
           <Typography
             style={styles.items}
-            onClick={() => handleRedirect("facilities")}
+            onClick={(event) => handleSelectTab(event, 0)}
           >{`${building?.facilityIds?.length} Anlagen`}</Typography>
         </Stack>
         <Stack direction="row" alignItems="center" gap={2}>
           <CgNotes size="1.5rem" color="#A0ADB1" />
           <Typography
             style={styles.items}
-            onClick={() => handleRedirect("tenders")}
+            onClick={(event) => handleSelectTab(event, 1)}
           >{`${totalTenders} Ausschreibungen`}</Typography>
         </Stack>
       </Box>
@@ -166,6 +173,13 @@ const styles = {
     flexShrink: 0,
     display: "flex",
     flexDirection: "column",
+  },
+  selectableCard: {
+    cursor: "pointer",
+    transition: "box-shadow 0.15s ease-in-out",
+    "&:hover": {
+      boxShadow: 4,
+    },
   },
   header: {
     display: "flex",

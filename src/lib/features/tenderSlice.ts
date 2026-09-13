@@ -200,4 +200,11 @@ export const checkActiveTenderForFacility =
       .some((tender: Tender) => tender.status === "ACTIVE");
   };
 
+export const getTendersByBuilding =
+  (buildingId: string) =>
+  (state: RootState): Tender[] =>
+    state.tender.tenderList.filter(
+      (tender: Tender) => tender.building?.id === buildingId
+    );
+
 export default tenderSlice.reducer;
