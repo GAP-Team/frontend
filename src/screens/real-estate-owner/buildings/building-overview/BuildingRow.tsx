@@ -25,6 +25,7 @@ import { getFacilitiesByBuilding } from "@/lib/features/facilitySlice";
 import { Building } from "./types";
 import { Tender } from "@/screens/real-estate-owner/tenders/tender-overview/types";
 import FacilityRow from "@/screens/real-estate-owner/facilities/facility-overview/FacilityRow";
+import BuildingDocuments from "./BuildingDocuments";
 
 interface BuildingRowProps {
   building: Building;
@@ -133,6 +134,7 @@ const BuildingRow: React.FC<BuildingRowProps> = ({ building }) => {
             </GButton>
           </Stack>
         )}
+        <BuildingDocuments documents={building.documents} />
       </AccordionDetails>
     </Accordion>
   );
