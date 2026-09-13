@@ -9,7 +9,7 @@ import Pagination from "@mui/material/Pagination";
 interface BuildingContainerProps {
   buildings: Building[];
   itemsPerPage?: number;
-  onSelect?: (buildingId: string) => void;
+  onSelect?: (buildingId: string, tab?: number) => void;
 }
 
 const BuildingContainer: React.FC<BuildingContainerProps> = ({

@@ -23,6 +23,7 @@ const BuildingsOverview: React.FC = () => {
   const [selectedBuildingId, setSelectedBuildingId] = useState<string | null>(
     null
   );
+  const [selectedTab, setSelectedTab] = useState<number>(0);
 
   useEffect(() => {
     if (!user?.id) return;
@@ -63,10 +64,16 @@ const BuildingsOverview: React.FC = () => {
     [userBuildings, selectedBuildingId]
   );
 
+  const handleSelectBuilding = (buildingId: string, tab = 0): void => {
+    setSelectedBuildingId(buildingId);
+    setSelectedTab(tab);
+  };
+
   if (selectedBuilding) {
     return (
       <BuildingDetailWorkspace
         building={selectedBuilding}
+        initialTab={selectedTab}
         onBack={() => setSelectedBuildingId(null)}
       />
     );
@@ -76,7 +83,7 @@ const BuildingsOverview: React.FC = () => {
     userBuildings?.length > 0 ? (
       <BuildingContainer
         buildings={userBuildings}
-        onSelect={setSelectedBuildingId}
+        onSelect={handleSelectBuilding}
       />
     ) : (
       <FallbackPage

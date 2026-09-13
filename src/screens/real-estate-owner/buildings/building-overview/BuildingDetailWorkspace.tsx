@@ -16,15 +16,17 @@ import { getTendersByBuilding } from "@/lib/features/tenderSlice";
 
 interface BuildingDetailWorkspaceProps {
   building: Building;
+  initialTab?: number;
   onBack: () => void;
 }
 
 const BuildingDetailWorkspace: React.FC<BuildingDetailWorkspaceProps> = ({
   building,
+  initialTab = 0,
   onBack,
 }) => {
   const router = useRouter();
-  const [activeTab, setActiveTab] = useState<number>(0);
+  const [activeTab, setActiveTab] = useState<number>(initialTab);
   const facilities = useAppSelector(getFacilitiesByBuilding(building.id));
   const tenders = useAppSelector(getTendersByBuilding(building.id));
 

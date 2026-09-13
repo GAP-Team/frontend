@@ -19,7 +19,7 @@ import buildingAPI from "@/api/building";
 import DocumentList from "./DocumentList";
 import { DOCUMENT_TYPE } from "@/utils/enums";
 import ActionMenu from "@/components/navigation/ActionMenu";
-import { ROUTES, REAL_ESTATE_BASE } from "@/utils/routes";
+import { ROUTES } from "@/utils/routes";
 import { styles as scrollbarStyles } from "@/components/utils/scrollbar/styles";
 import {
   getUserBuildings,
@@ -28,7 +28,7 @@ import {
 
 interface BuildingCardProps {
   building: Building;
-  onSelect?: (buildingId: string) => void;
+  onSelect?: (buildingId: string, tab?: number) => void;
 }
 
 const BuildingCard: React.FC<BuildingCardProps> = ({ building, onSelect }) => {
@@ -77,8 +77,9 @@ const BuildingCard: React.FC<BuildingCardProps> = ({ building, onSelect }) => {
     }
   };
 
-  const handleRedirect = (redirect: string): void => {
-    router.push(`${REAL_ESTATE_BASE}/${redirect}`);
+  const handleSelectTab = (event: React.MouseEvent, tab: number): void => {
+    event.stopPropagation();
+    onSelect?.(building.id, tab);
   };
 
   return (
@@ -109,14 +110,14 @@ const BuildingCard: React.FC<BuildingCardProps> = ({ building, onSelect }) => {
           <IoExtensionPuzzleOutline size="1.5rem" color="#A0ADB1" />
           <Typography
             style={styles.items}
-            onClick={() => handleRedirect("facilities")}
+            onClick={(event) => handleSelectTab(event, 0)}
           >{`${building?.facilityIds?.length} Anlagen`}</Typography>
         </Stack>
         <Stack direction="row" alignItems="center" gap={2}>
           <CgNotes size="1.5rem" color="#A0ADB1" />
           <Typography
             style={styles.items}
-            onClick={() => handleRedirect("tenders")}
+            onClick={(event) => handleSelectTab(event, 1)}
           >{`${totalTenders} Ausschreibungen`}</Typography>
         </Stack>
       </Box>
