@@ -1,5 +1,5 @@
 import * as yup from "yup";
-import { USER_ROLE } from "./enums";
+import { ObjectFacilityMode, USER_ROLE } from "./enums";
 
 const EMAIL_REGEX =
   /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -238,22 +238,98 @@ export const addTenderValidationSchema = [
       .required("Beschreiben Sie bitte den gewünschten Ausschreibungstyp"),
   }),
   yup.object({
-    buildingId: yup
-      .string()
-      .test(
-        "not-zero",
-        "Sie müssen vorher Gebäude erstellen",
-        (value) => value !== "0"
-      )
-      .required("Bitte wählen Sie ein Gebäude aus"),
-    facilityId: yup
-      .string()
-      .test(
-        "not-zero",
-        "Sie müssen vorher Anlage erstellen",
-        (value) => value !== "0"
-      )
-      .required("Bitte wählen Sie eine Anlage aus"),
+    buildingId: yup.string().when("objectFacilityMode", {
+      is: ObjectFacilityMode.EXISTING,
+      then: (schema) =>
+        schema
+          .test(
+            "not-zero",
+            "Sie müssen vorher Gebäude erstellen",
+            (value) => value !== "0"
+          )
+          .required("Bitte wählen Sie ein Gebäude aus"),
+    }),
+    facilityId: yup.string().when("objectFacilityMode", {
+      is: ObjectFacilityMode.EXISTING,
+      then: (schema) =>
+        schema
+          .test(
+            "not-zero",
+            "Sie müssen vorher Anlage erstellen",
+            (value) => value !== "0"
+          )
+          .required("Bitte wählen Sie eine Anlage aus"),
+    }),
+    newBuilding: yup.object({
+      name: yup.string().when("$objectFacilityMode", {
+        is: ObjectFacilityMode.NEW,
+        then: (schema) => schema.required("Gebäudename ist erforderlich."),
+      }),
+      buildingType: yup.string().when("$objectFacilityMode", {
+        is: ObjectFacilityMode.NEW,
+        then: (schema) => schema.required("Gebäudetyp ist erforderlich."),
+      }),
+      street: yup.string().when("$objectFacilityMode", {
+        is: ObjectFacilityMode.NEW,
+        then: (schema) => schema.required("STRAßE ist erforderlich."),
+      }),
+      houseNumber: yup
+        .number()
+        .typeError("Hausnummer muss eine Zahl sein.")
+        .when("$objectFacilityMode", {
+          is: ObjectFacilityMode.NEW,
+          then: (schema) =>
+            schema
+              .required("Hausnummer ist erforderlich.")
+              .positive("Hausnummer muss größer als 0 sein.")
+              .integer("Hausnummer muss eine ganze Zahl sein."),
+        }),
+      zip: yup.string().when("$objectFacilityMode", {
+        is: ObjectFacilityMode.NEW,
+        then: (schema) =>
+          schema
+            .required("Postleitzahl ist erforderlich")
+            .matches(
+              /^\d{4,5}$/,
+              "Postleitzahl muss zwischen 4 und 5 Ziffern lang sein"
+            ),
+      }),
+      city: yup.string().when("$objectFacilityMode", {
+        is: ObjectFacilityMode.NEW,
+        then: (schema) => schema.required("Stadt ist erforderlich."),
+      }),
+      state: yup.string().when("$objectFacilityMode", {
+        is: ObjectFacilityMode.NEW,
+        then: (schema) => schema.required("Bundesland ist erforderlich."),
+      }),
+    }),
+    newFacility: yup.object({
+      name: yup.string().when("$objectFacilityMode", {
+        is: ObjectFacilityMode.NEW,
+        then: (schema) => schema.required("Anlagenname ist erforderlich"),
+      }),
+      facilityType: yup.string().when("$objectFacilityMode", {
+        is: ObjectFacilityMode.NEW,
+        then: (schema) => schema.required("Oberbegriff ist erforderlich"),
+      }),
+      subcategory: yup.string(),
+      numberOfUnits: yup
+        .number()
+        .typeError("Anlage Anzahl muss eine Zahl sein")
+        .when("$objectFacilityMode", {
+          is: ObjectFacilityMode.NEW,
+          then: (schema) =>
+            schema
+              .required("Anlage Anzahl ist erforderlich")
+              .positive("Anlage Anzahl muss eine positive Zahl sein")
+              .integer("Anlage Anzahl muss eine Ganzzahl sein")
+              .test(
+                "not-zero",
+                "Anlage Anzahl, um mindestens eine zu haben",
+                (value) => value !== 0
+              ),
+        }),
+    }),
   }),
   yup.object({
     detailDescription: yup.string(),

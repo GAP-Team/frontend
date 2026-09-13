@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import userAPI from "@/api/user";
 import { RootState } from "../store";
 // FIXME: Building should not be imported from the screen, it should be imported from a common types file.
@@ -42,6 +42,9 @@ const buildingSlice = createSlice({
     setUserBuilding: (state, action) => {
       state.buildings = action?.payload;
     },
+    addBuilding: (state, action: PayloadAction<Building>) => {
+      state.buildings = [...state.buildings, action.payload];
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -59,7 +62,7 @@ const buildingSlice = createSlice({
   },
 });
 
-export const { setUserBuilding: setUserBuilding } = buildingSlice.actions;
+export const { setUserBuilding, addBuilding } = buildingSlice.actions;
 
 export const getUserBuildings = (state: RootState): any =>
   state.building.buildings;

@@ -75,7 +75,7 @@ export const createFacility = createAsyncThunk(
   //FIXME: Add proper types for the parameters and response
   async (newFacility: any): Promise<{ id: string }> => {
     const response = await facilityAPI.create(newFacility);
-    return response;
+    return response.data;
   }
 );
 // Update Facility

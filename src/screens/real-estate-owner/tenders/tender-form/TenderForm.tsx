@@ -6,11 +6,14 @@ import { IconButton } from "@mui/material";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { Formik, FormikHelpers } from "formik";
+import moment from "moment";
 import {
   NewTenderProps,
   ActiveStepItem,
   StepComponentProps,
   TenderFormValues,
+  NewBuildingFields,
+  NewFacilityFields,
 } from "./types";
 import dayjs from "dayjs";
 import AddTenderForm from "./AddTenderForm";
@@ -26,20 +29,35 @@ import { showSnackbar } from "@/components/feedback/snackbar";
 import SectionTitle from "@/components/data-display/label/SectionTitle";
 import { addTenderValidationSchema } from "@/utils/ValidationSchema";
 import GProgressStepper from "@/components/navigation/stepper/GProgressStepper";
-import { TENDER_FORM } from "@/utils/enums";
-import { isUserActive } from "@/lib/features/userSlice";
+import { DocumentChoice, ObjectFacilityMode, TENDER_FORM } from "@/utils/enums";
+import { currentUser, isUserActive } from "@/lib/features/userSlice";
 import {
   createTender,
   getTenderById,
   updateTender,
 } from "@/lib/features/tenderSlice";
+import buildingAPI from "@/api/building";
+import facilityAPI from "@/api/facility";
+import { addBuilding } from "@/lib/features/buildingSlice";
+import { addFacilities } from "@/lib/features/facilitySlice";
+import { Facility } from "@/screens/real-estate-owner/facilities/facility-overview/types";
+import { DEFAULT_PUBLISH_MONTHS } from "@/utils/Constants";
+import logger from "@/utils/Logger";
 import { ROUTES } from "@/utils/routes";
 import utc from "dayjs/plugin/utc";
 dayjs.extend(utc);
 
+interface CreatedBuildingFacility {
+  buildingId: string;
+  buildingName: string;
+  facilityId: string;
+  facilityName: string;
+}
+
 const TenderForm: React.FC<NewTenderProps> = ({ id }): JSX.Element => {
   const router = useRouter();
   const dispatch = useAppDispatch();
+  const user = useAppSelector(currentUser);
   const checkActiveUser = useAppSelector(isUserActive);
   const tender = useAppSelector((state) =>
     id ? getTenderById(id)(state) : null
@@ -80,6 +98,22 @@ const TenderForm: React.FC<NewTenderProps> = ({ id }): JSX.Element => {
     freeParkingAvailable: tender?.freeParkingAvailable || false,
     buildingId: tender?.building?.id || "",
     facilityId: tender?.facility?.id || "",
+    objectFacilityMode: ObjectFacilityMode.EXISTING,
+    newBuilding: {
+      name: "",
+      buildingType: "",
+      street: "",
+      houseNumber: "",
+      zip: "",
+      city: "",
+      state: "",
+    },
+    newFacility: {
+      name: "",
+      facilityType: "",
+      subcategory: "",
+      numberOfUnits: 1,
+    },
   });
 
   const [formData, setFormData] = useState<TenderFormValues>(() =>
@@ -116,14 +150,173 @@ const TenderForm: React.FC<NewTenderProps> = ({ id }): JSX.Element => {
     }
   };
 
+  const createBuildingUnderTheHood = async (
+    newBuilding: NewBuildingFields
+  ): Promise<{ id: string; name: string } | null> => {
+    const address = {
+      city: newBuilding.city,
+      state: newBuilding.state,
+      street: newBuilding.street,
+      country: "Deutschland",
+      zip: Number(newBuilding.zip),
+      houseNumber: Number(newBuilding.houseNumber),
+    };
+
+    const building = {
+      userId: user?.id,
+      documents: [],
+      address,
+      createdAt: moment().format("YYYY-MM-DDTHH:mm:ss.SSS[Z]"),
+      buildingName: newBuilding.name,
+      serverLink: "",
+      buildingType: newBuilding.buildingType,
+      totalArea: null,
+      contactPerson: [],
+      documentUploadType: DocumentChoice.NO_DOCUMENTS,
+      buildingAbbreviation: "",
+    };
+
+    try {
+      const response = await buildingAPI.create(building);
+      const newBuildingId = response?.data?.id;
+      if (!newBuildingId) {
+        throw new Error("Building creation did not return an id");
+      }
+
+      dispatch(
+        addBuilding({
+          id: newBuildingId,
+          buildingName: building.buildingName,
+          buildingType: building.buildingType,
+          totalArea: 0,
+          address,
+          facilityIds: [],
+          documents: [],
+          tendersCount: 0,
+        })
+      );
+
+      return { id: newBuildingId, name: building.buildingName };
+    } catch (error) {
+      logger.error("Error creating building for tender: ", error);
+      dispatch(
+        showSnackbar({
+          type: "error",
+          message:
+            "Gebäude konnte nicht erstellt werden. Bitte versuchen Sie es später erneut.",
+        })
+      );
+      return null;
+    }
+  };
+
+  const createFacilityUnderTheHood = async (
+    newFacility: NewFacilityFields,
+    buildingId: string
+  ): Promise<{ id: string; name: string } | null> => {
+    const facilityData: Partial<Facility> = {
+      name: newFacility.name,
+      facilityType: newFacility.facilityType,
+      subcategory: newFacility.subcategory,
+      numberOfUnits: Number(newFacility.numberOfUnits),
+      buildingId,
+      check: {
+        lastCheckDate: null,
+        nextCheckInYearNumber: 0,
+        isPublishAutomatically: false,
+        publishAutomaticallyInMonth: DEFAULT_PUBLISH_MONTHS,
+        reminderInMonth: 0,
+        isEmailNotificationEnable: false,
+        emailNotificationList: ["", ""],
+      },
+      maintenance: {
+        lastMaintenanceDate: null,
+        nextMaintenanceInMonth: 0,
+        isPublishAutomatically: false,
+        publishAutomaticallyInMonth: DEFAULT_PUBLISH_MONTHS,
+        reminderInMonth: 0,
+        isEmailNotificationEnable: false,
+        emailNotificationList: ["", ""],
+      },
+      documents: [],
+      documentUploadType: DocumentChoice.NO_DOCUMENTS,
+      serverLink: "",
+    };
+
+    try {
+      const response = await facilityAPI.create(facilityData as Facility);
+      const newFacilityId = response?.data?.id;
+      if (!newFacilityId) {
+        throw new Error("Facility creation did not return an id");
+      }
+
+      dispatch(
+        addFacilities([
+          { ...facilityData, id: newFacilityId, tenderIds: [] } as Facility,
+        ])
+      );
+
+      return { id: newFacilityId, name: newFacility.name };
+    } catch (error) {
+      logger.error("Error creating facility for tender: ", error);
+      dispatch(
+        showSnackbar({
+          type: "error",
+          message:
+            "Anlage konnte nicht hinzugefügt werden. Bitte überprüfen Sie die Eingabedaten und versuchen Sie es erneut",
+        })
+      );
+      return null;
+    }
+  };
+
+  const createBuildingAndFacility = async (
+    values: TenderFormValues
+  ): Promise<CreatedBuildingFacility | null> => {
+    const createdBuilding = await createBuildingUnderTheHood(
+      values.newBuilding
+    );
+    if (!createdBuilding) {
+      return null;
+    }
+
+    const createdFacility = await createFacilityUnderTheHood(
+      values.newFacility,
+      createdBuilding.id
+    );
+    if (!createdFacility) {
+      return null;
+    }
+
+    return {
+      buildingId: createdBuilding.id,
+      buildingName: createdBuilding.name,
+      facilityId: createdFacility.id,
+      facilityName: createdFacility.name,
+    };
+  };
+
   const saveTenderData = async (values: TenderFormValues): Promise<boolean> => {
+    let buildingId = values?.buildingId;
+    let buildingName = values?.buildingName;
+    let facilityId = values?.facilityId;
+    let facilityName = values?.facilityName;
+
+    if (!tender && values.objectFacilityMode === ObjectFacilityMode.NEW) {
+      const created = await createBuildingAndFacility(values);
+      if (!created) {
+        return false;
+      }
+      ({ buildingId, buildingName, facilityId, facilityName } = created);
+    }
+
     let buildingObj = {
-      id: values?.buildingId,
-      name: values?.buildingName,
+      id: buildingId,
+      name: buildingName,
     };
     let facilityObj = {
-      id: values?.facilityId,
-      name: values?.facilityName,
+      id: facilityId,
+      name: facilityName,
     };
 
     let tenderData = {
@@ -275,6 +468,7 @@ const styles = {
     flexDirection: "row",
     backgroundColor: "white",
     height: "37.375rem",
+    overflowY: "auto",
     padding: "1.5rem",
     borderRadius: "0.5rem",
     boxShadow: "0px 8px 24px 0px rgba(30, 49, 55, 0.08)",

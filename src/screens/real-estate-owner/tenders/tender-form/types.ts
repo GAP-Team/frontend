@@ -1,5 +1,24 @@
 import { Dispatch, SetStateAction } from "react";
 import { Dayjs } from "dayjs";
+import { ObjectFacilityMode } from "@/utils/enums";
+
+export interface NewBuildingFields {
+  name: string;
+  buildingType: string;
+  street: string;
+  houseNumber: string;
+  zip: string;
+  city: string;
+  state: string;
+}
+
+export interface NewFacilityFields {
+  name: string;
+  facilityType: string;
+  subcategory: string;
+  numberOfUnits: number;
+}
+
 export interface TenderFormValues {
   //Tender Info feilds = Form 1
   clientName: string;
@@ -10,6 +29,10 @@ export interface TenderFormValues {
   buildingId: string;
   facilityName: string;
   facilityId: string;
+  // Whether Form 2 selects an existing building/facility or creates new ones inline
+  objectFacilityMode: ObjectFacilityMode;
+  newBuilding: NewBuildingFields;
+  newFacility: NewFacilityFields;
   //Description feild = Form 3
   detailDescription: string;
   //Classification = Form 4
