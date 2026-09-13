@@ -8,9 +8,11 @@ import { useAppDispatch } from "@/lib/hooks";
 import { currentUser } from "@/lib/features/userSlice";
 import addObjSrc from "@icons/add_building.svg";
 import FallbackPage from "@/components/common/pages/FallbackPage";
-import BuildingContainer from "@/screens/real-estate-owner/buildings/building-overview/BuildingContainer";
+import BuildingWorkspace from "@/screens/real-estate-owner/buildings/building-overview/BuildingWorkspace";
 import PropertyFilterPanel from "@/components/common/filter/PropertyFilterPanel";
 import { fetchBuildings, getUserBuildings } from "@/lib/features/buildingSlice";
+import { getFacilitiesByUser } from "@/lib/features/facilitySlice";
+import { fetchTenders } from "@/lib/features/tenderSlice";
 
 const BuildingsOverview: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -35,6 +37,8 @@ const BuildingsOverview: React.FC = () => {
       facilityType: facilityType,
     };
     dispatch(fetchBuildings(query));
+    dispatch(getFacilitiesByUser(user.id));
+    dispatch(fetchTenders(user.id));
   };
 
   const onStateCityFacilityTypeChange = (
@@ -47,7 +51,7 @@ const BuildingsOverview: React.FC = () => {
 
   const buildingContent =
     userBuildings?.length > 0 ? (
-      <BuildingContainer buildings={userBuildings} />
+      <BuildingWorkspace buildings={userBuildings} />
     ) : (
       <FallbackPage
         image={addObjSrc}
