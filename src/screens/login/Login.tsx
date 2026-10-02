@@ -66,7 +66,10 @@ const Login = (): JSX.Element => {
     onSubmit: async (values, { setSubmitting, setTouched }) => {
       try {
         setLoading(true);
-        const res = await authAPI.login(values);
+        const res = await authAPI.login({
+          ...values,
+          email: values.email.trim(),
+        });
 
         if (res?.data?.access_token) {
           appDispatch(setUser(res.data?.user));
