@@ -21,11 +21,22 @@ import FacilityDocumentUploadDialog from "./FacilityDocumentUploadDialog";
 interface FacilityRowProps {
   facility: Facility;
   returnTo: string;
+  onShowTenders: (facility: Facility) => void;
 }
+
+// Only a facility that has tenders can link to them.
+const getTenderCountStyle = (count: number): object =>
+  count > 0
+    ? { ...styles.tenderCount, ...styles.tenderLink }
+    : styles.tenderCount;
 
 const activeChipStyle = { bgcolor: "#96E9CB", color: "#056643" };
 
-const FacilityRow: React.FC<FacilityRowProps> = ({ facility, returnTo }) => {
+const FacilityRow: React.FC<FacilityRowProps> = ({
+  facility,
+  returnTo,
+  onShowTenders,
+}) => {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const [isUploadOpen, setIsUploadOpen] = useState<boolean>(false);
@@ -49,6 +60,13 @@ const FacilityRow: React.FC<FacilityRowProps> = ({ facility, returnTo }) => {
         })
       );
     }
+  };
+
+  const tenderCount = facility.tenderIds?.length ?? 0;
+
+  const handleShowTenders = (event: React.MouseEvent): void => {
+    event.stopPropagation();
+    if (tenderCount > 0) onShowTenders(facility);
   };
 
   return (
@@ -80,8 +98,12 @@ const FacilityRow: React.FC<FacilityRowProps> = ({ facility, returnTo }) => {
             {isActive && (
               <Chip label="Aktiv" sx={activeChipStyle} size="small" />
             )}
-            <Typography variant="bodymr" sx={styles.tenderCount}>
-              {`${facility.tenderIds?.length ?? 0} Ausschreibungen`}
+            <Typography
+              variant="bodymr"
+              sx={getTenderCountStyle(tenderCount)}
+              onClick={handleShowTenders}
+            >
+              {`${tenderCount} Ausschreibungen`}
             </Typography>
             <Box onClick={(event) => event.stopPropagation()}>
               <ActionMenu
@@ -156,5 +178,9 @@ const styles = {
   tenderCount: {
     color: "#22A7F1",
     fontWeight: 500,
+  },
+  tenderLink: {
+    cursor: "pointer",
+    "&:hover": { textDecoration: "underline" },
   },
 };

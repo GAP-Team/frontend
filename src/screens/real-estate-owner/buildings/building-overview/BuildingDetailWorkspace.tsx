@@ -17,6 +17,7 @@ import DocumentTabPanel from "./DocumentTabPanel";
 import FacilityTabPanel from "./FacilityTabPanel";
 import TenderTabPanel from "./TenderTabPanel";
 import { getFacilitiesByBuilding } from "@/lib/features/facilitySlice";
+import { Facility } from "@/screens/real-estate-owner/facilities/facility-overview/types";
 import { getTendersByBuilding } from "@/lib/features/tenderSlice";
 
 interface BuildingDetailWorkspaceProps {
@@ -33,8 +34,14 @@ const BuildingDetailWorkspace: React.FC<BuildingDetailWorkspaceProps> = ({
   const router = useRouter();
   const [activeTab, setActiveTab] = useState<number>(initialTab);
   const [isUploadOpen, setIsUploadOpen] = useState<boolean>(false);
+  // Set when a facility's tender count was clicked: the Ausschreibungen tab
+  // then only lists that facility's tenders.
+  const [facilityFilter, setFacilityFilter] = useState<Facility | null>(null);
   const facilities = useAppSelector(getFacilitiesByBuilding(building.id));
-  const tenders = useAppSelector(getTendersByBuilding(building.id));
+  const allTenders = useAppSelector(getTendersByBuilding(building.id));
+  const tenders = facilityFilter
+    ? allTenders.filter((tender) => tender.facility?.id === facilityFilter.id)
+    : allTenders;
 
   // Forms and detail screens opened from here return to this exact view.
   const returnTo = `${ROUTES.REAL_ESTATE.BUILDING.BUILDINGS}?building=${building.id}&tab=${activeTab}`;
@@ -43,7 +50,13 @@ const BuildingDetailWorkspace: React.FC<BuildingDetailWorkspaceProps> = ({
     _event: React.SyntheticEvent,
     value: number
   ): void => {
+    setFacilityFilter(null);
     setActiveTab(value);
+  };
+
+  const handleShowTenders = (facility: Facility): void => {
+    setFacilityFilter(facility);
+    setActiveTab(1);
   };
 
   return (
@@ -100,10 +113,19 @@ const BuildingDetailWorkspace: React.FC<BuildingDetailWorkspaceProps> = ({
       </Tabs>
 
       {activeTab === 0 && (
-        <FacilityTabPanel facilities={facilities} returnTo={returnTo} />
+        <FacilityTabPanel
+          facilities={facilities}
+          returnTo={returnTo}
+          onShowTenders={handleShowTenders}
+        />
       )}
       {activeTab === 1 && (
-        <TenderTabPanel tenders={tenders} returnTo={returnTo} />
+        <TenderTabPanel
+          tenders={tenders}
+          returnTo={returnTo}
+          facilityName={facilityFilter?.name}
+          onClearFilter={() => setFacilityFilter(null)}
+        />
       )}
       {activeTab === 2 && (
         <DocumentTabPanel building={building} facilities={facilities} />

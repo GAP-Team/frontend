@@ -10,11 +10,13 @@ import { withReturnTo } from "@/utils/returnTo";
 interface FacilityTabPanelProps {
   facilities: Facility[];
   returnTo: string;
+  onShowTenders: (facility: Facility) => void;
 }
 
 const FacilityTabPanel: React.FC<FacilityTabPanelProps> = ({
   facilities,
   returnTo,
+  onShowTenders,
 }) => {
   return (
     <Box sx={styles.container}>
@@ -35,6 +37,7 @@ const FacilityTabPanel: React.FC<FacilityTabPanelProps> = ({
             key={facility.id}
             facility={facility}
             returnTo={returnTo}
+            onShowTenders={onShowTenders}
           />
         ))
       ) : (
