@@ -21,7 +21,7 @@ const ContractApplicationForm: React.FC<ApplyContractProps> = ({
     <>
       {!isOnLastStep && (
         <GButton onClick={handleBack} color="ggrey">
-          Abbrechen
+          {activeStep.id > 0 ? "Zurück" : "Abbrechen"}
         </GButton>
       )}
       {loading ? (
