@@ -9,6 +9,7 @@ const NAME_REGEX = /^[\p{L}\s'-]+$/u;
 export const loginValidationSchema = yup.object({
   email: yup
     .string()
+    .trim()
     .matches(EMAIL_REGEX, "Ungültige Email")
     .required("Email ist erforderlich."),
   password: yup.string().required("Passwort ist erforderlich"),
