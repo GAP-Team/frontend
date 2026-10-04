@@ -144,35 +144,6 @@ const ContractServicesForm = ({ formik }: { formik?: any }): JSX.Element => {
       <Grid container spacing={2}>
         <Grid item xs={12} md={4}>
           <Typography sx={styles.descriptionLable}>
-            Angebot als PDF hochladen
-          </Typography>
-          <Typography sx={styles.descriptionText}>
-            Laden Sie Ihre eigenen Allgemeinen
-            <br />
-            Geschäftsbedingungen hoch.
-          </Typography>
-        </Grid>
-        <Grid item xs={12} md={8}>
-          <LabelWithAsterisk>Angebot Dokumente</LabelWithAsterisk>
-          <Box sx={styles.docUploaderBox}>
-            <UploadButton
-              id="offerDoc"
-              name="offerDoc"
-              onChange={(ev: any) => setUploadLandDoc(ev, "offerDoc")}
-              value={formik.values.offerDoc}
-              error={formik.touched.offerDoc && Boolean(formik.errors.offerDoc)}
-              helperText={
-                formik.touched.offerDoc && formik.errors.offerDoc?.toString()
-              }
-            />
-          </Box>
-        </Grid>
-      </Grid>
-      <Divider sx={styles.divider} />
-
-      <Grid container spacing={2}>
-        <Grid item xs={12} md={4}>
-          <Typography sx={styles.descriptionLable}>
             Nachricht für Auftraggeber
           </Typography>
           <Typography sx={styles.descriptionText}>
