@@ -2,11 +2,13 @@ import React from "react";
 interface GVideoSectionProps {
   title?: string;
   subtitle?: string;
+  videoSrc?: string;
 }
 
 const GVideoSection: React.FC<GVideoSectionProps> = ({
   title = "Unternehmenssuche leicht gemacht!",
-  subtitle = "Lorem ipsum dolor sit amet consectetur adipiscing elit. Eaque sed tenetur rem quam nihil dolorum expedita maxime nisi recusandae sequi magni culpa fuga accusamus eveniet fugiat ipsum ab consequuntur.",
+  subtitle,
+  videoSrc,
 }) => {
   return (
     <>
@@ -18,15 +20,14 @@ const GVideoSection: React.FC<GVideoSectionProps> = ({
           {subtitle}
         </p>
       </div>
-      <video
-        className="w-full mx-auto rounded-lg aspect-video max-w-md sm:max-w-xl md:max-w-2xl lg:max-w-5xl -mt-28 md:-mt-32 lg:-mt-36 md:mb-28"
-        controls
-      >
-        <source
-          src="https://docs.material-tailwind.com/demo.mp4"
-          type="video/mp4"
-        />
-      </video>
+      {videoSrc && (
+        <video
+          className="w-full mx-auto rounded-lg aspect-video max-w-md sm:max-w-xl md:max-w-2xl lg:max-w-5xl -mt-28 md:-mt-32 lg:-mt-36 md:mb-28"
+          controls
+        >
+          <source src={videoSrc} type="video/mp4" />
+        </video>
+      )}
     </>
   );
 };

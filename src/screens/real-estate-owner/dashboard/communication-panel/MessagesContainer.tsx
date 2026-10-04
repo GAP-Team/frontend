@@ -4,12 +4,17 @@ import { List } from "@mui/material";
 import { styles as scrollbarStyles } from "@/components/utils/scrollbar/styles";
 import { MessageItemProps } from "./types";
 import Message from "./Message";
+import GEmptyState from "@/components/data-display/GEmptyState";
 
 interface MessagesProps {
   messages: MessageItemProps[];
 }
 
 const MessagesContainer: React.FC<MessagesProps> = ({ messages: messages }) => {
+  if (messages.length === 0) {
+    return <GEmptyState text="Keine Nachrichten vorhanden" compact />;
+  }
+
   return (
     <List sx={styles.listContainer}>
       {messages.map((app, index) => (

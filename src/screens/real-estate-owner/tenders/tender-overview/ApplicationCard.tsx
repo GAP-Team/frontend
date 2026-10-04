@@ -14,24 +14,32 @@ interface ApplicationCardProps {
   loading?: boolean;
   offerID: string;
   tenderID: string;
+  companyName: string;
+  location: string;
+  tags: string[];
+  price: string;
+  distance: string;
+  deadline: string;
+  specialServices: number;
+  employees: number;
+  discount: number;
 }
 
 const ApplicationCard: React.FC<ApplicationCardProps> = ({
   loading = false,
   offerID,
   tenderID,
+  companyName,
+  location,
+  tags,
+  price,
+  distance,
+  deadline,
+  specialServices,
+  employees,
+  discount,
 }) => {
-  const avatarLetter = "M";
-  const companyName = "Mayer Prüfungs GmbH";
-  const location = "Sindelfingen";
-  const tags = ["Brandschutz", "Wasserschutz", "Prüfungsleistungen"];
-  const price = "4.103,00 €";
-  const distance = "230 km";
-  const deadline = "17.06";
-  const specialServices = 4;
-  const employees = 15;
-  const discount = 18;
-
+  const avatarLetter = companyName.charAt(0).toUpperCase();
   const router = useRouter();
   const onClickHandler = (): void => {
     router.push(ROUTES.REAL_ESTATE.TENDER.OFFER_DETAILS(tenderID, offerID));

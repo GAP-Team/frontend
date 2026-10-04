@@ -10,17 +10,29 @@ import { TbProgressCheck, TbPigMoney } from "react-icons/tb";
 import { Divider } from "@mui/material";
 import { LuClipboardCheck } from "react-icons/lu";
 
-const TotalSavingSection = (): JSX.Element => {
+interface TotalSavingSectionProps {
+  completedTenders?: number;
+  tendersWithSavings?: number;
+  totalSaving?: string;
+  savingPercentage?: number;
+}
+
+const TotalSavingSection: React.FC<TotalSavingSectionProps> = ({
+  completedTenders = 0,
+  tendersWithSavings = 0,
+  totalSaving = "0 €",
+  savingPercentage = 0,
+}) => {
   const stats = [
     {
       icon: <TbProgressCheck size="2.4rem" />,
       label: "Durchgeführte Ausschreibungen",
-      value: 7,
+      value: completedTenders,
     },
     {
       icon: <LuClipboardCheck size="2.4rem" />,
       label: "Aufträge mit Einsparungen",
-      value: 6,
+      value: tendersWithSavings,
     },
   ];
 
@@ -57,7 +69,7 @@ const TotalSavingSection = (): JSX.Element => {
             <TbPigMoney size={85} color="#FECB00" />
           </Box>
           <Typography variant="h4b" fontSize="1.5rem" textAlign="center" mt={1}>
-            4.193 €
+            {totalSaving}
           </Typography>
           <Typography
             variant="subtitle1"
@@ -77,7 +89,7 @@ const TotalSavingSection = (): JSX.Element => {
           >
             <CircularProgress
               variant="determinate"
-              value={48}
+              value={savingPercentage}
               size={85}
               thickness={6}
               sx={{ color: "#FECB00" }}
@@ -93,7 +105,7 @@ const TotalSavingSection = (): JSX.Element => {
               justifyContent="center"
             >
               <Typography variant="h6" fontWeight={600} color="black">
-                48%
+                {`${savingPercentage}%`}
               </Typography>
             </Box>
           </Box>
@@ -120,9 +132,8 @@ const styles = {
   },
   savingsContainer: {
     display: "flex",
-    alignItems: "flex-end",
+    alignItems: "flex-start",
     justifyContent: "space-between",
-    height: "100%",
     gap: 2,
     flexWrap: "wrap",
   },

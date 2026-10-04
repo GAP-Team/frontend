@@ -1,7 +1,9 @@
 import { USER_ROLE } from "./enums";
-import { Notification } from "@/typings/types";
+import { BlogProps, Notification } from "@/typings/types";
+import { MessageItemProps } from "@/screens/real-estate-owner/dashboard/communication-panel/types";
+import { ApplicationItemProps } from "@/screens/real-estate-owner/dashboard/applications-panel/types";
+import { JobItemProps } from "@/screens/real-estate-owner/cost-saving/types";
 import HomeWorkIcon from "@mui/icons-material/HomeWork";
-import OfficeImage from "@images/office.jpg";
 import DescriptionIcon from "@mui/icons-material/Description";
 import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
 import { FilterOptionType } from "@/screens/service-provider/contracts/types";
@@ -221,154 +223,9 @@ export const germanStates: Item[] = [
   { label: "Thüringen", value: "Thüringen" }, // Thuringia
 ];
 
-export const applications = [
-  {
-    companyName: "Mayer Prüfungs GmbH",
-    timeAgo: "vor 30 Minuten",
-    location: "G003 Mittelstraße 121",
-    projectID: "A0382",
-    price: "4.036,00",
-    statusColor: "#3498db",
-    avatarLetter: "M",
-  },
-  {
-    companyName: "Mayer Prüfungs GmbH",
-    timeAgo: "vor 30 Minuten",
-    location: "G003 Mittelstraße 121",
-    projectID: "A0382",
-    price: "4.036,00",
-    statusColor: "#3498db",
-    avatarLetter: "M",
-  },
-  {
-    companyName: "Mayer Prüfungs GmbH",
-    timeAgo: "vor 30 Minuten",
-    location: "G003 Mittelstraße 121",
-    projectID: "A0382",
-    price: "4.036,00",
-    statusColor: "#3498db",
-    avatarLetter: "M",
-  },
-  {
-    companyName: "Mayer Prüfungs GmbH",
-    timeAgo: "vor 30 Minuten",
-    location: "G003 Mittelstraße 121",
-    projectID: "A0382",
-    price: "4.036,00",
-    statusColor: "#3498db",
-    avatarLetter: "M",
-  },
-  {
-    companyName: "Mayer Prüfungs GmbH",
-    timeAgo: "vor 30 Minuten",
-    location: "G003 Mittelstraße 121",
-    projectID: "A0382",
-    price: "4.036,00",
-    statusColor: "#3498db",
-    avatarLetter: "M",
-  },
-  {
-    companyName: "Mayer Prüfungs GmbH",
-    timeAgo: "vor 30 Minuten",
-    location: "G003 Mittelstraße 121",
-    projectID: "A0382",
-    price: "4.036,00",
-    statusColor: "#3498db",
-    avatarLetter: "M",
-  },
-  // ...other applications
-];
+export const applications: ApplicationItemProps[] = [];
 
-export const messages = [
-  {
-    companyName: "Mayer Prüfungs GmbH",
-    numberOfMessages: 3,
-    location: "G003 Mittelstraße",
-    minLeft: 30,
-    statusNew: true,
-    avatarLetter: "MX",
-  },
-  {
-    companyName: "Bauer Bauunternehmen",
-    numberOfMessages: 5,
-    location: "G202 Hauptstraße",
-    minLeft: 45,
-    statusNew: false,
-    avatarLetter: "BB",
-  },
-  {
-    companyName: "Schmidt Sanierung GmbH",
-    numberOfMessages: 2,
-    location: "A113 Am Wald",
-    minLeft: 10,
-    statusNew: true,
-    avatarLetter: "SS",
-  },
-  {
-    companyName: "Fischer Finanzen KG",
-    numberOfMessages: 6,
-    location: "C410 Clara-Zetkin-Weg",
-    minLeft: 20,
-    statusNew: true,
-    avatarLetter: "FF",
-  },
-  {
-    companyName: "Klein Konditorei AG",
-    numberOfMessages: 4,
-    location: "P224 Parkallee",
-    minLeft: 25,
-    statusNew: false,
-    avatarLetter: "KK",
-  },
-  {
-    companyName: "Lang Landschaftsbau GmbH",
-    numberOfMessages: 1,
-    location: "U345 Uferstraße",
-    minLeft: 5,
-    statusNew: true,
-    avatarLetter: "LL",
-  },
-  {
-    companyName: "Gross Gastronomie GmbH",
-    numberOfMessages: 3,
-    location: "B101 Bahnhofstraße",
-    minLeft: 15,
-    statusNew: false,
-    avatarLetter: "GG",
-  },
-  {
-    companyName: "Becker Bäckerei GmbH",
-    numberOfMessages: 2,
-    location: "S123 Sonnenweg",
-    minLeft: 40,
-    statusNew: false,
-    avatarLetter: "BB",
-  },
-  {
-    companyName: "Zimmermann Zimmerei GmbH",
-    numberOfMessages: 4,
-    location: "L333 Lindenstraße",
-    minLeft: 50,
-    statusNew: true,
-    avatarLetter: "ZZ",
-  },
-  {
-    companyName: "Weber Werkstatt AG",
-    numberOfMessages: 3,
-    location: "M666 Mühlenstraße",
-    minLeft: 35,
-    statusNew: false,
-    avatarLetter: "WW",
-  },
-  {
-    companyName: "Schneider Schneiderei KG",
-    numberOfMessages: 1,
-    location: "F555 Freiheitsstraße",
-    minLeft: 60,
-    statusNew: true,
-    avatarLetter: "SS",
-  },
-];
+export const messages: MessageItemProps[] = [];
 
 export const buildingTypesList = [
   { label: "Bürogebäude", value: "Bürogebäude" }, // Office building
@@ -396,88 +253,7 @@ const mapTenderTypeItems = (items: string[]): Item[] =>
 export const tenderTypesListSV = mapTenderTypeItems(listOfTenderTypes[0].items);
 export const tenderTypesListHW = mapTenderTypeItems(listOfTenderTypes[1].items);
 
-export const jobItemListInCostPage = [
-  {
-    facilityType: "Brandschutzprüfung inkl. Reparatur",
-    tags: ["Brandschutz", "Wasserschutz", "Inserlation"],
-    location: "G001 Mittelstraße 121",
-    projectID: "A1001",
-    savingAmount: 50,
-    status: "offen",
-  },
-  {
-    facilityType: "Brandschutzprüfung inkl. Reparatur",
-    tags: ["Brandschutz", "Wasserschutz", "Inserlation"],
-    location: "G002 Mittelstraße 121",
-    projectID: "A1002",
-    savingAmount: 800,
-    status: "abgeschlossen",
-  },
-  {
-    facilityType: "Brandschutzprüfung inkl. Reparatur",
-    tags: ["Brandschutz", "Wasserschutz", "Inserlation"],
-    location: "G003 Mittelstraße 121",
-    projectID: "A1003",
-    savingAmount: 420,
-    status: "in Bearbeitung",
-  },
-  {
-    facilityType: "Brandschutzprüfung inkl. Reparatur",
-    tags: ["Brandschutz", "Wasserschutz", "Inserlation"],
-    location: "G004 Mittelstraße 121",
-    projectID: "A1004",
-    savingAmount: 275,
-    status: "Freigabe ausstehend",
-  },
-  {
-    facilityType: "Brandschutzprüfung inkl. Reparatur",
-    tags: ["Brandschutz", "Wasserschutz", "Inserlation"],
-    location: "G005 Mittelstraße 121",
-    projectID: "A1005",
-    savingAmount: 530,
-    status: "Nachprüfung",
-  },
-  {
-    facilityType: "Brandschutzprüfung inkl. Reparatur",
-    tags: ["Brandschutz", "Wasserschutz", "Inserlation"],
-    location: "G006 Mittelstraße 121",
-    projectID: "A1006",
-    savingAmount: 610,
-    status: "offen",
-  },
-  {
-    facilityType: "Brandschutzprüfung inkl. Reparatur",
-    tags: ["Brandschutz", "Wasserschutz", "Inserlation"],
-    location: "G007 Mittelstraße 121",
-    projectID: "A1007",
-    savingAmount: 710,
-    status: "abgeschlossen",
-  },
-  {
-    facilityType: "Brandschutzprüfung inkl. Reparatur",
-    tags: ["Brandschutz", "Wasserschutz", "Inserlation"],
-    location: "G008 Mittelstraße 121",
-    projectID: "A1008",
-    savingAmount: 290,
-    status: "in Bearbeitung",
-  },
-  {
-    facilityType: "Brandschutzprüfung inkl. Reparatur",
-    tags: ["Brandschutz", "Wasserschutz", "Inserlation"],
-    location: "G009 Mittelstraße 121",
-    projectID: "A1009",
-    savingAmount: 750,
-    status: "Freigabe ausstehend",
-  },
-  {
-    facilityType: "Brandschutzprüfung inkl. Reparatur",
-    tags: ["Brandschutz", "Wasserschutz", "Inserlation"],
-    location: "G010 Mittelstraße 121",
-    projectID: "A1010",
-    savingAmount: 880,
-    status: "Nachprüfung",
-  },
-];
+export const jobItemListInCostPage: JobItemProps[] = [];
 
 export const NextMaintenanceOptions = Array.from({ length: 12 }, (_, i) => ({
   label: `${i + 1} Monat${i + 1 > 1 ? "e" : ""}`,
@@ -673,38 +449,7 @@ export const RealEstateLandingPageTabs = [
 export const CHECK_DUE_SOON_DAYS = 183;
 export const MAINTENANCE_DUE_SOON_DAYS = 15;
 
-export const articles = [
-  {
-    date: "08. April 2025",
-    category: "Steuern",
-    title: "What is GAP ?",
-    slug: "what-is-gap",
-    excerpt:
-      "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
-    image: OfficeImage,
-    author: "Sudipto",
-  },
-  {
-    date: "08. April 2025",
-    category: "Immobilien",
-    title: "How to calculate the tax on the sale of a property?",
-    slug: "how-to-calculate-tax",
-    excerpt:
-      "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
-    image: OfficeImage,
-    author: "Sudipto",
-  },
-  {
-    date: "08. April 2025",
-    category: "Mietvertrag",
-    title: "Warum Lorem Ipsum?",
-    slug: "warum-lorem-ipsum",
-    excerpt:
-      "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
-    image: OfficeImage,
-    author: "Sudipto",
-  },
-];
+export const articles: BlogProps[] = [];
 
 export const FAQs = [
   {
