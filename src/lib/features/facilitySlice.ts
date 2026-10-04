@@ -5,6 +5,7 @@ import { Facility } from "@/screens/real-estate-owner/facilities/facility-overvi
 import buildingAPI from "@/api/building";
 import userAPI from "@/api/user";
 import facilityAPI from "@/api/facility";
+import { deleteTender } from "./tenderSlice";
 
 interface FacilityState {
   facilities: Facility[];
@@ -156,6 +157,19 @@ const FacilitySlice = createSlice({
       .addCase(deleteFacility.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message || "Failed to delete facility";
+      })
+
+      // A deleted tender must also leave its facility's tenderIds, otherwise the
+      // facility keeps counting (and linking to) a tender that no longer exists.
+      .addCase(deleteTender.fulfilled, (state, action) => {
+        const facility = state.facilities.find((item) =>
+          item.tenderIds?.includes(action.payload)
+        );
+        if (facility) {
+          facility.tenderIds = facility.tenderIds.filter(
+            (tenderId) => tenderId !== action.payload
+          );
+        }
       })
 
       // Update Facility
