@@ -467,7 +467,24 @@ export const applyContractFormSchema = yup.object().shape({
       /^\d{4,5}$/,
       "Postleitzahl muss zwischen 4 und 5 Ziffern lang sein"
     ),
-  desiredDates: yup.array().of(yup.date()),
+  desiredDates: yup.array().of(
+    yup.object({
+      type: yup.string().oneOf(["single", "range"]),
+      date: yup.string(),
+      endDate: yup.string().when("type", {
+        is: "range",
+        then: (schema) =>
+          schema.test(
+            "end-not-before-start",
+            "Das Enddatum darf nicht vor dem Startdatum liegen",
+            function (endDate) {
+              const { date } = this.parent;
+              return !endDate || !date || endDate >= date;
+            }
+          ),
+      }),
+    })
+  ),
   termsConditionDoc: yup.string().required("AGB dokument ist erforderlich"),
   offerDoc: yup.string().required("Angebot dokument ist erforderlich"),
 });

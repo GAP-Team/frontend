@@ -1,6 +1,17 @@
 import { useState } from "react";
+import { FieldArray } from "formik";
+import AddIcon from "@mui/icons-material/Add";
+import SuggestedDateRow from "./SuggestedDateRow";
+import { SuggestedDate } from "./types";
 import { NumericFormat } from "react-number-format";
-import { Box, Grid, Divider, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  Grid,
+  Button,
+  Divider,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { GAP_COMMISSION_RATE } from "@/utils/Constants";
 import HeaderSection from "@/screens/real-estate-owner/dashboard/HeaderSection";
 import LabelWithAsterisk from "@/components/data-display/label/LabelWithAsterisk";
@@ -96,43 +107,42 @@ const ContractRateForm = ({ formik }: { formik?: any }): JSX.Element => {
         <Grid item xs={12} md={4}>
           <Typography sx={styles.descriptionLable}>Prüfungsdatum</Typography>
           <Typography sx={styles.descriptionText}>
-            Hier ist das gewünschte und mögliche
+            Geben Sie ein oder mehrere mögliche
             <br />
-            Prüfungsdatum angezeigt.
+            Termine an: als bestimmtes Datum oder
+            <br />
+            als Zeitraum (von – bis).
           </Typography>
         </Grid>
         <Grid item xs={12} md={8}>
-          <Grid container spacing={2} sx={styles.desiredDateHolder}>
-            {formik?.values?.desiredDates?.map(
-              (date: string, index: number) => (
-                <Grid item xs={12} md={4} key={index}>
-                  <Typography
-                    variant="gsub"
-                    color="gray.500"
-                    sx={styles.lableText}
-                  >
-                    Gewünschtes Datum {index + 1}
-                  </Typography>
-                  <div>
-                    <TextField
-                      type="date"
-                      onBlur={formik?.handleBlur}
-                      id={`desiredDates[${index}]`}
-                      name={`desiredDates[${index}]`}
-                      onChange={formik?.handleChange}
-                      InputLabelProps={{ shrink: true }}
-                      value={formik?.values?.desiredDates[index] || ""}
-                      InputProps={{
-                        inputProps: {
-                          min: new Date().toISOString().split("T")[0],
-                        },
-                      }}
+          <FieldArray name="desiredDates">
+            {({ push, remove }) => (
+              <Box sx={styles.dateList}>
+                {formik?.values?.desiredDates?.map(
+                  (entry: SuggestedDate, index: number) => (
+                    <SuggestedDateRow
+                      key={index}
+                      index={index}
+                      entry={entry}
+                      formik={formik}
+                      canRemove={formik.values.desiredDates.length > 1}
+                      onRemove={() => remove(index)}
                     />
-                  </div>
-                </Grid>
-              )
+                  )
+                )}
+                <Button
+                  variant="text"
+                  startIcon={<AddIcon />}
+                  sx={styles.addDateButton}
+                  onClick={() =>
+                    push({ type: "single", date: "", endDate: "" })
+                  }
+                >
+                  Weiteren Termin hinzufügen
+                </Button>
+              </Box>
             )}
-          </Grid>
+          </FieldArray>
         </Grid>
       </Grid>
       <Divider sx={styles.divider} />
@@ -210,11 +220,15 @@ const styles = {
     justifyContent: "space-between",
     fontWeight: 700,
   },
-  desiredDateHolder: {
+  dateList: {
     display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
+    flexDirection: "column",
+    gap: 2,
+  },
+  addDateButton: {
+    alignSelf: "flex-start",
+    fontWeight: 600,
+    textTransform: "none",
   },
   divider: {
     mt: 4,
