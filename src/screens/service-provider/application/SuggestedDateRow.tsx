@@ -38,7 +38,8 @@ const SuggestedDateRow = ({
     if (type === "single") formik.setFieldValue(`${fieldName}.endDate`, "");
   };
 
-  const rangeError = formik?.errors?.desiredDates?.[index]?.endDate;
+  const startError = formik?.errors?.desiredDates?.[index]?.date;
+  const endError = formik?.errors?.desiredDates?.[index]?.endDate;
 
   return (
     <Box sx={styles.row}>
@@ -75,6 +76,8 @@ const SuggestedDateRow = ({
           onChange={formik?.handleChange}
           InputLabelProps={{ shrink: true }}
           inputProps={{ min: today() }}
+          error={Boolean(startError)}
+          helperText={startError}
         />
         {isRange && (
           <TextField
@@ -86,8 +89,8 @@ const SuggestedDateRow = ({
             onChange={formik?.handleChange}
             InputLabelProps={{ shrink: true }}
             inputProps={{ min: entry.date || today() }}
-            error={Boolean(rangeError)}
-            helperText={rangeError}
+            error={Boolean(endError)}
+            helperText={endError}
           />
         )}
       </Box>

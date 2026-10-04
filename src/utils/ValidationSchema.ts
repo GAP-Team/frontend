@@ -470,18 +470,23 @@ export const applyContractFormSchema = yup.object().shape({
   desiredDates: yup.array().of(
     yup.object({
       type: yup.string().oneOf(["single", "range"]),
-      date: yup.string(),
+      date: yup.string().when("type", {
+        is: "range",
+        then: (schema) => schema.required("Startdatum ist erforderlich"),
+      }),
       endDate: yup.string().when("type", {
         is: "range",
         then: (schema) =>
-          schema.test(
-            "end-not-before-start",
-            "Das Enddatum darf nicht vor dem Startdatum liegen",
-            function (endDate) {
-              const { date } = this.parent;
-              return !endDate || !date || endDate >= date;
-            }
-          ),
+          schema
+            .required("Enddatum ist erforderlich")
+            .test(
+              "end-not-before-start",
+              "Das Enddatum darf nicht vor dem Startdatum liegen",
+              function (endDate) {
+                const { date } = this.parent;
+                return !date || endDate >= date;
+              }
+            ),
       }),
     })
   ),
