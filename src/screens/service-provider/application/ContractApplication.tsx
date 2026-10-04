@@ -51,8 +51,8 @@ const steps: ActiveStepItem[] = [
 ];
 
 const stepFieldsMap: Record<number, string[]> = {
-  0: ["totalPrice", "zip", "city", "desiredDates"],
-  1: ["advantages", "termsConditionDoc", "offerDoc", "message"],
+  0: ["offerDoc", "totalPrice", "zip", "city", "desiredDates"],
+  1: ["advantages", "termsConditionDoc", "message"],
   2: [],
 };
 
