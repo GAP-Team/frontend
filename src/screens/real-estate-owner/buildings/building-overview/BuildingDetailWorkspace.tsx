@@ -5,6 +5,7 @@ import Tabs from "@mui/material/Tabs";
 import Typography from "@mui/material/Typography";
 import { useRouter } from "next/navigation";
 import { FaRegEdit } from "react-icons/fa";
+import { FiUpload } from "react-icons/fi";
 import { ROUTES } from "@/utils/routes";
 import { withReturnTo } from "@/utils/returnTo";
 import GButton from "@/components/inputs/button/GButton";
@@ -64,13 +65,16 @@ const BuildingDetailWorkspace: React.FC<BuildingDetailWorkspaceProps> = ({
         <Box sx={styles.actions}>
           <GButton
             variant="outlined"
-            sx={styles.uploadButton}
+            startIcon={<FiUpload size="1.1rem" />}
+            sx={styles.actionButton}
             onClick={() => setIsUploadOpen(true)}
           >
             Upload document
           </GButton>
-          <Box
-            sx={styles.editLink}
+          <GButton
+            variant="outlined"
+            startIcon={<FaRegEdit size="1.1rem" />}
+            sx={styles.actionButton}
             onClick={() =>
               router.push(
                 withReturnTo(
@@ -80,9 +84,8 @@ const BuildingDetailWorkspace: React.FC<BuildingDetailWorkspaceProps> = ({
               )
             }
           >
-            <FaRegEdit size="1.1rem" />
-            <Typography variant="bodymsb">Bearbeiten</Typography>
-          </Box>
+            Bearbeiten
+          </GButton>
         </Box>
       </Box>
 
@@ -141,17 +144,11 @@ const styles = {
   actions: {
     display: "flex",
     alignItems: "center",
-    gap: "1.5rem",
+    gap: "0.75rem",
   },
-  uploadButton: {
+  // Shared by both header buttons so they always look the same.
+  actionButton: {
     margin: 0,
-  },
-  editLink: {
-    display: "flex",
-    alignItems: "center",
-    gap: "0.5rem",
-    color: "#22A7F1",
-    cursor: "pointer",
   },
   tabs: {
     mt: "1.5rem",
