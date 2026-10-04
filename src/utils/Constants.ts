@@ -595,3 +595,6 @@ export const UsersTableColumns = [
     label: "Aktiv Status",
   },
 ];
+
+// Commission GAP keeps from the total price of an accepted offer
+export const GAP_COMMISSION_RATE = 0.15;

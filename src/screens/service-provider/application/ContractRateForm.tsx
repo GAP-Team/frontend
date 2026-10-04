@@ -1,32 +1,31 @@
-import { useState } from "react";
 import { NumericFormat } from "react-number-format";
-import { Grid, Divider, TextField, Typography } from "@mui/material";
+import { Box, Grid, Divider, TextField, Typography } from "@mui/material";
+import { GAP_COMMISSION_RATE } from "@/utils/Constants";
 import HeaderSection from "@/screens/real-estate-owner/dashboard/HeaderSection";
 import LabelWithAsterisk from "@/components/data-display/label/LabelWithAsterisk";
 
+const formatEuro = (amount: number): string =>
+  amount.toLocaleString("de-DE", { style: "currency", currency: "EUR" });
+
+const parsePrice = (price: string): number =>
+  Number(price.replace(/\./g, "").replace(",", ".")) || 0;
+
 const ContractRateForm = ({ formik }: { formik?: any }): JSX.Element => {
-  const [info, setInfo] = useState<string>("");
-
-  const handleSetInfo = (value: string): void => {
-    setInfo(value);
-    formik.setFieldValue("message", value);
-  };
-
-  const [priceValues, setPriceValues] = useState({
-    totalPrice: "",
-  });
-
   const handlePriceChange = (
     event: React.ChangeEvent<HTMLInputElement>,
     name: string
   ): void => {
-    setPriceValues({
-      ...priceValues,
-      [name]: event.target.value,
-    });
     const cleanPrice = event.target.value.replace("€", "");
     formik.setFieldValue(name, cleanPrice);
   };
+
+  // formik is the single source of truth, so the price survives step changes
+  const priceInput = formik?.values?.totalPrice
+    ? `€${formik.values.totalPrice}`
+    : "";
+  const totalPrice = parsePrice(formik?.values?.totalPrice ?? "");
+  const commission = totalPrice * GAP_COMMISSION_RATE;
+  const commissionPercent = GAP_COMMISSION_RATE * 100;
 
   return (
     <Grid item xs={12} md={9}>
@@ -56,7 +55,7 @@ const ContractRateForm = ({ formik }: { formik?: any }): JSX.Element => {
                 decimalSeparator=","
                 thousandSeparator="."
                 customInput={TextField}
-                value={priceValues.totalPrice}
+                value={priceInput}
                 onChange={(event) => handlePriceChange(event, "totalPrice")}
                 helperText={
                   formik?.touched?.totalPrice && formik?.errors?.totalPrice
@@ -66,43 +65,24 @@ const ContractRateForm = ({ formik }: { formik?: any }): JSX.Element => {
                   Boolean(formik?.errors?.totalPrice)
                 }
               />
+              {totalPrice > 0 && (
+                <Box sx={styles.commissionBox}>
+                  <Box sx={styles.commissionRow}>
+                    <span>GAP-Provision ({commissionPercent} %)</span>
+                    <span>- {formatEuro(commission)}</span>
+                  </Box>
+                  <Box sx={styles.commissionRowBold}>
+                    <span>Ihre Auszahlung</span>
+                    <span>{formatEuro(totalPrice - commission)}</span>
+                  </Box>
+                </Box>
+              )}
+              <Typography sx={styles.commissionHint}>
+                Von Ihrem Gesamtpreis behält GAP eine Provision von{" "}
+                {commissionPercent} % ein.
+              </Typography>
             </Grid>
           </Grid>
-        </Grid>
-      </Grid>
-      <Divider sx={styles.divider} />
-
-      <Grid container spacing={2}>
-        <Grid item xs={12} md={4}>
-          <Typography sx={styles.descriptionLable}>
-            Nachricht für Auftraggeber
-          </Typography>
-          <Typography sx={styles.descriptionText}>
-            Hier können Sie alles schreiben, was Sie für
-            <br />
-            nützlich für die Arbeit erachten, die Sie erledigen <br />
-            können. Möglicherweise einige Einschränkungen oder Details.
-          </Typography>
-        </Grid>
-        <Grid item xs={12} md={8}>
-          <Typography variant="gsub" color="gray.500" sx={styles.lableText}>
-            Nützliche Informationen
-          </Typography>
-          <TextField
-            rows={4}
-            multiline
-            fullWidth
-            name="message"
-            sx={{ mt: 2 }}
-            onBlur={formik?.handleBlur}
-            value={formik?.values?.message}
-            helperText={
-              <Typography sx={{ color: info.length === 250 ? "red" : "" }}>
-                {info.length}/250
-              </Typography>
-            }
-            onChange={(e) => handleSetInfo(e.target.value.slice(0, 250))}
-          />
         </Grid>
       </Grid>
       <Divider sx={styles.divider} />
@@ -202,6 +182,29 @@ const ContractRateForm = ({ formik }: { formik?: any }): JSX.Element => {
 export default ContractRateForm;
 
 const styles = {
+  commissionHint: {
+    mt: 1,
+    color: "#A0ADB1",
+    fontSize: "0.8rem",
+  },
+  commissionBox: {
+    mt: 1.5,
+    p: 1.5,
+    borderRadius: "0.5rem",
+    bgcolor: "#F6F8FB",
+    fontSize: "0.9rem",
+  },
+  commissionRow: {
+    display: "flex",
+    justifyContent: "space-between",
+    color: "#6b7280",
+  },
+  commissionRowBold: {
+    mt: 0.5,
+    display: "flex",
+    justifyContent: "space-between",
+    fontWeight: 700,
+  },
   desiredDateHolder: {
     display: "flex",
     flexDirection: "row",
