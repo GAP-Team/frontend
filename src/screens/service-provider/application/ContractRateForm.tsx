@@ -5,13 +5,6 @@ import HeaderSection from "@/screens/real-estate-owner/dashboard/HeaderSection";
 import LabelWithAsterisk from "@/components/data-display/label/LabelWithAsterisk";
 
 const ContractRateForm = ({ formik }: { formik?: any }): JSX.Element => {
-  const [info, setInfo] = useState<string>("");
-
-  const handleSetInfo = (value: string): void => {
-    setInfo(value);
-    formik.setFieldValue("message", value);
-  };
-
   const [priceValues, setPriceValues] = useState({
     totalPrice: "",
   });
@@ -68,41 +61,6 @@ const ContractRateForm = ({ formik }: { formik?: any }): JSX.Element => {
               />
             </Grid>
           </Grid>
-        </Grid>
-      </Grid>
-      <Divider sx={styles.divider} />
-
-      <Grid container spacing={2}>
-        <Grid item xs={12} md={4}>
-          <Typography sx={styles.descriptionLable}>
-            Nachricht für Auftraggeber
-          </Typography>
-          <Typography sx={styles.descriptionText}>
-            Hier können Sie alles schreiben, was Sie für
-            <br />
-            nützlich für die Arbeit erachten, die Sie erledigen <br />
-            können. Möglicherweise einige Einschränkungen oder Details.
-          </Typography>
-        </Grid>
-        <Grid item xs={12} md={8}>
-          <Typography variant="gsub" color="gray.500" sx={styles.lableText}>
-            Nützliche Informationen
-          </Typography>
-          <TextField
-            rows={4}
-            multiline
-            fullWidth
-            name="message"
-            sx={{ mt: 2 }}
-            onBlur={formik?.handleBlur}
-            value={formik?.values?.message}
-            helperText={
-              <Typography sx={{ color: info.length === 250 ? "red" : "" }}>
-                {info.length}/250
-              </Typography>
-            }
-            onChange={(e) => handleSetInfo(e.target.value.slice(0, 250))}
-          />
         </Grid>
       </Grid>
       <Divider sx={styles.divider} />

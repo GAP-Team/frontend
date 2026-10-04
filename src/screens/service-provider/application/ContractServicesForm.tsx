@@ -14,11 +14,15 @@ import UploadButton from "@/components/inputs/button/UploadButton";
 import HeaderSection from "@/screens/real-estate-owner/dashboard/HeaderSection";
 import LabelWithAsterisk from "@/components/data-display/label/LabelWithAsterisk";
 
+const MAX_MESSAGE_LENGTH = 250;
+
 const ContractServicesForm = ({ formik }: { formik?: any }): JSX.Element => {
   const [newAdvantage, setNewAdvantage] = useState<string>("");
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [selectedAdvantages, setSelectedAdvantages] = useState<string[]>([]);
   const [advantages, setAdvantages] = useState<string[]>(previousAdvantages);
+
+  const messageLength: number = formik?.values?.message?.length ?? 0;
 
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
@@ -167,6 +171,50 @@ const ContractServicesForm = ({ formik }: { formik?: any }): JSX.Element => {
       </Grid>
       <Divider sx={styles.divider} />
 
+      <Grid container spacing={2}>
+        <Grid item xs={12} md={4}>
+          <Typography sx={styles.descriptionLable}>
+            Nachricht für Auftraggeber
+          </Typography>
+          <Typography sx={styles.descriptionText}>
+            Hier können Sie alles schreiben, was Sie für
+            <br />
+            nützlich für die Arbeit erachten, die Sie erledigen <br />
+            können. Möglicherweise einige Einschränkungen oder Details.
+          </Typography>
+        </Grid>
+        <Grid item xs={12} md={8}>
+          <Typography variant="gsub" color="gray.500" sx={styles.lableText}>
+            Nützliche Informationen
+          </Typography>
+          <TextField
+            rows={4}
+            multiline
+            fullWidth
+            name="message"
+            sx={{ mt: 2 }}
+            onBlur={formik?.handleBlur}
+            value={formik?.values?.message}
+            helperText={
+              <Typography
+                sx={{
+                  color: messageLength === MAX_MESSAGE_LENGTH ? "red" : "",
+                }}
+              >
+                {messageLength}/{MAX_MESSAGE_LENGTH}
+              </Typography>
+            }
+            onChange={(e) =>
+              formik.setFieldValue(
+                "message",
+                e.target.value.slice(0, MAX_MESSAGE_LENGTH)
+              )
+            }
+          />
+        </Grid>
+      </Grid>
+      <Divider sx={styles.divider} />
+
       <Popover
         id={id}
         open={open}
@@ -204,6 +252,10 @@ const ContractServicesForm = ({ formik }: { formik?: any }): JSX.Element => {
 export default ContractServicesForm;
 
 const styles = {
+  lableText: {
+    display: "flex",
+    flexDirection: "row",
+  },
   descriptionLable: {
     fontSize: "1rem",
     fontWeight: "bold",
