@@ -38,13 +38,6 @@ const BuildingSummary = ({
     values.state && { label: "Bundesland", value: values.state },
   ].filter(Boolean); // Filter out undefined values
 
-  const updatedContactPersonList: Detail[] = values?.contactPerson?.length
-    ? values.contactPerson.map((person: any) => ({
-        label: "Name",
-        value: `${person.firstName} ${person.lastName}`,
-      }))
-    : [];
-
   const updatedDocList: Detail[] = [
     ...(values.constructionDocs?.length
       ? values.constructionDocs.map((doc: any) => ({
@@ -86,15 +79,6 @@ const BuildingSummary = ({
             setActiveStep={() => setActiveStep(steps[1])}
           />
         </Grid>
-        {updatedContactPersonList.length > 0 && (
-          <Grid item xs={6}>
-            <SummarySection
-              title="Ansprechpartner"
-              details={updatedContactPersonList}
-              setActiveStep={() => setActiveStep(steps[0])}
-            />
-          </Grid>
-        )}
         {updatedDocList.length > 0 && (
           <Grid item xs={6}>
             <SummarySection
