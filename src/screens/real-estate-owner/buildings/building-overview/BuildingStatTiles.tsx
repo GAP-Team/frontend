@@ -98,6 +98,9 @@ const styles = {
     borderRadius: "0.5rem",
     minWidth: "10rem",
     flex: "1 1 10rem",
+    display: "flex",
+    alignItems: "baseline",
+    gap: "0.75rem",
   },
   label: {
     color: "#8D999C",
