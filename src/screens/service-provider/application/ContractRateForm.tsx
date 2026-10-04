@@ -1,8 +1,15 @@
 import { useState } from "react";
 import { NumericFormat } from "react-number-format";
-import { Grid, Divider, TextField, Typography } from "@mui/material";
+import { Box, Grid, Divider, TextField, Typography } from "@mui/material";
+import { GAP_COMMISSION_RATE } from "@/utils/Constants";
 import HeaderSection from "@/screens/real-estate-owner/dashboard/HeaderSection";
 import LabelWithAsterisk from "@/components/data-display/label/LabelWithAsterisk";
+
+const formatEuro = (amount: number): string =>
+  amount.toLocaleString("de-DE", { style: "currency", currency: "EUR" });
+
+const parsePrice = (price: string): number =>
+  Number(price.replace(/\./g, "").replace(",", ".")) || 0;
 
 const ContractRateForm = ({ formik }: { formik?: any }): JSX.Element => {
   const [priceValues, setPriceValues] = useState({
@@ -20,6 +27,10 @@ const ContractRateForm = ({ formik }: { formik?: any }): JSX.Element => {
     const cleanPrice = event.target.value.replace("€", "");
     formik.setFieldValue(name, cleanPrice);
   };
+
+  const totalPrice = parsePrice(priceValues.totalPrice.replace("€", ""));
+  const commission = totalPrice * GAP_COMMISSION_RATE;
+  const commissionPercent = GAP_COMMISSION_RATE * 100;
 
   return (
     <Grid item xs={12} md={9}>
@@ -59,6 +70,22 @@ const ContractRateForm = ({ formik }: { formik?: any }): JSX.Element => {
                   Boolean(formik?.errors?.totalPrice)
                 }
               />
+              {totalPrice > 0 && (
+                <Box sx={styles.commissionBox}>
+                  <Box sx={styles.commissionRow}>
+                    <span>GAP-Provision ({commissionPercent} %)</span>
+                    <span>- {formatEuro(commission)}</span>
+                  </Box>
+                  <Box sx={styles.commissionRowBold}>
+                    <span>Ihre Auszahlung</span>
+                    <span>{formatEuro(totalPrice - commission)}</span>
+                  </Box>
+                </Box>
+              )}
+              <Typography sx={styles.commissionHint}>
+                Von Ihrem Gesamtpreis behält GAP eine Provision von{" "}
+                {commissionPercent} % ein.
+              </Typography>
             </Grid>
           </Grid>
         </Grid>
@@ -160,6 +187,29 @@ const ContractRateForm = ({ formik }: { formik?: any }): JSX.Element => {
 export default ContractRateForm;
 
 const styles = {
+  commissionHint: {
+    mt: 1,
+    color: "#A0ADB1",
+    fontSize: "0.8rem",
+  },
+  commissionBox: {
+    mt: 1.5,
+    p: 1.5,
+    borderRadius: "0.5rem",
+    bgcolor: "#F6F8FB",
+    fontSize: "0.9rem",
+  },
+  commissionRow: {
+    display: "flex",
+    justifyContent: "space-between",
+    color: "#6b7280",
+  },
+  commissionRowBold: {
+    mt: 0.5,
+    display: "flex",
+    justifyContent: "space-between",
+    fontWeight: 700,
+  },
   desiredDateHolder: {
     display: "flex",
     flexDirection: "row",
