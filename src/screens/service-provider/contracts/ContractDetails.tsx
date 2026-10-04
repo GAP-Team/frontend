@@ -88,12 +88,12 @@ const ContractDetails: React.FC<ContractDetailsProps> = ({
             columns={18}
             style={styles.innerContainer}
           >
-            <Grid item xs={8}>
+            <Grid item xs={18} md={9} lg={8}>
               <Paper sx={styles.summaryContainer}>
                 <ContractSummarySection contract={contractDetails} />
               </Paper>
             </Grid>
-            <Grid item xs={8}>
+            <Grid item xs={18} md={9} lg={8}>
               <Grid container spacing={2}>
                 {contractDetails?.buildingDocuments?.length > 0 && (
                   <Grid item xs={12}>
@@ -217,6 +217,7 @@ const styles = {
     maxWidth: "false",
     width: "100%",
     p: "1.25rem",
+    overflow: "hidden",
   },
   documentContainer: {
     display: "flex",
