@@ -5,23 +5,37 @@ import GButton from "@/components/inputs/button/GButton";
 import { ROUTES } from "@/utils/routes";
 import { Facility } from "@/screens/real-estate-owner/facilities/facility-overview/types";
 import FacilityRow from "./FacilityRow";
+import { withReturnTo } from "@/utils/returnTo";
 
 interface FacilityTabPanelProps {
   facilities: Facility[];
+  returnTo: string;
 }
 
-const FacilityTabPanel: React.FC<FacilityTabPanelProps> = ({ facilities }) => {
+const FacilityTabPanel: React.FC<FacilityTabPanelProps> = ({
+  facilities,
+  returnTo,
+}) => {
   return (
     <Box sx={styles.container}>
       <Box sx={styles.header}>
         <Typography variant="bodylsb">Anlagen dieses Gebäudes</Typography>
-        <GButton href={ROUTES.REAL_ESTATE.FACILITY.ADD_FACILITY}>
+        <GButton
+          href={withReturnTo(
+            ROUTES.REAL_ESTATE.FACILITY.ADD_FACILITY,
+            returnTo
+          )}
+        >
           Anlage hinzufügen
         </GButton>
       </Box>
       {facilities.length > 0 ? (
         facilities.map((facility) => (
-          <FacilityRow key={facility.id} facility={facility} />
+          <FacilityRow
+            key={facility.id}
+            facility={facility}
+            returnTo={returnTo}
+          />
         ))
       ) : (
         <Typography variant="bodymr" sx={styles.empty}>

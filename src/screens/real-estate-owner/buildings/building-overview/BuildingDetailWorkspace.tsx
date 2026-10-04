@@ -6,9 +6,13 @@ import Typography from "@mui/material/Typography";
 import { useRouter } from "next/navigation";
 import { FaRegEdit } from "react-icons/fa";
 import { ROUTES } from "@/utils/routes";
+import { withReturnTo } from "@/utils/returnTo";
+import GButton from "@/components/inputs/button/GButton";
 import { useAppSelector } from "@/lib/hooks";
 import { Building } from "./types";
 import BuildingStatTiles from "./BuildingStatTiles";
+import BuildingDocumentUploadDialog from "./BuildingDocumentUploadDialog";
+import DocumentTabPanel from "./DocumentTabPanel";
 import FacilityTabPanel from "./FacilityTabPanel";
 import TenderTabPanel from "./TenderTabPanel";
 import { getFacilitiesByBuilding } from "@/lib/features/facilitySlice";
@@ -27,8 +31,12 @@ const BuildingDetailWorkspace: React.FC<BuildingDetailWorkspaceProps> = ({
 }) => {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState<number>(initialTab);
+  const [isUploadOpen, setIsUploadOpen] = useState<boolean>(false);
   const facilities = useAppSelector(getFacilitiesByBuilding(building.id));
   const tenders = useAppSelector(getTendersByBuilding(building.id));
+
+  // Forms and detail screens opened from here return to this exact view.
+  const returnTo = `${ROUTES.REAL_ESTATE.BUILDING.BUILDINGS}?building=${building.id}&tab=${activeTab}`;
 
   const handleTabChange = (
     _event: React.SyntheticEvent,
@@ -53,14 +61,28 @@ const BuildingDetailWorkspace: React.FC<BuildingDetailWorkspaceProps> = ({
             {`${building.address.street} ${building.address.houseNumber}, ${building.address.zip} ${building.address.city}`}
           </Typography>
         </Box>
-        <Box
-          sx={styles.editLink}
-          onClick={() =>
-            router.push(ROUTES.REAL_ESTATE.BUILDING.EDIT_BUILDING(building.id))
-          }
-        >
-          <FaRegEdit size="1.1rem" />
-          <Typography variant="bodymsb">Bearbeiten</Typography>
+        <Box sx={styles.actions}>
+          <GButton
+            variant="outlined"
+            sx={styles.uploadButton}
+            onClick={() => setIsUploadOpen(true)}
+          >
+            Upload document
+          </GButton>
+          <Box
+            sx={styles.editLink}
+            onClick={() =>
+              router.push(
+                withReturnTo(
+                  ROUTES.REAL_ESTATE.BUILDING.EDIT_BUILDING(building.id),
+                  returnTo
+                )
+              )
+            }
+          >
+            <FaRegEdit size="1.1rem" />
+            <Typography variant="bodymsb">Bearbeiten</Typography>
+          </Box>
         </Box>
       </Box>
 
@@ -69,13 +91,24 @@ const BuildingDetailWorkspace: React.FC<BuildingDetailWorkspaceProps> = ({
       <Tabs value={activeTab} onChange={handleTabChange} sx={styles.tabs}>
         <Tab label="Anlagen" />
         <Tab label="Ausschreibungen" />
+        <Tab label="Dokumente" />
       </Tabs>
 
-      {activeTab === 0 ? (
-        <FacilityTabPanel facilities={facilities} />
-      ) : (
-        <TenderTabPanel tenders={tenders} />
+      {activeTab === 0 && (
+        <FacilityTabPanel facilities={facilities} returnTo={returnTo} />
       )}
+      {activeTab === 1 && (
+        <TenderTabPanel tenders={tenders} returnTo={returnTo} />
+      )}
+      {activeTab === 2 && (
+        <DocumentTabPanel building={building} facilities={facilities} />
+      )}
+
+      <BuildingDocumentUploadDialog
+        building={building}
+        open={isUploadOpen}
+        onClose={() => setIsUploadOpen(false)}
+      />
     </Box>
   );
 };
@@ -104,6 +137,14 @@ const styles = {
   address: {
     color: "#8D999C",
     mt: "0.25rem",
+  },
+  actions: {
+    display: "flex",
+    alignItems: "center",
+    gap: "1.5rem",
+  },
+  uploadButton: {
+    margin: 0,
   },
   editLink: {
     display: "flex",

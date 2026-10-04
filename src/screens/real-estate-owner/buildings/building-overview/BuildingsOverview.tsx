@@ -2,8 +2,9 @@
 "use client";
 import Box from "@mui/material/Box";
 import { ROUTES } from "@/utils/routes";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo } from "react";
 import { useSelector } from "react-redux";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useAppDispatch } from "@/lib/hooks";
 import { currentUser } from "@/lib/features/userSlice";
 import addObjSrc from "@icons/add_building.svg";
@@ -18,12 +19,15 @@ import { Building } from "@/screens/real-estate-owner/buildings/building-overvie
 
 const BuildingsOverview: React.FC = () => {
   const dispatch = useAppDispatch();
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const user = useSelector(currentUser);
   const userBuildings = useSelector(getUserBuildings);
-  const [selectedBuildingId, setSelectedBuildingId] = useState<string | null>(
-    null
-  );
-  const [selectedTab, setSelectedTab] = useState<number>(0);
+  // The selected building lives in the URL (?building=<id>&tab=<n>), so the
+  // sidebar's "Alle Gebäude" link (no query) always returns to the list.
+  const selectedBuildingId = searchParams.get("building");
+  const requestedTab = Number(searchParams.get("tab"));
+  const selectedTab = [0, 1, 2].includes(requestedTab) ? requestedTab : 0;
 
   useEffect(() => {
     if (!user?.id) return;
@@ -65,16 +69,18 @@ const BuildingsOverview: React.FC = () => {
   );
 
   const handleSelectBuilding = (buildingId: string, tab = 0): void => {
-    setSelectedBuildingId(buildingId);
-    setSelectedTab(tab);
+    router.push(
+      `${ROUTES.REAL_ESTATE.BUILDING.BUILDINGS}?building=${buildingId}&tab=${tab}`
+    );
   };
 
   if (selectedBuilding) {
     return (
       <BuildingDetailWorkspace
+        key={selectedBuilding.id}
         building={selectedBuilding}
         initialTab={selectedTab}
-        onBack={() => setSelectedBuildingId(null)}
+        onBack={() => router.push(ROUTES.REAL_ESTATE.BUILDING.BUILDINGS)}
       />
     );
   }

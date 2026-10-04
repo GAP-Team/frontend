@@ -12,18 +12,25 @@ import { deleteTender } from "@/lib/features/tenderSlice";
 import { showSnackbar } from "@/components/feedback/snackbar";
 import { getTenderStatusStyle, translateTenderForm } from "@/utils/utils";
 import ActionMenu from "@/components/navigation/ActionMenu";
+import { withReturnTo } from "@/utils/returnTo";
 
 interface TenderRowProps {
   tender: Tender;
+  returnTo: string;
 }
 
-const TenderRow: React.FC<TenderRowProps> = ({ tender }) => {
+const TenderRow: React.FC<TenderRowProps> = ({ tender, returnTo }) => {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const statusStyle = getTenderStatusStyle[tender.status];
 
   const handleClick = (): void => {
-    router.push(ROUTES.REAL_ESTATE.TENDER.TENDER_DETAILS(tender.id));
+    router.push(
+      withReturnTo(
+        ROUTES.REAL_ESTATE.TENDER.TENDER_DETAILS(tender.id),
+        returnTo
+      )
+    );
   };
 
   const handleDelete = async (tenderId: string): Promise<void> => {
@@ -72,7 +79,9 @@ const TenderRow: React.FC<TenderRowProps> = ({ tender }) => {
         <ActionMenu
           itemId={tender.id}
           onEdit={(id) =>
-            router.push(ROUTES.REAL_ESTATE.TENDER.EDIT_TENDER(id))
+            router.push(
+              withReturnTo(ROUTES.REAL_ESTATE.TENDER.EDIT_TENDER(id), returnTo)
+            )
           }
           onDelete={handleDelete}
           messege="Sind Sie sicher, dass Sie dieses Element löschen möchten?"
