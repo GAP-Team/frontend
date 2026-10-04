@@ -1,9 +1,14 @@
 "use client";
+import { Suspense } from "react";
 import { useParams } from "next/navigation";
 import TenderForm from "@/screens/real-estate-owner/tenders/tender-form/TenderForm";
 
 export default function EditTenderPage(): JSX.Element {
   const params = useParams();
   const id = Array.isArray(params.id) ? params.id[0] : params.id;
-  return <TenderForm id={id} />;
+  return (
+    <Suspense>
+      <TenderForm id={id} />
+    </Suspense>
+  );
 }

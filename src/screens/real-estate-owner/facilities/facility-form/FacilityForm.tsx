@@ -7,6 +7,7 @@ import {
 import Link from "next/link";
 import Grid from "@mui/material/Grid";
 import { ROUTES } from "@/utils/routes";
+import { useReturnTo } from "@/hooks/useReturnTo";
 import { CgClose } from "react-icons/cg";
 import { IconButton } from "@mui/material";
 import FacilityCheck from "./FacilityCheck";
@@ -48,6 +49,7 @@ const FacilityForm: React.FC<NewFacilityProps> = ({
   facilityId,
 }): JSX.Element => {
   const router = useRouter();
+  const exitUrl = useReturnTo() ?? ROUTES.REAL_ESTATE.FACILITY.FACILITIES;
   const dispatch = useAppDispatch();
   const user = useAppSelector(currentUser);
   const checkActiveUser = useAppSelector(isUserActive);
@@ -309,7 +311,7 @@ const FacilityForm: React.FC<NewFacilityProps> = ({
           : "Anlage wurde erfolgreich angelegt"
       }
       buttonLabel={"Schließen"}
-      redirectUrl={ROUTES.REAL_ESTATE.FACILITY.FACILITIES}
+      redirectUrl={exitUrl}
     />
   ) : (
     <>
@@ -322,7 +324,7 @@ const FacilityForm: React.FC<NewFacilityProps> = ({
           />
         </Grid>
         <Grid item>
-          <Link href={ROUTES.REAL_ESTATE.FACILITY.FACILITIES}>
+          <Link href={exitUrl}>
             <IconButton sx={{ marginLeft: "auto" }} size="medium">
               <CgClose color="red" />
             </IconButton>

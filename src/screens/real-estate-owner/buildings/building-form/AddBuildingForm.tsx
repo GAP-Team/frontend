@@ -8,6 +8,7 @@ import Divider from "@mui/material/Divider";
 import { IconButton, Typography } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
 import { ROUTES } from "@/utils/routes";
+import { useReturnTo } from "@/hooks/useReturnTo";
 import { AddBuildingFormValues } from "./types";
 import GButton from "@/components/inputs/button/GButton";
 import { AddComponentFormProps } from "../../types";
@@ -27,6 +28,7 @@ const AddBuildingForm = ({
   setActiveStep,
 }: AddComponentFormProps): JSX.Element => {
   const router = useRouter();
+  const exitUrl = useReturnTo() ?? ROUTES.REAL_ESTATE.BUILDING.BUILDINGS;
   const formik = useFormikContext<AddBuildingFormValues>();
 
   const StepComponent = steps[activeStep.id]?.component;
@@ -34,7 +36,7 @@ const AddBuildingForm = ({
   const typeOfBtn = activeStep.id + 1 >= steps.length ? "submit" : "button";
 
   const handleRoute = (): void => {
-    router.push(ROUTES.REAL_ESTATE.BUILDING.BUILDINGS);
+    router.push(exitUrl);
   };
 
   const formOrSuccessContent = isBeyondLastStep ? (
@@ -61,7 +63,7 @@ const AddBuildingForm = ({
           />
         </Grid>
         <Grid item>
-          <Link href={ROUTES.REAL_ESTATE.BUILDING.BUILDINGS}>
+          <Link href={exitUrl}>
             <IconButton sx={{ marginLeft: "auto" }} size="medium">
               <CgClose color="red" />
             </IconButton>
