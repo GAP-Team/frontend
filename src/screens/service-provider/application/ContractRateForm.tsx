@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { NumericFormat } from "react-number-format";
 import { Box, Grid, Divider, TextField, Typography } from "@mui/material";
 import { GAP_COMMISSION_RATE } from "@/utils/Constants";
@@ -12,23 +11,19 @@ const parsePrice = (price: string): number =>
   Number(price.replace(/\./g, "").replace(",", ".")) || 0;
 
 const ContractRateForm = ({ formik }: { formik?: any }): JSX.Element => {
-  const [priceValues, setPriceValues] = useState({
-    totalPrice: "",
-  });
-
   const handlePriceChange = (
     event: React.ChangeEvent<HTMLInputElement>,
     name: string
   ): void => {
-    setPriceValues({
-      ...priceValues,
-      [name]: event.target.value,
-    });
     const cleanPrice = event.target.value.replace("€", "");
     formik.setFieldValue(name, cleanPrice);
   };
 
-  const totalPrice = parsePrice(priceValues.totalPrice.replace("€", ""));
+  // formik is the single source of truth, so the price survives step changes
+  const priceInput = formik?.values?.totalPrice
+    ? `€${formik.values.totalPrice}`
+    : "";
+  const totalPrice = parsePrice(formik?.values?.totalPrice ?? "");
   const commission = totalPrice * GAP_COMMISSION_RATE;
   const commissionPercent = GAP_COMMISSION_RATE * 100;
 
@@ -60,7 +55,7 @@ const ContractRateForm = ({ formik }: { formik?: any }): JSX.Element => {
                 decimalSeparator=","
                 thousandSeparator="."
                 customInput={TextField}
-                value={priceValues.totalPrice}
+                value={priceInput}
                 onChange={(event) => handlePriceChange(event, "totalPrice")}
                 helperText={
                   formik?.touched?.totalPrice && formik?.errors?.totalPrice
