@@ -1,5 +1,5 @@
 "use client";
-import { Grid } from "@mui/material";
+import { Box } from "@mui/material";
 import TopFilterPanel from "@/screens/landing-page/TopFilterPanel";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
@@ -110,15 +110,9 @@ const ContractsOverview = (): JSX.Element => {
             style={styles.resultSection}
             className="flex flex-cols-4 mb-8 pl-2"
           >
-            <Grid
-              container
-              spacing={"1.25rem"}
-              sx={{ overflow: "auto", flexGrow: 1 }}
-            >
-              <Grid item sx={styles.innerContainer}>
-                <ContractCard contracts={contracts} />
-              </Grid>
-            </Grid>
+            <Box sx={styles.cardGrid}>
+              <ContractCard contracts={contracts} />
+            </Box>
           </div>
         )}
       </div>
@@ -138,12 +132,12 @@ const styles = {
   resultSection: {
     width: "75%",
   },
-  innerContainer: {
-    display: "flex",
-    flexDirection: "row",
-    flexWrap: "wrap",
+  cardGrid: {
+    display: "grid",
+    gridTemplateColumns: "repeat(auto-fill, minmax(16rem, 1fr))",
+    gap: "1.25rem",
     padding: "0.5rem",
-    marginBottom: "1rem",
     width: "100%",
+    alignContent: "start",
   },
 };
