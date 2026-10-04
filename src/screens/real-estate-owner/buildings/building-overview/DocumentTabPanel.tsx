@@ -1,5 +1,6 @@
 import React from "react";
 import Box from "@mui/material/Box";
+import Link from "@mui/material/Link";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import { DOCUMENT_TYPE } from "@/utils/enums";
@@ -10,6 +11,7 @@ import DocumentList from "./DocumentList";
 interface DocumentTabPanelProps {
   building: Building;
   facilities: Facility[];
+  onOpenFacility: (facility: Facility) => void;
 }
 
 const buildingDocumentGroups = [
@@ -24,6 +26,7 @@ const buildingDocumentGroups = [
 const DocumentTabPanel: React.FC<DocumentTabPanelProps> = ({
   building,
   facilities,
+  onOpenFacility,
 }) => {
   const buildingDocuments = building.documents ?? [];
   const facilitiesWithDocuments = facilities.filter(
@@ -61,7 +64,16 @@ const DocumentTabPanel: React.FC<DocumentTabPanelProps> = ({
       {facilitiesWithDocuments.map((facility) => (
         <Paper key={facility.id} sx={styles.section} elevation={2}>
           <Typography variant="bodylsb" sx={styles.sectionTitle}>
-            {`Dokumente: ${facility.name}`}
+            {"Dokumente: "}
+            <Link
+              component="button"
+              type="button"
+              underline="hover"
+              sx={styles.facilityLink}
+              onClick={() => onOpenFacility(facility)}
+            >
+              {facility.name}
+            </Link>
           </Typography>
           <DocumentList documents={facility.documents} />
         </Paper>
@@ -81,6 +93,11 @@ const styles = {
     p: "1.25rem",
     borderRadius: "0.5rem",
     mb: "0.75rem",
+  },
+  facilityLink: {
+    font: "inherit",
+    color: "#22A7F1",
+    verticalAlign: "baseline",
   },
   sectionTitle: {
     display: "block",

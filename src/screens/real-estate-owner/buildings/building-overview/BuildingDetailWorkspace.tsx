@@ -37,6 +37,11 @@ const BuildingDetailWorkspace: React.FC<BuildingDetailWorkspaceProps> = ({
   // Set when a facility's tender count was clicked: the Ausschreibungen tab
   // then only lists that facility's tenders.
   const [facilityFilter, setFacilityFilter] = useState<Facility | null>(null);
+  // Set when a facility was opened from the Dokumente tab: the Anlagen tab
+  // then shows it expanded and scrolled into view.
+  const [focusedFacilityId, setFocusedFacilityId] = useState<string | null>(
+    null
+  );
   const facilities = useAppSelector(getFacilitiesByBuilding(building.id));
   const allTenders = useAppSelector(getTendersByBuilding(building.id));
   const tenders = facilityFilter
@@ -51,7 +56,13 @@ const BuildingDetailWorkspace: React.FC<BuildingDetailWorkspaceProps> = ({
     value: number
   ): void => {
     setFacilityFilter(null);
+    setFocusedFacilityId(null);
     setActiveTab(value);
+  };
+
+  const handleOpenFacility = (facility: Facility): void => {
+    setFocusedFacilityId(facility.id);
+    setActiveTab(0);
   };
 
   const handleShowTenders = (facility: Facility): void => {
@@ -117,6 +128,7 @@ const BuildingDetailWorkspace: React.FC<BuildingDetailWorkspaceProps> = ({
           facilities={facilities}
           returnTo={returnTo}
           onShowTenders={handleShowTenders}
+          focusedFacilityId={focusedFacilityId}
         />
       )}
       {activeTab === 1 && (
@@ -128,7 +140,11 @@ const BuildingDetailWorkspace: React.FC<BuildingDetailWorkspaceProps> = ({
         />
       )}
       {activeTab === 2 && (
-        <DocumentTabPanel building={building} facilities={facilities} />
+        <DocumentTabPanel
+          building={building}
+          facilities={facilities}
+          onOpenFacility={handleOpenFacility}
+        />
       )}
 
       <BuildingDocumentUploadDialog

@@ -11,12 +11,14 @@ interface FacilityTabPanelProps {
   facilities: Facility[];
   returnTo: string;
   onShowTenders: (facility: Facility) => void;
+  focusedFacilityId?: string | null;
 }
 
 const FacilityTabPanel: React.FC<FacilityTabPanelProps> = ({
   facilities,
   returnTo,
   onShowTenders,
+  focusedFacilityId,
 }) => {
   return (
     <Box sx={styles.container}>
@@ -38,6 +40,7 @@ const FacilityTabPanel: React.FC<FacilityTabPanelProps> = ({
             facility={facility}
             returnTo={returnTo}
             onShowTenders={onShowTenders}
+            isFocused={facility.id === focusedFacilityId}
           />
         ))
       ) : (

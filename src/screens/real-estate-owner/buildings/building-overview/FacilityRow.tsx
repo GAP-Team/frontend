@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Box from "@mui/material/Box";
 import Chip from "@mui/material/Chip";
 import Collapse from "@mui/material/Collapse";
@@ -22,6 +22,8 @@ interface FacilityRowProps {
   facility: Facility;
   returnTo: string;
   onShowTenders: (facility: Facility) => void;
+  // The row was opened from elsewhere: start expanded and scroll to it.
+  isFocused?: boolean;
 }
 
 // Only a facility that has tenders can link to them.
@@ -36,11 +38,13 @@ const FacilityRow: React.FC<FacilityRowProps> = ({
   facility,
   returnTo,
   onShowTenders,
+  isFocused = false,
 }) => {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const [isUploadOpen, setIsUploadOpen] = useState<boolean>(false);
-  const [isExpanded, setIsExpanded] = useState<boolean>(false);
+  const [isExpanded, setIsExpanded] = useState<boolean>(isFocused);
+  const cardRef = useRef<HTMLDivElement>(null);
   const isActive = useAppSelector(checkActiveTenderForFacility(facility.id));
 
   const handleDelete = async (facilityId: string): Promise<void> => {
@@ -64,6 +68,12 @@ const FacilityRow: React.FC<FacilityRowProps> = ({
 
   const tenderCount = facility.tenderIds?.length ?? 0;
 
+  useEffect(() => {
+    if (isFocused) {
+      cardRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }, [isFocused]);
+
   const handleShowTenders = (event: React.MouseEvent): void => {
     event.stopPropagation();
     if (tenderCount > 0) onShowTenders(facility);
@@ -71,7 +81,7 @@ const FacilityRow: React.FC<FacilityRowProps> = ({
 
   return (
     <>
-      <Paper sx={styles.card} elevation={2}>
+      <Paper ref={cardRef} sx={styles.card} elevation={2}>
         <Box
           sx={styles.row}
           onClick={() => setIsExpanded((expanded) => !expanded)}
