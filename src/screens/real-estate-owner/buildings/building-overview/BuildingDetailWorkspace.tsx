@@ -57,7 +57,9 @@ const BuildingDetailWorkspace: React.FC<BuildingDetailWorkspaceProps> = ({
 
       <Box sx={styles.header}>
         <Box>
-          <Typography variant="h4sb">{building.buildingName}</Typography>
+          <Typography variant="h4sb" sx={styles.title}>
+            {building.buildingName}
+          </Typography>
           <Typography variant="bodymr" sx={styles.address}>
             {`${building.address.street} ${building.address.houseNumber}, ${building.address.zip} ${building.address.city}`}
           </Typography>
@@ -137,7 +139,11 @@ const styles = {
     alignItems: "flex-start",
     mb: "1.25rem",
   },
+  title: {
+    display: "block",
+  },
   address: {
+    display: "block",
     color: "#8D999C",
     mt: "0.25rem",
   },
