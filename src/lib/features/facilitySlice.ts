@@ -89,7 +89,7 @@ export const updateFacility = createAsyncThunk(
     data: Partial<Facility>;
   }) => {
     const response = await facilityAPI.update(facilityId, data);
-    return response;
+    return response.data;
   }
 );
 
