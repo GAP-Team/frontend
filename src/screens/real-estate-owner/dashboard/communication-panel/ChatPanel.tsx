@@ -9,7 +9,7 @@ const ChatPanel: React.FC<DashboardComponentsProps> = (): JSX.Element => {
     <Stack height="100%">
       <HeaderSection
         titletext="NEUE NACHRICHTEN"
-        count={3}
+        count={messages.length}
         overviewText="Alle anzeigen"
       />
       <MessagesContainer messages={messages} />
