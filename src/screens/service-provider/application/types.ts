@@ -1,13 +1,25 @@
-import { Dayjs } from "dayjs";
 import { Document } from "@/typings/types";
 import { ActiveStepItem } from "@/screens/real-estate-owner/types";
+
+export type SuggestedDateType = "single" | "range";
+
+export interface SuggestedDate {
+  type: SuggestedDateType;
+  date: string; // YYYY-MM-DD
+  endDate: string; // YYYY-MM-DD, only used when type is "range"
+}
+
+export interface SuggestionWorkDate {
+  date: string;
+  endDate?: string;
+}
 
 export interface Application {
   tenderId: string;
   userId: string;
   serviceTotalPrice: string;
   message: string;
-  suggestionWorkDates: string[];
+  suggestionWorkDates: SuggestionWorkDate[];
   zip: number;
   city: string;
   dataPrivacy: boolean;
@@ -21,7 +33,7 @@ export interface ContractApplicationFormValues {
   message: string;
   zip: string;
   city: string;
-  desiredDates: (Dayjs | null)[];
+  desiredDates: SuggestedDate[];
   advantages: string[];
   offerDoc: string;
   termsConditionDoc: string;

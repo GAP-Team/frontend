@@ -5,6 +5,7 @@ import SummarySection, {
 } from "@/components/common/summary/SummarySection";
 import { currentUser } from "@/lib/features/userSlice";
 import { ContractApplicationFormValues } from "./types";
+import { formatSuggestedDate } from "./suggestedDates";
 import { ActiveStepItem } from "@/screens/real-estate-owner/types";
 import { Box, Grid, Divider, Checkbox, Typography } from "@mui/material";
 import HeaderSection from "@/screens/real-estate-owner/dashboard/HeaderSection";
@@ -40,12 +41,12 @@ const ContractApplicationSummary = ({
       label: "Nützliche Informationen",
       value: values.message,
     },
-    ...(values.desiredDates && values.desiredDates.length
-      ? values.desiredDates.map((date: any, index: number) => ({
-          label: `Mögliche Daten ${index + 1}`,
-          value: date ? new Date(date).toLocaleDateString() : "Nicht angegeben",
-        }))
-      : []),
+    ...values.desiredDates
+      .filter((d) => d.date)
+      .map((d, index) => ({
+        label: `Mögliche Termine ${index + 1}`,
+        value: formatSuggestedDate(d),
+      })),
   ].filter(Boolean) as Detail[];
 
   const contractServiceSummary: Detail[] = [

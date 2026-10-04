@@ -141,7 +141,6 @@ const ContractServicesForm = ({ formik }: { formik?: any }): JSX.Element => {
       </Grid>
       <Divider sx={styles.divider} />
 
-      {/* Angebot Upload Sections */}
       <Grid container spacing={2}>
         <Grid item xs={12} md={4}>
           <Typography sx={styles.descriptionLable}>

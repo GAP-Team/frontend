@@ -1,5 +1,17 @@
+import { FieldArray } from "formik";
+import AddIcon from "@mui/icons-material/Add";
+import UploadButton from "@/components/inputs/button/UploadButton";
+import SuggestedDateRow from "./SuggestedDateRow";
+import { SuggestedDate } from "./types";
 import { NumericFormat } from "react-number-format";
-import { Box, Grid, Divider, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  Grid,
+  Button,
+  Divider,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { GAP_COMMISSION_RATE } from "@/utils/Constants";
 import HeaderSection from "@/screens/real-estate-owner/dashboard/HeaderSection";
 import LabelWithAsterisk from "@/components/data-display/label/LabelWithAsterisk";
@@ -11,6 +23,12 @@ const parsePrice = (price: string): number =>
   Number(price.replace(/\./g, "").replace(",", ".")) || 0;
 
 const ContractRateForm = ({ formik }: { formik?: any }): JSX.Element => {
+  const handleOfferDocChange = (ev: any): void => {
+    const file = ev?.target.files[0];
+    formik.setFieldValue("offerDocFile", file);
+    formik.setFieldValue("offerDoc", file?.name ?? "");
+  };
+
   const handlePriceChange = (
     event: React.ChangeEvent<HTMLInputElement>,
     name: string
@@ -30,6 +48,39 @@ const ContractRateForm = ({ formik }: { formik?: any }): JSX.Element => {
   return (
     <Grid item xs={12} md={9}>
       <HeaderSection titletext="VERTRAGSRATE" />
+      {/* Angebot Upload Section */}
+      <Grid container spacing={2}>
+        <Grid item xs={12} md={4}>
+          <Typography sx={styles.descriptionLable}>
+            Angebot als PDF hochladen
+          </Typography>
+          <Typography sx={styles.descriptionText}>
+            Laden Sie Ihr Angebot für diese
+            <br />
+            Ausschreibung als PDF hoch.
+          </Typography>
+        </Grid>
+        <Grid item xs={12} md={8}>
+          <LabelWithAsterisk>Angebot Dokumente</LabelWithAsterisk>
+          <Box sx={styles.docUploaderBox}>
+            <UploadButton
+              id="offerDoc"
+              name="offerDoc"
+              onChange={handleOfferDocChange}
+              value={formik?.values?.offerDoc}
+              error={
+                formik?.touched?.offerDoc && Boolean(formik?.errors?.offerDoc)
+              }
+              helperText={
+                formik?.touched?.offerDoc &&
+                formik?.errors?.offerDoc?.toString()
+              }
+            />
+          </Box>
+        </Grid>
+      </Grid>
+      <Divider sx={styles.divider} />
+
       <Grid container spacing={2}>
         <Grid item xs={12} md={4}>
           <Typography sx={styles.descriptionLable}>
@@ -91,43 +142,42 @@ const ContractRateForm = ({ formik }: { formik?: any }): JSX.Element => {
         <Grid item xs={12} md={4}>
           <Typography sx={styles.descriptionLable}>Prüfungsdatum</Typography>
           <Typography sx={styles.descriptionText}>
-            Hier ist das gewünschte und mögliche
+            Geben Sie ein oder mehrere mögliche
             <br />
-            Prüfungsdatum angezeigt.
+            Termine an: als bestimmtes Datum oder
+            <br />
+            als Zeitraum (von – bis).
           </Typography>
         </Grid>
         <Grid item xs={12} md={8}>
-          <Grid container spacing={2} sx={styles.desiredDateHolder}>
-            {formik?.values?.desiredDates?.map(
-              (date: string, index: number) => (
-                <Grid item xs={12} md={4} key={index}>
-                  <Typography
-                    variant="gsub"
-                    color="gray.500"
-                    sx={styles.lableText}
-                  >
-                    Gewünschtes Datum {index + 1}
-                  </Typography>
-                  <div>
-                    <TextField
-                      type="date"
-                      onBlur={formik?.handleBlur}
-                      id={`desiredDates[${index}]`}
-                      name={`desiredDates[${index}]`}
-                      onChange={formik?.handleChange}
-                      InputLabelProps={{ shrink: true }}
-                      value={formik?.values?.desiredDates[index] || ""}
-                      InputProps={{
-                        inputProps: {
-                          min: new Date().toISOString().split("T")[0],
-                        },
-                      }}
+          <FieldArray name="desiredDates">
+            {({ push, remove }) => (
+              <Box sx={styles.dateList}>
+                {formik?.values?.desiredDates?.map(
+                  (entry: SuggestedDate, index: number) => (
+                    <SuggestedDateRow
+                      key={index}
+                      index={index}
+                      entry={entry}
+                      formik={formik}
+                      canRemove={formik.values.desiredDates.length > 1}
+                      onRemove={() => remove(index)}
                     />
-                  </div>
-                </Grid>
-              )
+                  )
+                )}
+                <Button
+                  variant="text"
+                  startIcon={<AddIcon />}
+                  sx={styles.addDateButton}
+                  onClick={() =>
+                    push({ type: "single", date: "", endDate: "" })
+                  }
+                >
+                  Weiteren Termin hinzufügen
+                </Button>
+              </Box>
             )}
-          </Grid>
+          </FieldArray>
         </Grid>
       </Grid>
       <Divider sx={styles.divider} />
@@ -182,6 +232,15 @@ const ContractRateForm = ({ formik }: { formik?: any }): JSX.Element => {
 export default ContractRateForm;
 
 const styles = {
+  docUploaderBox: {
+    p: 1,
+    display: "flex",
+    cursor: "pointer",
+    alignItems: "center",
+    borderRadius: "12px",
+    justifyContent: "center",
+    border: "2px dashed #ccc",
+  },
   commissionHint: {
     mt: 1,
     color: "#A0ADB1",
@@ -205,11 +264,15 @@ const styles = {
     justifyContent: "space-between",
     fontWeight: 700,
   },
-  desiredDateHolder: {
+  dateList: {
     display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
+    flexDirection: "column",
+    gap: 2,
+  },
+  addDateButton: {
+    alignSelf: "flex-start",
+    fontWeight: 600,
+    textTransform: "none",
   },
   divider: {
     mt: 4,
