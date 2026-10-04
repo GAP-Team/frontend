@@ -49,7 +49,8 @@ const FacilityForm: React.FC<NewFacilityProps> = ({
   facilityId,
 }): JSX.Element => {
   const router = useRouter();
-  const exitUrl = useReturnTo() ?? ROUTES.REAL_ESTATE.FACILITY.FACILITIES;
+  const returnTo = useReturnTo();
+  const exitUrl = returnTo ?? ROUTES.REAL_ESTATE.FACILITY.FACILITIES;
   const dispatch = useAppDispatch();
   const user = useAppSelector(currentUser);
   const checkActiveUser = useAppSelector(isUserActive);
@@ -176,7 +177,7 @@ const FacilityForm: React.FC<NewFacilityProps> = ({
     if (activeStep.id > 0) {
       setActiveStep(steps[activeStep.id - 1]);
     } else {
-      router.push(ROUTES.REAL_ESTATE.DASHBOARD);
+      router.push(returnTo ?? ROUTES.REAL_ESTATE.DASHBOARD);
     }
   };
 

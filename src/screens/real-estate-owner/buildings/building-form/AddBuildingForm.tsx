@@ -84,7 +84,11 @@ const AddBuildingForm = ({
   const forwardAndBackBtns = (
     <>
       {!isBeyondLastStep && (
-        <GButton onClick={handleBack} color="ggrey">
+        <GButton
+          disabled={activeStep.id === 0}
+          onClick={handleBack}
+          color="ggrey"
+        >
           {activeStep.id < steps.length - 1 ? "Zurück" : "Bearbeiten"}
         </GButton>
       )}

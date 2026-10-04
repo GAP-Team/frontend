@@ -1,5 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { RootState } from "../store";
+// Type-only: a runtime import of the store would create a cycle
+// (store -> facilitySlice -> tenderSlice -> store).
+import type { RootState } from "../store";
 // FIXME: Tender, BuildingTenders should not be imported from the screen, it should be imported from a common types file.
 import {
   Tender,
