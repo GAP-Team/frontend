@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { FieldArray } from "formik";
 import AddIcon from "@mui/icons-material/Add";
 import UploadButton from "@/components/inputs/button/UploadButton";
@@ -29,10 +28,6 @@ const ContractRateForm = ({ formik }: { formik?: any }): JSX.Element => {
     formik.setFieldValue("offerDocFile", file);
     formik.setFieldValue("offerDoc", file?.name ?? "");
   };
-
-  const [priceValues, setPriceValues] = useState({
-    totalPrice: "",
-  });
 
   const handlePriceChange = (
     event: React.ChangeEvent<HTMLInputElement>,
