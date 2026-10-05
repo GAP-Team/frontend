@@ -40,6 +40,10 @@ export interface Contract {
   freeParkingAvailable: boolean;
   facilityDocuments: Document[];
   buildingDocuments: Document[];
+  buildingDocumentUploadType?: string;
+  buildingServerLink?: string | null;
+  facilityDocumentUploadType?: string;
+  facilityServerLink?: string | null;
   toDate?: string;
   fromDate?: string;
   applicationIds?: string[];
