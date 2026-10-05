@@ -14,6 +14,7 @@ import s3API from "@/api/s3";
 import { ROUTES } from "@/utils/routes";
 import { translateTenderForm } from "@/utils/utils";
 import { handleUploadDoc } from "@/utils/uploadToS3";
+import { redactContactData } from "@/utils/redactContactData";
 import { DOCUMENT_TYPE, DOCUMENT_FIELDS } from "@/utils/enums";
 import { applyContractFormSchema } from "@/utils/ValidationSchema";
 
@@ -178,7 +179,8 @@ const ContractApplication = (): JSX.Element => {
     file: File,
     type: string
   ): Promise<Document> => {
-    const uploaded = await handleUploadDoc(file);
+    const redacted = await redactContactData(file, user);
+    const uploaded = await handleUploadDoc(redacted);
     return { ...uploaded, documentType: type };
   };
 
