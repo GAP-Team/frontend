@@ -14,6 +14,8 @@ export interface PostalAddress {
 }
 
 const EARTH_RADIUS_KM = 6371;
+const MAPS_POLL_INTERVAL_MS = 100;
+const MAPS_LOAD_TIMEOUT_MS = 10000;
 const coordinatesCache = new Map<string, Promise<Coordinates>>();
 
 const toRadians = (degrees: number): number => (degrees * Math.PI) / 180;
@@ -30,14 +32,34 @@ export const formatAddress = ({
   return [streetLine, cityLine, country].filter(Boolean).join(", ");
 };
 
+const isMapsReady = (): boolean =>
+  typeof window !== "undefined" && Boolean(window.google?.maps?.Geocoder);
+
+// The Maps script is added to the layout with `async`, so it can still be
+// loading when a screen first asks for a distance.
+const waitForMaps = (): Promise<void> =>
+  new Promise((resolve, reject) => {
+    const startedAt = Date.now();
+    const check = (): void => {
+      if (isMapsReady()) {
+        resolve();
+      } else if (Date.now() - startedAt > MAPS_LOAD_TIMEOUT_MS) {
+        reject(new Error("Google Maps did not load in time"));
+      } else {
+        setTimeout(check, MAPS_POLL_INTERVAL_MS);
+      }
+    };
+    check();
+  });
+
 const geocode = (address: string): Promise<Coordinates> => {
   const cached = coordinatesCache.get(address);
   if (cached) {
     return cached;
   }
-  const request = geocodeByAddress(address).then((results) =>
-    getLatLng(results[0])
-  );
+  const request = waitForMaps()
+    .then(() => geocodeByAddress(address))
+    .then((results) => getLatLng(results[0]));
   // Do not cache failures, so a later attempt can retry.
   request.catch(() => coordinatesCache.delete(address));
   coordinatesCache.set(address, request);
