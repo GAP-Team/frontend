@@ -32,7 +32,10 @@ const TenderDetails: React.FC<TenderDetailsProps> = ({ tenderId }) => {
       <Grid container spacing={2} mx={1} columns={18}>
         <Grid item xs={8}>
           <Paper sx={{ maxWidth: "false", width: "100%", p: "1.25rem" }}>
-            <TenderSummarySection tender={tender} />
+            <TenderSummarySection
+              tender={tender}
+              buildingAddress={building?.address}
+            />
           </Paper>
         </Grid>
         <Grid item xs={8}>

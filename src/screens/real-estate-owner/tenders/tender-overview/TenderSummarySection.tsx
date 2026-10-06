@@ -11,14 +11,18 @@ import { Tender } from "./types";
 import { TENDER_FORM } from "@/utils/enums";
 import { useAppSelector } from "@/lib/hooks";
 import { ROUTES } from "@/utils/routes";
+import { BuildingAddress } from "@/screens/real-estate-owner/buildings/building-overview/types";
+import { formatAddress } from "@/utils/distance";
 import { Facility } from "@/screens/real-estate-owner/facilities/facility-overview/types";
 
 interface TenderSummarySectionProps {
   tender?: Tender | null;
+  buildingAddress?: BuildingAddress;
 }
 
 const TenderSummarySection: React.FC<TenderSummarySectionProps> = ({
   tender,
+  buildingAddress,
 }) => {
   const router = useRouter();
   const { facilities } = useAppSelector((state) => state.facility);
@@ -38,6 +42,11 @@ const TenderSummarySection: React.FC<TenderSummarySectionProps> = ({
     },
     { label: "Ausschreibungstyp", value: tender?.tenderType },
     { label: "Objekt", value: tender?.building.name },
+    {
+      label: "Adresse des Objekts",
+      value:
+        buildingAddress && formatAddress({ ...buildingAddress, country: "" }),
+    },
     { label: "Anlage", value: tender?.facility.name },
     { label: "Anlagetyp", value: subcategory },
     { label: "Dringlichkeit", value: tender?.urgency },
