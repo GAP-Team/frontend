@@ -156,10 +156,26 @@ const ApplicationCard: React.FC<ApplicationCardProps> = ({
         </GButton>
         <Box sx={styles.additionalInfoContainer}>
           <Typography variant="bodylsb" sx={styles.specialServices}>
-            {specialServices} Sonderleistungen
+            {specialServices}{" "}
+            <Typography
+              component="span"
+              variant="bodylsb"
+              sx={styles.infoLabel}
+            >
+              Sonderleistungen
+            </Typography>
           </Typography>
           {employees && (
-            <Typography variant="bodylsb">{employees} Mitarbeiter</Typography>
+            <Typography variant="bodylsb">
+              {employees}{" "}
+              <Typography
+                component="span"
+                variant="bodylsb"
+                sx={styles.infoLabel}
+              >
+                Mitarbeiter
+              </Typography>
+            </Typography>
           )}
         </Box>
       </Box>
@@ -227,6 +243,9 @@ const styles = {
     flexWrap: "wrap",
     alignItems: "center",
     columnGap: "1rem",
+  },
+  infoLabel: {
+    color: "grey.500",
   },
   separator: {
     color: "grey.400",
