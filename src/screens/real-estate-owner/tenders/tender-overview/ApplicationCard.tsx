@@ -18,6 +18,7 @@ interface ApplicationCardProps {
   location: string;
   price: string;
   distance?: string;
+  workDates?: string;
   deadline?: string;
   specialServices: number;
   employees?: string;
@@ -32,6 +33,7 @@ const ApplicationCard: React.FC<ApplicationCardProps> = ({
   location,
   price,
   distance,
+  workDates,
   deadline,
   specialServices,
   employees,
@@ -98,13 +100,16 @@ const ApplicationCard: React.FC<ApplicationCardProps> = ({
           <Box sx={styles.priceContainer}>
             <Box sx={styles.priceAndDistance}>
               <Typography variant="bodylsb">{price}</Typography>
-              {distance && (
-                <>
-                  <Typography variant="bodylsb" sx={styles.separator}>
-                    |
-                  </Typography>
-                  <Typography variant="bodylsb">{distance}</Typography>
-                </>
+              {[distance, workDates].map(
+                (value) =>
+                  value && (
+                    <React.Fragment key={value}>
+                      <Typography variant="bodylsb" sx={styles.separator}>
+                        |
+                      </Typography>
+                      <Typography variant="bodylsb">{value}</Typography>
+                    </React.Fragment>
+                  )
               )}
             </Box>
             {deadline && (
@@ -219,6 +224,7 @@ const styles = {
   },
   priceAndDistance: {
     display: "flex",
+    flexWrap: "wrap",
     alignItems: "center",
     columnGap: "1rem",
   },

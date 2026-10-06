@@ -33,6 +33,11 @@ export interface UpdateTenderResponse {
   data: Tender;
 }
 
+export interface SuggestionWorkDate {
+  date?: string;
+  endDate?: string;
+}
+
 export interface TenderApplication {
   id: string;
   tenderId: string;
@@ -41,6 +46,7 @@ export interface TenderApplication {
   zip?: number;
   city?: string;
   benefitsSpecialServices: string[];
+  suggestionWorkDates?: SuggestionWorkDate[];
   companyName?: string;
   numberOfEmployees?: string;
   companyAddress?: {

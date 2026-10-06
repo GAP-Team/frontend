@@ -6,7 +6,7 @@ import Typography from "@mui/material/Typography";
 import contractAPI from "@/api/contract";
 import logger from "@/utils/Logger";
 import ApplicationCard from "./ApplicationCard";
-import { TenderApplication } from "./types";
+import { SuggestionWorkDate, TenderApplication } from "./types";
 import { BuildingAddress } from "@/screens/real-estate-owner/buildings/building-overview/types";
 import { formatDistance, getDistanceKm, PostalAddress } from "@/utils/distance";
 
@@ -14,6 +14,20 @@ interface TenderApplicationsProps {
   tenderId: string;
   buildingAddress?: BuildingAddress;
 }
+
+const formatDate = (date: string): string =>
+  new Date(date).toLocaleDateString("de-DE");
+
+// A suggestion is either a single day or a period (date - endDate).
+const formatWorkDates = (workDates: SuggestionWorkDate[] = []): string =>
+  workDates
+    .filter(({ date }) => date)
+    .map(({ date, endDate }) =>
+      endDate
+        ? `${formatDate(date as string)} - ${formatDate(endDate)}`
+        : formatDate(date as string)
+    )
+    .join(", ");
 
 // The departure point submitted with the application wins over the registered
 // company address, because it is also the location shown on the card.
@@ -112,6 +126,7 @@ const TenderApplications: React.FC<TenderApplicationsProps> = ({
           location={application.city ?? ""}
           price={`${application.serviceTotalPrice} €`}
           distance={distances[application.id]}
+          workDates={formatWorkDates(application.suggestionWorkDates)}
           specialServices={application.benefitsSpecialServices.length}
           employees={application.numberOfEmployees}
         />
