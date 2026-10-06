@@ -7,7 +7,28 @@ import { FormControlLabel, RadioGroup } from "@mui/material";
 import { TenderFormValues } from "./types";
 import { ObjectFacilityMode } from "@/utils/enums";
 import TenderExistingObjectFacility from "./TenderExistingObjectFacility";
+import TenderNewFacilityFields from "./TenderNewFacilityFields";
 import TenderNewObjectFacility from "./TenderNewObjectFacility";
+
+const renderObjectFacilityFields = (mode: ObjectFacilityMode): JSX.Element => {
+  switch (mode) {
+    case ObjectFacilityMode.NEW:
+      return <TenderNewObjectFacility />;
+    case ObjectFacilityMode.NEW_FACILITY:
+      return (
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <TenderExistingObjectFacility showFacilitySelect={false} />
+          </Grid>
+          <Grid item xs={12}>
+            <TenderNewFacilityFields />
+          </Grid>
+        </Grid>
+      );
+    default:
+      return <TenderExistingObjectFacility />;
+  }
+};
 
 const TenderBuilding = (): JSX.Element => {
   const formik = useFormikContext<TenderFormValues>();
@@ -35,6 +56,13 @@ const TenderBuilding = (): JSX.Element => {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <FormControlLabel
+                  value={ObjectFacilityMode.NEW_FACILITY}
+                  control={<Radio />}
+                  label="Bestehendes Objekt, neue Anlage anlegen"
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <FormControlLabel
                   value={ObjectFacilityMode.NEW}
                   control={<Radio />}
                   label="Neues Objekt & Anlage anlegen"
@@ -44,11 +72,7 @@ const TenderBuilding = (): JSX.Element => {
           </RadioGroup>
         </Grid>
       </Grid>
-      {formik.values.objectFacilityMode === ObjectFacilityMode.EXISTING ? (
-        <TenderExistingObjectFacility />
-      ) : (
-        <TenderNewObjectFacility />
-      )}
+      {renderObjectFacilityFields(formik.values.objectFacilityMode)}
     </Box>
   );
 };

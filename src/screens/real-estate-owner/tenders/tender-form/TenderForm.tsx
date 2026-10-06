@@ -38,8 +38,13 @@ import {
 } from "@/lib/features/tenderSlice";
 import buildingAPI from "@/api/building";
 import facilityAPI from "@/api/facility";
-import { addBuilding } from "@/lib/features/buildingSlice";
+import { addBuilding, getUserBuildings } from "@/lib/features/buildingSlice";
+import {
+  DUPLICATE_ADDRESS_MESSAGE,
+  isSameAddress,
+} from "@/utils/buildingAddress";
 import { addFacilities } from "@/lib/features/facilitySlice";
+import { Building } from "@/screens/real-estate-owner/buildings/building-overview/types";
 import { Facility } from "@/screens/real-estate-owner/facilities/facility-overview/types";
 import { DEFAULT_PUBLISH_MONTHS } from "@/utils/Constants";
 import logger from "@/utils/Logger";
@@ -59,6 +64,7 @@ const TenderForm: React.FC<NewTenderProps> = ({ id }): JSX.Element => {
   const dispatch = useAppDispatch();
   const user = useAppSelector(currentUser);
   const checkActiveUser = useAppSelector(isUserActive);
+  const existingBuildings: Building[] = useAppSelector(getUserBuildings);
   const tender = useAppSelector((state) =>
     id ? getTenderById(id)(state) : null
   );
@@ -120,10 +126,25 @@ const TenderForm: React.FC<NewTenderProps> = ({ id }): JSX.Element => {
     getInitialFormValues()
   );
 
+  const hasDuplicateAddress = (newBuilding: NewBuildingFields): boolean =>
+    existingBuildings?.some((building) =>
+      isSameAddress(building.address, newBuilding)
+    );
+
   const handleNext = async (
     values: TenderFormValues,
     actions: FormikHelpers<TenderFormValues>
   ): Promise<void> => {
+    const isNewObjectStep =
+      activeStep?.id === 1 &&
+      !tender &&
+      values.objectFacilityMode === ObjectFacilityMode.NEW;
+    if (isNewObjectStep && hasDuplicateAddress(values.newBuilding)) {
+      actions.setFieldError("newBuilding.street", DUPLICATE_ADDRESS_MESSAGE);
+      actions.setFieldTouched("newBuilding.street", true, false);
+      actions.setSubmitting(false);
+      return;
+    }
     const updatedValues = { ...formData, ...values };
     setFormData(updatedValues);
     if (activeStep?.id === steps.length - 1) {
@@ -153,6 +174,13 @@ const TenderForm: React.FC<NewTenderProps> = ({ id }): JSX.Element => {
   const createBuildingUnderTheHood = async (
     newBuilding: NewBuildingFields
   ): Promise<{ id: string; name: string } | null> => {
+    if (hasDuplicateAddress(newBuilding)) {
+      dispatch(
+        showSnackbar({ type: "error", message: DUPLICATE_ADDRESS_MESSAGE })
+      );
+      return null;
+    }
+
     const address = {
       city: newBuilding.city,
       state: newBuilding.state,
@@ -197,13 +225,15 @@ const TenderForm: React.FC<NewTenderProps> = ({ id }): JSX.Element => {
       );
 
       return { id: newBuildingId, name: building.buildingName };
-    } catch (error) {
+    } catch (error: any) {
       logger.error("Error creating building for tender: ", error);
+      const isDuplicate = error?.response?.status === 409;
       dispatch(
         showSnackbar({
           type: "error",
-          message:
-            "Gebäude konnte nicht erstellt werden. Bitte versuchen Sie es später erneut.",
+          message: isDuplicate
+            ? DUPLICATE_ADDRESS_MESSAGE
+            : "Gebäude konnte nicht erstellt werden. Bitte versuchen Sie es später erneut.",
         })
       );
       return null;
@@ -308,6 +338,20 @@ const TenderForm: React.FC<NewTenderProps> = ({ id }): JSX.Element => {
         return false;
       }
       ({ buildingId, buildingName, facilityId, facilityName } = created);
+    }
+
+    if (
+      !tender &&
+      values.objectFacilityMode === ObjectFacilityMode.NEW_FACILITY
+    ) {
+      const createdFacility = await createFacilityUnderTheHood(
+        values.newFacility,
+        buildingId
+      );
+      if (!createdFacility) {
+        return false;
+      }
+      ({ id: facilityId, name: facilityName } = createdFacility);
     }
 
     let buildingObj = {

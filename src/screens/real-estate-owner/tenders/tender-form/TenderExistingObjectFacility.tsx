@@ -3,6 +3,9 @@ import Grid from "@mui/material/Grid";
 import buildingAPI from "@/api/building";
 import { useSelector } from "react-redux";
 import { useFormikContext } from "formik";
+import logger from "@/utils/Logger";
+import { useAppDispatch } from "@/lib/hooks";
+import { showSnackbar } from "@/components/feedback/snackbar";
 import { useEffect, useState } from "react";
 import { TenderFormValues } from "./types";
 import HelpIcon from "@/components/icons/HelpIcon";
@@ -14,8 +17,15 @@ import LabelWithAsterisk from "@/components/data-display/label/LabelWithAsterisk
 import { Facility } from "@/screens/real-estate-owner/facilities/facility-overview/types";
 import { AddFacilityFormValues } from "@/screens/real-estate-owner/facilities/facility-form/types";
 
-const TenderExistingObjectFacility = (): JSX.Element => {
+interface TenderExistingObjectFacilityProps {
+  showFacilitySelect?: boolean;
+}
+
+const TenderExistingObjectFacility = ({
+  showFacilitySelect = true,
+}: TenderExistingObjectFacilityProps): JSX.Element => {
   const allBuildings = useSelector(getUserBuildings);
+  const dispatch = useAppDispatch();
   const formik = useFormikContext<TenderFormValues>();
   const [buildingFacilities, setBuildingFacilities] = useState([]);
   const [buildingDropDownOptions, setBuildingDropDownOptions] = useState<
@@ -41,50 +51,48 @@ const TenderExistingObjectFacility = (): JSX.Element => {
     }
   }, []);
 
-  const setSelectedBuildingFacilities = async (): Promise<void> => {
-    const allFacilities = await buildingAPI.getFacilitiesOfBuilding(
-      formik?.values?.buildingId
-    );
-
-    const facilityOptions: Item[] = [];
-    allFacilities?.data?.forEach((facility: Facility) => {
-      const temp = {
-        label: constructFacilityLabel(facility),
-        value: facility?.id,
-      };
-      facilityOptions.push(temp);
-    });
-
-    setFacilityDropDownOptions(facilityOptions);
+  const loadFacilities = async (buildingId: string): Promise<void> => {
+    try {
+      const response = await buildingAPI.getFacilitiesOfBuilding(buildingId);
+      const facilities: Facility[] = response?.data ?? [];
+      setBuildingFacilities(facilities as any);
+      setFacilityDropDownOptions(
+        facilities.map((facility) => ({
+          label: constructFacilityLabel(facility),
+          value: facility?.id,
+        }))
+      );
+    } catch (error) {
+      logger.error("Error loading facilities of building: ", error);
+      setBuildingFacilities([]);
+      setFacilityDropDownOptions([]);
+      dispatch(
+        showSnackbar({
+          type: "error",
+          message:
+            "Anlagen konnten nicht geladen werden. Bitte versuchen Sie es später erneut.",
+        })
+      );
+    }
   };
+
+  const setSelectedBuildingFacilities = (): Promise<void> =>
+    loadFacilities(formik?.values?.buildingId);
 
   const handleBuildingSelect = async (selectedItem: any): Promise<void> => {
     const selectedBuildingId = selectedItem.target.value;
-    if (selectedBuildingId !== "0") {
-      formik?.setFieldValue("buildingId", selectedBuildingId);
-      const building = allBuildings.filter(
-        (building: any) => building.id === selectedBuildingId
-      );
-      formik?.setFieldValue("buildingName", building[0]?.buildingName);
-
-      const allFacilities =
-        await buildingAPI.getFacilitiesOfBuilding(selectedBuildingId);
-
-      const facilityOptions: Item[] = [];
-      allFacilities?.data?.forEach((facility: Facility) => {
-        const temp = {
-          label: constructFacilityLabel(facility),
-          value: facility?.id,
-        };
-        facilityOptions.push(temp);
-      });
-
-      setFacilityDropDownOptions(facilityOptions);
-      setBuildingFacilities(allFacilities?.data);
-    } else {
-      formik?.setFieldValue("buildingId", selectedBuildingId);
+    formik?.setFieldValue("buildingId", selectedBuildingId);
+    formik?.setFieldValue("facilityId", "");
+    formik?.setFieldValue("facilityName", "");
+    if (selectedBuildingId === "0") {
       formik?.setFieldValue("buildingName", "");
+      return;
     }
+    const building = allBuildings.find(
+      (item: any) => item.id === selectedBuildingId
+    );
+    formik?.setFieldValue("buildingName", building?.buildingName);
+    await loadFacilities(selectedBuildingId);
   };
 
   const handleFacilitySelect = async (selectedItem: any): Promise<void> => {
@@ -142,38 +150,40 @@ const TenderExistingObjectFacility = (): JSX.Element => {
           )}
         </FormControl>
       </Grid>
-      <Grid item xs={12}>
-        <LabelWithAsterisk>ANLAGE AUSWÄHLEN</LabelWithAsterisk>
-        <HelpIcon
-          iconColor={HELP_ICON_BUTTON_COLOR.GREY}
-          helpText="The helper text will be displayed here."
-        />
-        <FormControl fullWidth>
-          {facilityDropDownOptions?.length > 0 ? (
-            <CustomSelect
-              name={"facilityId"}
-              onChange={handleFacilitySelect}
-              options={facilityDropDownOptions}
-              value={formik?.values?.facilityId}
-            />
-          ) : (
-            <Select
-              name="facilityId"
-              value={formik?.values?.facilityId}
-              label="Anlagen zuordnen"
-              onChange={formik.handleChange}
-              displayEmpty
-            >
-              <MenuItem disabled key={0} value={"0"}>
-                {`Keine Anlage vorhanden`}
-              </MenuItem>
-            </Select>
-          )}
-          {formik?.touched?.facilityId && (
-            <p style={styles.errorTexts}>{formik?.errors?.facilityId}</p>
-          )}
-        </FormControl>
-      </Grid>
+      {showFacilitySelect && (
+        <Grid item xs={12}>
+          <LabelWithAsterisk>ANLAGE AUSWÄHLEN</LabelWithAsterisk>
+          <HelpIcon
+            iconColor={HELP_ICON_BUTTON_COLOR.GREY}
+            helpText="The helper text will be displayed here."
+          />
+          <FormControl fullWidth>
+            {facilityDropDownOptions?.length > 0 ? (
+              <CustomSelect
+                name={"facilityId"}
+                onChange={handleFacilitySelect}
+                options={facilityDropDownOptions}
+                value={formik?.values?.facilityId}
+              />
+            ) : (
+              <Select
+                name="facilityId"
+                value={formik?.values?.facilityId}
+                label="Anlagen zuordnen"
+                onChange={formik.handleChange}
+                displayEmpty
+              >
+                <MenuItem disabled key={0} value={"0"}>
+                  {`Keine Anlage vorhanden`}
+                </MenuItem>
+              </Select>
+            )}
+            {formik?.touched?.facilityId && (
+              <p style={styles.errorTexts}>{formik?.errors?.facilityId}</p>
+            )}
+          </FormControl>
+        </Grid>
+      )}
     </Grid>
   );
 };

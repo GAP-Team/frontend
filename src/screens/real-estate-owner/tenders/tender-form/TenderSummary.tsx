@@ -36,17 +36,19 @@ const TenderSummary = ({
     },
   ].filter(Boolean); // Filter out undefined values
 
-  const isNewObjectFacility =
-    values.objectFacilityMode === ObjectFacilityMode.NEW;
+  const isNewObject = values.objectFacilityMode === ObjectFacilityMode.NEW;
+  const isNewFacility =
+    isNewObject ||
+    values.objectFacilityMode === ObjectFacilityMode.NEW_FACILITY;
 
   const objektInformation: Detail[] = [
-    isNewObjectFacility
+    isNewObject
       ? values.newBuilding?.name && {
           label: "Objekt (neu anzulegen)",
           value: values.newBuilding.name,
         }
       : values.buildingName && { label: "Objekt", value: values.buildingName },
-    isNewObjectFacility
+    isNewFacility
       ? values.newFacility?.name && {
           label: "Anlage (neu anzulegen)",
           value: values.newFacility.name,
