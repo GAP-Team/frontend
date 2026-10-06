@@ -1,5 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  experimental: {
+    turbo: {
+      // pdfjs-dist optionally requires node-canvas; not needed in the browser
+      resolveAlias: { canvas: "./src/utils/emptyModule.ts" },
+    },
+  },
   webpack: (config, { isServer }) => {
     if (!isServer) {
       // Exclude server-only packages from client bundle
@@ -11,6 +17,8 @@ const nextConfig = {
         tls: false,
       };
     }
+    // pdfjs-dist optionally requires node-canvas; not needed in the browser
+    config.resolve.alias.canvas = false;
     return config;
   },
 };

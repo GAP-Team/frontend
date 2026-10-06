@@ -3,9 +3,9 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import TotalSavingSection from "./TotalSavingSection";
 import PageTitle from "@/components/data-display/label/PageTitle";
-import CounselorCard from "./CounselorCard";
 import JobList from "./JobList";
 import { jobItemListInCostPage } from "@/utils/Constants";
+import GEmptyState from "@/components/data-display/GEmptyState";
 
 export default function CostSaving(): JSX.Element {
   return (
@@ -23,17 +23,21 @@ export default function CostSaving(): JSX.Element {
           md={3}
           sx={{ display: "flex", flexDirection: "column", gap: "1rem" }}
         >
-          <Box sx={{ ...styles.coloredPaper1, flexGrow: 2 }}>
+          <Box sx={styles.coloredPaper1}>
             <TotalSavingSection />
-          </Box>
-          <Box sx={{ ...styles.coloredPaper2, flexGrow: 1 }}>
-            <CounselorCard />
           </Box>
         </Grid>
 
         {/* Right Column */}
         <Grid item xs={12} md={9} sx={styles.rightColumn}>
-          <JobList jobs={jobItemListInCostPage} />
+          {jobItemListInCostPage.length === 0 ? (
+            <GEmptyState
+              text="Noch keine Einsparungen vorhanden"
+              description="Hier sehen Sie, wie viel Sie durch Ausschreibungen gespart haben. Sobald Aufträge mit Einsparungen abgeschlossen sind, erscheinen sie hier."
+            />
+          ) : (
+            <JobList jobs={jobItemListInCostPage} />
+          )}
         </Grid>
       </Grid>
     </Box>
@@ -51,15 +55,12 @@ const styles: { [key: string]: React.CSSProperties } = {
   pageContainer: {
     display: "flex",
     flexDirection: "column",
-    height: "100%", // Takes full height of the parent container
+    minHeight: "100vh",
+    backgroundColor: "#F1F3F4",
   },
   coloredPaper1: {
     ...sharedColoredPaperStyles,
     backgroundColor: "#22BC7E",
-  },
-  coloredPaper2: {
-    ...sharedColoredPaperStyles,
-    backgroundColor: "#22A7F1",
   },
   rightColumn: {
     display: "flex",

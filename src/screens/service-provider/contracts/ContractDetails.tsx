@@ -1,16 +1,31 @@
 import { memo, useEffect } from "react";
 import { checkIsLoggedIn } from "@/utils/auth";
 import { USER_ROLE, DOCUMENT_TYPE } from "@/utils/enums";
-import { Box, Grid, Paper, Typography } from "@mui/material";
+import { Grid, Paper } from "@mui/material";
 import { useAppSelector, useAppDispatch } from "@/lib/hooks";
 import { showSnackbar } from "@/components/feedback/snackbar";
 import ContractSummarySection from "./ContractSummarySection";
 import { fetchContractById, getContract } from "@/lib/features/contractSlice";
-import DocumentList from "@/screens/real-estate-owner/buildings/building-overview/DocumentList";
+import ContractDocumentsSection from "./ContractDocumentsSection";
 import DataDisplayBar from "@/components/data-display/DataDisplayBar";
 import FallbackPage from "@/components/common/pages/FallbackPage";
 import { ROUTES } from "@/utils/routes";
 import NoAccessImage from "@images/no_access.png";
+
+const BUILDING_DOCUMENT_GROUPS = [
+  {
+    title: "Bauunterlagen",
+    documentType: DOCUMENT_TYPE.CONSTRUCTION_DOCUMENTS,
+  },
+  { title: "Grundrisse", documentType: DOCUMENT_TYPE.FLOOR_PLANS },
+  { title: "Sonstige Dokumente", documentType: DOCUMENT_TYPE.OTHER },
+];
+
+const FACILITY_DOCUMENT_GROUPS = [
+  { title: "Berichte", documentType: DOCUMENT_TYPE.CHECK_REPORTS },
+  { title: "Grundrisse", documentType: DOCUMENT_TYPE.FLOOR_PLANS },
+  { title: "Sonstige Dokumente", documentType: DOCUMENT_TYPE.OTHER },
+];
 
 interface ContractDetailsProps {
   id: string;
@@ -88,115 +103,27 @@ const ContractDetails: React.FC<ContractDetailsProps> = ({
             columns={18}
             style={styles.innerContainer}
           >
-            <Grid item xs={8}>
+            <Grid item xs={18} md={9} lg={8}>
               <Paper sx={styles.summaryContainer}>
                 <ContractSummarySection contract={contractDetails} />
               </Paper>
             </Grid>
-            <Grid item xs={8}>
+            <Grid item xs={18} md={9} lg={8}>
               <Grid container spacing={2}>
-                {contractDetails?.buildingDocuments?.length > 0 && (
-                  <Grid item xs={12}>
-                    <Paper sx={styles.documentContainer}>
-                      <Typography
-                        variant="body2"
-                        color="text.secondary"
-                        style={styles.documentTitle}
-                      >
-                        DOKUMENTE Objekte (
-                        {contractDetails?.buildingDocuments?.length})
-                      </Typography>
-                      <Box sx={styles.documentsContainer}>
-                        <Grid container spacing={2}>
-                          {contractDetails?.buildingDocuments &&
-                            contractDetails?.buildingDocuments?.length > 0 && (
-                              <>
-                                <Grid item xs={12}>
-                                  <DocumentList
-                                    title={"Bauunterlagen"}
-                                    documentType={
-                                      DOCUMENT_TYPE.CONSTRUCTION_DOCUMENTS
-                                    }
-                                    documents={
-                                      contractDetails?.buildingDocuments
-                                    }
-                                  />
-                                </Grid>
-                                <Grid item xs={12}>
-                                  <DocumentList
-                                    title={"Grundrisse"}
-                                    documentType={DOCUMENT_TYPE.FLOOR_PLANS}
-                                    documents={
-                                      contractDetails?.buildingDocuments
-                                    }
-                                  />
-                                </Grid>
-                                <Grid item xs={12}>
-                                  <DocumentList
-                                    title={"Sonstige Dokumente"}
-                                    documentType={DOCUMENT_TYPE.OTHER}
-                                    documents={
-                                      contractDetails?.buildingDocuments
-                                    }
-                                  />
-                                </Grid>
-                              </>
-                            )}
-                        </Grid>
-                      </Box>
-                    </Paper>
-                  </Grid>
-                )}
-                {contractDetails?.facilityDocuments?.length > 0 && (
-                  <Grid item xs={12}>
-                    <Paper sx={styles.documentContainer}>
-                      <Typography
-                        variant="body2"
-                        color="text.secondary"
-                        style={styles.documentTitle}
-                      >
-                        DOKUMENTE Anlage (
-                        {contractDetails?.facilityDocuments?.length})
-                      </Typography>
-                      <Box sx={styles.documentsContainer}>
-                        <Grid container spacing={2}>
-                          {contractDetails?.facilityDocuments &&
-                            contractDetails?.facilityDocuments?.length > 0 && (
-                              <>
-                                <Grid item xs={12}>
-                                  <DocumentList
-                                    title={"Berichte"}
-                                    documentType={DOCUMENT_TYPE.CHECK_REPORTS}
-                                    documents={
-                                      contractDetails?.facilityDocuments
-                                    }
-                                  />
-                                </Grid>
-                                <Grid item xs={12}>
-                                  <DocumentList
-                                    title={"Grundrisse"}
-                                    documentType={DOCUMENT_TYPE.FLOOR_PLANS}
-                                    documents={
-                                      contractDetails?.facilityDocuments
-                                    }
-                                  />
-                                </Grid>
-                                <Grid item xs={12}>
-                                  <DocumentList
-                                    title={"Sonstige Dokumente"}
-                                    documentType={DOCUMENT_TYPE.OTHER}
-                                    documents={
-                                      contractDetails?.facilityDocuments
-                                    }
-                                  />
-                                </Grid>
-                              </>
-                            )}
-                        </Grid>
-                      </Box>
-                    </Paper>
-                  </Grid>
-                )}
+                <ContractDocumentsSection
+                  title="DOKUMENTE Objekte"
+                  groups={BUILDING_DOCUMENT_GROUPS}
+                  documents={contractDetails?.buildingDocuments}
+                  uploadType={contractDetails?.buildingDocumentUploadType}
+                  serverLink={contractDetails?.buildingServerLink}
+                />
+                <ContractDocumentsSection
+                  title="DOKUMENTE Anlage"
+                  groups={FACILITY_DOCUMENT_GROUPS}
+                  documents={contractDetails?.facilityDocuments}
+                  uploadType={contractDetails?.facilityDocumentUploadType}
+                  serverLink={contractDetails?.facilityServerLink}
+                />
               </Grid>
             </Grid>
             <Grid item xs={2}></Grid>
@@ -217,25 +144,6 @@ const styles = {
     maxWidth: "false",
     width: "100%",
     p: "1.25rem",
-  },
-  documentContainer: {
-    display: "flex",
-    flexDirection: "column",
-    maxWidth: "false",
-    width: "100%",
-    borderRadius: "0.8rem",
-    p: "1.25rem",
-  },
-  documentsContainer: {
-    display: "flex",
-    flexWrap: "wrap",
-    mb: 1,
-  },
-  documentTitle: {
-    marginBottom: "0.5rem",
-    borderWidth: "medium",
-    borderBottom: "3px solid #22A7F2",
-    maxWidth: "15rem",
-    paddingBottom: "0.50rem",
+    overflow: "hidden",
   },
 };

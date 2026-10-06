@@ -14,26 +14,10 @@ export interface AddBuildingFormValues {
   houseNumber: string;
   buildingType: string;
   buildingAbbreviation: string;
-  contactPerson: ContactPersonItem[];
-}
-
-export interface ContactPersonItem {
-  firstName: string;
-  lastName: string;
-  phoneNumber: string;
-  // role: string;
-  email: string;
 }
 
 export interface NewBuildingProps {
   id: string;
-}
-export interface ContactPersonDataType {
-  firstName: string;
-  lastName: string;
-  phoneNumber: string;
-  // role: string;
-  email: string;
 }
 export interface Address {
   city: string;
@@ -49,7 +33,6 @@ export interface SelectedBuildingData {
   totalArea: string;
   buildingType: string;
   buildingAbbreviation: string;
-  contactPerson: ContactPersonDataType[];
   address: Address;
   documentUploadType: string;
   constructionDocs: File[];

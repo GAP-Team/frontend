@@ -71,20 +71,38 @@ const ContractCard = ({ contracts }: ContractCardProps): JSX.Element => {
                 text={`Angebote: 0 ${contract?.toDate ? `(bis ${new Date(contract?.toDate).toLocaleDateString("de-DE")})` : ""}`}
               />
             </Box>
-            <Box>
-              <Typography variant="h6" sx={styles.address}>
+            <Box sx={styles.content}>
+              <Typography
+                variant="h6"
+                sx={{ ...styles.address, ...styles.clamp, WebkitLineClamp: 2 }}
+              >
                 {`${contract?.city}, ${contract?.state}`}
               </Typography>
-              <Typography variant="body2" sx={styles.title}>
+              <Typography
+                variant="body2"
+                sx={{ ...styles.title, ...styles.clamp, WebkitLineClamp: 2 }}
+              >
                 {contract?.facilityType}
               </Typography>
               <Typography
                 variant="body2"
-                sx={{ pl: 2, marginBottom: "1.5rem" }}
+                sx={{
+                  pl: 2,
+                  marginBottom: "1.5rem",
+                  ...styles.clamp,
+                  WebkitLineClamp: 2,
+                }}
               >
                 {`--> ${contract?.subcategory}`}
               </Typography>
-              <Typography variant="body2" sx={styles.bottomTitle}>
+              <Typography
+                variant="body2"
+                sx={{
+                  ...styles.bottomTitle,
+                  ...styles.clamp,
+                  WebkitLineClamp: 2,
+                }}
+              >
                 {contract?.urgency}
               </Typography>
 
@@ -107,18 +125,28 @@ export default ContractCard;
 const styles = {
   innerContainer: {
     cursor: "pointer",
-    marginRight: "0.5rem",
   },
   card: {
     p: "1.25rem",
     borderRadius: "0.5rem",
-    maxWidth: "20rem",
-    minWidth: "10rem",
+    width: "100%",
     height: "25rem",
-    flexShrink: 0,
-    overflow: "auto",
-    mb: "0.35rem",
+    display: "flex",
+    flexDirection: "column",
+    overflow: "hidden",
     cursor: "pointer",
+  },
+  content: {
+    display: "flex",
+    flexDirection: "column",
+    flexGrow: 1,
+    minHeight: 0,
+  },
+  clamp: {
+    display: "-webkit-box",
+    WebkitBoxOrient: "vertical",
+    overflow: "hidden",
+    wordBreak: "break-word",
   },
   cardTypeTitle: {
     background: "#96E9CB",
@@ -189,6 +217,6 @@ const styles = {
   button: {
     marginLeft: 0,
     width: "100%",
-    marginTop: "0.5rem",
+    marginTop: "auto",
   },
 };

@@ -4,16 +4,11 @@ import StatisticsCard from "@/components/surfaces/card/StatisticsCard";
 import { Box, Container, Typography, Grid } from "@mui/material";
 import heroBackgroundPicture from "@images/hero6.jpg";
 
-const AboutUsSection = (): JSX.Element => {
-  const stats = [
-    { value: "+350.000", label: "Einheiten in der Verwaltung" },
-    { value: "+5.200.000", label: "Automatisch zugeordnete Mieten" },
-    { value: "+60.000", label: "Betriebskostenabrechnungen erstellt" },
-    { value: "+10.000", label: "Zufriedene Kunden" },
-    { value: "+7", label: "Jahre am Markt" },
-    { value: "+25", label: "Motivierte Mitarbeiter" },
-  ];
+interface AboutUsSectionProps {
+  stats?: { value: string; label: string }[];
+}
 
+const AboutUsSection: React.FC<AboutUsSectionProps> = ({ stats = [] }) => {
   return (
     <>
       <section className="bg-white w-full mb-4 ">

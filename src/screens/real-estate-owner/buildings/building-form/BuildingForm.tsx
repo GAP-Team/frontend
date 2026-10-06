@@ -76,9 +76,6 @@ const BuildingForm: React.FC<NewBuildingProps> = ({ id }) => {
     totalArea: selectedBuildingDetails?.totalArea || "",
     buildingType: selectedBuildingDetails?.buildingType || "",
     buildingAbbreviation: selectedBuildingDetails?.buildingAbbreviation || "",
-    contactPerson: selectedBuildingDetails?.contactPerson
-      ? selectedBuildingDetails?.contactPerson
-      : [],
     zip: selectedBuildingDetails?.address?.zip || "",
     city: selectedBuildingDetails?.address?.city || "",
     state: selectedBuildingDetails?.address?.state || "",
@@ -105,13 +102,7 @@ const BuildingForm: React.FC<NewBuildingProps> = ({ id }) => {
   };
 
   const stepFieldsMap: { [key: number]: string[] } = {
-    0: [
-      "name",
-      "totalArea",
-      "buildingType",
-      "buildingAbbreviation",
-      "contactPerson",
-    ],
+    0: ["name", "totalArea", "buildingType", "buildingAbbreviation"],
     1: ["zip", "street", "country", "houseNumber", "city", "state"],
     2: ["serverLink", "constructionDocs", "floorplanDocs", "otherDocs"],
   };
@@ -253,7 +244,6 @@ const BuildingForm: React.FC<NewBuildingProps> = ({ id }) => {
       serverLink: values.serverLink,
       buildingType: values.buildingType,
       totalArea: values.totalArea !== "" ? Number(values.totalArea) : null,
-      contactPerson: values.contactPerson,
       documentUploadType: values.documentChoice,
       buildingAbbreviation: values.buildingAbbreviation,
     };

@@ -12,7 +12,7 @@ const ApplicationsPanel: React.FC<
       <Stack height="100%">
         <HeaderSection
           titletext="NEUE BEWERBUNGEN"
-          count={7}
+          count={applications.length}
           overviewText="Alle anzeigen"
         />
         <ApplicationList applications={applications} />

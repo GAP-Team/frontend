@@ -5,7 +5,6 @@ import { getTenderById } from "@/lib/features/tenderSlice";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import TenderSummarySection from "./TenderSummarySection";
-import ApplicationCard from "./ApplicationCard";
 import { Facility } from "@/screens/real-estate-owner/facilities/facility-overview/types";
 import DataDisplayBar from "@/components/data-display/DataDisplayBar";
 
@@ -32,19 +31,6 @@ const TenderDetails: React.FC<TenderDetailsProps> = ({ tenderId }) => {
           <Paper sx={{ maxWidth: "false", width: "100%", p: "1.25rem" }}>
             <TenderSummarySection tender={tender} />
           </Paper>
-        </Grid>
-        <Grid item xs={8}>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <ApplicationCard tenderID={tenderId} offerID={"1"} />
-            </Grid>
-            <Grid item xs={12}>
-              <ApplicationCard tenderID={tenderId} offerID={"2"} />
-            </Grid>
-            <Grid item xs={12}>
-              <ApplicationCard tenderID={tenderId} offerID={"3"} />
-            </Grid>
-          </Grid>
         </Grid>
         <Grid item xs={2}></Grid>
       </Grid>
