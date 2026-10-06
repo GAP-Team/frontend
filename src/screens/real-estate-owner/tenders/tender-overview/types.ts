@@ -32,3 +32,22 @@ export interface Tender {
 export interface UpdateTenderResponse {
   data: Tender;
 }
+
+export interface TenderApplication {
+  id: string;
+  tenderId: string;
+  userId: string;
+  serviceTotalPrice: string;
+  zip?: number;
+  city?: string;
+  benefitsSpecialServices: string[];
+  companyName?: string;
+  numberOfEmployees?: string;
+  companyAddress?: {
+    street: string;
+    houseNo?: number;
+    zip: number;
+    city: string;
+    country: string;
+  };
+}

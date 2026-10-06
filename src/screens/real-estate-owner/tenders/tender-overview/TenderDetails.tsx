@@ -2,9 +2,11 @@
 import React, { memo } from "react";
 import { useAppSelector } from "@/lib/hooks";
 import { getTenderById } from "@/lib/features/tenderSlice";
+import { getBuildingById } from "@/lib/features/buildingSlice";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import TenderSummarySection from "./TenderSummarySection";
+import TenderApplications from "./TenderApplications";
 import { Facility } from "@/screens/real-estate-owner/facilities/facility-overview/types";
 import DataDisplayBar from "@/components/data-display/DataDisplayBar";
 
@@ -15,6 +17,7 @@ interface TenderDetailsProps {
 const TenderDetails: React.FC<TenderDetailsProps> = ({ tenderId }) => {
   // Fetch tender details by ID
   const tender = useAppSelector(getTenderById(tenderId));
+  const building = useAppSelector(getBuildingById(tender?.building?.id ?? ""));
   const { facilities } = useAppSelector((state) => state.facility);
   const subcategory = facilities.find(
     (facility: Facility) => facility.id === tender?.facility?.id
@@ -32,7 +35,12 @@ const TenderDetails: React.FC<TenderDetailsProps> = ({ tenderId }) => {
             <TenderSummarySection tender={tender} />
           </Paper>
         </Grid>
-        <Grid item xs={2}></Grid>
+        <Grid item xs={8}>
+          <TenderApplications
+            tenderId={tenderId}
+            buildingAddress={building?.address}
+          />
+        </Grid>
       </Grid>
     </Grid>
   );
