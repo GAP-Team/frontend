@@ -101,14 +101,20 @@ const ContractSummarySection: React.FC<ContractSummarySectionProps> = ({
           <GButton color="gprimary" variant="outlined" onClick={backHandler}>
             Zurück
           </GButton>
-          <GButton
-            color="ggreen"
-            href={ROUTES.SERVICE_PROVIDER.CONTRACT_APPLICATION(
-              contract?.tenderId
-            )}
-          >
-            Jetzt Bewerben
-          </GButton>
+          {contract?.hasApplied ? (
+            <GButton color="ggreen" disabled>
+              Bereits beworben
+            </GButton>
+          ) : (
+            <GButton
+              color="ggreen"
+              href={ROUTES.SERVICE_PROVIDER.CONTRACT_APPLICATION(
+                contract?.tenderId
+              )}
+            >
+              Jetzt Bewerben
+            </GButton>
+          )}
         </Grid>
       </Grid>
     </>
