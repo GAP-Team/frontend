@@ -6,9 +6,9 @@ interface Coordinates {
 }
 
 export interface PostalAddress {
-  street: string;
+  street?: string;
   houseNumber?: number;
-  zip: number;
+  zip?: number;
   city: string;
   country: string;
 }
@@ -24,8 +24,11 @@ export const formatAddress = ({
   zip,
   city,
   country,
-}: PostalAddress): string =>
-  `${street} ${houseNumber ?? ""}, ${zip} ${city}, ${country}`;
+}: PostalAddress): string => {
+  const streetLine = [street, houseNumber].filter(Boolean).join(" ");
+  const cityLine = [zip, city].filter(Boolean).join(" ");
+  return [streetLine, cityLine, country].filter(Boolean).join(", ");
+};
 
 const geocode = (address: string): Promise<Coordinates> => {
   const cached = coordinatesCache.get(address);

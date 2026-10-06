@@ -8,12 +8,27 @@ import logger from "@/utils/Logger";
 import ApplicationCard from "./ApplicationCard";
 import { TenderApplication } from "./types";
 import { BuildingAddress } from "@/screens/real-estate-owner/buildings/building-overview/types";
-import { formatDistance, getDistanceKm } from "@/utils/distance";
+import { formatDistance, getDistanceKm, PostalAddress } from "@/utils/distance";
 
 interface TenderApplicationsProps {
   tenderId: string;
   buildingAddress?: BuildingAddress;
 }
+
+// The departure point submitted with the application wins over the registered
+// company address, because it is also the location shown on the card.
+const getOrigin = (
+  application: TenderApplication,
+  country: string
+): PostalAddress | null => {
+  const { zip, city, companyAddress } = application;
+  if (city) {
+    return { zip, city, country };
+  }
+  return companyAddress
+    ? { ...companyAddress, houseNumber: companyAddress.houseNo }
+    : null;
+};
 
 const TenderApplications: React.FC<TenderApplicationsProps> = ({
   tenderId,
@@ -43,16 +58,14 @@ const TenderApplications: React.FC<TenderApplicationsProps> = ({
     }
     const fetchDistances = async (): Promise<void> => {
       const entries = await Promise.all(
-        applications.map(async ({ id, companyAddress }) => {
-          if (!companyAddress) {
+        applications.map(async (application) => {
+          const origin = getOrigin(application, buildingAddress.country);
+          if (!origin) {
             return null;
           }
           try {
-            const km = await getDistanceKm(
-              { ...companyAddress, houseNumber: companyAddress.houseNo },
-              buildingAddress
-            );
-            return [id, formatDistance(km)] as const;
+            const km = await getDistanceKm(origin, buildingAddress);
+            return [application.id, formatDistance(km)] as const;
           } catch (error) {
             logger.error("Failed to calculate distance", error);
             return null;
