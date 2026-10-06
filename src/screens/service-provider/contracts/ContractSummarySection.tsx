@@ -39,9 +39,8 @@ const ContractSummarySection: React.FC<ContractSummarySectionProps> = ({
     { label: "Dringlichkeit", value: contract?.urgency },
     {
       label: "Auftragsinformation",
-      value: contract?.detailDescription
-        ? `${contract?.detailDescription.substring(0, 60)}...`
-        : "Nicht Vorhanden",
+      value: contract?.detailDescription || "Nicht Vorhanden",
+      fullWidth: true,
     },
     {
       label: "Gewünschte Angebotsfrist",
@@ -70,15 +69,22 @@ const ContractSummarySection: React.FC<ContractSummarySectionProps> = ({
     <>
       <HeaderSection titletext="DATEN ÜBERPRÜFEN" />
       <Typography variant="bodymsb">Zusammenfassung</Typography>
-      <Grid container spacing={2} marginLeft={1} pt={2}>
+      <Grid container spacing={2} pt={2}>
         {summaryData.map((item, index) => (
-          <Grid item xs={6} key={index} paddingBottom={2}>
+          <Grid
+            item
+            xs={12}
+            sm={"fullWidth" in item && item.fullWidth ? 12 : 6}
+            sx={styles.item}
+            key={index}
+            paddingBottom={2}
+          >
             <LabelText
               text={item.label}
               fontSize="1.2rem"
               textColor="blue.main"
             />
-            <Typography variant="bodylr" mt="0.2rem">
+            <Typography variant="bodylr" mt="0.2rem" sx={styles.value}>
               {item.value}
             </Typography>
           </Grid>
@@ -110,3 +116,14 @@ const ContractSummarySection: React.FC<ContractSummarySectionProps> = ({
 };
 
 export default ContractSummarySection;
+
+const styles = {
+  item: {
+    minWidth: 0,
+  },
+  value: {
+    whiteSpace: "pre-line",
+    overflowWrap: "anywhere",
+    wordBreak: "break-word",
+  },
+};

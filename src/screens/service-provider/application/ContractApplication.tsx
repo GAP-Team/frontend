@@ -14,6 +14,7 @@ import s3API from "@/api/s3";
 import { ROUTES } from "@/utils/routes";
 import { translateTenderForm } from "@/utils/utils";
 import { handleUploadDoc } from "@/utils/uploadToS3";
+import { redactContactData } from "@/utils/redactContactData";
 import { DOCUMENT_TYPE, DOCUMENT_FIELDS } from "@/utils/enums";
 import { applyContractFormSchema } from "@/utils/ValidationSchema";
 
@@ -26,7 +27,19 @@ import ContractApplicationSummary from "./ContractApplicationSummary";
 import HeaderSection from "@/screens/real-estate-owner/dashboard/HeaderSection";
 
 import { Document, SubmitFormFunction } from "@/typings/types";
-import { Application, ContractApplicationFormValues } from "./types";
+import {
+  Application,
+  ContractApplicationFormValues,
+  SuggestedDate,
+  SuggestionWorkDate,
+} from "./types";
+
+const toSuggestionWorkDate = (d: SuggestedDate): SuggestionWorkDate => ({
+  date: dayjs(d.date).toISOString(),
+  ...(d.type === "range" && d.endDate
+    ? { endDate: dayjs(d.endDate).toISOString() }
+    : {}),
+});
 
 const steps: ActiveStepItem[] = [
   { id: 0, stepName: "ContractRate", component: ContractRateForm },
@@ -39,8 +52,8 @@ const steps: ActiveStepItem[] = [
 ];
 
 const stepFieldsMap: Record<number, string[]> = {
-  0: ["totalPrice", "message", "zip", "city", "desiredDateOne"],
-  1: ["advantages", "termsConditionDoc", "offerDoc"],
+  0: ["offerDoc", "totalPrice", "zip", "city", "desiredDates"],
+  1: ["advantages", "termsConditionDoc", "message"],
   2: [],
 };
 
@@ -49,7 +62,7 @@ const initialValues: ContractApplicationFormValues = {
   message: "",
   zip: "",
   city: "",
-  desiredDates: [null, null, null],
+  desiredDates: [{ type: "single", date: "", endDate: "" }],
   advantages: [],
   offerDoc: "",
   termsConditionDoc: "",
@@ -125,8 +138,8 @@ const ContractApplication = (): JSX.Element => {
         serviceTotalPrice: values.totalPrice,
         message: values.message,
         suggestionWorkDates: values.desiredDates
-          .filter(Boolean)
-          .map((d) => dayjs(d).toISOString()),
+          .filter((d) => d.date)
+          .map(toSuggestionWorkDate),
         zip: Number(values.zip),
         city: values.city,
         dataPrivacy: values.acceptedTerms,
@@ -166,7 +179,8 @@ const ContractApplication = (): JSX.Element => {
     file: File,
     type: string
   ): Promise<Document> => {
-    const uploaded = await handleUploadDoc(file);
+    const redacted = await redactContactData(file, user);
+    const uploaded = await handleUploadDoc(redacted);
     return { ...uploaded, documentType: type };
   };
 

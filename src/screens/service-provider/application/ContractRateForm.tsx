@@ -1,36 +1,86 @@
-import { useState } from "react";
+import { FieldArray } from "formik";
+import AddIcon from "@mui/icons-material/Add";
+import UploadButton from "@/components/inputs/button/UploadButton";
+import SuggestedDateRow from "./SuggestedDateRow";
+import { SuggestedDate } from "./types";
 import { NumericFormat } from "react-number-format";
-import { Grid, Divider, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  Grid,
+  Button,
+  Divider,
+  TextField,
+  Typography,
+} from "@mui/material";
+import { GAP_COMMISSION_RATE } from "@/utils/Constants";
 import HeaderSection from "@/screens/real-estate-owner/dashboard/HeaderSection";
 import LabelWithAsterisk from "@/components/data-display/label/LabelWithAsterisk";
 
+const formatEuro = (amount: number): string =>
+  amount.toLocaleString("de-DE", { style: "currency", currency: "EUR" });
+
+const parsePrice = (price: string): number =>
+  Number(price.replace(/\./g, "").replace(",", ".")) || 0;
+
 const ContractRateForm = ({ formik }: { formik?: any }): JSX.Element => {
-  const [info, setInfo] = useState<string>("");
-
-  const handleSetInfo = (value: string): void => {
-    setInfo(value);
-    formik.setFieldValue("message", value);
+  const handleOfferDocChange = (ev: any): void => {
+    const file = ev?.target.files[0];
+    formik.setFieldValue("offerDocFile", file);
+    formik.setFieldValue("offerDoc", file?.name ?? "");
   };
-
-  const [priceValues, setPriceValues] = useState({
-    totalPrice: "",
-  });
 
   const handlePriceChange = (
     event: React.ChangeEvent<HTMLInputElement>,
     name: string
   ): void => {
-    setPriceValues({
-      ...priceValues,
-      [name]: event.target.value,
-    });
     const cleanPrice = event.target.value.replace("€", "");
     formik.setFieldValue(name, cleanPrice);
   };
 
+  // formik is the single source of truth, so the price survives step changes
+  const priceInput = formik?.values?.totalPrice
+    ? `€${formik.values.totalPrice}`
+    : "";
+  const totalPrice = parsePrice(formik?.values?.totalPrice ?? "");
+  const commission = totalPrice * GAP_COMMISSION_RATE;
+  const commissionPercent = GAP_COMMISSION_RATE * 100;
+
   return (
     <Grid item xs={12} md={9}>
       <HeaderSection titletext="VERTRAGSRATE" />
+      {/* Angebot Upload Section */}
+      <Grid container spacing={2}>
+        <Grid item xs={12} md={4}>
+          <Typography sx={styles.descriptionLable}>
+            Angebot als PDF hochladen
+          </Typography>
+          <Typography sx={styles.descriptionText}>
+            Laden Sie Ihr Angebot für diese
+            <br />
+            Ausschreibung als PDF hoch.
+          </Typography>
+        </Grid>
+        <Grid item xs={12} md={8}>
+          <LabelWithAsterisk>Angebot Dokumente</LabelWithAsterisk>
+          <Box sx={styles.docUploaderBox}>
+            <UploadButton
+              id="offerDoc"
+              name="offerDoc"
+              onChange={handleOfferDocChange}
+              value={formik?.values?.offerDoc}
+              error={
+                formik?.touched?.offerDoc && Boolean(formik?.errors?.offerDoc)
+              }
+              helperText={
+                formik?.touched?.offerDoc &&
+                formik?.errors?.offerDoc?.toString()
+              }
+            />
+          </Box>
+        </Grid>
+      </Grid>
+      <Divider sx={styles.divider} />
+
       <Grid container spacing={2}>
         <Grid item xs={12} md={4}>
           <Typography sx={styles.descriptionLable}>
@@ -56,7 +106,7 @@ const ContractRateForm = ({ formik }: { formik?: any }): JSX.Element => {
                 decimalSeparator=","
                 thousandSeparator="."
                 customInput={TextField}
-                value={priceValues.totalPrice}
+                value={priceInput}
                 onChange={(event) => handlePriceChange(event, "totalPrice")}
                 helperText={
                   formik?.touched?.totalPrice && formik?.errors?.totalPrice
@@ -66,6 +116,22 @@ const ContractRateForm = ({ formik }: { formik?: any }): JSX.Element => {
                   Boolean(formik?.errors?.totalPrice)
                 }
               />
+              {totalPrice > 0 && (
+                <Box sx={styles.commissionBox}>
+                  <Box sx={styles.commissionRow}>
+                    <span>GAP-Provision ({commissionPercent} %)</span>
+                    <span>- {formatEuro(commission)}</span>
+                  </Box>
+                  <Box sx={styles.commissionRowBold}>
+                    <span>Ihre Auszahlung</span>
+                    <span>{formatEuro(totalPrice - commission)}</span>
+                  </Box>
+                </Box>
+              )}
+              <Typography sx={styles.commissionHint}>
+                Von Ihrem Gesamtpreis behält GAP eine Provision von{" "}
+                {commissionPercent} % ein.
+              </Typography>
             </Grid>
           </Grid>
         </Grid>
@@ -74,80 +140,44 @@ const ContractRateForm = ({ formik }: { formik?: any }): JSX.Element => {
 
       <Grid container spacing={2}>
         <Grid item xs={12} md={4}>
-          <Typography sx={styles.descriptionLable}>
-            Nachricht für Auftraggeber
-          </Typography>
-          <Typography sx={styles.descriptionText}>
-            Hier können Sie alles schreiben, was Sie für
-            <br />
-            nützlich für die Arbeit erachten, die Sie erledigen <br />
-            können. Möglicherweise einige Einschränkungen oder Details.
-          </Typography>
-        </Grid>
-        <Grid item xs={12} md={8}>
-          <Typography variant="gsub" color="gray.500" sx={styles.lableText}>
-            Nützliche Informationen
-          </Typography>
-          <TextField
-            rows={4}
-            multiline
-            fullWidth
-            name="message"
-            sx={{ mt: 2 }}
-            onBlur={formik?.handleBlur}
-            value={formik?.values?.message}
-            helperText={
-              <Typography sx={{ color: info.length === 250 ? "red" : "" }}>
-                {info.length}/250
-              </Typography>
-            }
-            onChange={(e) => handleSetInfo(e.target.value.slice(0, 250))}
-          />
-        </Grid>
-      </Grid>
-      <Divider sx={styles.divider} />
-
-      <Grid container spacing={2}>
-        <Grid item xs={12} md={4}>
           <Typography sx={styles.descriptionLable}>Prüfungsdatum</Typography>
           <Typography sx={styles.descriptionText}>
-            Hier ist das gewünschte und mögliche
+            Geben Sie ein oder mehrere mögliche
             <br />
-            Prüfungsdatum angezeigt.
+            Termine an: als bestimmtes Datum oder
+            <br />
+            als Zeitraum (von – bis).
           </Typography>
         </Grid>
         <Grid item xs={12} md={8}>
-          <Grid container spacing={2} sx={styles.desiredDateHolder}>
-            {formik?.values?.desiredDates?.map(
-              (date: string, index: number) => (
-                <Grid item xs={12} md={4} key={index}>
-                  <Typography
-                    variant="gsub"
-                    color="gray.500"
-                    sx={styles.lableText}
-                  >
-                    Gewünschtes Datum {index + 1}
-                  </Typography>
-                  <div>
-                    <TextField
-                      type="date"
-                      onBlur={formik?.handleBlur}
-                      id={`desiredDates[${index}]`}
-                      name={`desiredDates[${index}]`}
-                      onChange={formik?.handleChange}
-                      InputLabelProps={{ shrink: true }}
-                      value={formik?.values?.desiredDates[index] || ""}
-                      InputProps={{
-                        inputProps: {
-                          min: new Date().toISOString().split("T")[0],
-                        },
-                      }}
+          <FieldArray name="desiredDates">
+            {({ push, remove }) => (
+              <Box sx={styles.dateList}>
+                {formik?.values?.desiredDates?.map(
+                  (entry: SuggestedDate, index: number) => (
+                    <SuggestedDateRow
+                      key={index}
+                      index={index}
+                      entry={entry}
+                      formik={formik}
+                      canRemove={formik.values.desiredDates.length > 1}
+                      onRemove={() => remove(index)}
                     />
-                  </div>
-                </Grid>
-              )
+                  )
+                )}
+                <Button
+                  variant="text"
+                  startIcon={<AddIcon />}
+                  sx={styles.addDateButton}
+                  onClick={() =>
+                    push({ type: "single", date: "", endDate: "" })
+                  }
+                >
+                  Weiteren Termin hinzufügen
+                </Button>
+              </Box>
             )}
-          </Grid>
+          </FieldArray>
         </Grid>
       </Grid>
       <Divider sx={styles.divider} />
@@ -202,11 +232,47 @@ const ContractRateForm = ({ formik }: { formik?: any }): JSX.Element => {
 export default ContractRateForm;
 
 const styles = {
-  desiredDateHolder: {
+  docUploaderBox: {
+    p: 1,
     display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-between",
+    cursor: "pointer",
     alignItems: "center",
+    borderRadius: "12px",
+    justifyContent: "center",
+    border: "2px dashed #ccc",
+  },
+  commissionHint: {
+    mt: 1,
+    color: "#A0ADB1",
+    fontSize: "0.8rem",
+  },
+  commissionBox: {
+    mt: 1.5,
+    p: 1.5,
+    borderRadius: "0.5rem",
+    bgcolor: "#F6F8FB",
+    fontSize: "0.9rem",
+  },
+  commissionRow: {
+    display: "flex",
+    justifyContent: "space-between",
+    color: "#6b7280",
+  },
+  commissionRowBold: {
+    mt: 0.5,
+    display: "flex",
+    justifyContent: "space-between",
+    fontWeight: 700,
+  },
+  dateList: {
+    display: "flex",
+    flexDirection: "column",
+    gap: 2,
+  },
+  addDateButton: {
+    alignSelf: "flex-start",
+    fontWeight: 600,
+    textTransform: "none",
   },
   divider: {
     mt: 4,

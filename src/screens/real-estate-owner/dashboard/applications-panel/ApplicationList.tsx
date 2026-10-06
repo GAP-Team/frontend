@@ -3,6 +3,7 @@ import React from "react";
 import { List } from "@mui/material";
 import { ApplicationItemProps } from "./types";
 import ApplicationItem from "./ApplicationItem";
+import GEmptyState from "@/components/data-display/GEmptyState";
 import { styles as scrollbarStyles } from "@/components/utils/scrollbar/styles";
 
 interface ApplicationListProps {
@@ -10,6 +11,10 @@ interface ApplicationListProps {
 }
 
 const ApplicationList: React.FC<ApplicationListProps> = ({ applications }) => {
+  if (applications.length === 0) {
+    return <GEmptyState text="Keine Bewerbungen vorhanden" compact />;
+  }
+
   return (
     <List sx={styles.listContainer}>
       {applications.map((app, index) => (
