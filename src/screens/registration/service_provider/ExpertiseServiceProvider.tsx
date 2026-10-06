@@ -7,7 +7,7 @@ import RadioGroup from "@mui/material/RadioGroup";
 import Typography from "@mui/material/Typography";
 import GTextInput from "@/components/inputs/GTextInput";
 import LabelWithAsterisk from "@/components/data-display/label/LabelWithAsterisk";
-import { numOfEmployeesOptions } from "@/utils/Constants";
+import { numberOfEmployeesOptions } from "@/utils/Constants";
 import UploadMultiButton from "@/components/inputs/button/UploadMultiButton";
 
 const ExpertiseServiceProvider = ({ formik }: any): JSX.Element => {
@@ -22,14 +22,14 @@ const ExpertiseServiceProvider = ({ formik }: any): JSX.Element => {
 
         <FormControl sx={{ display: "block" }}>
           <RadioGroup
-            id="numOfEmployees"
-            name="numOfEmployees"
-            value={formik?.values?.numOfEmployees}
+            id="numberOfEmployees"
+            name="numberOfEmployees"
+            value={formik?.values?.numberOfEmployees}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
           >
             <Grid container>
-              {numOfEmployeesOptions?.map((option, index) => (
+              {numberOfEmployeesOptions?.map((option, index) => (
                 <Grid key={index} item xs={2}>
                   <FormControlLabel
                     value={option?.value}

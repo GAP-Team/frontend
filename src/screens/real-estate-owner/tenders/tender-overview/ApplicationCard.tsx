@@ -16,13 +16,13 @@ interface ApplicationCardProps {
   tenderID: string;
   companyName: string;
   location: string;
-  tags: string[];
   price: string;
-  distance: string;
-  deadline: string;
+  distance?: string;
+  workDates?: string;
+  deadline?: string;
   specialServices: number;
-  employees: number;
-  discount: number;
+  employees?: string;
+  discount?: number;
 }
 
 const ApplicationCard: React.FC<ApplicationCardProps> = ({
@@ -31,9 +31,9 @@ const ApplicationCard: React.FC<ApplicationCardProps> = ({
   tenderID,
   companyName,
   location,
-  tags,
   price,
   distance,
+  workDates,
   deadline,
   specialServices,
   employees,
@@ -61,11 +61,6 @@ const ApplicationCard: React.FC<ApplicationCardProps> = ({
                 <Skeleton variant="text" width={150} />
                 <Skeleton variant="text" width={100} />
               </Box>
-            </Box>
-            <Box sx={styles.tagsContainer}>
-              <Skeleton variant="text" width={60} sx={styles.tag} />
-              <Skeleton variant="text" width={60} sx={styles.tag} />
-              <Skeleton variant="text" width={60} sx={styles.tag} />
             </Box>
             <Box sx={styles.priceContainer}>
               <Skeleton variant="text" width={80} />
@@ -102,53 +97,57 @@ const ApplicationCard: React.FC<ApplicationCardProps> = ({
               </Typography>
             </Box>
           </Box>
-          <Box sx={styles.tagsContainer}>
-            {tags.map((tag, index) => (
-              <Typography
-                key={index}
-                variant="bodymr"
-                color="blue.main"
-                sx={styles.tag}
-              >
-                {tag}
-              </Typography>
-            ))}
-          </Box>
           <Box sx={styles.priceContainer}>
-            <Typography variant="bodylsb">{price}</Typography>
-            <Typography variant="bodylsb">{distance}</Typography>
-            <Typography variant="bodylsb" color="error">
-              {deadline} Frist
+            <Box sx={styles.priceAndDistance}>
+              <Typography variant="bodylsb">{price}</Typography>
+              {[distance, workDates].map(
+                (value) =>
+                  value && (
+                    <React.Fragment key={value}>
+                      <Typography variant="bodylsb" sx={styles.separator}>
+                        |
+                      </Typography>
+                      <Typography variant="bodylsb">{value}</Typography>
+                    </React.Fragment>
+                  )
+              )}
+            </Box>
+            {deadline && (
+              <Typography variant="bodylsb" color="error">
+                {deadline} Frist
+              </Typography>
+            )}
+          </Box>
+        </Box>
+        {discount !== undefined && (
+          <Box sx={styles.progressContainer}>
+            <Box sx={styles.circularProgressContainer}>
+              <CircularProgress
+                variant="determinate"
+                value={discount}
+                size={80}
+                thickness={5}
+                sx={styles.circularProgress}
+              />
+              <Box sx={styles.progressTextContainer}>
+                <Typography
+                  variant="bodylsb"
+                  component="div"
+                  color="textSecondary"
+                >
+                  {`${discount}%`}
+                </Typography>
+              </Box>
+            </Box>
+            <Typography
+              variant="bodymsb"
+              color="grey.500"
+              sx={styles.discountText}
+            >
+              Günstiger
             </Typography>
           </Box>
-        </Box>
-        <Box sx={styles.progressContainer}>
-          <Box sx={styles.circularProgressContainer}>
-            <CircularProgress
-              variant="determinate"
-              value={discount}
-              size={80}
-              thickness={5}
-              sx={styles.circularProgress}
-            />
-            <Box sx={styles.progressTextContainer}>
-              <Typography
-                variant="bodylsb"
-                component="div"
-                color="textSecondary"
-              >
-                {`${discount}%`}
-              </Typography>
-            </Box>
-          </Box>
-          <Typography
-            variant="bodymsb"
-            color="grey.500"
-            sx={styles.discountText}
-          >
-            Günstiger
-          </Typography>
-        </Box>
+        )}
       </Box>
 
       <Box sx={styles.buttonContainer}>
@@ -157,9 +156,27 @@ const ApplicationCard: React.FC<ApplicationCardProps> = ({
         </GButton>
         <Box sx={styles.additionalInfoContainer}>
           <Typography variant="bodylsb" sx={styles.specialServices}>
-            {specialServices} Sonderleistungen
+            {specialServices}{" "}
+            <Typography
+              component="span"
+              variant="bodylsb"
+              sx={styles.infoLabel}
+            >
+              Sonderleistungen
+            </Typography>
           </Typography>
-          <Typography variant="bodylsb">{employees} Mitarbeiter</Typography>
+          {employees && (
+            <Typography variant="bodylsb">
+              {employees}{" "}
+              <Typography
+                component="span"
+                variant="bodylsb"
+                sx={styles.infoLabel}
+              >
+                Mitarbeiter
+              </Typography>
+            </Typography>
+          )}
         </Box>
       </Box>
     </Paper>
@@ -221,13 +238,17 @@ const styles = {
   discountText: {
     mt: 1,
   },
-  tagsContainer: {
+  priceAndDistance: {
     display: "flex",
     flexWrap: "wrap",
-    mb: 1,
+    alignItems: "center",
+    columnGap: "1rem",
   },
-  tag: {
-    mr: 2,
+  infoLabel: {
+    color: "grey.500",
+  },
+  separator: {
+    color: "grey.400",
   },
   priceContainer: {
     display: "flex",

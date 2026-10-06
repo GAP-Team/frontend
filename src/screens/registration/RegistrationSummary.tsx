@@ -66,9 +66,9 @@ const RegistrationSummary = ({
   ].filter(Boolean);
 
   const updatedExpertise: Detail[] = [
-    values.numOfEmployees && {
+    values.numberOfEmployees && {
       label: "Anzahl der Mitarbeiter",
-      value: values.numOfEmployees,
+      value: values.numberOfEmployees,
     },
     values.manufacturerExperience && {
       label: "Herstellerfahrung",
