@@ -407,7 +407,7 @@ export const notifications: Notification[] = [
   },
 ];
 
-export const numOfEmployeesOptions = [
+export const numberOfEmployeesOptions = [
   {
     label: "1-5",
     value: "1-5",

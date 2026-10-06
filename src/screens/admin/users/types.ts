@@ -19,7 +19,7 @@ export interface UserCompany {
   name: string;
   phonenumber: number;
   address: Partial<UserCompanyAddress>;
-  numberOfEmployees?: number;
+  numberOfEmployees?: string;
   business?: Partial<UserBusiness>;
 }
 

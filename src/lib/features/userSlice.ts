@@ -32,7 +32,7 @@ const initialState: UserState = {
   company: {
     name: "",
     phonenumber: 0,
-    numberOfEmployees: 0,
+    numberOfEmployees: "",
     address: {
       zip: 0,
       state: "",
