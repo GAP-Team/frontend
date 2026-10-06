@@ -74,4 +74,6 @@ export enum USER_ROLE_IN_GERMAN {
 export enum ObjectFacilityMode {
   EXISTING = "EXISTING",
   NEW = "NEW",
+  // Existing building, but the facility is created inline
+  NEW_FACILITY = "NEW_FACILITY",
 }
