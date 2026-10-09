@@ -68,7 +68,7 @@ const ContractCard = ({ contracts }: ContractCardProps): JSX.Element => {
             <Box sx={styles.location}>
               <SectionTitle
                 sx={styles.timeSection}
-                text={`Angebote: 0 ${contract?.toDate ? `(bis ${new Date(contract?.toDate).toLocaleDateString("de-DE")})` : ""}`}
+                text={`Angebote: ${contract?.applicationCount ?? 0} ${contract?.toDate ? `(bis ${new Date(contract?.toDate).toLocaleDateString("de-DE")})` : ""}`}
               />
             </Box>
             <Box sx={styles.content}>

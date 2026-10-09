@@ -7,6 +7,7 @@ import {
   Tender,
   BuildingTenders,
 } from "@/screens/real-estate-owner/tenders/tender-overview/types";
+import { BuildingAddress } from "@/screens/real-estate-owner/buildings/building-overview/types";
 import userAPI from "@/api/user";
 import tenderAPI from "@/api/tender";
 interface TenderState {
@@ -192,6 +193,15 @@ export const getTenderById =
   (state: RootState): Tender | null =>
     state.tender.tenderList.find((tender: Tender) => tender.id === tenderId) ??
     null;
+
+// The tender list is grouped by building and every group carries its address,
+// so it is available without the buildings having been loaded.
+export const getTenderBuildingAddress =
+  (tenderId: string) =>
+  (state: RootState): BuildingAddress | undefined =>
+    state.tender.tenders.find((group: BuildingTenders) =>
+      group.tenders.some((tender: Tender) => tender.id === tenderId)
+    )?.buildingAddress;
 
 export const checkActiveTenderForFacility =
   (facilityId: string) =>

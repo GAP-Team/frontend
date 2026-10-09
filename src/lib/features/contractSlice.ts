@@ -103,6 +103,9 @@ const contractSlice = createSlice({
           (contract) => contract.tenderId === action.meta.arg.contractId
         );
         if (contractIndex !== -1) {
+          const { applicationCount = 0 } = state.contracts[contractIndex];
+          state.contracts[contractIndex].applicationCount =
+            applicationCount + 1;
           if (!state.contracts[contractIndex].applicationIds) {
             state.contracts[contractIndex].applicationIds = [];
           }

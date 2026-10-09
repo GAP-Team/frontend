@@ -47,6 +47,8 @@ export interface Contract {
   toDate?: string;
   fromDate?: string;
   applicationIds?: string[];
+  hasApplied?: boolean;
+  applicationCount?: number;
 }
 
 export interface ContractSearchProps {
