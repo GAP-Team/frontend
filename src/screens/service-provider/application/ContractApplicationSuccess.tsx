@@ -1,8 +1,6 @@
 import { ROUTES } from "@/utils/routes";
-import { useRouter } from "next/navigation";
 import { Grid, Link, Typography } from "@mui/material";
 import InfoBanner from "@/components/data-display/InfoBanner";
-import BackButton from "@/components/inputs/button/BackButton";
 import SuccessPage from "@/components/common/pages/SuccessPage";
 
 interface ContractApplicationSuccessProps {
@@ -12,12 +10,6 @@ interface ContractApplicationSuccessProps {
 const ContractApplicationSuccess: React.FC<ContractApplicationSuccessProps> = ({
   submittedApplicationId,
 }): JSX.Element => {
-  const router = useRouter();
-
-  const handleBackToStart = (): void => {
-    router.push(ROUTES.SERVICE_PROVIDER.CONTRACT_FILTER_URL([], [], []));
-  };
-
   return (
     <Grid item xs={12} md={12}>
       <Grid container component="main" sx={styles.mainContainer}>
@@ -31,9 +23,6 @@ const ContractApplicationSuccess: React.FC<ContractApplicationSuccessProps> = ({
           </Grid>
         </Grid>
         <Grid item xs={12} md={7}>
-          <Grid item xs={12} md={8} lg={8}>
-            <BackButton onBack={handleBackToStart} />
-          </Grid>
           <Grid sx={styles.successPageHolder}>
             <SuccessPage
               title="Bewerbung versendet"
