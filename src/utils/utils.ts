@@ -4,12 +4,12 @@ import { TENDER_FORM } from "./enums";
 export const getTenderStatusStyle: {
   [key: string]: { bgcolor: string; color: string; title: string };
 } = {
-  OPEN: { bgcolor: "#E7E0FF", color: "#582EFF", title: "offen" },
-  DONE: { bgcolor: "#E5F5FA", color: "#22A7F1", title: "abgeschlossen" },
+  OPEN: { bgcolor: "#D9EEFC", color: "#1478B4", title: "offen" },
+  DONE: { bgcolor: "#ECEFF0", color: "#5B6B70", title: "abgeschlossen" },
   ACTIVE: { bgcolor: "#96E9CB", color: "#056643", title: "Aktiv" },
   REVIEW_REQUIRED: {
-    bgcolor: "#FFE1D7",
-    color: "#EB4444",
+    bgcolor: "#FFF1C2",
+    color: "#8A6100",
     title: "Nachprüfung",
   },
 };
