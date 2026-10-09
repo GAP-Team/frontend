@@ -18,6 +18,11 @@ interface ContractCardProps {
   contracts: Contract[];
 }
 
+const getDeadline = (contract: Contract): string =>
+  contract?.toDate
+    ? `(bis ${new Date(contract.toDate).toLocaleDateString("de-DE")})`
+    : "";
+
 const ContractCard = ({ contracts }: ContractCardProps): JSX.Element => {
   const router = useRouter();
   const appDispatch = useAppDispatch();
@@ -64,15 +69,26 @@ const ContractCard = ({ contracts }: ContractCardProps): JSX.Element => {
           >
             <Box sx={styles.header}>
               <Chip label={contract?.tenderType} sx={styles.cardTypeTitle} />
-              {contract?.isBookedOut && (
-                <Chip label="Ausgebucht" sx={styles.bookedOutChip} />
-              )}
             </Box>
             <Box sx={styles.location}>
-              <SectionTitle
-                sx={styles.timeSection}
-                text={`Angebote: ${contract?.applicationCount ?? 0} ${contract?.toDate ? `(bis ${new Date(contract?.toDate).toLocaleDateString("de-DE")})` : ""}`}
-              />
+              {contract?.isBookedOut ? (
+                <Box sx={styles.bookedOut}>
+                  <Chip
+                    label="Ausgebucht"
+                    size="small"
+                    sx={styles.bookedOutChip}
+                  />
+                  <SectionTitle
+                    sx={styles.timeSection}
+                    text={getDeadline(contract)}
+                  />
+                </Box>
+              ) : (
+                <SectionTitle
+                  sx={styles.timeSection}
+                  text={`Angebote: ${contract?.applicationCount ?? 0} ${getDeadline(contract)}`}
+                />
+              )}
             </Box>
             <Box sx={styles.content}>
               <Typography
@@ -155,10 +171,15 @@ const styles = {
     background: "#96E9CB",
     marginBottom: "0.8rem",
   },
+  bookedOut: {
+    display: "flex",
+    alignItems: "center",
+    gap: "0.5rem",
+  },
   bookedOutChip: {
     background: "#ECEFF0",
     color: "#5B6B70",
-    marginBottom: "0.8rem",
+    fontWeight: 600,
   },
   timeSection: {
     py: "0.75rem",
