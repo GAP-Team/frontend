@@ -14,6 +14,40 @@ interface ContractSummarySectionProps {
   contract?: Contract | null;
 }
 
+// A provider who already applied sees that first; otherwise a booked-out
+// contract (maximum number of applications reached) cannot be applied to.
+const renderApplyButton = (contract?: Contract | null): JSX.Element => {
+  if (!contract?.tenderId) {
+    return (
+      <GButton color="ggreen" disabled>
+        Jetzt Bewerben
+      </GButton>
+    );
+  }
+  if (contract?.hasApplied) {
+    return (
+      <GButton color="ggreen" disabled>
+        Bereits beworben
+      </GButton>
+    );
+  }
+  if (contract?.isBookedOut) {
+    return (
+      <GButton color="ggreen" disabled>
+        Ausgebucht – keine Bewerbung mehr möglich
+      </GButton>
+    );
+  }
+  return (
+    <GButton
+      color="ggreen"
+      href={ROUTES.SERVICE_PROVIDER.CONTRACT_APPLICATION(contract?.tenderId)}
+    >
+      Jetzt Bewerben
+    </GButton>
+  );
+};
+
 const ContractSummarySection: React.FC<ContractSummarySectionProps> = ({
   contract,
 }) => {
@@ -101,20 +135,7 @@ const ContractSummarySection: React.FC<ContractSummarySectionProps> = ({
           <GButton color="gprimary" variant="outlined" onClick={backHandler}>
             Zurück
           </GButton>
-          {contract?.hasApplied ? (
-            <GButton color="ggreen" disabled>
-              Bereits beworben
-            </GButton>
-          ) : (
-            <GButton
-              color="ggreen"
-              href={ROUTES.SERVICE_PROVIDER.CONTRACT_APPLICATION(
-                contract?.tenderId
-              )}
-            >
-              Jetzt Bewerben
-            </GButton>
-          )}
+          {renderApplyButton(contract)}
         </Grid>
       </Grid>
     </>
