@@ -83,6 +83,12 @@ const ContractApplication = (): JSX.Element => {
 
   useEffect(() => setActiveStep(steps[0]), []);
 
+  useEffect(() => {
+    if (contract?.hasApplied && !submittedId) {
+      router.replace(ROUTES.SERVICE_PROVIDER.CONTRACT_FILTER_URL([], [], []));
+    }
+  }, [contract?.hasApplied, submittedId, router]);
+
   const handleBack = (): void => {
     if (activeStep.id > 0) setActiveStep(steps[activeStep.id - 1]);
     else router.push(ROUTES.SERVICE_PROVIDER.CONTRACT_FILTER_URL([], [], []));
@@ -147,15 +153,15 @@ const ContractApplication = (): JSX.Element => {
         documents: docs,
         status: null,
       };
-      const resultAction = await dispatch(
+      const result = await dispatch(
         applyForContract({
           contractId: contract.tenderId,
           applicationData,
         })
-      );
+      ).unwrap();
 
-      // If we reach here, the action was successful
-      setSubmittedId(resultAction.payload?.id);
+      // unwrap() throws on rejection (e.g. 409 already applied)
+      setSubmittedId(result?.id);
       dispatch(
         showSnackbar({
           type: "success",
