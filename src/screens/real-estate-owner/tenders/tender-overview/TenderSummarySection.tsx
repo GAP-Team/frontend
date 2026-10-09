@@ -85,7 +85,7 @@ const TenderSummarySection: React.FC<TenderSummarySectionProps> = ({
   };
 
   const backHandler = (): void => {
-    router.push(returnTo ?? ROUTES.REAL_ESTATE.TENDER.TENDERS);
+    router.push(returnTo ?? ROUTES.REAL_ESTATE.BUILDING.BUILDINGS);
   };
 
   return (

@@ -63,7 +63,7 @@ interface CreatedBuildingFacility {
 const TenderForm: React.FC<NewTenderProps> = ({ id }): JSX.Element => {
   const router = useRouter();
   const returnTo = useReturnTo();
-  const exitUrl = returnTo ?? ROUTES.REAL_ESTATE.TENDER.TENDERS;
+  const exitUrl = returnTo ?? ROUTES.REAL_ESTATE.BUILDING.BUILDINGS;
   const dispatch = useAppDispatch();
   const user = useAppSelector(currentUser);
   const checkActiveUser = useAppSelector(isUserActive);
