@@ -14,7 +14,6 @@ import { RegistrationFormValues } from "./types";
 import { DOCUMENT_TYPE, USER_ROLE } from "@/utils/enums";
 import PageTitle from "@/components/data-display/label/PageTitle";
 import { handleUploadDoc } from "@/utils/uploadToS3";
-import BackButton from "@/components/inputs/button/BackButton";
 import InfoBanner from "@/components/data-display/InfoBanner";
 import EmailVerificationScreen from "@/screens/EmailVerificationScreen";
 import { registrationValidationSchema } from "@/utils/ValidationSchema";
@@ -251,13 +250,7 @@ const Registration = (): JSX.Element => {
         />
       </Grid>
       <Grid item xs={12} md={8} lg={8} sx={styles.formGrid}>
-        <BackButton
-          onBack={handleBack}
-          sx={{
-            visibility: activeStep <= steps.length - 1 ? "visible" : "hidden",
-          }}
-        />
-        <PageTitle title="Registrierung" />
+        <PageTitle title="Registrierung" sx={{ mt: "2.5rem" }} />
         <Formik
           initialValues={initialValues}
           validationSchema={registrationValidationSchema[activeStep]}
