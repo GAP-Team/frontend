@@ -64,6 +64,9 @@ const ContractCard = ({ contracts }: ContractCardProps): JSX.Element => {
           >
             <Box sx={styles.header}>
               <Chip label={contract?.tenderType} sx={styles.cardTypeTitle} />
+              {contract?.isBookedOut && (
+                <Chip label="Ausgebucht" sx={styles.bookedOutChip} />
+              )}
             </Box>
             <Box sx={styles.location}>
               <SectionTitle
@@ -150,6 +153,11 @@ const styles = {
   },
   cardTypeTitle: {
     background: "#96E9CB",
+    marginBottom: "0.8rem",
+  },
+  bookedOutChip: {
+    background: "#ECEFF0",
+    color: "#5B6B70",
     marginBottom: "0.8rem",
   },
   timeSection: {

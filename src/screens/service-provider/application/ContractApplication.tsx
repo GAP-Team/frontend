@@ -84,10 +84,11 @@ const ContractApplication = (): JSX.Element => {
   useEffect(() => setActiveStep(steps[0]), []);
 
   useEffect(() => {
-    if (contract?.hasApplied && !submittedId) {
+    // Already applied, or the contract is booked out: nothing to apply for.
+    if ((contract?.hasApplied || contract?.isBookedOut) && !submittedId) {
       router.replace(ROUTES.SERVICE_PROVIDER.CONTRACT_FILTER_URL([], [], []));
     }
-  }, [contract?.hasApplied, submittedId, router]);
+  }, [contract?.hasApplied, contract?.isBookedOut, submittedId, router]);
 
   const handleBack = (): void => {
     if (activeStep.id > 0) setActiveStep(steps[activeStep.id - 1]);
