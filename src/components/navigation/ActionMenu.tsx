@@ -3,6 +3,7 @@ import * as React from "react";
 import Menu from "@mui/material/Menu";
 import Dialog from "@mui/material/Dialog";
 import { FaRegEdit } from "react-icons/fa";
+import { FiUpload } from "react-icons/fi";
 import Divider from "@mui/material/Divider";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
@@ -22,6 +23,8 @@ interface ActionMenuProps {
   messege: any;
   onEdit: (itemId: string) => void;
   onDelete: (itemId: string) => void;
+  // When provided, adds a "Dokumente hochladen" entry to the menu.
+  onUploadDocuments?: (itemId: string) => void;
 }
 
 const ActionMenu: React.FC<ActionMenuProps> = ({
@@ -29,6 +32,7 @@ const ActionMenu: React.FC<ActionMenuProps> = ({
   messege,
   onEdit,
   onDelete,
+  onUploadDocuments,
 }) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [openDialog, setOpenDialog] = React.useState(false);
@@ -58,6 +62,11 @@ const ActionMenu: React.FC<ActionMenuProps> = ({
 
   const handleEditClick = (): void => {
     onEdit(itemId); // Call edit action with item ID
+    handleCloseMenu();
+  };
+
+  const handleUploadClick = (): void => {
+    onUploadDocuments?.(itemId);
     handleCloseMenu();
   };
 
@@ -93,6 +102,14 @@ const ActionMenu: React.FC<ActionMenuProps> = ({
           </ListItemIcon>
           Bearbeiten
         </MenuItem>
+        {onUploadDocuments && (
+          <MenuItem onClick={handleUploadClick}>
+            <ListItemIcon>
+              <FiUpload color="#A0ADB1" size={"1.25rem"} />
+            </ListItemIcon>
+            Dokumente hochladen
+          </MenuItem>
+        )}
         <Divider />
         <MenuItem onClick={handleDeleteClick} sx={{ color: "red" }}>
           <ListItemIcon>

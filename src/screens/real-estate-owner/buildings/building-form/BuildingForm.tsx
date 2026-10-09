@@ -16,6 +16,7 @@ import { SubmitFormFunction } from "@/typings/types";
 import { currentUser, isUserActive } from "@/lib/features/userSlice";
 
 import { ROUTES } from "@/utils/routes";
+import { useReturnTo } from "@/hooks/useReturnTo";
 import AddBuildingForm from "./AddBuildingForm";
 import BuildingAddress from "./BuildingAddress";
 import BuildingSummary from "./BuildingSummary";
@@ -31,6 +32,7 @@ import { DOCUMENT_TYPE, FORM_ACTION_TYPE } from "@/utils/enums";
 
 const BuildingForm: React.FC<NewBuildingProps> = ({ id }) => {
   const router = useRouter();
+  const returnTo = useReturnTo();
   const appDispatch = useAppDispatch();
   const user = useSelector(currentUser);
   const checkActiveUser = useSelector(isUserActive);
@@ -163,7 +165,7 @@ const BuildingForm: React.FC<NewBuildingProps> = ({ id }) => {
     if (activeStep.id > 0) {
       setActiveStep(steps[activeStep.id - 1]);
     } else {
-      router.push(ROUTES.REAL_ESTATE.DASHBOARD);
+      router.push(returnTo ?? ROUTES.REAL_ESTATE.DASHBOARD);
     }
   };
 

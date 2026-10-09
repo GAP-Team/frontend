@@ -49,6 +49,7 @@ import { Facility } from "@/screens/real-estate-owner/facilities/facility-overvi
 import { DEFAULT_PUBLISH_MONTHS } from "@/utils/Constants";
 import logger from "@/utils/Logger";
 import { ROUTES } from "@/utils/routes";
+import { useReturnTo } from "@/hooks/useReturnTo";
 import utc from "dayjs/plugin/utc";
 dayjs.extend(utc);
 
@@ -61,6 +62,8 @@ interface CreatedBuildingFacility {
 
 const TenderForm: React.FC<NewTenderProps> = ({ id }): JSX.Element => {
   const router = useRouter();
+  const returnTo = useReturnTo();
+  const exitUrl = returnTo ?? ROUTES.REAL_ESTATE.TENDER.TENDERS;
   const dispatch = useAppDispatch();
   const user = useAppSelector(currentUser);
   const checkActiveUser = useAppSelector(isUserActive);
@@ -426,7 +429,7 @@ const TenderForm: React.FC<NewTenderProps> = ({ id }): JSX.Element => {
     if (activeStep.id > 0) {
       setActiveStep(steps[activeStep.id - 1]);
     } else {
-      router.push(ROUTES.REAL_ESTATE.DASHBOARD);
+      router.push(returnTo ?? ROUTES.REAL_ESTATE.DASHBOARD);
     }
   };
 
@@ -440,7 +443,7 @@ const TenderForm: React.FC<NewTenderProps> = ({ id }): JSX.Element => {
       }
       secondaryDescription="Du kannst Ihre Ausschreibung in der Ausschreibung-übersicht sehen und bearbeiten."
       buttonLabel="Schließen"
-      redirectUrl={ROUTES.REAL_ESTATE.TENDER.TENDERS}
+      redirectUrl={exitUrl}
     />
   ) : (
     <>
@@ -453,7 +456,7 @@ const TenderForm: React.FC<NewTenderProps> = ({ id }): JSX.Element => {
           />
         </Grid>
         <Grid item>
-          <Link href={ROUTES.REAL_ESTATE.TENDER.TENDERS} type="button">
+          <Link href={exitUrl} type="button">
             <IconButton sx={{ marginLeft: "auto" }} size="medium">
               <CgClose color="red" />
             </IconButton>

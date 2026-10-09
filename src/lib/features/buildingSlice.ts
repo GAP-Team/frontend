@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import userAPI from "@/api/user";
+import buildingAPI from "@/api/building";
 import { RootState } from "../store";
 // FIXME: Building should not be imported from the screen, it should be imported from a common types file.
 import { Building } from "@/screens/real-estate-owner/buildings/building-overview/types";
@@ -35,6 +36,20 @@ export const fetchBuildings = createAsyncThunk(
   }
 );
 
+export const updateBuilding = createAsyncThunk(
+  "building/updateBuilding",
+  async ({
+    buildingId,
+    data,
+  }: {
+    buildingId: string;
+    data: Partial<Building> & { documentUploadType?: string };
+  }): Promise<Building> => {
+    const response = await buildingAPI.update(buildingId, data);
+    return response.data;
+  }
+);
+
 const buildingSlice = createSlice({
   name: "building",
   initialState,
@@ -58,6 +73,15 @@ const buildingSlice = createSlice({
       .addCase(fetchBuildings.rejected, (state, action) => {
         state.error = action.error.message || "Failed to fetch buildings";
         state.loading = false;
+      })
+      .addCase(updateBuilding.fulfilled, (state, action) => {
+        // Merge, so fields the update response doesn't carry (e.g. the
+        // tenders count) are kept.
+        state.buildings = state.buildings.map((building) =>
+          building.id === action.payload.id
+            ? { ...building, ...action.payload }
+            : building
+        );
       });
   },
 });

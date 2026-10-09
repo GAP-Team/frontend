@@ -14,7 +14,8 @@ const facilityAPI = {
   update: (
     facilityId: string,
     facility: Partial<Facility>
-  ): Promise<Facility> => api.put(`/facilities/${facilityId}`, facility),
+  ): Promise<AxiosResponse<Facility>> =>
+    api.put(`/facilities/${facilityId}`, facility),
 };
 
 export default facilityAPI;
