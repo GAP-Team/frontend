@@ -13,6 +13,7 @@ import { showSnackbar } from "@/components/feedback/snackbar";
 import { getTenderStatusStyle, translateTenderForm } from "@/utils/utils";
 import ActionMenu from "@/components/navigation/ActionMenu";
 import { withReturnTo } from "@/utils/returnTo";
+import { countApplications } from "./tenderFilters";
 
 interface TenderRowProps {
   tender: Tender;
@@ -23,6 +24,7 @@ const TenderRow: React.FC<TenderRowProps> = ({ tender, returnTo }) => {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const statusStyle = getTenderStatusStyle[tender.status];
+  const applicationCount = countApplications(tender);
 
   const handleClick = (): void => {
     router.push(
@@ -75,6 +77,16 @@ const TenderRow: React.FC<TenderRowProps> = ({ tender, returnTo }) => {
           {`${dayjs(tender.fromDate).format("DD.MM.YYYY")} - ${dayjs(tender.toDate).format("DD.MM.YYYY")}`}
         </Typography>
       </Box>
+      <Chip
+        label={
+          applicationCount > 0
+            ? `${applicationCount} ${applicationCount === 1 ? "Bewerbung" : "Bewerbungen"}`
+            : "Keine Bewerbungen"
+        }
+        color={applicationCount > 0 ? "gprimary" : "default"}
+        size="small"
+        sx={styles.applicationChip}
+      />
       <Box onClick={(event) => event.stopPropagation()}>
         <ActionMenu
           itemId={tender.id}
@@ -113,6 +125,11 @@ const styles = {
     display: "flex",
     gap: "0.5rem",
     mb: "0.25rem",
+  },
+  applicationChip: {
+    ml: "auto",
+    mr: "1rem",
+    fontWeight: 600,
   },
   dateRange: {
     color: "#8D999C",
