@@ -1,5 +1,5 @@
 import * as yup from "yup";
-import { USER_ROLE } from "./enums";
+import { ObjectFacilityMode, USER_ROLE } from "./enums";
 
 const EMAIL_REGEX =
   /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -222,6 +222,104 @@ export const ContactPersonSchema = yup.object().shape({
     ),
 });
 
+const requiredIf = <T extends yup.Schema>(
+  condition: boolean,
+  schema: T,
+  message: string
+): T => (condition ? (schema.required(message) as T) : schema);
+
+const buildObjectFacilitySchema = (
+  mode: ObjectFacilityMode = ObjectFacilityMode.EXISTING
+): yup.ObjectSchema<any> => {
+  const isExisting = mode === ObjectFacilityMode.EXISTING;
+  const isNewObject = mode === ObjectFacilityMode.NEW;
+  const isNewFacilityOnly = mode === ObjectFacilityMode.NEW_FACILITY;
+  const needsExistingBuilding = isExisting || isNewFacilityOnly;
+  const needsNewFacility = isNewObject || isNewFacilityOnly;
+
+  return yup.object({
+    buildingId: requiredIf(
+      needsExistingBuilding,
+      yup
+        .string()
+        .test(
+          "not-zero",
+          "Sie müssen vorher Gebäude erstellen",
+          (value) => value !== "0"
+        ),
+      "Bitte wählen Sie ein Gebäude aus"
+    ),
+    facilityId: requiredIf(
+      isExisting,
+      yup
+        .string()
+        .test(
+          "not-zero",
+          "Sie müssen vorher Anlage erstellen",
+          (value) => value !== "0"
+        ),
+      "Bitte wählen Sie eine Anlage aus"
+    ),
+    newBuilding: yup.object({
+      name: requiredIf(
+        isNewObject,
+        yup.string(),
+        "Gebäudename ist erforderlich."
+      ),
+      buildingType: requiredIf(
+        isNewObject,
+        yup.string(),
+        "Gebäudetyp ist erforderlich."
+      ),
+      street: requiredIf(isNewObject, yup.string(), "STRAßE ist erforderlich."),
+      houseNumber: isNewObject
+        ? yup
+            .number()
+            .typeError("Hausnummer muss eine Zahl sein.")
+            .required("Hausnummer ist erforderlich.")
+            .positive("Hausnummer muss größer als 0 sein.")
+            .integer("Hausnummer muss eine ganze Zahl sein.")
+        : yup.mixed(),
+      zip: isNewObject
+        ? yup
+            .string()
+            .required("Postleitzahl ist erforderlich")
+            .matches(
+              /^\d{4,5}$/,
+              "Postleitzahl muss zwischen 4 und 5 Ziffern lang sein"
+            )
+        : yup.string(),
+      city: requiredIf(isNewObject, yup.string(), "Stadt ist erforderlich."),
+      state: requiredIf(
+        isNewObject,
+        yup.string(),
+        "Bundesland ist erforderlich."
+      ),
+    }),
+    newFacility: yup.object({
+      name: requiredIf(
+        needsNewFacility,
+        yup.string(),
+        "Anlagenname ist erforderlich"
+      ),
+      facilityType: requiredIf(
+        needsNewFacility,
+        yup.string(),
+        "Oberbegriff ist erforderlich"
+      ),
+      subcategory: yup.string(),
+      numberOfUnits: needsNewFacility
+        ? yup
+            .number()
+            .typeError("Anlage Anzahl muss eine Zahl sein")
+            .required("Anlage Anzahl ist erforderlich")
+            .positive("Anlage Anzahl muss eine positive Zahl sein")
+            .integer("Anlage Anzahl muss eine Ganzzahl sein")
+        : yup.mixed(),
+    }),
+  });
+};
+
 export const addTenderValidationSchema = [
   yup.object().shape({
     clientName: yup.string().required("Name des Auftraggeber ist erforderlich"),
@@ -230,24 +328,10 @@ export const addTenderValidationSchema = [
       .string()
       .required("Beschreiben Sie bitte den gewünschten Ausschreibungstyp"),
   }),
-  yup.object({
-    buildingId: yup
-      .string()
-      .test(
-        "not-zero",
-        "Sie müssen vorher Gebäude erstellen",
-        (value) => value !== "0"
-      )
-      .required("Bitte wählen Sie ein Gebäude aus"),
-    facilityId: yup
-      .string()
-      .test(
-        "not-zero",
-        "Sie müssen vorher Anlage erstellen",
-        (value) => value !== "0"
-      )
-      .required("Bitte wählen Sie eine Anlage aus"),
-  }),
+  // Formik passes no yup context, so the schema is picked from the form values
+  yup.lazy((values: { objectFacilityMode?: ObjectFacilityMode }) =>
+    buildObjectFacilitySchema(values?.objectFacilityMode)
+  ),
   yup.object({
     detailDescription: yup.string(),
   }),

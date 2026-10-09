@@ -6,7 +6,7 @@ import { StepComponentProps } from "./types";
 import SummarySection, {
   Detail,
 } from "@/components/common/summary/SummarySection";
-import { TENDER_FORM } from "@/utils/enums";
+import { ObjectFacilityMode, TENDER_FORM } from "@/utils/enums";
 
 const TenderSummary = ({
   setActiveStep,
@@ -36,9 +36,24 @@ const TenderSummary = ({
     },
   ].filter(Boolean); // Filter out undefined values
 
+  const isNewObject = values.objectFacilityMode === ObjectFacilityMode.NEW;
+  const isNewFacility =
+    isNewObject ||
+    values.objectFacilityMode === ObjectFacilityMode.NEW_FACILITY;
+
   const objektInformation: Detail[] = [
-    values.buildingName && { label: "Objekt", value: values.buildingName },
-    values.facilityId && { label: "Anlage", value: values.facilityName },
+    isNewObject
+      ? values.newBuilding?.name && {
+          label: "Objekt (neu anzulegen)",
+          value: values.newBuilding.name,
+        }
+      : values.buildingName && { label: "Objekt", value: values.buildingName },
+    isNewFacility
+      ? values.newFacility?.name && {
+          label: "Anlage (neu anzulegen)",
+          value: values.newFacility.name,
+        }
+      : values.facilityName && { label: "Anlage", value: values.facilityName },
   ].filter(Boolean); // Filter out undefined values
 
   const updatedDetails: Detail[] = [
