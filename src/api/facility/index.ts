@@ -1,5 +1,6 @@
 // FIXME: Facility should not be imported from the screen, it should be imported from a common types file.
 import { Facility } from "@/screens/real-estate-owner/facilities/facility-overview/types";
+import { AxiosResponse } from "axios";
 import api from "../axios";
 
 const facilityAPI = {
@@ -13,7 +14,8 @@ const facilityAPI = {
   update: (
     facilityId: string,
     facility: Partial<Facility>
-  ): Promise<Facility> => api.put(`/facilities/${facilityId}`, facility),
+  ): Promise<AxiosResponse<Facility>> =>
+    api.put(`/facilities/${facilityId}`, facility),
 };
 
 export default facilityAPI;

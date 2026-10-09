@@ -9,11 +9,13 @@ import Pagination from "@mui/material/Pagination";
 interface BuildingContainerProps {
   buildings: Building[];
   itemsPerPage?: number;
+  onSelect?: (buildingId: string, tab?: number) => void;
 }
 
 const BuildingContainer: React.FC<BuildingContainerProps> = ({
   buildings,
   itemsPerPage = 8,
+  onSelect,
 }) => {
   const [page, setPage] = useState<number>(1);
   const handleChange = (
@@ -37,7 +39,7 @@ const BuildingContainer: React.FC<BuildingContainerProps> = ({
       >
         {currentItems.map((building) => (
           <Grid item xs={12} md={6} lg={3} key={building.id}>
-            <BuildingCard building={building} />
+            <BuildingCard building={building} onSelect={onSelect} />
           </Grid>
         ))}
       </Grid>

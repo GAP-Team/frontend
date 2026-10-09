@@ -1,0 +1,202 @@
+import React, { useState } from "react";
+import Box from "@mui/material/Box";
+import Tab from "@mui/material/Tab";
+import Tabs from "@mui/material/Tabs";
+import Typography from "@mui/material/Typography";
+import { useRouter } from "next/navigation";
+import { FaRegEdit } from "react-icons/fa";
+import { FiUpload } from "react-icons/fi";
+import { ROUTES } from "@/utils/routes";
+import { withReturnTo } from "@/utils/returnTo";
+import GButton from "@/components/inputs/button/GButton";
+import { useAppSelector } from "@/lib/hooks";
+import { Building } from "./types";
+import BuildingStatTiles from "./BuildingStatTiles";
+import BuildingDocumentUploadDialog from "./BuildingDocumentUploadDialog";
+import DocumentTabPanel from "./DocumentTabPanel";
+import FacilityTabPanel from "./FacilityTabPanel";
+import TenderTabPanel from "./TenderTabPanel";
+import { getFacilitiesByBuilding } from "@/lib/features/facilitySlice";
+import { Facility } from "@/screens/real-estate-owner/facilities/facility-overview/types";
+import { getTendersByBuilding } from "@/lib/features/tenderSlice";
+
+interface BuildingDetailWorkspaceProps {
+  building: Building;
+  initialTab?: number;
+  onBack: () => void;
+}
+
+const BuildingDetailWorkspace: React.FC<BuildingDetailWorkspaceProps> = ({
+  building,
+  initialTab = 0,
+  onBack,
+}) => {
+  const router = useRouter();
+  const [activeTab, setActiveTab] = useState<number>(initialTab);
+  const [isUploadOpen, setIsUploadOpen] = useState<boolean>(false);
+  // Set when a facility's tender count was clicked: the Ausschreibungen tab
+  // then only lists that facility's tenders.
+  const [facilityFilter, setFacilityFilter] = useState<Facility | null>(null);
+  // Set when a facility was opened from the Dokumente tab: the Anlagen tab
+  // then shows it expanded and scrolled into view.
+  const [focusedFacilityId, setFocusedFacilityId] = useState<string | null>(
+    null
+  );
+  const facilities = useAppSelector(getFacilitiesByBuilding(building.id));
+  const allTenders = useAppSelector(getTendersByBuilding(building.id));
+  const tenders = facilityFilter
+    ? allTenders.filter((tender) => tender.facility?.id === facilityFilter.id)
+    : allTenders;
+
+  // Forms and detail screens opened from here return to this exact view.
+  const returnTo = `${ROUTES.REAL_ESTATE.BUILDING.BUILDINGS}?building=${building.id}&tab=${activeTab}`;
+
+  const handleTabChange = (
+    _event: React.SyntheticEvent,
+    value: number
+  ): void => {
+    setFacilityFilter(null);
+    setFocusedFacilityId(null);
+    setActiveTab(value);
+  };
+
+  const handleOpenFacility = (facility: Facility): void => {
+    setFocusedFacilityId(facility.id);
+    setActiveTab(0);
+  };
+
+  const handleShowTenders = (facility: Facility): void => {
+    setFacilityFilter(facility);
+    setActiveTab(1);
+  };
+
+  return (
+    <Box sx={styles.container}>
+      <Typography variant="bodymsb" sx={styles.breadcrumb} onClick={onBack}>
+        {"← Alle Objekte / "}
+        <Typography component="span" variant="bodylsb">
+          {building.buildingName}
+        </Typography>
+      </Typography>
+
+      <Box sx={styles.header}>
+        <Box>
+          <Typography variant="h4sb" sx={styles.title}>
+            {building.buildingName}
+          </Typography>
+          <Typography variant="bodymr" sx={styles.address}>
+            {`${building.address.street} ${building.address.houseNumber}, ${building.address.zip} ${building.address.city}`}
+          </Typography>
+        </Box>
+        <Box sx={styles.actions}>
+          <GButton
+            variant="outlined"
+            startIcon={<FiUpload size="1.1rem" />}
+            sx={styles.actionButton}
+            onClick={() => setIsUploadOpen(true)}
+          >
+            Upload document
+          </GButton>
+          <GButton
+            variant="outlined"
+            startIcon={<FaRegEdit size="1.1rem" />}
+            sx={styles.actionButton}
+            onClick={() =>
+              router.push(
+                withReturnTo(
+                  ROUTES.REAL_ESTATE.BUILDING.EDIT_BUILDING(building.id),
+                  returnTo
+                )
+              )
+            }
+          >
+            Bearbeiten
+          </GButton>
+        </Box>
+      </Box>
+
+      <BuildingStatTiles facilities={facilities} tenders={tenders} />
+
+      <Tabs value={activeTab} onChange={handleTabChange} sx={styles.tabs}>
+        <Tab label="Anlagen" />
+        <Tab label="Ausschreibungen" />
+        <Tab label="Dokumente" />
+      </Tabs>
+
+      {activeTab === 0 && (
+        <FacilityTabPanel
+          facilities={facilities}
+          returnTo={returnTo}
+          onShowTenders={handleShowTenders}
+          focusedFacilityId={focusedFacilityId}
+        />
+      )}
+      {activeTab === 1 && (
+        <TenderTabPanel
+          tenders={tenders}
+          returnTo={returnTo}
+          facilityName={facilityFilter?.name}
+          onClearFilter={() => setFacilityFilter(null)}
+        />
+      )}
+      {activeTab === 2 && (
+        <DocumentTabPanel
+          building={building}
+          facilities={facilities}
+          onOpenFacility={handleOpenFacility}
+        />
+      )}
+
+      <BuildingDocumentUploadDialog
+        building={building}
+        open={isUploadOpen}
+        onClose={() => setIsUploadOpen(false)}
+      />
+    </Box>
+  );
+};
+
+export default BuildingDetailWorkspace;
+
+// Styles
+const styles = {
+  container: {
+    px: "1.5rem",
+    pt: "1.5rem",
+    height: "calc(100vh - 9.125rem)",
+    overflow: "auto",
+  },
+  breadcrumb: {
+    color: "#22A7F1",
+    cursor: "pointer",
+    mb: "1rem",
+  },
+  header: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "flex-start",
+    mb: "1.25rem",
+  },
+  title: {
+    display: "block",
+  },
+  address: {
+    display: "block",
+    color: "#8D999C",
+    mt: "0.25rem",
+  },
+  actions: {
+    display: "flex",
+    alignItems: "center",
+    gap: "0.75rem",
+  },
+  // Shared by both header buttons so they always look the same.
+  actionButton: {
+    margin: 0,
+  },
+  tabs: {
+    mt: "1.5rem",
+    borderBottom: 1,
+    borderColor: "divider",
+  },
+};

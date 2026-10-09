@@ -11,6 +11,8 @@ import { Tender } from "./types";
 import { TENDER_FORM } from "@/utils/enums";
 import { useAppSelector } from "@/lib/hooks";
 import { ROUTES } from "@/utils/routes";
+import { useReturnTo } from "@/hooks/useReturnTo";
+import { withReturnTo } from "@/utils/returnTo";
 import { BuildingAddress } from "@/screens/real-estate-owner/buildings/building-overview/types";
 import { formatAddress } from "@/utils/distance";
 import { Facility } from "@/screens/real-estate-owner/facilities/facility-overview/types";
@@ -25,6 +27,7 @@ const TenderSummarySection: React.FC<TenderSummarySectionProps> = ({
   buildingAddress,
 }) => {
   const router = useRouter();
+  const returnTo = useReturnTo();
   const { facilities } = useAppSelector((state) => state.facility);
   const subcategory = facilities.find(
     (facility: Facility) => facility.id === tender?.facility?.id
@@ -76,11 +79,13 @@ const TenderSummarySection: React.FC<TenderSummarySectionProps> = ({
   ].filter((item) => item.value);
 
   const editHandler = (): void => {
-    router.push(ROUTES.REAL_ESTATE.TENDER.EDIT_TENDER(tender?.id));
+    router.push(
+      withReturnTo(ROUTES.REAL_ESTATE.TENDER.EDIT_TENDER(tender?.id), returnTo)
+    );
   };
 
   const backHandler = (): void => {
-    router.push(ROUTES.REAL_ESTATE.TENDER.TENDERS);
+    router.push(returnTo ?? ROUTES.REAL_ESTATE.TENDER.TENDERS);
   };
 
   return (

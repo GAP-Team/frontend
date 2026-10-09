@@ -1,9 +1,10 @@
 "use client";
-import { CgNotes } from "react-icons/cg";
+// import { CgNotes } from "react-icons/cg"; // only used by the hidden Ausschreibungen menu
 import { TbPigMoney } from "react-icons/tb";
 import { LuLayoutDashboard } from "react-icons/lu";
 import { usePathname } from "next/navigation";
-import { MdOutlineDoorSliding, MdOutlineAddHomeWork } from "react-icons/md";
+// import { MdOutlineDoorSliding } from "react-icons/md"; // only used by the hidden Anlagen menu
+import { MdOutlineAddHomeWork } from "react-icons/md";
 import { REAL_ESTATE_BASE, ROUTES } from "@/utils/routes";
 import Layout from "@/screens/real-estate-owner/Layout";
 import { Box } from "@mui/material";
@@ -16,40 +17,44 @@ const sidebarItems = [
     text: "Dashboard",
     url: ROUTES.REAL_ESTATE.DASHBOARD,
   },
-  {
-    id: 1,
-    icon: CgNotes,
-    text: "Ausschreibungen",
-    subItems: [
-      {
-        id: 10,
-        text: "Alle Ausschreibungen",
-        url: ROUTES.REAL_ESTATE.TENDER.TENDERS,
-      },
-      {
-        id: 11,
-        text: "Ausschreibung hinzufügen",
-        url: ROUTES.REAL_ESTATE.TENDER.ADD_TENDER,
-      },
-    ],
-  },
-  {
-    id: 2,
-    icon: MdOutlineDoorSliding,
-    text: "Anlagen",
-    subItems: [
-      {
-        id: 20,
-        text: "Alle Anlagen",
-        url: ROUTES.REAL_ESTATE.FACILITY.FACILITIES,
-      },
-      {
-        id: 21,
-        text: "Anlage hinzufügen",
-        url: ROUTES.REAL_ESTATE.FACILITY.ADD_FACILITY,
-      },
-    ],
-  },
+  // Facility and tender overviews are temporarily hidden: facilities, tenders
+  // and their documents are managed from a building's detail view
+  // (Gebäude > Alle Gebäude). Restore these entries (and the icon imports above)
+  // to bring the separate overview pages back to the menu.
+  // {
+  //   id: 1,
+  //   icon: CgNotes,
+  //   text: "Ausschreibungen",
+  //   subItems: [
+  //     {
+  //       id: 10,
+  //       text: "Alle Ausschreibungen",
+  //       url: ROUTES.REAL_ESTATE.TENDER.TENDERS,
+  //     },
+  //     {
+  //       id: 11,
+  //       text: "Ausschreibung hinzufügen",
+  //       url: ROUTES.REAL_ESTATE.TENDER.ADD_TENDER,
+  //     },
+  //   ],
+  // },
+  // {
+  //   id: 2,
+  //   icon: MdOutlineDoorSliding,
+  //   text: "Anlagen",
+  //   subItems: [
+  //     {
+  //       id: 20,
+  //       text: "Alle Anlagen",
+  //       url: ROUTES.REAL_ESTATE.FACILITY.FACILITIES,
+  //     },
+  //     {
+  //       id: 21,
+  //       text: "Anlage hinzufügen",
+  //       url: ROUTES.REAL_ESTATE.FACILITY.ADD_FACILITY,
+  //     },
+  //   ],
+  // },
   {
     id: 3,
     icon: MdOutlineAddHomeWork,
