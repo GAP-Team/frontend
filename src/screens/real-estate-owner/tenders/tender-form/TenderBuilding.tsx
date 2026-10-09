@@ -3,12 +3,31 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Radio from "@mui/material/Radio";
 import { useFormikContext } from "formik";
-import { FormControlLabel, RadioGroup } from "@mui/material";
+import { FormControlLabel, RadioGroup, Tooltip } from "@mui/material";
+import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import { TenderFormValues } from "./types";
 import { ObjectFacilityMode } from "@/utils/enums";
 import TenderExistingObjectFacility from "./TenderExistingObjectFacility";
 import TenderNewFacilityFields from "./TenderNewFacilityFields";
 import TenderNewObjectFacility from "./TenderNewObjectFacility";
+
+const MODE_OPTIONS = [
+  {
+    value: ObjectFacilityMode.EXISTING,
+    label: "Bestehendes Objekt & bestehende Anlage auswählen",
+    info: "Objekt und Anlage sind bereits angelegt. Sie wählen beide aus Ihren vorhandenen Einträgen aus.",
+  },
+  {
+    value: ObjectFacilityMode.NEW_FACILITY,
+    label: "Bestehendes Objekt, neue Anlage anlegen",
+    info: "Das Objekt ist bereits angelegt, die Anlage jedoch noch nicht. Sie wählen das Objekt aus und legen die Anlage neu an.",
+  },
+  {
+    value: ObjectFacilityMode.NEW,
+    label: "Neues Objekt & neue Anlage anlegen",
+    info: "Weder Objekt noch Anlage sind vorhanden. Sie legen beides neu an.",
+  },
+];
 
 const renderObjectFacilityFields = (mode: ObjectFacilityMode): JSX.Element => {
   switch (mode) {
@@ -47,27 +66,25 @@ const TenderBuilding = (): JSX.Element => {
             onChange={formik.handleChange}
           >
             <Grid container spacing={1}>
-              <Grid item xs={12} sm={6}>
-                <FormControlLabel
-                  value={ObjectFacilityMode.EXISTING}
-                  control={<Radio />}
-                  label="Bestehendes Objekt & Anlage auswählen"
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <FormControlLabel
-                  value={ObjectFacilityMode.NEW_FACILITY}
-                  control={<Radio />}
-                  label="Bestehendes Objekt, neue Anlage anlegen"
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <FormControlLabel
-                  value={ObjectFacilityMode.NEW}
-                  control={<Radio />}
-                  label="Neues Objekt & Anlage anlegen"
-                />
-              </Grid>
+              {MODE_OPTIONS.map(({ value, label, info }) => (
+                <Grid item xs={12} sm={6} key={value}>
+                  <Box sx={{ display: "flex", alignItems: "center" }}>
+                    <FormControlLabel
+                      value={value}
+                      control={<Radio />}
+                      label={label}
+                      sx={{ mr: 0 }}
+                    />
+                    <Tooltip arrow placement="right" title={info}>
+                      <InfoOutlinedIcon
+                        fontSize="small"
+                        aria-label={`Erklärung: ${label}`}
+                        sx={{ color: "gray.500", cursor: "help", ml: 1 }}
+                      />
+                    </Tooltip>
+                  </Box>
+                </Grid>
+              ))}
             </Grid>
           </RadioGroup>
         </Grid>
