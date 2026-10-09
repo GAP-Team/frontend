@@ -1,7 +1,9 @@
-import dayjs, { Dayjs } from "dayjs";
+import {
+  DeadlineStatus,
+  getFacilityCheckStatus,
+} from "@/screens/real-estate-owner/facilities/utils";
 import { Facility } from "@/screens/real-estate-owner/facilities/facility-overview/types";
 
-export type DeadlineStatus = "overdue" | "soon" | "ok";
 export type DeadlineTab = "all" | DeadlineStatus;
 
 export interface FacilityFilters {
@@ -20,30 +22,9 @@ export const DEFAULT_FACILITY_FILTERS: FacilityFilters = {
   onlyActiveTender: false,
 };
 
-// Only the check (Prüfung) deadline counts; maintenance is not considered.
-const getNextCheckDate = (facility: Facility): Dayjs | null => {
-  const { lastCheckDate, nextCheckInYearNumber } = facility.check ?? {};
-  return lastCheckDate && nextCheckInYearNumber
-    ? dayjs(lastCheckDate).add(Number(nextCheckInYearNumber), "year")
-    : null;
-};
-
-// "Überfällig": deadline already exceeded. "Bald fällig": deadline is today or
-// within the next year. "In Ordnung": deadline is at least one year away.
 // Facilities without a check deadline only show up under "Alle".
-const getDeadlineStatus = (facility: Facility): DeadlineStatus | null => {
-  const deadline = getNextCheckDate(facility);
-  if (!deadline) {
-    return null;
-  }
-  if (deadline.isBefore(dayjs(), "day")) {
-    return "overdue";
-  }
-  return deadline.isBefore(dayjs().add(1, "year")) ? "soon" : "ok";
-};
-
 const matchesTab = (facility: Facility, tab: DeadlineTab): boolean =>
-  tab === "all" || getDeadlineStatus(facility) === tab;
+  tab === "all" || getFacilityCheckStatus(facility) === tab;
 
 const matchesSearch = (facility: Facility, search: string): boolean => {
   const term = search.trim().toLowerCase();
