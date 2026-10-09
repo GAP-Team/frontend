@@ -26,6 +26,6 @@ export interface RegistrationFormValues {
   landRegisterEntryDocumentFile?: File;
   personalIdDocumentFile?: File;
 
-  numOfEmployees: string;
+  numberOfEmployees: string;
   qualificationDocs: File[];
 }

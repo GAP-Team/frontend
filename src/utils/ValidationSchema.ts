@@ -119,7 +119,7 @@ export const registrationValidationSchema = [
       }
     ),
   yup.object({
-    numOfEmployees: yup.string().when("role", {
+    numberOfEmployees: yup.string().when("role", {
       is: USER_ROLE.SERVICE_PROVIDER,
       then: (schema) =>
         schema.required("Anzahl der Mitarbeiter ist erforderlich"),

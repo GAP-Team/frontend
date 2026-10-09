@@ -21,7 +21,10 @@ import { registrationValidationSchema } from "@/utils/ValidationSchema";
 import { Document } from "@/typings/types";
 import emailAPI from "@/api/email";
 import { ROUTES } from "@/utils/routes";
-import { numOfEmployeesOptions, getRegistrationSteps } from "@/utils/Constants";
+import {
+  numberOfEmployeesOptions,
+  getRegistrationSteps,
+} from "@/utils/Constants";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>((props, ref) => {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -89,7 +92,7 @@ const Registration = (): JSX.Element => {
     landRegisterEntryDocument: "",
     personalIdDocument: "",
     businessType: "",
-    numOfEmployees: numOfEmployeesOptions[0].value,
+    numberOfEmployees: numberOfEmployeesOptions[0].value,
     manufacturerExperience: "",
     qualificationDocs: [],
   };
@@ -109,6 +112,9 @@ const Registration = (): JSX.Element => {
         address: addressObj,
         name: values.company,
         phonenumber: Number(values.telephone),
+        ...(values.role === USER_ROLE.SERVICE_PROVIDER && {
+          numberOfEmployees: values.numberOfEmployees,
+        }),
         business: {
           documents: docObj,
           businessType: values.businessType,
@@ -135,7 +141,6 @@ const Registration = (): JSX.Element => {
         company: companyObj,
         ...(values.role === USER_ROLE.SERVICE_PROVIDER && {
           manufacturerExperience: values.manufacturerExperience,
-          numOfEmployees: values.numOfEmployees,
           qualificationDocuments: qualificationDocuments,
         }),
       };
