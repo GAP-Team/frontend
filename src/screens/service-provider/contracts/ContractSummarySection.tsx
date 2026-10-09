@@ -17,6 +17,13 @@ interface ContractSummarySectionProps {
 // A provider who already applied sees that first; otherwise a booked-out
 // contract (maximum number of applications reached) cannot be applied to.
 const renderApplyButton = (contract?: Contract | null): JSX.Element => {
+  if (!contract?.tenderId) {
+    return (
+      <GButton color="ggreen" disabled>
+        Jetzt Bewerben
+      </GButton>
+    );
+  }
   if (contract?.hasApplied) {
     return (
       <GButton color="ggreen" disabled>
