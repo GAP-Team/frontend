@@ -38,7 +38,13 @@ const GENERIC_PATTERNS: RegExp[] = [
 
 const LEGAL_FORMS =
   "(?:&\\s*Co\\.?\\s*)?(?:GmbH|UG(?:\\s*\\(haftungsbeschränkt\\))?|AG|KGaA|KG|OHG|GbR|e\\.?\\s?K\\.?|mbH|SE)(?![\\wäöüß])";
-const LEGAL_FORM_SUFFIX = new RegExp(`(?:\\s*,?\\s*${LEGAL_FORMS})+\\s*$`, "i");
+// A legal form is a separate token: whitespace or a comma has to precede it,
+// so name endings like the "se" in "Reise" are never taken for one.
+const LEGAL_SEPARATOR = "(?:\\s*,\\s*|\\s+)";
+const LEGAL_FORM_SUFFIX = new RegExp(
+  `(?:${LEGAL_SEPARATOR}${LEGAL_FORMS})+\\s*$`,
+  "i"
+);
 
 const escapeRegExp = (value: string): string =>
   value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
@@ -56,7 +62,7 @@ const streetVariants = (escaped: string): string =>
 const companyPattern = (name: string): RegExp => {
   const base = name.replace(LEGAL_FORM_SUFFIX, "").trim() || name.trim();
   return new RegExp(
-    `${flexibleSpaces(escapeRegExp(base))}(?:\\s*,?\\s*${LEGAL_FORMS})*`,
+    `(?<![\\wäöüß])${flexibleSpaces(escapeRegExp(base))}(?![\\wäöüß])(?:${LEGAL_SEPARATOR}${LEGAL_FORMS})*`,
     "gi"
   );
 };
