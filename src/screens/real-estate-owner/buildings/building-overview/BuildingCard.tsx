@@ -6,7 +6,6 @@ import Stack from "@mui/material/Stack";
 import { CgNotes } from "react-icons/cg";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
 import { FaRegFlag } from "react-icons/fa6";
 import Divider from "@mui/material/Divider";
 import { useAppDispatch } from "@/lib/hooks";
@@ -14,12 +13,12 @@ import Typography from "@mui/material/Typography";
 import { IoExtensionPuzzleOutline } from "react-icons/io5";
 
 import { Building } from "./types";
-import facilityAPI from "@/api/facility";
 import buildingAPI from "@/api/building";
 import DocumentList from "./DocumentList";
 import { DOCUMENT_TYPE } from "@/utils/enums";
 import ActionMenu from "@/components/navigation/ActionMenu";
 import { ROUTES } from "@/utils/routes";
+import { getTendersByBuilding } from "@/lib/features/tenderSlice";
 import { styles as scrollbarStyles } from "@/components/utils/scrollbar/styles";
 import {
   getUserBuildings,
@@ -35,24 +34,9 @@ const BuildingCard: React.FC<BuildingCardProps> = ({ building, onSelect }) => {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const userBuildings = useSelector(getUserBuildings);
-  const [totalTenders, setTotalTenders] = useState<number>();
-
-  useEffect(() => {
-    getFacilityTendersCount();
-  }, []);
-
-  const getFacilityTendersCount = async (): Promise<void> => {
-    var count = 0;
-    if (building?.facilityIds?.length > 0) {
-      await Promise.all(
-        building?.facilityIds?.map(async (facilityId: string) => {
-          const tender = await facilityAPI.getTendersOfFacility(facilityId);
-          count = count + tender?.data?.length;
-        })
-      );
-    }
-    setTotalTenders(count);
-  };
+  // Read from the store (loaded by the overview) so the count follows tenders
+  // created or deleted elsewhere instead of being fetched once on mount.
+  const totalTenders = useSelector(getTendersByBuilding(building.id)).length;
 
   const delMsg = `
     Beim Löschen dieses Gebäudes werden alle relevanten Objekte mitgelöscht.
