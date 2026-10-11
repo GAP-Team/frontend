@@ -10,7 +10,7 @@ export const getTenderStatusStyle: {
   REVIEW_REQUIRED: {
     bgcolor: "#FFF1C2",
     color: "#8A6100",
-    title: "Nachprüfung",
+    title: "Prüfung nötig",
   },
 };
 
