@@ -219,4 +219,12 @@ export const getTendersByBuilding =
       (tender: Tender) => tender.building?.id === buildingId
     );
 
+// Returns a number, so subscribers only rerender when the count itself changes.
+export const getTenderCountByBuilding =
+  (buildingId: string) =>
+  (state: RootState): number =>
+    state.tender.tenderList.filter(
+      (tender: Tender) => tender.building?.id === buildingId
+    ).length;
+
 export default tenderSlice.reducer;
