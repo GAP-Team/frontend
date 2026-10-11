@@ -1,12 +1,16 @@
 // ContractApplication.tsx
 import dayjs from "dayjs";
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { Formik, FormikHelpers } from "formik";
-import { Grid, Paper, Typography } from "@mui/material";
+import { CircularProgress, Grid, Paper, Typography } from "@mui/material";
 import logger from "@/utils/Logger";
 import { currentUser } from "@/lib/features/userSlice";
-import { applyForContract, getContract } from "@/lib/features/contractSlice";
+import {
+  applyForContract,
+  fetchContractById,
+  getContract,
+} from "@/lib/features/contractSlice";
 import { showSnackbar } from "@/lib/features/snackbarSlice";
 import { useAppSelector, useAppDispatch } from "@/lib/hooks";
 
@@ -73,6 +77,7 @@ const initialValues: ContractApplicationFormValues = {
 
 const ContractApplication = (): JSX.Element => {
   const router = useRouter();
+  const { id } = useParams<{ id: string }>();
   const dispatch = useAppDispatch();
   const user = useAppSelector(currentUser);
   const contract = useAppSelector(getContract);
@@ -83,12 +88,41 @@ const ContractApplication = (): JSX.Element => {
 
   useEffect(() => setActiveStep(steps[0]), []);
 
+  // Always load the routed contract: the store may be empty (direct visit,
+  // refresh) or still hold a previously viewed contract.
+  useEffect(() => {
+    dispatch(fetchContractById({ id }))
+      .unwrap()
+      .catch(() => {
+        dispatch(
+          showSnackbar({
+            type: "error",
+            message:
+              "Etwas ist schiefgelaufen. Versuchen Sie es später noch einmal!",
+          })
+        );
+        router.replace(ROUTES.SERVICE_PROVIDER.CONTRACT_FILTER_URL([], [], []));
+      });
+  }, [id, dispatch, router]);
+
+  const isContractLoaded = contract?.tenderId === id;
+
   useEffect(() => {
     // Already applied, or the contract is booked out: nothing to apply for.
-    if ((contract?.hasApplied || contract?.isBookedOut) && !submittedId) {
+    if (
+      isContractLoaded &&
+      (contract.hasApplied || contract.isBookedOut) &&
+      !submittedId
+    ) {
       router.replace(ROUTES.SERVICE_PROVIDER.CONTRACT_FILTER_URL([], [], []));
     }
-  }, [contract?.hasApplied, contract?.isBookedOut, submittedId, router]);
+  }, [
+    isContractLoaded,
+    contract?.hasApplied,
+    contract?.isBookedOut,
+    submittedId,
+    router,
+  ]);
 
   const handleBack = (): void => {
     if (activeStep.id > 0) setActiveStep(steps[activeStep.id - 1]);
@@ -194,6 +228,14 @@ const ContractApplication = (): JSX.Element => {
   const cleanupDocuments = async (docs: Document[]): Promise<void> => {
     for (const doc of docs) await s3API.delete(doc.key);
   };
+
+  if (!isContractLoaded && !submittedId) {
+    return (
+      <Grid sx={{ p: 4, mt: 2, textAlign: "center" }}>
+        <CircularProgress />
+      </Grid>
+    );
+  }
 
   return (
     <Grid sx={{ p: 4, mt: 2 }}>
