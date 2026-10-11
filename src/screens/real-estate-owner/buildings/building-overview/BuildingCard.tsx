@@ -18,7 +18,7 @@ import DocumentList from "./DocumentList";
 import { DOCUMENT_TYPE } from "@/utils/enums";
 import ActionMenu from "@/components/navigation/ActionMenu";
 import { ROUTES } from "@/utils/routes";
-import { getTendersByBuilding } from "@/lib/features/tenderSlice";
+import { getTenderCountByBuilding } from "@/lib/features/tenderSlice";
 import { styles as scrollbarStyles } from "@/components/utils/scrollbar/styles";
 import {
   getUserBuildings,
@@ -36,7 +36,7 @@ const BuildingCard: React.FC<BuildingCardProps> = ({ building, onSelect }) => {
   const userBuildings = useSelector(getUserBuildings);
   // Read from the store (loaded by the overview) so the count follows tenders
   // created or deleted elsewhere instead of being fetched once on mount.
-  const totalTenders = useSelector(getTendersByBuilding(building.id)).length;
+  const totalTenders = useSelector(getTenderCountByBuilding(building.id));
 
   const delMsg = `
     Beim Löschen dieses Gebäudes werden alle relevanten Objekte mitgelöscht.
