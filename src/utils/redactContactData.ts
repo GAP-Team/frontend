@@ -8,17 +8,32 @@ export interface RedactionSource {
 }
 
 const RENDER_SCALE = 2;
+const LINE_TOLERANCE = 2;
+// Letters like g, p, ü reach below the baseline; the box covers them too.
+const DESCENT_RATIO = 0.3;
 const BOX_PADDING = 2;
 
-// Phone numbers are only matched when labelled ("Tel.", "Mobil", ...) or
-// written with an international prefix, so dates and offer numbers survive.
+// Contact data is detected from the document itself, because an offer does
+// not have to match the profile (letterhead, footer). Phone numbers are only
+// matched when labelled ("Tel.", "Mobil", ...) or written with an international
+// prefix, so dates and offer numbers survive; the label goes with the number.
 const GENERIC_PATTERNS: RegExp[] = [
   /[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/gi, // E-Mail
-  /(?<=(?:tel(?:efon)?|mobil(?:e)?|handy|fax|phone|fon)\.?\s*:?\s*)\+?\d[\d\s/().-]{5,}\d/gi,
+  /\b(?:tel(?:efon)?|mobil(?:e)?|handy|fax|phone|fon)\.?\s*:?\s*\+?[\d\s/().-]*\d/gi,
   /(?:\+|\b00)\d{1,3}(?:[\s/.-]*\(0\))?[\d\s/().-]{6,}\d/g,
   /\bhttps?:\/\/[^\s<>"]+/gi, // Website
   /\bwww\.[^\s<>"]+/gi,
   /\b[a-z0-9-]+(?:\.[a-z0-9-]+)*\.(?:de|com|net|org|eu|info|biz|at|ch)\b\/?[^\s<>"]*/gi,
+  // Sender line above the recipient: "Firma GmbH, Musterstr. 2, 12345 Stadt"
+  /[^\n,]*?\b(?:GmbH|mbH|UG|AG|KG|OHG|GbR|e\.?\s?K\.?)\s*,\s*[^,\n]*\d+\s?[a-z]?\s*,\s*\d{5}\s+[A-ZÄÖÜ][\wäöüß-]*(?:\s+(?:am|an der|im|bei|ob der)\s+[A-ZÄÖÜ][\wäöüß-]*)?/g,
+  // Bank and tax identifiers of the sender
+  /\bIBAN\s*:?\s*[A-Z]{2}\d{2}(?:\s?[A-Z0-9]{4}){2,7}(?:\s?[A-Z0-9]{1,4})?\b/gi,
+  /\b(?:BIC|SWIFT)\s*:?\s*[A-Z]{6}[A-Z0-9]{2}(?:[A-Z0-9]{3})?\b/gi,
+  /\b[A-Z]{2}\d{2}(?:\s?[A-Z0-9]{4}){3,7}(?:\s?[A-Z0-9]{1,4})?\b/g,
+  /\bUSt-?\s?Id\.?-?\s?Nr\.?\s*:?\s*[A-Z]{2}\s?\d{8,11}/gi,
+  /\b(?:Steuer(?:nummer|-Nr\.?)|St\.?-?Nr\.?)\s*:?\s*[\d/ ]{8,}\d/gi,
+  /\bFinanzamt\s+[A-ZÄÖÜ][\wäöüß-]*/g,
+  /\bHR[AB]\s*\d+(?:\s*[A-Z]{1,2})?/g,
 ];
 
 const LEGAL_FORMS =
@@ -137,8 +152,25 @@ const itemBox = (
     x: x + from * charWidth - BOX_PADDING,
     y: y - height - BOX_PADDING,
     width: (to - from) * charWidth + BOX_PADDING * 2,
-    height: height + BOX_PADDING * 2,
+    height: height * (1 + DESCENT_RATIO) + BOX_PADDING * 2,
   };
+};
+
+// Items on the same baseline are joined with a space, items on another line
+// with a newline, so patterns can tell a line from the whole page.
+export const joinItems = (
+  items: PdfTextItem[]
+): { text: string; spans: { start: number; end: number }[] } => {
+  let text = "";
+  const spans = items.map((item, i) => {
+    const start = text.length;
+    const next = items[i + 1];
+    const sameLine =
+      !next || Math.abs(next.transform[5] - item.transform[5]) < LINE_TOLERANCE;
+    text += item.str + (sameLine ? " " : "\n");
+    return { start, end: start + item.str.length };
+  });
+  return { text, spans };
 };
 
 const collectBoxes = (
@@ -146,12 +178,7 @@ const collectBoxes = (
   patterns: RegExp[],
   viewport: { convertToViewportPoint: (x: number, y: number) => number[] }
 ): Box[] => {
-  let text = "";
-  const spans = items.map((item) => {
-    const start = text.length;
-    text += item.str + " ";
-    return { start, end: start + item.str.length };
-  });
+  const { text, spans } = joinItems(items);
   const ranges = findMatchRanges(text, patterns);
   return items.flatMap((item, i) =>
     ranges
@@ -162,6 +189,38 @@ const collectBoxes = (
         return itemBox(item, viewport, [start, end]);
       })
   );
+};
+
+// Small print in the bottom strip of a page is the letterhead footer (address,
+// phone, bank and tax data of the sender); page numbers are kept.
+const FOOTER_ZONE = 0.12;
+const FOOTER_FONT_RATIO = 0.85;
+const PAGE_NUMBER = /^(?:seite|page)?\s*\d+\s*(?:\/|von|of)\s*\d+$/i;
+
+const median = (values: number[]): number => {
+  const sorted = [...values].sort((a, b) => a - b);
+  return sorted[Math.floor(sorted.length / 2)] ?? 0;
+};
+
+const fontSize = (item: PdfTextItem): number =>
+  item.height || Math.abs(item.transform[3]);
+
+export const collectFooterBoxes = (
+  items: PdfTextItem[],
+  viewport: { convertToViewportPoint: (x: number, y: number) => number[] },
+  page: { bottom: number; height: number }
+): Box[] => {
+  const texts = items.filter((item) => item.str.trim());
+  const bodySize = median(texts.map(fontSize));
+  const limit = page.bottom + page.height * FOOTER_ZONE;
+  return texts
+    .filter(
+      (item) =>
+        item.transform[5] < limit &&
+        fontSize(item) <= bodySize * FOOTER_FONT_RATIO &&
+        !PAGE_NUMBER.test(item.str.trim())
+    )
+    .map((item) => itemBox(item, viewport, [0, item.str.length]));
 };
 
 /**
@@ -201,9 +260,15 @@ export const redactContactData = async (
     await page.render({ canvasContext: context, viewport }).promise;
     const content = await page.getTextContent();
     context.fillStyle = "#fff";
-    collectBoxes(content.items as PdfTextItem[], patterns, viewport).forEach(
-      (box) => context.fillRect(box.x, box.y, box.width, box.height)
-    );
+    const items = content.items as PdfTextItem[];
+    const [, bottom, , top] = page.view;
+    [
+      ...collectBoxes(items, patterns, viewport),
+      ...collectFooterBoxes(items, viewport, {
+        bottom,
+        height: top - bottom,
+      }),
+    ].forEach((box) => context.fillRect(box.x, box.y, box.width, box.height));
 
     const image = await output.embedJpg(
       await fetch(canvas.toDataURL("image/jpeg", 0.85)).then((r) =>
