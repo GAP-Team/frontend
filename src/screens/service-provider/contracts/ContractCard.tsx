@@ -132,18 +132,18 @@ const Requirements: React.FC<{ contract: Contract }> = ({ contract }) => (
 const getButton = (
   contract: Contract
 ): { label: string; sx: object; disabled: boolean } => {
+  if (contract?.hasApplied) {
+    return {
+      label: "✓ Bereits beworben",
+      sx: styles.buttonDone,
+      disabled: true,
+    };
+  }
   if (contract?.isBookedOut) {
     return {
       label: "Keine Bewerbung mehr möglich",
       sx: styles.buttonOff,
       disabled: true,
-    };
-  }
-  if (contract?.hasApplied) {
-    return {
-      label: "✓ Bereits beworben",
-      sx: styles.buttonDone,
-      disabled: false,
     };
   }
   return { label: "Details ansehen", sx: styles.button, disabled: false };
@@ -194,7 +194,8 @@ const ContractCard = ({ contracts }: ContractCardProps): JSX.Element => {
             elevation={2}
             sx={{
               ...styles.card,
-              ...(button.disabled ? styles.cardMuted : styles.cardClickable),
+              ...(button.disabled ? styles.cardStatic : styles.cardClickable),
+              ...(contract?.isBookedOut ? styles.cardMuted : {}),
             }}
             onClick={() =>
               !button.disabled && handleShowContractDetails(contract?.tenderId)
@@ -291,6 +292,10 @@ const styles = {
       boxShadow: "0 6px 18px rgba(30, 49, 55, 0.18)",
       transform: "translateY(-2px)",
     },
+  },
+  // Nothing to open: already applied or booked out.
+  cardStatic: {
+    cursor: "default",
   },
   cardMuted: {
     opacity: 0.72,
