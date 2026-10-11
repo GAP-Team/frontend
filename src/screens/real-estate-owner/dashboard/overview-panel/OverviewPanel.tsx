@@ -16,13 +16,12 @@ import {
   BuildingAddress,
 } from "@/screens/real-estate-owner/buildings/building-overview/types";
 import { truncateLabel } from "@/utils/utils";
+import { DashboardComponentsProps } from "@/utils/Constants";
 import {
-  DashboardComponentsProps,
-  CHECK_DUE_SOON_DAYS,
-  MAINTENANCE_DUE_SOON_DAYS,
-} from "@/utils/Constants";
-import {
+  DeadlineStatus,
+  getFacilityCheckStatus,
   getFacilityCheckTimeRemaining,
+  getFacilityMaintenanceStatus,
   getFacilityMaintenanceTimeRemaining,
 } from "../../facilities/utils";
 import GButton from "@/components/inputs/button/GButton";
@@ -53,33 +52,24 @@ const OverviewPanel: React.FC<DashboardComponentsProps> = (): JSX.Element => {
     }
   }, [user?.id, dispatch]);
 
-  const facilitiesCheckDueSoon = facilities?.filter((facility: Facility) => {
-    return (
-      getFacilityCheckTimeRemaining(facility, "days") < CHECK_DUE_SOON_DAYS &&
-      getFacilityCheckTimeRemaining(facility, "days") > 0
-    );
-  });
+  const filterByStatus = (
+    getStatus: (facility: Facility) => DeadlineStatus | null,
+    status: DeadlineStatus
+  ): Facility[] =>
+    facilities?.filter((facility: Facility) => getStatus(facility) === status);
 
-  const facilitiesCheckExceedingDays = facilities?.filter(
-    (facility: Facility) => {
-      return getFacilityCheckTimeRemaining(facility, "days") <= 0;
-    }
+  const facilitiesCheckDueSoon = filterByStatus(getFacilityCheckStatus, "soon");
+  const facilitiesCheckExceedingDays = filterByStatus(
+    getFacilityCheckStatus,
+    "overdue"
   );
-
-  const facilitiesMaintenanceDueSoon = facilities?.filter(
-    (facility: Facility) => {
-      return (
-        getFacilityMaintenanceTimeRemaining(facility, "days") <
-          MAINTENANCE_DUE_SOON_DAYS &&
-        getFacilityMaintenanceTimeRemaining(facility, "days") > 0
-      );
-    }
+  const facilitiesMaintenanceDueSoon = filterByStatus(
+    getFacilityMaintenanceStatus,
+    "soon"
   );
-
-  const facilitiesMaintenanceExceedingDays = facilities?.filter(
-    (facility: Facility) => {
-      return getFacilityMaintenanceTimeRemaining(facility, "days") <= 0;
-    }
+  const facilitiesMaintenanceExceedingDays = filterByStatus(
+    getFacilityMaintenanceStatus,
+    "overdue"
   );
 
   const handleCardClick = (

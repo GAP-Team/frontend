@@ -4,14 +4,7 @@ import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import { Facility } from "@/screens/real-estate-owner/facilities/facility-overview/types";
 import { Tender } from "@/screens/real-estate-owner/tenders/tender-overview/types";
-import {
-  getFacilityCheckTimeRemaining,
-  getFacilityMaintenanceTimeRemaining,
-} from "@/screens/real-estate-owner/facilities/utils";
-import {
-  CHECK_DUE_SOON_DAYS,
-  MAINTENANCE_DUE_SOON_DAYS,
-} from "@/utils/Constants";
+import { getFacilityCheckStatus } from "@/screens/real-estate-owner/facilities/utils";
 import { TenderStatusEnum } from "@/utils/enums";
 
 interface BuildingStatTilesProps {
@@ -19,37 +12,9 @@ interface BuildingStatTilesProps {
   tenders: Tender[];
 }
 
-const isCheckOrMaintenanceOverdue = (facility: Facility): boolean => {
-  const monthsUntilCheck = getFacilityCheckTimeRemaining(facility, "months");
-  const daysUntilMaintenance = getFacilityMaintenanceTimeRemaining(
-    facility,
-    "days"
-  );
-  return monthsUntilCheck < 0 || daysUntilMaintenance < 0;
-};
-
-const isCheckDueSoon = (facility: Facility): boolean => {
-  const monthsUntilCheck = getFacilityCheckTimeRemaining(facility, "months");
-  return (
-    monthsUntilCheck > 0 &&
-    monthsUntilCheck < Math.floor(CHECK_DUE_SOON_DAYS / 30)
-  );
-};
-
-const isMaintenanceDueSoon = (facility: Facility): boolean => {
-  const daysUntilMaintenance = getFacilityMaintenanceTimeRemaining(
-    facility,
-    "days"
-  );
-  return (
-    daysUntilMaintenance > 0 && daysUntilMaintenance < MAINTENANCE_DUE_SOON_DAYS
-  );
-};
-
-const isFacilityDueForAttention = (facility: Facility): boolean =>
-  isCheckOrMaintenanceOverdue(facility) ||
-  isCheckDueSoon(facility) ||
-  isMaintenanceDueSoon(facility);
+// A check that is overdue or due soon needs attention.
+const isCheckDueForAttention = (facility: Facility): boolean =>
+  ["overdue", "soon"].includes(getFacilityCheckStatus(facility) ?? "");
 
 const BuildingStatTiles: React.FC<BuildingStatTilesProps> = ({
   facilities,
@@ -58,9 +23,7 @@ const BuildingStatTiles: React.FC<BuildingStatTilesProps> = ({
   const activeTendersCount = tenders.filter(
     (tender) => tender.status === TenderStatusEnum.ACTIVE
   ).length;
-  const dueForAttentionCount = facilities.filter(
-    isFacilityDueForAttention
-  ).length;
+  const dueForAttentionCount = facilities.filter(isCheckDueForAttention).length;
 
   const tiles = [
     { label: "Anlagen", value: facilities.length },

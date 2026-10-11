@@ -21,13 +21,11 @@ import { checkActiveTenderForFacility } from "@/lib/features/tenderSlice";
 import { showSnackbar } from "@/components/feedback/snackbar";
 import { deleteFacility } from "@/lib/features/facilitySlice";
 import {
+  getFacilityCheckStatus,
   getFacilityCheckTimeRemaining,
+  getFacilityMaintenanceStatus,
   getFacilityMaintenanceTimeRemaining,
 } from "../utils";
-import {
-  CHECK_DUE_SOON_DAYS,
-  MAINTENANCE_DUE_SOON_DAYS,
-} from "@/utils/Constants";
 import dayjs from "dayjs";
 import DetailItem from "@/components/data-display/DetailItem";
 import SummaryLayout from "@/components/layout/SummaryLayout";
@@ -53,30 +51,14 @@ const FacilityCard: React.FC<FacilityCardProps> = ({ facility }) => {
   const chipStyles = statusStyles[status] || statusStyles["aktiv"];
 
   const checkUrgency = (): string => {
-    const monthsUntilCheck = getFacilityCheckTimeRemaining(facility, "months");
-    const daysUntilMaintenance = getFacilityMaintenanceTimeRemaining(
-      facility,
-      "days"
-    );
-
-    // Check if either maintenance or check is overdue (negative values)
-    if (monthsUntilCheck < 0 || daysUntilMaintenance < 0) {
+    const statuses = [
+      getFacilityCheckStatus(facility),
+      getFacilityMaintenanceStatus(facility),
+    ];
+    if (statuses.includes("overdue")) {
       return "red";
     }
-    // Warning for upcoming check or maintenance
-    if (
-      monthsUntilCheck > 0 &&
-      monthsUntilCheck < Math.floor(CHECK_DUE_SOON_DAYS / 30)
-    ) {
-      return "orange";
-    }
-    if (
-      daysUntilMaintenance > 0 &&
-      daysUntilMaintenance < MAINTENANCE_DUE_SOON_DAYS
-    ) {
-      return "orange";
-    }
-    return "";
+    return statuses.includes("soon") ? "orange" : "";
   };
 
   const handleDeleteFacility = async (facilityId: string): Promise<void> => {
