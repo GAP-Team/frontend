@@ -15,19 +15,45 @@ const BOX_PADDING = 2;
 const GENERIC_PATTERNS: RegExp[] = [
   /[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/gi, // E-Mail
   /(?<=(?:tel(?:efon)?|mobil(?:e)?|handy|fax|phone|fon)\.?\s*:?\s*)\+?\d[\d\s/().-]{5,}\d/gi,
-  /(?:\+|\b00)\d{1,3}[\d\s/().-]{6,}\d/g,
+  /(?:\+|\b00)\d{1,3}(?:[\s/.-]*\(0\))?[\d\s/().-]{6,}\d/g,
+  /\bhttps?:\/\/[^\s<>"]+/gi, // Website
+  /\bwww\.[^\s<>"]+/gi,
+  /\b[a-z0-9-]+(?:\.[a-z0-9-]+)*\.(?:de|com|net|org|eu|info|biz|at|ch)\b\/?[^\s<>"]*/gi,
 ];
+
+const LEGAL_FORMS =
+  "(?:&\\s*Co\\.?\\s*)?(?:GmbH|UG(?:\\s*\\(haftungsbeschränkt\\))?|AG|KGaA|KG|OHG|GbR|e\\.?\\s?K\\.?|mbH|SE)(?![\\wäöüß])";
+const LEGAL_FORM_SUFFIX = new RegExp(`(?:\\s*,?\\s*${LEGAL_FORMS})+\\s*$`, "i");
 
 const escapeRegExp = (value: string): string =>
   value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
-// Tolerates spaces, slashes and dashes between digits and a missing
-// leading 0 / country code (the phone number is stored as a number).
+// Spaces match any whitespace, since a value can wrap across lines in a PDF.
+const flexibleSpaces = (escaped: string): string =>
+  escaped.replace(/\s+/g, "\\s+");
+
+// "Musterstraße", "Musterstrasse" and "Musterstr." are the same street.
+const streetVariants = (escaped: string): string =>
+  escaped.replace(/stra(?:ß|ss)e|str\\\./gi, "(?:straße|strasse|str\\.?)");
+
+// The company is matched with or without its legal form, and any legal form
+// that follows the name is removed with it ("Volker" / "Volker GmbH & Co. KG").
+const companyPattern = (name: string): RegExp => {
+  const base = name.replace(LEGAL_FORM_SUFFIX, "").trim() || name.trim();
+  return new RegExp(
+    `${flexibleSpaces(escapeRegExp(base))}(?:\\s*,?\\s*${LEGAL_FORMS})*`,
+    "gi"
+  );
+};
+
+// Tolerates spaces, slashes and dashes between digits, a "(0)" after the
+// country code, and a missing leading 0 / country code (the phone number is
+// stored as a number).
 const phonePattern = (phone: string): RegExp | null => {
   const digits = phone.replace(/\D/g, "").replace(/^(?:0049|49|0)/, "");
   if (digits.length < 6) return null;
   return new RegExp(
-    `(?:\\+49|0049|0)?[\\s/().-]*${digits.split("").join("[\\s/.-]?")}`,
+    `(?:(?:\\+|00)\\d{1,3}[\\s/.-]*(?:\\(0\\))?|0)?[\\s/().-]*${digits.split("").join("[\\s/.-]?")}`,
     "g"
   );
 };
@@ -39,7 +65,6 @@ export const buildRedactionPatterns = (user: RedactionSource): RegExp[] => {
     user.email,
     firstName && lastName ? `${firstName} ${lastName}` : undefined,
     firstName && lastName ? `${lastName}, ${firstName}` : undefined,
-    user.company?.name,
     address?.street && address?.houseNo
       ? `${address.street} ${address.houseNo}`
       : address?.street,
@@ -49,12 +74,24 @@ export const buildRedactionPatterns = (user: RedactionSource): RegExp[] => {
   ].filter((value): value is string => Boolean(value?.trim()));
 
   const specific = texts.map(
-    (value) => new RegExp(escapeRegExp(value.trim()), "gi")
+    (value) =>
+      new RegExp(
+        streetVariants(flexibleSpaces(escapeRegExp(value.trim()))),
+        "gi"
+      )
   );
+  const company = user.company?.name?.trim()
+    ? [companyPattern(user.company.name)]
+    : [];
   const phone = user.company?.phonenumber
     ? phonePattern(String(user.company.phonenumber))
     : null;
-  return [...GENERIC_PATTERNS, ...specific, ...(phone ? [phone] : [])];
+  return [
+    ...GENERIC_PATTERNS,
+    ...specific,
+    ...company,
+    ...(phone ? [phone] : []),
+  ];
 };
 
 interface Box {
