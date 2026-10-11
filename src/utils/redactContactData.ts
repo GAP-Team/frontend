@@ -14,9 +14,14 @@ const DESCENT_RATIO = 0.3;
 const BOX_PADDING = 2;
 
 // Contact data is detected from the document itself, because an offer does
-// not have to match the profile (letterhead, footer). Phone numbers are only
-// matched when labelled ("Tel.", "Mobil", ...) or written with an international
-// prefix, so dates and offer numbers survive; the label goes with the number.
+// not have to match the profile (letterhead, footer). Only ways to contact the
+// sender are removed. The company name, bank details (IBAN, BIC) and tax
+// identifiers (USt-IdNr, Steuernummer, Finanzamt) stay in the document.
+// Phone numbers are only matched when labelled ("Tel.", "Mobil", ...) or
+// written with an international prefix, so dates and offer numbers survive;
+// the label goes with the number.
+const CITY =
+  "[A-ZÄÖÜ][\\wäöüß-]*(?:\\s+(?:am|an der|im|bei|ob der)\\s+[A-ZÄÖÜ][\\wäöüß-]*)?";
 const GENERIC_PATTERNS: RegExp[] = [
   /[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/gi, // E-Mail
   /\b(?:tel(?:efon)?|mobil(?:e)?|handy|fax|phone|fon)\.?\s*:?\s*\+?[\d\s/().-]*\d/gi,
@@ -24,27 +29,30 @@ const GENERIC_PATTERNS: RegExp[] = [
   /\bhttps?:\/\/[^\s<>"]+/gi, // Website
   /\bwww\.[^\s<>"]+/gi,
   /\b[a-z0-9-]+(?:\.[a-z0-9-]+)*\.(?:de|com|net|org|eu|info|biz|at|ch)\b\/?[^\s<>"]*/gi,
-  // Sender line above the recipient: "Firma GmbH, Musterstr. 2, 12345 Stadt"
-  /[^\n,]*?\b(?:GmbH|mbH|UG|AG|KG|OHG|GbR|e\.?\s?K\.?)\s*,\s*[^,\n]*\d+\s?[a-z]?\s*,\s*\d{5}\s+[A-ZÄÖÜ][\wäöüß-]*(?:\s+(?:am|an der|im|bei|ob der)\s+[A-ZÄÖÜ][\wäöüß-]*)?/g,
-  // Bank and tax identifiers of the sender
-  /\bIBAN\s*:?\s*[A-Z]{2}\d{2}(?:\s?[A-Z0-9]{4}){2,7}(?:\s?[A-Z0-9]{1,4})?\b/gi,
-  /\b(?:BIC|SWIFT)\s*:?\s*[A-Z]{6}[A-Z0-9]{2}(?:[A-Z0-9]{3})?\b/gi,
-  /\b[A-Z]{2}\d{2}(?:\s?[A-Z0-9]{4}){3,7}(?:\s?[A-Z0-9]{1,4})?\b/g,
-  /\bUSt-?\s?Id\.?-?\s?Nr\.?\s*:?\s*[A-Z]{2}\s?\d{8,11}/gi,
-  /\b(?:Steuer(?:nummer|-Nr\.?)|St\.?-?Nr\.?)\s*:?\s*[\d/ ]{8,}\d/gi,
-  /\bFinanzamt\s+[A-ZÄÖÜ][\wäöüß-]*/g,
-  /\bHR[AB]\s*\d+(?:\s*[A-Z]{1,2})?/g,
+  // Address in the sender line above the recipient: only what follows the
+  // company ("Firma GmbH, Musterstr. 2, 12345 Stadt" -> "Musterstr. 2, 12345 Stadt").
+  new RegExp(
+    `(?<=\\b(?:GmbH|mbH|UG|AG|KG|OHG|GbR|e\\.?\\s?K\\.?)\\s*,\\s*)[^,\\n]*\\d+\\s?[a-z]?\\s*,\\s*\\d{5}\\s+${CITY}`,
+    "g"
+  ),
 ];
 
-const LEGAL_FORMS =
-  "(?:&\\s*Co\\.?\\s*)?(?:GmbH|UG(?:\\s*\\(haftungsbeschränkt\\))?|AG|KGaA|KG|OHG|GbR|e\\.?\\s?K\\.?|mbH|SE)(?![\\wäöüß])";
-// A legal form is a separate token: whitespace or a comma has to precede it,
-// so name endings like the "se" in "Reise" are never taken for one.
-const LEGAL_SEPARATOR = "(?:\\s*,\\s*|\\s+)";
-const LEGAL_FORM_SUFFIX = new RegExp(
-  `(?:${LEGAL_SEPARATOR}${LEGAL_FORMS})+\\s*$`,
-  "i"
-);
+// Street and ZIP + city without a known company in front of them. They are
+// only applied to the small print in the footer, because the recipient's
+// address in the body must stay.
+const STREET_SUFFIX =
+  "(?:stra(?:ß|ss)e|str\\.|weg|allee|platz|ring|promenade|gasse|ufer|damm|chaussee|markt|hof|park|steig|pfad|wall|kamp)";
+const FOOTER_ADDRESS_PATTERNS: RegExp[] = [
+  new RegExp(
+    `\\b[A-ZÄÖÜ][\\wäöüß-]*${STREET_SUFFIX}\\s*\\d+\\s?[a-z]?\\b`,
+    "gi"
+  ),
+  new RegExp(
+    `\\b(?:Am|An der|An den|Auf dem|Im|In der|Zum|Zur)\\s+[A-ZÄÖÜ][\\wäöüß-]*\\s+\\d+\\s?[a-z]?\\b`,
+    "g"
+  ),
+  new RegExp(`\\b\\d{5}\\s+${CITY}`, "g"),
+];
 
 const escapeRegExp = (value: string): string =>
   value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
@@ -56,16 +64,6 @@ const flexibleSpaces = (escaped: string): string =>
 // "Musterstraße", "Musterstrasse" and "Musterstr." are the same street.
 const streetVariants = (escaped: string): string =>
   escaped.replace(/stra(?:ß|ss)e|str\\\./gi, "(?:straße|strasse|str\\.?)");
-
-// The company is matched with or without its legal form, and any legal form
-// that follows the name is removed with it ("Volker" / "Volker GmbH & Co. KG").
-const companyPattern = (name: string): RegExp => {
-  const base = name.replace(LEGAL_FORM_SUFFIX, "").trim() || name.trim();
-  return new RegExp(
-    `(?<![\\wäöüß])${flexibleSpaces(escapeRegExp(base))}(?![\\wäöüß])(?:${LEGAL_SEPARATOR}${LEGAL_FORMS})*`,
-    "gi"
-  );
-};
 
 // Tolerates spaces, slashes and dashes between digits, a "(0)" after the
 // country code, and a missing leading 0 / country code (the phone number is
@@ -101,18 +99,10 @@ export const buildRedactionPatterns = (user: RedactionSource): RegExp[] => {
         "gi"
       )
   );
-  const company = user.company?.name?.trim()
-    ? [companyPattern(user.company.name)]
-    : [];
   const phone = user.company?.phonenumber
     ? phonePattern(String(user.company.phonenumber))
     : null;
-  return [
-    ...GENERIC_PATTERNS,
-    ...specific,
-    ...company,
-    ...(phone ? [phone] : []),
-  ];
+  return [...GENERIC_PATTERNS, ...specific, ...(phone ? [phone] : [])];
 };
 
 interface Box {
@@ -197,36 +187,24 @@ const collectBoxes = (
   );
 };
 
-// Small print in the bottom strip of a page is the letterhead footer (address,
-// phone, bank and tax data of the sender); page numbers are kept.
+// The bottom strip of a page is the letterhead footer. Only the sender's
+// address is removed there (street and ZIP + city, found by their shape);
+// everything else in it stays. Body text is never touched by this rule.
 const FOOTER_ZONE = 0.12;
-const FOOTER_FONT_RATIO = 0.85;
-const PAGE_NUMBER = /^(?:seite|page)?\s*\d+\s*(?:\/|von|of)\s*\d+$/i;
-
-const median = (values: number[]): number => {
-  const sorted = [...values].sort((a, b) => a - b);
-  return sorted[Math.floor(sorted.length / 2)] ?? 0;
-};
-
-const fontSize = (item: PdfTextItem): number =>
-  item.height || Math.abs(item.transform[3]);
 
 export const collectFooterBoxes = (
   items: PdfTextItem[],
   viewport: { convertToViewportPoint: (x: number, y: number) => number[] },
   page: { bottom: number; height: number }
 ): Box[] => {
-  const texts = items.filter((item) => item.str.trim());
-  const bodySize = median(texts.map(fontSize));
   const limit = page.bottom + page.height * FOOTER_ZONE;
-  return texts
-    .filter(
-      (item) =>
-        item.transform[5] < limit &&
-        fontSize(item) <= bodySize * FOOTER_FONT_RATIO &&
-        !PAGE_NUMBER.test(item.str.trim())
-    )
-    .map((item) => itemBox(item, viewport, [0, item.str.length]));
+  return items
+    .filter((item) => item.str.trim() && item.transform[5] < limit)
+    .flatMap((item) =>
+      findMatchRanges(item.str, FOOTER_ADDRESS_PATTERNS).map((range) =>
+        itemBox(item, viewport, range)
+      )
+    );
 };
 
 /**
