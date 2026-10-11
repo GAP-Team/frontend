@@ -3,25 +3,151 @@ import { Contract } from "./types";
 import Box from "@mui/material/Box";
 import Chip from "@mui/material/Chip";
 import Paper from "@mui/material/Paper";
-import { ROUTES } from "@/utils/routes";
-import { USER_ROLE } from "@/utils/enums";
-import { Typography } from "@mui/material";
+import Typography from "@mui/material/Typography";
 import { useRouter } from "next/navigation";
+import {
+  MdOutlineBuild,
+  MdOutlineCalendarToday,
+  MdOutlineLocalParking,
+  MdOutlinePersonOutline,
+  MdOutlinePlace,
+  MdOutlineShield,
+  MdOutlineTimer,
+} from "react-icons/md";
+import { ROUTES } from "@/utils/routes";
+import { TENDER_FORM, USER_ROLE, Urgency } from "@/utils/enums";
+import { formatDateRange } from "@/utils/utils";
 import { checkIsLoggedIn, getIsUserActivated } from "@/utils/auth";
 import { currentUser } from "@/lib/features/userSlice";
-import GButton from "@/components/inputs/button/GButton";
 import { useAppSelector, useAppDispatch } from "@/lib/hooks";
 import { showSnackbar } from "@/components/feedback/snackbar";
-import SectionTitle from "@/components/data-display/label/SectionTitle";
+import { MAX_APPLICATIONS_PER_CONTRACT } from "./constants";
 
 interface ContractCardProps {
   contracts: Contract[];
 }
 
-const getDeadline = (contract: Contract): string =>
-  contract?.toDate
-    ? `(bis ${new Date(contract.toDate).toLocaleDateString("de-DE")})`
-    : "";
+interface SpotsInfo {
+  title: string;
+  detail: string;
+  taken: number;
+  variant: "open" | "last" | "full";
+}
+
+const getSpots = (contract: Contract): SpotsInfo => {
+  const count = contract?.applicationCount ?? 0;
+  const free = Math.max(MAX_APPLICATIONS_PER_CONTRACT - count, 0);
+  const detail =
+    count === 0
+      ? "Noch keine Bewerbung"
+      : `${count} von ${MAX_APPLICATIONS_PER_CONTRACT} Bewerbungen`;
+  if (contract?.isBookedOut || free === 0) {
+    return {
+      title: "Ausgebucht",
+      detail: `${MAX_APPLICATIONS_PER_CONTRACT} von ${MAX_APPLICATIONS_PER_CONTRACT} Bewerbungen`,
+      taken: MAX_APPLICATIONS_PER_CONTRACT,
+      variant: "full",
+    };
+  }
+  if (free === 1) {
+    return {
+      title: "Noch 1 Platz frei",
+      detail,
+      taken: count,
+      variant: "last",
+    };
+  }
+  return {
+    title: `${free} Plätze frei`,
+    detail,
+    taken: count,
+    variant: "open",
+  };
+};
+
+const FactRow: React.FC<{
+  icon: React.ReactNode;
+  value: string;
+  extra?: string;
+}> = ({ icon, value, extra }) => (
+  <Box sx={styles.fact}>
+    <Box sx={styles.factIcon}>{icon}</Box>
+    <Typography component="span" sx={styles.factValue}>
+      {value}
+    </Typography>
+    {extra && (
+      <Typography component="span" sx={styles.factExtra}>
+        {extra}
+      </Typography>
+    )}
+  </Box>
+);
+
+const Spots: React.FC<{ contract: Contract }> = ({ contract }) => {
+  const spots = getSpots(contract);
+  return (
+    <Box sx={{ ...styles.spots, ...spotsVariants[spots.variant].box }}>
+      <Box sx={styles.dots}>
+        {Array.from({ length: MAX_APPLICATIONS_PER_CONTRACT }, (_, index) => (
+          <Box
+            key={index}
+            sx={{
+              ...styles.dot,
+              ...(index < spots.taken ? spotsVariants[spots.variant].dot : {}),
+            }}
+          />
+        ))}
+      </Box>
+      <Box>
+        <Typography sx={styles.spotsTitle}>{spots.title}</Typography>
+        <Typography sx={styles.spotsDetail}>{spots.detail}</Typography>
+      </Box>
+    </Box>
+  );
+};
+
+const Requirements: React.FC<{ contract: Contract }> = ({ contract }) => (
+  <Box sx={styles.requirements}>
+    {contract?.safetyWorkRequired && (
+      <Chip
+        icon={<MdOutlineShield />}
+        label="Sicherheitsunterweisung"
+        size="small"
+        variant="outlined"
+        sx={styles.requirement}
+      />
+    )}
+    {contract?.freeParkingAvailable && (
+      <Chip
+        icon={<MdOutlineLocalParking />}
+        label="Parkplatz"
+        size="small"
+        variant="outlined"
+        sx={styles.requirement}
+      />
+    )}
+  </Box>
+);
+
+const getButton = (
+  contract: Contract
+): { label: string; sx: object; disabled: boolean } => {
+  if (contract?.isBookedOut) {
+    return {
+      label: "Keine Bewerbung mehr möglich",
+      sx: styles.buttonOff,
+      disabled: true,
+    };
+  }
+  if (contract?.hasApplied) {
+    return {
+      label: "✓ Bereits beworben",
+      sx: styles.buttonDone,
+      disabled: false,
+    };
+  }
+  return { label: "Details ansehen", sx: styles.button, disabled: false };
+};
 
 const ContractCard = ({ contracts }: ContractCardProps): JSX.Element => {
   const router = useRouter();
@@ -59,78 +185,75 @@ const ContractCard = ({ contracts }: ContractCardProps): JSX.Element => {
 
   return (
     <>
-      {contracts?.map((contract, index) => {
+      {contracts?.map((contract) => {
+        const button = getButton(contract);
+        const isCraftsman = contract?.tenderForm === TENDER_FORM.CRAFTSMAN;
         return (
           <Paper
-            sx={styles.card}
-            elevation={4}
-            style={styles.innerContainer}
-            key={index}
+            key={contract?.tenderId}
+            elevation={2}
+            sx={{
+              ...styles.card,
+              ...(button.disabled ? styles.cardMuted : styles.cardClickable),
+            }}
+            onClick={() =>
+              !button.disabled && handleShowContractDetails(contract?.tenderId)
+            }
           >
-            <Box sx={styles.header}>
-              <Chip label={contract?.tenderType} sx={styles.cardTypeTitle} />
-            </Box>
-            <Box sx={styles.location}>
-              {contract?.isBookedOut ? (
-                <Box sx={styles.bookedOut}>
-                  <Chip
-                    label="Ausgebucht"
-                    size="small"
-                    sx={styles.bookedOutChip}
-                  />
-                  <SectionTitle
-                    sx={styles.timeSection}
-                    text={getDeadline(contract)}
-                  />
-                </Box>
-              ) : (
-                <SectionTitle
-                  sx={styles.timeSection}
-                  text={`Angebote: ${contract?.applicationCount ?? 0} ${getDeadline(contract)}`}
+            <Box sx={styles.body}>
+              <Box sx={styles.header}>
+                <Chip
+                  label={contract?.tenderType}
+                  size="small"
+                  sx={styles.kind}
                 />
-              )}
-            </Box>
-            <Box sx={styles.content}>
-              <Typography
-                variant="h6"
-                sx={{ ...styles.address, ...styles.clamp, WebkitLineClamp: 2 }}
-              >
-                {`${contract?.city}, ${contract?.state}`}
-              </Typography>
-              <Typography
-                variant="body2"
-                sx={{ ...styles.title, ...styles.clamp, WebkitLineClamp: 2 }}
-              >
+                {contract?.urgency === Urgency.URGENT && (
+                  <Chip
+                    icon={<MdOutlineTimer color="inherit" />}
+                    label="Dringend"
+                    size="small"
+                    sx={styles.urgent}
+                  />
+                )}
+              </Box>
+
+              <Typography sx={styles.title}>
                 {contract?.facilityType}
               </Typography>
-              <Typography
-                variant="body2"
-                sx={{
-                  pl: 2,
-                  marginBottom: "1.5rem",
-                  ...styles.clamp,
-                  WebkitLineClamp: 2,
-                }}
-              >
-                {`--> ${contract?.subcategory}`}
-              </Typography>
-              <Typography
-                variant="body2"
-                sx={{
-                  ...styles.bottomTitle,
-                  ...styles.clamp,
-                  WebkitLineClamp: 2,
-                }}
-              >
-                {contract?.urgency}
+              <Typography sx={styles.subtitle}>
+                {contract?.subcategory}
               </Typography>
 
-              <GButton
-                style={styles.button}
-                onClick={() => handleShowContractDetails(contract?.tenderId)}
-              >
-                Mehr Anzeigen
-              </GButton>
+              <Box sx={styles.facts}>
+                <FactRow
+                  icon={<MdOutlinePlace size="1rem" />}
+                  value={contract?.city}
+                  extra={contract?.state}
+                />
+                <FactRow
+                  icon={<MdOutlineCalendarToday size="1rem" />}
+                  value={formatDateRange(contract?.fromDate, contract?.toDate)}
+                />
+                <FactRow
+                  icon={
+                    isCraftsman ? (
+                      <MdOutlineBuild size="1rem" />
+                    ) : (
+                      <MdOutlinePersonOutline size="1rem" />
+                    )
+                  }
+                  value={isCraftsman ? "Handwerker" : "Sachverständige"}
+                />
+              </Box>
+
+              <Spots contract={contract} />
+              <Requirements contract={contract} />
+            </Box>
+
+            <Box sx={styles.footer}>
+              <Box sx={{ ...styles.buttonBase, ...button.sx }}>
+                {button.label}
+              </Box>
             </Box>
           </Paper>
         );
@@ -141,111 +264,144 @@ const ContractCard = ({ contracts }: ContractCardProps): JSX.Element => {
 
 export default ContractCard;
 
+const spotsVariants = {
+  open: { box: {}, dot: { bgcolor: "#1478B4", borderColor: "#1478B4" } },
+  last: {
+    box: { bgcolor: "#FFF1C2" },
+    dot: { bgcolor: "#B98300", borderColor: "#B98300" },
+  },
+  full: {
+    box: { bgcolor: "#ECEFF0" },
+    dot: { bgcolor: "#8D999C", borderColor: "#8D999C" },
+  },
+};
+
 const styles = {
-  innerContainer: {
-    cursor: "pointer",
-  },
   card: {
-    p: "1.25rem",
-    borderRadius: "0.5rem",
-    width: "100%",
-    height: "25rem",
     display: "flex",
     flexDirection: "column",
+    height: "100%",
+    borderRadius: "0.75rem",
     overflow: "hidden",
+    transition: "box-shadow 0.15s, transform 0.15s",
+  },
+  cardClickable: {
     cursor: "pointer",
+    "&:hover": {
+      boxShadow: "0 6px 18px rgba(30, 49, 55, 0.18)",
+      transform: "translateY(-2px)",
+    },
   },
-  content: {
-    display: "flex",
-    flexDirection: "column",
-    flexGrow: 1,
-    minHeight: 0,
+  cardMuted: {
+    opacity: 0.72,
   },
-  clamp: {
-    display: "-webkit-box",
-    WebkitBoxOrient: "vertical",
-    overflow: "hidden",
-    wordBreak: "break-word",
-  },
-  cardTypeTitle: {
-    background: "#96E9CB",
-    marginBottom: "0.8rem",
-  },
-  bookedOut: {
-    display: "flex",
-    alignItems: "center",
-    gap: "0.5rem",
-  },
-  bookedOutChip: {
-    background: "#ECEFF0",
-    color: "#5B6B70",
-    fontWeight: 600,
-  },
-  timeSection: {
-    py: "0.75rem",
-    fontWeight: 400,
-    marginBottom: "0.6rem",
+  body: {
+    p: "1rem 1rem 0.75rem",
   },
   header: {
     display: "flex",
-    justifyContent: "space-between",
     alignItems: "center",
+    gap: "0.5rem",
+    minHeight: "1.5rem",
   },
-  location: {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
+  kind: {
+    bgcolor: "#E8F1F3",
+    color: "#1E3137",
+    fontWeight: 600,
   },
-  urgentIcon: {
-    marginLeft: "5rem",
-    color: "orange",
-  },
-  chip: {
-    bgcolor: "purple",
-    color: "white",
-  },
-  address: {
-    pb: "0.5rem",
-    color: "#22A7F1",
-    fontWeight: "600",
-    fontSize: "1.2rem",
-    lineHeight: "1.5rem",
-    marginBottom: "1.7rem",
-  },
-  tags: {
-    display: "flex",
-    alignItems: "center",
-    flexWrap: "wrap",
-  },
-  tagChip: {
-    mr: 0.5,
-    mb: 0.5,
-  },
-  divider: {
-    my: "0.75rem",
+  urgent: {
+    ml: "auto",
+    bgcolor: "#FFE9D6",
+    color: "#B4540A",
+    fontWeight: 600,
+    "& .MuiChip-icon": { color: "inherit" },
   },
   title: {
+    mt: "0.75rem",
+    fontSize: "1.0625rem",
+    fontWeight: 700,
+    lineHeight: 1.25,
+  },
+  subtitle: {
+    fontSize: "0.78rem",
+    lineHeight: 1.3,
+    color: "#5B6B70",
+  },
+  facts: {
+    mt: "0.875rem",
+    display: "grid",
+    gap: "0.5625rem",
+  },
+  fact: {
     display: "flex",
     alignItems: "center",
-    fontSize: "1.2rem",
-    fontWeight: "600",
-    lineHeight: "1rem",
-    marginBottom: "0.8rem",
-    mt: 0.5,
-    "& > svg": {
-      mr: 0.5,
-    },
+    gap: "0.625rem",
   },
-  bottomTitle: {
-    pb: "0.5rem",
-    color: "#7a7575",
-    fontSize: "1.1rem",
-    lineHeight: "1.5rem",
-    marginBottom: "1rem",
+  factIcon: {
+    display: "flex",
+    color: "#1478B4",
   },
-  button: {
-    marginLeft: 0,
-    width: "100%",
-    marginTop: "auto",
+  factValue: {
+    fontSize: "0.875rem",
+    fontWeight: 600,
   },
+  factExtra: {
+    fontSize: "0.78rem",
+    color: "#5B6B70",
+  },
+  spots: {
+    mt: "0.875rem",
+    display: "flex",
+    alignItems: "center",
+    gap: "0.625rem",
+    p: "0.625rem 0.75rem",
+    borderRadius: "0.5rem",
+    bgcolor: "#F6F8F9",
+  },
+  dots: {
+    display: "flex",
+    gap: "0.3125rem",
+  },
+  dot: {
+    width: "0.75rem",
+    height: "0.75rem",
+    borderRadius: "50%",
+    border: "2px solid #B8C2C6",
+  },
+  spotsTitle: {
+    fontSize: "0.8125rem",
+    fontWeight: 700,
+    lineHeight: 1.3,
+  },
+  spotsDetail: {
+    fontSize: "0.78rem",
+    lineHeight: 1.3,
+    color: "#5B6B70",
+  },
+  requirements: {
+    display: "flex",
+    flexWrap: "wrap",
+    gap: "0.375rem",
+    mt: "0.75rem",
+    minHeight: "1.5rem",
+  },
+  requirement: {
+    color: "#5B6B70",
+    borderColor: "#E2E7E9",
+    "& .MuiChip-icon": { color: "#8D999C" },
+  },
+  footer: {
+    mt: "auto",
+    p: "0 1rem 1rem",
+  },
+  buttonBase: {
+    textAlign: "center",
+    p: "0.625rem",
+    borderRadius: "0.5rem",
+    fontWeight: 600,
+    fontSize: "0.875rem",
+  },
+  button: { bgcolor: "#22A7F1", color: "#fff" },
+  buttonDone: { bgcolor: "#E4F6EE", color: "#056643" },
+  buttonOff: { bgcolor: "#ECEFF0", color: "#8D999C" },
 };
