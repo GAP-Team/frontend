@@ -84,6 +84,9 @@ const contractSlice = createSlice({
     builder
       .addCase(fetchContractById.pending, (state) => {
         state.loading = true;
+        // The store is persisted: drop the previously viewed contract so its
+        // state (hasApplied, isBookedOut, ...) never shows on another one.
+        state.currentContract = {} as Contract;
       })
       .addCase(fetchContractById.fulfilled, (state, action) => {
         state.currentContract = action.payload;
@@ -91,6 +94,7 @@ const contractSlice = createSlice({
       })
       .addCase(fetchContractById.rejected, (state, action) => {
         state.error = action.error.message || "Failed to fetch contract by ID";
+        state.currentContract = {} as Contract;
         state.loading = false;
       });
     builder
