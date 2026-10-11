@@ -8,6 +8,7 @@ import Link from "next/link";
 import Grid from "@mui/material/Grid";
 import { ROUTES } from "@/utils/routes";
 import { useReturnTo } from "@/hooks/useReturnTo";
+import { usePreselection } from "@/hooks/usePreselection";
 import { CgClose } from "react-icons/cg";
 import { IconButton } from "@mui/material";
 import FacilityCheck from "./FacilityCheck";
@@ -50,6 +51,7 @@ const FacilityForm: React.FC<NewFacilityProps> = ({
 }): JSX.Element => {
   const router = useRouter();
   const returnTo = useReturnTo();
+  const preselected = usePreselection();
   const exitUrl = returnTo ?? ROUTES.REAL_ESTATE.BUILDING.BUILDINGS;
   const dispatch = useAppDispatch();
   const user = useAppSelector(currentUser);
@@ -82,7 +84,7 @@ const FacilityForm: React.FC<NewFacilityProps> = ({
       facility?.check?.publishAutomaticallyInMonth || DEFAULT_PUBLISH_MONTHS,
     isReminderEnabled: false,
     emailNotificationList: facility?.check?.emailNotificationList || ["", ""],
-    selectedBuilding: facility?.buildingId || "",
+    selectedBuilding: facility?.buildingId || preselected.buildingId,
     documentChoice: facility?.documentUploadType || DocumentChoice.UPLOAD_NOW,
     checkReports:
       facility?.documents?.filter(
