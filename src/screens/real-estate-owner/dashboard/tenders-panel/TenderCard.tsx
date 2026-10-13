@@ -1,5 +1,4 @@
 import React from "react";
-import dayjs from "dayjs";
 import Box from "@mui/material/Box";
 import Chip from "@mui/material/Chip";
 import Paper from "@mui/material/Paper";
@@ -22,7 +21,11 @@ import { deleteTender } from "@/lib/features/tenderSlice";
 import { BuildingAddress } from "@/screens/real-estate-owner/buildings/building-overview/types";
 import { Tender } from "@/screens/real-estate-owner/tenders/tender-overview/types";
 import { Facility } from "@/screens/real-estate-owner/facilities/facility-overview/types";
-import { getTenderStatusStyle, translateTenderForm } from "@/utils/utils";
+import {
+  formatDateRange,
+  getTenderStatusStyle,
+  translateTenderForm,
+} from "@/utils/utils";
 
 const NEUTRAL_COLOR = "#5B6B70";
 
@@ -39,14 +42,6 @@ interface PathStepProps {
   detail?: string;
   isLast?: boolean;
 }
-
-// "01.11. – 30.11.2026"; the year is only repeated when the dates differ in it.
-const formatDateRange = (from: Date, to: Date): string => {
-  const start = dayjs(from);
-  const end = dayjs(to);
-  const startFormat = start.year() === end.year() ? "DD.MM." : "DD.MM.YYYY";
-  return `${start.format(startFormat)} – ${end.format("DD.MM.YYYY")}`;
-};
 
 const formatApplications = (count: number): string => {
   if (count === 0) return "Keine Bewerbungen";

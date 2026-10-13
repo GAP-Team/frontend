@@ -15,9 +15,10 @@ import {
 import { useAppSelector } from "@/lib/hooks";
 import { Tender } from "@/screens/real-estate-owner/tenders/tender-overview/types";
 import { TenderStatusEnum } from "@/utils/enums";
-import { withReturnTo } from "@/utils/returnTo";
+import { withPreselection, withReturnTo } from "@/utils/returnTo";
 
 interface FacilityTabPanelProps {
+  buildingId: string;
   facilities: Facility[];
   returnTo: string;
   onShowTenders: (facility: Facility) => void;
@@ -25,6 +26,7 @@ interface FacilityTabPanelProps {
 }
 
 const FacilityTabPanel: React.FC<FacilityTabPanelProps> = ({
+  buildingId,
   facilities,
   returnTo,
   onShowTenders,
@@ -55,7 +57,9 @@ const FacilityTabPanel: React.FC<FacilityTabPanelProps> = ({
         <Typography variant="bodylsb">Anlagen dieses Gebäudes</Typography>
         <GButton
           href={withReturnTo(
-            ROUTES.REAL_ESTATE.FACILITY.ADD_FACILITY,
+            withPreselection(ROUTES.REAL_ESTATE.FACILITY.ADD_FACILITY, {
+              buildingId,
+            }),
             returnTo
           )}
         >
