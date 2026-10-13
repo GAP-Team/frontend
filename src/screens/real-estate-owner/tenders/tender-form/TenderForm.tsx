@@ -50,6 +50,7 @@ import { DEFAULT_PUBLISH_MONTHS } from "@/utils/Constants";
 import logger from "@/utils/Logger";
 import { ROUTES } from "@/utils/routes";
 import { useReturnTo } from "@/hooks/useReturnTo";
+import { usePreselection } from "@/hooks/usePreselection";
 import utc from "dayjs/plugin/utc";
 dayjs.extend(utc);
 
@@ -63,6 +64,7 @@ interface CreatedBuildingFacility {
 const TenderForm: React.FC<NewTenderProps> = ({ id }): JSX.Element => {
   const router = useRouter();
   const returnTo = useReturnTo();
+  const preselected = usePreselection();
   const exitUrl = returnTo ?? ROUTES.REAL_ESTATE.BUILDING.BUILDINGS;
   const dispatch = useAppDispatch();
   const user = useAppSelector(currentUser);
@@ -93,20 +95,37 @@ const TenderForm: React.FC<NewTenderProps> = ({ id }): JSX.Element => {
     setIsSubmitted(false);
   }, []);
 
+  const facilities: Facility[] = useAppSelector(
+    (state) => state.facility.facilities
+  );
+  // Only for a new tender: the object / facility the form was opened for.
+  // The facility has to belong to that object, otherwise it is ignored.
+  const preselectedBuilding = tender
+    ? undefined
+    : existingBuildings?.find((item) => item.id === preselected.buildingId);
+  const preselectedFacility = preselectedBuilding
+    ? facilities?.find(
+        (item) =>
+          item.id === preselected.facilityId &&
+          item.buildingId === preselectedBuilding.id
+      )
+    : undefined;
+
   const getInitialFormValues = (): TenderFormValues => ({
     clientName: tender?.clientName || "",
     tenderForm: tender?.tenderForm || TENDER_FORM.CRAFTSMAN,
     tenderType: tender?.tenderType || "",
-    buildingName: tender?.building?.name || "",
-    facilityName: tender?.facility?.name || "",
+    buildingName:
+      tender?.building?.name || preselectedBuilding?.buildingName || "",
+    facilityName: tender?.facility?.name || preselectedFacility?.name || "",
     detailDescription: tender?.detailDescription || "",
     urgency: tender?.urgency || "Nicht Dringend",
     fromDate: tender?.fromDate ? dayjs(tender?.fromDate) : null,
     toDate: tender?.toDate ? dayjs(tender?.toDate) : null,
     safetyWorkRequired: tender?.safetyWorkRequired || false,
     freeParkingAvailable: tender?.freeParkingAvailable || false,
-    buildingId: tender?.building?.id || "",
-    facilityId: tender?.facility?.id || "",
+    buildingId: tender?.building?.id || preselectedBuilding?.id || "",
+    facilityId: tender?.facility?.id || preselectedFacility?.id || "",
     objectFacilityMode: ObjectFacilityMode.EXISTING,
     newBuilding: {
       name: "",
