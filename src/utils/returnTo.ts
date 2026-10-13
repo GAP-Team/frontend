@@ -12,3 +12,24 @@ export const withReturnTo = (url: string, returnTo?: string | null): string => {
   const separator = url.includes("?") ? "&" : "?";
   return `${url}${separator}${RETURN_TO_PARAM}=${encodeURIComponent(returnTo)}`;
 };
+
+export const BUILDING_PARAM = "buildingId";
+export const FACILITY_PARAM = "facilityId";
+
+export interface Preselection {
+  buildingId?: string;
+  facilityId?: string;
+}
+
+// The add forms open with this object / facility already chosen.
+export const withPreselection = (
+  url: string,
+  { buildingId, facilityId }: Preselection
+): string => {
+  const params = new URLSearchParams();
+  if (buildingId) params.set(BUILDING_PARAM, buildingId);
+  if (facilityId) params.set(FACILITY_PARAM, facilityId);
+  const query = params.toString();
+  if (!query) return url;
+  return `${url}${url.includes("?") ? "&" : "?"}${query}`;
+};

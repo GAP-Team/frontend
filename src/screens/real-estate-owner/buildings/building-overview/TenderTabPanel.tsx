@@ -13,12 +13,14 @@ import {
   applyTenderView,
   getFilterCounts,
 } from "./tenderFilters";
-import { withReturnTo } from "@/utils/returnTo";
+import { withPreselection, withReturnTo } from "@/utils/returnTo";
 
 interface TenderTabPanelProps {
+  buildingId: string;
   tenders: Tender[];
   returnTo: string;
   // When set, the list is filtered to this facility and can be cleared.
+  facilityId?: string;
   facilityName?: string;
   onClearFilter: () => void;
 }
@@ -36,8 +38,10 @@ const getEmptyMessage = (
 };
 
 const TenderTabPanel: React.FC<TenderTabPanelProps> = ({
+  buildingId,
   tenders,
   returnTo,
+  facilityId,
   facilityName,
   onClearFilter,
 }) => {
@@ -66,7 +70,13 @@ const TenderTabPanel: React.FC<TenderTabPanelProps> = ({
           )}
         </Box>
         <GButton
-          href={withReturnTo(ROUTES.REAL_ESTATE.TENDER.ADD_TENDER, returnTo)}
+          href={withReturnTo(
+            withPreselection(ROUTES.REAL_ESTATE.TENDER.ADD_TENDER, {
+              buildingId,
+              facilityId,
+            }),
+            returnTo
+          )}
         >
           Ausschreibung hinzufügen
         </GButton>

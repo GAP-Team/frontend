@@ -125,6 +125,7 @@ const BuildingDetailWorkspace: React.FC<BuildingDetailWorkspaceProps> = ({
 
       {activeTab === 0 && (
         <FacilityTabPanel
+          buildingId={building.id}
           facilities={facilities}
           returnTo={returnTo}
           onShowTenders={handleShowTenders}
@@ -133,8 +134,10 @@ const BuildingDetailWorkspace: React.FC<BuildingDetailWorkspaceProps> = ({
       )}
       {activeTab === 1 && (
         <TenderTabPanel
+          buildingId={building.id}
           tenders={tenders}
           returnTo={returnTo}
+          facilityId={facilityFilter?.id}
           facilityName={facilityFilter?.name}
           onClearFilter={() => setFacilityFilter(null)}
         />
