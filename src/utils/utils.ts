@@ -1,4 +1,5 @@
 import Cookies from "js-cookie";
+import dayjs from "dayjs";
 import { TENDER_FORM } from "./enums";
 
 export const getTenderStatusStyle: {
@@ -74,4 +75,16 @@ export const translateTenderForm = (tenderForm: string): string => {
       ? "Handwerker"
       : "Sachverständigen"
     : "Nicht_Vorhanden";
+};
+
+// "01.11. – 30.11.2026"; the year is only repeated when the dates differ in it.
+export const formatDateRange = (
+  from?: Date | string,
+  to?: Date | string
+): string => {
+  if (!from || !to) return "";
+  const start = dayjs(from);
+  const end = dayjs(to);
+  const startFormat = start.year() === end.year() ? "DD.MM." : "DD.MM.YYYY";
+  return `${start.format(startFormat)} – ${end.format("DD.MM.YYYY")}`;
 };
