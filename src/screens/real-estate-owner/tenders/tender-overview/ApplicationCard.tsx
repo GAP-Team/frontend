@@ -19,6 +19,7 @@ interface ApplicationCardProps {
   price: string;
   distance?: string;
   workDates?: string;
+  ownerDates?: string;
   deadline?: string;
   specialServices: number;
   employees?: string;
@@ -34,6 +35,7 @@ const ApplicationCard: React.FC<ApplicationCardProps> = ({
   price,
   distance,
   workDates,
+  ownerDates,
   deadline,
   specialServices,
   employees,
@@ -43,6 +45,14 @@ const ApplicationCard: React.FC<ApplicationCardProps> = ({
   const router = useRouter();
   const onClickHandler = (): void => {
     router.push(ROUTES.REAL_ESTATE.TENDER.OFFER_DETAILS(tenderID, offerID));
+  };
+
+  // Tells apart who the date comes from: the provider's suggestion wins, then
+  // the owner's desired period, otherwise the owner still has to suggest one.
+  const getDateLabel = (): string => {
+    if (workDates) return `Anbieter: ${workDates}`;
+    if (ownerDates) return `Wunschtermin: ${ownerDates}`;
+    return "Termin vom Auftraggeber vorzuschlagen";
   };
 
   if (loading) {
@@ -100,7 +110,7 @@ const ApplicationCard: React.FC<ApplicationCardProps> = ({
           <Box sx={styles.priceContainer}>
             <Box sx={styles.priceAndDistance}>
               <Typography variant="bodylsb">{price}</Typography>
-              {[distance, workDates].map(
+              {[distance, getDateLabel()].map(
                 (value) =>
                   value && (
                     <React.Fragment key={value}>
