@@ -1,5 +1,4 @@
 import React from "react";
-import dayjs from "dayjs";
 import Box from "@mui/material/Box";
 import Chip from "@mui/material/Chip";
 import Paper from "@mui/material/Paper";
@@ -10,7 +9,11 @@ import { useAppDispatch } from "@/lib/hooks";
 import { Tender } from "@/screens/real-estate-owner/tenders/tender-overview/types";
 import { deleteTender } from "@/lib/features/tenderSlice";
 import { showSnackbar } from "@/components/feedback/snackbar";
-import { getTenderStatusStyle, translateTenderForm } from "@/utils/utils";
+import {
+  formatDateRange,
+  getTenderStatusStyle,
+  translateTenderForm,
+} from "@/utils/utils";
 import ActionMenu from "@/components/navigation/ActionMenu";
 import { withReturnTo } from "@/utils/returnTo";
 import { countApplications } from "./tenderFilters";
@@ -25,6 +28,7 @@ const TenderRow: React.FC<TenderRowProps> = ({ tender, returnTo }) => {
   const dispatch = useAppDispatch();
   const statusStyle = getTenderStatusStyle[tender.status];
   const applicationCount = countApplications(tender);
+  const dateRange = formatDateRange(tender.fromDate, tender.toDate);
 
   const handleClick = (): void => {
     router.push(
@@ -73,9 +77,11 @@ const TenderRow: React.FC<TenderRowProps> = ({ tender, returnTo }) => {
           />
         </Box>
         <Typography variant="bodylsb">{tender.facility?.name}</Typography>
-        <Typography variant="bodymr" sx={styles.dateRange}>
-          {`${dayjs(tender.fromDate).format("DD.MM.YYYY")} - ${dayjs(tender.toDate).format("DD.MM.YYYY")}`}
-        </Typography>
+        {dateRange && (
+          <Typography variant="bodymr" sx={styles.dateRange}>
+            {dateRange}
+          </Typography>
+        )}
       </Box>
       <Chip
         label={
