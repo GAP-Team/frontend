@@ -8,26 +8,92 @@ export interface RedactionSource {
 }
 
 const RENDER_SCALE = 2;
+const LINE_TOLERANCE = 2;
+// Letters like g, p, ü reach below the baseline; the box covers them too.
+const DESCENT_RATIO = 0.3;
 const BOX_PADDING = 2;
 
+// Contact data is detected from the document itself, because an offer does
+// not have to match the profile (letterhead, footer). Only ways to contact the
+// sender are removed. The company name, bank details (IBAN, BIC) and tax
+// identifiers (USt-IdNr, Steuernummer, Finanzamt) stay in the document.
 // Phone numbers are only matched when labelled ("Tel.", "Mobil", ...) or
-// written with an international prefix, so dates and offer numbers survive.
+// written with an international prefix, so dates and offer numbers survive;
+// the label goes with the number.
+const CITY =
+  "[A-ZÄÖÜ][\\wäöüß-]*(?:[^\\S\\n]+(?:am|an der|im|bei|ob der|in der|i\\.\\s?d\\.)[^\\S\\n]+[A-ZÄÖÜ][\\wäöüß-]*)?(?:[^\\S\\n]+[-–][^\\S\\n]+[A-ZÄÖÜ][\\wäöüß-]*)?";
+// ZIP + city stay on one line, so the number in front of a line like
+// "USt.-ID" is not mistaken for a ZIP code.
+const ZIP = "(?:D-)?\\d{5}[^\\S\\n]+";
+// A country written after the address goes with it.
+const COUNTRY =
+  "(?:Deutschland|Germany|Allemagne|Alemania|Österreich|Austria|Schweiz|Switzerland)";
+const COUNTRY_SUFFIX = `(?:[\\s,.-]*\\b${COUNTRY}\\b)?`;
+// Labels in front of a contact value are removed together with it.
+const EMAIL_LABEL = "(?:\\b(?:e-?\\s?mail|mail)\\.?\\s*:?\\s*)?";
+const WEBSITE_LABEL =
+  "(?:\\b(?:website|web\\s?site|webseite|homepage|internet|web|url)\\.?\\s*:?\\s*)?";
 const GENERIC_PATTERNS: RegExp[] = [
-  /[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/gi, // E-Mail
-  /(?<=(?:tel(?:efon)?|mobil(?:e)?|handy|fax|phone|fon)\.?\s*:?\s*)\+?\d[\d\s/().-]{5,}\d/gi,
-  /(?:\+|\b00)\d{1,3}[\d\s/().-]{6,}\d/g,
+  new RegExp(`${EMAIL_LABEL}[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,}`, "gi"), // E-Mail
+  /\b(?:tel(?:efon|efax)?|mobil(?:e)?|handy|fax|phone|fon|büro|zentrale|durchwahl)(?:\s*(?:nummer|number|no|nr))?\.?\s*:?\s*\+?[\d \t/().-]*\d/gi,
+  /(?:\+|(?<!\d\s?)\b00)\d{1,3}(?:[\s/.-]*\(0\))?[\d\s/().-]{6,}\d/g,
+  // Single-letter labels ("T", "F", "M", "W") in front of a contact value.
+  /(?<![\w.-])[TFMW]:?[^\S\n]+(?=\+\d|[A-Za-z0-9._%+-]+@|www\.|https?:)/g,
+  new RegExp(`${WEBSITE_LABEL}\\bhttps?:\\/\\/[^\\s<>"]+`, "gi"), // Website
+  new RegExp(`${WEBSITE_LABEL}\\bwww\\.[^\\s<>"]+`, "gi"),
+  new RegExp(
+    `${WEBSITE_LABEL}\\b[a-z0-9-]+(?:\\.[a-z0-9-]+)*\\.(?:de|com|net|org|eu|info|biz|at|ch)\\b\\/?[^\\s<>"]*`,
+    "gi"
+  ),
+  // Address in the sender line above the recipient: only what follows the
+  // company ("Firma GmbH, Musterstr. 2, 12345 Stadt" -> "Musterstr. 2, 12345 Stadt").
+  new RegExp(
+    `(?<=\\b(?:GmbH|mbH|UG|AG|KG|OHG|GbR|e\\.?\\s?K\\.?)\\s*,\\s*)[^,\\n]*\\d+\\s?[a-z]?\\s*,\\s*${ZIP}${CITY}${COUNTRY_SUFFIX}`,
+    "g"
+  ),
+];
+
+// Street and ZIP + city without a known company in front of them. They are
+// only applied to the small print in the footer, because the recipient's
+// address in the body must stay.
+const STREET_SUFFIX =
+  "(?:stra(?:ß|ss)e|str\\.|weg|allee|platz|ring|promenade|gasse|ufer|damm|chaussee|markt|hof|park|steig|pfad|wall|kamp)";
+export const FOOTER_ADDRESS_PATTERNS: RegExp[] = [
+  new RegExp(
+    `\\b[A-ZÄÖÜ][\\wäöüß.-]*${STREET_SUFFIX}\\s*\\d+\\s?[a-z]?\\b`,
+    "gi"
+  ),
+  // "Markircher Str. 14": the abbreviation stands apart from the name.
+  new RegExp(
+    `\\b[A-ZÄÖÜ][\\wäöüß-]*[^\\S\\n]+(?:Stra(?:ß|ss)e|Str\\.)[^\\S\\n]*\\d+\\s?[a-z]?\\b`,
+    "g"
+  ),
+  new RegExp(
+    `\\b(?:Am|An der|An den|Auf dem|Im|In der|Zum|Zur)\\s+[A-ZÄÖÜ][\\wäöüß-]*\\s+\\d+\\s?[a-z]?\\b`,
+    "g"
+  ),
+  new RegExp(`\\b${ZIP}${CITY}${COUNTRY_SUFFIX}`, "g"),
 ];
 
 const escapeRegExp = (value: string): string =>
   value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
-// Tolerates spaces, slashes and dashes between digits and a missing
-// leading 0 / country code (the phone number is stored as a number).
+// Spaces match any whitespace, since a value can wrap across lines in a PDF.
+const flexibleSpaces = (escaped: string): string =>
+  escaped.replace(/\s+/g, "\\s+");
+
+// "Musterstraße", "Musterstrasse" and "Musterstr." are the same street.
+const streetVariants = (escaped: string): string =>
+  escaped.replace(/stra(?:ß|ss)e|str\\\./gi, "(?:straße|strasse|str\\.?)");
+
+// Tolerates spaces, slashes and dashes between digits, a "(0)" after the
+// country code, and a missing leading 0 / country code (the phone number is
+// stored as a number).
 const phonePattern = (phone: string): RegExp | null => {
   const digits = phone.replace(/\D/g, "").replace(/^(?:0049|49|0)/, "");
   if (digits.length < 6) return null;
   return new RegExp(
-    `(?:\\+49|0049|0)?[\\s/().-]*${digits.split("").join("[\\s/.-]?")}`,
+    `(?:(?:\\+|00)\\d{1,3}[\\s/.-]*(?:\\(0\\))?|0)?[\\s/().-]*${digits.split("").join("[\\s/.-]?")}`,
     "g"
   );
 };
@@ -35,21 +101,36 @@ const phonePattern = (phone: string): RegExp | null => {
 export const buildRedactionPatterns = (user: RedactionSource): RegExp[] => {
   const address = user.company?.address;
   const { firstName, lastName } = user;
+  const zipCity =
+    address?.zip && address?.city
+      ? `${address.zip} ${address.city}`
+      : undefined;
   const texts = [
     user.email,
     firstName && lastName ? `${firstName} ${lastName}` : undefined,
     firstName && lastName ? `${lastName}, ${firstName}` : undefined,
-    user.company?.name,
     address?.street && address?.houseNo
       ? `${address.street} ${address.houseNo}`
       : address?.street,
-    address?.zip && address?.city
-      ? `${address.zip} ${address.city}`
-      : undefined,
+    zipCity,
   ].filter((value): value is string => Boolean(value?.trim()));
 
-  const specific = texts.map(
-    (value) => new RegExp(escapeRegExp(value.trim()), "gi")
+  const toPattern = (value: string, suffix = "", prefix = ""): RegExp =>
+    new RegExp(
+      prefix +
+        streetVariants(flexibleSpaces(escapeRegExp(value.trim()))) +
+        suffix,
+      "gi"
+    );
+  // The profile country is only removed right behind the profile's ZIP + city,
+  // never on its own, so it stays where it belongs to someone else's address.
+  const countrySuffix = address?.country?.trim()
+    ? `(?:[\\s,.-]*\\b${flexibleSpaces(escapeRegExp(address.country.trim()))}\\b)?`
+    : "";
+  const specific = texts.map((value) =>
+    value === zipCity
+      ? toPattern(value, countrySuffix, "(?:D-)?")
+      : toPattern(value)
   );
   const phone = user.company?.phonenumber
     ? phonePattern(String(user.company.phonenumber))
@@ -100,21 +181,33 @@ const itemBox = (
     x: x + from * charWidth - BOX_PADDING,
     y: y - height - BOX_PADDING,
     width: (to - from) * charWidth + BOX_PADDING * 2,
-    height: height + BOX_PADDING * 2,
+    height: height * (1 + DESCENT_RATIO) + BOX_PADDING * 2,
   };
 };
 
-const collectBoxes = (
+// Items on the same baseline are joined with a space, items on another line
+// with a newline, so patterns can tell a line from the whole page.
+export const joinItems = (
+  items: PdfTextItem[]
+): { text: string; spans: { start: number; end: number }[] } => {
+  let text = "";
+  const spans = items.map((item, i) => {
+    const start = text.length;
+    const next = items[i + 1];
+    const sameLine =
+      !next || Math.abs(next.transform[5] - item.transform[5]) < LINE_TOLERANCE;
+    text += item.str + (sameLine ? " " : "\n");
+    return { start, end: start + item.str.length };
+  });
+  return { text, spans };
+};
+
+export const collectPatternBoxes = (
   items: PdfTextItem[],
   patterns: RegExp[],
   viewport: { convertToViewportPoint: (x: number, y: number) => number[] }
 ): Box[] => {
-  let text = "";
-  const spans = items.map((item) => {
-    const start = text.length;
-    text += item.str + " ";
-    return { start, end: start + item.str.length };
-  });
+  const { text, spans } = joinItems(items);
   const ranges = findMatchRanges(text, patterns);
   return items.flatMap((item, i) =>
     ranges
@@ -125,6 +218,24 @@ const collectBoxes = (
         return itemBox(item, viewport, [start, end]);
       })
   );
+};
+
+// The bottom strip of a page is the letterhead footer. Only the sender's
+// address is removed there (street and ZIP + city, found by their shape);
+// everything else in it stays. Body text is never touched by this rule.
+const FOOTER_ZONE = 0.12;
+
+export const collectFooterBoxes = (
+  items: PdfTextItem[],
+  viewport: { convertToViewportPoint: (x: number, y: number) => number[] },
+  page: { bottom: number; height: number }
+): Box[] => {
+  const limit = page.bottom + page.height * FOOTER_ZONE;
+  // Joined first, so an address split into several text runs still matches.
+  const footerItems = items.filter(
+    (item) => item.str.trim() && item.transform[5] < limit
+  );
+  return collectPatternBoxes(footerItems, FOOTER_ADDRESS_PATTERNS, viewport);
 };
 
 /**
@@ -164,9 +275,15 @@ export const redactContactData = async (
     await page.render({ canvasContext: context, viewport }).promise;
     const content = await page.getTextContent();
     context.fillStyle = "#fff";
-    collectBoxes(content.items as PdfTextItem[], patterns, viewport).forEach(
-      (box) => context.fillRect(box.x, box.y, box.width, box.height)
-    );
+    const items = content.items as PdfTextItem[];
+    const [, bottom, , top] = page.view;
+    [
+      ...collectPatternBoxes(items, patterns, viewport),
+      ...collectFooterBoxes(items, viewport, {
+        bottom,
+        height: top - bottom,
+      }),
+    ].forEach((box) => context.fillRect(box.x, box.y, box.width, box.height));
 
     const image = await output.embedJpg(
       await fetch(canvas.toDataURL("image/jpeg", 0.85)).then((r) =>
