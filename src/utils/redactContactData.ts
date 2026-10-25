@@ -21,7 +21,10 @@ const BOX_PADDING = 2;
 // written with an international prefix, so dates and offer numbers survive;
 // the label goes with the number.
 const CITY =
-  "[A-ZÄÖÜ][\\wäöüß-]*(?:\\s+(?:am|an der|im|bei|ob der)\\s+[A-ZÄÖÜ][\\wäöüß-]*)?";
+  "[A-ZÄÖÜ][\\wäöüß-]*(?:[^\\S\\n]+(?:am|an der|im|bei|ob der|in der|i\\.\\s?d\\.)[^\\S\\n]+[A-ZÄÖÜ][\\wäöüß-]*)?(?:[^\\S\\n]+[-–][^\\S\\n]+[A-ZÄÖÜ][\\wäöüß-]*)?";
+// ZIP + city stay on one line, so the number in front of a line like
+// "USt.-ID" is not mistaken for a ZIP code.
+const ZIP = "(?:D-)?\\d{5}[^\\S\\n]+";
 // A country written after the address goes with it.
 const COUNTRY =
   "(?:Deutschland|Germany|Allemagne|Alemania|Österreich|Austria|Schweiz|Switzerland)";
@@ -32,8 +35,10 @@ const WEBSITE_LABEL =
   "(?:\\b(?:website|web\\s?site|webseite|homepage|internet|web|url)\\.?\\s*:?\\s*)?";
 const GENERIC_PATTERNS: RegExp[] = [
   new RegExp(`${EMAIL_LABEL}[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,}`, "gi"), // E-Mail
-  /\b(?:tel(?:efon)?|mobil(?:e)?|handy|fax|phone|fon)(?:\s*(?:nummer|number|no|nr))?\.?\s*:?\s*\+?[\d \t/().-]*\d/gi,
-  /(?:\+|\b00)\d{1,3}(?:[\s/.-]*\(0\))?[\d\s/().-]{6,}\d/g,
+  /\b(?:tel(?:efon|efax)?|mobil(?:e)?|handy|fax|phone|fon|büro|zentrale|durchwahl)(?:\s*(?:nummer|number|no|nr))?\.?\s*:?\s*\+?[\d \t/().-]*\d/gi,
+  /(?:\+|(?<!\d\s?)\b00)\d{1,3}(?:[\s/.-]*\(0\))?[\d\s/().-]{6,}\d/g,
+  // Single-letter labels ("T", "F", "M", "W") in front of a contact value.
+  /(?<![\w.-])[TFMW]:?[^\S\n]+(?=\+\d|[A-Za-z0-9._%+-]+@|www\.|https?:)/g,
   new RegExp(`${WEBSITE_LABEL}\\bhttps?:\\/\\/[^\\s<>"]+`, "gi"), // Website
   new RegExp(`${WEBSITE_LABEL}\\bwww\\.[^\\s<>"]+`, "gi"),
   new RegExp(
@@ -43,7 +48,7 @@ const GENERIC_PATTERNS: RegExp[] = [
   // Address in the sender line above the recipient: only what follows the
   // company ("Firma GmbH, Musterstr. 2, 12345 Stadt" -> "Musterstr. 2, 12345 Stadt").
   new RegExp(
-    `(?<=\\b(?:GmbH|mbH|UG|AG|KG|OHG|GbR|e\\.?\\s?K\\.?)\\s*,\\s*)[^,\\n]*\\d+\\s?[a-z]?\\s*,\\s*\\d{5}\\s+${CITY}${COUNTRY_SUFFIX}`,
+    `(?<=\\b(?:GmbH|mbH|UG|AG|KG|OHG|GbR|e\\.?\\s?K\\.?)\\s*,\\s*)[^,\\n]*\\d+\\s?[a-z]?\\s*,\\s*${ZIP}${CITY}${COUNTRY_SUFFIX}`,
     "g"
   ),
 ];
@@ -53,17 +58,21 @@ const GENERIC_PATTERNS: RegExp[] = [
 // address in the body must stay.
 const STREET_SUFFIX =
   "(?:stra(?:ß|ss)e|str\\.|weg|allee|platz|ring|promenade|gasse|ufer|damm|chaussee|markt|hof|park|steig|pfad|wall|kamp)";
-const FOOTER_ADDRESS_PATTERNS: RegExp[] = [
+export const FOOTER_ADDRESS_PATTERNS: RegExp[] = [
   new RegExp(
-    `\\b[A-ZÄÖÜ][\\wäöüß-]*${STREET_SUFFIX}\\s*\\d+\\s?[a-z]?\\b`,
+    `\\b[A-ZÄÖÜ][\\wäöüß.-]*${STREET_SUFFIX}\\s*\\d+\\s?[a-z]?\\b`,
     "gi"
+  ),
+  // "Markircher Str. 14": the abbreviation stands apart from the name.
+  new RegExp(
+    `\\b[A-ZÄÖÜ][\\wäöüß-]*[^\\S\\n]+(?:Stra(?:ß|ss)e|Str\\.)[^\\S\\n]*\\d+\\s?[a-z]?\\b`,
+    "g"
   ),
   new RegExp(
     `\\b(?:Am|An der|An den|Auf dem|Im|In der|Zum|Zur)\\s+[A-ZÄÖÜ][\\wäöüß-]*\\s+\\d+\\s?[a-z]?\\b`,
     "g"
   ),
-  new RegExp(`\\b\\d{5}\\s+${CITY}${COUNTRY_SUFFIX}`, "g"),
-  new RegExp(`\\b${COUNTRY}\\b`, "g"),
+  new RegExp(`\\b${ZIP}${CITY}${COUNTRY_SUFFIX}`, "g"),
 ];
 
 const escapeRegExp = (value: string): string =>
@@ -92,6 +101,10 @@ const phonePattern = (phone: string): RegExp | null => {
 export const buildRedactionPatterns = (user: RedactionSource): RegExp[] => {
   const address = user.company?.address;
   const { firstName, lastName } = user;
+  const zipCity =
+    address?.zip && address?.city
+      ? `${address.zip} ${address.city}`
+      : undefined;
   const texts = [
     user.email,
     firstName && lastName ? `${firstName} ${lastName}` : undefined,
@@ -99,18 +112,25 @@ export const buildRedactionPatterns = (user: RedactionSource): RegExp[] => {
     address?.street && address?.houseNo
       ? `${address.street} ${address.houseNo}`
       : address?.street,
-    address?.zip && address?.city
-      ? `${address.zip} ${address.city}`
-      : undefined,
-    address?.country,
+    zipCity,
   ].filter((value): value is string => Boolean(value?.trim()));
 
-  const specific = texts.map(
-    (value) =>
-      new RegExp(
-        streetVariants(flexibleSpaces(escapeRegExp(value.trim()))),
-        "gi"
-      )
+  const toPattern = (value: string, suffix = "", prefix = ""): RegExp =>
+    new RegExp(
+      prefix +
+        streetVariants(flexibleSpaces(escapeRegExp(value.trim()))) +
+        suffix,
+      "gi"
+    );
+  // The profile country is only removed right behind the profile's ZIP + city,
+  // never on its own, so it stays where it belongs to someone else's address.
+  const countrySuffix = address?.country?.trim()
+    ? `(?:[\\s,.-]*\\b${flexibleSpaces(escapeRegExp(address.country.trim()))}\\b)?`
+    : "";
+  const specific = texts.map((value) =>
+    value === zipCity
+      ? toPattern(value, countrySuffix, "(?:D-)?")
+      : toPattern(value)
   );
   const phone = user.company?.phonenumber
     ? phonePattern(String(user.company.phonenumber))
@@ -182,7 +202,7 @@ export const joinItems = (
   return { text, spans };
 };
 
-const collectBoxes = (
+export const collectPatternBoxes = (
   items: PdfTextItem[],
   patterns: RegExp[],
   viewport: { convertToViewportPoint: (x: number, y: number) => number[] }
@@ -211,13 +231,11 @@ export const collectFooterBoxes = (
   page: { bottom: number; height: number }
 ): Box[] => {
   const limit = page.bottom + page.height * FOOTER_ZONE;
-  return items
-    .filter((item) => item.str.trim() && item.transform[5] < limit)
-    .flatMap((item) =>
-      findMatchRanges(item.str, FOOTER_ADDRESS_PATTERNS).map((range) =>
-        itemBox(item, viewport, range)
-      )
-    );
+  // Joined first, so an address split into several text runs still matches.
+  const footerItems = items.filter(
+    (item) => item.str.trim() && item.transform[5] < limit
+  );
+  return collectPatternBoxes(footerItems, FOOTER_ADDRESS_PATTERNS, viewport);
 };
 
 /**
@@ -260,7 +278,7 @@ export const redactContactData = async (
     const items = content.items as PdfTextItem[];
     const [, bottom, , top] = page.view;
     [
-      ...collectBoxes(items, patterns, viewport),
+      ...collectPatternBoxes(items, patterns, viewport),
       ...collectFooterBoxes(items, viewport, {
         bottom,
         height: top - bottom,
