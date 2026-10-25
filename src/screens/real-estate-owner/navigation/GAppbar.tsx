@@ -23,10 +23,13 @@ import { currentUser } from "@/lib/features/userSlice";
 import SettingsIcon from "@mui/icons-material/Settings";
 import NotificationItem from "@/components/data-display/notification/NotificationItem";
 import { notifications } from "@/utils/Constants";
-import { ROUTES } from "@/utils/routes";
 import Button from "@mui/material/Button";
 import { FaArrowRightToBracket } from "react-icons/fa6";
-import { checkIsLoggedIn, clearAuthData } from "@/utils/auth";
+import {
+  checkIsLoggedIn,
+  clearAuthData,
+  getUserSettingsRoutes,
+} from "@/utils/auth";
 import { persistor } from "@/lib/store";
 
 export default function GAppbar(): JSX.Element {
@@ -73,14 +76,15 @@ export default function GAppbar(): JSX.Element {
   const handleMenuItemClick = (menuItem: string): void => {
     setActiveMenuItem(menuItem);
     handleClose();
+    const settingsRoutes = getUserSettingsRoutes();
     if (menuItem === "Mein Profil") {
-      router.push(ROUTES.REAL_ESTATE.SETTINGS.USER_PROFILE);
+      router.push(settingsRoutes.USER_PROFILE);
     } else if (menuItem === "Unternehmens Profil") {
-      router.push(ROUTES.REAL_ESTATE.SETTINGS.COMPANY_PROFILE);
+      router.push(settingsRoutes.COMPANY_PROFILE);
     } else if (menuItem === "E-Mail ändern") {
-      router.push(ROUTES.REAL_ESTATE.SETTINGS.EMAIL_CHANGE);
+      router.push(settingsRoutes.EMAIL_CHANGE);
     } else if (menuItem === "Passwort ändern") {
-      router.push(ROUTES.REAL_ESTATE.SETTINGS.PASSWORD_CHANGE);
+      router.push(settingsRoutes.PASSWORD_CHANGE);
     }
   };
 
