@@ -22,17 +22,28 @@ const BOX_PADDING = 2;
 // the label goes with the number.
 const CITY =
   "[A-ZÄÖÜ][\\wäöüß-]*(?:\\s+(?:am|an der|im|bei|ob der)\\s+[A-ZÄÖÜ][\\wäöüß-]*)?";
+// A country written after the address goes with it.
+const COUNTRY =
+  "(?:Deutschland|Germany|Allemagne|Alemania|Österreich|Austria|Schweiz|Switzerland)";
+const COUNTRY_SUFFIX = `(?:[\\s,.-]*\\b${COUNTRY}\\b)?`;
+// Labels in front of a contact value are removed together with it.
+const EMAIL_LABEL = "(?:\\b(?:e-?\\s?mail|mail)\\.?\\s*:?\\s*)?";
+const WEBSITE_LABEL =
+  "(?:\\b(?:website|web\\s?site|webseite|homepage|internet|web|url)\\.?\\s*:?\\s*)?";
 const GENERIC_PATTERNS: RegExp[] = [
-  /[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/gi, // E-Mail
-  /\b(?:tel(?:efon)?|mobil(?:e)?|handy|fax|phone|fon)\.?\s*:?\s*\+?[\d\s/().-]*\d/gi,
+  new RegExp(`${EMAIL_LABEL}[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,}`, "gi"), // E-Mail
+  /\b(?:tel(?:efon)?|mobil(?:e)?|handy|fax|phone|fon)(?:\s*(?:nummer|number|no|nr))?\.?\s*:?\s*\+?[\d \t/().-]*\d/gi,
   /(?:\+|\b00)\d{1,3}(?:[\s/.-]*\(0\))?[\d\s/().-]{6,}\d/g,
-  /\bhttps?:\/\/[^\s<>"]+/gi, // Website
-  /\bwww\.[^\s<>"]+/gi,
-  /\b[a-z0-9-]+(?:\.[a-z0-9-]+)*\.(?:de|com|net|org|eu|info|biz|at|ch)\b\/?[^\s<>"]*/gi,
+  new RegExp(`${WEBSITE_LABEL}\\bhttps?:\\/\\/[^\\s<>"]+`, "gi"), // Website
+  new RegExp(`${WEBSITE_LABEL}\\bwww\\.[^\\s<>"]+`, "gi"),
+  new RegExp(
+    `${WEBSITE_LABEL}\\b[a-z0-9-]+(?:\\.[a-z0-9-]+)*\\.(?:de|com|net|org|eu|info|biz|at|ch)\\b\\/?[^\\s<>"]*`,
+    "gi"
+  ),
   // Address in the sender line above the recipient: only what follows the
   // company ("Firma GmbH, Musterstr. 2, 12345 Stadt" -> "Musterstr. 2, 12345 Stadt").
   new RegExp(
-    `(?<=\\b(?:GmbH|mbH|UG|AG|KG|OHG|GbR|e\\.?\\s?K\\.?)\\s*,\\s*)[^,\\n]*\\d+\\s?[a-z]?\\s*,\\s*\\d{5}\\s+${CITY}`,
+    `(?<=\\b(?:GmbH|mbH|UG|AG|KG|OHG|GbR|e\\.?\\s?K\\.?)\\s*,\\s*)[^,\\n]*\\d+\\s?[a-z]?\\s*,\\s*\\d{5}\\s+${CITY}${COUNTRY_SUFFIX}`,
     "g"
   ),
 ];
@@ -51,7 +62,8 @@ const FOOTER_ADDRESS_PATTERNS: RegExp[] = [
     `\\b(?:Am|An der|An den|Auf dem|Im|In der|Zum|Zur)\\s+[A-ZÄÖÜ][\\wäöüß-]*\\s+\\d+\\s?[a-z]?\\b`,
     "g"
   ),
-  new RegExp(`\\b\\d{5}\\s+${CITY}`, "g"),
+  new RegExp(`\\b\\d{5}\\s+${CITY}${COUNTRY_SUFFIX}`, "g"),
+  new RegExp(`\\b${COUNTRY}\\b`, "g"),
 ];
 
 const escapeRegExp = (value: string): string =>
@@ -90,6 +102,7 @@ export const buildRedactionPatterns = (user: RedactionSource): RegExp[] => {
     address?.zip && address?.city
       ? `${address.zip} ${address.city}`
       : undefined,
+    address?.country,
   ].filter((value): value is string => Boolean(value?.trim()));
 
   const specific = texts.map(
