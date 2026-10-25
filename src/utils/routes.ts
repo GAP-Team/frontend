@@ -1,6 +1,8 @@
 export const ADMIN_BASE = "/admin";
 export const REAL_ESTATE_BASE = "/real-estate";
 export const SERVICE_PROVIDER_BASE = "/service-provider";
+// Query flag telling the contract details page to go back to "Aufträge"
+export const BACK_TO_APPLICATIONS_PARAM = "from=applications";
 
 export const ROUTES = {
   SERVICE_PROVIDER_HOME: "/",
@@ -47,6 +49,8 @@ export const ROUTES = {
     CONTRACTS: `${SERVICE_PROVIDER_BASE}/contracts`,
     CONTRACT_DETAILS: (id: string) =>
       `${SERVICE_PROVIDER_BASE}/contracts/${id}`,
+    CONTRACT_DETAILS_FROM_APPLICATIONS: (id: string) =>
+      `${SERVICE_PROVIDER_BASE}/contracts/${id}?${BACK_TO_APPLICATIONS_PARAM}`,
     CONTRACT_APPLICATION: (id: string | undefined) =>
       `${SERVICE_PROVIDER_BASE}/contracts/${id}/application`,
     CONTRACT_FILTER_URL: (

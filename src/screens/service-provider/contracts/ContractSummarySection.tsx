@@ -1,7 +1,7 @@
 "use client";
 import { Contract } from "./types";
 import Grid from "@mui/material/Grid";
-import { ROUTES } from "@/utils/routes";
+import { BACK_TO_APPLICATIONS_PARAM, ROUTES } from "@/utils/routes";
 import { TENDER_FORM } from "@/utils/enums";
 import Divider from "@mui/material/Divider";
 import { useRouter } from "next/navigation";
@@ -96,7 +96,15 @@ const ContractSummarySection: React.FC<ContractSummarySectionProps> = ({
   ].filter((item) => item.value);
 
   const backHandler = (): void => {
-    router.push(ROUTES.SERVICE_PROVIDER.CONTRACT_FILTER_URL([], [], []));
+    const cameFromApplications = window.location.search
+      .slice(1)
+      .split("&")
+      .includes(BACK_TO_APPLICATIONS_PARAM);
+    router.push(
+      cameFromApplications
+        ? ROUTES.SERVICE_PROVIDER.APPLICATIONS
+        : ROUTES.SERVICE_PROVIDER.CONTRACT_FILTER_URL([], [], [])
+    );
   };
 
   return (
