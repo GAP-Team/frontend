@@ -4,6 +4,7 @@ import { useFormik } from "formik";
 import Grid from "@mui/material/Grid";
 import React, { useState } from "react";
 import { ROUTES } from "@/utils/routes";
+import { getUserDashboard } from "@/utils/auth";
 import Divider from "@mui/material/Divider";
 import { useRouter } from "next/navigation";
 import { showSnackbar } from "@/components/feedback/snackbar";
@@ -97,7 +98,7 @@ const DeleteAccount = (): JSX.Element => {
           <Grid item>
             <GButton
               variant="outlined"
-              onClick={() => router.push(ROUTES.REAL_ESTATE.DASHBOARD)}
+              onClick={() => router.push(getUserDashboard())}
             >
               Abbrechen
             </GButton>

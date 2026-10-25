@@ -75,6 +75,11 @@ export const getUserDashboard = (): string => {
   return roleDashboardMap[role] || ROUTES.LOGIN;
 };
 
+export const getUserSettingsRoutes = (): typeof ROUTES.REAL_ESTATE.SETTINGS =>
+  getUserRole() === USER_ROLE.SERVICE_PROVIDER
+    ? ROUTES.SERVICE_PROVIDER.SETTINGS
+    : ROUTES.REAL_ESTATE.SETTINGS;
+
 export const clearAuthData = (): void => {
   Cookies.remove("access_token");
   Cookies.remove("isVerified");

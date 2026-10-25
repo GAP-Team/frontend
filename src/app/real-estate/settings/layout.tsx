@@ -10,22 +10,24 @@ import ListItemText from "@mui/material/ListItemText";
 import Divider from "@mui/material/Divider";
 import Typography from "@mui/material/Typography";
 import PageTitle from "@/components/data-display/label/PageTitle";
-import { ROUTES } from "@/utils/routes";
+import { ROUTES, SERVICE_PROVIDER_BASE } from "@/utils/routes";
 
-const menuItems = [
-  { label: "Mein Profil", href: ROUTES.REAL_ESTATE.SETTINGS.USER_PROFILE },
+const buildMenuItems = (
+  settings: typeof ROUTES.REAL_ESTATE.SETTINGS
+): { label: string; href: string; style?: { color: string } }[] => [
+  { label: "Mein Profil", href: settings.USER_PROFILE },
   {
     label: "Unternehmens Informationen",
-    href: ROUTES.REAL_ESTATE.SETTINGS.COMPANY_PROFILE,
+    href: settings.COMPANY_PROFILE,
   },
-  { label: "E-Mail ändern", href: ROUTES.REAL_ESTATE.SETTINGS.EMAIL_CHANGE },
+  { label: "E-Mail ändern", href: settings.EMAIL_CHANGE },
   {
     label: "Passwort ändern",
-    href: ROUTES.REAL_ESTATE.SETTINGS.PASSWORD_CHANGE,
+    href: settings.PASSWORD_CHANGE,
   },
   {
     label: "Account löschen",
-    href: ROUTES.REAL_ESTATE.SETTINGS.DELETE_ACCOUNT,
+    href: settings.DELETE_ACCOUNT,
     style: { color: "red" },
   },
 ];
@@ -36,6 +38,11 @@ export default function SettingsLayout({
   children: React.ReactNode;
 }): React.ReactNode {
   const pathname = usePathname();
+  const menuItems = buildMenuItems(
+    pathname.startsWith(SERVICE_PROVIDER_BASE)
+      ? ROUTES.SERVICE_PROVIDER.SETTINGS
+      : ROUTES.REAL_ESTATE.SETTINGS
+  );
 
   // Find the matching menu item based on the current pathname
   const currentMenuItem = menuItems.find((item) => pathname === item.href);

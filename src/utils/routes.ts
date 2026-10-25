@@ -4,6 +4,23 @@ export const SERVICE_PROVIDER_BASE = "/service-provider";
 // Query flag telling the contract details page to go back to "Aufträge"
 export const BACK_TO_APPLICATIONS_PARAM = "from=applications";
 
+const buildSettingsRoutes = (
+  base: string
+): Record<
+  | "USER_PROFILE"
+  | "EMAIL_CHANGE"
+  | "DELETE_ACCOUNT"
+  | "COMPANY_PROFILE"
+  | "PASSWORD_CHANGE",
+  string
+> => ({
+  USER_PROFILE: `${base}/settings/user-profile`,
+  EMAIL_CHANGE: `${base}/settings/email-change`,
+  DELETE_ACCOUNT: `${base}/settings/delete-account`,
+  COMPANY_PROFILE: `${base}/settings/company-profile`,
+  PASSWORD_CHANGE: `${base}/settings/password-change`,
+});
+
 export const ROUTES = {
   SERVICE_PROVIDER_HOME: "/",
   LOGIN: "/login",
@@ -34,16 +51,11 @@ export const ROUTES = {
         `${REAL_ESTATE_BASE}/tenders/${id}/offers/${offerID}`,
     },
     COST_SAVING: `${REAL_ESTATE_BASE}/cost-savings`,
-    SETTINGS: {
-      USER_PROFILE: `${REAL_ESTATE_BASE}/settings/user-profile`,
-      EMAIL_CHANGE: `${REAL_ESTATE_BASE}/settings/email-change`,
-      DELETE_ACCOUNT: `${REAL_ESTATE_BASE}/settings/delete-account`,
-      COMPANY_PROFILE: `${REAL_ESTATE_BASE}/settings/company-profile`,
-      PASSWORD_CHANGE: `${REAL_ESTATE_BASE}/settings/password-change`,
-    },
+    SETTINGS: buildSettingsRoutes(REAL_ESTATE_BASE),
   },
   SERVICE_PROVIDER: {
     DASHBOARD: `${SERVICE_PROVIDER_BASE}/dashboard`,
+    SETTINGS: buildSettingsRoutes(SERVICE_PROVIDER_BASE),
     APPLICATIONS: `${SERVICE_PROVIDER_BASE}/applications`,
     MESSAGES: `${SERVICE_PROVIDER_BASE}/messages`,
     CONTRACTS: `${SERVICE_PROVIDER_BASE}/contracts`,
