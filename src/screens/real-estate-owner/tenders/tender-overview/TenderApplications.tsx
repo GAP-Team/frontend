@@ -8,13 +8,14 @@ import { useAppDispatch } from "@/lib/hooks";
 import { markOffersSeen } from "@/lib/features/seenOffersSlice";
 import logger from "@/utils/Logger";
 import ApplicationCard from "./ApplicationCard";
-import { SuggestionWorkDate, TenderApplication } from "./types";
+import { SuggestionWorkDate, Tender, TenderApplication } from "./types";
 import { BuildingAddress } from "@/screens/real-estate-owner/buildings/building-overview/types";
 import { formatDistance, getDistanceKm, PostalAddress } from "@/utils/distance";
 
 interface TenderApplicationsProps {
   tenderId: string;
   buildingAddress?: BuildingAddress;
+  tender?: Tender | null;
 }
 
 const formatDate = (date: string): string =>
@@ -30,6 +31,17 @@ const formatWorkDates = (workDates: SuggestionWorkDate[] = []): string =>
         : formatDate(date as string)
     )
     .join(", ");
+
+// Dates the owner asked for in the tender; shown when a provider gave none.
+const getOwnerDates = (tender?: Tender | null): string =>
+  tender?.fromDate
+    ? formatWorkDates([
+        {
+          date: String(tender.fromDate),
+          endDate: tender.toDate && String(tender.toDate),
+        },
+      ])
+    : "";
 
 // The departure point submitted with the application wins over the registered
 // company address, because it is also the location shown on the card.
@@ -49,6 +61,7 @@ const getOrigin = (
 const TenderApplications: React.FC<TenderApplicationsProps> = ({
   tenderId,
   buildingAddress,
+  tender,
 }) => {
   const [applications, setApplications] = useState<TenderApplication[]>([]);
   const [distances, setDistances] = useState<Record<string, string>>({});
@@ -140,6 +153,7 @@ const TenderApplications: React.FC<TenderApplicationsProps> = ({
           price={`${application.serviceTotalPrice} €`}
           distance={distances[application.id]}
           workDates={formatWorkDates(application.suggestionWorkDates)}
+          ownerDates={getOwnerDates(tender)}
           specialServices={application.benefitsSpecialServices.length}
           employees={application.numberOfEmployees}
         />
