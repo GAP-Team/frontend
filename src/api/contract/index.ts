@@ -1,5 +1,6 @@
 import api from "../axios";
 import { Application } from "@/screens/service-provider/application/types";
+import { MyApplication } from "@/screens/service-provider/my-applications/types";
 import { TenderApplication } from "@/screens/real-estate-owner/tenders/tender-overview/types";
 
 // FIXME: Add proper types for the parameters and response
@@ -12,6 +13,15 @@ const contractAPI = {
     api.get(
       `/contracts?states=${states}&subcategories=${subcategories}&tenderTypes=${tenderTypes}`
     ),
+
+  getMyApplications: (): Promise<{ data: MyApplication[] }> =>
+    api.get("/contracts/applications/me"),
+
+  withdrawApplication: (
+    contractId: string,
+    applicationId: string
+  ): Promise<{ data: { message: string } }> =>
+    api.delete(`/contracts/${contractId}/applications/${applicationId}`),
 
   getContractById: (id: string): any => api.get(`/contracts/${id}`),
   applyForContract: (
