@@ -1,7 +1,6 @@
 "use client";
-import React, { memo, useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "@/lib/hooks";
-import { markOffersSeen } from "@/lib/features/seenOffersSlice";
+import React, { memo } from "react";
+import { useAppSelector } from "@/lib/hooks";
 import {
   getTenderBuildingAddress,
   getTenderById,
@@ -19,15 +18,7 @@ interface TenderDetailsProps {
 
 const TenderDetails: React.FC<TenderDetailsProps> = ({ tenderId }) => {
   // Fetch tender details by ID
-  const dispatch = useAppDispatch();
   const tender = useAppSelector(getTenderById(tenderId));
-  const offerCount = tender?.applicationIds?.length ?? 0;
-
-  // Opening the tender shows its offers, so they are no longer new.
-  useEffect(() => {
-    if (tender) dispatch(markOffersSeen({ tenderId, count: offerCount }));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [tender?.id, offerCount]);
   const buildingAddress = useAppSelector(getTenderBuildingAddress(tenderId));
   const { facilities } = useAppSelector((state) => state.facility);
   const subcategory = facilities.find(

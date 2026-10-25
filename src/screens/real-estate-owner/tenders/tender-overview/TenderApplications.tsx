@@ -4,6 +4,8 @@ import React, { useEffect, useState } from "react";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import contractAPI from "@/api/contract";
+import { useAppDispatch } from "@/lib/hooks";
+import { markOffersSeen } from "@/lib/features/seenOffersSlice";
 import logger from "@/utils/Logger";
 import ApplicationCard from "./ApplicationCard";
 import { SuggestionWorkDate, TenderApplication } from "./types";
@@ -51,20 +53,31 @@ const TenderApplications: React.FC<TenderApplicationsProps> = ({
   const [applications, setApplications] = useState<TenderApplication[]>([]);
   const [distances, setDistances] = useState<Record<string, string>>({});
   const [loading, setLoading] = useState(true);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
+    // Leaving the page before the offers arrived means they were not shown.
+    let isActive = true;
     const fetchApplications = async (): Promise<void> => {
       try {
         const response = await contractAPI.getApplicationsForContract(tenderId);
+        if (!isActive) return;
         setApplications(response.data);
+        // Only offers that were loaded and are displayed count as seen.
+        dispatch(
+          markOffersSeen({ tenderId, count: response.data?.length ?? 0 })
+        );
       } catch (error) {
         logger.error("Failed to fetch tender applications", error);
       } finally {
-        setLoading(false);
+        if (isActive) setLoading(false);
       }
     };
     fetchApplications();
-  }, [tenderId]);
+    return () => {
+      isActive = false;
+    };
+  }, [tenderId, dispatch]);
 
   useEffect(() => {
     if (!buildingAddress) {
