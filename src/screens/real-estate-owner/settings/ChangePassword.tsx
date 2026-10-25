@@ -20,7 +20,7 @@ import {
 } from "@/lib/features/userSlice";
 import { USER_ACTIVITY_EMAIL_TEMPLATES } from "@/utils/Constants";
 import { useRouter } from "next/navigation";
-import { ROUTES } from "@/utils/routes";
+import { getUserDashboard } from "@/utils/auth";
 import GButton from "@/components/inputs/button/GButton";
 
 interface ChangePasswordInitialValuesProps {
@@ -242,7 +242,7 @@ const ChangePassword = (): JSX.Element => {
             <Grid item>
               <GButton
                 variant="outlined"
-                onClick={() => router.push(ROUTES.REAL_ESTATE.DASHBOARD)}
+                onClick={() => router.push(getUserDashboard())}
               >
                 Abbrechen
               </GButton>

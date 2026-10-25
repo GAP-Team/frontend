@@ -23,7 +23,7 @@ import { BUSINESS_TYPE, DOCUMENT_TYPE } from "@/utils/enums";
 import UploadButton from "@/components/inputs/button/UploadButton";
 import { handleDeleteDoc, handleUploadDoc } from "@/utils/uploadToS3";
 import { Document } from "@/typings/types";
-import { ROUTES } from "@/utils/routes";
+import { getUserDashboard } from "@/utils/auth";
 import Image from "next/image";
 import GButton from "@/components/inputs/button/GButton";
 
@@ -586,7 +586,7 @@ const CompanyProfile = (): JSX.Element => {
             <Grid item>
               <GButton
                 variant="outlined"
-                onClick={() => router.push(ROUTES.REAL_ESTATE.DASHBOARD)}
+                onClick={() => router.push(getUserDashboard())}
               >
                 Abbrechen
               </GButton>

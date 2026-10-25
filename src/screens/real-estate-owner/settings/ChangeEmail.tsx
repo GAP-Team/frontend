@@ -3,7 +3,7 @@
 import React from "react";
 import { useFormik } from "formik";
 import Grid from "@mui/material/Grid";
-import { ROUTES } from "@/utils/routes";
+import { getUserDashboard } from "@/utils/auth";
 import Divider from "@mui/material/Divider";
 import { useRouter } from "next/navigation";
 import TextField from "@mui/material/TextField";
@@ -126,7 +126,7 @@ const ChangeEmail = (): JSX.Element => {
             <Grid item>
               <GButton
                 variant="outlined"
-                onClick={() => router.push(ROUTES.REAL_ESTATE.DASHBOARD)}
+                onClick={() => router.push(getUserDashboard())}
               >
                 Abbrechen
               </GButton>
