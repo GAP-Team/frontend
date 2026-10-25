@@ -44,6 +44,7 @@ const TenderDetails: React.FC<TenderDetailsProps> = ({ tenderId }) => {
           <TenderApplications
             tenderId={tenderId}
             buildingAddress={buildingAddress}
+            tender={tender}
           />
         </Grid>
       </Grid>
