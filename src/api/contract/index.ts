@@ -23,5 +23,15 @@ const contractAPI = {
     contractId: string
   ): Promise<{ data: TenderApplication[] }> =>
     api.get(`/contracts/${contractId}/applications`),
+  acceptApplication: (
+    contractId: string,
+    applicationId: string
+  ): Promise<{ data: { message: string } }> =>
+    api.post(`/contracts/${contractId}/applications/${applicationId}/accept`),
+  declineApplication: (
+    contractId: string,
+    applicationId: string
+  ): Promise<{ data: { message: string } }> =>
+    api.post(`/contracts/${contractId}/applications/${applicationId}/decline`),
 };
 export default contractAPI;

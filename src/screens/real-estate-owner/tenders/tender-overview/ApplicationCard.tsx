@@ -6,6 +6,7 @@ import Typography from "@mui/material/Typography";
 import Avatar from "@mui/material/Avatar";
 import Paper from "@mui/material/Paper";
 import CircularProgress from "@mui/material/CircularProgress";
+import Chip from "@mui/material/Chip";
 import Skeleton from "@mui/material/Skeleton";
 import GButton from "@/components/inputs/button/GButton";
 import { useRouter } from "next/navigation";
@@ -24,6 +25,8 @@ interface ApplicationCardProps {
   specialServices: number;
   employees?: string;
   discount?: number;
+  // null while undecided, true = accepted, false = declined
+  status?: boolean | null;
 }
 
 const ApplicationCard: React.FC<ApplicationCardProps> = ({
@@ -40,6 +43,7 @@ const ApplicationCard: React.FC<ApplicationCardProps> = ({
   specialServices,
   employees,
   discount,
+  status,
 }) => {
   const avatarLetter = companyName.charAt(0).toUpperCase();
   const router = useRouter();
@@ -161,9 +165,17 @@ const ApplicationCard: React.FC<ApplicationCardProps> = ({
       </Box>
 
       <Box sx={styles.buttonContainer}>
-        <GButton onClick={onClickHandler} variant="outlined">
-          zum Angebot
-        </GButton>
+        <Box sx={styles.actionContainer}>
+          <GButton onClick={onClickHandler} variant="outlined">
+            zum Angebot
+          </GButton>
+          {typeof status === "boolean" && (
+            <Chip
+              label={status ? "Angenommen" : "Abgelehnt"}
+              color={status ? "success" : "error"}
+            />
+          )}
+        </Box>
         <Box sx={styles.additionalInfoContainer}>
           <Typography variant="bodylsb" sx={styles.specialServices}>
             {specialServices}{" "}
@@ -271,6 +283,11 @@ const styles = {
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
+  },
+  actionContainer: {
+    display: "flex",
+    alignItems: "center",
+    gap: 2,
   },
   additionalInfoContainer: {
     display: "flex",
