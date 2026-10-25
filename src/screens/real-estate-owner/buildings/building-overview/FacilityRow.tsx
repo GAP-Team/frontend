@@ -14,7 +14,8 @@ import { checkActiveTenderForFacility } from "@/lib/features/tenderSlice";
 import { deleteFacility } from "@/lib/features/facilitySlice";
 import { showSnackbar } from "@/components/feedback/snackbar";
 import ActionMenu from "@/components/navigation/ActionMenu";
-import { withReturnTo } from "@/utils/returnTo";
+import GButton from "@/components/inputs/button/GButton";
+import { withPreselection, withReturnTo } from "@/utils/returnTo";
 import FacilityDetails from "./FacilityDetails";
 import FacilityDocumentUploadDialog from "./FacilityDocumentUploadDialog";
 
@@ -116,6 +117,21 @@ const FacilityRow: React.FC<FacilityRowProps> = ({
               {`${tenderCount} Ausschreibungen`}
             </Typography>
             <Box onClick={(event) => event.stopPropagation()}>
+              <GButton
+                href={withReturnTo(
+                  withPreselection(ROUTES.REAL_ESTATE.TENDER.ADD_TENDER, {
+                    buildingId: facility.buildingId,
+                    facilityId: facility.id,
+                  }),
+                  returnTo
+                )}
+                size="small"
+                sx={styles.addTenderButton}
+              >
+                Ausschreibung hinzufügen
+              </GButton>
+            </Box>
+            <Box onClick={(event) => event.stopPropagation()}>
               <ActionMenu
                 itemId={facility.id}
                 onEdit={(id) =>
@@ -188,6 +204,10 @@ const styles = {
   tenderCount: {
     color: "#22A7F1",
     fontWeight: 500,
+  },
+  addTenderButton: {
+    m: 0,
+    whiteSpace: "nowrap",
   },
   tenderLink: {
     cursor: "pointer",
