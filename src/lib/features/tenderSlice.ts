@@ -93,6 +93,19 @@ const tenderSlice = createSlice({
     setTenders: (state, action: PayloadAction<Tender[]>) => {
       state.tenderList = action.payload;
     },
+    setTenderStatus: (
+      state,
+      action: PayloadAction<{ tenderId: string; status: string }>
+    ) => {
+      const { tenderId, status } = action.payload;
+      const apply = (tender: Tender): Tender =>
+        tender.id === tenderId ? { ...tender, status } : tender;
+      state.tenderList = state.tenderList.map(apply);
+      state.tenders = state.tenders.map((group) => ({
+        ...group,
+        tenders: group.tenders.map(apply),
+      }));
+    },
     removeTender: (state, action: PayloadAction<string>) => {
       state.tenders = state.tenders.map((tender) => ({
         ...tender,
@@ -179,6 +192,7 @@ const tenderSlice = createSlice({
 export const {
   setTenderNumbers,
   removeTender,
+  setTenderStatus,
   setTendersByBuilding,
   setTenders,
 } = tenderSlice.actions;

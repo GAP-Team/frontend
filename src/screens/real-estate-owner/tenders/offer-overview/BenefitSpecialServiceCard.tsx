@@ -1,77 +1,85 @@
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
-import DiscountIcon from "@mui/icons-material/Discount";
+import EuroIcon from "@mui/icons-material/Euro";
 import SocialDistanceIcon from "@mui/icons-material/SocialDistance";
+import StarBorderIcon from "@mui/icons-material/StarBorder";
 
-import {
-  Box,
-  List,
-  ListItem,
-  Paper,
-  Skeleton,
-  Typography,
-} from "@mui/material";
-import React from "react";
+import { List, ListItem, Paper, Typography } from "@mui/material";
+import React, { useState } from "react";
 
 import HeaderSection from "@/screens/real-estate-owner/dashboard/HeaderSection";
 
 interface BenefitSpecialServiceCardProps {
-  loading?: boolean;
+  price: string;
+  workDates?: string;
+  distance?: string;
+  specialServices: string[];
 }
 
-const BenefitSpecialServiceCard: React.FC<BenefitSpecialServiceCardProps> = ({
-  loading = false,
-}) => {
-  const possibleStartDate = "Sofort";
-  const discount = "18";
-  const distance = "15";
+const MAX_VISIBLE_SERVICES = 3;
 
-  if (loading) {
-    return (
-      <Paper sx={styles.paper}>
-        <Box sx={styles.headerContainer}>
-          <Box sx={{ width: "80%", ml: "0.5rem" }}>
-            <Box sx={styles.iconContainer}>
-              <Skeleton variant="text" width={80} />
-              <Skeleton variant="text" width={60} />
-              <Skeleton variant="text" width={60} />
-            </Box>
-          </Box>
-        </Box>
-      </Paper>
-    );
-  }
+const BenefitSpecialServiceCard: React.FC<BenefitSpecialServiceCardProps> = ({
+  price,
+  workDates,
+  distance,
+  specialServices,
+}) => {
+  const [showAll, setShowAll] = useState(false);
+  const visibleServices = showAll
+    ? specialServices
+    : specialServices.slice(0, MAX_VISIBLE_SERVICES);
+  const hiddenCount = specialServices.length - visibleServices.length;
+  const rows = [
+    {
+      Icon: EuroIcon,
+      label: "Gesamtpreis",
+      value: `${price} €`,
+    },
+    {
+      Icon: CalendarTodayIcon,
+      label: "Mögliches Startdatum",
+      value: workDates || "Nach Absprache",
+    },
+    ...(distance
+      ? [
+          {
+            Icon: SocialDistanceIcon,
+            label: "Entfernung zum Objekt",
+            value: distance,
+          },
+        ]
+      : []),
+  ];
 
   return (
     <Paper sx={styles.paper}>
       <HeaderSection titletext="SONDERLEISTUNGEN" />
       <List sx={{ p: 0 }}>
-        <ListItem sx={{ ...styles.iconContainer, px: 0 }}>
-          <CalendarTodayIcon sx={{ color: "gold", fontSize: "2rem", mt: 3 }} />
-          <Typography sx={{ mt: 3, ml: 3, color: "lightgrey" }}>
-            {"Mögliches Startdatum"}
-          </Typography>
-          <Typography sx={{ fontWeight: "bold", mt: 3, mr: 3, ml: "auto" }}>
-            {possibleStartDate}
-          </Typography>
-        </ListItem>
-        <ListItem sx={{ ...styles.iconContainer, px: 0 }}>
-          <DiscountIcon sx={{ color: "gold", fontSize: "2rem", mt: 0 }} />
-          <Typography sx={{ color: "lightgrey", mt: 0, ml: 3 }}>
-            {"Skonto bei direkter Zusage"}
-          </Typography>
-          <Typography sx={{ fontWeight: "bold", mt: 3, mr: 3, ml: "auto" }}>
-            {discount === "18" ? "18" : discount}
-          </Typography>
-        </ListItem>
-        <ListItem sx={{ ...styles.iconContainer, px: 0 }}>
-          <SocialDistanceIcon sx={{ color: "gold", fontSize: "2rem", mt: 0 }} />
-          <Typography sx={{ color: "lightgrey", mt: 0, ml: 3 }}>
-            {"Entfernung zum Objekt "}
-          </Typography>
-          <Typography sx={{ fontWeight: "bold", mt: 3, mr: 3, ml: "auto" }}>
-            {`${distance} km`}
-          </Typography>
-        </ListItem>
+        {rows.map(({ Icon, label, value }) => (
+          <ListItem key={label} sx={{ ...styles.iconContainer, px: 0 }}>
+            <Icon sx={{ color: "gold", fontSize: "2rem" }} />
+            <Typography sx={{ ml: 3, color: "lightgrey" }}>{label}</Typography>
+            <Typography sx={{ fontWeight: "bold", mr: 3, ml: "auto" }}>
+              {value}
+            </Typography>
+          </ListItem>
+        ))}
+        {visibleServices.map((service) => (
+          <ListItem key={service} sx={{ ...styles.iconContainer, px: 0 }}>
+            <StarBorderIcon sx={{ color: "gold", fontSize: "2rem" }} />
+            <Typography sx={{ ml: 3 }}>{service}</Typography>
+          </ListItem>
+        ))}
+        {hiddenCount > 0 && (
+          <ListItem sx={{ px: 0 }}>
+            <Typography
+              color="#22A7F1"
+              onClick={() => setShowAll(true)}
+              sx={{ cursor: "pointer", textDecoration: "underline" }}
+            >
+              {`+ ${hiddenCount} weitere`}
+            </Typography>
+          </ListItem>
+        )}
       </List>
     </Paper>
   );

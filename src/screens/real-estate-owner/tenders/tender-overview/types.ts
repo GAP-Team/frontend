@@ -1,3 +1,4 @@
+import { Document } from "@/typings/types";
 import { BuildingAddress } from "@/screens/real-estate-owner/buildings/building-overview/types";
 export interface BuildingTenders {
   buildingName: string;
@@ -47,6 +48,10 @@ export interface TenderApplication {
   city?: string;
   benefitsSpecialServices: string[];
   suggestionWorkDates?: SuggestionWorkDate[];
+  message?: string;
+  // null while the owner has not decided yet, true = accepted, false = declined
+  status?: boolean | null;
+  documents?: Document[];
   companyName?: string;
   numberOfEmployees?: string;
   companyAddress?: {

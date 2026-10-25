@@ -8,29 +8,16 @@ import { useAppDispatch } from "@/lib/hooks";
 import { markOffersSeen } from "@/lib/features/seenOffersSlice";
 import logger from "@/utils/Logger";
 import ApplicationCard from "./ApplicationCard";
-import { SuggestionWorkDate, Tender, TenderApplication } from "./types";
+import { Tender, TenderApplication } from "./types";
+import { formatWorkDates, getOrigin } from "./utils";
 import { BuildingAddress } from "@/screens/real-estate-owner/buildings/building-overview/types";
-import { formatDistance, getDistanceKm, PostalAddress } from "@/utils/distance";
+import { formatDistance, getDistanceKm } from "@/utils/distance";
 
 interface TenderApplicationsProps {
   tenderId: string;
   buildingAddress?: BuildingAddress;
   tender?: Tender | null;
 }
-
-const formatDate = (date: string): string =>
-  new Date(date).toLocaleDateString("de-DE");
-
-// A suggestion is either a single day or a period (date - endDate).
-const formatWorkDates = (workDates: SuggestionWorkDate[] = []): string =>
-  workDates
-    .filter(({ date }) => date)
-    .map(({ date, endDate }) =>
-      endDate
-        ? `${formatDate(date as string)} - ${formatDate(endDate)}`
-        : formatDate(date as string)
-    )
-    .join(", ");
 
 // Dates the owner asked for in the tender; shown when a provider gave none.
 const getOwnerDates = (tender?: Tender | null): string =>
@@ -42,21 +29,6 @@ const getOwnerDates = (tender?: Tender | null): string =>
         },
       ])
     : "";
-
-// The departure point submitted with the application wins over the registered
-// company address, because it is also the location shown on the card.
-const getOrigin = (
-  application: TenderApplication,
-  country: string
-): PostalAddress | null => {
-  const { zip, city, companyAddress } = application;
-  if (city) {
-    return { zip, city, country };
-  }
-  return companyAddress
-    ? { ...companyAddress, houseNumber: companyAddress.houseNo }
-    : null;
-};
 
 const TenderApplications: React.FC<TenderApplicationsProps> = ({
   tenderId,
@@ -156,6 +128,7 @@ const TenderApplications: React.FC<TenderApplicationsProps> = ({
           ownerDates={getOwnerDates(tender)}
           specialServices={application.benefitsSpecialServices.length}
           employees={application.numberOfEmployees}
+          status={application.status}
         />
       ))}
     </Stack>
