@@ -61,6 +61,19 @@ interface CreatedBuildingFacility {
   facilityName: string;
 }
 
+const OBJECT_STEP_INDEX = 1;
+
+const buildSteps = (skipObjectStep: boolean): ActiveStepItem[] =>
+  [
+    { stepName: "Ausschreibungstyp", component: TenderInformation },
+    { stepName: "Objekt / Anlage", component: TenderBuilding },
+    { stepName: "Beschreibung", component: TenderDescription },
+    { stepName: "Einstufung", component: TenderClassification },
+    { stepName: "Übersicht Ausschreibung", component: TenderSummary },
+  ]
+    .filter((_, index) => !(skipObjectStep && index === OBJECT_STEP_INDEX))
+    .map((step, id) => ({ ...step, id }));
+
 const TenderForm: React.FC<NewTenderProps> = ({ id }): JSX.Element => {
   const router = useRouter();
   const returnTo = useReturnTo();
@@ -73,28 +86,7 @@ const TenderForm: React.FC<NewTenderProps> = ({ id }): JSX.Element => {
   const tender = useAppSelector((state) =>
     id ? getTenderById(id)(state) : null
   );
-  const steps: ActiveStepItem[] = [
-    {
-      id: 0,
-      stepName: "Ausschreibungstyp",
-      component: TenderInformation,
-    },
-    { id: 1, stepName: "Objekt / Anlage", component: TenderBuilding },
-    { id: 2, stepName: "Beschreibung", component: TenderDescription },
-    { id: 3, stepName: "Einstufung", component: TenderClassification },
-    { id: 4, stepName: "Übersicht Ausschreibung", component: TenderSummary },
-  ];
-
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [activeStep, setActiveStep] = useState<ActiveStepItem>(steps[0]);
-  const StepComponent = steps[activeStep.id]
-    ?.component as React.ComponentType<StepComponentProps>;
-
-  useEffect(() => {
-    setActiveStep(steps[0]);
-    setIsSubmitted(false);
-  }, []);
-
   const facilities: Facility[] = useAppSelector(
     (state) => state.facility.facilities
   );
@@ -110,6 +102,26 @@ const TenderForm: React.FC<NewTenderProps> = ({ id }): JSX.Element => {
           item.buildingId === preselectedBuilding.id
       )
     : undefined;
+
+  // Opened for a facility: object and facility are already known, so the
+  // object / facility step is skipped.
+  const isFacilityPreselected = Boolean(preselectedFacility);
+  const steps = buildSteps(isFacilityPreselected);
+  const [activeStep, setActiveStep] = useState<ActiveStepItem>(steps[0]);
+  const StepComponent = steps[activeStep.id]
+    ?.component as React.ComponentType<StepComponentProps>;
+  // The validation schemas are listed for the full step sequence.
+  const activeSchema =
+    addTenderValidationSchema[
+      isFacilityPreselected && activeStep.id >= OBJECT_STEP_INDEX
+        ? activeStep.id + 1
+        : activeStep.id
+    ];
+
+  useEffect(() => {
+    setActiveStep(steps[0]);
+    setIsSubmitted(false);
+  }, [isFacilityPreselected]);
 
   const getInitialFormValues = (): TenderFormValues => ({
     clientName: tender?.clientName || "",
@@ -472,6 +484,7 @@ const TenderForm: React.FC<NewTenderProps> = ({ id }): JSX.Element => {
           <GProgressStepper
             sx={styles.progressStepper}
             activeStep={activeStep.id}
+            steps={steps.length}
           />
         </Grid>
         <Grid item>
@@ -501,7 +514,7 @@ const TenderForm: React.FC<NewTenderProps> = ({ id }): JSX.Element => {
         />
         <Formik
           initialValues={formData}
-          validationSchema={addTenderValidationSchema[activeStep?.id]}
+          validationSchema={activeSchema}
           onSubmit={handleNext}
           enableReinitialize
         >

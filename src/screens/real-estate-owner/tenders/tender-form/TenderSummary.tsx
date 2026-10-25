@@ -2,17 +2,27 @@
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import { useFormikContext } from "formik";
-import { StepComponentProps } from "./types";
+import React from "react";
+import { ActiveStepItem, StepComponentProps } from "./types";
 import SummarySection, {
   Detail,
 } from "@/components/common/summary/SummarySection";
 import { ObjectFacilityMode, TENDER_FORM } from "@/utils/enums";
+import TenderInformation from "./TenderInformation";
+import TenderBuilding from "./TenderBuilding";
+import TenderDescription from "./TenderDescription";
+import TenderClassification from "./TenderClassification";
 
 const TenderSummary = ({
   setActiveStep,
   steps,
 }: StepComponentProps): JSX.Element => {
   const { values } = useFormikContext<any>();
+  // The object / facility step is left out when the form was opened for a
+  // facility, so steps are looked up by their component, not by position.
+  const stepOf = (component: React.ComponentType<any>): ActiveStepItem =>
+    steps.find((step) => step.component === component) as ActiveStepItem;
+  const hasObjectStep = steps.some((step) => step.component === TenderBuilding);
 
   const updatedTenderInformation: Detail[] = [
     values.clientName && {
@@ -108,14 +118,15 @@ const TenderSummary = ({
           <SummarySection
             title="Ausschreibungstyp"
             details={updatedTenderInformation}
-            setActiveStep={() => setActiveStep(steps[0])}
+            setActiveStep={() => setActiveStep(stepOf(TenderInformation))}
           />
         </Grid>
         <Grid item xs={12}>
           <SummarySection
             title="Objekt / Anlage"
             details={objektInformation}
-            setActiveStep={() => setActiveStep(steps[1])}
+            disableEdit={!hasObjectStep}
+            setActiveStep={() => setActiveStep(stepOf(TenderBuilding))}
           />
         </Grid>
         {updatedDetails.length > 0 && (
@@ -123,7 +134,7 @@ const TenderSummary = ({
             <SummarySection
               title="Beschreibung"
               details={updatedDetails}
-              setActiveStep={() => setActiveStep(steps[2])}
+              setActiveStep={() => setActiveStep(stepOf(TenderDescription))}
             />
           </Grid>
         )}
@@ -132,7 +143,7 @@ const TenderSummary = ({
             <SummarySection
               title="Einstufung"
               details={updatedClassification}
-              setActiveStep={() => setActiveStep(steps[3])}
+              setActiveStep={() => setActiveStep(stepOf(TenderClassification))}
             />
           </Grid>
         )}
@@ -142,7 +153,7 @@ const TenderSummary = ({
             <SummarySection
               title="Dokumente"
               details={updatedDocList}
-              setActiveStep={() => setActiveStep(steps[4])}
+              setActiveStep={() => setActiveStep(steps[steps.length - 1])}
             />
           </Grid>
         )}
