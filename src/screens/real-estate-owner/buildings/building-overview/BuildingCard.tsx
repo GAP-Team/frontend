@@ -15,6 +15,7 @@ import { IoExtensionPuzzleOutline } from "react-icons/io5";
 import { Building } from "./types";
 import buildingAPI from "@/api/building";
 import DocumentList from "./DocumentList";
+import BuildingBadges from "./BuildingBadges";
 import { DOCUMENT_TYPE } from "@/utils/enums";
 import ActionMenu from "@/components/navigation/ActionMenu";
 import { ROUTES } from "@/utils/routes";
@@ -89,6 +90,7 @@ const BuildingCard: React.FC<BuildingCardProps> = ({ building, onSelect }) => {
           />
         </Box>
       </Box>
+      <BuildingBadges buildingId={building.id} />
       <Box sx={styles.header} marginTop="1rem">
         <Stack direction="row" alignItems="center" gap={2}>
           <IoExtensionPuzzleOutline size="1.5rem" color="#A0ADB1" />
@@ -152,8 +154,8 @@ const styles = {
   card: {
     p: "1.25rem",
     borderRadius: "0.5rem",
-    maxHeight: "21rem",
-    minHeight: "21rem",
+    maxHeight: "24rem",
+    minHeight: "24rem",
     flexShrink: 0,
     display: "flex",
     flexDirection: "column",
