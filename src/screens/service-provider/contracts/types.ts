@@ -49,6 +49,7 @@ export interface Contract {
   applicationIds?: string[];
   hasApplied?: boolean;
   isBookedOut?: boolean;
+  isOpen?: boolean;
   applicationCount?: number;
 }
 

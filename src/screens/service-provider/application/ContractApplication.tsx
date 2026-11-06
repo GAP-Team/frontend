@@ -46,6 +46,13 @@ const toSuggestionWorkDate = (d: SuggestedDate): SuggestionWorkDate => ({
     : {}),
 });
 
+// An awarded (no longer open) contract takes no applications, whatever its count.
+const canApplyTo = (c: {
+  hasApplied?: boolean;
+  isBookedOut?: boolean;
+  isOpen?: boolean;
+}): boolean => c.isOpen !== false && !c.hasApplied && !c.isBookedOut;
+
 const steps: ActiveStepItem[] = [
   { id: 0, stepName: "ContractRate", component: ContractRateForm },
   { id: 1, stepName: "ContractServices", component: ContractServicesForm },
@@ -110,21 +117,11 @@ const ContractApplication = (): JSX.Element => {
   const isContractLoaded = contract?.tenderId === id;
 
   useEffect(() => {
-    // Already applied, or the contract is booked out: nothing to apply for.
-    if (
-      isContractLoaded &&
-      (contract.hasApplied || contract.isBookedOut) &&
-      !submittedId
-    ) {
+    // Already applied, booked out or awarded: nothing to apply for.
+    if (isContractLoaded && !canApplyTo(contract) && !submittedId) {
       router.replace(ROUTES.SERVICE_PROVIDER.CONTRACT_FILTER_URL([], [], []));
     }
-  }, [
-    isContractLoaded,
-    contract?.hasApplied,
-    contract?.isBookedOut,
-    submittedId,
-    router,
-  ]);
+  }, [isContractLoaded, contract, submittedId, router]);
 
   const handleBack = (): void => {
     if (activeStep.id > 0) setActiveStep(steps[activeStep.id - 1]);
@@ -153,7 +150,7 @@ const ContractApplication = (): JSX.Element => {
   const canStillApply = async (): Promise<boolean> => {
     try {
       const { data } = await contractAPI.getContractById(contract.tenderId);
-      return !data.hasApplied && !data.isBookedOut;
+      return canApplyTo(data);
     } catch (error) {
       logger.error("Error checking the contract before applying:", error);
       return false;
