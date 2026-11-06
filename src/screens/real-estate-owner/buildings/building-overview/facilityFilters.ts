@@ -1,8 +1,11 @@
 import {
   DeadlineStatus,
   getFacilityCheckStatus,
+  getFacilityMaintenanceStatus,
 } from "@/screens/real-estate-owner/facilities/utils";
 import { Facility } from "@/screens/real-estate-owner/facilities/facility-overview/types";
+
+export type DeadlineKind = "check" | "maintenance";
 
 export type DeadlineTab = "all" | DeadlineStatus;
 
@@ -22,9 +25,17 @@ export const DEFAULT_FACILITY_FILTERS: FacilityFilters = {
   onlyActiveTender: false,
 };
 
-// Facilities without a check deadline only show up under "Alle".
-const matchesTab = (facility: Facility, tab: DeadlineTab): boolean =>
-  tab === "all" || getFacilityCheckStatus(facility) === tab;
+const DEADLINE_STATUS_GETTERS = {
+  check: getFacilityCheckStatus,
+  maintenance: getFacilityMaintenanceStatus,
+};
+
+// Facilities without the given deadline only show up under "Alle".
+const matchesTab = (
+  facility: Facility,
+  tab: DeadlineTab,
+  kind: DeadlineKind
+): boolean => tab === "all" || DEADLINE_STATUS_GETTERS[kind](facility) === tab;
 
 const matchesSearch = (facility: Facility, search: string): boolean => {
   const term = search.trim().toLowerCase();
@@ -50,12 +61,13 @@ const matchesActiveTender = (
 export const applyFacilityFilters = (
   facilities: Facility[],
   filters: FacilityFilters,
-  activeTenderFacilityIds: Set<string>
+  activeTenderFacilityIds: Set<string>,
+  kind: DeadlineKind = "check"
 ): Facility[] =>
   facilities.filter(
     (facility) =>
       matchesSearch(facility, filters.search) &&
-      matchesTab(facility, filters.tab) &&
+      matchesTab(facility, filters.tab, kind) &&
       matchesType(facility, filters.facilityType) &&
       matchesActiveTender(
         facility,

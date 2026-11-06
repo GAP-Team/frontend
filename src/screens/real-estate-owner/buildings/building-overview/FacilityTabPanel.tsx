@@ -8,6 +8,7 @@ import FacilityRow from "./FacilityRow";
 import FacilityListToolbar from "./FacilityListToolbar";
 import {
   DEFAULT_FACILITY_FILTERS,
+  DeadlineKind,
   FacilityFilters,
   applyFacilityFilters,
   getFacilityTypes,
@@ -23,7 +24,13 @@ interface FacilityTabPanelProps {
   returnTo: string;
   onShowTenders: (facility: Facility) => void;
   focusedFacilityId?: string | null;
+  deadlineKind: DeadlineKind;
 }
+
+const HEADERS: Record<DeadlineKind, string> = {
+  check: "Prüffristen dieser Anlagen",
+  maintenance: "Wartungsfristen dieser Anlagen",
+};
 
 const FacilityTabPanel: React.FC<FacilityTabPanelProps> = ({
   buildingId,
@@ -31,6 +38,7 @@ const FacilityTabPanel: React.FC<FacilityTabPanelProps> = ({
   returnTo,
   onShowTenders,
   focusedFacilityId,
+  deadlineKind,
 }) => {
   const [filters, setFilters] = useState<FacilityFilters>(
     DEFAULT_FACILITY_FILTERS
@@ -48,13 +56,18 @@ const FacilityTabPanel: React.FC<FacilityTabPanelProps> = ({
         .filter((tender) => tender.status === TenderStatusEnum.ACTIVE)
         .map((tender) => tender.facility?.id)
     );
-    return applyFacilityFilters(facilities, filters, activeTenderFacilityIds);
-  }, [facilities, filters, tenderList]);
+    return applyFacilityFilters(
+      facilities,
+      filters,
+      activeTenderFacilityIds,
+      deadlineKind
+    );
+  }, [facilities, filters, tenderList, deadlineKind]);
 
   return (
     <Box sx={styles.container}>
       <Box sx={styles.header}>
-        <Typography variant="bodylsb">Anlagen dieses Gebäudes</Typography>
+        <Typography variant="bodylsb">{HEADERS[deadlineKind]}</Typography>
         <GButton
           href={withReturnTo(
             withPreselection(ROUTES.REAL_ESTATE.FACILITY.ADD_FACILITY, {

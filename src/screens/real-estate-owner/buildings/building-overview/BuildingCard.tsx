@@ -21,6 +21,7 @@ import ActionMenu from "@/components/navigation/ActionMenu";
 import { ROUTES } from "@/utils/routes";
 import { getTenderCountByBuilding } from "@/lib/features/tenderSlice";
 import { styles as scrollbarStyles } from "@/components/utils/scrollbar/styles";
+import { BUILDING_TABS } from "./buildingTabs";
 import {
   getUserBuildings,
   setUserBuilding,
@@ -96,14 +97,16 @@ const BuildingCard: React.FC<BuildingCardProps> = ({ building, onSelect }) => {
           <IoExtensionPuzzleOutline size="1.5rem" color="#A0ADB1" />
           <Typography
             style={styles.items}
-            onClick={(event) => handleSelectTab(event, 0)}
+            onClick={(event) =>
+              handleSelectTab(event, BUILDING_TABS.CHECK_DEADLINES)
+            }
           >{`${building?.facilityIds?.length} Anlagen`}</Typography>
         </Stack>
         <Stack direction="row" alignItems="center" gap={2}>
           <CgNotes size="1.5rem" color="#A0ADB1" />
           <Typography
             style={styles.items}
-            onClick={(event) => handleSelectTab(event, 1)}
+            onClick={(event) => handleSelectTab(event, BUILDING_TABS.TENDERS)}
           >{`${totalTenders} Ausschreibungen`}</Typography>
         </Stack>
       </Box>
