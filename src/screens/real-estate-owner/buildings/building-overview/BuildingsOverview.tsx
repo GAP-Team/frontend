@@ -16,6 +16,7 @@ import { fetchBuildings, getUserBuildings } from "@/lib/features/buildingSlice";
 import { getFacilitiesByUser } from "@/lib/features/facilitySlice";
 import { fetchTenders } from "@/lib/features/tenderSlice";
 import { Building } from "@/screens/real-estate-owner/buildings/building-overview/types";
+import { BUILDING_TABS, BUILDING_TAB_VALUES } from "./buildingTabs";
 
 const BuildingsOverview: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -27,7 +28,9 @@ const BuildingsOverview: React.FC = () => {
   // sidebar's "Alle Gebäude" link (no query) always returns to the list.
   const selectedBuildingId = searchParams.get("building");
   const requestedTab = Number(searchParams.get("tab"));
-  const selectedTab = [0, 1, 2].includes(requestedTab) ? requestedTab : 0;
+  const selectedTab = BUILDING_TAB_VALUES.includes(requestedTab)
+    ? requestedTab
+    : BUILDING_TABS.CHECK_DEADLINES;
 
   useEffect(() => {
     if (!user?.id) return;

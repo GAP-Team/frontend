@@ -15,6 +15,7 @@ import BuildingStatTiles from "./BuildingStatTiles";
 import BuildingDocumentUploadDialog from "./BuildingDocumentUploadDialog";
 import DocumentTabPanel from "./DocumentTabPanel";
 import FacilityTabPanel from "./FacilityTabPanel";
+import { BUILDING_TABS } from "./buildingTabs";
 import TenderTabPanel from "./TenderTabPanel";
 import { getFacilitiesByBuilding } from "@/lib/features/facilitySlice";
 import { Facility } from "@/screens/real-estate-owner/facilities/facility-overview/types";
@@ -28,7 +29,7 @@ interface BuildingDetailWorkspaceProps {
 
 const BuildingDetailWorkspace: React.FC<BuildingDetailWorkspaceProps> = ({
   building,
-  initialTab = 0,
+  initialTab = BUILDING_TABS.CHECK_DEADLINES,
   onBack,
 }) => {
   const router = useRouter();
@@ -62,12 +63,12 @@ const BuildingDetailWorkspace: React.FC<BuildingDetailWorkspaceProps> = ({
 
   const handleOpenFacility = (facility: Facility): void => {
     setFocusedFacilityId(facility.id);
-    setActiveTab(0);
+    setActiveTab(BUILDING_TABS.CHECK_DEADLINES);
   };
 
   const handleShowTenders = (facility: Facility): void => {
     setFacilityFilter(facility);
-    setActiveTab(1);
+    setActiveTab(BUILDING_TABS.TENDERS);
   };
 
   return (
@@ -118,21 +119,32 @@ const BuildingDetailWorkspace: React.FC<BuildingDetailWorkspaceProps> = ({
       <BuildingStatTiles facilities={facilities} tenders={tenders} />
 
       <Tabs value={activeTab} onChange={handleTabChange} sx={styles.tabs}>
-        <Tab label="Anlagen" />
+        <Tab label="Anlagenprüffristen" />
+        <Tab label="Anlagenwartungsfristen" />
         <Tab label="Ausschreibungen" />
         <Tab label="Dokumente" />
       </Tabs>
 
-      {activeTab === 0 && (
+      {activeTab === BUILDING_TABS.CHECK_DEADLINES && (
         <FacilityTabPanel
           buildingId={building.id}
           facilities={facilities}
           returnTo={returnTo}
           onShowTenders={handleShowTenders}
           focusedFacilityId={focusedFacilityId}
+          deadlineKind="check"
         />
       )}
-      {activeTab === 1 && (
+      {activeTab === BUILDING_TABS.MAINTENANCE_DEADLINES && (
+        <FacilityTabPanel
+          buildingId={building.id}
+          facilities={facilities}
+          returnTo={returnTo}
+          onShowTenders={handleShowTenders}
+          deadlineKind="maintenance"
+        />
+      )}
+      {activeTab === BUILDING_TABS.TENDERS && (
         <TenderTabPanel
           buildingId={building.id}
           tenders={tenders}
@@ -142,7 +154,7 @@ const BuildingDetailWorkspace: React.FC<BuildingDetailWorkspaceProps> = ({
           onClearFilter={() => setFacilityFilter(null)}
         />
       )}
-      {activeTab === 2 && (
+      {activeTab === BUILDING_TABS.DOCUMENTS && (
         <DocumentTabPanel
           building={building}
           facilities={facilities}
