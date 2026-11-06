@@ -1,7 +1,7 @@
 import { ApplicationFilter, ApplicationStatus } from "./types";
 
 export const STATUS_LABELS: Record<ApplicationStatus, string> = {
-  PENDING: "In Prüfung",
+  PENDING: "In Bearbeitung",
   ACCEPTED: "Angenommen",
   DECLINED: "Abgelehnt",
 };
