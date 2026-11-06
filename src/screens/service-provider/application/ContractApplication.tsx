@@ -1,6 +1,6 @@
 // ContractApplication.tsx
 import dayjs from "dayjs";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { Formik, FormikHelpers } from "formik";
 import { CircularProgress, Grid, Paper, Typography } from "@mui/material";
@@ -15,6 +15,7 @@ import { showSnackbar } from "@/lib/features/snackbarSlice";
 import { useAppSelector, useAppDispatch } from "@/lib/hooks";
 
 import s3API from "@/api/s3";
+import contractAPI from "@/api/contract";
 import { ROUTES } from "@/utils/routes";
 import { translateTenderForm } from "@/utils/utils";
 import { handleUploadDoc } from "@/utils/uploadToS3";
@@ -44,6 +45,13 @@ const toSuggestionWorkDate = (d: SuggestedDate): SuggestionWorkDate => ({
     ? { endDate: dayjs(d.endDate).toISOString() }
     : {}),
 });
+
+// An awarded (no longer open) contract takes no applications, whatever its count.
+const canApplyTo = (c: {
+  hasApplied?: boolean;
+  isBookedOut?: boolean;
+  isOpen?: boolean;
+}): boolean => c.isOpen !== false && !c.hasApplied && !c.isBookedOut;
 
 const steps: ActiveStepItem[] = [
   { id: 0, stepName: "ContractRate", component: ContractRateForm },
@@ -85,6 +93,7 @@ const ContractApplication = (): JSX.Element => {
 
   const [submittedId, setSubmittedId] = useState<string>("");
   const [activeStep, setActiveStep] = useState<ActiveStepItem>(steps[0]);
+  const isSubmitting = useRef(false);
 
   useEffect(() => setActiveStep(steps[0]), []);
 
@@ -108,21 +117,11 @@ const ContractApplication = (): JSX.Element => {
   const isContractLoaded = contract?.tenderId === id;
 
   useEffect(() => {
-    // Already applied, or the contract is booked out: nothing to apply for.
-    if (
-      isContractLoaded &&
-      (contract.hasApplied || contract.isBookedOut) &&
-      !submittedId
-    ) {
+    // Already applied, booked out or awarded: nothing to apply for.
+    if (isContractLoaded && !canApplyTo(contract) && !submittedId) {
       router.replace(ROUTES.SERVICE_PROVIDER.CONTRACT_FILTER_URL([], [], []));
     }
-  }, [
-    isContractLoaded,
-    contract?.hasApplied,
-    contract?.isBookedOut,
-    submittedId,
-    router,
-  ]);
+  }, [isContractLoaded, contract, submittedId, router]);
 
   const handleBack = (): void => {
     if (activeStep.id > 0) setActiveStep(steps[activeStep.id - 1]);
@@ -146,11 +145,36 @@ const ContractApplication = (): JSX.Element => {
     }
   };
 
+  // Files must only reach S3 for an application the backend can still accept,
+  // so ask it first instead of uploading and cleaning up afterwards.
+  const canStillApply = async (): Promise<boolean> => {
+    try {
+      const { data } = await contractAPI.getContractById(contract.tenderId);
+      return canApplyTo(data);
+    } catch (error) {
+      logger.error("Error checking the contract before applying:", error);
+      return false;
+    }
+  };
+
   const submitApplication = async (
     values: ContractApplicationFormValues
   ): Promise<void> => {
+    // Ignore repeated clicks while a submission is already in flight.
+    if (isSubmitting.current) return;
+    isSubmitting.current = true;
     const docs: Document[] = [];
     try {
+      if (!(await canStillApply())) {
+        dispatch(
+          showSnackbar({
+            type: "error",
+            message:
+              "Für diesen Auftrag kann keine Bewerbung mehr abgegeben werden.",
+          })
+        );
+        return;
+      }
       const docFields = [
         DOCUMENT_FIELDS.OFFER_DOC_FILE,
         DOCUMENT_FIELDS.TERMS_CONDITION_DOC_FILE,
@@ -213,6 +237,8 @@ const ContractApplication = (): JSX.Element => {
           message: "Fehler beim Einreichen des Angebots.",
         })
       );
+    } finally {
+      isSubmitting.current = false;
     }
   };
 
