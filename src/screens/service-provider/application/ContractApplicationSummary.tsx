@@ -47,6 +47,10 @@ const ContractApplicationSummary = ({
         label: `Mögliche Termine ${index + 1}`,
         value: formatSuggestedDate(d),
       })),
+    values.responseDeadline && {
+      label: "Frist für Rückmeldung",
+      value: new Date(values.responseDeadline).toLocaleDateString("de-DE"),
+    },
   ].filter(Boolean) as Detail[];
 
   const contractServiceSummary: Detail[] = [

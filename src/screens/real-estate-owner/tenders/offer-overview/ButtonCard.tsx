@@ -9,12 +9,15 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useState } from "react";
+import { formatDate, isDeadlineExpired } from "../tender-overview/utils";
 
 export type OfferDecision = "accept" | "decline";
 
 interface ButtonCardProps {
   // null while undecided, true = accepted, false = declined
   status?: boolean | null;
+  // YYYY-MM-DD date until which the owner has to decide
+  responseDeadline?: string;
   onDecide: (decision: OfferDecision) => Promise<void>;
 }
 
@@ -29,10 +32,16 @@ const DIALOG_TEXT: Record<OfferDecision, { title: string; content: string }> = {
   },
 };
 
-const ButtonCard: React.FC<ButtonCardProps> = ({ status, onDecide }) => {
+const ButtonCard: React.FC<ButtonCardProps> = ({
+  status,
+  responseDeadline,
+  onDecide,
+}) => {
   const [pending, setPending] = useState<OfferDecision | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const isDecided = typeof status === "boolean";
+  const isExpired = !isDecided && isDeadlineExpired(responseDeadline);
+  const isLocked = isDecided || isExpired;
 
   const confirm = async (): Promise<void> => {
     if (!pending) return;
@@ -54,12 +63,23 @@ const ButtonCard: React.FC<ButtonCardProps> = ({ status, onDecide }) => {
             {status ? "Auftrag erteilt" : "Angebot abgelehnt"}
           </Typography>
         )}
+        {!isDecided && responseDeadline && (
+          <Typography
+            variant="bodylsb"
+            color={isExpired ? "error.main" : "text.primary"}
+            sx={{ textAlign: "center", mb: 2 }}
+          >
+            {isExpired
+              ? "Frist für Rückmeldung abgelaufen"
+              : `Rückmeldung bis ${formatDate(responseDeadline)}`}
+          </Typography>
+        )}
         <Box sx={styles.buttonContainer}>
           <Button
             variant="contained"
             color="success"
             fullWidth
-            disabled={isDecided}
+            disabled={isLocked}
             onClick={() => setPending("accept")}
           >
             Auftrag erteilen
@@ -70,7 +90,7 @@ const ButtonCard: React.FC<ButtonCardProps> = ({ status, onDecide }) => {
             variant="contained"
             color="error"
             fullWidth
-            disabled={isDecided}
+            disabled={isLocked}
             onClick={() => setPending("decline")}
           >
             Angebot ablehnen

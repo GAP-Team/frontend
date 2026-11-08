@@ -48,6 +48,7 @@ export interface TenderApplication {
   city?: string;
   benefitsSpecialServices: string[];
   suggestionWorkDates?: SuggestionWorkDate[];
+  responseDeadline?: string;
   message?: string;
   // null while the owner has not decided yet, true = accepted, false = declined
   status?: boolean | null;

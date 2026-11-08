@@ -9,7 +9,7 @@ import { markOffersSeen } from "@/lib/features/seenOffersSlice";
 import logger from "@/utils/Logger";
 import ApplicationCard from "./ApplicationCard";
 import { Tender, TenderApplication } from "./types";
-import { formatWorkDates, getOrigin } from "./utils";
+import { formatWorkDates, getDeadlineLabel, getOrigin } from "./utils";
 import { BuildingAddress } from "@/screens/real-estate-owner/buildings/building-overview/types";
 import { formatDistance, getDistanceKm } from "@/utils/distance";
 
@@ -128,6 +128,7 @@ const TenderApplications: React.FC<TenderApplicationsProps> = ({
           ownerDates={getOwnerDates(tender)}
           specialServices={application.benefitsSpecialServices.length}
           employees={application.numberOfEmployees}
+          deadline={getDeadlineLabel(application)}
           status={application.status}
         />
       ))}
