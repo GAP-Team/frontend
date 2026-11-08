@@ -20,6 +20,7 @@ export interface Application {
   serviceTotalPrice: string;
   message: string;
   suggestionWorkDates: SuggestionWorkDate[];
+  responseDeadline?: string;
   zip: number;
   city: string;
   dataPrivacy: boolean;
@@ -34,6 +35,7 @@ export interface ContractApplicationFormValues {
   zip: string;
   city: string;
   desiredDates: SuggestedDate[];
+  responseDeadline: string; // YYYY-MM-DD, optional
   advantages: string[];
   offerDoc: string;
   termsConditionDoc: string;

@@ -195,7 +195,11 @@ const OfferOverview: React.FC<OfferOverviewProps> = ({ offerID, tenderID }) => {
           }}
         >
           <Box>
-            <ButtonCard status={application.status} onDecide={handleDecision} />
+            <ButtonCard
+              status={application.status}
+              responseDeadline={application.responseDeadline}
+              onDecide={handleDecision}
+            />
           </Box>
         </Grid>
       </Grid>

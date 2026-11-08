@@ -574,6 +574,13 @@ export const applyContractFormSchema = yup.object().shape({
       }),
     })
   ),
+  responseDeadline: yup
+    .string()
+    .test(
+      "deadline-not-in-past",
+      "Die Frist darf nicht in der Vergangenheit liegen",
+      (value) => !value || value >= new Date().toISOString().split("T")[0]
+    ),
   termsConditionDoc: yup.string().required("AGB dokument ist erforderlich"),
   offerDoc: yup.string().required("Angebot dokument ist erforderlich"),
 });

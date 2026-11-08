@@ -64,7 +64,14 @@ const steps: ActiveStepItem[] = [
 ];
 
 const stepFieldsMap: Record<number, string[]> = {
-  0: ["offerDoc", "totalPrice", "zip", "city", "desiredDates"],
+  0: [
+    "offerDoc",
+    "totalPrice",
+    "zip",
+    "city",
+    "desiredDates",
+    "responseDeadline",
+  ],
   1: ["advantages", "termsConditionDoc", "message"],
   2: [],
 };
@@ -75,6 +82,7 @@ const initialValues: ContractApplicationFormValues = {
   zip: "",
   city: "",
   desiredDates: [{ type: "single", date: "", endDate: "" }],
+  responseDeadline: "",
   advantages: [],
   offerDoc: "",
   termsConditionDoc: "",
@@ -205,6 +213,9 @@ const ContractApplication = (): JSX.Element => {
         suggestionWorkDates: values.desiredDates
           .filter((d) => d.date)
           .map(toSuggestionWorkDate),
+        ...(values.responseDeadline
+          ? { responseDeadline: dayjs(values.responseDeadline).toISOString() }
+          : {}),
         zip: Number(values.zip),
         city: values.city,
         dataPrivacy: values.acceptedTerms,

@@ -185,6 +185,42 @@ const ContractRateForm = ({ formik }: { formik?: any }): JSX.Element => {
       <Grid container spacing={2}>
         <Grid item xs={12} md={4}>
           <Typography sx={styles.descriptionLable}>
+            Frist für Rückmeldung
+          </Typography>
+          <Typography sx={styles.descriptionText}>
+            Bis zu diesem Datum muss
+            <br />
+            der Eigentümer Ihr Angebot
+            <br />
+            annehmen oder ablehnen.
+          </Typography>
+        </Grid>
+        <Grid item xs={12} md={8}>
+          <TextField
+            type="date"
+            label="Frist"
+            name="responseDeadline"
+            value={formik?.values?.responseDeadline ?? ""}
+            onBlur={formik?.handleBlur}
+            onChange={formik?.handleChange}
+            InputLabelProps={{ shrink: true }}
+            inputProps={{ min: new Date().toISOString().split("T")[0] }}
+            error={Boolean(
+              formik?.touched?.responseDeadline &&
+                formik?.errors?.responseDeadline
+            )}
+            helperText={
+              formik?.touched?.responseDeadline &&
+              formik?.errors?.responseDeadline
+            }
+          />
+        </Grid>
+      </Grid>
+      <Divider sx={styles.divider} />
+
+      <Grid container spacing={2}>
+        <Grid item xs={12} md={4}>
+          <Typography sx={styles.descriptionLable}>
             Stadt-PLZ des Dienstleisters
           </Typography>
           <Typography sx={styles.descriptionText}>

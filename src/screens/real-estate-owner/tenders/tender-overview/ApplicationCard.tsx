@@ -128,7 +128,7 @@ const ApplicationCard: React.FC<ApplicationCardProps> = ({
             </Box>
             {deadline && (
               <Typography variant="bodylsb" color="error">
-                {deadline} Frist
+                {deadline}
               </Typography>
             )}
           </Box>
